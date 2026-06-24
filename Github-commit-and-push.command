@@ -5,15 +5,15 @@
 # Double-click this file to commit and push changes
 # =============================================
 
-# Change to the directory where this .command file is located
 cd "$(dirname "$0")"
 
 echo "========================================"
 echo "  BTC Dashboard - Commit & Push"
 echo "========================================"
 echo ""
+echo "Folder: $(pwd)"
+echo ""
 
-# Check if this is a git repository
 if [ ! -d .git ]; then
     echo "❌ Error: This folder is not a Git repository."
     echo "Please make sure this .command file is inside your project folder."
@@ -21,57 +21,95 @@ if [ ! -d .git ]; then
     exit 1
 fi
 
-# Show current status
-echo "Current changes:"
-git status --short
+BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
+echo "Branch: $BRANCH"
 echo ""
 
-# Check if there are any changes
-if git diff-index --quiet HEAD --; then
-    echo "✅ No changes to commit."
+echo "Current status:"
+git status --short
+if [ -z "$(git status --porcelain)" ]; then
+    echo "  (working tree clean)"
+fi
+echo ""
+
+# Any local file changes? (modified, deleted, or untracked)
+HAS_FILE_CHANGES=0
+if [ -n "$(git status --porcelain)" ]; then
+    HAS_FILE_CHANGES=1
+fi
+
+# Any commits not yet on GitHub?
+NEEDS_PUSH=0
+if git rev-parse --abbrev-ref @{u} >/dev/null 2>&1; then
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse @{u})
+    if [ "$LOCAL" != "$REMOTE" ]; then
+        NEEDS_PUSH=1
+        AHEAD=$(git rev-list --count @{u}..@)
+        echo "📤 $AHEAD commit(s) on this Mac not yet on GitHub."
+        echo ""
+    fi
+else
+    echo "⚠️  No upstream branch set. Will push with: git push -u origin $BRANCH"
+    echo ""
+fi
+
+if [ "$HAS_FILE_CHANGES" -eq 0 ] && [ "$NEEDS_PUSH" -eq 0 ]; then
+    echo "✅ Everything is up to date."
+    echo "   No file changes to commit, and GitHub already has your latest commits."
+    echo ""
+    echo "Latest commit:"
+    git log -1 --oneline
+    echo ""
     read -p "Press Enter to close this window..."
     exit 0
 fi
 
-# Ask for commit message
-echo "Enter a commit message (or press Enter for automatic message):"
-read -r commit_message
+if [ "$HAS_FILE_CHANGES" -eq 1 ]; then
+    echo "Enter a commit message (or press Enter for automatic message):"
+    read -r commit_message
 
-if [ -z "$commit_message" ]; then
-    commit_message="Update $(date '+%Y-%m-%d %H:%M:%S')"
+    if [ -z "$commit_message" ]; then
+        commit_message="Update $(date '+%Y-%m-%d %H:%M:%S')"
+    fi
+
+    echo ""
+    echo "Committing with message: \"$commit_message\""
+    echo ""
+
+    git add .
+
+    git commit -m "$commit_message"
+
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "❌ Commit failed."
+        read -p "Press Enter to close..."
+        exit 1
+    fi
+    NEEDS_PUSH=1
 fi
 
-echo ""
-echo "Committing with message: \"$commit_message\""
-echo ""
-
-# Add all changes
-git add .
-
-# Commit
-git commit -m "$commit_message"
-
-if [ $? -ne 0 ]; then
+if [ "$NEEDS_PUSH" -eq 1 ]; then
     echo ""
-    echo "❌ Commit failed."
-    read -p "Press Enter to close..."
-    exit 1
-fi
-
-echo ""
-echo "Pushing to GitHub..."
-echo ""
-
-# Push
-git push
-
-if [ $? -eq 0 ]; then
+    echo "Pushing to GitHub..."
     echo ""
-    echo "✅ Successfully pushed to GitHub!"
-else
-    echo ""
-    echo "❌ Push failed. You may need to authenticate or fix credentials."
-    echo "Try running: gh auth login"
+
+    if git rev-parse --abbrev-ref @{u} >/dev/null 2>&1; then
+        git push
+    else
+        git push -u origin "$BRANCH"
+    fi
+
+    if [ $? -eq 0 ]; then
+        echo ""
+        echo "✅ Successfully pushed to GitHub!"
+        git log -1 --oneline
+    else
+        echo ""
+        echo "❌ Push failed. You may need to authenticate or fix credentials."
+        echo "Try running: gh auth login"
+    fi
 fi
 
 echo ""
