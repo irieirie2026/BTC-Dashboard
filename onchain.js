@@ -72,9 +72,16 @@ async function fetchJson(url, asText = false) {
 }
 
 async function fetchBlockchainChart(name, timespan = "30days") {
-  const data = await fetchJson(
-    `${CHAIN_CHARTS}/${name}?timespan=${timespan}&format=json`,
-  );
+  let data;
+  try {
+    data = await fetchJson(
+      `/api/onchain/chart?name=${encodeURIComponent(name)}&timespan=${encodeURIComponent(timespan)}`,
+    );
+  } catch (_) {
+    data = await fetchJson(
+      `${CHAIN_CHARTS}/${name}?timespan=${timespan}&format=json`,
+    );
+  }
   return (data.values || []).map((v) => ({
     date: new Date(v.x * 1000).toISOString().slice(0, 10),
     close: v.y,
@@ -227,11 +234,13 @@ async function fetchOnchainSectionData(section) {
     const diffAdjHistory = await fetchJson(
       `${MEMPOOL_BASE}/v1/mining/difficulty-adjustments/90d`,
     );
-    const adjPoints = (diffAdjHistory || []).map((row) => ({
-      date: new Date(row[0] * 1000).toISOString().slice(0, 10),
-      close: row[3] != null ? row[3] * 100 : 0,
-      ts: row[0],
-    }));
+    const adjPoints = (diffAdjHistory || [])
+      .filter((row) => row && row[3] > 0)
+      .map((row) => ({
+        date: new Date(row[0] * 1000).toISOString().slice(0, 10),
+        close: (row[3] - 1) * 100,
+        ts: row[0],
+      }));
     return {
       section,
       title: titles.network,
@@ -264,7 +273,7 @@ async function fetchOnchainSectionData(section) {
     ]);
     const hashPoints = (hashWeek.hashrates || []).map((h) => ({
       date: new Date(h.timestamp * 1000).toISOString().slice(0, 10),
-      close: h.avgHashrate / 1e9,
+      close: h.avgHashrate / 1e18,
       ts: h.timestamp,
     }));
     const poolRows = poolsData.pools || [];
@@ -601,11 +610,21 @@ function renderHalvingCard(section, data) {
     </article>`;
 }
 
+function chartYLabel(value) {
+  const v = Number(value);
+  if (!Number.isFinite(v)) return "—";
+  if (Math.abs(v) >= 1e6) return (v / 1e6).toFixed(1) + "M";
+  if (Math.abs(v) >= 1e3) return (v / 1e3).toFixed(1) + "K";
+  if (Math.abs(v) >= 100) return v.toFixed(0);
+  if (Math.abs(v) >= 1) return v.toFixed(1);
+  return v.toFixed(2);
+}
+
 function paintOnchainChart(data, chartKey, color, w, h) {
   const chart = chartKey === 2 ? data.chart2 : data.chart;
-  const pts = chart?.points || [];
+  const pts = (chart?.points || []).filter((p) => Number.isFinite(p.close));
   const canvas = ocEl(`onchain-${data.section}-chart${chartKey === 2 ? "2" : ""}`);
-  if (!canvas || !pts.length) return;
+  if (!canvas || pts.length < 2) return;
 
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
@@ -648,14 +667,34 @@ function paintOnchainChart(data, chartKey, color, w, h) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
   ctx.textAlign = "right";
-  ctx.fillText(fmtLarge(maxV), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtLarge(minV), pad.left - 6, h - pad.bottom);
+  ctx.fillText(chartYLabel(maxV), pad.left - 6, pad.top + 10);
+  ctx.fillText(chartYLabel(minV), pad.left - 6, h - pad.bottom);
 
-  if (pts[0]?.date && pts[0].date.length > 4) {
+  if (pts[0]?.date && /^\d{4}-\d{2}-\d{2}/.test(pts[0].date)) {
     drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
       fmtChartDate(pts[i]?.date, pts.length > 120),
     );
   }
+}
+
+function drawOnchainCharts(section, data) {
+  if (!data) return;
+  const accent = "#10b981";
+  const run = () => {
+    scheduleChartDraw(ocEl(`onchain-${section}-chart`), (w, h) =>
+      paintOnchainChart(data, 1, accent, w, h),
+    );
+    if (data.chart2?.points?.length) {
+      scheduleChartDraw(ocEl(`onchain-${section}-chart2`), (w, h) =>
+        paintOnchainChart(data, 2, "#34d399", w, h),
+      );
+    }
+  };
+  run();
+  requestAnimationFrame(run);
+  setTimeout(run, 120);
+  setTimeout(run, 350);
+  setTimeout(run, 600);
 }
 
 function renderOnchainCommentary(section, data) {
@@ -697,15 +736,7 @@ function renderOnchainScreen(section, data, opts = {}) {
   renderHalvingCard(section, data);
   renderOnchainCommentary(section, data);
 
-  const accent = "#10b981";
-  scheduleChartDraw(ocEl(`onchain-${section}-chart`), (w, h) =>
-    paintOnchainChart(data, 1, accent, w, h),
-  );
-  if (data.chart2?.points?.length) {
-    scheduleChartDraw(ocEl(`onchain-${section}-chart2`), (w, h) =>
-      paintOnchainChart(data, 2, "#34d399", w, h),
-    );
-  }
+  drawOnchainCharts(section, data);
 
   const screen = document.querySelector(
     `#dashboard-onchain .menu-screen[data-l2="${section}"]`,
@@ -756,15 +787,7 @@ function initOnchainModule() {
   onchainReady = true;
   window.addEventListener("resize", () => {
     if (!onchainActiveSection || !onchainCache[onchainActiveSection]) return;
-    const data = onchainCache[onchainActiveSection];
-    scheduleChartDraw(ocEl(`onchain-${onchainActiveSection}-chart`), (w, h) =>
-      paintOnchainChart(data, 1, "#10b981", w, h),
-    );
-    if (data.chart2?.points?.length) {
-      scheduleChartDraw(ocEl(`onchain-${onchainActiveSection}-chart2`), (w, h) =>
-        paintOnchainChart(data, 2, "#34d399", w, h),
-      );
-    }
+    drawOnchainCharts(onchainActiveSection, onchainCache[onchainActiveSection]);
   });
 }
 
@@ -781,5 +804,12 @@ window.refreshOnchainData = function () {
     loadOnchainSection(onchainActiveSection);
   } else {
     loadOnchainSection("overview");
+  }
+};
+
+window.refreshOnchainCharts = function (section) {
+  const active = section || onchainActiveSection;
+  if (active && onchainCache[active]) {
+    drawOnchainCharts(active, onchainCache[active]);
   }
 };

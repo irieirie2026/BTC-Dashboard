@@ -1242,7 +1242,10 @@ function refreshActiveDashboardCharts() {
   window.refreshPriceChart?.();
   window.refreshDepthChart?.();
   const byL1 = {
-    onchain: () => window.refreshOnchainData?.(),
+    onchain: () => {
+      window.refreshOnchainCharts?.();
+      window.refreshOnchainData?.();
+    },
     exchanges: () => window.loadExchangesDashboard?.(),
     derivatives: () => {
       window.refreshDeliveryCurve?.();
@@ -1358,6 +1361,9 @@ const MenuController = {
     applyMenuTheme(l1, l2, activeL3);
     updateBreadcrumb(l1, l2, activeL3);
     runOnShow(l1, l2, activeL3);
+    if (l1 === "onchain") {
+      setTimeout(() => window.refreshOnchainCharts?.(activeL2), 200);
+    }
     requestAnimationFrame(() => scrollActiveTabIntoView(3));
   },
 

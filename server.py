@@ -656,6 +656,38 @@ def get_options_payload():
     return data
 
 
+ONCHAIN_CHART_NAMES = frozenset({
+    "avg-block-size",
+    "estimated-transaction-volume",
+    "hash-rate",
+    "miners-revenue",
+    "n-transactions",
+    "n-unique-addresses",
+    "total-bitcoins",
+    "transaction-fees",
+})
+
+
+def get_onchain_chart_payload(name, timespan="30days"):
+    if name not in ONCHAIN_CHART_NAMES:
+        raise ValueError(f"Unknown on-chain chart: {name}")
+    allowed_timespans = {"1year", "2years", "30days", "60days", "90days"}
+    if timespan not in allowed_timespans:
+        timespan = "30days"
+    key = f"onchain-chart:{name}:{timespan}"
+    now = time.time()
+    entry = _cache.get(key)
+    if entry and now - entry["ts"] < CACHE_TTL:
+        return entry["data"]
+    url = (
+        f"https://api.blockchain.info/charts/{name}"
+        f"?timespan={timespan}&format=json"
+    )
+    data = fetch_json(url)
+    _cache[key] = {"ts": now, "data": data}
+    return data
+
+
 def get_etf_payload():
     holdings = cached_fetch(
         "holdings", "https://bitbo.io/treasuries/us-etfs/", parse_holdings

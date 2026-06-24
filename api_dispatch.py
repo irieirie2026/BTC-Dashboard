@@ -10,6 +10,7 @@ from server import (
     get_exchanges_payload,
     get_macro_payload,
     get_news_payload,
+    get_onchain_chart_payload,
     get_options_payload,
     get_tradfi_payload,
     get_treasury_payload,
@@ -75,6 +76,13 @@ def dispatch_api(path, query):
     if path.startswith("/api/news/"):
         section = path[len("/api/news/") :].strip("/")
         return get_news_payload(section)
+
+    if path == "/api/onchain/chart":
+        name = (query.get("name") or [None])[0]
+        timespan = (query.get("timespan") or ["30days"])[0]
+        if not name:
+            raise ValueError("Missing chart name")
+        return get_onchain_chart_payload(name, timespan)
 
     static_routes = {
         "/api/etf": get_etf_payload,
