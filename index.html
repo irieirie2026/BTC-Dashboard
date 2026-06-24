@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTC/USDT — Live Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=27" />
+  </head>
+  <body>
+    <div class="app app--compact">
+      <header class="header">
+        <div class="header-left">
+          <div class="logo">
+            <span class="logo-icon">₿</span>
+            <div>
+              <h1>BTC / USDT</h1>
+              <p class="subtitle">Binance Spot & Futures · Real-time</p>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div id="header-market-meta" class="header-meta">
+            <div class="status" id="connection-status">
+              <span class="status-dot"></span>
+              <span class="status-text">Connecting…</span>
+            </div>
+            <time class="last-update" id="last-update">—</time>
+          </div>
+          <div id="header-derivatives-meta" class="header-meta" hidden>
+            <div class="status" id="futures-status-header">
+              <span class="status-dot"></span>
+              <span class="status-text">Connecting…</span>
+            </div>
+            <span class="panel-meta" id="futures-header-update">—</span>
+          </div>
+          <span id="header-etf-meta" class="panel-meta header-etf-meta" hidden>—</span>
+          <span id="header-treasury-meta" class="panel-meta header-etf-meta" hidden>—</span>
+          <span id="header-dashboard-meta" class="panel-meta header-dashboard-meta" hidden>—</span>
+        </div>
+      </header>
+
+      <div id="menu-tree" class="menu-tree menu-tree--compact">
+        <nav class="dashboard-nav menu-l1" aria-label="Main sections">
+          <button type="button" class="dash-tab dash-tab--l1 active" data-dashboard="market">Market</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="exchanges">Exchanges</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="derivatives">Derivatives</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="etf">ETFs</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="treasury">DATCO</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="stats">Stats</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="tradfi">TradFi</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="defi">DeFi</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="macro">Macro</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="news">News</button>
+        </nav>
+        <div id="menu-l2-slot" class="menu-l2-slot">
+          <nav class="dashboard-nav menu-l2" aria-label="Market sections">
+            <button type="button" class="dash-tab dash-tab--l2 active">Overview</button>
+            <button type="button" class="dash-tab dash-tab--l2">Order Book</button>
+          </nav>
+        </div>
+        <div id="menu-l3-slot" class="menu-l3-slot">
+          <nav class="dashboard-nav menu-l3" aria-label="Overview views">
+            <button type="button" class="dash-tab dash-tab--l3 active">Spot Price</button>
+            <button type="button" class="dash-tab dash-tab--l3">On-Chain</button>
+            <button type="button" class="dash-tab dash-tab--l3">Indicators</button>
+          </nav>
+        </div>
+        <div id="menu-l4-slot" class="menu-l4-slot" hidden></div>
+      </div>
+
+      <div id="dashboard-market" class="dashboard-view">
+        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="spot">
+      <section class="price-hero">
+        <div class="price-main">
+          <span class="price-label" data-help-key="spot-last-price">Last Price</span>
+          <div class="price-row">
+            <span class="price-value" id="price">—</span>
+            <span class="price-currency">USDT</span>
+          </div>
+          <div class="price-change" id="price-change">
+            <span class="change-pct">—</span>
+            <span class="change-abs">—</span>
+            <button type="button" class="help-trigger help-trigger--inline" data-help-key="spot-24h-change" aria-label="Explain 24h change">?</button>
+          </div>
+        </div>
+        <div class="price-chart-wrap">
+          <canvas id="price-chart" width="600" height="260"></canvas>
+          <span class="chart-label" data-help-key="spot-chart">1m candles · last 60 min</span>
+        </div>
+      </section>
+
+      <section class="stats-grid" id="stats-grid">
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="high-24h">24h High</span>
+          <span class="stat-value" id="high-24h">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="low-24h">24h Low</span>
+          <span class="stat-value" id="low-24h">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="vol-btc">24h Volume (BTC)</span>
+          <span class="stat-value" id="vol-btc">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="vol-usdt">24h Volume (USDT)</span>
+          <span class="stat-value" id="vol-usdt">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="best-bid">Best Bid</span>
+          <span class="stat-value bid" id="best-bid">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="best-ask">Best Ask</span>
+          <span class="stat-value ask" id="best-ask">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="spread">Spread</span>
+          <span class="stat-value" id="spread">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label" data-help-key="weighted-avg">Weighted Avg</span>
+          <span class="stat-value" id="weighted-avg">—</span>
+        </article>
+      </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="onchain" hidden>
+        <section class="panel chain-panel">
+          <div class="panel-header">
+            <h2>On-Chain</h2>
+            <span class="panel-meta" id="chain-update">Loading…</span>
+          </div>
+          <div class="chain-grid" id="chain-grid"></div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="indicators" data-l4="1h" hidden>
+        <section class="panel indicators-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-overview">Indicators</h2>
+            <span class="panel-meta" id="indicators-meta-1h">1h · 30+ indicators · 5 categories</span>
+          </div>
+          <div class="indicators-list" id="indicators-list-1h"></div>
+        </section>
+        <section class="panel stats-commentary-panel indicators-overview-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-briefing">Technical Overview</h2>
+            <span class="panel-meta">Spot · On-Chain · Indicators · 1h</span>
+          </div>
+          <div class="stats-commentary" id="indicators-overview-1h"><p>Loading commentary…</p></div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="indicators" data-l4="4h" hidden>
+        <section class="panel indicators-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-overview">Indicators</h2>
+            <span class="panel-meta" id="indicators-meta-4h">4h · 30+ indicators · 5 categories</span>
+          </div>
+          <div class="indicators-list" id="indicators-list-4h"></div>
+        </section>
+        <section class="panel stats-commentary-panel indicators-overview-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-briefing">Technical Overview</h2>
+            <span class="panel-meta">Spot · On-Chain · Indicators · 4h</span>
+          </div>
+          <div class="stats-commentary" id="indicators-overview-4h"><p>Loading commentary…</p></div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="indicators" data-l4="d" hidden>
+        <section class="panel indicators-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-overview">Indicators</h2>
+            <span class="panel-meta" id="indicators-meta-d">D · 30+ indicators · 5 categories</span>
+          </div>
+          <div class="indicators-list" id="indicators-list-d"></div>
+        </section>
+        <section class="panel stats-commentary-panel indicators-overview-panel">
+          <div class="panel-header">
+            <h2 data-help-key="indicators-briefing">Technical Overview</h2>
+            <span class="panel-meta">Spot · On-Chain · Indicators · D</span>
+          </div>
+          <div class="stats-commentary" id="indicators-overview-d"><p>Loading commentary…</p></div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="orderbook" data-l3="depth" hidden>
+        <section class="panel order-book">
+          <div class="panel-header">
+            <h2>Depth Chart</h2>
+            <span class="panel-meta">Cumulative volume · 20 levels</span>
+          </div>
+          <div class="book-body book-body--depth">
+            <div class="depth-chart-wrap">
+              <canvas id="depth-chart"></canvas>
+              <div class="depth-chart-legend">
+                <span class="legend-bid" data-help-key="depth-chart">Bids</span>
+                <span class="legend-ask" data-help-key="depth-chart">Asks</span>
+              </div>
+            </div>
+            <div class="book-spread">
+              <div class="spread-side bid">
+                <span class="spread-label" data-help-key="book-best-bid">Best Bid</span>
+                <span class="spread-value" id="spread-bid">—</span>
+              </div>
+              <div class="spread-mid">
+                <span class="spread-label" data-help-key="book-mid">Mid</span>
+                <span class="spread-value" id="book-mid">—</span>
+              </div>
+              <div class="spread-side ask">
+                <span class="spread-label" data-help-key="book-best-ask">Best Ask</span>
+                <span class="spread-value" id="spread-ask">—</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="orderbook" data-l3="ladder" hidden>
+        <section class="panel order-book">
+          <div class="panel-header">
+            <h2>Bid / Ask Ladder</h2>
+            <span class="panel-meta">Depth · 20 levels</span>
+          </div>
+          <div class="book-body book-body--ladder">
+            <div class="book-ladder">
+              <div class="book-side bids">
+                <div class="book-side-header">
+                  <span data-help-key="book-total">Total</span>
+                  <span data-help-key="book-size">Size</span>
+                  <span data-help-key="book-price">Price</span>
+                </div>
+                <div class="book-rows" id="book-bids"></div>
+              </div>
+              <div class="book-side asks">
+                <div class="book-side-header">
+                  <span data-help-key="book-price">Price</span>
+                  <span data-help-key="book-size">Size</span>
+                  <span data-help-key="book-total">Total</span>
+                </div>
+                <div class="book-rows" id="book-asks"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+
+      <div id="dashboard-exchanges" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="exchanges" data-l2="overview">
+          <section class="deriv-hero-strip exchanges-hero-strip" id="exchanges-overview-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-overview">Cross-Exchange Overview</h2>
+              <span class="panel-meta" id="exchanges-overview-update">Live · public APIs · scaffold</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table exchanges-table">
+                <thead><tr id="exchanges-overview-table-head"></tr></thead>
+                <tbody id="exchanges-overview-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-overview-chart" id="exchanges-overview-chart-title">Price vs Median</h2>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+              <canvas id="exchanges-overview-chart" height="150"></canvas>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="exchanges-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="exchanges-overview-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="exchanges" data-l2="spot" hidden>
+          <section class="deriv-hero-strip exchanges-hero-strip" id="exchanges-spot-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-spot">Spot Markets</h2>
+              <span class="panel-meta" id="exchanges-spot-update">Live · public APIs</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table exchanges-table">
+                <thead><tr id="exchanges-spot-table-head"></tr></thead>
+                <tbody id="exchanges-spot-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-spot-chart" id="exchanges-spot-chart-title">Spot 24h Volume</h2>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+              <canvas id="exchanges-spot-chart" height="150"></canvas>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="exchanges-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="exchanges-spot-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="exchanges" data-l2="perp" hidden>
+          <section class="deriv-hero-strip exchanges-hero-strip" id="exchanges-perp-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-perp">Perpetual Markets</h2>
+              <span class="panel-meta" id="exchanges-perp-update">Funding · basis · mark</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table exchanges-table">
+                <thead><tr id="exchanges-perp-table-head"></tr></thead>
+                <tbody id="exchanges-perp-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-perp-chart" id="exchanges-perp-chart-title">Funding Rates</h2>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+              <canvas id="exchanges-perp-chart" height="150"></canvas>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="exchanges-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="exchanges-perp-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="exchanges" data-l2="volume" hidden>
+          <section class="deriv-hero-strip exchanges-hero-strip" id="exchanges-volume-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-volume">Volume Rankings</h2>
+              <span class="panel-meta" id="exchanges-volume-update">Spot + perp · 24h</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table exchanges-table">
+                <thead><tr id="exchanges-volume-table-head"></tr></thead>
+                <tbody id="exchanges-volume-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="exchanges-volume-chart" id="exchanges-volume-chart-title">Volume Share</h2>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+              <canvas id="exchanges-volume-chart" height="150"></canvas>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="exchanges-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="exchanges-volume-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-derivatives" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="derivatives" data-l2="perp" data-l3="price">
+          <section class="panel futures-panel">
+            <div class="panel-header">
+              <h2>Price & Basis</h2>
+              <div class="futures-header-meta">
+                <div class="status" id="futures-status">
+                  <span class="status-dot"></span>
+                  <span class="status-text">Connecting…</span>
+                </div>
+                <span class="panel-meta" id="futures-update">—</span>
+              </div>
+            </div>
+            <div class="futures-hero">
+              <div class="futures-price-block">
+                <span class="futures-label" data-help-key="fut-last-price">Last Price</span>
+                <span class="futures-value" id="fut-price">—</span>
+                <span class="futures-change" id="fut-change">—</span>
+              </div>
+              <div class="futures-price-block">
+                <span class="futures-label" data-help-key="fut-mark-price">Mark Price</span>
+                <span class="futures-value" id="fut-mark">—</span>
+                <span class="futures-sub">Liquidation reference</span>
+              </div>
+              <div class="futures-price-block">
+                <span class="futures-label" data-help-key="fut-index-price">Index Price</span>
+                <span class="futures-value" id="fut-index">—</span>
+                <span class="futures-sub">Spot composite</span>
+              </div>
+              <div class="futures-price-block">
+                <span class="futures-label" data-help-key="fut-basis">Basis</span>
+                <span class="futures-value" id="fut-basis">—</span>
+                <span class="futures-sub" id="fut-basis-sub">Mark − Index</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="perp" data-l3="sentiment" hidden>
+          <section class="panel futures-panel">
+            <div class="panel-header">
+              <h2>Sentiment & Positioning</h2>
+              <span class="panel-meta">Open interest · funding · long/short ratio</span>
+            </div>
+            <span id="fut-funding-countdown" hidden></span>
+            <div class="chain-grid" id="futures-grid"></div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="perp" data-l3="indicators" hidden>
+          <section class="panel futures-panel">
+            <div class="panel-header">
+              <h2 data-help-key="indicators-overview">Technical Indicators</h2>
+              <span class="panel-meta">1h · 30+ indicators · 5 categories</span>
+            </div>
+            <div class="futures-indicators-wrap">
+              <div class="indicators-list" id="futures-indicators-list"></div>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel indicators-overview-panel">
+            <div class="panel-header">
+              <h2 data-help-key="indicators-briefing">Technical Overview</h2>
+              <span class="panel-meta">Composite indicator read</span>
+            </div>
+            <div class="stats-commentary" id="futures-indicators-overview-commentary"><p>Loading commentary…</p></div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="futures" data-l3="contracts" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Index Price</span>
+              <span class="deriv-hero-value" id="delivery-index">—</span>
+              <span class="deriv-hero-sub">Spot composite</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Perp Last</span>
+              <span class="deriv-hero-value" id="delivery-perp">—</span>
+              <span class="deriv-hero-sub">BTCUSDT perpetual</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Curve Shape</span>
+              <span class="deriv-hero-value" id="delivery-curve-shape">—</span>
+              <span class="deriv-hero-sub">Quarterly term structure</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Nearest Basis</span>
+              <span class="deriv-hero-value" id="delivery-nearest-basis">—</span>
+              <span class="deriv-hero-sub" id="delivery-nearest-sub">—</span>
+            </article>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Term Structure</h2>
+              <span class="panel-meta">Annualized basis % · days to expiry</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="delivery-curve-chart" height="220"></canvas>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Open Interest by Contract</h2>
+              <span class="panel-meta" data-help-key="delivery-oi-chart">BTC contracts · perp + delivery</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="delivery-oi-chart" height="200"></canvas>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Delivery Contracts</h2>
+              <span class="panel-meta" id="delivery-update">Loading…</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Margin</th>
+                    <th>Type</th>
+                    <th>Expiry</th>
+                    <th>Last</th>
+                    <th>Mark</th>
+                    <th>Basis</th>
+                    <th>Ann. Basis</th>
+                    <th>OI</th>
+                    <th>Vol (24h)</th>
+                  </tr>
+                </thead>
+                <tbody id="delivery-contracts-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="options" data-l3="volatility" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-atm-iv">ATM IV</span>
+              <span class="deriv-hero-value" id="opt-iv-index">—</span>
+              <span class="deriv-hero-sub">Nearest expiry</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-skew">25Δ Skew</span>
+              <span class="deriv-hero-value" id="opt-iv-skew">—</span>
+              <span class="deriv-hero-sub">Put IV − Call IV</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-iv-range">IV Range</span>
+              <span class="deriv-hero-value" id="opt-iv-range">—</span>
+              <span class="deriv-hero-sub">Chain min – max</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Nearest Expiry</span>
+              <span class="deriv-hero-value" id="opt-iv-expiry">—</span>
+              <span class="deriv-hero-sub" id="opt-iv-spot-sub">Deribit BTC</span>
+            </article>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>IV Term Structure</h2>
+              <span class="panel-meta" id="options-vol-update">Loading…</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="options-iv-term-chart" height="220"></canvas>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Volatility Smile</h2>
+              <span class="panel-meta" id="options-smile-meta">Deribit mark IV · calls green · puts red</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="options-smile-chart" height="220"></canvas>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="options" data-l3="oi" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-pc-ratio">Put / Call OI</span>
+              <span class="deriv-hero-value" id="opt-pc-ratio">—</span>
+              <span class="deriv-hero-sub" id="opt-pc-sub">—</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-max-pain">Max Pain</span>
+              <span class="deriv-hero-value" id="opt-max-pain">—</span>
+              <span class="deriv-hero-sub" id="opt-max-pain-sub">—</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="opt-total-oi">Total OI</span>
+              <span class="deriv-hero-value" id="opt-total-oi">—</span>
+              <span class="deriv-hero-sub">Open contracts · chain-wide</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Total Volume</span>
+              <span class="deriv-hero-value" id="opt-total-vol">—</span>
+              <span class="deriv-hero-sub">24h contracts traded</span>
+            </article>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Volume by Strike</h2>
+              <span class="panel-meta" id="options-oi-update">Loading…</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="options-strike-chart" height="220"></canvas>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Open Interest by Strike</h2>
+              <span class="panel-meta" data-help-key="opt-oi-strike">Top strikes · calls green · puts red</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="options-oi-strike-chart" height="220"></canvas>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Top Strikes</h2>
+              <span class="panel-meta">Ranked by open interest · chain-wide</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table">
+                <thead>
+                  <tr>
+                    <th>Strike</th>
+                    <th>Call OI</th>
+                    <th>Put OI</th>
+                    <th>Total OI</th>
+                    <th>24h Vol</th>
+                  </tr>
+                </thead>
+                <tbody id="options-strikes-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-etf" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="etf" data-l2="holdings" data-l3="summary">
+          <section class="etf-hero">
+            <div class="etf-hero-block">
+              <span class="etf-hero-label" data-help-key="etf-total-aum">Total AUM</span>
+              <span class="etf-hero-value" id="etf-total-aum">—</span>
+              <span class="etf-hero-sub" id="etf-holdings-updated">—</span>
+            </div>
+            <div class="etf-hero-block">
+              <span class="etf-hero-label" data-help-key="etf-total-btc">Total BTC Held</span>
+              <span class="etf-hero-value" id="etf-total-btc">—</span>
+              <span class="etf-hero-sub">All US spot ETFs</span>
+            </div>
+            <div class="etf-hero-block">
+              <span class="etf-hero-label" data-help-key="etf-pct-21m">% of 21M Cap</span>
+              <span class="etf-hero-value" id="etf-pct-21m">—</span>
+              <span class="etf-hero-sub">Network supply share</span>
+            </div>
+            <div class="etf-hero-block">
+              <span class="etf-hero-label" data-help-key="etf-latest-flow">Latest Net Flow</span>
+              <span class="etf-hero-value" id="etf-latest-flow">—</span>
+              <span class="etf-hero-sub" id="etf-latest-flow-date">—</span>
+            </div>
+          </section>
+          <div class="chain-grid etf-summary-wrap" id="etf-summary-grid"></div>
+        </div>
+
+        <div class="menu-screen" data-l1="etf" data-l2="holdings" data-l3="chart" hidden>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Daily Net Flows</h2>
+              <span class="panel-meta" data-help-key="etf-flow-chart">USD · millions</span>
+            </div>
+            <div class="etf-chart-wrap">
+              <canvas id="etf-flow-chart" height="280"></canvas>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="etf" data-l2="holdings" data-l3="table" hidden>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>ETF Holdings</h2>
+              <span class="panel-meta" id="etf-update">Loading…</span>
+            </div>
+            <div class="etf-table-wrap">
+              <table class="etf-table">
+                <thead>
+                  <tr>
+                    <th data-help-key="etf-entity">ETF</th>
+                    <th data-help-key="etf-btc-held">BTC Held</th>
+                    <th data-help-key="etf-aum-value">AUM (USD)</th>
+                    <th data-help-key="etf-pct-21m">% of 21M</th>
+                    <th data-help-key="etf-exchange">Exchange</th>
+                  </tr>
+                </thead>
+                <tbody id="etf-holdings-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="etf" data-l2="flows" data-l3="table" hidden>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Recent Daily Flows</h2>
+              <span class="panel-meta" data-help-key="etf-flow-table">USD millions per ticker</span>
+            </div>
+            <div class="etf-table-wrap etf-flows-wrap">
+              <table class="etf-table etf-flows-table">
+                <thead id="etf-flows-head"></thead>
+                <tbody id="etf-flows-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-treasury" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="treasury" data-l2="summary" data-l3="stats">
+          <section class="trs-hero trs-hero--compact">
+            <p class="trs-hero-sub" id="trs-update">Loading from BitcoinTreasuries.net…</p>
+            <div class="trs-hero-stats trs-hero-stats--three">
+              <div class="trs-stat-card">
+                <span class="trs-stat-label" data-help-key="trs-total-btc">BTC Held by Public Companies</span>
+                <span class="trs-stat-value" id="trs-total-btc">—</span>
+                <span class="trs-stat-sub" id="trs-total-usd">—</span>
+              </div>
+              <div class="trs-stat-card">
+                <span class="trs-stat-label" data-help-key="trs-company-count">Number of Public Companies</span>
+                <span class="trs-stat-value" id="trs-company-count">—</span>
+              </div>
+              <div class="trs-stat-card">
+                <span class="trs-stat-label" data-help-key="trs-btc-price">BTC Price</span>
+                <span class="trs-stat-value" id="trs-btc-price">—</span>
+                <span class="trs-stat-sub" id="trs-btc-change">—</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="trs-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Top Holders</h2>
+                <span class="panel-meta" data-help-key="trs-top-chart" id="trs-top-holders-meta">Top 15 public companies by BTC balance</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="trs-top-holders-chart" height="280"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Geographic Mix</h2>
+                <span class="panel-meta" data-help-key="trs-country-chart" id="trs-country-chart-meta">Corporate BTC by country of incorporation</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="trs-country-chart" height="280"></canvas>
+              </div>
+            </section>
+          </div>
+
+          <div class="trs-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Share of 21M Supply</h2>
+                <span class="panel-meta" data-help-key="trs-public-pct" id="trs-supply-pct-meta">—</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="trs-supply-chart" height="160"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>mNAV Distribution</h2>
+                <span class="panel-meta" data-help-key="trs-mnav-dist">How public treasuries trade vs BTC on balance sheet</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="trs-mnav-chart" height="160"></canvas>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="menu-screen" data-l1="treasury" data-l2="summary" data-l3="dominance" hidden>
+          <section class="panel trs-dominance-panel">
+            <div class="panel-header">
+              <h2>Asset Dominance</h2>
+              <span class="panel-meta" data-help-key="trs-asset-dominance">BTC share of treasury holdings</span>
+            </div>
+            <div class="trs-dominance-content">
+              <div class="trs-stat-card trs-stat-card--accent trs-stat-card--large">
+                <span class="trs-stat-label" data-help-key="trs-asset-dominance">Asset Dominance</span>
+                <span class="trs-stat-value" id="trs-btc-dominance">—</span>
+                <div class="trs-dominance-bar" id="trs-dominance-bar"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="treasury" data-l2="companies" data-l3="rankings" hidden>
+          <section class="panel trs-table-panel">
+            <div class="panel-header trs-table-header">
+              <div>
+                <h2>Top 100 Public Bitcoin Treasury Companies</h2>
+                <span class="panel-meta" data-help-key="trs-companies-table" id="trs-table-count">—</span>
+              </div>
+              <div class="trs-table-controls">
+                <span class="trs-btc-price-tag" id="trs-table-btc-price">—</span>
+                <input
+                  type="search"
+                  id="trs-search"
+                  class="trs-search"
+                  placeholder="Filter by company or ticker…"
+                  aria-label="Search treasury companies"
+                />
+                <select id="trs-country-filter" class="trs-filter" aria-label="Filter by country">
+                  <option value="">All countries</option>
+                </select>
+              </div>
+            </div>
+            <div class="trs-table-wrap">
+              <table class="trs-table trs-table--home">
+                <thead>
+                  <tr>
+                    <th class="trs-col-rank">Rank</th>
+                    <th class="trs-col-company" data-help-key="trs-company-name">Company</th>
+                    <th class="trs-col-flag" data-help-key="trs-company-country">Country</th>
+                    <th class="trs-col-ticker">Ticker</th>
+                    <th class="trs-col-num" data-help-key="trs-company-btc">Bitcoin</th>
+                    <th class="trs-col-num" data-help-key="trs-mnav">mNAV</th>
+                  </tr>
+                </thead>
+                <tbody id="trs-companies-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-stats" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="stats" data-l2="statistics" data-l3="panel">
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-ann-mean">Ann. Mean</span>
+              <span class="deriv-hero-value" id="stat-ann-mean">—</span>
+              <span class="deriv-hero-sub">Daily return · 252d</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-ann-vol">Ann. Volatility</span>
+              <span class="deriv-hero-value" id="stat-ann-vol">—</span>
+              <span class="deriv-hero-sub">Realized · daily</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-sharpe">Sharpe Ratio</span>
+              <span class="deriv-hero-value" id="stat-sharpe">—</span>
+              <span class="deriv-hero-sub">rf = 0</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-skew">Skewness</span>
+              <span class="deriv-hero-value" id="stat-skew">—</span>
+              <span class="deriv-hero-sub">Return distribution</span>
+            </article>
+          </section>
+          <section class="deriv-hero-strip stats-hero-strip--secondary">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Win Rate</span>
+              <span class="deriv-hero-value" id="stat-win-rate">—</span>
+              <span class="deriv-hero-sub">Positive close days</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Total Return</span>
+              <span class="deriv-hero-value" id="stat-total-ret">—</span>
+              <span class="deriv-hero-sub" id="stat-sample">—</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-max-dd">Max Drawdown</span>
+              <span class="deriv-hero-value" id="stat-max-dd">—</span>
+              <span class="deriv-hero-sub">Peak-to-trough</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label">Pair</span>
+              <span class="deriv-hero-value">BTC/USDT</span>
+              <span class="deriv-hero-sub">Binance spot · daily</span>
+            </article>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Cumulative Return</h2>
+              <span class="panel-meta" id="stats-analysis-update">Loading…</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+              <canvas id="stats-cumulative-chart" height="130"></canvas>
+            </div>
+          </section>
+          <div class="stats-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Return Distribution</h2>
+                <span class="panel-meta">Daily simple returns · histogram</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="stats-histogram-chart" height="180"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Rolling Volatility</h2>
+                <span class="panel-meta">30-day realized · annualized</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="stats-rolling-vol-chart" height="180"></canvas>
+              </div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Descriptive Statistics</h2>
+              <span class="panel-meta">Full sample · simple daily returns</span>
+            </div>
+            <div class="deriv-table-wrap stats-metrics-table-wrap stats-metrics-table-wrap--scroll">
+              <table class="deriv-table stats-metrics-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="stats-metrics-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <div class="stats-tables-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Recent Daily Returns</h2>
+                <span class="panel-meta">Last 30 trading days</span>
+              </div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Close</th>
+                      <th>Return</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stats-recent-body"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Monthly Returns</h2>
+                <span class="panel-meta">Calendar month · last 24 months</span>
+              </div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Return</th>
+                      <th>Days</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stats-monthly-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2>Analysis</h2>
+              <span class="panel-meta">Automated commentary on return behavior</span>
+            </div>
+            <div class="stats-commentary" id="stats-commentary">
+              <p>Loading return analysis…</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="risk" data-l3="panel" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-vol-30">30d Volatility</span>
+              <span class="deriv-hero-value" id="risk-vol-30">—</span>
+              <span class="deriv-hero-sub">Realized · annualized</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-sortino">Sortino Ratio</span>
+              <span class="deriv-hero-value" id="risk-sortino">—</span>
+              <span class="deriv-hero-sub">Downside-adjusted</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-beta">Beta (ETH)</span>
+              <span class="deriv-hero-value" id="risk-beta">—</span>
+              <span class="deriv-hero-sub">vs ETH/USDT daily</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-max-dd">Max Drawdown</span>
+              <span class="deriv-hero-value" id="risk-max-dd">—</span>
+              <span class="deriv-hero-sub">Peak-to-trough</span>
+            </article>
+          </section>
+          <section class="deriv-hero-strip stats-hero-strip--secondary">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="stat-sharpe">Sharpe Ratio</span>
+              <span class="deriv-hero-value" id="risk-sharpe">—</span>
+              <span class="deriv-hero-sub">rf = 0</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-calmar">Calmar Ratio</span>
+              <span class="deriv-hero-value" id="risk-calmar">—</span>
+              <span class="deriv-hero-sub">Return / max DD</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-downside">Downside Dev</span>
+              <span class="deriv-hero-value" id="risk-downside">—</span>
+              <span class="deriv-hero-sub">Below-zero days</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="risk-corr">Correlation</span>
+              <span class="deriv-hero-value" id="risk-corr">—</span>
+              <span class="deriv-hero-sub">BTC vs ETH returns</span>
+            </article>
+          </section>
+          <div class="stats-charts-row stats-charts-row--risk">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="risk-drawdown-chart">Drawdown History</h2>
+                <span class="panel-meta" id="risk-update">Loading…</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--risk">
+                <canvas id="risk-drawdown-chart" height="180"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="risk-rolling-vol">Rolling Volatility</h2>
+                <span class="panel-meta">30 / 90-day · ann.</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--risk">
+                <canvas id="risk-rolling-vol-chart" height="180"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="risk-rolling-sharpe">Rolling Sharpe</h2>
+                <span class="panel-meta">90-day · rf = 0</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--risk">
+                <canvas id="risk-rolling-sharpe-chart" height="180"></canvas>
+              </div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="risk-metrics">Risk Metrics</h2>
+              <span class="panel-meta">BTC/USDT daily returns</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table stats-metrics-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="risk-metrics-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel stats-commentary-panel--risk">
+            <div class="panel-header">
+              <h2>Risk Analysis</h2>
+              <span class="panel-meta">Automated commentary</span>
+            </div>
+            <div class="stats-commentary" id="risk-commentary">
+              <p>Loading risk analysis…</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="var" data-l3="panel" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="var-95">95% VaR</span>
+              <span class="deriv-hero-value" id="var-95">—</span>
+              <span class="deriv-hero-sub">1-day · historical</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="var-99">99% VaR</span>
+              <span class="deriv-hero-value" id="var-99">—</span>
+              <span class="deriv-hero-sub">1-day · historical</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="var-cvar-95">CVaR 95%</span>
+              <span class="deriv-hero-value" id="var-cvar-95">—</span>
+              <span class="deriv-hero-sub">Expected shortfall</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="var-usd">USD at Risk</span>
+              <span class="deriv-hero-value" id="var-usd-95">—</span>
+              <span class="deriv-hero-sub" id="var-usd-sub">Per 1 BTC · 95%</span>
+            </article>
+          </section>
+          <div class="stats-charts-row stats-charts-row--var">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Return Distribution & VaR</h2>
+                <span class="panel-meta" id="var-update">Loading…</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="var-histogram-chart" height="150"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Rolling 95% VaR</h2>
+                <span class="panel-meta">252-day window · daily returns</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="var-rolling-chart" height="150"></canvas>
+              </div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>VaR Exceedances</h2>
+              <span class="panel-meta">Days breaching 95% historical VaR</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Return</th>
+                    <th>VaR 95%</th>
+                  </tr>
+                </thead>
+                <tbody id="var-breaches-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2>VaR Methods Comparison</h2>
+              <span class="panel-meta">1-day horizon · BTC/USDT</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>95% VaR</th>
+                    <th>99% VaR</th>
+                    <th>CVaR 95%</th>
+                    <th>CVaR 99%</th>
+                  </tr>
+                </thead>
+                <tbody id="var-methods-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2>VaR Analysis</h2>
+              <span class="panel-meta">Automated commentary</span>
+            </div>
+            <div class="stats-commentary" id="var-commentary">
+              <p>Loading VaR analysis…</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="markov" data-l3="panel" hidden>
+          <section class="panel deriv-placeholder-panel">
+            <div class="panel-header">
+              <h2>Markov Model</h2>
+              <span class="panel-meta">Regime transitions · states</span>
+            </div>
+            <div class="deriv-placeholder-grid">
+              <article class="deriv-contract-card">
+                <span class="deriv-contract-label">States</span>
+                <span class="deriv-contract-value">—</span>
+                <span class="deriv-contract-sub">Regime count</span>
+              </article>
+              <article class="deriv-contract-card">
+                <span class="deriv-contract-label">Transition Prob</span>
+                <span class="deriv-contract-value">—</span>
+                <span class="deriv-contract-sub">Matrix estimate</span>
+              </article>
+              <article class="deriv-contract-card">
+                <span class="deriv-contract-label">Steady State</span>
+                <span class="deriv-contract-value">—</span>
+                <span class="deriv-contract-sub">Long-run distribution</span>
+              </article>
+            </div>
+            <p class="deriv-placeholder-note">Live Markov chain analysis coming soon.</p>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-tradfi" class="dashboard-view" hidden>
+        <div id="tradfi-refresh-status" class="tradfi-refresh-status" role="status" aria-live="polite" data-help-key="tradfi-refresh-status" hidden>
+          <span class="tradfi-refresh-dot"></span>
+          <span class="tradfi-refresh-text"></span>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="indices" data-tradfi-section="stocks-indices">
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-stocks-indices-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Global Indices</h2>
+              <span class="panel-meta" id="tradfi-stocks-indices-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-stocks-indices-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-stocks-indices-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-stocks-indices-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-stocks-indices-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="companies" data-tradfi-section="stocks-companies" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-stocks-companies-heroes"></section>
+          <section class="panel">
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-companies-watchlist">Bellwethers</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-stocks-companies-add-row" class="tradfi-add-row-btn">+ Add company</button>
+                <span class="panel-meta" id="tradfi-stocks-companies-update">Yahoo Finance · delayed</span>
+              </div>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table">
+                <thead><tr><th>Ticker</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th><th></th></tr></thead>
+                <tbody id="tradfi-stocks-companies-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-stocks-companies-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-stocks-companies-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-stocks-companies-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="futures" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-futures-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-futures-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-futures-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-futures-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-futures-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-futures-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="rates" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-rates-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-rates-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-rates-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-rates-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-rates-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-rates-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="currencies" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-currencies-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-currencies-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-currencies-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-currencies-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-currencies-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-currencies-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="commodities" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-commodities-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-commodities-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-commodities-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-commodities-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-commodities-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-commodities-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="sectors" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-sectors-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-sectors-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Sector</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-sectors-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-sectors-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-sectors-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-sectors-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="tradfi" data-l2="energy" data-l3="overview" hidden>
+          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-energy-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-markets-table">Markets</h2>
+              <span class="panel-meta" id="tradfi-energy-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table tradfi-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="tradfi-energy-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-energy-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-energy-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2>Market Analysis</h2></div>
+            <div class="stats-commentary" id="tradfi-energy-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-defi" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="defi" data-l2="wrapped" data-l3="overview">
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-wrapped-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-protocols-table">Wrapped BTC</h2>
+              <span class="panel-meta" id="defi-wrapped-update">DeFi Llama</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <tbody id="defi-wrapped-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-wrapped-chart-wrap">
+            <div class="panel-header">
+              <h2 data-help-key="defi-tvl-chart" id="defi-wrapped-chart-title">TVL</h2>
+              <span class="panel-meta">Historical · USD</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-wrapped-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-wrapped-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="stables" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-stables-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-stables-table">Stablecoins</h2>
+              <span class="panel-meta" id="defi-stables-update">DeFi Llama Stablecoins</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">Name</th><th data-help-key="defi-col-mcap">Market Cap</th><th data-help-key="defi-col-price">Price</th><th data-help-key="defi-col-change7d">7d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <tbody id="defi-stables-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <div class="stats-charts-row stats-charts-row--defi-stables">
+            <section class="panel" id="defi-stables-chart-wrap">
+              <div class="panel-header">
+                <h2 data-help-key="defi-stables-mcap-chart" id="defi-stables-chart-title">Market Cap</h2>
+                <span class="panel-meta">USD-pegged · all chains</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-stables-chart" height="130"></canvas></div>
+            </section>
+            <section class="panel" id="defi-stables-chart2-wrap">
+              <div class="panel-header">
+                <h2 data-help-key="defi-stables-dominance">Dominance</h2>
+                <span class="panel-meta">Top 8 by mcap</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-stables-dominance-chart" height="130"></canvas></div>
+            </section>
+          </div>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-stables-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="bridges" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-bridges-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-protocols-table">BTC Bridges</h2>
+              <span class="panel-meta" id="defi-bridges-update">DeFi Llama</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <tbody id="defi-bridges-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-bridges-chart-wrap">
+            <div class="panel-header">
+              <h2 data-help-key="defi-tvl-chart" id="defi-bridges-chart-title">TVL</h2>
+              <span class="panel-meta">Historical · USD</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-bridges-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-bridges-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="lending" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-lending-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-lending-table">BTC Lending Pools</h2>
+              <span class="panel-meta" id="defi-lending-update">DeFi Llama Yields</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-chain">Chain</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-apy">APY</th><th data-help-key="defi-col-change7d">7d APY %</th></tr></thead>
+                <tbody id="defi-lending-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-lending-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="liquidity" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-liquidity-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-liquidity-table">DEX Liquidity</h2>
+              <span class="panel-meta" id="defi-liquidity-update">DeFi Llama DEX</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">DEX</th><th data-help-key="defi-col-volume24h">24h Volume</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-change7d-vol">7d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <tbody id="defi-liquidity-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-liquidity-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="staking" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-staking-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-staking-table">BTC Staking</h2>
+              <span class="panel-meta" id="defi-staking-update">DeFi Llama</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-chain">Chain</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-apy">APY</th><th data-help-key="defi-col-change1d">Change</th></tr></thead>
+                <tbody id="defi-staking-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-staking-chart-wrap">
+            <div class="panel-header">
+              <h2 data-help-key="defi-tvl-chart" id="defi-staking-chart-title">TVL</h2>
+              <span class="panel-meta">Historical · USD</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-staking-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="stats-commentary" id="defi-staking-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="lightning" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-lightning-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-lightning-table">Lightning Network</h2>
+              <span class="panel-meta" id="defi-lightning-update">mempool.space</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table defi-lightning-table">
+                <thead><tr><th data-help-key="defi-col-metric">Metric</th><th data-help-key="defi-col-value">Value</th></tr></thead>
+                <tbody id="defi-lightning-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-network-analysis">Network Analysis</h2></div>
+            <div class="stats-commentary" id="defi-lightning-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="dashboard-macro" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="macro" data-l2="rates" data-l3="overview">
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-rates-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">Rates</h2>
+              <span class="panel-meta" id="macro-rates-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-rates-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-rates-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-rates-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-rates-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="dollar" data-l3="overview" hidden>
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-dollar-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">US Dollar</h2>
+              <span class="panel-meta" id="macro-dollar-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-dollar-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-dollar-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-dollar-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-dollar-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="liquidity" data-l3="overview" hidden>
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-liquidity-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">Liquidity</h2>
+              <span class="panel-meta" id="macro-liquidity-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-liquidity-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-liquidity-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-liquidity-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-liquidity-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="risk" data-l3="overview" hidden>
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-risk-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">Risk Sentiment</h2>
+              <span class="panel-meta" id="macro-risk-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-risk-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-risk-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-risk-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-risk-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="inflation" data-l3="overview" hidden>
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-inflation-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">Inflation</h2>
+              <span class="panel-meta" id="macro-inflation-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-inflation-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-inflation-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-inflation-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-inflation-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="commodities" data-l3="overview" hidden>
+          <section class="deriv-hero-strip macro-hero-strip" id="macro-commodities-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-markets-table">Commodities</h2>
+              <span class="panel-meta" id="macro-commodities-update">Yahoo Finance · delayed</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table macro-markets-table">
+                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <tbody id="macro-commodities-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="macro-benchmark-chart" id="macro-commodities-chart-title">Benchmark</h2>
+              <span class="panel-meta">3-month · daily</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="macro-commodities-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="macro-analysis">Macro Analysis</h2></div>
+            <div class="stats-commentary" id="macro-commodities-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+      </div>
+      <div id="dashboard-news" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="news" data-l2="all" data-l3="overview">
+          <section class="deriv-hero-strip news-hero-strip" id="news-all-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-headlines-feed">All Headlines</h2>
+              <span class="panel-meta" id="news-all-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-all-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-all-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="market" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-market-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-market-feed">Market</h2>
+              <span class="panel-meta" id="news-market-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-market-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-market-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="regulation" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-regulation-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-regulation-feed">Regulation</h2>
+              <span class="panel-meta" id="news-regulation-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-regulation-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-regulation-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="institutions" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-institutions-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-institutions-feed">Institutions</h2>
+              <span class="panel-meta" id="news-institutions-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-institutions-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-institutions-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="mining" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-mining-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-mining-feed">Mining</h2>
+              <span class="panel-meta" id="news-mining-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-mining-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-mining-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="technology" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-technology-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-technology-feed">Technology</h2>
+              <span class="panel-meta" id="news-technology-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-technology-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-technology-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="onchain" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-onchain-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-onchain-feed">On-Chain</h2>
+              <span class="panel-meta" id="news-onchain-update">RSS feeds</span>
+            </div>
+            <div class="news-feed" id="news-onchain-feed"><p class="news-empty">Loading headlines…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-onchain-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="news" data-l2="x" data-l3="overview" hidden>
+          <section class="deriv-hero-strip news-hero-strip" id="news-x-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="news-x-feed">X</h2>
+              <span class="panel-meta" id="news-x-update">Curated BTC accounts</span>
+            </div>
+            <div class="news-feed news-feed--x" id="news-x-feed"><p class="news-empty">Loading posts…</p></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="news-briefing">Briefing</h2></div>
+            <div class="stats-commentary" id="news-x-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
+    <script src="chart-utils.js?v=4"></script>
+    <script src="swr-cache.js?v=2"></script>
+    <script src="help.js?v=25"></script>
+    <script src="dashboard.js?v=20"></script>
+    <script src="etf.js?v=12"></script>
+    <script src="treasury.js?v=9"></script>
+    <script src="derivatives-extra.js?v=13"></script>
+    <script src="stats.js?v=15"></script>
+    <script src="tradfi.js?v=9"></script>
+    <script src="defi.js?v=3"></script>
+    <script src="exchanges.js?v=6"></script>
+    <script src="macro.js?v=1"></script>
+    <script src="news.js?v=3"></script>
+    <script src="indicators.js?v=3"></script>
+    <script src="app.js?v=15"></script>
+  </body>
+</html>
