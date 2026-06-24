@@ -1,1 +1,0 @@
-from vercel_api_handler import BTCAPIHandler as handler

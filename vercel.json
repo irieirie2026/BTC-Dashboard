@@ -1,9 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
+  ],
   "functions": {
-    "api/**/*.py": {
+    "api/handler.py": {
       "maxDuration": 60,
-      "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command}"
+      "includeFiles": "{server.py,api_dispatch.py,requirements.txt}",
+      "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command,**/*.js,**/*.html,**/*.css,**/*.md}"
     }
   }
 }
