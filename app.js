@@ -30,7 +30,6 @@ let futuresReconnectTimer = null;
 let nextFundingTime = null;
 let futuresSentimentItems = [];
 let futuresMarketState = {};
-let chainSnapshot = {};
 
 const $ = (id) => document.getElementById(id);
 
@@ -501,7 +500,7 @@ function renderIndicatorsList(containerId, klines, options = {}) {
         overviewEl.innerHTML = window.buildTechnicalOverview(
           result.categories,
           getSpotContext(),
-          chainSnapshot,
+          window.chainSnapshot || {},
           options.timeframeLabel,
         );
       } else if (window.buildIndicatorsOnlyOverview) {

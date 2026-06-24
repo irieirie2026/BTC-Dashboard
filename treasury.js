@@ -485,14 +485,14 @@ function renderTreasurySummaryCharts() {
 }
 
 function renderTreasuryDashboard() {
-  if (!treasuryData) return;
+  if (!treasuryData?.summary || !Array.isArray(treasuryData.companies)) return;
   renderHero(treasuryData.summary, treasuryData.btcPrice, treasuryData.btcChange24h);
   renderTreasurySummaryCharts();
   populateCountryFilter(treasuryData.companies);
   renderTreasuryCompaniesTable(filteredCompanies());
 }
 
-async function loadTreasuryDashboard() {
+window.loadTreasuryDashboard = async function loadTreasuryDashboard() {
   const swr = window.DashboardSWR;
   if (!swr) return;
   const updateEl = $("trs-update");
