@@ -785,7 +785,7 @@ const METRIC_HELP = {
   },
   "news-x-feed": {
     title: "X (Twitter)",
-    body: "Bitcoin-relevant posts from curated X accounts with established reputations — executives, researchers, ETF analysts, and on-chain voices. Sourced via public RSS mirrors.",
+    body: "Bitcoin-relevant posts from curated X accounts with established reputations — executives, researchers, ETF analysts, and on-chain voices. Sourced via public RSS mirrors when available; otherwise a cached snapshot refreshed hourly.",
   },
   "news-sentiment": {
     title: "BTC Price Sentiment",

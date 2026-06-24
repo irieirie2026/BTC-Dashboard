@@ -31,7 +31,21 @@ BROWSER_UA = (
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
 
-NITTER_RSS_BASE = "https://nitter.net"
+NITTER_MIRRORS = [
+    "https://nitter.net",
+]
+X_RSS_USER_AGENT = "Feedly/1.0 (+https://github.com/irieirie2026/BTC-Dashboard)"
+X_FEED_STALE_TTL = 86400  # 24 hours
+X_FEED_CACHE_PATH = ROOT / "data" / "x-feed-cache.json"
+NITTER_MIRROR_HOSTS = (
+    "nitter.net",
+    "xcancel.com",
+    "rss.xcancel.com",
+    "nitter.poast.org",
+    "nitter.privacyredirect.com",
+    "nt.vern.cc",
+    "twitter.com",
+)
 
 
 def fetch_html(url):
@@ -1545,13 +1559,34 @@ def fetch_rss_xml(url):
         return resp.read().decode("utf-8", errors="replace")
 
 
-def _x_url_from_nitter(link):
+def fetch_x_rss_xml(url):
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": X_RSS_USER_AGENT,
+            "Accept": "application/rss+xml, application/xml, text/xml, */*",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode("utf-8", errors="replace")
+
+
+def _normalize_mirror_url(link):
     if not link:
         return link
-    return (
-        link.replace("nitter.net", "x.com")
-        .replace("twitter.com", "x.com")
-    )
+    normalized = link.replace("twitter.com", "x.com")
+    for host in NITTER_MIRROR_HOSTS:
+        normalized = normalized.replace(host, "x.com")
+    return normalized
+
+
+def _is_valid_tweet_link(link):
+    if not link:
+        return False
+    normalized = _normalize_mirror_url(link)
+    if normalized.rstrip("/").endswith("/rss"):
+        return False
+    return "/status/" in normalized
 
 
 def _clean_tweet_text(title):
@@ -1562,19 +1597,22 @@ def _clean_tweet_text(title):
 
 def _parse_nitter_feed(xml_text, author):
     tweets = []
+    cleaned = (xml_text or "").strip()
+    if "<?xml" in cleaned:
+        cleaned = cleaned[cleaned.find("<?xml") :]
     try:
-        root = ET.fromstring(xml_text)
+        root = ET.fromstring(cleaned)
     except ET.ParseError:
         return tweets
 
     handle = author["handle"]
     for item in root.iter("item"):
         title = (item.findtext("title") or "").strip()
-        link = _x_url_from_nitter((item.findtext("link") or "").strip())
+        link = _normalize_mirror_url((item.findtext("link") or "").strip())
         pub_raw = (item.findtext("pubDate") or "").strip()
         summary = _strip_html(item.findtext("description") or "")[:280]
         text = _clean_tweet_text(title) or summary
-        if not text or not link:
+        if not text or not link or not _is_valid_tweet_link(link):
             continue
         published = _parse_rss_date(pub_raw)
         is_rt = title.lower().startswith("rt by @")
@@ -1594,22 +1632,28 @@ def _parse_nitter_feed(xml_text, author):
     return tweets
 
 
-def _fetch_all_x_tweets():
-    key = "news:x-tweets"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
-
-    seen = set()
-    tweets = []
-    for author in X_AUTHORS:
-        url = f"{NITTER_RSS_BASE}/{author['handle']}/rss"
+def _fetch_author_tweets(author):
+    for mirror in NITTER_MIRRORS:
+        url = f"{mirror.rstrip('/')}/{author['handle']}/rss"
         try:
-            xml_text = fetch_rss_xml(url)
+            xml_text = fetch_x_rss_xml(url)
+            tweets = _parse_nitter_feed(xml_text, author)
+            if tweets:
+                return tweets, mirror
         except Exception:
             continue
-        for tweet in _parse_nitter_feed(xml_text, author):
+    return [], None
+
+
+def _fetch_x_tweets_live():
+    seen = set()
+    tweets = []
+    mirror_used = None
+    for index, author in enumerate(X_AUTHORS):
+        author_tweets, mirror = _fetch_author_tweets(author)
+        if mirror and not mirror_used:
+            mirror_used = mirror
+        for tweet in author_tweets:
             if not author.get("btcFocused") and not _is_bitcoin_article(tweet):
                 continue
             link = tweet["link"]
@@ -1617,19 +1661,130 @@ def _fetch_all_x_tweets():
                 continue
             seen.add(link)
             tweets.append(tweet)
+        if index < len(X_AUTHORS) - 1:
+            time.sleep(0.25)
 
     tweets.sort(key=lambda t: t.get("publishedTs") or 0, reverse=True)
-    _cache[key] = {"ts": now, "data": tweets}
-    return tweets
+    mirror_host = urlparse(mirror_used).netloc if mirror_used else None
+    return tweets, mirror_host
 
 
-def _build_x_commentary(articles):
+def _load_x_feed_cache():
+    try:
+        data = json.loads(X_FEED_CACHE_PATH.read_text(encoding="utf-8"))
+        tweets = data.get("tweets") or []
+        if tweets:
+            return {
+                "tweets": tweets,
+                "fetchedAt": data.get("fetchedAt"),
+                "source": data.get("source") or "cache",
+            }
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        pass
+    return None
+
+
+def _format_cache_age(fetched_at_iso):
+    if not fetched_at_iso:
+        return None
+    try:
+        fetched = datetime.fromisoformat(fetched_at_iso.replace("Z", "+00:00"))
+        if fetched.tzinfo is None:
+            fetched = fetched.replace(tzinfo=timezone.utc)
+        age_seconds = max(0, int(time.time() - fetched.timestamp()))
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+    if age_seconds < 3600:
+        minutes = max(1, age_seconds // 60)
+        return f"{minutes}m ago"
+    if age_seconds < 86400:
+        hours = max(1, age_seconds // 3600)
+        return f"{hours}h ago"
+    days = max(1, age_seconds // 86400)
+    return f"{days}d ago"
+
+
+def _x_feed_bundle(tweets, feed_mode, mirror_source=None, cache_fetched_at=None):
+    return {
+        "tweets": tweets,
+        "feedMode": feed_mode,
+        "mirrorSource": mirror_source,
+        "cacheFetchedAt": cache_fetched_at,
+        "cacheAge": _format_cache_age(cache_fetched_at),
+    }
+
+
+def _fetch_all_x_tweets():
+    key = "news:x-tweets"
+    now = time.time()
+    entry = _cache.get(key)
+    if entry and now - entry["ts"] < CACHE_TTL:
+        return entry["data"]
+
+    stale_entry = _cache.get(f"{key}:stale")
+    tweets, mirror_host = _fetch_x_tweets_live()
+    if tweets:
+        bundle = _x_feed_bundle(
+            tweets,
+            "live",
+            mirror_source=mirror_host,
+        )
+        _cache[key] = {"ts": now, "data": bundle}
+        _cache[f"{key}:stale"] = {"ts": now, "data": bundle}
+        return bundle
+
+    if stale_entry and now - stale_entry["ts"] < X_FEED_STALE_TTL:
+        return stale_entry["data"]
+
+    disk_cache = _load_x_feed_cache()
+    if disk_cache:
+        bundle = _x_feed_bundle(
+            disk_cache["tweets"],
+            "cached",
+            mirror_source=disk_cache.get("source"),
+            cache_fetched_at=disk_cache.get("fetchedAt"),
+        )
+        _cache[key] = {"ts": now, "data": bundle}
+        return bundle
+
+    bundle = _x_feed_bundle([], "empty")
+    _cache[key] = {"ts": now, "data": bundle}
+    return bundle
+
+
+def write_x_feed_cache(tweets, mirror_source=None):
+    if not tweets:
+        return False
+
+    X_FEED_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "source": mirror_source or NITTER_MIRRORS[0].replace("https://", ""),
+        "tweets": tweets,
+    }
+    X_FEED_CACHE_PATH.write_text(
+        json.dumps(payload, indent=2, default=str),
+        encoding="utf-8",
+    )
+    return True
+
+
+def _build_x_commentary(articles, feed_meta=None):
     lines = []
+    feed_meta = feed_meta or {}
     if not articles:
         return [
             "No Bitcoin-related posts available from tracked X accounts. "
             "The Nitter RSS mirror may be temporarily unavailable.",
         ]
+
+    if feed_meta.get("feedMode") == "cached":
+        cache_age = feed_meta.get("cacheAge") or "recently"
+        lines.append(
+            f"Showing cached X posts (last refreshed {cache_age}). "
+            "Live Nitter mirrors are unavailable from this server.",
+        )
 
     lines.append(
         f"X wire: {len(articles)} BTC-relevant posts from "
@@ -1668,7 +1823,9 @@ def _build_x_commentary(articles):
 
 def _fetch_x_section():
     cfg = NEWS_CATEGORIES["x"]
-    all_tweets = _fetch_all_x_tweets()
+    feed_bundle = _fetch_all_x_tweets()
+    all_tweets = feed_bundle.get("tweets") or []
+    feed_mode = feed_bundle.get("feedMode") or "empty"
     articles = []
     for tweet in all_tweets[:25]:
         articles.append({
@@ -1704,18 +1861,29 @@ def _fetch_x_section():
             "sub": _strip_html(articles[0].get("title", ""))[:72],
         })
 
+    if feed_mode == "cached":
+        source = "X cached snapshot · curated BTC accounts"
+    elif feed_mode == "live":
+        mirror = feed_bundle.get("mirrorSource") or "Nitter RSS"
+        source = f"X via {mirror} · curated BTC accounts"
+    else:
+        source = "X via Nitter RSS · curated BTC accounts"
+
     return {
         "section": "x",
         "title": cfg["title"],
         "heroes": heroes[:4],
         "articles": articles,
-        "commentary": _build_x_commentary(articles),
+        "commentary": _build_x_commentary(articles, feed_bundle),
         "authors": [
             {"handle": a["handle"], "name": a["name"], "role": a["role"]}
             for a in X_AUTHORS
         ],
         "feeds": [f"@{a['handle']}" for a in X_AUTHORS],
-        "source": "X via Nitter RSS · curated BTC accounts",
+        "source": source,
+        "feedMode": feed_mode,
+        "cacheAge": feed_bundle.get("cacheAge"),
+        "cacheFetchedAt": feed_bundle.get("cacheFetchedAt"),
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
