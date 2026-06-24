@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=27" />
+    <link rel="stylesheet" href="styles.css?v=28" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1143,29 +1143,80 @@
         </div>
 
         <div class="menu-screen" data-l1="stats" data-l2="markov" data-l3="panel" hidden>
-          <section class="panel deriv-placeholder-panel">
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="markov-current">Current Regime</span>
+              <span class="deriv-hero-value" id="markov-current">—</span>
+              <span class="deriv-hero-sub">Latest daily state</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="markov-streak">Days in State</span>
+              <span class="deriv-hero-value" id="markov-streak">—</span>
+              <span class="deriv-hero-sub">Consecutive run</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="markov-persistence">Persistence</span>
+              <span class="deriv-hero-value" id="markov-persistence">—</span>
+              <span class="deriv-hero-sub">Avg diagonal prob</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="markov-steady">Steady-State Bull</span>
+              <span class="deriv-hero-value" id="markov-steady-bull">—</span>
+              <span class="deriv-hero-sub">Long-run ergodic mix</span>
+            </article>
+          </section>
+          <div class="stats-charts-row stats-charts-row--markov">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="markov-regime-chart">Regime History</h2>
+                <span class="panel-meta" id="markov-update">Loading…</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="markov-regime-chart" height="150"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="markov-matrix">Transition Matrix</h2>
+                <span class="panel-meta">Row-stochastic · tercile states</span>
+              </div>
+              <div class="deriv-table-wrap markov-matrix-wrap">
+                <table class="deriv-table markov-matrix-table">
+                  <thead>
+                    <tr id="markov-matrix-head"></tr>
+                  </thead>
+                  <tbody id="markov-matrix-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <section class="panel">
             <div class="panel-header">
-              <h2>Markov Model</h2>
-              <span class="panel-meta">Regime transitions · states</span>
+              <h2 data-help-key="markov-occupancy">State Profile</h2>
+              <span class="panel-meta">Occupancy · self-transition · expected duration</span>
             </div>
-            <div class="deriv-placeholder-grid">
-              <article class="deriv-contract-card">
-                <span class="deriv-contract-label">States</span>
-                <span class="deriv-contract-value">—</span>
-                <span class="deriv-contract-sub">Regime count</span>
-              </article>
-              <article class="deriv-contract-card">
-                <span class="deriv-contract-label">Transition Prob</span>
-                <span class="deriv-contract-value">—</span>
-                <span class="deriv-contract-sub">Matrix estimate</span>
-              </article>
-              <article class="deriv-contract-card">
-                <span class="deriv-contract-label">Steady State</span>
-                <span class="deriv-contract-value">—</span>
-                <span class="deriv-contract-sub">Long-run distribution</span>
-              </article>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table">
+                <thead>
+                  <tr>
+                    <th>State</th>
+                    <th>Occupancy</th>
+                    <th>P(stay)</th>
+                    <th>Exp. Duration</th>
+                  </tr>
+                </thead>
+                <tbody id="markov-occupancy-body"></tbody>
+              </table>
             </div>
-            <p class="deriv-placeholder-note">Live Markov chain analysis coming soon.</p>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2>Regime Analysis</h2>
+              <span class="panel-meta">Automated commentary</span>
+            </div>
+            <div class="stats-commentary" id="markov-commentary">
+              <p>Loading regime analysis…</p>
+            </div>
           </section>
         </div>
       </div>
@@ -1838,12 +1889,12 @@
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=4"></script>
     <script src="swr-cache.js?v=2"></script>
-    <script src="help.js?v=25"></script>
-    <script src="dashboard.js?v=20"></script>
+    <script src="help.js?v=26"></script>
+    <script src="dashboard.js?v=21"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=9"></script>
     <script src="derivatives-extra.js?v=13"></script>
-    <script src="stats.js?v=15"></script>
+    <script src="stats.js?v=16"></script>
     <script src="tradfi.js?v=9"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>

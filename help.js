@@ -319,6 +319,34 @@ const METRIC_HELP = {
     title: "USD Value at Risk",
     body: "95% historical VaR expressed in USDT per 1 BTC at the latest close. Approximate maximum 1-day dollar loss at 95% confidence.",
   },
+  "markov-current": {
+    title: "Current Regime",
+    body: "Latest daily return classified into Bear (bottom tercile), Neutral (middle third), or Bull (top tercile) versus the full sample distribution.",
+  },
+  "markov-streak": {
+    title: "Days in State",
+    body: "Consecutive trading days the market has remained in the current regime without crossing a tercile boundary.",
+  },
+  "markov-persistence": {
+    title: "Persistence",
+    body: "Average diagonal probability across the transition matrix — how often each state follows itself. Higher values mean stickier regimes.",
+  },
+  "markov-steady": {
+    title: "Steady-State Bull",
+    body: "Long-run ergodic share of Bull days implied by the estimated Markov chain. The fraction of time the process spends in the top tercile if transitions persist.",
+  },
+  "markov-regime-chart": {
+    title: "Regime History",
+    body: "Daily regime classification over the last year. Color bands show Bear, Neutral, and Bull stretches; the dashed line marks the latest day.",
+  },
+  "markov-matrix": {
+    title: "Transition Matrix",
+    body: "Row-stochastic probabilities of moving from one daily regime to the next. Diagonal cells are persistence; off-diagonal cells are regime switches.",
+  },
+  "markov-occupancy": {
+    title: "State Profile",
+    body: "Historical time spent in each regime, self-transition probability P(stay), and expected duration 1/(1−P(stay)) in trading days.",
+  },
   "open-interest": {
     title: "Open Interest",
     body: "Total number of outstanding futures contracts (long + short legs, not net). Rising OI with rising price often means new money entering longs; rising OI with falling price can mean new shorts. Measured in BTC and USDT notional.",

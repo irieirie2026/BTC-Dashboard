@@ -166,6 +166,90 @@ function computeVarBlock(returns) {
   };
 }
 
+const MARKOV_STATE_DEFS = [
+  { id: 0, label: "Bear", sub: "≤ 33rd pct", color: "#f6465d", dim: "rgba(246, 70, 93, 0.22)" },
+  { id: 1, label: "Neutral", sub: "Middle third", color: "#7d8799", dim: "rgba(125, 135, 153, 0.22)" },
+  { id: 2, label: "Bull", sub: "> 67th pct", color: "#0ecb81", dim: "rgba(14, 203, 129, 0.22)" },
+];
+
+function classifyMarkovState(ret, thresholds) {
+  if (ret <= thresholds[0]) return 0;
+  if (ret <= thresholds[1]) return 1;
+  return 2;
+}
+
+function computeSteadyState(transProb) {
+  const n = transProb.length;
+  let pi = Array(n).fill(1 / n);
+  for (let iter = 0; iter < 128; iter++) {
+    const next = Array(n).fill(0);
+    for (let j = 0; j < n; j++) {
+      for (let i = 0; i < n; i++) next[j] += pi[i] * transProb[i][j];
+    }
+    pi = next;
+  }
+  return pi;
+}
+
+function computeMarkov(returns, dates) {
+  const nStates = MARKOV_STATE_DEFS.length;
+  const thresholds = [percentile(returns, 100 / 3), percentile(returns, (200 / 3))];
+  const states = returns.map((r) => classifyMarkovState(r, thresholds));
+  const counts = Array.from({ length: nStates }, () => Array(nStates).fill(0));
+
+  for (let i = 0; i < states.length - 1; i++) {
+    counts[states[i]][states[i + 1]] += 1;
+  }
+
+  const transProb = counts.map((row) => {
+    const sum = row.reduce((a, b) => a + b, 0);
+    return sum ? row.map((c) => c / sum) : row.map(() => 1 / nStates);
+  });
+
+  const steadyState = computeSteadyState(transProb);
+  const currentState = states[states.length - 1];
+  let streak = 1;
+  for (let i = states.length - 2; i >= 0; i--) {
+    if (states[i] === currentState) streak += 1;
+    else break;
+  }
+
+  const historyLen = Math.min(252, states.length);
+  const history = states.slice(-historyLen).map((state, i) => ({
+    date: dates[dates.length - historyLen + i],
+    state,
+    ret: returns[returns.length - historyLen + i],
+  }));
+
+  const occupancy = MARKOV_STATE_DEFS.map(
+    (_, s) => states.filter((x) => x === s).length / states.length,
+  );
+  const persistence =
+    transProb.reduce((sum, row, i) => sum + row[i], 0) / nStates;
+
+  const expectedDur = transProb.map((row, i) =>
+    row[i] < 1 ? 1 / (1 - row[i]) : Infinity,
+  );
+
+  return {
+    nStates,
+    stateDefs: MARKOV_STATE_DEFS,
+    thresholds,
+    counts,
+    transProb,
+    steadyState,
+    currentState,
+    currentLabel: MARKOV_STATE_DEFS[currentState].label,
+    streak,
+    occupancy,
+    persistence,
+    expectedDur,
+    history,
+    lastReturn: returns[returns.length - 1],
+    transitions: states.length - 1,
+  };
+}
+
 function extendRiskVar(base, ethReturns) {
   const { returns, days } = base;
   const vol30 =
@@ -358,6 +442,7 @@ function computeStats(days) {
       .reverse(),
     risk: null,
     var: null,
+    markov: null,
   };
 }
 
@@ -578,6 +663,7 @@ function applyStatsBundle(bundle) {
   renderStatsScreen();
   renderRiskScreen();
   renderVarScreen();
+  renderMarkovScreen();
 }
 
 async function fetchBtcStats() {
@@ -600,6 +686,10 @@ async function fetchBtcStats() {
         const extended = extendRiskVar(base, ethR);
         base.risk = extended;
         base.var = extended.var;
+        base.markov = computeMarkov(
+          base.returns,
+          base.days.slice(1).map((d) => d.date),
+        );
         base.fetchedAt = new Date().toISOString();
         return base;
       },
@@ -879,6 +969,208 @@ function renderVarScreen() {
   scheduleChartDraw(stEl("var-rolling-chart"), (w, h) =>
     paintVarRollingChart(v, w, h),
   );
+}
+
+function buildMarkovCommentary(s) {
+  const m = s.markov;
+  if (!m) return ["Markov regime data unavailable."];
+  const lines = [];
+  const cur = m.stateDefs[m.currentState];
+
+  lines.push(
+    `BTC/USDT daily returns are classified into ${m.nStates} tercile states ` +
+      `(Bear ≤ ${fmtPct(m.thresholds[0], 2)}, Neutral, Bull > ${fmtPct(m.thresholds[1], 2)}) ` +
+      `over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}). ` +
+      `${m.transitions} observed transitions inform the matrix below.`,
+  );
+
+  lines.push(
+    `Current regime: ${cur.label} (${fmtPct(m.lastReturn, 2)} on the latest day) — ` +
+      `${m.streak} consecutive day${m.streak === 1 ? "" : "s"} in this state. ` +
+      `Average diagonal persistence is ${(m.persistence * 100).toFixed(1)}%, meaning regimes ` +
+      `tend to ${m.persistence > 0.55 ? "cluster rather than flip daily" : "shift frequently"}.`,
+  );
+
+  const topSteady = m.steadyState
+    .map((p, i) => ({ label: m.stateDefs[i].label, p }))
+    .sort((a, b) => b.p - a.p)[0];
+  lines.push(
+    `Long-run steady-state distribution: ${m.stateDefs
+      .map((d, i) => `${d.label} ${(m.steadyState[i] * 100).toFixed(1)}%`)
+      .join(" · ")}. ` +
+      `${topSteady.label} dominates the ergodic mix (${(topSteady.p * 100).toFixed(1)}%).`,
+  );
+
+  const bullOcc = m.occupancy[2];
+  const bearOcc = m.occupancy[0];
+  const occNote =
+    bullOcc > bearOcc + 0.08
+      ? "Bull days outnumber bear days in the sample — upward drift in daily classification."
+      : bearOcc > bullOcc + 0.08
+        ? "Bear days dominate — the sample skews toward weak daily closes."
+        : "Bear and bull occupancy are balanced — no strong directional bias in daily regimes.";
+  lines.push(
+    `Historical occupancy: Bear ${(bearOcc * 100).toFixed(1)}% · Neutral ` +
+      `${(m.occupancy[1] * 100).toFixed(1)}% · Bull ${(bullOcc * 100).toFixed(1)}%. ${occNote}`,
+  );
+
+  const bestExit = m.transProb
+    .map((row, i) => ({
+      from: m.stateDefs[i].label,
+      to: m.stateDefs[row.indexOf(Math.max(...row))].label,
+      p: Math.max(...row),
+    }))
+    .sort((a, b) => b.p - a.p)[0];
+  lines.push(
+    `Strongest single-step transition: ${bestExit.from} → ${bestExit.to} ` +
+      `(${(bestExit.p * 100).toFixed(1)}%). Expected duration in current ${cur.label} state ` +
+      `is ~${Number.isFinite(m.expectedDur[m.currentState]) ? fmtNum(m.expectedDur[m.currentState], 1) : "∞"} days ` +
+      `if the estimated chain persists.`,
+  );
+
+  return lines;
+}
+
+function markovCellBg(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function renderMarkovMatrix(m) {
+  const head = stEl("markov-matrix-head");
+  const body = stEl("markov-matrix-body");
+  if (!head || !body) return;
+
+  head.innerHTML =
+    `<th>From \\ To</th>` +
+    m.stateDefs.map((d) => `<th>${d.label}</th>`).join("");
+
+  body.innerHTML = m.transProb
+    .map((row, i) => {
+      const from = m.stateDefs[i];
+      return `<tr>
+        <td class="markov-matrix-from" style="color:${from.color}">${from.label}</td>
+        ${row
+          .map((p, j) => {
+            const alpha = 0.1 + p * 0.75;
+            const diag = i === j ? " markov-matrix-diag" : "";
+            return `<td class="mono markov-matrix-cell${diag}" style="background:${markovCellBg(m.stateDefs[j].color, alpha)}">${(p * 100).toFixed(1)}%</td>`;
+          })
+          .join("")}
+      </tr>`;
+    })
+    .join("");
+}
+
+function paintMarkovRegimeChart(m, w, h) {
+  const canvas = stEl("markov-regime-chart");
+  if (!canvas || !m.history.length) return;
+
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 14, right: 16, bottom: 32, left: 12 };
+  const chartW = w - pad.left - pad.right;
+  const chartH = h - pad.top - pad.bottom;
+  const bandH = chartH / m.nStates;
+
+  ctx.clearRect(0, 0, w, h);
+
+  m.history.forEach((pt, i) => {
+    const x = pad.left + (i / Math.max(m.history.length - 1, 1)) * chartW;
+    const barW = Math.max(chartW / m.history.length, 1.5);
+    const y = pad.top + pt.state * bandH;
+    ctx.fillStyle = m.stateDefs[pt.state].dim;
+    ctx.fillRect(x, y, barW, bandH - 1);
+  });
+
+  ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([3, 3]);
+  const lastIdx = m.history.length - 1;
+  const lx = pad.left + (lastIdx / Math.max(m.history.length - 1, 1)) * chartW;
+  ctx.beginPath();
+  ctx.moveTo(lx, pad.top);
+  ctx.lineTo(lx, h - pad.bottom);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.font = "10px IBM Plex Mono, monospace";
+  m.stateDefs.forEach((d, i) => {
+    ctx.fillStyle = d.color;
+    ctx.textAlign = "left";
+    ctx.fillText(d.label, pad.left + 2, pad.top + i * bandH + bandH / 2 + 3);
+  });
+
+  drawTimeAxisLabels(ctx, w, h, pad, m.history.length, (i) =>
+    fmtChartDate(m.history[i]?.date, m.history.length > 120),
+  );
+}
+
+function renderMarkovScreen() {
+  if (!statsData?.markov) return;
+  const s = statsData;
+  const m = s.markov;
+
+  const set = (id, text, cls) => {
+    const node = stEl(id);
+    if (!node) return;
+    node.textContent = text;
+    if (cls) node.className = cls;
+  };
+
+  set("markov-current", m.currentLabel, `deriv-hero-value markov-hero--${m.currentState}`);
+  set("markov-streak", String(m.streak), "deriv-hero-value");
+  set("markov-persistence", (m.persistence * 100).toFixed(1) + "%", "deriv-hero-value");
+  set(
+    "markov-steady-bull",
+    (m.steadyState[2] * 100).toFixed(1) + "%",
+    "deriv-hero-value positive",
+  );
+
+  const updateEl = stEl("markov-update");
+  if (updateEl) {
+    updateEl.textContent =
+      `Tercile states · ${m.history.length}d history · Updated ` +
+      new Date().toLocaleTimeString("en-US", { hour12: false });
+  }
+
+  const occBody = stEl("markov-occupancy-body");
+  if (occBody) {
+    occBody.innerHTML = m.stateDefs
+      .map((d, i) => {
+        const exp =
+          Number.isFinite(m.expectedDur[i]) && m.expectedDur[i] < 100
+            ? fmtNum(m.expectedDur[i], 1) + "d"
+            : "—";
+        return `<tr>
+          <td style="color:${d.color}">${d.label}</td>
+          <td class="mono">${(m.occupancy[i] * 100).toFixed(1)}%</td>
+          <td class="mono">${(m.transProb[i][i] * 100).toFixed(1)}%</td>
+          <td class="mono">${exp}</td>
+        </tr>`;
+      })
+      .join("");
+  }
+
+  renderMarkovMatrix(m);
+
+  const commentary = stEl("markov-commentary");
+  if (commentary) {
+    commentary.innerHTML = buildMarkovCommentary(s)
+      .map((p) => `<p>${p}</p>`)
+      .join("");
+  }
+
+  const markovScreen = document.querySelector('.menu-screen[data-l1="stats"][data-l2="markov"]');
+  window.decorateHelpLabels?.(markovScreen);
+
+  scheduleChartDraw(stEl("markov-regime-chart"), (w, h) => paintMarkovRegimeChart(m, w, h));
 }
 
 function drawRiskDrawdownChart(r) {
@@ -1327,6 +1619,11 @@ function initStatsModule() {
       drawVarHistogramChart(statsData);
       drawVarRollingChart(statsData.var);
     }
+    if (statsData.markov) {
+      scheduleChartDraw(stEl("markov-regime-chart"), (w, h) =>
+        paintMarkovRegimeChart(statsData.markov, w, h),
+      );
+    }
   });
 }
 
@@ -1355,6 +1652,14 @@ window.refreshRiskCharts = function () {
 window.refreshVarCharts = function () {
   if (statsData?.var) {
     renderVarScreen();
+  } else {
+    fetchBtcStats();
+  }
+};
+
+window.refreshMarkovCharts = function () {
+  if (statsData?.markov) {
+    renderMarkovScreen();
   } else {
     fetchBtcStats();
   }

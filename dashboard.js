@@ -317,6 +317,7 @@ const MENU_TREE = {
             label: "Transition Matrix",
             accent: "#67e8f9",
             accentDim: "rgba(103, 232, 249, 0.18)",
+            onShow: () => window.refreshMarkovCharts?.(),
           },
         },
       },

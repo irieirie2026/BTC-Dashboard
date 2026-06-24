@@ -2266,6 +2266,47 @@ body {
   min-width: 0;
 }
 
+.stats-charts-row--markov .panel {
+  min-width: 0;
+}
+
+.markov-matrix-wrap {
+  padding: 0.25rem 0.5rem 0.5rem;
+}
+
+.markov-matrix-table th,
+.markov-matrix-table td {
+  text-align: center;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.markov-matrix-from {
+  text-align: left !important;
+  font-weight: 600;
+}
+
+.markov-matrix-diag {
+  font-weight: 600;
+}
+
+.markov-hero--0 {
+  color: #f6465d;
+}
+
+.markov-hero--1 {
+  color: #7d8799;
+}
+
+.markov-hero--2 {
+  color: #0ecb81;
+}
+
+#markov-regime-chart {
+  height: 150px;
+  max-height: 150px;
+}
+
 .stats-charts-row--risk {
   grid-template-columns: repeat(3, 1fr);
 }
