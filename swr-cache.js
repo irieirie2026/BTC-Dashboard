@@ -6,6 +6,7 @@ const SWR_HEADER_MAP = {
   derivatives: "futures-header-update",
   etf: "header-etf-meta",
   treasury: "header-treasury-meta",
+  onchain: "header-dashboard-meta",
   exchanges: "header-dashboard-meta",
   stats: "header-dashboard-meta",
   tradfi: "header-dashboard-meta",

@@ -48,6 +48,7 @@
       <div id="menu-tree" class="menu-tree menu-tree--compact">
         <nav class="dashboard-nav menu-l1" aria-label="Main sections">
           <button type="button" class="dash-tab dash-tab--l1 active" data-dashboard="market">Market</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="onchain">On Chain</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="exchanges">Exchanges</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="derivatives">Derivatives</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="etf">ETFs</button>
@@ -67,7 +68,6 @@
         <div id="menu-l3-slot" class="menu-l3-slot">
           <nav class="dashboard-nav menu-l3" aria-label="Overview views">
             <button type="button" class="dash-tab dash-tab--l3 active">Spot Price</button>
-            <button type="button" class="dash-tab dash-tab--l3">On-Chain</button>
             <button type="button" class="dash-tab dash-tab--l3">Indicators</button>
           </nav>
         </div>
@@ -129,16 +129,6 @@
           <span class="stat-value" id="weighted-avg">—</span>
         </article>
       </section>
-        </div>
-
-        <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="onchain" hidden>
-        <section class="panel chain-panel">
-          <div class="panel-header">
-            <h2>On-Chain</h2>
-            <span class="panel-meta" id="chain-update">Loading…</span>
-          </div>
-          <div class="chain-grid" id="chain-grid"></div>
-        </section>
         </div>
 
         <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="indicators" data-l4="1h" hidden>
@@ -251,6 +241,18 @@
             </div>
           </div>
         </section>
+        </div>
+      </div>
+
+      <div id="dashboard-onchain" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="onchain" data-l2="network">
+          <section class="panel chain-panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-network">Network Metrics</h2>
+              <span class="panel-meta" id="onchain-update">Loading…</span>
+            </div>
+            <div class="chain-grid" id="onchain-grid"></div>
+          </section>
         </div>
       </div>
 
@@ -1888,9 +1890,9 @@
 
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=4"></script>
-    <script src="swr-cache.js?v=2"></script>
-    <script src="help.js?v=26"></script>
-    <script src="dashboard.js?v=21"></script>
+    <script src="swr-cache.js?v=3"></script>
+    <script src="help.js?v=27"></script>
+    <script src="dashboard.js?v=22"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=9"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -1901,6 +1903,6 @@
     <script src="macro.js?v=1"></script>
     <script src="news.js?v=3"></script>
     <script src="indicators.js?v=3"></script>
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=16"></script>
   </body>
 </html>

@@ -20,11 +20,6 @@ const MENU_TREE = {
             accentDim: "rgba(14, 203, 129, 0.18)",
             onShow: () => window.refreshPriceChart?.(),
           },
-          onchain: {
-            label: "On-Chain",
-            accent: "#10b981",
-            accentDim: "rgba(16, 185, 129, 0.18)",
-          },
           indicators: {
             label: "Indicators",
             accent: "#34d399",
@@ -90,6 +85,19 @@ const MENU_TREE = {
             accentDim: "rgba(8, 145, 178, 0.18)",
           },
         },
+      },
+    },
+  },
+  onchain: {
+    label: "On Chain",
+    accent: "#10b981",
+    accentDim: "rgba(16, 185, 129, 0.18)",
+    children: {
+      network: {
+        label: "Network",
+        accent: "#10b981",
+        accentDim: "rgba(16, 185, 129, 0.18)",
+        onShow: () => window.refreshOnchainData?.(),
       },
     },
   },
@@ -729,6 +737,11 @@ const DASHBOARD_META = {
     subtitle: "Binance Spot · Real-time",
     pageTitle: "BTC/USDT — Live Market",
   },
+  onchain: {
+    title: "On Chain",
+    subtitle: "Bitcoin mainnet · Mempool · Mining",
+    pageTitle: "On Chain — Live Dashboard",
+  },
   exchanges: {
     title: "BTC Exchanges",
     subtitle: "Cross-venue spot · perp · volume",
@@ -778,6 +791,7 @@ const DASHBOARD_META = {
 
 const LEGACY_L2 = {
   market: { st1: "overview", st2: "orderbook", overview: "overview", orderbook: "orderbook" },
+  onchain: { st1: "network", network: "network" },
   exchanges: {
     st1: "overview",
     st2: "spot",
@@ -1252,7 +1266,7 @@ const MenuController = {
     const treasuryMeta = document.getElementById("header-treasury-meta");
     const dashboardMeta = document.getElementById("header-dashboard-meta");
     const usesDashboardMeta = [
-      "exchanges", "stats", "tradfi", "defi", "macro", "news",
+      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news",
     ];
     if (marketMeta) marketMeta.hidden = l1 !== "market";
     if (derivativesMeta) derivativesMeta.hidden = l1 !== "derivatives";
@@ -1260,6 +1274,9 @@ const MenuController = {
     if (treasuryMeta) treasuryMeta.hidden = l1 !== "treasury";
     if (dashboardMeta) dashboardMeta.hidden = !usesDashboardMeta.includes(l1);
 
+    if (l1 === "onchain" && typeof loadBlockchainData === "function") {
+      loadBlockchainData();
+    }
     if (l1 === "etf" && typeof loadEtfDashboard === "function") loadEtfDashboard();
     if (l1 === "treasury" && typeof loadTreasuryDashboard === "function") {
       loadTreasuryDashboard();

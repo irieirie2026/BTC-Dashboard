@@ -486,7 +486,7 @@ function renderDataGrid(items, gridId) {
 }
 
 function renderChainGrid(items) {
-  renderDataGrid(items, "chain-grid");
+  renderDataGrid(items, "onchain-grid");
 }
 
 function buildChainBundle(mempool, fees, diffAdj, height, stats) {
@@ -578,17 +578,19 @@ function applyChainBundle(bundle) {
   chainSnapshot = bundle.chainSnapshot;
   window.chainSnapshot = chainSnapshot;
   renderChainGrid(bundle.items);
+  const screen = document.querySelector('.menu-screen[data-l1="onchain"]');
+  window.decorateHelpLabels?.(screen);
 }
 
 async function loadBlockchainData() {
   const swr = window.DashboardSWR;
   if (!swr) return;
-  const chainUpdateEl = $("chain-update");
+  const chainUpdateEl = $("onchain-update");
 
   try {
     await swr.runSWR({
-      key: "market:chain",
-      l1: "market",
+      key: "onchain:network",
+      l1: "onchain",
       source: "Mempool.space",
       fetch: async () => {
         const [mempoolRes, feesRes, diffRes, heightRes, statsRes] =
@@ -638,6 +640,12 @@ async function loadBlockchainData() {
     }
   }
 }
+
+window.refreshOnchainData = function () {
+  loadBlockchainData();
+  const screen = document.querySelector('.menu-screen[data-l1="onchain"]');
+  window.decorateHelpLabels?.(screen);
+};
 
 function parseKlinesOHLCV(klines) {
   return {

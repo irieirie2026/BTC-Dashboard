@@ -63,6 +63,10 @@ const METRIC_HELP = {
     title: "Recommended Fee Rate",
     body: "Suggested transaction fees in satoshis per virtual byte (sat/vB) for timely confirmation. Fast targets quick inclusion; economy is cheaper but slower. Set by mempool.space based on current congestion.",
   },
+  "onchain-network": {
+    title: "Network Metrics",
+    body: "Live Bitcoin mainnet statistics from Mempool.space and Blockchain.info: block height, hash rate, difficulty, mempool backlog, fee rates, 24h transaction count, circulating supply, and the next difficulty adjustment.",
+  },
   "onchain-txs": {
     title: "On-Chain Transactions (24h)",
     body: "Number of confirmed Bitcoin transactions over the last 24 hours across the entire network (not just Binance). Indicates how actively the base layer is being used for transfers and settlements.",
