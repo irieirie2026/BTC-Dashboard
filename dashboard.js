@@ -1119,6 +1119,54 @@ function showScreen(l1, l2, l3, l4) {
   });
 }
 
+function scrollActiveTabIntoView(level) {
+  const container =
+    level === 1
+      ? document.querySelector(".menu-l1")
+      : document.getElementById(`menu-l${level}-slot`)?.querySelector(".dashboard-nav");
+  const active = container?.querySelector(".dash-tab.active");
+  if (active) {
+    active.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+  }
+}
+
+function refreshActiveDashboardCharts() {
+  const l1 = MenuController.l1;
+  window.refreshPriceChart?.();
+  window.refreshDepthChart?.();
+  const byL1 = {
+    onchain: () => window.refreshOnchainData?.(),
+    exchanges: () => window.loadExchangesDashboard?.(),
+    derivatives: () => {
+      window.refreshDeliveryCurve?.();
+      window.refreshOptionsVolCharts?.();
+      window.refreshOptionsOiCharts?.();
+    },
+    etf: () => window.loadEtfDashboard?.(),
+    treasury: () => window.loadTreasuryDashboard?.(),
+    stats: () => {
+      window.refreshStatsCharts?.();
+      window.refreshRiskCharts?.();
+      window.refreshVarCharts?.();
+      window.refreshMarkovCharts?.();
+    },
+    tradfi: () => window.loadTradfiDashboard?.(),
+    defi: () => window.loadDefiDashboard?.(),
+    macro: () => window.loadMacroDashboard?.(),
+    news: () => window.loadNewsDashboard?.(),
+  };
+  byL1[l1]?.();
+}
+
+let orientationRefreshTimer = null;
+
+function scheduleOrientationRefresh() {
+  clearTimeout(orientationRefreshTimer);
+  orientationRefreshTimer = setTimeout(() => {
+    refreshActiveDashboardCharts();
+  }, 200);
+}
+
 function runOnShow(l1, l2, l3, l4) {
   if (l3HasChildren(l1, l2, l3)) {
     const node = l4Node(l1, l2, l3, l4);
@@ -1171,6 +1219,7 @@ const MenuController = {
     applyMenuTheme(l1, l2, l3, activeL4);
     updateBreadcrumb(l1, l2, l3, activeL4);
     runOnShow(l1, l2, l3, activeL4);
+    requestAnimationFrame(() => scrollActiveTabIntoView(4));
   },
 
   setLevel3(l3) {
@@ -1202,6 +1251,7 @@ const MenuController = {
     applyMenuTheme(l1, l2, activeL3);
     updateBreadcrumb(l1, l2, activeL3);
     runOnShow(l1, l2, activeL3);
+    requestAnimationFrame(() => scrollActiveTabIntoView(3));
   },
 
   setLevel2(l2) {
@@ -1227,6 +1277,7 @@ const MenuController = {
       applyMenuTheme(l1, activeL2);
       updateBreadcrumb(l1, activeL2);
       runOnShow(l1, activeL2);
+      requestAnimationFrame(() => scrollActiveTabIntoView(2));
       return;
     }
 
@@ -1304,6 +1355,7 @@ const MenuController = {
     }
 
     this.setLevel2(activeL2);
+    requestAnimationFrame(() => scrollActiveTabIntoView(1));
   },
 };
 
@@ -1312,6 +1364,8 @@ let menuInitialized = false;
 function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
+
+  window.addEventListener("orientationchange", scheduleOrientationRefresh);
 
   const tree = document.getElementById("menu-tree");
   if (tree) {
