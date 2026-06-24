@@ -1,14 +1,11 @@
 const SYMBOL = "BTCUSDT";
 const REST_BASE = "https://api.binance.com/api/v3";
 const FUTURES_REST = "https://fapi.binance.com";
-const MEMPOOL_BASE = "https://mempool.space/api";
-const CHAIN_STATS_URL = "https://api.blockchain.info/stats";
 const WS_URL =
   "wss://stream.binance.com:9443/stream?streams=btcusdt@ticker/btcusdt@kline_1m/btcusdt@depth20@100ms";
 const FUTURES_WS_URL =
   "wss://fstream.binance.com/stream?streams=btcusdt@ticker/btcusdt@markPrice@1s";
 
-const CHAIN_POLL_MS = 60_000;
 const INDICATOR_POLL_MS = 300_000;
 const FUTURES_POLL_MS = 60_000;
 
@@ -57,33 +54,6 @@ function formatBtc(n) {
     minimumFractionDigits: 4,
     maximumFractionDigits: 4,
   });
-}
-
-function formatHashrate(ghs) {
-  const eh = ghs / 1e9;
-  return eh >= 100 ? eh.toFixed(1) + " EH/s" : eh.toFixed(2) + " EH/s";
-}
-
-function formatLargeNum(n) {
-  const v = Number(n);
-  if (v >= 1e12) return (v / 1e12).toFixed(2) + "T";
-  if (v >= 1e9) return (v / 1e9).toFixed(2) + "B";
-  if (v >= 1e6) return (v / 1e6).toFixed(2) + "M";
-  if (v >= 1e3) return (v / 1e3).toFixed(1) + "K";
-  return v.toLocaleString("en-US");
-}
-
-function formatDifficulty(n) {
-  const t = Number(n) / 1e12;
-  return t.toFixed(2) + "T";
-}
-
-function formatDuration(seconds) {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  if (h >= 48) return Math.floor(h / 24) + "d " + (h % 24) + "h";
-  if (h > 0) return h + "h " + m + "m";
-  return m + "m";
 }
 
 function setConnectionStatus(state, elId = "connection-status") {
@@ -484,168 +454,6 @@ function renderDataGrid(items, gridId) {
     )
     .join("");
 }
-
-function renderChainGrid(items) {
-  renderDataGrid(items, "onchain-grid");
-}
-
-function buildChainBundle(mempool, fees, diffAdj, height, stats) {
-  const supplyBtc = stats.totalbc / 1e8;
-  const mempoolMb = mempool.vsize / 1e6;
-  const feeTotalBtc = mempool.total_fee / 1e8;
-  const adjSign = diffAdj.difficultyChange >= 0 ? "+" : "";
-  const adjDays = formatDuration(Math.floor(diffAdj.remainingTime / 1000));
-
-  const snapshot = {
-    height: String(height).trim(),
-    hashrate: formatHashrate(stats.hash_rate),
-    mempoolCount: mempool.count,
-    mempoolMb: mempool.vsize / 1e6,
-    fastFee: fees.fastestFee,
-    diffChange: diffAdj.difficultyChange,
-    nTx: stats.n_tx,
-    supplyBtc,
-  };
-
-  const items = [
-    {
-      label: "Block Height",
-      helpKey: "block-height",
-      value: formatLargeNum(height),
-      sub: "Bitcoin mainnet",
-    },
-    {
-      label: "Hash Rate",
-      helpKey: "hash-rate",
-      value: formatHashrate(stats.hash_rate),
-      sub: "Network compute power",
-    },
-    {
-      label: "Difficulty",
-      helpKey: "difficulty",
-      value: formatDifficulty(stats.difficulty),
-      sub: "Mining difficulty",
-    },
-    {
-      label: "Mempool",
-      helpKey: "mempool",
-      value: formatLargeNum(mempool.count) + " txs",
-      sub: mempoolMb.toFixed(1) + " MB · " + feeTotalBtc.toFixed(3) + " BTC fees",
-    },
-    {
-      label: "Fee Rate",
-      helpKey: "fee-rate",
-      value: fees.fastestFee + " sat/vB",
-      sub: "Fast · " + fees.hourFee + " hr · " + fees.economyFee + " economy",
-    },
-    {
-      label: "On-Chain Txs (24h)",
-      helpKey: "onchain-txs",
-      value: formatLargeNum(stats.n_tx),
-      sub: "Confirmed transactions",
-    },
-    {
-      label: "Circulating Supply",
-      helpKey: "circulating-supply",
-      value: supplyBtc.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " BTC",
-      sub: ((supplyBtc / 21e6) * 100).toFixed(2) + "% of 21M cap",
-    },
-    {
-      label: "Avg Block Time",
-      helpKey: "avg-block-time",
-      value: stats.minutes_between_blocks.toFixed(1) + " min",
-      sub: "Last 24h average",
-    },
-    {
-      label: "Next Difficulty Adj.",
-      helpKey: "difficulty-adj",
-      value: adjSign + diffAdj.difficultyChange.toFixed(2) + "%",
-      sub:
-        diffAdj.remainingBlocks +
-        " blocks · ~" +
-        adjDays +
-        " · " +
-        diffAdj.progressPercent.toFixed(1) +
-        "% through epoch",
-      wide: true,
-    },
-  ];
-
-  return { chainSnapshot: snapshot, items };
-}
-
-function applyChainBundle(bundle) {
-  chainSnapshot = bundle.chainSnapshot;
-  window.chainSnapshot = chainSnapshot;
-  renderChainGrid(bundle.items);
-  const screen = document.querySelector('.menu-screen[data-l1="onchain"]');
-  window.decorateHelpLabels?.(screen);
-}
-
-async function loadBlockchainData() {
-  const swr = window.DashboardSWR;
-  if (!swr) return;
-  const chainUpdateEl = $("onchain-update");
-
-  try {
-    await swr.runSWR({
-      key: "onchain:network",
-      l1: "onchain",
-      source: "Mempool.space",
-      fetch: async () => {
-        const [mempoolRes, feesRes, diffRes, heightRes, statsRes] =
-          await Promise.all([
-            fetch(`${MEMPOOL_BASE}/mempool`),
-            fetch(`${MEMPOOL_BASE}/v1/fees/recommended`),
-            fetch(`${MEMPOOL_BASE}/v1/difficulty-adjustment`),
-            fetch(`${MEMPOOL_BASE}/blocks/tip/height`),
-            fetch(CHAIN_STATS_URL),
-          ]);
-
-        const mempool = await mempoolRes.json();
-        const fees = await feesRes.json();
-        const diffAdj = await diffRes.json();
-        const height = await heightRes.text();
-        const stats = await statsRes.json();
-        const bundle = buildChainBundle(mempool, fees, diffAdj, height, stats);
-        return {
-          ...bundle,
-          fetchedAt: new Date().toISOString(),
-        };
-      },
-      render: (data, opts = {}) => {
-        if (opts.loading) {
-          if (chainUpdateEl) chainUpdateEl.textContent = "Loading…";
-          return;
-        }
-        applyChainBundle(data);
-        if (chainUpdateEl) {
-          chainUpdateEl.textContent = swr.formatPanelMeta({
-            fetchedAt: data.fetchedAt,
-            source: "Mempool.space",
-            stale: opts.stale,
-            refreshing: opts.refreshing,
-            refreshFailed: opts.refreshFailed,
-          });
-        }
-        if (activeIndicatorTf && marketIndicatorCache[activeIndicatorTf]) {
-          renderCachedMarketIndicators(activeIndicatorTf);
-        }
-      },
-    });
-  } catch (err) {
-    console.error("Failed to load blockchain data:", err);
-    if (chainUpdateEl && !chainSnapshot.height) {
-      chainUpdateEl.textContent = "Unavailable";
-    }
-  }
-}
-
-window.refreshOnchainData = function () {
-  loadBlockchainData();
-  const screen = document.querySelector('.menu-screen[data-l1="onchain"]');
-  window.decorateHelpLabels?.(screen);
-};
 
 function parseKlinesOHLCV(klines) {
   return {
@@ -1219,14 +1027,15 @@ initDashboardSwitcher();
 initEtfDashboard();
 initTreasuryDashboard();
 loadInitialData();
-loadBlockchainData();
+if (typeof window.loadOnchainSection === "function") {
+  window.loadOnchainSection("overview");
+}
 prefetchMarketIndicators();
 loadFuturesData();
 loadFuturesIndicators();
 connect();
 connectFutures();
 
-setInterval(loadBlockchainData, CHAIN_POLL_MS);
 setInterval(() => {
   loadMarketIndicators(activeIndicatorTf);
 }, INDICATOR_POLL_MS);

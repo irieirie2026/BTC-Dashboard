@@ -5,7 +5,6 @@ const DEFI_SECTIONS = [
   "lending",
   "liquidity",
   "staking",
-  "lightning",
 ];
 
 const DEFI_POLL_MS = 300_000;
@@ -60,17 +59,12 @@ function changeClass(n) {
 
 function heroHelpKey(section, name) {
   const n = (name || "").toLowerCase();
-  if (n.includes("network capacity")) return "defi-hero-lightning-capacity";
-  if (n.includes("nodes")) return "defi-hero-lightning-nodes";
-  if (n.includes("channels")) return "defi-hero-lightning-channels";
-  if (n.includes("median channel")) return "defi-hero-lightning-median";
   if (section === "stables") return "defi-hero-stables";
   if (section === "lending") return "defi-hero-lending";
   if (section === "liquidity") return "defi-hero-liquidity";
   if (section === "staking") return "defi-hero-staking";
   if (section === "bridges") return "defi-hero-bridge";
   if (section === "wrapped") return "defi-hero-wrapped";
-  if (section === "lightning") return "defi-hero-lightning-capacity";
   return `defi-hero-${section}`;
 }
 
@@ -93,14 +87,6 @@ function defiScreenRoot(section) {
 }
 
 function heroValue(hero, section) {
-  if (section === "lightning") {
-    if (hero.name === "Network Capacity" || hero.name === "Median Channel") {
-      return fmtBtc(hero.value);
-    }
-    if (hero.name === "Nodes" || hero.name === "Channels") {
-      return fmtNum(hero.value, 0);
-    }
-  }
   if (section === "stables" && hero.name === "Total Stablecoin MCap") {
     return fmtUsd(hero.value);
   }
@@ -192,20 +178,6 @@ function buildDefiCommentary(data) {
     }
   }
 
-  if (data.section === "lightning") {
-    const cap = heroes.find((h) => h.name === "Network Capacity");
-    const nodes = heroes.find((h) => h.name === "Nodes");
-    if (cap && nodes) {
-      lines.push(
-        `Lightning carries ${fmtBtc(cap.value)} across ${fmtNum(nodes.value, 0)} nodes — ` +
-          `the primary L2 for native BTC payments.`,
-      );
-    }
-    if (data.updated) {
-      lines.push(`Network statistics as of ${data.updated}.`);
-    }
-  }
-
   const pts = data.chart?.points || [];
   if (pts.length >= 2) {
     const first = pts[0].close;
@@ -294,18 +266,7 @@ function renderDefiTable(section, data) {
     return;
   }
 
-  if (mode === "lightning") {
-    body.innerHTML = rows
-      .map(
-        (r) => `
-      <tr>
-        <td>${r.metric}</td>
-        <td class="mono">${r.unit === "BTC" ? fmtBtc(r.value) : fmtNum(r.value, r.unit === "ppm" ? 0 : 2)}${r.unit && r.unit !== "BTC" ? " " + r.unit : ""}</td>
-      </tr>`,
-      )
-      .join("");
-    return;
-  }
+
 
   body.innerHTML = rows
     .map(

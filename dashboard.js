@@ -93,11 +93,109 @@ const MENU_TREE = {
     accent: "#10b981",
     accentDim: "rgba(16, 185, 129, 0.18)",
     children: {
-      network: {
-        label: "Network",
+      overview: {
+        label: "Overview",
         accent: "#10b981",
         accentDim: "rgba(16, 185, 129, 0.18)",
-        onShow: () => window.refreshOnchainData?.(),
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#10b981",
+            accentDim: "rgba(16, 185, 129, 0.18)",
+            onShow: () => window.loadOnchainSection?.("overview"),
+          },
+        },
+      },
+      network: {
+        label: "Network",
+        accent: "#059669",
+        accentDim: "rgba(5, 150, 105, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#059669",
+            accentDim: "rgba(5, 150, 105, 0.18)",
+            onShow: () => window.loadOnchainSection?.("network"),
+          },
+        },
+      },
+      mining: {
+        label: "Mining",
+        accent: "#34d399",
+        accentDim: "rgba(52, 211, 153, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#34d399",
+            accentDim: "rgba(52, 211, 153, 0.18)",
+            onShow: () => window.loadOnchainSection?.("mining"),
+          },
+        },
+      },
+      fees: {
+        label: "Fees",
+        accent: "#6ee7b7",
+        accentDim: "rgba(110, 231, 183, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#6ee7b7",
+            accentDim: "rgba(110, 231, 183, 0.18)",
+            onShow: () => window.loadOnchainSection?.("fees"),
+          },
+        },
+      },
+      transactions: {
+        label: "Transactions",
+        accent: "#14b8a6",
+        accentDim: "rgba(20, 184, 166, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#14b8a6",
+            accentDim: "rgba(20, 184, 166, 0.18)",
+            onShow: () => window.loadOnchainSection?.("transactions"),
+          },
+        },
+      },
+      supply: {
+        label: "Supply",
+        accent: "#0d9488",
+        accentDim: "rgba(13, 148, 136, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#0d9488",
+            accentDim: "rgba(13, 148, 136, 0.18)",
+            onShow: () => window.loadOnchainSection?.("supply"),
+          },
+        },
+      },
+      addresses: {
+        label: "Addresses",
+        accent: "#2dd4bf",
+        accentDim: "rgba(45, 212, 191, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#2dd4bf",
+            accentDim: "rgba(45, 212, 191, 0.18)",
+            onShow: () => window.loadOnchainSection?.("addresses"),
+          },
+        },
+      },
+      lightning: {
+        label: "Lightning",
+        accent: "#facc15",
+        accentDim: "rgba(250, 204, 21, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#facc15",
+            accentDim: "rgba(250, 204, 21, 0.18)",
+            onShow: () => window.loadOnchainSection?.("lightning"),
+          },
+        },
       },
     },
   },
@@ -518,19 +616,6 @@ const MENU_TREE = {
           },
         },
       },
-      lightning: {
-        label: "Lightning",
-        accent: "#facc15",
-        accentDim: "rgba(250, 204, 21, 0.18)",
-        children: {
-          overview: {
-            label: "Overview",
-            accent: "#facc15",
-            accentDim: "rgba(250, 204, 21, 0.18)",
-            onShow: () => window.loadDefiSection?.("lightning"),
-          },
-        },
-      },
     },
   },
   macro: {
@@ -739,7 +824,7 @@ const DASHBOARD_META = {
   },
   onchain: {
     title: "On Chain",
-    subtitle: "Bitcoin mainnet · Mempool · Mining",
+    subtitle: "Bitcoin mainnet · Mempool · Blockchain charts",
     pageTitle: "On Chain — Live Dashboard",
   },
   exchanges: {
@@ -774,7 +859,7 @@ const DASHBOARD_META = {
   },
   defi: {
     title: "Bitcoin DeFi",
-    subtitle: "Wrapped BTC · Stables · Lightning",
+    subtitle: "Wrapped BTC · Stables · Bridges · Lending",
     pageTitle: "Bitcoin DeFi — Live Dashboard",
   },
   macro: {
@@ -791,7 +876,24 @@ const DASHBOARD_META = {
 
 const LEGACY_L2 = {
   market: { st1: "overview", st2: "orderbook", overview: "overview", orderbook: "orderbook" },
-  onchain: { st1: "network", network: "network" },
+  onchain: {
+    st1: "overview",
+    st2: "network",
+    st3: "mining",
+    st4: "fees",
+    st5: "transactions",
+    st6: "supply",
+    st7: "addresses",
+    st8: "lightning",
+    overview: "overview",
+    network: "network",
+    mining: "mining",
+    fees: "fees",
+    transactions: "transactions",
+    supply: "supply",
+    addresses: "addresses",
+    lightning: "lightning",
+  },
   exchanges: {
     st1: "overview",
     st2: "spot",
@@ -847,14 +949,12 @@ const LEGACY_L2 = {
     st4: "lending",
     st5: "liquidity",
     st6: "staking",
-    st7: "lightning",
     wrapped: "wrapped",
     stables: "stables",
     bridges: "bridges",
     lending: "lending",
     liquidity: "liquidity",
     staking: "staking",
-    lightning: "lightning",
     hub: "wrapped",
   },
   macro: {
@@ -919,8 +1019,15 @@ const LEGACY_L3 = {
   "defi/lending": { overview: "overview" },
   "defi/liquidity": { overview: "overview" },
   "defi/staking": { overview: "overview" },
-  "defi/lightning": { overview: "overview" },
   "defi/hub": { panel: "overview" },
+  "onchain/overview": { overview: "overview" },
+  "onchain/network": { overview: "overview" },
+  "onchain/mining": { overview: "overview" },
+  "onchain/fees": { overview: "overview" },
+  "onchain/transactions": { overview: "overview" },
+  "onchain/supply": { overview: "overview" },
+  "onchain/addresses": { overview: "overview" },
+  "onchain/lightning": { overview: "overview" },
   "macro/rates": { overview: "overview" },
   "macro/dollar": { overview: "overview" },
   "macro/liquidity": { overview: "overview" },
@@ -1325,8 +1432,8 @@ const MenuController = {
     if (treasuryMeta) treasuryMeta.hidden = l1 !== "treasury";
     if (dashboardMeta) dashboardMeta.hidden = !usesDashboardMeta.includes(l1);
 
-    if (l1 === "onchain" && typeof loadBlockchainData === "function") {
-      loadBlockchainData();
+    if (l1 === "onchain" && typeof loadOnchainDashboard === "function") {
+      loadOnchainDashboard();
     }
     if (l1 === "etf" && typeof loadEtfDashboard === "function") loadEtfDashboard();
     if (l1 === "treasury" && typeof loadTreasuryDashboard === "function") {

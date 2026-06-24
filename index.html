@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=30" />
+    <link rel="stylesheet" href="styles.css?v=31" />
   </head>
   <body>
     <div class="app app--compact">
@@ -246,13 +246,210 @@
       </div>
 
       <div id="dashboard-onchain" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="onchain" data-l2="network">
+        <div class="menu-screen" data-l1="onchain" data-l2="overview" data-l3="overview">
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-overview-heroes"></section>
+          <section class="panel chain-panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-overview">Network Snapshot</h2>
+              <span class="panel-meta" id="onchain-overview-update">Loading…</span>
+            </div>
+            <div class="chain-grid" id="onchain-overview-grid"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-hashrate-chart" id="onchain-overview-chart-title">Hash Rate</h2>
+              <span class="panel-meta">30-day trend</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-overview-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-tx-chart" id="onchain-overview-chart2-title">Transactions</h2>
+              <span class="panel-meta">30-day trend</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-overview-chart2" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-overview-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="network" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-network-heroes"></section>
           <section class="panel chain-panel">
             <div class="panel-header">
               <h2 data-help-key="onchain-network">Network Metrics</h2>
-              <span class="panel-meta" id="onchain-update">Loading…</span>
+              <span class="panel-meta" id="onchain-network-update">Loading…</span>
             </div>
-            <div class="chain-grid" id="onchain-grid"></div>
+            <div class="chain-grid" id="onchain-network-grid"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-network-table">Epoch &amp; Chain</h2>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table onchain-metrics-table">
+                <thead><tr><th>Metric</th><th>Value</th><th>Detail</th></tr></thead>
+                <tbody id="onchain-network-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-diff-chart" id="onchain-network-chart-title">Difficulty Adjustments</h2>
+              <span class="panel-meta">90-day history</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-network-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-network-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="mining" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-mining-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-pools-table">Mining Pool Share (1w)</h2>
+              <span class="panel-meta" id="onchain-mining-update">Mempool.space</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table onchain-pool-table">
+                <thead><tr><th>Pool</th><th>Blocks</th><th>Share</th></tr></thead>
+                <tbody id="onchain-mining-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-hashrate-chart" id="onchain-mining-chart-title">Hash Rate</h2>
+              <span class="panel-meta">1-week</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-mining-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-mining-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="fees" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-fees-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-mempool-blocks">Projected Mempool Blocks</h2>
+              <span class="panel-meta" id="onchain-fees-update">Mempool.space</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table onchain-mempool-blocks-table">
+                <thead><tr><th>Block</th><th>Median Fee</th><th>Composition</th></tr></thead>
+                <tbody id="onchain-fees-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-fee-chart" id="onchain-fees-chart-title">Transaction Fees</h2>
+              <span class="panel-meta">30-day</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-fees-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-fees-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="transactions" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-transactions-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-tx-chart" id="onchain-transactions-chart-title">Confirmed Transactions</h2>
+              <span class="panel-meta" id="onchain-transactions-update">Blockchain.info</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-transactions-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-addresses-chart" id="onchain-transactions-chart2-title">Unique Addresses</h2>
+              <span class="panel-meta">90-day</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-transactions-chart2" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-transactions-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="supply" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-supply-heroes"></section>
+          <div id="onchain-supply-halving"></div>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-supply-chart" id="onchain-supply-chart-title">Circulating Supply</h2>
+              <span class="panel-meta" id="onchain-supply-update">Blockchain.info</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-supply-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-supply-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="addresses" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-addresses-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-addresses-table">Address Activity</h2>
+              <span class="panel-meta" id="onchain-addresses-update">Blockchain.info</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table onchain-metrics-table">
+                <thead><tr><th>Metric</th><th>Value</th><th>Detail</th></tr></thead>
+                <tbody id="onchain-addresses-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-addresses-chart" id="onchain-addresses-chart-title">Unique Addresses</h2>
+              <span class="panel-meta">90-day</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-addresses-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-tx-chart" id="onchain-addresses-chart2-title">Transactions</h2>
+              <span class="panel-meta">90-day</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-addresses-chart2" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-addresses-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="onchain" data-l2="lightning" data-l3="overview" hidden>
+          <section class="deriv-hero-strip onchain-hero-strip" id="onchain-lightning-heroes"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-lightning-table">Lightning Network</h2>
+              <span class="panel-meta" id="onchain-lightning-update">Mempool.space</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table onchain-lightning-table">
+                <thead><tr><th>Metric</th><th>Value</th><th>Detail</th></tr></thead>
+                <tbody id="onchain-lightning-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="onchain-lightning-chart" id="onchain-lightning-chart-title">Network Snapshot</h2>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="onchain-lightning-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="onchain-analysis">On-Chain Analysis</h2></div>
+            <div class="stats-commentary" id="onchain-lightning-commentary"><p>Loading…</p></div>
           </section>
         </div>
       </div>
@@ -1594,25 +1791,6 @@
             <div class="stats-commentary" id="defi-staking-commentary"><p>Loading…</p></div>
           </section>
         </div>
-        <div class="menu-screen" data-l1="defi" data-l2="lightning" data-l3="overview" hidden>
-          <section class="deriv-hero-strip defi-hero-strip" id="defi-lightning-heroes"></section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="defi-lightning-table">Lightning Network</h2>
-              <span class="panel-meta" id="defi-lightning-update">mempool.space</span>
-            </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table defi-markets-table defi-lightning-table">
-                <thead><tr><th data-help-key="defi-col-metric">Metric</th><th data-help-key="defi-col-value">Value</th></tr></thead>
-                <tbody id="defi-lightning-table-body"></tbody>
-              </table>
-            </div>
-          </section>
-          <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-network-analysis">Network Analysis</h2></div>
-            <div class="stats-commentary" id="defi-lightning-commentary"><p>Loading…</p></div>
-          </section>
-        </div>
       </div>
 
       <div id="dashboard-macro" class="dashboard-view" hidden>
@@ -1892,8 +2070,8 @@
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=4"></script>
     <script src="swr-cache.js?v=3"></script>
-    <script src="help.js?v=27"></script>
-    <script src="dashboard.js?v=23"></script>
+    <script src="help.js?v=28"></script>
+    <script src="dashboard.js?v=24"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=9"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -1902,8 +2080,9 @@
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>
+    <script src="onchain.js?v=1"></script>
     <script src="news.js?v=3"></script>
     <script src="indicators.js?v=3"></script>
-    <script src="app.js?v=16"></script>
+    <script src="app.js?v=17"></script>
   </body>
 </html>

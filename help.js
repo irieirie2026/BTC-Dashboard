@@ -63,9 +63,65 @@ const METRIC_HELP = {
     title: "Recommended Fee Rate",
     body: "Suggested transaction fees in satoshis per virtual byte (sat/vB) for timely confirmation. Fast targets quick inclusion; economy is cheaper but slower. Set by mempool.space based on current congestion.",
   },
+  "onchain-overview": {
+    title: "On-Chain Overview",
+    body: "Glassnode-style network health dashboard: live snapshot metrics plus 30-day hashrate and transaction trends from Mempool.space and Blockchain.info.",
+  },
   "onchain-network": {
     title: "Network Metrics",
     body: "Live Bitcoin mainnet statistics from Mempool.space and Blockchain.info: block height, hash rate, difficulty, mempool backlog, fee rates, 24h transaction count, circulating supply, and the next difficulty adjustment.",
+  },
+  "onchain-analysis": {
+    title: "On-Chain Analysis",
+    body: "Auto-generated briefing synthesizing current network, mining, fee, and supply conditions. Advanced entity-adjusted metrics (exchange flows, MVRV, SOPR) require a paid analytics API.",
+  },
+  "onchain-hashrate-chart": {
+    title: "Hash Rate Trend",
+    body: "Historical network hash rate — total mining compute securing Bitcoin. Rising hashrate signals miner investment; drops can follow price stress or seasonal migration.",
+  },
+  "onchain-tx-chart": {
+    title: "Transaction Trend",
+    body: "Confirmed Bitcoin transactions per day. Spikes often coincide with volatility, airdrops, or inscription activity; sustained highs indicate heavy base-layer usage.",
+  },
+  "onchain-diff-chart": {
+    title: "Difficulty Adjustments",
+    body: "Percent change at each mining difficulty retarget (~every 2016 blocks). Keeps average block time near 10 minutes as hash rate shifts.",
+  },
+  "onchain-pools-table": {
+    title: "Mining Pool Share",
+    body: "Blocks mined per pool over the last week (Mempool.space). Concentration among top pools is a decentralization watch item — no single pool should dominate long-term.",
+  },
+  "onchain-mempool-blocks": {
+    title: "Projected Mempool Blocks",
+    body: "How the current mempool backlog is expected to clear across upcoming blocks, including median fee rates and transaction counts per projected block.",
+  },
+  "onchain-fee-chart": {
+    title: "Fee Trend",
+    body: "Total transaction fees paid to miners per day. Fee spikes reflect congestion and competition for block space during high-demand periods.",
+  },
+  "onchain-supply-chart": {
+    title: "Supply Trend",
+    body: "Circulating BTC over time approaching the 21 million hard cap. Issuance slows at each halving until block subsidies approach zero (~2140).",
+  },
+  "onchain-addresses-chart": {
+    title: "Unique Addresses",
+    body: "Distinct addresses active per day — a proxy for network participation. Not equal to unique users (one person may use many addresses).",
+  },
+  "onchain-addresses-table": {
+    title: "Address Activity",
+    body: "Summary of on-chain participation metrics. Entity-adjusted cohort analysis (Glassnode-style) is not available via free public APIs.",
+  },
+  "onchain-network-table": {
+    title: "Epoch & Chain",
+    body: "Difficulty epoch progress, blocks until the next adjustment, mempool backlog, and supply mined to date.",
+  },
+  "onchain-lightning-table": {
+    title: "Lightning Network",
+    body: "Layer-2 payment network statistics: BTC locked in channels, node and channel counts, and routing fee parameters. Moved from DeFi — Lightning is native Bitcoin infrastructure.",
+  },
+  "onchain-lightning-chart": {
+    title: "Lightning Snapshot",
+    body: "Normalized view of capacity, nodes, and channels for quick comparison of Lightning network scale.",
   },
   "onchain-txs": {
     title: "On-Chain Transactions (24h)",

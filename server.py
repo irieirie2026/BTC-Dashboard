@@ -2078,10 +2078,6 @@ DEFILLAMA_API = "https://api.llama.fi"
 STABLECOINS_API = "https://stablecoins.llama.fi"
 COINS_API = "https://coins.llama.fi"
 YIELDS_API = "https://yields.llama.fi"
-MEMPOOL_LIGHTNING_URL = (
-    "https://mempool.space/api/v1/lightning/statistics/latest"
-)
-
 WRAPPED_BTC_SLUGS = [
     "wbtc",
     "coinbase-bridge",
@@ -3697,71 +3693,6 @@ def _fetch_defi_staking():
     }
 
 
-def _fetch_defi_lightning():
-    data = fetch_json(MEMPOOL_LIGHTNING_URL)
-    latest = data.get("latest") or {}
-
-    capacity_btc = (_as_float(latest.get("total_capacity")) or 0) / 1e8
-    avg_cap_btc = (_as_float(latest.get("avg_capacity")) or 0) / 1e8
-    med_cap_btc = (_as_float(latest.get("med_capacity")) or 0) / 1e8
-
-    heroes = [
-        {
-            "name": "Network Capacity",
-            "value": capacity_btc,
-            "changePct": None,
-            "sub": "Total BTC locked in channels",
-        },
-        {
-            "name": "Nodes",
-            "value": _as_float(latest.get("node_count")),
-            "changePct": None,
-            "sub": f"{_as_float(latest.get('tor_nodes')) or 0:.0f} Tor · "
-                    f"{_as_float(latest.get('clearnet_nodes')) or 0:.0f} clearnet",
-        },
-        {
-            "name": "Channels",
-            "value": _as_float(latest.get("channel_count")),
-            "changePct": None,
-            "sub": f"Avg fee {(_as_float(latest.get('avg_fee_rate')) or 0):.0f} ppm",
-        },
-        {
-            "name": "Median Channel",
-            "value": med_cap_btc,
-            "changePct": None,
-            "sub": f"Avg {avg_cap_btc:.4f} BTC per channel",
-        },
-    ]
-
-    table = [
-        {"metric": "Total capacity", "value": capacity_btc, "unit": "BTC"},
-        {"metric": "Node count", "value": _as_float(latest.get("node_count")), "unit": ""},
-        {"metric": "Channel count", "value": _as_float(latest.get("channel_count")), "unit": ""},
-        {"metric": "Tor nodes", "value": _as_float(latest.get("tor_nodes")), "unit": ""},
-        {"metric": "Clearnet nodes", "value": _as_float(latest.get("clearnet_nodes")), "unit": ""},
-        {"metric": "Avg capacity", "value": avg_cap_btc, "unit": "BTC"},
-        {"metric": "Median capacity", "value": med_cap_btc, "unit": "BTC"},
-        {"metric": "Avg fee rate", "value": _as_float(latest.get("avg_fee_rate")), "unit": "ppm"},
-        {"metric": "Median fee rate", "value": _as_float(latest.get("med_fee_rate")), "unit": "ppm"},
-        {"metric": "Avg base fee", "value": _as_float(latest.get("avg_base_fee_mtokens")), "unit": "mtokens"},
-    ]
-
-    updated = latest.get("added") or ""
-
-    return {
-        "section": "lightning",
-        "title": "Lightning Network",
-        "heroes": heroes,
-        "table": table,
-        "chart": {"points": [], "label": "Network snapshot"},
-        "chartLabel": "Lightning Network",
-        "tableMode": "lightning",
-        "updated": updated,
-        "source": "mempool.space",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
 DEFI_FETCHERS = {
     "wrapped": _fetch_defi_wrapped,
     "stables": _fetch_defi_stables,
@@ -3769,7 +3700,6 @@ DEFI_FETCHERS = {
     "lending": _fetch_defi_lending,
     "staking": _fetch_defi_staking,
     "liquidity": _fetch_defi_liquidity,
-    "lightning": _fetch_defi_lightning,
 }
 
 
