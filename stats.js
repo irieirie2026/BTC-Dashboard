@@ -250,6 +250,147 @@ function computeMarkov(returns, dates) {
   };
 }
 
+const PL_GENESIS_MS = Date.UTC(2009, 0, 3);
+const PL_A = Math.pow(10, -16.493);
+const PL_N = 5.68;
+const PL_BEAR_MULT = 0.4;
+const PL_BULL_MULT = 1.5;
+
+const PL_RELATIONS = [
+  { link: "Adoption", relation: "Addresses ∝ t³", note: "Curbing mechanisms shift S-curves to power-law adoption" },
+  { link: "Metcalfe", relation: "Price ∝ Addresses²", note: "Network value scales with the square of users (~1.95 empirically)" },
+  { link: "Mining", relation: "Hash rate ∝ Price²", note: "Difficulty adjustment keeps miners near breakeven" },
+  { link: "Consolidated", relation: "Price ∝ t⁶", note: "Santostasi PLT fair-value line used in this dashboard" },
+  { link: "Security loop", relation: "Hash rate ∝ t¹²", note: "Higher security attracts users in the feedback cycle" },
+];
+
+const PL_HORIZONS = [
+  { key: "1y", days: 365, label: "1 year" },
+  { key: "5y", days: 365 * 5, label: "5 years" },
+  { key: "10y", days: 365 * 10, label: "10 years" },
+  { key: "25y", days: 365 * 25, label: "25 years" },
+];
+
+const PL_MILESTONES = [100_000, 250_000, 500_000, 1_000_000, 3_000_000, 10_000_000];
+
+function daysSinceGenesis(ts) {
+  return Math.max(1, (ts - PL_GENESIS_MS) / 86_400_000);
+}
+
+function powerLawFair(days, a = PL_A, n = PL_N) {
+  return a * Math.pow(days, n);
+}
+
+function powerLawDaysForPrice(price, a = PL_A, n = PL_N) {
+  if (price <= 0) return null;
+  return Math.pow(price / a, 1 / n);
+}
+
+function fmtPriceCompact(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  const v = Number(n);
+  if (v >= 1e9) return "$" + (v / 1e9).toFixed(2) + "B";
+  if (v >= 1e6) return "$" + (v / 1e6).toFixed(2) + "M";
+  if (v >= 1e3) return "$" + (v / 1e3).toFixed(1) + "K";
+  return "$" + v.toLocaleString("en-US", { maximumFractionDigits: 0 });
+}
+
+function computePowerLaw(dayRows) {
+  const points = dayRows.map((d) => {
+    const ds = daysSinceGenesis(d.date);
+    const fair = powerLawFair(ds);
+    return {
+      date: d.date,
+      close: d.close,
+      days: ds,
+      fair,
+      support: fair * PL_BEAR_MULT,
+      resistance: fair * PL_BULL_MULT,
+      ratio: d.close / fair,
+      logDays: Math.log10(ds),
+      logPrice: Math.log10(d.close),
+    };
+  });
+
+  const xs = points.map((p) => Math.log(p.days));
+  const ys = points.map((p) => Math.log(p.close));
+  const meanX = mean(xs);
+  const meanY = mean(ys);
+  let num = 0;
+  let den = 0;
+  for (let i = 0; i < points.length; i++) {
+    num += (xs[i] - meanX) * (ys[i] - meanY);
+    den += (xs[i] - meanX) ** 2;
+  }
+  const fitN = den ? num / den : PL_N;
+  const fitLogA = meanY - fitN * meanX;
+  const fitA = Math.exp(fitLogA);
+  const ssRes = ys.reduce((s, y, i) => s + (y - (fitLogA + fitN * xs[i])) ** 2, 0);
+  const ssTot = ys.reduce((s, y) => s + (y - meanY) ** 2, 0);
+  const r2 = ssTot ? 1 - ssRes / ssTot : 0;
+
+  const ratios = points.map((p) => p.ratio).filter((r) => r > 0 && Number.isFinite(r));
+  const supportMult = Math.max(0.25, Math.min(0.55, percentile(ratios, 10)));
+  const resistMult = Math.max(1.6, Math.min(4.5, percentile(ratios, 90)));
+
+  points.forEach((p) => {
+    p.support = p.fair * supportMult;
+    p.resistance = p.fair * resistMult;
+  });
+
+  const last = points[points.length - 1];
+  const deviationPct = (last.ratio - 1) * 100;
+  let bandZone = "Fair-value corridor";
+  let bandClass = "";
+  if (last.ratio <= supportMult * 1.08) {
+    bandZone = "Near support";
+    bandClass = "negative";
+  } else if (last.ratio >= resistMult * 0.92) {
+    bandZone = "Near resistance";
+    bandClass = "positive";
+  }
+
+  const forecasts = PL_HORIZONS.map((h) => {
+    const futureDays = last.days + h.days;
+    const fair = powerLawFair(futureDays);
+    return {
+      ...h,
+      date: last.date + h.days * 86_400_000,
+      neutral: fair,
+      bear: fair * PL_BEAR_MULT,
+      bull: fair * PL_BULL_MULT,
+    };
+  });
+
+  const milestones = PL_MILESTONES.map((price) => {
+    const d = powerLawDaysForPrice(price);
+    const date = d ? PL_GENESIS_MS + d * 86_400_000 : null;
+    return {
+      price,
+      days: d,
+      date,
+      reached: last.close >= price,
+    };
+  });
+
+  return {
+    genesisMs: PL_GENESIS_MS,
+    constants: { A: PL_A, n: PL_N, formula: "Price = A × (days since Genesis)^n" },
+    fit: { A: fitA, n: fitN, r2 },
+    supportMult,
+    resistMult,
+    points,
+    last,
+    deviationPct,
+    bandZone,
+    bandClass,
+    forecasts,
+    milestones,
+    relations: PL_RELATIONS,
+    sampleDays: points.length,
+  };
+}
+
 function extendRiskVar(base, ethReturns) {
   const { returns, days } = base;
   const vol30 =
@@ -443,6 +584,7 @@ function computeStats(days) {
     risk: null,
     var: null,
     markov: null,
+    powerlaw: null,
   };
 }
 
@@ -664,6 +806,7 @@ function applyStatsBundle(bundle) {
   renderRiskScreen();
   renderVarScreen();
   renderMarkovScreen();
+  renderPowerLawScreen();
 }
 
 async function fetchBtcStats() {
@@ -690,6 +833,7 @@ async function fetchBtcStats() {
           base.returns,
           base.days.slice(1).map((d) => d.date),
         );
+        base.powerlaw = computePowerLaw(base.days);
         base.fetchedAt = new Date().toISOString();
         return base;
       },
@@ -1110,6 +1254,350 @@ function paintMarkovRegimeChart(m, w, h) {
   drawTimeAxisLabels(ctx, w, h, pad, m.history.length, (i) =>
     fmtChartDate(m.history[i]?.date, m.history.length > 120),
   );
+}
+
+function buildPowerLawCommentary(s) {
+  const pl = s.powerlaw;
+  if (!pl) return ["Power Law data unavailable."];
+  const lines = [];
+  const dev = pl.deviationPct;
+  const devWord =
+    Math.abs(dev) < 8
+      ? "roughly aligned with"
+      : dev > 0
+        ? "trading above"
+        : "trading below";
+
+  lines.push(
+    `Giovanni Santostasi's Bitcoin Power Law Theory (PLT) models long-run price as ` +
+      `A × (days since the Jan 3, 2009 Genesis Block)^n with A ≈ 10⁻¹⁶·⁴⁹³ and n ≈ 5.68 ` +
+      `(source: bitcoinpower.law). Over ${pl.sampleDays} daily closes (${fmtDate(s.startDate)} → ` +
+      `${fmtDate(s.endDate)}), log–log regression R² is ${(pl.fit.r2 * 100).toFixed(2)}%.`,
+  );
+
+  lines.push(
+    `Spot $${fmtPrice(pl.last.close)} is ${devWord} the fair-value line at ` +
+      `${fmtPriceCompact(pl.last.fair)} (${dev >= 0 ? "+" : ""}${dev.toFixed(1)}% deviation). ` +
+      `Empirical support/resistance multipliers: ${pl.supportMult.toFixed(2)}× fair ` +
+      `(${fmtPriceCompact(pl.last.support)}) · ${pl.resistMult.toFixed(2)}× fair ` +
+      `(${fmtPriceCompact(pl.last.resistance)}). Current read: ${pl.bandZone}.`,
+  );
+
+  lines.push(
+    `PLT treats Bitcoin as a scale-invariant system: price, hash rate, and adoption interlock ` +
+      `through feedback loops (users → price → mining → security → users). Bubbles punctuate ` +
+      `the trend but historically revert toward the power-law corridor — not exponential forever.`,
+  );
+
+  const next = pl.forecasts[0];
+  if (next) {
+    lines.push(
+      `Neutral 1-year fair value: ${fmtPriceCompact(next.neutral)} (${fmtDate(next.date)}). ` +
+        `Scenario band: bear ${fmtPriceCompact(next.bear)} (−60%) · bull ${fmtPriceCompact(next.bull)} (+50%), ` +
+        `matching bitcoinpower.law calculator assumptions.`,
+    );
+  }
+
+  const pending = pl.milestones.filter((m) => !m.reached).slice(0, 2);
+  if (pending.length) {
+    lines.push(
+      `Next model milestones: ${pending
+        .map((m) => `${fmtPriceCompact(m.price)} ~${fmtDate(m.date)}`)
+        .join(" · ")}. Past performance of the curve is not a guarantee.`,
+    );
+  }
+
+  return lines;
+}
+
+function paintPowerLawBandChart(pl, w, h) {
+  const canvas = stEl("pl-band-chart");
+  if (!canvas || !pl.points.length) return;
+
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  const pad = { top: 18, right: 20, bottom: 36, left: 62 };
+  const chartW = w - pad.left - pad.right;
+  const chartH = h - pad.top - pad.bottom;
+  const pts = pl.points;
+  const yMax = Math.max(...pts.map((p) => Math.max(p.close, p.resistance)));
+  const yMin = Math.min(...pts.map((p) => Math.min(p.close, p.support)));
+  const ySpan = Math.log10(yMax) - Math.log10(Math.max(yMin, 1));
+  const yMap = (v) => pad.top + chartH - ((Math.log10(v) - Math.log10(yMin)) / ySpan) * chartH;
+
+  ctx.fillStyle = "rgba(56, 189, 248, 0.08)";
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
+    const y = yMap(p.resistance);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  for (let i = pts.length - 1; i >= 0; i--) {
+    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
+    ctx.lineTo(x, yMap(pts[i].support));
+  }
+  ctx.closePath();
+  ctx.fill();
+
+  const drawLine = (key, color, width = 1.5) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    pts.forEach((p, i) => {
+      const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
+      const y = yMap(p[key]);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  };
+
+  drawLine("support", "rgba(14, 203, 129, 0.65)", 1);
+  drawLine("fair", "rgba(240, 185, 11, 0.9)", 2);
+  drawLine("resistance", "rgba(246, 70, 93, 0.65)", 1);
+
+  ctx.strokeStyle = "#e8eaed";
+  ctx.lineWidth = 1.75;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
+    const y = yMap(p.close);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  ctx.fillStyle = "#7d8799";
+  ctx.font = "10px IBM Plex Mono, monospace";
+  ctx.textAlign = "right";
+  ctx.fillText(fmtPriceCompact(yMax), pad.left - 6, pad.top + 10);
+  ctx.fillText(fmtPriceCompact(yMin), pad.left - 6, h - pad.bottom);
+  drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
+    fmtChartDate(pts[i]?.date, pts.length > 120),
+  );
+}
+
+function paintPowerLawLogChart(pl, w, h) {
+  const canvas = stEl("pl-log-chart");
+  if (!canvas || !pl.points.length) return;
+
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  const pad = { top: 18, right: 20, bottom: 40, left: 52 };
+  const chartW = w - pad.left - pad.right;
+  const chartH = h - pad.top - pad.bottom;
+  const pts = pl.points;
+  const xMin = Math.min(...pts.map((p) => p.logDays));
+  const xMax = Math.max(...pts.map((p) => p.logDays));
+  const yMin = Math.min(...pts.map((p) => p.logPrice));
+  const yMax = Math.max(...pts.map((p) => p.logPrice));
+  const xSpan = xMax - xMin || 1;
+  const ySpan = yMax - yMin || 1;
+  const xMap = (v) => pad.left + ((v - xMin) / xSpan) * chartW;
+  const yMap = (v) => pad.top + chartH - ((v - yMin) / ySpan) * chartH;
+
+  ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const x = xMap(p.logDays);
+    const y = yMap(Math.log10(p.fair));
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  const step = Math.max(1, Math.floor(pts.length / 220));
+  pts.forEach((p, i) => {
+    if (i % step !== 0 && i !== pts.length - 1) return;
+    const x = xMap(p.logDays);
+    const y = yMap(p.logPrice);
+    ctx.fillStyle = i === pts.length - 1 ? "#f0b90b" : "rgba(56, 189, 248, 0.55)";
+    ctx.beginPath();
+    ctx.arc(x, y, i === pts.length - 1 ? 3.5 : 2, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.fillStyle = "#7d8799";
+  ctx.font = "10px IBM Plex Mono, monospace";
+  ctx.textAlign = "center";
+  ctx.fillText("log₁₀(days since Genesis)", pad.left + chartW / 2, h - 8);
+  ctx.save();
+  ctx.translate(12, pad.top + chartH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText("log₁₀(price)", 0, 0);
+  ctx.restore();
+}
+
+function paintPowerLawRatioChart(pl, w, h) {
+  const canvas = stEl("pl-ratio-chart");
+  if (!canvas || !pl.points.length) return;
+
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  const chartW = w - pad.left - pad.right;
+  const chartH = h - pad.top - pad.bottom;
+  const pts = pl.points;
+  const ratios = pts.map((p) => p.ratio);
+  const yMax = Math.max(...ratios, pl.resistMult * 1.05, 1.2);
+  const yMin = Math.min(...ratios, pl.supportMult * 0.95, 0.8);
+  const ySpan = yMax - yMin || 0.1;
+  const yMap = (v) => pad.top + chartH - ((v - yMin) / ySpan) * chartH;
+
+  ctx.fillStyle = "rgba(14, 203, 129, 0.06)";
+  ctx.fillRect(pad.left, yMap(pl.resistMult), chartW, yMap(pl.supportMult) - yMap(pl.resistMult));
+
+  [pl.supportMult, 1, pl.resistMult].forEach((lvl, idx) => {
+    const y = yMap(lvl);
+    ctx.strokeStyle =
+      idx === 1 ? "rgba(240, 185, 11, 0.75)" : "rgba(125, 135, 153, 0.45)";
+    ctx.setLineDash(idx === 1 ? [5, 4] : []);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(pad.left + chartW, y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  ctx.strokeStyle = "#38bdf8";
+  ctx.lineWidth = 1.75;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
+    const y = yMap(p.ratio);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  ctx.fillStyle = "#7d8799";
+  ctx.font = "10px IBM Plex Mono, monospace";
+  ctx.textAlign = "right";
+  ctx.fillText(yMax.toFixed(2) + "×", pad.left - 6, pad.top + 10);
+  ctx.fillText(yMin.toFixed(2) + "×", pad.left - 6, h - pad.bottom);
+  drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
+    fmtChartDate(pts[i]?.date, pts.length > 120),
+  );
+}
+
+function renderPowerLawScreen() {
+  if (!statsData?.powerlaw) return;
+  const s = statsData;
+  const pl = s.powerlaw;
+
+  const set = (id, text, cls) => {
+    const node = stEl(id);
+    if (!node) return;
+    node.textContent = text;
+    if (cls) node.className = cls;
+  };
+
+  set("pl-spot", "$" + fmtPrice(pl.last.close), "deriv-hero-value");
+  set("pl-fair", fmtPriceCompact(pl.last.fair), "deriv-hero-value");
+  const devPrefix = pl.deviationPct >= 0 ? "+" : "";
+  set(
+    "pl-deviation",
+    devPrefix + pl.deviationPct.toFixed(1) + "%",
+    "deriv-hero-value " + (pl.deviationPct >= 0 ? "positive" : "negative"),
+  );
+  set("pl-band-zone", pl.bandZone, "deriv-hero-value " + pl.bandClass);
+
+  const updateEl = stEl("pl-update");
+  if (updateEl) {
+    updateEl.textContent =
+      `Santostasi PLT · R² ${(pl.fit.r2 * 100).toFixed(1)}% · Updated ` +
+      new Date().toLocaleTimeString("en-US", { hour12: false });
+  }
+
+  const paramsBody = stEl("pl-params-body");
+  if (paramsBody) {
+    paramsBody.innerHTML = `
+      <tr><td>Genesis Block</td><td class="mono">2009-01-03</td></tr>
+      <tr><td>Days since Genesis</td><td class="mono">${Math.round(pl.last.days).toLocaleString()}</td></tr>
+      <tr><td>Constant A</td><td class="mono">10⁻¹⁶·⁴⁹³ (${pl.constants.A.toExponential(3)})</td></tr>
+      <tr><td>Exponent n</td><td class="mono">${pl.constants.n}</td></tr>
+      <tr><td>Empirical fit n</td><td class="mono">${pl.fit.n.toFixed(3)}</td></tr>
+      <tr><td>Log–log R²</td><td class="mono">${(pl.fit.r2 * 100).toFixed(2)}%</td></tr>
+      <tr><td>Support multiplier</td><td class="mono">${pl.supportMult.toFixed(2)}× fair</td></tr>
+      <tr><td>Resistance multiplier</td><td class="mono">${pl.resistMult.toFixed(2)}× fair</td></tr>`;
+  }
+
+  const relBody = stEl("pl-relations-body");
+  if (relBody) {
+    relBody.innerHTML = pl.relations
+      .map(
+        (r) => `<tr>
+          <td>${r.link}</td>
+          <td class="mono">${r.relation}</td>
+          <td>${r.note}</td>
+        </tr>`,
+      )
+      .join("");
+  }
+
+  const forecastBody = stEl("pl-forecast-body");
+  if (forecastBody) {
+    forecastBody.innerHTML = pl.forecasts
+      .map(
+        (f) => `<tr>
+          <td>${f.label}</td>
+          <td class="mono">${fmtDate(f.date)}</td>
+          <td class="mono">${fmtPriceCompact(f.bear)}</td>
+          <td class="mono">${fmtPriceCompact(f.neutral)}</td>
+          <td class="mono">${fmtPriceCompact(f.bull)}</td>
+        </tr>`,
+      )
+      .join("");
+  }
+
+  const milestoneBody = stEl("pl-milestone-body");
+  if (milestoneBody) {
+    milestoneBody.innerHTML = pl.milestones
+      .map((m) => {
+        const status = m.reached
+          ? '<span class="positive">Reached</span>'
+          : m.date
+            ? fmtDate(m.date)
+            : "—";
+        return `<tr>
+          <td class="mono">${fmtPriceCompact(m.price)}</td>
+          <td class="mono">${m.days ? Math.round(m.days).toLocaleString() : "—"}</td>
+          <td class="mono">${status}</td>
+        </tr>`;
+      })
+      .join("");
+  }
+
+  const commentary = stEl("pl-commentary");
+  if (commentary) {
+    commentary.innerHTML = buildPowerLawCommentary(s)
+      .map((p) => `<p>${p}</p>`)
+      .join("");
+  }
+
+  const screen = document.querySelector('.menu-screen[data-l1="stats"][data-l2="powerlaw"]');
+  window.decorateHelpLabels?.(screen);
+
+  scheduleChartDraw(stEl("pl-band-chart"), (w, h) => paintPowerLawBandChart(pl, w, h));
+  scheduleChartDraw(stEl("pl-log-chart"), (w, h) => paintPowerLawLogChart(pl, w, h));
+  scheduleChartDraw(stEl("pl-ratio-chart"), (w, h) => paintPowerLawRatioChart(pl, w, h));
 }
 
 function renderMarkovScreen() {
@@ -1624,6 +2112,12 @@ function initStatsModule() {
         paintMarkovRegimeChart(statsData.markov, w, h),
       );
     }
+    if (statsData.powerlaw) {
+      const pl = statsData.powerlaw;
+      scheduleChartDraw(stEl("pl-band-chart"), (w, h) => paintPowerLawBandChart(pl, w, h));
+      scheduleChartDraw(stEl("pl-log-chart"), (w, h) => paintPowerLawLogChart(pl, w, h));
+      scheduleChartDraw(stEl("pl-ratio-chart"), (w, h) => paintPowerLawRatioChart(pl, w, h));
+    }
   });
 }
 
@@ -1660,6 +2154,14 @@ window.refreshVarCharts = function () {
 window.refreshMarkovCharts = function () {
   if (statsData?.markov) {
     renderMarkovScreen();
+  } else {
+    fetchBtcStats();
+  }
+};
+
+window.refreshPowerLawCharts = function () {
+  if (statsData?.powerlaw) {
+    renderPowerLawScreen();
   } else {
     fetchBtcStats();
   }

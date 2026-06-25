@@ -407,6 +407,54 @@ const METRIC_HELP = {
     title: "State Profile",
     body: "Historical time spent in each regime, self-transition probability P(stay), and expected duration 1/(1−P(stay)) in trading days.",
   },
+  "pl-spot": {
+    title: "Spot Price",
+    body: "Latest BTC/USDT daily close from Binance used against the Santostasi power-law fair-value line.",
+  },
+  "pl-fair": {
+    title: "Fair Value",
+    body: "Model price A × (days since Genesis)^n using Santostasi constants A = 10⁻¹⁶·⁴⁹³ and n = 5.68.",
+  },
+  "pl-deviation": {
+    title: "Deviation",
+    body: "Percent difference between spot and fair value. Positive = trading above the PLT line; negative = below.",
+  },
+  "pl-band-zone": {
+    title: "Band Position",
+    body: "Whether price sits near empirical support (low historical ratio), the fair corridor, or resistance (high ratio).",
+  },
+  "pl-band-chart": {
+    title: "Power Law Corridor",
+    body: "BTC price with Santostasi fair-value line and empirical support/resistance bands derived from historical price/fair ratios.",
+  },
+  "pl-log-chart": {
+    title: "Log–Log Phase Space",
+    body: "Log₁₀(price) vs log₁₀(days since Genesis). A straight diagonal confirms power-law scaling across orders of magnitude.",
+  },
+  "pl-ratio-chart": {
+    title: "Price / Fair Ratio",
+    body: "Spot divided by fair value over time. 1.0 is equilibrium; support and resistance multipliers mark historical extremes.",
+  },
+  "pl-params": {
+    title: "Model Parameters",
+    body: "Published Santostasi constants plus log–log regression fit and empirical band multipliers from the Binance sample.",
+  },
+  "pl-relations": {
+    title: "PLT Feedback Loop",
+    body: "Linked power laws in Santostasi theory: adoption t³, Metcalfe price ~ addresses², mining hash rate ~ price², consolidated price ~ t⁶.",
+  },
+  "pl-forecast": {
+    title: "Price Forecasts",
+    body: "Forward fair values at 1y/5y/10y/25y horizons with bear (−60%) and bull (+50%) scenarios per bitcoinpower.law.",
+  },
+  "pl-milestone": {
+    title: "Price Milestones",
+    body: "Dates when the PLT model first crosses selected price levels, inverted from Price = A × days^n.",
+  },
+  "pl-theory": {
+    title: "Power Law Theory",
+    body: "Overview of Giovanni Santostasi's Bitcoin Power Law Theory — scale invariance, feedback loops, bubbles, and limitations.",
+  },
   "open-interest": {
     title: "Open Interest",
     body: "Total number of outstanding futures contracts (long + short legs, not net). Rising OI with rising price often means new money entering longs; rising OI with falling price can mean new shorts. Measured in BTC and USDT notional.",

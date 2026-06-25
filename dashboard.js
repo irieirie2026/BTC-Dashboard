@@ -427,6 +427,19 @@ const MENU_TREE = {
           },
         },
       },
+      powerlaw: {
+        label: "Power Law",
+        accent: "#a78bfa",
+        accentDim: "rgba(167, 139, 250, 0.18)",
+        children: {
+          panel: {
+            label: "PLT Model",
+            accent: "#a78bfa",
+            accentDim: "rgba(167, 139, 250, 0.18)",
+            onShow: () => window.refreshPowerLawCharts?.(),
+          },
+        },
+      },
     },
   },
   tradfi: {
@@ -921,10 +934,12 @@ const LEGACY_L2 = {
     st2: "risk",
     st3: "var",
     st4: "markov",
+    st5: "powerlaw",
     statistics: "statistics",
     risk: "risk",
     var: "var",
     markov: "markov",
+    powerlaw: "powerlaw",
   },
   tradfi: {
     st1: "stocks",
@@ -1006,6 +1021,7 @@ const LEGACY_L3 = {
   "stats/risk": { panel: "panel" },
   "stats/var": { panel: "panel" },
   "stats/markov": { panel: "panel" },
+  "stats/powerlaw": { panel: "panel" },
   "tradfi/stocks": { overview: "indices", indices: "indices", companies: "companies" },
   "tradfi/futures": { overview: "overview" },
   "tradfi/rates": { overview: "overview" },
@@ -1259,6 +1275,7 @@ function refreshActiveDashboardCharts() {
       window.refreshRiskCharts?.();
       window.refreshVarCharts?.();
       window.refreshMarkovCharts?.();
+      window.refreshPowerLawCharts?.();
     },
     tradfi: () => window.loadTradfiDashboard?.(),
     defi: () => window.loadDefiDashboard?.(),

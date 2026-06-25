@@ -1419,6 +1419,174 @@
             </div>
           </section>
         </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="powerlaw" data-l3="panel" hidden>
+          <section class="deriv-hero-strip">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="pl-spot">Spot Price</span>
+              <span class="deriv-hero-value" id="pl-spot">—</span>
+              <span class="deriv-hero-sub">BTC/USDT close</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="pl-fair">Fair Value</span>
+              <span class="deriv-hero-value" id="pl-fair">—</span>
+              <span class="deriv-hero-sub">Santostasi PLT line</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="pl-deviation">Deviation</span>
+              <span class="deriv-hero-value" id="pl-deviation">—</span>
+              <span class="deriv-hero-sub">vs fair value</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="pl-band-zone">Band Position</span>
+              <span class="deriv-hero-value" id="pl-band-zone">—</span>
+              <span class="deriv-hero-sub">Support · fair · resistance</span>
+            </article>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="pl-band-chart">Power Law Corridor</h2>
+              <span class="panel-meta" id="pl-update">Loading…</span>
+            </div>
+            <div class="deriv-chart-wrap">
+              <canvas id="pl-band-chart" height="200"></canvas>
+            </div>
+          </section>
+          <div class="stats-charts-row stats-charts-row--markov">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-log-chart">Log–Log Phase Space</h2>
+                <span class="panel-meta">Price vs days since Genesis · straight line = power law</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="pl-log-chart" height="180"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-ratio-chart">Price / Fair Ratio</h2>
+                <span class="panel-meta">Historical stretch vs model equilibrium</span>
+              </div>
+              <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                <canvas id="pl-ratio-chart" height="180"></canvas>
+              </div>
+            </section>
+          </div>
+          <div class="stats-tables-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-params">Model Parameters</h2>
+                <span class="panel-meta">Giovanni Santostasi constants + empirical fit</span>
+              </div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table stats-metrics-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pl-params-body"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-relations">PLT Feedback Loop</h2>
+                <span class="panel-meta">Linked power laws in Santostasi theory</span>
+              </div>
+              <div class="deriv-table-wrap stats-metrics-table-wrap--scroll">
+                <table class="deriv-table">
+                  <thead>
+                    <tr>
+                      <th>Link</th>
+                      <th>Scaling</th>
+                      <th>Note</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pl-relations-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <div class="stats-tables-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-forecast">Price Forecasts</h2>
+                <span class="panel-meta">Bear −60% · Neutral fair · Bull +50% (bitcoinpower.law scenarios)</span>
+              </div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table">
+                  <thead>
+                    <tr>
+                      <th>Horizon</th>
+                      <th>Date</th>
+                      <th>Bear</th>
+                      <th>Neutral</th>
+                      <th>Bull</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pl-forecast-body"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="pl-milestone">Price Milestones</h2>
+                <span class="panel-meta">Estimated crossing dates from PLT inversion</span>
+              </div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table">
+                  <thead>
+                    <tr>
+                      <th>Target</th>
+                      <th>Days since Genesis</th>
+                      <th>Est. date / status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pl-milestone-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="pl-theory">Power Law Theory</h2>
+              <span class="panel-meta">Giovanni Santostasi · Bitcoin Power Law Theory (PLT)</span>
+            </div>
+            <div class="stats-commentary" id="pl-theory">
+              <p>
+                The Bitcoin Power Law Theory models BTC as a scale-invariant system governed by
+                <strong>Price ≈ A × (days since Genesis)<sup>n</sup></strong> with
+                <strong>A = 10<sup>−16.493</sup></strong> and <strong>n = 5.68</strong>
+                (Genesis Block: 3 Jan 2009). Santostasi argues Bitcoin behaves more like a growing
+                city or physical network than a mean-reverting asset: adoption, hash rate, and price
+                reinforce each other through feedback loops.
+              </p>
+              <p>
+                Key scaling relations in the PLT: addresses grow ~t³, price scales with addresses²
+                (Metcalfe), hash rate scales with price², yielding a consolidated price ~t⁶ fair
+                line. Bubbles punctuate the trend (Moore's law + halvings + security-driven FOMO)
+                but historically revert toward the corridor — scale invariance implies ETF inflows
+                extend the path rather than breaking it.
+              </p>
+              <p>
+                Research: <a href="https://giovannisantostasi.medium.com/the-bitcoin-power-law-theory-962dfaf99ee9" target="_blank" rel="noopener noreferrer">The Bitcoin Power Law Theory (Medium)</a>
+                · <a href="https://bitcoinpower.law/" target="_blank" rel="noopener noreferrer">bitcoinpower.law</a>.
+                Not financial advice — the curve can fail; use as a long-horizon framework only.
+              </p>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2>Model Commentary</h2>
+              <span class="panel-meta">Automated read on current stretch vs PLT</span>
+            </div>
+            <div class="stats-commentary" id="pl-commentary">
+              <p>Loading power law analysis…</p>
+            </div>
+          </section>
+        </div>
       </div>
 
       <div id="dashboard-tradfi" class="dashboard-view" hidden>
@@ -2070,12 +2238,12 @@
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=4"></script>
     <script src="swr-cache.js?v=3"></script>
-    <script src="help.js?v=28"></script>
-    <script src="dashboard.js?v=25"></script>
+    <script src="help.js?v=29"></script>
+    <script src="dashboard.js?v=26"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
-    <script src="stats.js?v=16"></script>
+    <script src="stats.js?v=17"></script>
     <script src="tradfi.js?v=9"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
