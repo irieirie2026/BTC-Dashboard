@@ -228,6 +228,47 @@ function setupCanvas(canvas, w, h) {
 
 const co = () => window.ChartOutlier;
 
+const TRS_LABEL_FONT = "10px IBM Plex Mono, monospace";
+const TRS_LABEL_INSET = 10;
+const TRS_LABEL_GAP = 16;
+
+function countryChartLabel(row) {
+  const name = row.name || row.code || "—";
+  return (row.flag ? row.flag + " " : "") + name;
+}
+
+function hbarCategoryPad(ctx, labels, w, options = {}) {
+  const inset = options.inset ?? TRS_LABEL_INSET;
+  const gap = options.gap ?? TRS_LABEL_GAP;
+  const min = options.min ?? 96;
+  const maxShare = options.maxShare ?? 0.48;
+  ctx.font = options.font ?? TRS_LABEL_FONT;
+  let maxW = 0;
+  for (const label of labels) {
+    maxW = Math.max(maxW, ctx.measureText(label).width);
+  }
+  const cap = Math.floor(w * maxShare);
+  return Math.min(cap, Math.max(min, inset + maxW + gap));
+}
+
+function fitCategoryLabel(ctx, label, maxWidth) {
+  if (maxWidth <= 0) return label;
+  if (ctx.measureText(label).width <= maxWidth) return label;
+  let trimmed = label;
+  while (trimmed.length > 3 && ctx.measureText(trimmed + "…").width > maxWidth) {
+    trimmed = trimmed.slice(0, -1);
+  }
+  return trimmed + "…";
+}
+
+function drawCountryBarLabel(ctx, label, y, bodyH) {
+  ctx.fillStyle = "#7d8799";
+  ctx.font = TRS_LABEL_FONT;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText(label, TRS_LABEL_INSET, y + bodyH / 2);
+}
+
 function drawHolderBarLabels(ctx, row, y, bodyH, pad, valueX) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
@@ -297,10 +338,14 @@ function drawTreasuryCountryChart(rows, w, h) {
   const ctx = setupCanvas(canvas, w, h);
   ctx.clearRect(0, 0, w, h);
 
-  const pad = { top: 12, right: 16, bottom: 12, left: 132 };
+  const ordered = [...rows].reverse();
+  const rawLabels = ordered.map(countryChartLabel);
+  const padLeft = hbarCategoryPad(ctx, rawLabels, w);
+  const pad = { top: 12, right: 16, bottom: 12, left: padLeft };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
-  const ordered = [...rows].reverse();
+  const labelMaxW = pad.left - TRS_LABEL_INSET - TRS_LABEL_GAP;
+  const labels = rawLabels.map((label) => fitCategoryLabel(ctx, label, labelMaxW));
   const values = rows.map((r) => r.btc);
   const outlier = co()?.isBarOutlier(values);
   const outlierRow = outlier ? rows[0] : null;
@@ -321,8 +366,7 @@ function drawTreasuryCountryChart(rows, w, h) {
 
   ordered.forEach((r, i) => {
     const y = pad.top + i * barH + (barH - bodyH) / 2;
-    const label = (r.flag ? r.flag + " " : "") + (r.name || r.code);
-    const labelText = label.length > 16 ? label.slice(0, 15) + "…" : label;
+    const labelText = labels[i];
     const color = palette[i % palette.length];
 
     if (outlier && r === outlierRow && co()?.drawBrokenHBar) {
@@ -334,13 +378,10 @@ function drawTreasuryCountryChart(rows, w, h) {
         colorStart: color,
         colorEnd: color,
       });
-      ctx.fillStyle = "#7d8799";
-      ctx.font = "10px IBM Plex Mono, monospace";
-      ctx.textAlign = "right";
-      ctx.textBaseline = "middle";
-      ctx.fillText(labelText, pad.left - 8, y + bodyH / 2);
+      drawCountryBarLabel(ctx, labelText, y, bodyH);
       ctx.textAlign = "left";
       ctx.fillStyle = "#e8eaed";
+      ctx.font = TRS_LABEL_FONT;
       ctx.fillText(fmtBtcCompact(r.btc), segEnd + 6, y + bodyH / 2);
       return;
     }
@@ -348,12 +389,10 @@ function drawTreasuryCountryChart(rows, w, h) {
     const barW = (r.btc / scaleMax) * chartW;
     ctx.fillStyle = color;
     ctx.fillRect(pad.left, y, barW, bodyH);
-    ctx.fillStyle = "#7d8799";
-    ctx.font = "10px IBM Plex Mono, monospace";
-    ctx.textAlign = "right";
-    ctx.textBaseline = "middle";
-    ctx.fillText(labelText, pad.left - 8, y + bodyH / 2);
+    drawCountryBarLabel(ctx, labelText, y, bodyH);
     ctx.textAlign = "left";
+    ctx.fillStyle = "#e8eaed";
+    ctx.font = TRS_LABEL_FONT;
     ctx.fillText(fmtBtcCompact(r.btc), pad.left + barW + 6, y + bodyH / 2);
   });
 }
