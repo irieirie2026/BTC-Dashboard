@@ -803,16 +803,34 @@ function buildVarCommentary(s) {
 
 async function fetchBtcHistory() {
   const res = await fetch(STATS_BTC_HISTORY_API);
-  if (!res.ok) throw new Error("BTC history " + res.status);
-  const payload = await res.json();
-  return payload.days.map((d) => ({
-    date: d.date,
-    open: d.open,
-    high: d.high,
-    low: d.low,
-    close: d.close,
-    volume: d.volume,
-  }));
+  const payload = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(payload.error || "BTC history " + res.status);
+  }
+  if (!payload.days?.length) {
+    throw new Error(payload.error || "BTC history returned no daily rows");
+  }
+  return {
+    days: payload.days.map((d) => ({
+      date: d.date,
+      open: d.open,
+      high: d.high,
+      low: d.low,
+      close: d.close,
+      volume: d.volume,
+    })),
+    meta: {
+      pair: payload.pair || STATS_PAIR,
+      source: payload.source || STATS_SOURCE,
+      count: payload.count,
+      startDate: payload.startDate,
+      endDate: payload.endDate,
+      stale: !!payload.stale,
+      warnings: payload.warnings || [],
+      interpolatedDays: payload.interpolatedDays || 0,
+      fetchedAt: payload.fetchedAt,
+    },
+  };
 }
 
 async function fetchKlines(symbol) {
@@ -852,17 +870,24 @@ async function fetchBtcStats() {
 
   try {
     await swr.runSWR({
-      key: "stats",
+      key: "stats-btcusd-v2",
       l1: "stats",
       source: STATS_SOURCE,
+      persist: false,
+      validate: (d) =>
+        d?.count > 4000 &&
+        d?.pair === STATS_PAIR &&
+        (d?.source || "").includes("Bitstamp"),
       fetch: async () => {
-        const [btcDays, ethDays] = await Promise.all([
+        const [btcHistory, ethDays] = await Promise.all([
           fetchBtcHistory(),
           fetchKlines("ETHUSDT").catch(() => null),
         ]);
-        const base = computeStats(btcDays);
-        base.pair = STATS_PAIR;
-        base.source = STATS_SOURCE;
+        const base = computeStats(btcHistory.days);
+        const meta = btcHistory.meta;
+        base.pair = meta.pair || STATS_PAIR;
+        base.source = meta.source || STATS_SOURCE;
+        base.historyMeta = meta;
         const ethR = ethDays ? ethReturns(ethDays) : null;
         const extended = extendRiskVar(base, ethR);
         base.risk = extended;
@@ -872,24 +897,31 @@ async function fetchBtcStats() {
           base.days.slice(1).map((d) => d.date),
         );
         base.powerlaw = computePowerLaw(base.days);
-        base.fetchedAt = new Date().toISOString();
+        base.fetchedAt = meta.fetchedAt || new Date().toISOString();
+        base.stale = meta.stale;
+        base.warnings = meta.warnings;
         return base;
       },
       render: (data, opts = {}) => {
         if (opts.loading) {
-          if (updateEl) updateEl.textContent = "Loading daily candles…";
+          if (updateEl) updateEl.textContent = "Loading Bitstamp + Blockchain.info daily history…";
           return;
         }
         applyStatsBundle(data);
         if (updateEl) {
+          const warn =
+            data.warnings?.length && (opts.refreshFailed || data.stale)
+              ? ` · ${data.warnings[0]}`
+              : "";
           updateEl.textContent =
             `${data.count} days · ${data.pair || STATS_PAIR} · ${data.source || STATS_SOURCE} · ` +
             swr.formatPanelMeta({
               fetchedAt: data.fetchedAt,
-              stale: opts.stale,
+              stale: opts.stale || data.stale,
               refreshing: opts.refreshing,
               refreshFailed: opts.refreshFailed,
-            });
+            }) +
+            warn;
         }
       },
     });
@@ -2138,6 +2170,12 @@ function startStatsPoll() {
 function initStatsModule() {
   if (statsReady) return;
   statsReady = true;
+  try {
+    localStorage.removeItem("swr:payload:v1:stats");
+    localStorage.removeItem("swr:payload:v1:stats-btcusd-v2");
+  } catch {
+    /* ignore */
+  }
   window.addEventListener("resize", () => {
     if (!statsData) return;
     drawCumulativeChart(statsData);

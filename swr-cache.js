@@ -165,6 +165,7 @@ async function runSWR({
   onError,
   validate,
   updateHeader = true,
+  persist = true,
 }) {
   const persisted = loadPersisted(key);
   const stampOpts = { source };
@@ -192,10 +193,29 @@ async function runSWR({
 
   try {
     const data = await fetch();
-    if (validate && !validate(data)) return null;
+    if (validate && !validate(data)) {
+      if (persisted?.data) {
+        render(persisted.data, {
+          stale: true,
+          refreshFailed: true,
+          fetchedAt: persisted.fetchedAt,
+        });
+        stampHeader(
+          l1,
+          {
+            ...stampOpts,
+            fetchedAt: persisted.fetchedAt,
+            stale: true,
+            refreshFailed: true,
+          },
+          updateHeader,
+        );
+      }
+      return null;
+    }
     const fetchedAt = data?.fetchedAt || new Date().toISOString();
     if (data && !data.fetchedAt) data.fetchedAt = fetchedAt;
-    persistPayload(key, data, fetchedAt);
+    if (persist) persistPayload(key, data, fetchedAt);
     render(data, {
       stale: false,
       justUpdated: !!persisted,

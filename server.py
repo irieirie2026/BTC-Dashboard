@@ -4,7 +4,9 @@
 import json
 import re
 import time
+import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import parse_qs, urlparse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -693,12 +695,26 @@ BITSTAMP_OHLC_URL = "https://www.bitstamp.net/api/v2/ohlc/btcusd/"
 BLOCKCHAIN_MARKET_PRICE_URL = (
     "https://api.blockchain.info/charts/market-price?timespan=all&format=json"
 )
+STATS_HISTORY_DISK_CACHE = ROOT / "data" / "stats-btc-history-cache.json"
+DAY_MS = 86_400_000
 
 
 def _normalize_day_ms(ts_ms):
     dt = datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc)
     midnight = datetime(dt.year, dt.month, dt.day, tzinfo=timezone.utc)
     return int(midnight.timestamp() * 1000)
+
+
+def fetch_json_retry(url, retries=3, timeout=45, backoff=1.2):
+    last_err = None
+    for attempt in range(retries):
+        try:
+            return fetch_json(url, timeout=timeout)
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
+            last_err = exc
+            if attempt < retries - 1:
+                time.sleep(backoff * (attempt + 1))
+    raise last_err
 
 
 def _fetch_bitstamp_daily_btc():
@@ -714,19 +730,22 @@ def _fetch_bitstamp_daily_btc():
             f"{BITSTAMP_OHLC_URL}?step={step}&limit={limit}"
             f"&start={start}&end={end}"
         )
-        payload = fetch_json(url)
+        payload = fetch_json_retry(url, retries=3, timeout=45)
         ohlc = payload.get("data", {}).get("ohlc", [])
         if not ohlc:
             break
 
         for row in ohlc:
+            close = float(row["close"])
+            if close <= 0:
+                continue
             day = _normalize_day_ms(int(row["timestamp"]) * 1000)
             by_day[day] = {
                 "date": day,
                 "open": float(row["open"]),
                 "high": float(row["high"]),
                 "low": float(row["low"]),
-                "close": float(row["close"]),
+                "close": close,
                 "volume": float(row.get("volume") or 0),
                 "source": "bitstamp",
             }
@@ -735,16 +754,20 @@ def _fetch_bitstamp_daily_btc():
         if last_ts <= start:
             break
         start = last_ts + step
-        time.sleep(0.12)
+        time.sleep(0.08)
 
+    if not by_day:
+        raise RuntimeError("Bitstamp returned no daily OHLC rows")
     return [by_day[k] for k in sorted(by_day)]
 
 
 def _fetch_blockchain_market_price():
-    data = fetch_json(BLOCKCHAIN_MARKET_PRICE_URL)
+    data = fetch_json_retry(BLOCKCHAIN_MARKET_PRICE_URL, retries=3, timeout=60)
     rows = []
     for point in data.get("values", []):
         close = float(point["y"])
+        if close <= 0:
+            continue
         day = _normalize_day_ms(int(point["x"]) * 1000)
         rows.append({
             "date": day,
@@ -755,40 +778,111 @@ def _fetch_blockchain_market_price():
             "volume": 0,
             "source": "blockchain.info",
         })
+    if not rows:
+        raise RuntimeError("Blockchain.info returned no positive market prices")
     return rows
 
 
-def _stitch_btc_stats_history():
-    bitstamp = _fetch_bitstamp_daily_btc()
-    blockchain = _fetch_blockchain_market_price()
+def _stitch_btc_stats_sources():
+    errors = []
+    bitstamp = []
+    blockchain = []
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        bitstamp_future = pool.submit(_fetch_bitstamp_daily_btc)
+        blockchain_future = pool.submit(_fetch_blockchain_market_price)
+        try:
+            bitstamp = bitstamp_future.result(timeout=55)
+        except Exception as exc:
+            errors.append(f"Bitstamp: {exc}")
+        try:
+            blockchain = blockchain_future.result(timeout=55)
+        except Exception as exc:
+            errors.append(f"Blockchain.info: {exc}")
+
+    if not bitstamp and not blockchain:
+        raise RuntimeError("; ".join(errors) or "Both BTC history sources failed")
+
     first_bitstamp = bitstamp[0]["date"] if bitstamp else None
     merged = {}
+    sources = []
 
     for row in blockchain:
         if first_bitstamp and row["date"] >= first_bitstamp:
             continue
         merged[row["date"]] = row
+    if blockchain:
+        sources.append("Blockchain.info")
 
     for row in bitstamp:
         merged[row["date"]] = row
+    if bitstamp:
+        sources.append("Bitstamp")
 
-    return [merged[k] for k in sorted(merged)]
+    stitched = [merged[k] for k in sorted(merged)]
+    return stitched, errors, sources
 
 
-def get_stats_btc_history_payload():
-    key = "stats:btc-history"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < STATS_HISTORY_CACHE_TTL:
-        return entry["data"]
+def _fill_daily_gaps(rows):
+    valid = [r for r in rows if float(r.get("close") or 0) > 0]
+    if not valid:
+        return [], 0
 
-    days = _stitch_btc_stats_history()
-    if not days:
-        raise ValueError("No BTC history data available")
+    valid.sort(key=lambda r: r["date"])
+    known_dates = [r["date"] for r in valid]
+    by_day = {r["date"]: r for r in valid}
+    start_ms = known_dates[0]
+    end_ms = known_dates[-1]
+    filled = []
+    interpolated = 0
+    day = start_ms
 
+    while day <= end_ms:
+        if day in by_day:
+            filled.append(by_day[day])
+        else:
+            prev_date = next((d for d in reversed(known_dates) if d < day), None)
+            next_date = next((d for d in known_dates if d > day), None)
+            if prev_date and next_date:
+                prev_row = by_day[prev_date]
+                next_row = by_day[next_date]
+                gap_days = (next_date - prev_date) // DAY_MS
+                offset = (day - prev_date) // DAY_MS
+                frac = offset / gap_days
+                close = prev_row["close"] + (next_row["close"] - prev_row["close"]) * frac
+                filled.append({
+                    "date": day,
+                    "open": close,
+                    "high": close,
+                    "low": close,
+                    "close": close,
+                    "volume": 0,
+                    "source": "interpolated",
+                })
+                interpolated += 1
+            elif prev_date:
+                prev_row = by_day[prev_date]
+                filled.append({
+                    "date": day,
+                    "open": prev_row["close"],
+                    "high": prev_row["close"],
+                    "low": prev_row["close"],
+                    "close": prev_row["close"],
+                    "volume": 0,
+                    "source": "interpolated",
+                })
+                interpolated += 1
+        day += DAY_MS
+
+    return filled, interpolated
+
+
+def _stats_history_payload_from_days(days, meta=None):
+    meta = meta or {}
+    sources = meta.get("sources") or ["Bitstamp", "Blockchain.info"]
     payload = {
         "pair": "BTC/USD",
-        "source": "Bitstamp + Blockchain.info",
+        "source": " + ".join(sources) if len(sources) > 1 else sources[0],
         "startDate": time.strftime(
             "%Y-%m-%dT%H:%M:%SZ", time.gmtime(days[0]["date"] / 1000)
         ),
@@ -798,9 +892,76 @@ def get_stats_btc_history_payload():
         "count": len(days),
         "days": days,
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "stale": bool(meta.get("stale")),
+        "warnings": list(meta.get("warnings") or []),
+        "interpolatedDays": int(meta.get("interpolatedDays") or 0),
     }
-    _cache[key] = {"ts": now, "data": payload}
     return payload
+
+
+def _load_stats_history_disk_cache():
+    if not STATS_HISTORY_DISK_CACHE.is_file():
+        return None
+    try:
+        return json.loads(STATS_HISTORY_DISK_CACHE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _save_stats_history_disk_cache(payload):
+    try:
+        STATS_HISTORY_DISK_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        STATS_HISTORY_DISK_CACHE.write_text(
+            json.dumps(payload, separators=(",", ":")),
+            encoding="utf-8",
+        )
+    except OSError:
+        pass
+
+
+def _build_btc_stats_history():
+    stitched, errors, sources = _stitch_btc_stats_sources()
+    days, interpolated = _fill_daily_gaps(stitched)
+    if not days:
+        raise ValueError("No BTC history data available after gap fill")
+    return days, {
+        "sources": sources,
+        "warnings": errors,
+        "interpolatedDays": interpolated,
+        "stale": False,
+    }
+
+
+def get_stats_btc_history_payload():
+    key = "stats:btc-history"
+    now = time.time()
+    entry = _cache.get(key)
+    if entry and now - entry["ts"] < STATS_HISTORY_CACHE_TTL:
+        return entry["data"]
+
+    try:
+        days, meta = _build_btc_stats_history()
+        payload = _stats_history_payload_from_days(days, meta)
+        _cache[key] = {"ts": now, "data": payload}
+        _save_stats_history_disk_cache(payload)
+        return payload
+    except Exception as exc:
+        stale_entry = _cache.get(key)
+        stale_payload = (
+            stale_entry["data"]
+            if stale_entry and stale_entry.get("data", {}).get("days")
+            else _load_stats_history_disk_cache()
+        )
+        if stale_payload and stale_payload.get("days"):
+            fallback = dict(stale_payload)
+            fallback["stale"] = True
+            warnings = list(fallback.get("warnings") or [])
+            warnings.insert(0, str(exc))
+            fallback["warnings"] = warnings
+            return fallback
+        raise RuntimeError(
+            f"BTC history update failed ({exc}). No cached fallback available."
+        ) from exc
 
 
 def get_etf_payload():
