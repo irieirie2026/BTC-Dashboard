@@ -147,6 +147,25 @@ function downsampleSeries(items, maxPoints = CHART_MAX_POINTS) {
   return indices.map((i) => items[i]);
 }
 
+function mountStatsChart(canvasId, options) {
+  const canvas = stEl(canvasId);
+  if (!canvas || !window.ChartInteraction) return null;
+  if (!options.getLength?.()) return null;
+  return ChartInteraction.ensure(canvas, {
+    maxPoints: CHART_MAX_POINTS,
+    minWindow: 30,
+    ...options,
+  });
+}
+
+function chartTipTitle(date) {
+  return `<div class="chart-tooltip-title">${fmtDate(date)}</div>`;
+}
+
+function chartTipRow(label, value) {
+  return `<div class="chart-tooltip-row"><span>${label}</span><span class="mono">${value}</span></div>`;
+}
+
 function drawdownSeries(days) {
   let peak = days[0].close;
   return days.slice(1).map((d) => {
@@ -236,11 +255,10 @@ function computeMarkov(returns, dates) {
     else break;
   }
 
-  const historyLen = Math.min(252, states.length);
-  const history = states.slice(-historyLen).map((state, i) => ({
-    date: dates[dates.length - historyLen + i],
+  const history = states.map((state, i) => ({
+    date: dates[i],
     state,
-    ret: returns[returns.length - historyLen + i],
+    ret: returns[i],
   }));
 
   const occupancy = MARKOV_STATE_DEFS.map(
@@ -1177,12 +1195,8 @@ function renderVarScreen() {
       .join("");
   }
 
-  scheduleChartDraw(stEl("var-histogram-chart"), (w, h) =>
-    paintVarHistogramChart(s, w, h),
-  );
-  scheduleChartDraw(stEl("var-rolling-chart"), (w, h) =>
-    paintVarRollingChart(v, w, h),
-  );
+  drawVarHistogramChart(s);
+  drawVarRollingChart(v);
 }
 
 function buildMarkovCommentary(s) {
@@ -1278,52 +1292,62 @@ function renderMarkovMatrix(m) {
     .join("");
 }
 
-function paintMarkovRegimeChart(m, w, h) {
-  const canvas = stEl("markov-regime-chart");
-  if (!canvas || !m.history.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.scale(dpr, dpr);
-
+function drawMarkovRegimeChart(m) {
   const pad = { top: 14, right: 16, bottom: 32, left: 12 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const bandH = chartH / m.nStates;
+  mountStatsChart("markov-regime-chart", {
+    pad,
+    getLength: () => m.history.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const bandH = api.chartH / m.nStates;
+      const indices = api.indices;
+      const drawCount = indices.length;
 
-  ctx.clearRect(0, 0, w, h);
+      indices.forEach((globalIdx, i) => {
+        const pt = m.history[globalIdx];
+        const x = api.xAt(i, drawCount);
+        const barW = Math.max(api.chartW / drawCount, 1.5);
+        const y = api.pad.top + pt.state * bandH;
+        ctx.fillStyle = m.stateDefs[pt.state].dim;
+        ctx.fillRect(x, y, barW, bandH - 1);
+      });
 
-  m.history.forEach((pt, i) => {
-    const x = pad.left + (i / Math.max(m.history.length - 1, 1)) * chartW;
-    const barW = Math.max(chartW / m.history.length, 1.5);
-    const y = pad.top + pt.state * bandH;
-    ctx.fillStyle = m.stateDefs[pt.state].dim;
-    ctx.fillRect(x, y, barW, bandH - 1);
+      const lastGlobal = m.history.length - 1;
+      const lx = api.xAtGlobal(lastGlobal);
+      ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(lx, api.pad.top);
+      ctx.lineTo(lx, h - api.pad.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      if (api.hoverGlobal != null) {
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+      }
+
+      ctx.font = "10px IBM Plex Mono, monospace";
+      m.stateDefs.forEach((d, i) => {
+        ctx.fillStyle = d.color;
+        ctx.textAlign = "left";
+        ctx.fillText(d.label, api.pad.left + 2, api.pad.top + i * bandH + bandH / 2 + 3);
+      });
+
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(m.history[indices[i]]?.date, drawCount > 120),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = m.history[globalIdx];
+      const def = m.stateDefs[pt.state];
+      return (
+        chartTipTitle(pt.date) +
+        chartTipRow("Regime", def.label) +
+        chartTipRow("Return", fmtPct(pt.ret, 2))
+      );
+    },
   });
-
-  ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([3, 3]);
-  const lastIdx = m.history.length - 1;
-  const lx = pad.left + (lastIdx / Math.max(m.history.length - 1, 1)) * chartW;
-  ctx.beginPath();
-  ctx.moveTo(lx, pad.top);
-  ctx.lineTo(lx, h - pad.bottom);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  ctx.font = "10px IBM Plex Mono, monospace";
-  m.stateDefs.forEach((d, i) => {
-    ctx.fillStyle = d.color;
-    ctx.textAlign = "left";
-    ctx.fillText(d.label, pad.left + 2, pad.top + i * bandH + bandH / 2 + 3);
-  });
-
-  drawTimeAxisLabels(ctx, w, h, pad, m.history.length, (i) =>
-    fmtChartDate(m.history[i]?.date, m.history.length > 120),
-  );
 }
 
 function buildPowerLawCommentary(s) {
@@ -1380,191 +1404,231 @@ function buildPowerLawCommentary(s) {
   return lines;
 }
 
-function paintPowerLawBandChart(pl, w, h) {
-  const canvas = stEl("pl-band-chart");
-  if (!canvas || !pl.points.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, w, h);
-
+function drawPowerLawBandChart(pl) {
   const pad = { top: 18, right: 20, bottom: 36, left: 62 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const pts = downsampleSeries(pl.points);
-  const yMax = Math.max(...pts.map((p) => Math.max(p.close, p.resistance)));
-  const yMin = Math.min(...pts.map((p) => Math.min(p.close, p.support)));
-  const ySpan = Math.log10(yMax) - Math.log10(Math.max(yMin, 1));
-  const yMap = (v) => pad.top + chartH - ((Math.log10(v) - Math.log10(yMin)) / ySpan) * chartH;
+  mountStatsChart("pl-band-chart", {
+    pad,
+    getLength: () => pl.points.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const pts = indices.map((i) => pl.points[i]);
+      const drawCount = pts.length;
+      const yMax = Math.max(...pts.map((p) => Math.max(p.close, p.resistance)));
+      const yMin = Math.min(...pts.map((p) => Math.min(p.close, p.support)));
+      const ySpan = Math.log10(yMax) - Math.log10(Math.max(yMin, 1));
+      const yMap = (v) =>
+        api.pad.top +
+        api.chartH -
+        ((Math.log10(v) - Math.log10(yMin)) / ySpan) * api.chartH;
 
-  ctx.fillStyle = "rgba(56, 189, 248, 0.08)";
-  ctx.beginPath();
-  pts.forEach((p, i) => {
-    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
-    const y = yMap(p.resistance);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+      ctx.fillStyle = "rgba(56, 189, 248, 0.08)";
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yMap(p.resistance);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      for (let i = pts.length - 1; i >= 0; i--) {
+        ctx.lineTo(api.xAt(i, drawCount), yMap(pts[i].support));
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      const drawLine = (key, color, width = 1.5) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        pts.forEach((p, i) => {
+          const x = api.xAt(i, drawCount);
+          const y = yMap(p[key]);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      };
+
+      drawLine("support", "rgba(14, 203, 129, 0.65)", 1);
+      drawLine("fair", "rgba(240, 185, 11, 0.9)", 2);
+      drawLine("resistance", "rgba(246, 70, 93, 0.65)", 1);
+
+      ctx.strokeStyle = "#e8eaed";
+      ctx.lineWidth = 1.75;
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yMap(p.close);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        const p = pl.points[api.hoverGlobal];
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yMap(p.close));
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPriceCompact(yMax), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtPriceCompact(yMin), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(pts[i]?.date, drawCount > 120),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const p = pl.points[globalIdx];
+      return (
+        chartTipTitle(p.date) +
+        chartTipRow("Close", "$" + fmtPrice(p.close)) +
+        chartTipRow("Fair", fmtPriceCompact(p.fair)) +
+        chartTipRow("Support", fmtPriceCompact(p.support)) +
+        chartTipRow("Resistance", fmtPriceCompact(p.resistance))
+      );
+    },
   });
-  for (let i = pts.length - 1; i >= 0; i--) {
-    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
-    ctx.lineTo(x, yMap(pts[i].support));
-  }
-  ctx.closePath();
-  ctx.fill();
-
-  const drawLine = (key, color, width = 1.5) => {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.beginPath();
-    pts.forEach((p, i) => {
-      const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
-      const y = yMap(p[key]);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-  };
-
-  drawLine("support", "rgba(14, 203, 129, 0.65)", 1);
-  drawLine("fair", "rgba(240, 185, 11, 0.9)", 2);
-  drawLine("resistance", "rgba(246, 70, 93, 0.65)", 1);
-
-  ctx.strokeStyle = "#e8eaed";
-  ctx.lineWidth = 1.75;
-  ctx.beginPath();
-  pts.forEach((p, i) => {
-    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
-    const y = yMap(p.close);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtPriceCompact(yMax), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPriceCompact(yMin), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
-    fmtChartDate(pts[i]?.date, pts.length > 120),
-  );
 }
 
-function paintPowerLawLogChart(pl, w, h) {
-  const canvas = stEl("pl-log-chart");
-  if (!canvas || !pl.points.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, w, h);
-
+function drawPowerLawLogChart(pl) {
   const pad = { top: 18, right: 20, bottom: 40, left: 52 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const pts = pl.points;
-  const xMin = Math.min(...pts.map((p) => p.logDays));
-  const xMax = Math.max(...pts.map((p) => p.logDays));
-  const yMin = Math.min(...pts.map((p) => p.logPrice));
-  const yMax = Math.max(...pts.map((p) => p.logPrice));
-  const xSpan = xMax - xMin || 1;
-  const ySpan = yMax - yMin || 1;
-  const xMap = (v) => pad.left + ((v - xMin) / xSpan) * chartW;
-  const yMap = (v) => pad.top + chartH - ((v - yMin) / ySpan) * chartH;
+  mountStatsChart("pl-log-chart", {
+    pad,
+    getLength: () => pl.points.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const pts = indices.map((i) => pl.points[i]);
+      const xMin = Math.min(...pts.map((p) => p.logDays));
+      const xMax = Math.max(...pts.map((p) => p.logDays));
+      const yMin = Math.min(...pts.map((p) => p.logPrice));
+      const yMax = Math.max(...pts.map((p) => p.logPrice));
+      const xSpan = xMax - xMin || 1;
+      const ySpan = yMax - yMin || 1;
+      const xMap = (v) => api.pad.left + ((v - xMin) / xSpan) * api.chartW;
+      const yMap = (v) => api.pad.top + api.chartH - ((v - yMin) / ySpan) * api.chartH;
 
-  ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  pts.forEach((p, i) => {
-    const x = xMap(p.logDays);
-    const y = yMap(Math.log10(p.fair));
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+      ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = xMap(p.logDays);
+        const y = yMap(Math.log10(p.fair));
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      pts.forEach((p, i) => {
+        const x = xMap(p.logDays);
+        const y = yMap(p.logPrice);
+        const isLast = indices[i] === pl.points.length - 1;
+        ctx.fillStyle = isLast ? "#f0b90b" : "rgba(56, 189, 248, 0.55)";
+        ctx.beginPath();
+        ctx.arc(x, y, isLast ? 3.5 : 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      if (api.hoverGlobal != null) {
+        const p = pl.points[api.hoverGlobal];
+        api.drawDot(xMap(p.logDays), yMap(p.logPrice), "#f0b90b");
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("log₁₀(days since Genesis)", api.pad.left + api.chartW / 2, h - 8);
+      ctx.save();
+      ctx.translate(12, api.pad.top + api.chartH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("log₁₀(price)", 0, 0);
+      ctx.restore();
+    },
+    formatTooltip(globalIdx) {
+      const p = pl.points[globalIdx];
+      return (
+        chartTipTitle(p.date) +
+        chartTipRow("log₁₀(days)", p.logDays.toFixed(2)) +
+        chartTipRow("log₁₀(price)", p.logPrice.toFixed(2)) +
+        chartTipRow("Fair line", fmtPriceCompact(p.fair))
+      );
+    },
   });
-  ctx.stroke();
-
-  const step = Math.max(1, Math.floor(pts.length / 220));
-  pts.forEach((p, i) => {
-    if (i % step !== 0 && i !== pts.length - 1) return;
-    const x = xMap(p.logDays);
-    const y = yMap(p.logPrice);
-    ctx.fillStyle = i === pts.length - 1 ? "#f0b90b" : "rgba(56, 189, 248, 0.55)";
-    ctx.beginPath();
-    ctx.arc(x, y, i === pts.length - 1 ? 3.5 : 2, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "center";
-  ctx.fillText("log₁₀(days since Genesis)", pad.left + chartW / 2, h - 8);
-  ctx.save();
-  ctx.translate(12, pad.top + chartH / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillText("log₁₀(price)", 0, 0);
-  ctx.restore();
 }
 
-function paintPowerLawRatioChart(pl, w, h) {
-  const canvas = stEl("pl-ratio-chart");
-  if (!canvas || !pl.points.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, w, h);
-
+function drawPowerLawRatioChart(pl) {
   const pad = { top: 18, right: 20, bottom: 36, left: 52 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const pts = downsampleSeries(pl.points);
-  const ratios = pts.map((p) => p.ratio);
-  const yMax = Math.max(...ratios, pl.resistMult * 1.05, 1.2);
-  const yMin = Math.min(...ratios, pl.supportMult * 0.95, 0.8);
-  const ySpan = yMax - yMin || 0.1;
-  const yMap = (v) => pad.top + chartH - ((v - yMin) / ySpan) * chartH;
+  mountStatsChart("pl-ratio-chart", {
+    pad,
+    getLength: () => pl.points.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const pts = indices.map((i) => pl.points[i]);
+      const drawCount = pts.length;
+      const ratios = pts.map((p) => p.ratio);
+      const yMax = Math.max(...ratios, pl.resistMult * 1.05, 1.2);
+      const yMin = Math.min(...ratios, pl.supportMult * 0.95, 0.8);
+      const ySpan = yMax - yMin || 0.1;
+      const yMap = (v) => api.pad.top + api.chartH - ((v - yMin) / ySpan) * api.chartH;
 
-  ctx.fillStyle = "rgba(14, 203, 129, 0.06)";
-  ctx.fillRect(pad.left, yMap(pl.resistMult), chartW, yMap(pl.supportMult) - yMap(pl.resistMult));
+      ctx.fillStyle = "rgba(14, 203, 129, 0.06)";
+      ctx.fillRect(
+        api.pad.left,
+        yMap(pl.resistMult),
+        api.chartW,
+        yMap(pl.supportMult) - yMap(pl.resistMult),
+      );
 
-  [pl.supportMult, 1, pl.resistMult].forEach((lvl, idx) => {
-    const y = yMap(lvl);
-    ctx.strokeStyle =
-      idx === 1 ? "rgba(240, 185, 11, 0.75)" : "rgba(125, 135, 153, 0.45)";
-    ctx.setLineDash(idx === 1 ? [5, 4] : []);
-    ctx.beginPath();
-    ctx.moveTo(pad.left, y);
-    ctx.lineTo(pad.left + chartW, y);
-    ctx.stroke();
-    ctx.setLineDash([]);
+      [pl.supportMult, 1, pl.resistMult].forEach((lvl, idx) => {
+        const y = yMap(lvl);
+        ctx.strokeStyle =
+          idx === 1 ? "rgba(240, 185, 11, 0.75)" : "rgba(125, 135, 153, 0.45)";
+        ctx.setLineDash(idx === 1 ? [5, 4] : []);
+        ctx.beginPath();
+        ctx.moveTo(api.pad.left, y);
+        ctx.lineTo(api.pad.left + api.chartW, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+
+      ctx.strokeStyle = "#38bdf8";
+      ctx.lineWidth = 1.75;
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yMap(p.ratio);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        const p = pl.points[api.hoverGlobal];
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yMap(p.ratio));
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(yMax.toFixed(2) + "×", api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(yMin.toFixed(2) + "×", api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(pts[i]?.date, drawCount > 120),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const p = pl.points[globalIdx];
+      return (
+        chartTipTitle(p.date) +
+        chartTipRow("Price / Fair", p.ratio.toFixed(2) + "×") +
+        chartTipRow("Close", "$" + fmtPrice(p.close))
+      );
+    },
   });
-
-  ctx.strokeStyle = "#38bdf8";
-  ctx.lineWidth = 1.75;
-  ctx.beginPath();
-  pts.forEach((p, i) => {
-    const x = pad.left + (i / Math.max(pts.length - 1, 1)) * chartW;
-    const y = yMap(p.ratio);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(yMax.toFixed(2) + "×", pad.left - 6, pad.top + 10);
-  ctx.fillText(yMin.toFixed(2) + "×", pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
-    fmtChartDate(pts[i]?.date, pts.length > 120),
-  );
 }
 
 function renderPowerLawScreen() {
@@ -1667,9 +1731,9 @@ function renderPowerLawScreen() {
   );
   window.decorateHelpLabels?.(screen);
 
-  scheduleChartDraw(stEl("pl-band-chart"), (w, h) => paintPowerLawBandChart(pl, w, h));
-  scheduleChartDraw(stEl("pl-log-chart"), (w, h) => paintPowerLawLogChart(pl, w, h));
-  scheduleChartDraw(stEl("pl-ratio-chart"), (w, h) => paintPowerLawRatioChart(pl, w, h));
+  drawPowerLawBandChart(pl);
+  drawPowerLawLogChart(pl);
+  drawPowerLawRatioChart(pl);
 }
 
 function renderMarkovScreen() {
@@ -1732,434 +1796,469 @@ function renderMarkovScreen() {
   );
   window.decorateHelpLabels?.(markovScreen);
 
-  scheduleChartDraw(stEl("markov-regime-chart"), (w, h) => paintMarkovRegimeChart(m, w, h));
+  drawMarkovRegimeChart(m);
 }
 
 function drawRiskDrawdownChart(r) {
-  const canvas = stEl("risk-drawdown-chart");
-  if (!canvas || !r.drawdowns.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 18, right: 20, bottom: 36, left: 56 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
+  mountStatsChart("risk-drawdown-chart", {
+    pad,
+    getLength: () => r.drawdowns.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const vals = indices.map((i) => r.drawdowns[i].dd);
+      const drawCount = vals.length;
+      const minV = Math.min(...vals, 0);
+      const maxV = 0;
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
 
-  ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgba(246, 70, 93, 0.25)";
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, api.pad.top + api.chartH);
+        ctx.lineTo(x, y);
+      });
+      ctx.lineTo(api.pad.left + api.chartW, api.pad.top + api.chartH);
+      ctx.closePath();
+      ctx.fill();
 
-  const drawdowns = downsampleSeries(r.drawdowns);
-  const vals = drawdowns.map((d) => d.dd);
-  const minV = Math.min(...vals, 0);
-  const maxV = 0;
-  const range = maxV - minV || 0.01;
+      ctx.strokeStyle = "#f6465d";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
 
-  ctx.fillStyle = "rgba(246, 70, 93, 0.25)";
-  ctx.beginPath();
-  vals.forEach((v, i) => {
-    const x = pad.left + (i / (vals.length - 1)) * chartW;
-    const y = pad.top + chartH - ((v - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, pad.top + chartH);
-    ctx.lineTo(x, y);
+      if (api.hoverGlobal != null) {
+        const v = r.drawdowns[api.hoverGlobal].dd;
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v), "#f6465d");
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText("0%", api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(r.drawdowns[indices[i]].date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = r.drawdowns[globalIdx];
+      return chartTipTitle(pt.date) + chartTipRow("Drawdown", fmtPct(pt.dd, 2));
+    },
   });
-  ctx.lineTo(pad.left + chartW, pad.top + chartH);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.strokeStyle = "#f6465d";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  vals.forEach((v, i) => {
-    const x = pad.left + (i / (vals.length - 1)) * chartW;
-    const y = pad.top + chartH - ((v - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText("0%", pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPct(minV, 0), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, drawdowns.length, (i) =>
-    fmtChartDate(drawdowns[i].date, drawdowns.length > 180),
-  );
 }
 
 function drawRiskRollingVolChart(r) {
-  const canvas = stEl("risk-rolling-vol-chart");
-  if (!canvas || !r.rollVol30.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
-  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-
-  ctx.clearRect(0, 0, w, h);
-
   const n = Math.min(r.rollVol30.length, r.rollVol90.length);
   const vol30 = r.rollVol30.slice(-n);
   const vol90 = r.rollVol90.slice(-n);
-  const allV = [
-    ...vol30.map((x) => x.vol30),
-    ...vol90.map((x) => x.vol90),
-  ];
-  const minV = Math.min(...allV) * 0.9;
-  const maxV = Math.max(...allV) * 1.1;
-  const range = maxV - minV || 0.01;
+  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  mountStatsChart("risk-rolling-vol-chart", {
+    pad,
+    getLength: () => n,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const slice30 = indices.map((i) => vol30[i]);
+      const slice90 = indices.map((i) => vol90[i]);
+      const allV = [
+        ...slice30.map((x) => x.vol30),
+        ...slice90.map((x) => x.vol90),
+      ];
+      const minV = Math.min(...allV) * 0.9;
+      const maxV = Math.max(...allV) * 1.1;
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
 
-  const drawLine = (data, key, color) => {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    data.forEach((pt, i) => {
-      const x = pad.left + (i / Math.max(data.length - 1, 1)) * chartW;
-      const y = pad.top + chartH - ((pt[key] - minV) / range) * chartH;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-  };
+      const drawLine = (data, key, color) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        data.forEach((pt, i) => {
+          const x = api.xAt(i, drawCount);
+          const y = yAt(pt[key]);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      };
 
-  drawLine(vol30, "vol30", "#0ea5e9");
-  drawLine(vol90, "vol90", "#a78bfa");
+      drawLine(slice30, "vol30", "#0ea5e9");
+      drawLine(slice90, "vol90", "#a78bfa");
 
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxV, 0), pad.left - 6, pad.top + 10);
-  ctx.textAlign = "left";
-  ctx.fillText("30d", pad.left, pad.top + 10);
-  ctx.fillText("90d", pad.left + 28, pad.top + 10);
-  drawTimeAxisLabels(ctx, w, h, pad, n, (i) =>
-    fmtChartDate(vol30[i]?.date, n > 180),
-  );
+      if (api.hoverGlobal != null) {
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(
+          api.xAtGlobal(api.hoverGlobal),
+          yAt(vol30[api.hoverGlobal].vol30),
+          "#0ea5e9",
+        );
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.textAlign = "left";
+      ctx.fillText("30d", api.pad.left, api.pad.top + 10);
+      ctx.fillText("90d", api.pad.left + 28, api.pad.top + 10);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(vol30[indices[i]]?.date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const v30 = vol30[globalIdx];
+      const v90 = vol90[globalIdx];
+      return (
+        chartTipTitle(v30.date) +
+        chartTipRow("30d vol", fmtPct(v30.vol30, 1)) +
+        chartTipRow("90d vol", fmtPct(v90.vol90, 1))
+      );
+    },
+  });
 }
 
 function drawRiskRollingSharpeChart(r) {
-  const canvas = stEl("risk-rolling-sharpe-chart");
-  if (!canvas || !r.rollSharpe90.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 18, right: 20, bottom: 36, left: 52 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
+  mountStatsChart("risk-rolling-sharpe-chart", {
+    pad,
+    getLength: () => r.rollSharpe90.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const vals = indices.map((i) => r.rollSharpe90[i].sharpe);
+      const minV = Math.min(...vals, 0);
+      const maxV = Math.max(...vals, 0);
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
+      const zeroY = yAt(0);
 
-  ctx.clearRect(0, 0, w, h);
-
-  const vals = r.rollSharpe90.map((x) => x.sharpe);
-  const minV = Math.min(...vals, 0);
-  const maxV = Math.max(...vals, 0);
-  const range = maxV - minV || 0.01;
-  const zeroY = pad.top + chartH - ((0 - minV) / range) * chartH;
-
-  ctx.strokeStyle = "rgba(125, 135, 153, 0.35)";
-  ctx.beginPath();
-  ctx.moveTo(pad.left, zeroY);
-  ctx.lineTo(w - pad.right, zeroY);
-  ctx.stroke();
-
-  ctx.strokeStyle = "#38bdf8";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  r.rollSharpe90.forEach((pt, i) => {
-    const x = pad.left + (i / (r.rollSharpe90.length - 1)) * chartW;
-    const y = pad.top + chartH - ((pt.sharpe - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-  drawTimeAxisLabels(ctx, w, h, pad, r.rollSharpe90.length, (i) =>
-    fmtChartDate(r.rollSharpe90[i].date, r.rollSharpe90.length > 180),
-  );
-}
-
-function paintVarHistogramChart(s, w, h) {
-  const canvas = stEl("var-histogram-chart");
-  if (!canvas || !s.histogram?.length || w < 4) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const pad = { top: 22, right: 12, bottom: 40, left: 44 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-
-  ctx.clearRect(0, 0, w, h);
-
-  const maxCount = Math.max(...s.histogram.map((b) => b.count), 1);
-  const barW = chartW / s.histogram.length;
-  const v = s.var;
-
-  s.histogram.forEach((b, i) => {
-    const barH = (b.count / maxCount) * chartH;
-    const x = pad.left + i * barW + 1;
-    const y = pad.top + chartH - barH;
-    const mid = (b.lo + b.hi) / 2;
-    ctx.fillStyle = mid >= 0 ? "rgba(14, 203, 129, 0.7)" : "rgba(246, 70, 93, 0.7)";
-    ctx.fillRect(x, y, Math.max(barW - 2, 2), barH);
-  });
-
-  if (v) {
-    const minR = s.histogram[0].lo;
-    const maxR = s.histogram[s.histogram.length - 1].hi;
-    const span = maxR - minR || 0.001;
-    const mark = (pct, color, label) => {
-      const x = pad.left + ((pct - minR) / span) * chartW;
-      ctx.strokeStyle = color;
-      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = "rgba(125, 135, 153, 0.35)";
       ctx.beginPath();
-      ctx.moveTo(x, pad.top);
-      ctx.lineTo(x, h - pad.bottom);
+      ctx.moveTo(api.pad.left, zeroY);
+      ctx.lineTo(w - api.pad.right, zeroY);
       ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.fillStyle = color;
-      ctx.font = "9px IBM Plex Mono, monospace";
-      ctx.textAlign = "center";
-      ctx.fillText(label, x, pad.top + 10);
-    };
-    mark(v.historical.var95, "rgba(34, 211, 238, 0.9)", "95%");
-    mark(v.historical.var99, "rgba(167, 139, 250, 0.9)", "99%");
-  }
 
-  const minR = s.histogram[0].lo;
-  const maxR = s.histogram[s.histogram.length - 1].hi;
-  drawReturnAxisLabels(ctx, w, h, pad, minR, maxR, (v) => fmtPct(v, 1), {
-    ticks: 7,
-    y: h - 6,
+      ctx.strokeStyle = "#38bdf8";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        const v = r.rollSharpe90[api.hoverGlobal].sharpe;
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v));
+      }
+
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(r.rollSharpe90[indices[i]].date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = r.rollSharpe90[globalIdx];
+      return chartTipTitle(pt.date) + chartTipRow("90d Sharpe", fmtNum(pt.sharpe, 2));
+    },
   });
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "9px IBM Plex Mono, monospace";
-  ctx.textAlign = "center";
-  ctx.fillText("Daily return", w / 2, h - 22);
-}
-
-function paintVarRollingChart(v, w, h) {
-  const canvas = stEl("var-rolling-chart");
-  if (!canvas || !v.rollingVar95?.length || w < 4) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const pad = { top: 18, right: 12, bottom: 40, left: 48 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-
-  ctx.clearRect(0, 0, w, h);
-
-  const vals = v.rollingVar95.map((x) => x.var95);
-  const minV = Math.min(...vals);
-  const maxV = Math.max(...vals, 0);
-  const range = maxV - minV || 0.01;
-
-  ctx.strokeStyle = "#22d3ee";
-  ctx.lineWidth = 2;
-  const denom = Math.max(v.rollingVar95.length - 1, 1);
-  ctx.beginPath();
-  v.rollingVar95.forEach((pt, i) => {
-    const x = pad.left + (i / denom) * chartW;
-    const y = pad.top + chartH - ((pt.var95 - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxV, 1), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPct(minV, 1), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, v.rollingVar95.length, (i) =>
-    fmtChartDate(v.rollingVar95[i].date, v.rollingVar95.length > 180),
-  );
 }
 
 function drawVarHistogramChart(s) {
-  scheduleChartDraw(stEl("var-histogram-chart"), (w, h) =>
-    paintVarHistogramChart(s, w, h),
-  );
+  const pad = { top: 22, right: 12, bottom: 40, left: 44 };
+  mountStatsChart("var-histogram-chart", {
+    pad,
+    zoom: false,
+    getLength: () => s.histogram.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const hist = s.histogram;
+      const maxCount = Math.max(...hist.map((b) => b.count), 1);
+      const barW = api.chartW / hist.length;
+      const v = s.var;
+
+      hist.forEach((b, i) => {
+        const barH = (b.count / maxCount) * api.chartH;
+        const x = api.pad.left + i * barW + 1;
+        const y = api.pad.top + api.chartH - barH;
+        const mid = (b.lo + b.hi) / 2;
+        ctx.fillStyle = mid >= 0 ? "rgba(14, 203, 129, 0.7)" : "rgba(246, 70, 93, 0.7)";
+        ctx.fillRect(x, y, Math.max(barW - 2, 2), barH);
+      });
+
+      if (v) {
+        const minR = hist[0].lo;
+        const maxR = hist[hist.length - 1].hi;
+        const span = maxR - minR || 0.001;
+        const mark = (pct, color, label) => {
+          const x = api.pad.left + ((pct - minR) / span) * api.chartW;
+          ctx.strokeStyle = color;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(x, api.pad.top);
+          ctx.lineTo(x, h - api.pad.bottom);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = color;
+          ctx.font = "9px IBM Plex Mono, monospace";
+          ctx.textAlign = "center";
+          ctx.fillText(label, x, api.pad.top + 10);
+        };
+        mark(v.historical.var95, "rgba(34, 211, 238, 0.9)", "95%");
+        mark(v.historical.var99, "rgba(167, 139, 250, 0.9)", "99%");
+      }
+
+      if (api.hoverGlobal != null) {
+        const b = hist[api.hoverGlobal];
+        const x = api.pad.left + api.hoverGlobal * barW + barW / 2;
+        api.drawCrosshair(x);
+      }
+
+      const minR = hist[0].lo;
+      const maxR = hist[hist.length - 1].hi;
+      drawReturnAxisLabels(ctx, w, h, api.pad, minR, maxR, (val) => fmtPct(val, 1), {
+        ticks: 7,
+        y: h - 6,
+      });
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "9px IBM Plex Mono, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("Daily return", w / 2, h - 22);
+    },
+    formatTooltip(globalIdx) {
+      const b = s.histogram[globalIdx];
+      return (
+        `<div class="chart-tooltip-title">${fmtPct(b.lo, 2)} → ${fmtPct(b.hi, 2)}</div>` +
+        chartTipRow("Days in bin", String(b.count))
+      );
+    },
+  });
 }
 
 function drawVarRollingChart(v) {
-  scheduleChartDraw(stEl("var-rolling-chart"), (w, h) =>
-    paintVarRollingChart(v, w, h),
-  );
+  const pad = { top: 18, right: 12, bottom: 40, left: 48 };
+  mountStatsChart("var-rolling-chart", {
+    pad,
+    getLength: () => v.rollingVar95.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const vals = indices.map((i) => v.rollingVar95[i].var95);
+      const minV = Math.min(...vals);
+      const maxV = Math.max(...vals, 0);
+      const range = maxV - minV || 0.01;
+      const yAt = (val) => api.pad.top + api.chartH - ((val - minV) / range) * api.chartH;
+
+      ctx.strokeStyle = "#22d3ee";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((val, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(val);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        const val = v.rollingVar95[api.hoverGlobal].var95;
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(val), "#22d3ee");
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtPct(minV, 1), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(v.rollingVar95[indices[i]].date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = v.rollingVar95[globalIdx];
+      return chartTipTitle(pt.date) + chartTipRow("Rolling 95% VaR", fmtPct(pt.var95, 2));
+    },
+  });
 }
 
 function drawCumulativeChart(s) {
-  const canvas = stEl("stats-cumulative-chart");
-  if (!canvas || !s.cumulative.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 18, right: 20, bottom: 36, left: 56 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
+  mountStatsChart("stats-cumulative-chart", {
+    pad,
+    getLength: () => s.cumulative.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const vals = indices.map((i) => s.cumulative[i]);
+      const drawCount = vals.length;
+      const minV = Math.min(...vals, 0);
+      const maxV = Math.max(...vals, 0);
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
+      const zeroY = yAt(0);
 
-  ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "rgba(125, 135, 153, 0.35)";
+      ctx.beginPath();
+      ctx.moveTo(api.pad.left, zeroY);
+      ctx.lineTo(w - api.pad.right, zeroY);
+      ctx.stroke();
 
-  const cumIndices = downsampleIndices(s.cumulative.length);
-  const vals = cumIndices.map((i) => s.cumulative[i]);
-  const cumDates = cumIndices.map((i) => s.days[i + 1]?.date);
-  const minV = Math.min(...vals, 0);
-  const maxV = Math.max(...vals, 0);
-  const range = maxV - minV || 0.01;
-  const zeroY = pad.top + chartH - ((0 - minV) / range) * chartH;
+      ctx.strokeStyle = "#38bdf8";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
 
-  ctx.strokeStyle = "rgba(125, 135, 153, 0.35)";
-  ctx.beginPath();
-  ctx.moveTo(pad.left, zeroY);
-  ctx.lineTo(w - pad.right, zeroY);
-  ctx.stroke();
+      if (api.hoverGlobal != null) {
+        const v = s.cumulative[api.hoverGlobal];
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v));
+      }
 
-  ctx.strokeStyle = "#38bdf8";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  vals.forEach((v, i) => {
-    const x = pad.left + (i / (vals.length - 1)) * chartW;
-    const y = pad.top + chartH - ((v - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(s.days[indices[i] + 1]?.date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const date = s.days[globalIdx + 1]?.date;
+      const close = s.days[globalIdx + 1]?.close;
+      return (
+        chartTipTitle(date) +
+        chartTipRow("Cumulative", fmtPct(s.cumulative[globalIdx])) +
+        chartTipRow("Close", "$" + fmtPrice(close))
+      );
+    },
   });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxV, 0), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPct(minV, 0), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, vals.length, (i) =>
-    fmtChartDate(cumDates[i], vals.length > 180),
-  );
 }
 
 function drawHistogramChart(s) {
-  const canvas = stEl("stats-histogram-chart");
-  if (!canvas || !s.histogram.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 18, right: 16, bottom: 36, left: 48 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
+  mountStatsChart("stats-histogram-chart", {
+    pad,
+    zoom: false,
+    getLength: () => s.histogram.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const hist = s.histogram;
+      const maxCount = Math.max(...hist.map((b) => b.count), 1);
+      const barW = api.chartW / hist.length;
 
-  ctx.clearRect(0, 0, w, h);
+      hist.forEach((b, i) => {
+        const barH = (b.count / maxCount) * api.chartH;
+        const x = api.pad.left + i * barW + 1;
+        const y = api.pad.top + api.chartH - barH;
+        const mid = (b.lo + b.hi) / 2;
+        ctx.fillStyle = mid >= 0 ? "rgba(14, 203, 129, 0.7)" : "rgba(246, 70, 93, 0.7)";
+        ctx.fillRect(x, y, Math.max(barW - 2, 2), barH);
+      });
 
-  const maxCount = Math.max(...s.histogram.map((b) => b.count), 1);
-  const barW = chartW / s.histogram.length;
+      const zeroIdx = hist.findIndex((b) => b.lo <= 0 && b.hi >= 0);
+      if (zeroIdx >= 0) {
+        const zx = api.pad.left + zeroIdx * barW + barW / 2;
+        ctx.strokeStyle = "rgba(240, 185, 11, 0.6)";
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(zx, api.pad.top);
+        ctx.lineTo(zx, h - api.pad.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
 
-  s.histogram.forEach((b, i) => {
-    const barH = (b.count / maxCount) * chartH;
-    const x = pad.left + i * barW + 1;
-    const y = pad.top + chartH - barH;
-    const mid = (b.lo + b.hi) / 2;
-    ctx.fillStyle = mid >= 0 ? "rgba(14, 203, 129, 0.7)" : "rgba(246, 70, 93, 0.7)";
-    ctx.fillRect(x, y, Math.max(barW - 2, 2), barH);
+      if (api.hoverGlobal != null) {
+        const barW2 = api.chartW / hist.length;
+        api.drawCrosshair(api.pad.left + api.hoverGlobal * barW2 + barW2 / 2);
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(fmtPct(hist[0].lo, 1), api.pad.left, h - 8);
+      ctx.fillText(fmtPct(hist[hist.length - 1].hi, 1), w - api.pad.right, h - 8);
+    },
+    formatTooltip(globalIdx) {
+      const b = s.histogram[globalIdx];
+      return (
+        `<div class="chart-tooltip-title">${fmtPct(b.lo, 2)} → ${fmtPct(b.hi, 2)}</div>` +
+        chartTipRow("Days", String(b.count))
+      );
+    },
   });
-
-  const zeroIdx = s.histogram.findIndex((b) => b.lo <= 0 && b.hi >= 0);
-  if (zeroIdx >= 0) {
-    const zx = pad.left + zeroIdx * barW + barW / 2;
-    ctx.strokeStyle = "rgba(240, 185, 11, 0.6)";
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    ctx.moveTo(zx, pad.top);
-    ctx.lineTo(zx, h - pad.bottom);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "center";
-  ctx.fillText(fmtPct(s.histogram[0].lo, 1), pad.left, h - 8);
-  ctx.fillText(fmtPct(s.histogram[s.histogram.length - 1].hi, 1), w - pad.right, h - 8);
 }
 
 function drawRollingVolChart(s) {
-  const canvas = stEl("stats-rolling-vol-chart");
-  if (!canvas || !s.roll30.length) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 18, right: 20, bottom: 36, left: 52 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
+  mountStatsChart("stats-rolling-vol-chart", {
+    pad,
+    getLength: () => s.roll30.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const vals = indices.map((i) => s.roll30[i].vol);
+      const minV = Math.min(...vals) * 0.9;
+      const maxV = Math.max(...vals) * 1.1;
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
 
-  ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "#a78bfa";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
 
-  const vals = s.roll30.map((r) => r.vol);
-  const minV = Math.min(...vals) * 0.9;
-  const maxV = Math.max(...vals) * 1.1;
-  const range = maxV - minV || 0.01;
+      if (api.hoverGlobal != null) {
+        const v = s.roll30[api.hoverGlobal].vol;
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v), "#a78bfa");
+      }
 
-  ctx.strokeStyle = "#a78bfa";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  s.roll30.forEach((r, i) => {
-    const x = pad.left + (i / (s.roll30.length - 1)) * chartW;
-    const y = pad.top + chartH - ((r.vol - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(s.roll30[indices[i]].date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = s.roll30[globalIdx];
+      return chartTipTitle(pt.date) + chartTipRow("30d vol (ann.)", fmtPct(pt.vol, 1));
+    },
   });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxV, 0), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPct(minV, 0), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, s.roll30.length, (i) =>
-    fmtChartDate(s.roll30[i].date, s.roll30.length > 180),
-  );
 }
 
 function startStatsPoll() {
@@ -2190,16 +2289,12 @@ function initStatsModule() {
       drawVarHistogramChart(statsData);
       drawVarRollingChart(statsData.var);
     }
-    if (statsData.markov) {
-      scheduleChartDraw(stEl("markov-regime-chart"), (w, h) =>
-        paintMarkovRegimeChart(statsData.markov, w, h),
-      );
-    }
+    if (statsData.markov) drawMarkovRegimeChart(statsData.markov);
     if (statsData.powerlaw) {
       const pl = statsData.powerlaw;
-      scheduleChartDraw(stEl("pl-band-chart"), (w, h) => paintPowerLawBandChart(pl, w, h));
-      scheduleChartDraw(stEl("pl-log-chart"), (w, h) => paintPowerLawLogChart(pl, w, h));
-      scheduleChartDraw(stEl("pl-ratio-chart"), (w, h) => paintPowerLawRatioChart(pl, w, h));
+      drawPowerLawBandChart(pl);
+      drawPowerLawLogChart(pl);
+      drawPowerLawRatioChart(pl);
     }
   });
 }

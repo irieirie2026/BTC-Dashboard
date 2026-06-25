@@ -297,3 +297,330 @@ window.ChartOutlier = {
   drawBrokenHBarDiverging,
   drawBrokenVBar,
 };
+
+const _chartControllers = new WeakMap();
+
+function chartTooltipEl() {
+  let el = document.getElementById("chart-tooltip");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "chart-tooltip";
+    el.className = "chart-tooltip";
+    el.hidden = true;
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+function showChartTooltip(html, x, y) {
+  const el = chartTooltipEl();
+  el.innerHTML = html;
+  el.hidden = false;
+  const margin = 12;
+  const rect = el.getBoundingClientRect();
+  let left = x + 14;
+  let top = y - rect.height - 10;
+  if (left + rect.width > window.innerWidth - margin) {
+    left = x - rect.width - 14;
+  }
+  if (top < margin) top = y + 14;
+  el.style.left = `${Math.max(margin, left)}px`;
+  el.style.top = `${Math.max(margin, top)}px`;
+}
+
+function hideChartTooltip() {
+  const el = chartTooltipEl();
+  if (el) el.hidden = true;
+}
+
+function createChartView(length, minWindow = 24) {
+  return {
+    start: 0,
+    end: Math.max(0, length - 1),
+    length,
+    minWindow,
+  };
+}
+
+function syncChartView(view, length) {
+  view.length = length;
+  if (length <= 0) {
+    view.start = 0;
+    view.end = 0;
+    return;
+  }
+  if (view.end >= length) {
+    view.start = 0;
+    view.end = length - 1;
+  }
+}
+
+function resetChartView(view) {
+  view.start = 0;
+  view.end = Math.max(0, view.length - 1);
+}
+
+function chartViewSize(view) {
+  return Math.max(1, view.end - view.start + 1);
+}
+
+function zoomChartView(view, anchorFrac, zoomIn) {
+  const size = chartViewSize(view);
+  const factor = zoomIn ? 1.22 : 1 / 1.22;
+  let newSize = Math.round(size / factor);
+  newSize = Math.max(view.minWindow, Math.min(view.length, newSize));
+  if (newSize >= view.length) {
+    resetChartView(view);
+    return;
+  }
+  const anchor = view.start + Math.round(anchorFrac * (size - 1));
+  let newStart = anchor - Math.round(anchorFrac * (newSize - 1));
+  let newEnd = newStart + newSize - 1;
+  if (newStart < 0) {
+    newEnd -= newStart;
+    newStart = 0;
+  }
+  if (newEnd > view.length - 1) {
+    newStart -= newEnd - (view.length - 1);
+    newEnd = view.length - 1;
+  }
+  view.start = Math.max(0, newStart);
+  view.end = Math.min(view.length - 1, newEnd);
+}
+
+function panChartView(view, delta) {
+  const size = chartViewSize(view);
+  if (size >= view.length) return;
+  let newStart = view.start + delta;
+  newStart = Math.max(0, Math.min(newStart, view.length - size));
+  view.start = newStart;
+  view.end = newStart + size - 1;
+}
+
+function chartLocalIndexAtX(clientX, canvas, pad, count) {
+  const rect = canvas.getBoundingClientRect();
+  const chartW = rect.width - pad.left - pad.right;
+  if (chartW <= 0 || count < 1) return null;
+  const x = clientX - rect.left;
+  const frac = (x - pad.left) / chartW;
+  if (frac < 0 || frac > 1) return null;
+  return count === 1 ? 0 : Math.round(frac * (count - 1));
+}
+
+function drawChartCrosshair(ctx, pad, chartH, x) {
+  ctx.save();
+  ctx.strokeStyle = "rgba(240, 185, 11, 0.85)";
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(x, pad.top);
+  ctx.lineTo(x, pad.top + chartH);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+}
+
+function drawChartHoverDot(ctx, x, y, color = "#f0b90b") {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(x, y, 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function indicesInChartView(view, maxPoints = 1500) {
+  const size = chartViewSize(view);
+  if (size <= maxPoints) {
+    return Array.from({ length: size }, (_, i) => view.start + i);
+  }
+  const indices = [];
+  const last = size - 1;
+  const step = last / (maxPoints - 1);
+  for (let i = 0; i < maxPoints; i++) {
+    indices.push(view.start + Math.round(i === maxPoints - 1 ? last : i * step));
+  }
+  return [...new Set(indices)];
+}
+
+function ensureChartController(canvas, options) {
+  let ctrl = _chartControllers.get(canvas);
+  if (ctrl) {
+    ctrl.state.opts = options;
+    syncChartView(ctrl.state.view, options.getLength());
+    ctrl.requestDraw();
+    return ctrl;
+  }
+
+  const state = {
+    opts: options,
+    view: createChartView(options.getLength(), options.minWindow || 24),
+    hoverLocal: null,
+    drag: null,
+    lastMouse: null,
+  };
+
+  const requestDraw = () => {
+    scheduleChartDraw(canvas, (w, h) => {
+      const opts = state.opts;
+      const len = opts.getLength();
+      if (!len) return;
+      syncChartView(state.view, len);
+      const pad = opts.pad;
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const chartW = w - pad.left - pad.right;
+      const chartH = h - pad.top - pad.bottom;
+      const viewSize = chartViewSize(state.view);
+      const hoverGlobal =
+        state.hoverLocal != null ? state.view.start + state.hoverLocal : null;
+
+      const api = {
+        pad,
+        chartW,
+        chartH,
+        view: state.view,
+        hoverGlobal,
+        hoverLocal: state.hoverLocal,
+        indices: indicesInChartView(state.view, opts.maxPoints || 1500),
+        xAt(localIdx, count = viewSize) {
+          return pad.left + (localIdx / Math.max(count - 1, 1)) * chartW;
+        },
+        xAtGlobal(globalIdx) {
+          const local = globalIdx - state.view.start;
+          return pad.left + (local / Math.max(viewSize - 1, 1)) * chartW;
+        },
+        drawCrosshair(x) {
+          drawChartCrosshair(ctx, pad, chartH, x);
+        },
+        drawDot(x, y, color) {
+          drawChartHoverDot(ctx, x, y, color);
+        },
+      };
+
+      opts.onDraw(ctx, w, h, api);
+
+      if (
+        hoverGlobal != null &&
+        state.lastMouse &&
+        opts.formatTooltip
+      ) {
+        showChartTooltip(
+          opts.formatTooltip(hoverGlobal),
+          state.lastMouse.x,
+          state.lastMouse.y,
+        );
+      } else {
+        hideChartTooltip();
+      }
+    });
+  };
+
+  canvas.classList.add("chart-canvas--interactive");
+  const wrap = canvas.parentElement;
+  if (wrap) wrap.classList.add("deriv-chart-wrap--interactive");
+
+  if (options.zoom !== false) {
+    canvas.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        syncChartView(state.view, state.opts.getLength());
+        const rect = canvas.getBoundingClientRect();
+        const chartW = rect.width - state.opts.pad.left - state.opts.pad.right;
+        const frac =
+          chartW > 0
+            ? (e.clientX - rect.left - state.opts.pad.left) / chartW
+            : 0.5;
+        zoomChartView(
+          state.view,
+          Math.max(0, Math.min(1, frac)),
+          e.deltaY < 0,
+        );
+        requestDraw();
+      },
+      { passive: false },
+    );
+
+    canvas.addEventListener("mousedown", (e) => {
+      state.drag = { x: e.clientX, view: { ...state.view } };
+      canvas.style.cursor = "grabbing";
+    });
+
+    canvas.addEventListener("dblclick", () => {
+      resetChartView(state.view);
+      syncChartView(state.view, state.opts.getLength());
+      requestDraw();
+    });
+  }
+
+  canvas.style.cursor = options.zoom === false ? "crosshair" : "grab";
+
+  canvas.addEventListener("mousemove", (e) => {
+    state.lastMouse = { x: e.clientX, y: e.clientY };
+    syncChartView(state.view, state.opts.getLength());
+    const viewSize = chartViewSize(state.view);
+
+    if (state.drag && options.zoom !== false) {
+      const rect = canvas.getBoundingClientRect();
+      const chartW = rect.width - state.opts.pad.left - state.opts.pad.right;
+      const size = chartViewSize(state.drag.view);
+      const deltaPx = e.clientX - state.drag.x;
+      const deltaIdx = -Math.round((deltaPx / Math.max(chartW, 1)) * size);
+      state.view.start = state.drag.view.start;
+      state.view.end = state.drag.view.end;
+      panChartView(state.view, deltaIdx);
+      requestDraw();
+      return;
+    }
+
+    const local = chartLocalIndexAtX(
+      e.clientX,
+      canvas,
+      state.opts.pad,
+      viewSize,
+    );
+    if (local !== state.hoverLocal) {
+      state.hoverLocal = local;
+      requestDraw();
+    } else if (local != null && state.opts.formatTooltip) {
+      showChartTooltip(
+        state.opts.formatTooltip(state.view.start + local),
+        e.clientX,
+        e.clientY,
+      );
+    }
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!state.drag) return;
+    state.drag = null;
+    canvas.style.cursor = state.opts.zoom === false ? "crosshair" : "grab";
+  });
+
+  canvas.addEventListener("mouseleave", () => {
+    state.hoverLocal = null;
+    state.drag = null;
+    hideChartTooltip();
+    requestDraw();
+  });
+
+  ctrl = { requestDraw, state };
+  _chartControllers.set(canvas, ctrl);
+  requestDraw();
+  return ctrl;
+}
+
+window.ChartInteraction = {
+  ensure: ensureChartController,
+  hideChartTooltip,
+  showChartTooltip,
+  drawChartCrosshair,
+  drawChartHoverDot,
+  indicesInChartView,
+  resetChartView,
+  chartViewSize,
+};
