@@ -1,7 +1,10 @@
 const BINANCE_KLINES = "https://api.binance.com/api/v3/klines";
-const STATS_SYMBOL = "BTCUSDT";
+const STATS_BTC_HISTORY_API = "/api/stats/btc-history";
+const STATS_PAIR = "BTC/USD";
+const STATS_SOURCE = "Bitstamp + Blockchain.info";
 const STATS_INTERVAL = "1d";
-const STATS_LIMIT = 1000;
+const ETH_STATS_LIMIT = 1000;
+const CHART_MAX_POINTS = 1500;
 const TRADING_DAYS = 252;
 const STATS_POLL_MS = 3_600_000;
 
@@ -123,6 +126,25 @@ function rollingWindow(series, window, dates, mapper) {
     out.push({ date: dates[i], ...mapper(slice) });
   }
   return out;
+}
+
+function downsampleIndices(length, maxPoints = CHART_MAX_POINTS) {
+  if (length <= maxPoints) {
+    return Array.from({ length }, (_, i) => i);
+  }
+  const indices = [];
+  const last = length - 1;
+  const step = last / (maxPoints - 1);
+  for (let i = 0; i < maxPoints; i++) {
+    indices.push(i === maxPoints - 1 ? last : Math.round(i * step));
+  }
+  return [...new Set(indices)];
+}
+
+function downsampleSeries(items, maxPoints = CHART_MAX_POINTS) {
+  if (!items?.length || items.length <= maxPoints) return items;
+  const indices = downsampleIndices(items.length, maxPoints);
+  return indices.map((i) => items[i]);
 }
 
 function drawdownSeries(days) {
@@ -593,7 +615,7 @@ function buildCommentary(s) {
 
   lines.push(
     `Over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}), ` +
-      `BTC/USDT posted a cumulative return of ${fmtPct(s.totalReturn)} from ` +
+      `${STATS_PAIR} posted a cumulative return of ${fmtPct(s.totalReturn)} from ` +
       `roughly $${fmtPrice(s.days[0]?.close)} to $${fmtPrice(s.lastClose)}.`,
   );
 
@@ -649,7 +671,7 @@ function buildRiskCommentary(s) {
   const lines = [];
 
   lines.push(
-    `Over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}), BTC/USDT ` +
+    `Over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}), ${STATS_PAIR} ` +
       `returned ${fmtPct(s.totalReturn)} with ${fmtPct(s.annStd, 1)} full-sample realized volatility ` +
       `($${fmtPrice(s.days[0]?.close)} → $${fmtPrice(s.lastClose)}).`,
   );
@@ -779,9 +801,23 @@ function buildVarCommentary(s) {
   return lines;
 }
 
+async function fetchBtcHistory() {
+  const res = await fetch(STATS_BTC_HISTORY_API);
+  if (!res.ok) throw new Error("BTC history " + res.status);
+  const payload = await res.json();
+  return payload.days.map((d) => ({
+    date: d.date,
+    open: d.open,
+    high: d.high,
+    low: d.low,
+    close: d.close,
+    volume: d.volume,
+  }));
+}
+
 async function fetchKlines(symbol) {
   const url =
-    `${BINANCE_KLINES}?symbol=${symbol}&interval=${STATS_INTERVAL}&limit=${STATS_LIMIT}`;
+    `${BINANCE_KLINES}?symbol=${symbol}&interval=${STATS_INTERVAL}&limit=${ETH_STATS_LIMIT}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error("Binance klines " + symbol + " " + res.status);
   const raw = await res.json();
@@ -818,13 +854,15 @@ async function fetchBtcStats() {
     await swr.runSWR({
       key: "stats",
       l1: "stats",
-      source: `Binance ${STATS_SYMBOL}`,
+      source: STATS_SOURCE,
       fetch: async () => {
         const [btcDays, ethDays] = await Promise.all([
-          fetchKlines(STATS_SYMBOL),
+          fetchBtcHistory(),
           fetchKlines("ETHUSDT").catch(() => null),
         ]);
         const base = computeStats(btcDays);
+        base.pair = STATS_PAIR;
+        base.source = STATS_SOURCE;
         const ethR = ethDays ? ethReturns(ethDays) : null;
         const extended = extendRiskVar(base, ethR);
         base.risk = extended;
@@ -845,7 +883,7 @@ async function fetchBtcStats() {
         applyStatsBundle(data);
         if (updateEl) {
           updateEl.textContent =
-            `${data.count} days · Binance ${STATS_SYMBOL} · ` +
+            `${data.count} days · ${data.pair || STATS_PAIR} · ${data.source || STATS_SOURCE} · ` +
             swr.formatPanelMeta({
               fetchedAt: data.fetchedAt,
               stale: opts.stale,
@@ -992,7 +1030,7 @@ function renderRiskScreen() {
   const updateEl = stEl("risk-update");
   if (updateEl) {
     updateEl.textContent =
-      `${s.count} days · Binance ${STATS_SYMBOL} · Updated ` +
+      `${s.count} days · ${s.pair || STATS_PAIR} · ${s.source || STATS_SOURCE} · Updated ` +
       new Date().toLocaleTimeString("en-US", { hour12: false });
   }
 
@@ -1122,7 +1160,7 @@ function buildMarkovCommentary(s) {
   const cur = m.stateDefs[m.currentState];
 
   lines.push(
-    `BTC/USDT daily returns are classified into ${m.nStates} tercile states ` +
+    `${STATS_PAIR} daily returns are classified into ${m.nStates} tercile states ` +
       `(Bear ≤ ${fmtPct(m.thresholds[0], 2)}, Neutral, Bull > ${fmtPct(m.thresholds[1], 2)}) ` +
       `over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}). ` +
       `${m.transitions} observed transitions inform the matrix below.`,
@@ -1324,7 +1362,7 @@ function paintPowerLawBandChart(pl, w, h) {
   const pad = { top: 18, right: 20, bottom: 36, left: 62 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
-  const pts = pl.points;
+  const pts = downsampleSeries(pl.points);
   const yMax = Math.max(...pts.map((p) => Math.max(p.close, p.resistance)));
   const yMin = Math.min(...pts.map((p) => Math.min(p.close, p.support)));
   const ySpan = Math.log10(yMax) - Math.log10(Math.max(yMin, 1));
@@ -1454,7 +1492,7 @@ function paintPowerLawRatioChart(pl, w, h) {
   const pad = { top: 18, right: 20, bottom: 36, left: 52 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
-  const pts = pl.points;
+  const pts = downsampleSeries(pl.points);
   const ratios = pts.map((p) => p.ratio);
   const yMax = Math.max(...ratios, pl.resistMult * 1.05, 1.2);
   const yMin = Math.min(...ratios, pl.supportMult * 0.95, 0.8);
@@ -1684,7 +1722,8 @@ function drawRiskDrawdownChart(r) {
 
   ctx.clearRect(0, 0, w, h);
 
-  const vals = r.drawdowns.map((d) => d.dd);
+  const drawdowns = downsampleSeries(r.drawdowns);
+  const vals = drawdowns.map((d) => d.dd);
   const minV = Math.min(...vals, 0);
   const maxV = 0;
   const range = maxV - minV || 0.01;
@@ -1717,8 +1756,8 @@ function drawRiskDrawdownChart(r) {
   ctx.textAlign = "right";
   ctx.fillText("0%", pad.left - 6, pad.top + 10);
   ctx.fillText(fmtPct(minV, 0), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, r.drawdowns.length, (i) =>
-    fmtChartDate(r.drawdowns[i].date, r.drawdowns.length > 180),
+  drawTimeAxisLabels(ctx, w, h, pad, drawdowns.length, (i) =>
+    fmtChartDate(drawdowns[i].date, drawdowns.length > 180),
   );
 }
 
@@ -1961,7 +2000,9 @@ function drawCumulativeChart(s) {
 
   ctx.clearRect(0, 0, w, h);
 
-  const vals = s.cumulative;
+  const cumIndices = downsampleIndices(s.cumulative.length);
+  const vals = cumIndices.map((i) => s.cumulative[i]);
+  const cumDates = cumIndices.map((i) => s.days[i + 1]?.date);
   const minV = Math.min(...vals, 0);
   const maxV = Math.max(...vals, 0);
   const range = maxV - minV || 0.01;
@@ -1989,8 +2030,8 @@ function drawCumulativeChart(s) {
   ctx.textAlign = "right";
   ctx.fillText(fmtPct(maxV, 0), pad.left - 6, pad.top + 10);
   ctx.fillText(fmtPct(minV, 0), pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, s.cumulative.length, (i) =>
-    fmtChartDate(s.days[i + 1]?.date, s.count > 180),
+  drawTimeAxisLabels(ctx, w, h, pad, vals.length, (i) =>
+    fmtChartDate(cumDates[i], vals.length > 180),
   );
 }
 

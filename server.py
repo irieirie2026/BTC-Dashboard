@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 CACHE_TTL = 900  # 15 minutes
+STATS_HISTORY_CACHE_TTL = 21_600  # 6 hours
 SYMBOL_NAME_CACHE_TTL = 604800  # 7 days
 _cache = {}
 
@@ -686,6 +687,120 @@ def get_onchain_chart_payload(name, timespan="30days"):
     data = fetch_json(url)
     _cache[key] = {"ts": now, "data": data}
     return data
+
+
+BITSTAMP_OHLC_URL = "https://www.bitstamp.net/api/v2/ohlc/btcusd/"
+BLOCKCHAIN_MARKET_PRICE_URL = (
+    "https://api.blockchain.info/charts/market-price?timespan=all&format=json"
+)
+
+
+def _normalize_day_ms(ts_ms):
+    dt = datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc)
+    midnight = datetime(dt.year, dt.month, dt.day, tzinfo=timezone.utc)
+    return int(midnight.timestamp() * 1000)
+
+
+def _fetch_bitstamp_daily_btc():
+    step = 86_400
+    limit = 1000
+    start = int(datetime(2011, 8, 1, tzinfo=timezone.utc).timestamp())
+    now_ts = int(time.time())
+    by_day = {}
+
+    while start < now_ts:
+        end = min(start + step * limit, now_ts + step)
+        url = (
+            f"{BITSTAMP_OHLC_URL}?step={step}&limit={limit}"
+            f"&start={start}&end={end}"
+        )
+        payload = fetch_json(url)
+        ohlc = payload.get("data", {}).get("ohlc", [])
+        if not ohlc:
+            break
+
+        for row in ohlc:
+            day = _normalize_day_ms(int(row["timestamp"]) * 1000)
+            by_day[day] = {
+                "date": day,
+                "open": float(row["open"]),
+                "high": float(row["high"]),
+                "low": float(row["low"]),
+                "close": float(row["close"]),
+                "volume": float(row.get("volume") or 0),
+                "source": "bitstamp",
+            }
+
+        last_ts = int(ohlc[-1]["timestamp"])
+        if last_ts <= start:
+            break
+        start = last_ts + step
+        time.sleep(0.12)
+
+    return [by_day[k] for k in sorted(by_day)]
+
+
+def _fetch_blockchain_market_price():
+    data = fetch_json(BLOCKCHAIN_MARKET_PRICE_URL)
+    rows = []
+    for point in data.get("values", []):
+        close = float(point["y"])
+        day = _normalize_day_ms(int(point["x"]) * 1000)
+        rows.append({
+            "date": day,
+            "open": close,
+            "high": close,
+            "low": close,
+            "close": close,
+            "volume": 0,
+            "source": "blockchain.info",
+        })
+    return rows
+
+
+def _stitch_btc_stats_history():
+    bitstamp = _fetch_bitstamp_daily_btc()
+    blockchain = _fetch_blockchain_market_price()
+    first_bitstamp = bitstamp[0]["date"] if bitstamp else None
+    merged = {}
+
+    for row in blockchain:
+        if first_bitstamp and row["date"] >= first_bitstamp:
+            continue
+        merged[row["date"]] = row
+
+    for row in bitstamp:
+        merged[row["date"]] = row
+
+    return [merged[k] for k in sorted(merged)]
+
+
+def get_stats_btc_history_payload():
+    key = "stats:btc-history"
+    now = time.time()
+    entry = _cache.get(key)
+    if entry and now - entry["ts"] < STATS_HISTORY_CACHE_TTL:
+        return entry["data"]
+
+    days = _stitch_btc_stats_history()
+    if not days:
+        raise ValueError("No BTC history data available")
+
+    payload = {
+        "pair": "BTC/USD",
+        "source": "Bitstamp + Blockchain.info",
+        "startDate": time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ", time.gmtime(days[0]["date"] / 1000)
+        ),
+        "endDate": time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ", time.gmtime(days[-1]["date"] / 1000)
+        ),
+        "count": len(days),
+        "days": days,
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    _cache[key] = {"ts": now, "data": payload}
+    return payload
 
 
 def get_etf_payload():

@@ -321,7 +321,7 @@ const METRIC_HELP = {
   },
   "risk-corr": {
     title: "BTC–ETH Correlation",
-    body: "Pearson correlation of daily BTC/USDT and ETH/USDT returns. Near 1 means both move together; lower values mean more idiosyncratic BTC risk.",
+    body: "Pearson correlation of daily BTC/USD (Bitstamp + Blockchain.info) and ETH/USDT (Binance) returns. Near 1 means both move together; lower values mean more idiosyncratic BTC risk.",
   },
   "risk-vol-90": {
     title: "90-Day Realized Volatility",
@@ -361,7 +361,7 @@ const METRIC_HELP = {
   },
   "risk-metrics": {
     title: "Risk Metrics",
-    body: "Full risk profile from Binance BTC/USDT daily closes: short- and long-window realized volatility, downside semideviation, risk-adjusted return ratios, ETH beta/correlation, and tail statistics (skew, kurtosis, percentiles). Each row has its own definition.",
+    body: "Full risk profile from Bitstamp + Blockchain.info BTC/USD daily closes: short- and long-window realized volatility, downside semideviation, risk-adjusted return ratios, ETH beta/correlation (ETH from Binance), and tail statistics (skew, kurtosis, percentiles). Each row has its own definition.",
   },
   "var-95": {
     title: "95% Value at Risk",
@@ -377,7 +377,7 @@ const METRIC_HELP = {
   },
   "var-usd": {
     title: "USD Value at Risk",
-    body: "95% historical VaR expressed in USDT per 1 BTC at the latest close. Approximate maximum 1-day dollar loss at 95% confidence.",
+    body: "95% historical VaR expressed in USD per 1 BTC at the latest close. Approximate maximum 1-day dollar loss at 95% confidence.",
   },
   "markov-current": {
     title: "Current Regime",
@@ -409,7 +409,7 @@ const METRIC_HELP = {
   },
   "pl-spot": {
     title: "Spot Price",
-    body: "Latest BTC/USDT daily close from Binance used against the Santostasi power-law fair-value line.",
+    body: "Latest BTC/USD daily close (Bitstamp, with Blockchain.info pre-2011) used against the Santostasi power-law fair-value line.",
   },
   "pl-fair": {
     title: "Fair Value",
@@ -437,7 +437,7 @@ const METRIC_HELP = {
   },
   "pl-params": {
     title: "Model Parameters",
-    body: "Published Santostasi constants plus log–log regression fit and empirical band multipliers from the Binance sample.",
+    body: "Published Santostasi constants plus log–log regression fit and empirical band multipliers from the full BTC/USD history sample.",
   },
   "pl-relations": {
     title: "PLT Feedback Loop",

@@ -12,6 +12,7 @@ from server import (
     get_news_payload,
     get_onchain_chart_payload,
     get_options_payload,
+    get_stats_btc_history_payload,
     get_tradfi_payload,
     get_treasury_payload,
 )
@@ -88,6 +89,7 @@ def dispatch_api(path, query):
         "/api/etf": get_etf_payload,
         "/api/treasury": get_treasury_payload,
         "/api/options": get_options_payload,
+        "/api/stats/btc-history": get_stats_btc_history_payload,
     }
     if path in static_routes:
         return static_routes[path]()
