@@ -414,26 +414,19 @@ const MENU_TREE = {
           },
         },
       },
-      markov: {
-        label: "Markov",
-        accent: "#67e8f9",
-        accentDim: "rgba(103, 232, 249, 0.18)",
+      valuation: {
+        label: "Valuation Models",
+        accent: "#8b5cf6",
+        accentDim: "rgba(139, 92, 246, 0.18)",
         children: {
-          panel: {
-            label: "Transition Matrix",
+          markov: {
+            label: "Markov",
             accent: "#67e8f9",
             accentDim: "rgba(103, 232, 249, 0.18)",
             onShow: () => window.refreshMarkovCharts?.(),
           },
-        },
-      },
-      powerlaw: {
-        label: "Power Law",
-        accent: "#a78bfa",
-        accentDim: "rgba(167, 139, 250, 0.18)",
-        children: {
-          panel: {
-            label: "PLT Model",
+          powerlaw: {
+            label: "Power Law",
             accent: "#a78bfa",
             accentDim: "rgba(167, 139, 250, 0.18)",
             onShow: () => window.refreshPowerLawCharts?.(),
@@ -933,13 +926,14 @@ const LEGACY_L2 = {
     st1: "statistics",
     st2: "risk",
     st3: "var",
-    st4: "markov",
-    st5: "powerlaw",
+    st4: "valuation",
+    st5: "markov",
     statistics: "statistics",
     risk: "risk",
     var: "var",
-    markov: "markov",
-    powerlaw: "powerlaw",
+    valuation: "valuation",
+    markov: "valuation",
+    powerlaw: "valuation",
   },
   tradfi: {
     st1: "stocks",
@@ -1020,8 +1014,9 @@ const LEGACY_L3 = {
   "stats/statistics": { panel: "panel" },
   "stats/risk": { panel: "panel" },
   "stats/var": { panel: "panel" },
-  "stats/markov": { panel: "panel" },
-  "stats/powerlaw": { panel: "panel" },
+  "stats/valuation": { markov: "markov", powerlaw: "powerlaw", panel: "markov" },
+  "stats/markov": { panel: "markov" },
+  "stats/powerlaw": { panel: "powerlaw" },
   "tradfi/stocks": { overview: "indices", indices: "indices", companies: "companies" },
   "tradfi/futures": { overview: "overview" },
   "tradfi/rates": { overview: "overview" },
@@ -1491,10 +1486,21 @@ const MenuController = {
 
 let menuInitialized = false;
 
+function migrateStatsValuationMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "stats") return;
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 === "markov" || l2 === "powerlaw") {
+    localStorage.setItem(MENU_L2_KEY, "valuation");
+    localStorage.setItem(MENU_L3_KEY, l2);
+    localStorage.removeItem(MENU_L4_KEY);
+  }
+}
+
 function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
 
+  migrateStatsValuationMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 
   const tree = document.getElementById("menu-tree");

@@ -1592,7 +1592,9 @@ function renderPowerLawScreen() {
       .join("");
   }
 
-  const screen = document.querySelector('.menu-screen[data-l1="stats"][data-l2="powerlaw"]');
+  const screen = document.querySelector(
+    '.menu-screen[data-l1="stats"][data-l2="valuation"][data-l3="powerlaw"]',
+  );
   window.decorateHelpLabels?.(screen);
 
   scheduleChartDraw(stEl("pl-band-chart"), (w, h) => paintPowerLawBandChart(pl, w, h));
@@ -1655,7 +1657,9 @@ function renderMarkovScreen() {
       .join("");
   }
 
-  const markovScreen = document.querySelector('.menu-screen[data-l1="stats"][data-l2="markov"]');
+  const markovScreen = document.querySelector(
+    '.menu-screen[data-l1="stats"][data-l2="valuation"][data-l3="markov"]',
+  );
   window.decorateHelpLabels?.(markovScreen);
 
   scheduleChartDraw(stEl("markov-regime-chart"), (w, h) => paintMarkovRegimeChart(m, w, h));
