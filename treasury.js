@@ -229,23 +229,31 @@ function setupCanvas(canvas, w, h) {
 const co = () => window.ChartOutlier;
 
 const TRS_LABEL_FONT = "10px IBM Plex Mono, monospace";
-const TRS_LABEL_INSET = 10;
-const TRS_LABEL_GAP = 16;
+const TRS_LABEL_INSET = 12;
+const TRS_LABEL_GAP = 22;
 
 function countryChartLabel(row) {
   const name = row.name || row.code || "—";
   return (row.flag ? row.flag + " " : "") + name;
 }
 
+function categoryLabelWidth(ctx, label) {
+  let width = ctx.measureText(label).width;
+  if (/^\p{Extended_Pictographic}/u.test(label)) {
+    width += 14;
+  }
+  return width;
+}
+
 function hbarCategoryPad(ctx, labels, w, options = {}) {
   const inset = options.inset ?? TRS_LABEL_INSET;
   const gap = options.gap ?? TRS_LABEL_GAP;
-  const min = options.min ?? 96;
-  const maxShare = options.maxShare ?? 0.48;
+  const min = options.min ?? 104;
+  const maxShare = options.maxShare ?? 0.5;
   ctx.font = options.font ?? TRS_LABEL_FONT;
   let maxW = 0;
   for (const label of labels) {
-    maxW = Math.max(maxW, ctx.measureText(label).width);
+    maxW = Math.max(maxW, categoryLabelWidth(ctx, label));
   }
   const cap = Math.floor(w * maxShare);
   return Math.min(cap, Math.max(min, inset + maxW + gap));
@@ -253,9 +261,9 @@ function hbarCategoryPad(ctx, labels, w, options = {}) {
 
 function fitCategoryLabel(ctx, label, maxWidth) {
   if (maxWidth <= 0) return label;
-  if (ctx.measureText(label).width <= maxWidth) return label;
+  if (categoryLabelWidth(ctx, label) <= maxWidth) return label;
   let trimmed = label;
-  while (trimmed.length > 3 && ctx.measureText(trimmed + "…").width > maxWidth) {
+  while (trimmed.length > 3 && categoryLabelWidth(ctx, trimmed + "…") > maxWidth) {
     trimmed = trimmed.slice(0, -1);
   }
   return trimmed + "…";
