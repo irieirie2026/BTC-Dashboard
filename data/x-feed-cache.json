@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-06-24T21:14:09Z",
+  "fetchedAt": "2026-06-25T09:59:37Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "James Wynn(@JamesWynnReal) took a $30,695 profit on his $BTC short and is already onto his next trade. He opened a 50x short on 334.42 xyz:SP500 ($2.47M), using the maximum leverage available. Liquidation price: $7,436.23 https://hyperbot.network/trader/0x5078c2fbea2b2ad61bc840bc",
+      "link": "https://x.com/lookonchain/status/2069944287933153640#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "James Wynn( @JamesWynnReal ) took a $30,695 profit on his $BTC short and is already onto his next trade. He opened a 50x short on 334.42 xyz:SP500 ($2.47M), using the maximum leverage available. Liquidation price: $7,436.23 hyperbot.network/trader/0x50\u2026",
+      "publishedAt": "2026-06-25T00:42:30+00:00",
+      "publishedTs": 1782348150.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Grayscale says Bitcoin appears attractively priced at current levels \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2069904003727577183#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-24T22:02:26+00:00",
+      "publishedTs": 1782338546.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: More than 50% of BTC is underwater, which usually marks a bear market bottom. \ud83d\udc40 HODL \u270a",
       "link": "https://x.com/BitcoinMagazine/status/2069888804500983977#m",
@@ -14,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "CEO & CHAIRMAN OF NAKAMOTO DAVID BAILEY TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"#Bitcoin is reshaping institutions from within as more insiders adopt it, accelerating the path toward hyperbitcoinization.\" \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2069888246163632317#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "CEO &amp; CHAIRMAN OF NAKAMOTO DAVID BAILEY TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \" #Bitcoin is reshaping institutions from within as more insiders adopt it, accelerating the path toward hyperbitcoinization.\" \ud83d\ude80",
+      "publishedAt": "2026-06-24T20:59:49+00:00",
+      "publishedTs": 1782334789.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto published code to run Bitcoin on Linux",
@@ -497,19 +536,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Adam Back tells Yahoo Finance that Bitcoin is cheap and at \"a good entry point for anybody deploying capital into the market.\" \ud83d\udc40 Buy the dip! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2069511786047406185#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-23T20:03:54+00:00",
-      "publishedTs": 1782245034.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "thinking back, Trump's presidencies were remarkably scandal free, the only thing I can think of is the algae in the reflecting pool",
       "link": "https://x.com/nic_carter/status/2069505339427332234#m",
       "source": "@nic_carter",
@@ -518,32 +544,6 @@
       "summary": "",
       "publishedAt": "2026-06-23T19:38:17+00:00",
       "publishedTs": 1782243497.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: Bitcoin's bottom might be in for this cycle \ud83d\udc40 HODL \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2069496432453628271#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-23T19:02:53+00:00",
-      "publishedTs": 1782241373.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: World's largest Bitcoin & crypto prediction market Polymarket publishes World Cup commercial \u26bd\ufe0f",
-      "link": "https://x.com/BitcoinMagazine/status/2069464060672766054#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: World's largest Bitcoin &amp; crypto prediction market Polymarket publishes World Cup commercial \u26bd\ufe0f Video",
-      "publishedAt": "2026-06-23T16:54:15+00:00",
-      "publishedTs": 1782233655.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -687,32 +687,6 @@
       "summary": "the totality of the evidence that the atlantic surfaced to \"prove\" that european enthusiasm for america is \"too good to be true\": - one of the people who had a viral post praising the USA is an OF model. yes. as if that discredits her genuine enthusiasm. - an obvious parody post ",
       "publishedAt": "2026-06-23T02:25:24+00:00",
       "publishedTs": 1782181524.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Another whale is making a huge leveraged bet on $BTC. The whale opened a 40x long on 1,100 $BTC($70.54M). Liquidation price: $61,724.22 https://hypurrscan.io/address/0x7c4b71c1d8a11ed426f301c372a72e06f528e00b#perps",
-      "link": "https://x.com/lookonchain/status/2069224335395729609#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Another whale is making a huge leveraged bet on $BTC . The whale opened a 40x long on 1,100 $BTC ($70.54M). Liquidation price: $61,724.22 hypurrscan.io/address/0x7c4b\u2026 Lookonchain (@lookonchain) Trader 0x50b3 just opened a 20x long on 1,653.8 $BTC ($105.77M)! He is a high-frequen",
-      "publishedAt": "2026-06-23T01:01:40+00:00",
-      "publishedTs": 1782176500.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Trader 0x50b3 just opened a 20x long on 1,653.8 $BTC($105.77M)! He is a high-frequency trader who has made 100 trades since June 2, winning 93 of them for a 93% win rate. His total profit has exceeded $6M. https://hyperbot.network/trader/0x50b309f78e774a756a2230e1769729094cac9f20",
-      "link": "https://x.com/lookonchain/status/2069217369843814448#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Trader 0x50b3 just opened a 20x long on 1,653.8 $BTC ($105.77M)! He is a high-frequency trader who has made 100 trades since June 2, winning 93 of them for a 93% win rate. His total profit has exceeded $6M. hyperbot.network/trader/0x50\u2026",
-      "publishedAt": "2026-06-23T00:33:59+00:00",
-      "publishedTs": 1782174839.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1095,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "Equity Bitcoin DRIP: proposed ETFs will invest in US stocks but then broad index of stocks pay out dvds the ETF will buy btc with that money. Trying it w innovation stocks too. Interesting..",
-      "link": "https://x.com/EricBalchunas/status/2067886468677136434#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Equity Bitcoin DRIP: proposed ETFs will invest in US stocks but then broad index of stocks pay out dvds the ETF will buy btc with that money. Trying it w innovation stocks too. Interesting.. ETF Hearsay by Henry Jim (@ETFhearsay) 2 New ETFs Filed that invest dividends into Bitcoi",
-      "publishedAt": "2026-06-19T08:25:28+00:00",
-      "publishedTs": 1781857528.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Morgan Stanley Ether and Solana ETFs nearing launch. The fee on each is going to be 14bps making them the cheapest in U.S. and world. \ud83d\udd25",
       "link": "https://x.com/EricBalchunas/status/2067877337622786478#m",
       "source": "@JSeyff",
@@ -1485,19 +1446,6 @@
       "isRetweet": true
     },
     {
-      "title": "$BITA went effective Friday afternoon. Launch imminent. Prob Thursday give or take a day. This is the much anticipated follow up to $IBIT the fastest growing etf of all time by miles (even if you use current aum).",
-      "link": "https://x.com/EricBalchunas/status/2066472864174227940#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-06-15T10:48:18+00:00",
-      "publishedTs": 1781520498.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "As of last night, new bitcoins are 10.09% easier to mine as the network programmatically adjusted difficulty at block 953,568, marking the 11th-largest automatic decreased change in history.",
       "link": "https://x.com/DocumentingBTC/status/2066213245468229849#m",
       "source": "@DocumentingBTC",
@@ -1623,19 +1571,6 @@
       "summary": "",
       "publishedAt": "2026-06-10T21:50:14+00:00",
       "publishedTs": 1781128214.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "LFG",
-      "link": "https://x.com/CryptoHayes/status/2064653972556976408#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "LFG Maelstrom (@MaelstromFund) Today we\u2019re publishing Maelstrom's Bitcoin Grant Program Annual Report, for the period ending June 2026. The report covers the technical work of the four Maelstrom funded open source developers, working to improve Bitcoin, with respect to scalabilit",
-      "publishedAt": "2026-06-10T10:20:41+00:00",
-      "publishedTs": 1781086841.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1961,110 +1896,6 @@
       "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
       "publishedAt": "2019-12-14T00:35:14+00:00",
       "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 https://youtu.be/BCPJ9vLC_Js",
-      "link": "https://x.com/BitcoinArchives/status/1205640157048844288#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 piped.video/BCPJ9vLC_Js",
-      "publishedAt": "2019-12-14T00:06:27+00:00",
-      "publishedTs": 1576281987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ \" Wan (hiring)\">@DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
-      "link": "https://x.com/BitcoinArchives/status/1145799646494756865#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "The Genesis of Asia's Mining Pools &amp; Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan , @christopherzhu0, @satofishi &amp; Chris Zhu @bitcoin2019conf #bitcoin2019 piped.video/-iXZi0x4S_8",
-      "publishedAt": "2019-07-01T21:01:38+00:00",
-      "publishedTs": 1562014898.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Addressing Privacy w/ Andrew Poelstra, @Isa, @LeoAW & @matt_odell @bitcoin2019conf #bitcoin2019 https://youtu.be/o9Vvj1lMaDM",
-      "link": "https://x.com/BitcoinArchives/status/1145546672329695232#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Addressing Privacy w/ Andrew Poelstra, @Isa , @LeoAW &amp; @matt_odell @bitcoin2019conf #bitcoin2019 piped.video/o9Vvj1lMaDM",
-      "publishedAt": "2019-07-01T04:16:24+00:00",
-      "publishedTs": 1561954584.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling to the Masses w/ @francispouliot_, @eric_lombrozo, @danheld & @AaronvanW @bitcoin2019conf #bitcoin2019 https://youtu.be/biBY6QEhK0A",
-      "link": "https://x.com/BitcoinArchives/status/1145090025845116929#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling to the Masses w/ @francispouliot_ , @eric_lombrozo , @danheld &amp; @AaronvanW @bitcoin2019conf #bitcoin2019 piped.video/biBY6QEhK0A",
-      "publishedAt": "2019-06-29T22:01:51+00:00",
-      "publishedTs": 1561845711.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: In Review: Protocol Improvement Outlooks w/ @TheBlueMatt, @JeremyRubin, @roasbeef & @moneyball @bitcoin2019conf #bitcoin2019 https://youtu.be/JhokT9Fg4FA",
-      "link": "https://x.com/BitcoinArchives/status/1145012258549960706#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "In Review: Protocol Improvement Outlooks w/ @TheBlueMatt , @JeremyRubin , @roasbeef &amp; @moneyball @bitcoin2019conf #bitcoin2019 piped.video/JhokT9Fg4FA",
-      "publishedAt": "2019-06-29T16:52:50+00:00",
-      "publishedTs": 1561827170.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Is Bitcoin Unstoppable? w/ @maxkeiser, @APompliano & @billbarhydt @bitcoin2019conf #bitcoin2019 https://youtu.be/7cB5891b60g",
-      "link": "https://x.com/BitcoinArchives/status/1145011696693653505#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Is Bitcoin Unstoppable? w/ @maxkeiser , @APompliano &amp; @billbarhydt @bitcoin2019conf #bitcoin2019 piped.video/7cB5891b60g",
-      "publishedAt": "2019-06-29T16:50:36+00:00",
-      "publishedTs": 1561827036.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Market Perspectives & Predictions w/ @TimDraper & @APompliano @bitcoin2019conf #bitcoin2019 https://youtu.be/o2RMlPeggmI",
-      "link": "https://x.com/BitcoinArchives/status/1145011107393953793#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Market Perspectives &amp; Predictions w/ @TimDraper &amp; @APompliano @bitcoin2019conf #bitcoin2019 piped.video/o2RMlPeggmI",
-      "publishedAt": "2019-06-29T16:48:15+00:00",
-      "publishedTs": 1561826895.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Welcome & Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 https://youtu.be/qIBEQ7mE9W8",
-      "link": "https://x.com/BitcoinArchives/status/1145010766317268993#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Welcome &amp; Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 piped.video/qIBEQ7mE9W8",
-      "publishedAt": "2019-06-29T16:46:54+00:00",
-      "publishedTs": 1561826814.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
