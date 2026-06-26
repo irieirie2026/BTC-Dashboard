@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-06-26T18:13:25Z",
+  "fetchedAt": "2026-06-26T22:55:58Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: BTC is at a level that historically marks the bottom of a bear market, according to the \"Bubble-Free Bitcoin Support Rainbow\" \ud83d\udc40 HODL! \u270a",
+      "link": "https://x.com/BitcoinMagazine/status/2070613367572639960#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-26T21:01:11+00:00",
+      "publishedTs": 1782507671.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "TIL in 2006 the director Uwe Boll invited film critics who had criticized his work to a boxing match and five accepted. he fought all five in the same night and won all the fights by TKO.",
+      "link": "https://x.com/nic_carter/status/2070612225119727963#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-06-26T20:56:39+00:00",
+      "publishedTs": 1782507399.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin always survives every major \"crash\" This is nothing new. HODL \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2070598189363642876#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-26T20:00:52+00:00",
+      "publishedTs": 1782504052.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @Duelbits: Predict the World Cup, win Bitcoin \u2014 the @DuelbitsPredict Showdown is 100% free to play, no deposit, with a $150K prize pool paid in BTC. \ud83d\udc49 http://bitcoinmagazine.com/duelbits-bitcoin-world-cup",
+      "link": "https://x.com/BitcoinMagazine/status/2070587387072135427#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Predict the World Cup, win Bitcoin \u2014 the @DuelbitsPredict Showdown is 100% free to play, no deposit, with a $150K prize pool paid in BTC. \ud83d\udc49 bitcoinmagazine.com/duelbits\u2026",
+      "publishedAt": "2026-06-26T19:17:57+00:00",
+      "publishedTs": 1782501477.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin holdings by country: \ud83c\uddfa\ud83c\uddf8 328,372 BTC \ud83c\udde8\ud83c\uddf3 190,00 BTC \ud83c\uddec\ud83c\udde7 61,245 BTC Who will win the race to 1 million BTC? \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2070577241461796890#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-26T18:37:38+00:00",
+      "publishedTs": 1782499058.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Eating in your car is one of the most spiritually fat things you can do",
       "link": "https://x.com/nic_carter/status/2070567630415462559#m",
@@ -380,7 +445,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: No Tradeoffs, no compromises. Just your Bitcoin, activated! Self-custody Bitcoin optionality has arrived. Learn more @ http://VerifiedX.io",
+      "title": "No Tradeoffs, no compromises. Just your Bitcoin, activated! Self-custody Bitcoin optionality has arrived. Learn more @ http://VerifiedX.io",
       "link": "https://x.com/BitcoinMagazine/status/2070152460862210378#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -390,7 +455,7 @@
       "publishedTs": 1782397782.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "The market crash just wiped out whale 0xf79C's longs. His 809.9 $BTC($47.68M) and 27.92M $XRP($28.45M) long positions were fully liquidated, resulting in a $8.42M loss. https://hyperbot.network/trader/0xf79C163305387F940f49999Ff2AbFf5410129BbD",
@@ -445,19 +510,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Financial giant SBI Holdings agrees to buy Japanese Bitcoin exchange 'Bitbank' for $288 million \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2070132598026715165#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-25T13:10:47+00:00",
-      "publishedTs": 1782393047.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Our @DMND_Sv2 pool just mined the first known Bitcoin Stratum V2 block, Block 955,318. Mainnet. A miner built their own block template and mined it through our pool. No pool deciding their transactions for them.",
       "link": "https://x.com/bitentrepreneur/status/2070131040992035235#m",
       "source": "@lopp",
@@ -484,19 +536,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Bitcoin has already risen back above $61,000 since falling below the 'Bitcoin Power Law' for the first time ever yesterday \ud83d\udc40 Bullish! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2070116631712325637#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-25T12:07:20+00:00",
-      "publishedTs": 1782389240.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "BlackRock just deposited another 3,410 $BTC($209.64M) and 5,132 $ETH($8.43M) to Coinbase Prime. https://arkm.com/explorer/entity/blackrock",
       "link": "https://x.com/lookonchain/status/2070098712442081735#m",
       "source": "@lookonchain",
@@ -508,45 +547,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Grayscale says Bitcoin appears attractively priced at current levels \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2069904003727577183#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-24T22:02:26+00:00",
-      "publishedTs": 1782338546.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: More than 50% of BTC is underwater, which usually marks a bear market bottom. \ud83d\udc40 HODL \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2069888804500983977#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-24T21:02:02+00:00",
-      "publishedTs": 1782334922.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "CEO & CHAIRMAN OF NAKAMOTO DAVID BAILEY TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"#Bitcoin is reshaping institutions from within as more insiders adopt it, accelerating the path toward hyperbitcoinization.\" \ud83d\ude80",
-      "link": "https://x.com/Bitcoinconfasia/status/2069888246163632317#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "CEO &amp; CHAIRMAN OF NAKAMOTO DAVID BAILEY TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \" #Bitcoin is reshaping institutions from within as more insiders adopt it, accelerating the path toward hyperbitcoinization.\" \ud83d\ude80",
-      "publishedAt": "2026-06-24T20:59:49+00:00",
-      "publishedTs": 1782334789.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto published code to run Bitcoin on Linux",
@@ -739,19 +739,6 @@
       "summary": "60 years of hurt and likely to continue",
       "publishedAt": "2026-06-23T22:02:32+00:00",
       "publishedTs": 1782252152.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "England lose 0-0",
-      "link": "https://x.com/nic_carter/status/2069541282066600035#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-06-23T22:01:06+00:00",
-      "publishedTs": 1782252066.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
