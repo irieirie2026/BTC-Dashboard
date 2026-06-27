@@ -417,10 +417,31 @@ function renderPerformanceChart(el, data, opts = {}) {
   });
 }
 
-function eqFmtNewsTime(iso) {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
+function eqFmtNewsTime(iso, publishedAtMs) {
+  const ms = publishedAtMs || (iso ? Date.parse(iso) : NaN);
+  if (!Number.isFinite(ms)) return "Latest available";
+  const d = new Date(ms);
+  if (Number.isNaN(d.getTime())) return "Latest available";
+
+  const now = new Date();
+  const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const startYesterday = new Date(startToday);
+  startYesterday.setDate(startYesterday.getDate() - 1);
+  const time = d.toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  if (d >= startToday) return `Today · ${time}`;
+  if (d >= startYesterday) return `Yesterday · ${time}`;
+
+  const ageHours = (now.getTime() - d.getTime()) / 3_600_000;
+  if (ageHours < 48) {
+    const hrs = Math.max(1, Math.round(ageHours));
+    return `${hrs}h ago`;
+  }
+
   return d.toLocaleString(undefined, {
     month: "short",
     day: "numeric",
@@ -430,11 +451,18 @@ function eqFmtNewsTime(iso) {
   });
 }
 
+function sortNewsArticles(articles) {
+  return [...(articles || [])].sort(
+    (a, b) => (b.publishedAtMs || Date.parse(b.publishedAt || 0) || 0)
+      - (a.publishedAtMs || Date.parse(a.publishedAt || 0) || 0),
+  );
+}
+
 function renderGlobalNews(data) {
   const feed = eqEl("equity-global-news");
   if (!feed) return;
 
-  const articles = data?.news || [];
+  const articles = sortNewsArticles(data?.news || []);
   if (!data?.fetchedAt) {
     feed.innerHTML = '<p class="news-empty">Loading headlines…</p>';
     return;
@@ -442,6 +470,12 @@ function renderGlobalNews(data) {
   if (!articles.length) {
     feed.innerHTML = '<p class="news-empty">No recent headlines for these indices.</p>';
     return;
+  }
+
+  const latest = articles[0];
+  const latestMeta = eqEl("equity-global-news-latest");
+  if (latestMeta) {
+    latestMeta.textContent = `Latest: ${eqFmtNewsTime(latest.publishedAt, latest.publishedAtMs)}`;
   }
 
   feed.innerHTML = articles
@@ -457,7 +491,7 @@ function renderGlobalNews(data) {
         </div>
         <div class="news-card-meta">
           <span class="news-card-source">${art.source || "Yahoo Finance"}</span>
-          <span class="news-card-time">${eqFmtNewsTime(art.publishedAt)}</span>
+          <span class="news-card-time">${eqFmtNewsTime(art.publishedAt, art.publishedAtMs)}</span>
         </div>
       </article>`;
     })

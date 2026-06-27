@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import time
-from datetime import date, datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date, datetime, timedelta, timezone
 from typing import Any
 
 import numpy as np
@@ -159,21 +160,50 @@ def _news_url_from_item(item: dict) -> str | None:
     return content.get("link") or content.get("url") or item.get("link") or item.get("url")
 
 
-def _news_published_at(item: dict) -> str | None:
+def _news_timestamp(item: dict) -> tuple[str | None, int]:
     content = item.get("content") or item
-    raw = (
-        content.get("pubDate")
-        or content.get("displayTime")
-        or item.get("providerPublishTime")
-    )
-    if raw is None:
-        return None
-    if isinstance(raw, (int, float)):
+    candidates = [
+        content.get("pubDate"),
+        content.get("displayTime"),
+        item.get("providerPublishTime"),
+    ]
+    for raw in candidates:
+        if raw is None or raw == "":
+            continue
+        if isinstance(raw, (int, float)):
+            try:
+                secs = int(raw)
+                if secs > 1_000_000_000_000:
+                    secs = secs // 1000
+                iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(secs))
+                return iso, secs * 1000
+            except (TypeError, ValueError, OSError):
+                continue
+        text = str(raw).strip()
+        if not text:
+            continue
+        if text.endswith("Z"):
+            iso = text
+        elif "+" in text[10:] or text.endswith("UTC"):
+            iso = text.replace("UTC", "Z")
+        elif "T" in text:
+            iso = f"{text}Z"
+        else:
+            iso = f"{text}T00:00:00Z"
         try:
-            return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(raw)))
-        except (TypeError, ValueError, OSError):
-            return None
-    return str(raw)
+            parsed = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            ms = int(parsed.timestamp() * 1000)
+            return parsed.strftime("%Y-%m-%dT%H:%M:%SZ"), ms
+        except ValueError:
+            continue
+    return None, 0
+
+
+def _news_published_at(item: dict) -> str | None:
+    iso, _ = _news_timestamp(item)
+    return iso
 
 
 def _news_source_name(item: dict) -> str:
@@ -184,36 +214,58 @@ def _news_source_name(item: dict) -> str:
     return item.get("publisher") or "Yahoo Finance"
 
 
-def fetch_stock_news(symbols: list[str], per_symbol: int = 4, max_total: int = 30) -> list[dict]:
+def _news_items_for_symbol(sym: str, per_symbol: int) -> list[dict]:
+    if not sym:
+        return []
+    try:
+        return list((yf.Ticker(sym).news or [])[:per_symbol])
+    except Exception:
+        return []
+
+
+def fetch_stock_news(symbols: list[str], per_symbol: int = 8, max_total: int = 50) -> list[dict]:
+    unique_symbols = list(dict.fromkeys([s for s in symbols if s]))[:12]
+    if not unique_symbols:
+        return []
+
     by_key: dict[str, dict] = {}
-    for sym in symbols:
-        if not sym:
-            continue
-        try:
-            items = yf.Ticker(sym).news or []
-        except Exception:
-            continue
-        for item in items[:per_symbol]:
-            content = item.get("content") or item
-            link = _news_url_from_item(item)
-            key = link or content.get("id") or item.get("id")
-            if not key:
+    with ThreadPoolExecutor(max_workers=min(6, len(unique_symbols))) as pool:
+        futures = {
+            pool.submit(_news_items_for_symbol, sym, per_symbol): sym
+            for sym in unique_symbols
+        }
+        for future in as_completed(futures):
+            sym = futures[future]
+            try:
+                items = future.result()
+            except Exception:
                 continue
-            if key in by_key:
-                if sym not in by_key[key]["symbols"]:
-                    by_key[key]["symbols"].append(sym)
-                continue
-            by_key[key] = {
-                "title": content.get("title") or item.get("title") or "Untitled",
-                "link": link or "#",
-                "source": _news_source_name(item),
-                "publishedAt": _news_published_at(item),
-                "symbols": [sym],
-            }
+            for item in items:
+                content = item.get("content") or item
+                link = _news_url_from_item(item)
+                key = link or content.get("id") or item.get("id")
+                if not key:
+                    continue
+                published_at, published_ms = _news_timestamp(item)
+                if key in by_key:
+                    if sym not in by_key[key]["symbols"]:
+                        by_key[key]["symbols"].append(sym)
+                    if published_ms > by_key[key].get("publishedAtMs", 0):
+                        by_key[key]["publishedAt"] = published_at
+                        by_key[key]["publishedAtMs"] = published_ms
+                    continue
+                by_key[key] = {
+                    "title": content.get("title") or item.get("title") or "Untitled",
+                    "link": link or "#",
+                    "source": _news_source_name(item),
+                    "publishedAt": published_at,
+                    "publishedAtMs": published_ms,
+                    "symbols": [sym],
+                }
 
     articles = sorted(
         by_key.values(),
-        key=lambda a: a.get("publishedAt") or "",
+        key=lambda a: a.get("publishedAtMs", 0),
         reverse=True,
     )
     return articles[:max_total]
@@ -595,7 +647,7 @@ def build_global_payload(
             "points": history_points_from_closes(close, days=90),
         })
 
-    news_symbols = list(dict.fromkeys([s for s in hero_symbols + symbols if s]))[:15]
+    news_symbols = list(dict.fromkeys([s for s in hero_symbols + symbols if s]))
     news = fetch_stock_news(news_symbols)
 
     return {
