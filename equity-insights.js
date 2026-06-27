@@ -590,19 +590,34 @@ function renderCandlestick(el, ohlcv, opts = {}) {
   }
   const height = opts.height || 480;
   el.style.height = `${height}px`;
-  Plotly.newPlot(
-    el,
-    traces,
-    {
-      ...companyPlotLayout("", height, { y2: hasVolume, hover: "x unified" }),
-      xaxis: { rangeslider: { visible: false } },
-      yaxis2: hasVolume
-        ? { overlaying: "y", side: "right", showgrid: false, tickfont: { size: 9, color: "#64748b" } }
-        : undefined,
-      legend: { orientation: "h", y: 1.08, font: { size: 9 } },
+  const volumePaneTop = 0.24;
+  const pricePaneBottom = 0.3;
+  const layout = {
+    ...companyPlotLayout("", height, { y2: hasVolume, hover: "x unified" }),
+    xaxis: {
+      rangeslider: { visible: false },
+      domain: hasVolume ? [0, 1] : undefined,
+      anchor: hasVolume ? "y2" : undefined,
     },
-    { responsive: true, displayModeBar: false },
-  );
+    legend: { orientation: "h", y: 1.08, font: { size: 9 } },
+  };
+  if (hasVolume) {
+    layout.yaxis = {
+      ...layout.yaxis,
+      domain: [pricePaneBottom, 1],
+      side: "right",
+    };
+    layout.yaxis2 = {
+      domain: [0, volumePaneTop],
+      anchor: "x",
+      showgrid: false,
+      zeroline: false,
+      tickfont: { size: 9, color: "#64748b" },
+      tickformat: ".2s",
+      title: { text: "Vol", font: { size: 9, color: "#64748b" } },
+    };
+  }
+  Plotly.newPlot(el, traces, layout, { responsive: true, displayModeBar: false });
 }
 
 function renderIndicatorChart(el, ohlcv, field, title, upper, lower, extraTraces = []) {
