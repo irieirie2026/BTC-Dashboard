@@ -57,11 +57,14 @@ def dispatch_api(path, query):
         )
         start = (query.get("start") or [None])[0]
         end = (query.get("end") or [None])[0]
-        period = (query.get("period") or ["1Y"])[0]
+        period = (query.get("period") or ["5Y"])[0]
+        perf_period = (query.get("perfPeriod") or ["1Y"])[0]
         movers = (query.get("movers") or ["YTD"])[0]
         if not start or not end:
             start, end = period_to_dates(period, None, None)
-        return get_equity_global_payload(symbols, start, end, movers, period, heroes)
+        return get_equity_global_payload(
+            symbols, start, end, movers, period, heroes, perf_period
+        )
 
     if path == "/api/equity/company":
         symbol = ((query.get("symbol") or [""])[0]).strip().upper()

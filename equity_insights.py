@@ -58,6 +58,65 @@ PERIOD_DAYS = {
     "1M": 30, "3M": 90, "6M": 180, "1Y": 365, "3Y": 365 * 3, "5Y": 365 * 5,
 }
 
+PERF_PERIOD_PRESETS = frozenset({"1W", "1M", "1Q", "1Y", "WTD", "MTD", "YTD", "3Y", "5Y"})
+
+
+def normalize_perf_period(preset: str | None) -> str:
+    key = (preset or "1Y").strip().upper()
+    return key if key in PERF_PERIOD_PRESETS else "1Y"
+
+
+def perf_period_start_ts(as_of: pd.Timestamp, preset: str) -> pd.Timestamp:
+    preset = normalize_perf_period(preset)
+    if preset == "1W":
+        return as_of - pd.Timedelta(days=7)
+    if preset == "1M":
+        return as_of - pd.Timedelta(days=30)
+    if preset == "1Q":
+        return as_of - pd.Timedelta(days=90)
+    if preset == "1Y":
+        return as_of - pd.Timedelta(days=365)
+    if preset == "3Y":
+        return as_of - pd.Timedelta(days=365 * 3)
+    if preset == "5Y":
+        return as_of - pd.Timedelta(days=365 * 5)
+    if preset == "WTD":
+        return as_of - pd.Timedelta(days=int(as_of.weekday()))
+    if preset == "MTD":
+        return as_of.replace(day=1)
+    if preset == "YTD":
+        return as_of.replace(month=1, day=1)
+    return as_of - pd.Timedelta(days=365)
+
+
+def slice_closes_for_perf_period(closes: pd.DataFrame, preset: str) -> pd.DataFrame:
+    if closes is None or closes.empty:
+        return closes
+    as_of = closes.index[-1]
+    start = perf_period_start_ts(as_of, preset)
+    mask = closes.index >= start
+    if not mask.any():
+        return closes.tail(max(5, min(len(closes), 10)))
+    first_idx = closes.index[mask][0]
+    pos = closes.index.get_loc(first_idx)
+    if isinstance(pos, slice):
+        pos = pos.start if pos.start is not None else 0
+    return closes.iloc[int(pos):]
+
+
+def build_performance_series(closes: pd.DataFrame, labels: dict[str, str], preset: str) -> dict:
+    performance = {"dates": [], "series": {}, "period": normalize_perf_period(preset)}
+    perf_closes = slice_closes_for_perf_period(closes, preset)
+    if perf_closes is None or perf_closes.empty:
+        return performance
+    rebased = (perf_closes.divide(perf_closes.iloc[0].replace(0, np.nan)) * 100).dropna(how="all")
+    performance["dates"] = [_fmt_date(d) for d in rebased.index]
+    for col in rebased.columns:
+        performance["series"][labels.get(col, col)] = [
+            _safe_float(v) for v in rebased[col].tolist()
+        ]
+    return performance
+
 
 def period_to_dates(preset: str, start_str: str | None, end_str: str | None) -> tuple[str, str]:
     end = date.today()
@@ -391,6 +450,7 @@ def build_global_payload(
     end: str,
     movers_key: str = "YTD",
     hero_symbols: list[str] | None = None,
+    perf_period: str = "1Y",
 ) -> dict:
     hero_symbols = list(hero_symbols or [])
     name_by_ticker = {v: k for k, v in INDICES.items()}
@@ -403,14 +463,7 @@ def build_global_payload(
     closes = pd.DataFrame({s: h["Close"] for s, h in history.items() if "Close" in h.columns})
     closes = closes.dropna(how="all")
 
-    performance = {"dates": [], "series": {}}
-    if not closes.empty:
-        rebased = (closes.divide(closes.iloc[0].replace(0, np.nan)) * 100).dropna(how="all")
-        performance["dates"] = [_fmt_date(d) for d in rebased.index]
-        for col in rebased.columns:
-            performance["series"][labels.get(col, col)] = [
-                _safe_float(v) for v in rebased[col].tolist()
-            ]
+    performance = build_performance_series(closes, labels, perf_period)
 
     correlation = {"labels": [], "matrix": []}
     volatility = {"dates": [], "series": {}}
@@ -611,20 +664,24 @@ def get_equity_global_payload(
     movers_period="YTD",
     period_preset="1Y",
     hero_symbols=None,
+    perf_period="1Y",
 ):
     if not start or not end:
         start, end = period_to_dates(period_preset, None, None)
     sym_list = symbols or list(INDICES.values())
     hero_list = list(hero_symbols or [])
+    perf_key = normalize_perf_period(perf_period)
     key = (
         f"equity:global:{','.join(hero_list)}:{','.join(sym_list)}"
-        f":{start}:{end}:{movers_period}"
+        f":{start}:{end}:{movers_period}:{perf_key}"
     )
     now = time.time()
     entry = _cache.get(key)
     if entry and now - entry["ts"] < CACHE_TTL:
         return entry["data"]
-    data = build_global_payload(sym_list, start, end, movers_period, hero_list)
+    data = build_global_payload(
+        sym_list, start, end, movers_period, hero_list, perf_key
+    )
     _cache[key] = {"ts": now, "data": data}
     return data
 

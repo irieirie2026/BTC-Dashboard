@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=42" />
+    <link rel="stylesheet" href="styles.css?v=43" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1721,18 +1721,21 @@
               <div class="panel-header equity-perf-header">
                 <h2>Performance</h2>
                 <div class="equity-perf-toolbar">
-                  <nav id="equity-global-perf-periods" class="equity-perf-periods" aria-label="Performance period">
-                    <button type="button" class="equity-perf-period" data-period="1W">1W</button>
-                    <button type="button" class="equity-perf-period" data-period="1M">1M</button>
-                    <button type="button" class="equity-perf-period" data-period="1Q">1Q</button>
-                    <button type="button" class="equity-perf-period active" data-period="1Y">1Y</button>
-                    <button type="button" class="equity-perf-period" data-period="WTD">WTD</button>
-                    <button type="button" class="equity-perf-period" data-period="MTD">MTD</button>
-                    <button type="button" class="equity-perf-period" data-period="YTD">YTD</button>
-                    <button type="button" class="equity-perf-period" data-period="3Y">3Y</button>
-                    <button type="button" class="equity-perf-period" data-period="5Y">5Y</button>
-                  </nav>
-                  <span class="panel-meta" id="equity-global-perf-meta">1Y · normalized · rebased to 100</span>
+                  <label class="equity-control-label equity-perf-period-label" for="equity-global-perf-period-select">
+                    Time range
+                    <select id="equity-global-perf-period-select" class="equity-select equity-global-perf-select" aria-label="Performance time range">
+                      <option value="1W">1 Week</option>
+                      <option value="1M">1 Month</option>
+                      <option value="1Q">1 Quarter</option>
+                      <option value="1Y" selected>1 Year</option>
+                      <option value="WTD">Week to date</option>
+                      <option value="MTD">Month to date</option>
+                      <option value="YTD">Year to date</option>
+                      <option value="3Y">3 Years</option>
+                      <option value="5Y">5 Years</option>
+                    </select>
+                  </label>
+                  <span class="panel-meta" id="equity-global-perf-meta">Normalized · rebased to 100</span>
                 </div>
               </div>
               <div id="equity-global-perf-chart" class="equity-plotly-chart equity-global-perf-chart"></div>
@@ -2413,7 +2416,7 @@
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=14"></script>
-    <script src="equity-insights.js?v=11"></script>
+    <script src="equity-insights.js?v=12"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

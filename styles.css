@@ -2508,33 +2508,17 @@ body {
   margin-left: auto;
 }
 
-.equity-perf-periods {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.equity-perf-period {
-  font-family: inherit;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.2rem 0.45rem;
-  cursor: pointer;
-}
-
-.equity-perf-period:hover {
+.equity-perf-period-label {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.75rem;
   color: var(--text);
-  border-color: rgba(148, 163, 184, 0.4);
 }
 
-.equity-perf-period.active {
-  color: var(--text);
-  background: rgba(56, 189, 248, 0.14);
-  border-color: rgba(56, 189, 248, 0.45);
+.equity-global-perf-select {
+  min-width: 9.5rem;
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.55rem;
 }
 
 .equity-global-perf-chart {

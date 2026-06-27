@@ -37,7 +37,7 @@ let equityDataKey = null;
 let globalWatchlist = null;
 let globalRefetchTimer = null;
 let globalWatchlistEventsBound = false;
-let globalPerfPeriodEventsBound = false;
+
 
 const eqEl = (id) => document.getElementById(id);
 
@@ -290,100 +290,38 @@ function setGlobalPerfPeriod(period) {
   sessionStorage.setItem(GLOBAL_PERF_PERIOD_STORAGE_KEY, period);
 }
 
-function perfPeriodStartDate(lastDateStr, period) {
-  const end = new Date(`${lastDateStr}T12:00:00`);
-  const start = new Date(end);
-  switch (period) {
-    case "1W":
-      start.setDate(start.getDate() - 7);
-      break;
-    case "1M":
-      start.setDate(start.getDate() - 30);
-      break;
-    case "1Q":
-      start.setDate(start.getDate() - 90);
-      break;
-    case "1Y":
-      start.setDate(start.getDate() - 365);
-      break;
-    case "3Y":
-      start.setDate(start.getDate() - 365 * 3);
-      break;
-    case "5Y":
-      start.setDate(start.getDate() - 365 * 5);
-      break;
-    case "WTD": {
-      const weekday = start.getDay();
-      start.setDate(start.getDate() - (weekday === 0 ? 6 : weekday - 1));
-      break;
-    }
-    case "MTD":
-      start.setDate(1);
-      break;
-    case "YTD":
-      start.setMonth(0, 1);
-      break;
-    default:
-      start.setDate(start.getDate() - 365);
-  }
-  return start;
-}
+const GLOBAL_PERF_PERIOD_LABELS = {
+  "1W": "1 Week",
+  "1M": "1 Month",
+  "1Q": "1 Quarter",
+  "1Y": "1 Year",
+  WTD: "Week to date",
+  MTD: "Month to date",
+  YTD: "Year to date",
+  "3Y": "3 Years",
+  "5Y": "5 Years",
+};
 
-function findPerfStartIndex(dates, period) {
-  if (!dates.length) return 0;
-  const startMs = perfPeriodStartDate(dates[dates.length - 1], period).getTime();
-  let idx = 0;
-  for (let i = 0; i < dates.length; i += 1) {
-    if (new Date(`${dates[i]}T12:00:00`).getTime() >= startMs) {
-      idx = i;
-      break;
-    }
-    idx = i;
-  }
-  return Math.min(idx, Math.max(0, dates.length - 2));
-}
-
-function slicePerformanceForPeriod(performance, period) {
-  const dates = performance?.dates || [];
-  const series = performance?.series || {};
-  if (!dates.length) return { dates: [], series: {} };
-
-  const startIdx = findPerfStartIndex(dates, period);
-  const slicedDates = dates.slice(startIdx);
-  const slicedSeries = {};
-
-  Object.entries(series).forEach(([name, vals]) => {
-    const base = vals[startIdx];
-    slicedSeries[name] = vals.slice(startIdx).map((v) => {
-      if (v == null || base == null || base === 0) return null;
-      return (v / base) * 100;
-    });
-  });
-
-  return { dates: slicedDates, series: slicedSeries };
-}
-
-function syncGlobalPerfPeriodButtons() {
+function syncGlobalPerfPeriodSelect() {
   const period = getGlobalPerfPeriod();
-  document.querySelectorAll("#equity-global-perf-periods .equity-perf-period").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.period === period);
-  });
+  const sel = eqEl("equity-global-perf-period-select");
+  if (sel) sel.value = period;
   const meta = eqEl("equity-global-perf-meta");
-  if (meta) meta.textContent = `${period} · normalized · rebased to 100`;
+  if (meta) {
+    const label = GLOBAL_PERF_PERIOD_LABELS[period] || period;
+    meta.textContent = `${label} · normalized · rebased to 100`;
+  }
 }
 
-function bindGlobalPerfPeriodEvents() {
-  if (globalPerfPeriodEventsBound) return;
-  globalPerfPeriodEventsBound = true;
-
-  const nav = eqEl("equity-global-perf-periods");
-  nav?.addEventListener("click", (e) => {
-    const btn = e.target.closest(".equity-perf-period");
-    if (!btn?.dataset.period) return;
-    setGlobalPerfPeriod(btn.dataset.period);
-    syncGlobalPerfPeriodButtons();
-    const perf = equityCache.global?.performance;
-    if (perf) renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), perf);
+function bindGlobalPerfPeriodSelect() {
+  const sel = eqEl("equity-global-perf-period-select");
+  if (!sel || sel.dataset.bound) return;
+  sel.dataset.bound = "true";
+  sel.value = getGlobalPerfPeriod();
+  sel.addEventListener("change", () => {
+    setGlobalPerfPeriod(sel.value);
+    syncGlobalPerfPeriodSelect();
+    loadEquityGlobal();
   });
 }
 
@@ -395,10 +333,10 @@ function globalPerfChartHeight(el) {
 
 function renderGlobalPerformanceChart(el, performance) {
   if (!window.Plotly || !performance?.dates?.length || !el) return;
-  const period = getGlobalPerfPeriod();
-  const data = slicePerformanceForPeriod(performance, period);
+  const data = performance;
   const series = Object.entries(data.series || {});
   if (!series.length || !data.dates.length) return;
+  syncGlobalPerfPeriodSelect();
 
   const height = globalPerfChartHeight(el);
   el.style.height = `${height}px`;
@@ -1048,7 +986,10 @@ async function fetchEquityGlobal() {
   loadGlobalWatchlist();
   const heroes = globalWatchlist.heroes.filter(Boolean);
   const symbols = globalWatchlist.table.filter(Boolean);
-  const params = new URLSearchParams({ period: GLOBAL_PERF_FETCH_PERIOD });
+  const params = new URLSearchParams({
+    period: GLOBAL_PERF_FETCH_PERIOD,
+    perfPeriod: getGlobalPerfPeriod(),
+  });
   if (heroes.length) params.set("heroes", heroes.join(","));
   if (symbols.length) params.set("symbols", symbols.join(","));
   else if (!heroes.length) params.set("symbols", "^GSPC");
@@ -1125,25 +1066,25 @@ async function loadEquityGlobal() {
   initEquityModule();
   loadGlobalWatchlist();
   bindGlobalWatchlistEvents();
-  bindGlobalPerfPeriodEvents();
+  bindGlobalPerfPeriodSelect();
   bindEquityControls();
 
   const swr = window.DashboardSWR;
   if (!swr) return;
 
   try {
-    const fetchKey = globalWatchlistCacheKey();
+    const fetchKey = `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}`;
     await swr.runSWR({
       key: `equity:global:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
-      validate: () => globalWatchlistCacheKey() === fetchKey,
+      validate: () => `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}` === fetchKey,
       fetch: fetchEquityGlobal,
       render: (data, opts = {}) => {
         if (opts.loading) return;
-        if (globalWatchlistCacheKey() !== fetchKey) return;
+        if (`${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}` !== fetchKey) return;
         renderGlobalScreen(data);
-        syncGlobalPerfPeriodButtons();
+        syncGlobalPerfPeriodSelect();
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));
       },
