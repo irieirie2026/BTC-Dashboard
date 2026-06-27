@@ -2,7 +2,6 @@ const EQ_COLOR_POS = "#00C853";
 const EQ_COLOR_NEG = "#FF1744";
 const EQ_POLL_MS = 300_000;
 const EQ_PERIODS = ["1M", "3M", "6M", "1Y", "3Y", "5Y", "YTD", "Max"];
-const EQ_MOVERS = ["1D", "WTD", "MTD", "YTD", "1Y"];
 
 const GLOBAL_WATCHLIST_STORAGE_KEY = "equity:global:watchlist:v1";
 const GLOBAL_HERO_SLOTS = 4;
@@ -267,29 +266,6 @@ function resolvePlotlyHeight(el, opts = {}, fallback = 420) {
   return height;
 }
 
-function globalSubpanelEl(tab) {
-  return eqEl("equity-global-screen")?.querySelector(`.equity-subpanel[data-tab="${tab}"]`);
-}
-
-function globalChartViewportOpts(tab, chartCount = 1) {
-  const panelEl = globalSubpanelEl(tab);
-  const opts = {
-    fillViewport: true,
-    panelEl,
-    chartCount,
-    gap: 10,
-    bottomPad: 48,
-  };
-  if (chartCount > 1) {
-    opts.min = 240;
-    opts.max = 460;
-  } else {
-    opts.min = 360;
-    opts.max = 760;
-  }
-  return opts;
-}
-
 function renderPerformanceChart(el, data, opts = {}) {
   if (!window.Plotly || !data?.dates?.length || !el) return;
   const traces = Object.entries(data.series || {}).map(([name, vals]) => ({
@@ -308,101 +284,6 @@ function renderPerformanceChart(el, data, opts = {}) {
     responsive: true,
     displayModeBar: false,
   });
-}
-
-function renderCorrelationChart(el, data, opts = {}) {
-  if (!window.Plotly || !data?.matrix?.length || !el) return;
-  const height = resolvePlotlyHeight(el, opts, 400);
-  Plotly.newPlot(
-    el,
-    [{
-      z: data.matrix,
-      x: data.labels,
-      y: data.labels,
-      type: "heatmap",
-      colorscale: "RdBu",
-      zmid: 0,
-    }],
-    { ...plotLayout("Return Correlation", height), xaxis: { side: "bottom" } },
-    { responsive: true, displayModeBar: false },
-  );
-}
-
-function renderVolChart(el, data, opts = {}) {
-  if (!window.Plotly || !data?.dates?.length || !el) return;
-  const traces = Object.entries(data.series || {}).map(([name, vals]) => ({
-    x: data.dates.slice(-vals.length),
-    y: vals,
-    name,
-    type: "scatter",
-    mode: "lines",
-  }));
-  const height = resolvePlotlyHeight(el, opts, 360);
-  const layout = plotLayout("Rolling Annualized Volatility (%)", height, opts);
-  if (opts.fillViewport) {
-    layout.legend = { orientation: "h", y: 1.06, font: { size: 9 } };
-    layout.margin = { l: 48, r: 24, t: 48, b: 40 };
-  }
-  Plotly.newPlot(el, traces, layout, {
-    responsive: true,
-    displayModeBar: false,
-  });
-}
-
-function renderGeoChart(el, rows, opts = {}) {
-  if (!window.Plotly || !rows?.length || !el) return;
-  const height = resolvePlotlyHeight(el, opts, 480);
-  Plotly.newPlot(
-    el,
-    [{
-      type: "scattergeo",
-      lat: rows.map((r) => r.lat),
-      lon: rows.map((r) => r.lon),
-      text: rows.map((r) => `${r.name}: ${eqFmtPct(r.returnPct)}`),
-      marker: {
-        size: rows.map((r) => Math.max(8, Math.min(28, r.absReturn * 2))),
-        color: rows.map((r) => r.returnPct ?? 0),
-        colorscale: [[0, EQ_COLOR_NEG], [0.5, "#888"], [1, EQ_COLOR_POS]],
-        cmin: -10,
-        cmax: 10,
-        colorbar: { title: "Return %" },
-      },
-    }],
-    {
-      ...plotLayout("Global Performance Map", height),
-      geo: {
-        projection: { type: "natural earth" },
-        showland: true,
-        landcolor: "#1a1f2b",
-        oceancolor: "#0e1117",
-        showcountries: true,
-      },
-    },
-    { responsive: true, displayModeBar: false },
-  );
-}
-
-function renderMoversChart(el, rows, title, opts = {}) {
-  if (!window.Plotly || !rows?.length || !el) return;
-  const colors = rows.map((r) => (r.returnPct >= 0 ? EQ_COLOR_POS : EQ_COLOR_NEG));
-  const fallback = Math.max(300, rows.length * 40);
-  const height = resolvePlotlyHeight(el, opts, fallback);
-  Plotly.newPlot(
-    el,
-    [{
-      type: "bar",
-      orientation: "h",
-      y: rows.map((r) => r.name),
-      x: rows.map((r) => r.returnPct),
-      marker: { color: colors },
-    }],
-    {
-      ...plotLayout(title, height, opts),
-      xaxis: { ticksuffix: "%" },
-      margin: { l: 120, r: 24, t: 48, b: 40 },
-    },
-    { responsive: true, displayModeBar: false },
-  );
 }
 
 function renderCandlestick(el, ohlcv) {
@@ -515,54 +396,6 @@ function getActiveEquityTab(panel) {
   return active?.dataset.tab || "overview";
 }
 
-function renderGlobalTab(tab, data) {
-  const key = `global:${tab}`;
-  if (tab !== "overview" && equityRenderedTabs.has(key)) return;
-  if (tab !== "overview") equityRenderedTabs.add(key);
-
-  switch (tab) {
-    case "overview":
-      renderGlobalOverview(data);
-      break;
-    case "performance":
-      renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance, {
-        ...globalChartViewportOpts("performance"),
-        compactLegend: true,
-      });
-      break;
-    case "risk": {
-      const riskOpts = globalChartViewportOpts("risk", 2);
-      renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation, riskOpts);
-      renderVolChart(eqEl("equity-global-vol-chart"), data.volatility, {
-        ...riskOpts,
-        compactLegend: true,
-      });
-      break;
-    }
-    case "map":
-      renderGeoChart(eqEl("equity-global-geo-chart"), data.geo, globalChartViewportOpts("map"));
-      break;
-    case "movers": {
-      const moversOpts = globalChartViewportOpts("movers");
-      renderMoversChart(
-        eqEl("equity-global-movers-top"),
-        data.movers?.top || [],
-        `Top (${data.movers?.period || "YTD"})`,
-        moversOpts,
-      );
-      renderMoversChart(
-        eqEl("equity-global-movers-bottom"),
-        data.movers?.bottom || [],
-        `Bottom (${data.movers?.period || "YTD"})`,
-        moversOpts,
-      );
-      break;
-    }
-    default:
-      break;
-  }
-}
-
 function renderCompanyTab(tab, data) {
   const key = `company:${tab}`;
   if (equityRenderedTabs.has(key)) return;
@@ -636,13 +469,7 @@ function bindEquitySubtabs(containerId, screenKind) {
     });
 
     const data = equityCache[screenKind];
-    if (data) {
-      if (screenKind === "global" && tab !== "overview") {
-        equityRenderedTabs.delete(`global:${tab}`);
-      }
-      if (screenKind === "global") renderGlobalTab(tab, data);
-      else renderCompanyTab(tab, data);
-    }
+    if (data) renderCompanyTab(tab, data);
 
     const visiblePanel = panel.querySelector(`.equity-subpanel[data-tab="${tab}"]`);
     resizeEquityChartsIn(visiblePanel);
@@ -940,18 +767,13 @@ function renderGlobalOverview(data) {
   }
 }
 
-function globalDataKey() {
-  return `${globalWatchlistCacheKey()}:${getEquityPeriod()}:${sessionStorage.getItem("equity:movers") || "YTD"}`;
-}
-
 function companyDataKey() {
   return `company:${getCompanySymbol()}:${getCompanyPeers().join(",")}:${getEquityPeriod()}`;
 }
 
 function renderGlobalScreen(data) {
   equityCache.global = data;
-  resetEquityRenderedTabs(globalDataKey());
-  renderGlobalTab("overview", data);
+  renderGlobalOverview(data);
 
   const meta = eqEl("equity-global-update");
   const swr = window.DashboardSWR;
@@ -1007,9 +829,7 @@ async function fetchEquityGlobal() {
   loadGlobalWatchlist();
   const heroes = globalWatchlist.heroes.filter(Boolean);
   const symbols = globalWatchlist.table.filter(Boolean);
-  const period = getEquityPeriod();
-  const movers = sessionStorage.getItem("equity:movers") || "YTD";
-  const params = new URLSearchParams({ period, movers });
+  const params = new URLSearchParams({ period: "1Y" });
   if (heroes.length) params.set("heroes", heroes.join(","));
   if (symbols.length) params.set("symbols", symbols.join(","));
   else if (!heroes.length) params.set("symbols", "^GSPC");
@@ -1040,19 +860,9 @@ function bindEquityControls() {
       document.querySelectorAll(".equity-period-select").forEach((s) => {
         if (s !== periodSel) s.value = periodSel.value;
       });
-      if (equityActive === "global") loadEquityGlobal();
       if (equityActive === "company") loadEquityCompany();
     });
   });
-  const moversSel = eqEl("equity-movers-select");
-  if (moversSel && !moversSel.dataset.bound) {
-    moversSel.dataset.bound = "true";
-    moversSel.value = sessionStorage.getItem("equity:movers") || "YTD";
-    moversSel.addEventListener("change", () => {
-      sessionStorage.setItem("equity:movers", moversSel.value);
-      if (equityActive === "global") loadEquityGlobal();
-    });
-  }
   const symSel = eqEl("equity-company-symbol");
   if (symSel && !symSel.dataset.bound) {
     symSel.dataset.bound = "true";
@@ -1104,7 +914,7 @@ async function loadEquityGlobal() {
   try {
     const fetchKey = globalWatchlistCacheKey();
     await swr.runSWR({
-      key: `equity:global:${fetchKey}:${getEquityPeriod()}`,
+      key: `equity:global:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
       validate: () => globalWatchlistCacheKey() === fetchKey,
@@ -1113,7 +923,6 @@ async function loadEquityGlobal() {
         if (opts.loading) return;
         if (globalWatchlistCacheKey() !== fetchKey) return;
         renderGlobalScreen(data);
-        bindEquitySubtabs("equity-global-subtabs", "global");
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));
       },
@@ -1156,16 +965,8 @@ function initEquityModule() {
   equityReady = true;
   window.addEventListener("resize", () => {
     if (equityActive !== "global") return;
-    const panel = eqEl("equity-global-screen")?.querySelector(".equity-panel");
-    const tab = getActiveEquityTab(panel);
     const data = equityCache.global;
-    if (!data) return;
-    if (tab === "overview") {
-      repaintGlobalOverviewCharts(data);
-      return;
-    }
-    equityRenderedTabs.delete(`global:${tab}`);
-    renderGlobalTab(tab, data);
+    if (data) repaintGlobalOverviewCharts(data);
   });
 }
 

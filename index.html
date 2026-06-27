@@ -1686,88 +1686,39 @@
           <section class="panel equity-panel">
             <div class="panel-header equity-toolbar">
               <h2 data-help-key="equity-global-insights">Global Insights</h2>
-              <div class="equity-controls">
-                <label class="equity-control-label">Period
-                  <select class="equity-select equity-period-select" aria-label="Chart period">
-                    <option value="1M">1M</option>
-                    <option value="3M">3M</option>
-                    <option value="6M">6M</option>
-                    <option value="1Y" selected>1Y</option>
-                    <option value="3Y">3Y</option>
-                    <option value="5Y">5Y</option>
-                    <option value="YTD">YTD</option>
-                    <option value="Max">Max</option>
-                  </select>
-                </label>
-                <label class="equity-control-label">Movers
-                  <select id="equity-movers-select" class="equity-select" aria-label="Movers period">
-                    <option value="1D">1D</option>
-                    <option value="WTD">WTD</option>
-                    <option value="MTD">MTD</option>
-                    <option value="YTD" selected>YTD</option>
-                    <option value="1Y">1Y</option>
-                  </select>
-                </label>
-                <span class="panel-meta" id="equity-global-update">Yahoo Finance · loading</span>
-              </div>
+              <span class="panel-meta" id="equity-global-update">Yahoo Finance · loading</span>
             </div>
-            <nav id="equity-global-subtabs" class="equity-subtabs" aria-label="Global insights sections">
-              <button type="button" class="equity-subtab active" data-tab="overview">Overview</button>
-              <button type="button" class="equity-subtab" data-tab="performance">Performance</button>
-              <button type="button" class="equity-subtab" data-tab="risk">Risk</button>
-              <button type="button" class="equity-subtab" data-tab="map">Map</button>
-              <button type="button" class="equity-subtab" data-tab="movers">Movers</button>
-            </nav>
-            <div class="equity-subpanel" data-tab="overview">
-              <section class="deriv-hero-strip tradfi-hero-strip" id="equity-global-heroes"></section>
-              <section class="panel equity-overview-panel">
-                <div class="panel-header tradfi-companies-header equity-overview-header">
-                  <h2>Global Indices</h2>
-                  <div class="tradfi-companies-toolbar">
-                    <button type="button" id="equity-global-add-row" class="tradfi-add-row-btn">+ Add index</button>
-                  </div>
+            <section class="deriv-hero-strip tradfi-hero-strip" id="equity-global-heroes"></section>
+            <section class="panel equity-overview-panel">
+              <div class="panel-header tradfi-companies-header equity-overview-header">
+                <h2>Global Indices</h2>
+                <div class="tradfi-companies-toolbar">
+                  <button type="button" id="equity-global-add-row" class="tradfi-add-row-btn">+ Add index</button>
                 </div>
-                <div class="deriv-table-wrap tradfi-indices-table-wrap">
-                  <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
-                    <thead>
-                      <tr>
-                        <th>Ticker</th>
-                        <th>Name</th>
-                        <th>Last</th>
-                        <th>Chg</th>
-                        <th>Chg %</th>
-                        <th>1W</th>
-                        <th>1M</th>
-                        <th>3M</th>
-                        <th>12M</th>
-                        <th>YTD</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody id="equity-global-overview-body"></tbody>
-                  </table>
-                </div>
-              </section>
-              <div class="tradfi-charts-row" id="equity-global-charts"></div>
-            </div>
-            <div class="equity-subpanel equity-subpanel--charts" data-tab="performance" hidden>
-              <div id="equity-global-perf-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
-            </div>
-            <div class="equity-subpanel equity-subpanel--charts" data-tab="risk" hidden>
-              <div id="equity-global-corr-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
-              <div id="equity-global-vol-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
-            </div>
-            <div class="equity-subpanel equity-subpanel--charts" data-tab="map" hidden>
-              <div id="equity-global-geo-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
-            </div>
-            <div class="equity-subpanel equity-subpanel--charts" data-tab="movers" hidden>
-              <div class="equity-movers-grid equity-movers-grid--fill">
-                <div id="equity-global-movers-top" class="equity-plotly-chart equity-plotly-chart--fill"></div>
-                <div id="equity-global-movers-bottom" class="equity-plotly-chart equity-plotly-chart--fill"></div>
               </div>
-            </div>
+              <div class="deriv-table-wrap tradfi-indices-table-wrap">
+                <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
+                  <thead>
+                    <tr>
+                      <th>Ticker</th>
+                      <th>Name</th>
+                      <th>Last</th>
+                      <th>Chg</th>
+                      <th>Chg %</th>
+                      <th>1W</th>
+                      <th>1M</th>
+                      <th>3M</th>
+                      <th>12M</th>
+                      <th>YTD</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="equity-global-overview-body"></tbody>
+                </table>
+              </div>
+            </section>
+            <div class="tradfi-charts-row" id="equity-global-charts"></div>
           </section>
-          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="companyInsights" id="equity-company-screen" hidden>
           <section class="panel equity-panel">
@@ -2435,14 +2386,14 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=36"></script>
+    <script src="help.js?v=37"></script>
     <script src="dashboard.js?v=28"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=13"></script>
-    <script src="equity-insights.js?v=8"></script>
+    <script src="equity-insights.js?v=9"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>
