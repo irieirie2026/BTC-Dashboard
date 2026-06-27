@@ -693,7 +693,7 @@ const METRIC_HELP = {
   },
   "tradfi-markets-table": {
     title: "TradFi Markets Table",
-    body: "Live delayed quotes from Yahoo Finance for the selected asset class. Last is the latest price or yield; Chg and Chg % are versus the prior close.",
+    body: "Live delayed quotes from Yahoo Finance for the selected asset class. Last is the latest price or yield; Chg and Chg % are versus the prior close. On Global Indices, 1W/1M/3M/12M/YTD are total returns from daily closes (5, 21, 63, and 252 trading days back, and prior year-end for YTD).",
   },
   "tradfi-companies-watchlist": {
     title: "Editable Watchlist",

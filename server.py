@@ -1044,6 +1044,18 @@ TRADFI_SECTIONS = {
         ],
         "chart": "^GSPC",
         "chartLabel": "S&P 500",
+        "charts": [
+            {"symbol": "^GSPC", "label": "S&P 500"},
+            {"symbol": "^DJI", "label": "Dow Jones"},
+            {"symbol": "^IXIC", "label": "Nasdaq Composite"},
+            {"symbol": "^RUT", "label": "Russell 2000"},
+            {"symbol": "^GDAXI", "label": "DAX"},
+            {"symbol": "^FTSE", "label": "FTSE 100"},
+            {"symbol": "^STOXX50E", "label": "Euro Stoxx 50"},
+            {"symbol": "^N225", "label": "Nikkei 225"},
+            {"symbol": "^HSI", "label": "Hang Seng"},
+            {"symbol": "^AXJO", "label": "ASX 200"},
+        ],
         "priceMode": "price",
     },
     "stocks-companies": {
@@ -1300,6 +1312,110 @@ def fetch_yfinance_quotes(symbols):
     return by_symbol
 
 
+def _index_year(idx):
+    if hasattr(idx, "year"):
+        return idx.year
+    try:
+        return int(str(idx)[:4])
+    except (TypeError, ValueError):
+        return None
+
+
+def _perf_from_closes(closes):
+    if closes is None or closes.empty:
+        return None
+    closes = closes.dropna()
+    count = len(closes)
+    if count < 2:
+        return None
+
+    current = _as_float(closes.iloc[-1])
+
+    def ret_at(offset):
+        pos = count - 1 - offset
+        if pos < 0:
+            return None
+        base = _as_float(closes.iloc[pos])
+        if not base:
+            return None
+        return ((current / base) - 1) * 100
+
+    ytd = None
+    last_year = _index_year(closes.index[-1])
+    if last_year is not None:
+        base = None
+        for i in range(count):
+            year = _index_year(closes.index[i])
+            if year is not None and year >= last_year:
+                if i > 0:
+                    base = _as_float(closes.iloc[i - 1])
+                break
+        if base:
+            ytd = ((current / base) - 1) * 100
+
+    return {
+        "w1": ret_at(5),
+        "m1": ret_at(21),
+        "m3": ret_at(63),
+        "m12": ret_at(252),
+        "ytd": ytd,
+    }
+
+
+def _history_points_from_closes(closes, days=90):
+    if closes is None or closes.empty:
+        return []
+    tail = closes.dropna().tail(days)
+    points = []
+    for idx, close in tail.items():
+        date = idx.strftime("%Y-%m-%d") if hasattr(idx, "strftime") else str(idx)[:10]
+        points.append({"date": date, "close": _as_float(close)})
+    return points
+
+
+def fetch_yfinance_history_batch(symbols, period="1y"):
+    if not YFINANCE_AVAILABLE:
+        raise RuntimeError("yfinance is not installed — run: pip3 install yfinance")
+
+    unique = [sym for sym in dict.fromkeys(symbols) if sym]
+    by_symbol = {}
+    chunk_size = 6
+
+    for i in range(0, len(unique), chunk_size):
+        chunk = unique[i : i + chunk_size]
+        try:
+            data = yf.download(
+                chunk,
+                period=period,
+                group_by="ticker",
+                threads=False,
+                progress=False,
+                auto_adjust=True,
+            )
+            multi = len(chunk) > 1
+            for sym in chunk:
+                if sym in by_symbol:
+                    continue
+                closes = _closes_for_symbol(data, sym, multi)
+                if closes is not None and not closes.empty:
+                    by_symbol[sym] = closes
+        except Exception:
+            pass
+
+    for sym in unique:
+        if sym in by_symbol:
+            continue
+        try:
+            hist = yf.Ticker(sym).history(period=period, auto_adjust=True)
+            closes = hist["Close"].dropna() if hist is not None and not hist.empty else None
+            if closes is not None and not closes.empty:
+                by_symbol[sym] = closes
+        except Exception:
+            continue
+
+    return by_symbol
+
+
 def fetch_yfinance_chart(symbol, range_="3mo"):
     if not YFINANCE_AVAILABLE:
         raise RuntimeError("yfinance is not installed — run: pip3 install yfinance")
@@ -1312,11 +1428,7 @@ def fetch_yfinance_chart(symbol, range_="3mo"):
         auto_adjust=True,
     )
     closes = _closes_for_symbol(data, symbol, multi=False)
-    points = []
-    if closes is not None:
-        for idx, close in closes.items():
-            date = idx.strftime("%Y-%m-%d") if hasattr(idx, "strftime") else str(idx)[:10]
-            points.append({"date": date, "close": _as_float(close)})
+    points = _history_points_from_closes(closes, days=90 if range_ == "3mo" else 5)
     return {
         "symbol": symbol,
         "label": _symbol_label(symbol),
@@ -1449,9 +1561,53 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         )
         heroes = table[:4] if len(table) >= 4 else heroes
 
-    chart = fetch_yahoo_chart(cfg["chart"])
+    charts = None
+    if section == "stocks-indices":
+        charts_cfg = cfg.get("charts") or [
+            {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
+        ]
+        perf_symbols = list(
+            dict.fromkeys(
+                [s for s in hero_symbols + table_symbols if s]
+                + [c["symbol"] for c in charts_cfg if c.get("symbol")]
+            )
+        )
+        history = fetch_yfinance_history_batch(perf_symbols, period="2y")
 
-    return {
+        def _attach_perf(row):
+            sym = row.get("symbol")
+            if sym and sym in history:
+                perf = _perf_from_closes(history[sym])
+                if perf:
+                    row["perf"] = perf
+            return row
+
+        heroes = [_attach_perf(row) for row in heroes]
+        table = [_attach_perf(row) for row in table]
+
+        charts = []
+        for entry in charts_cfg:
+            sym = entry.get("symbol")
+            if not sym:
+                continue
+            closes = history.get(sym)
+            if closes is None:
+                chart_obj = fetch_yahoo_chart(sym)
+                charts.append(chart_obj)
+                continue
+            charts.append(
+                {
+                    "symbol": sym,
+                    "label": entry.get("label") or _symbol_label(sym),
+                    "currency": "USD",
+                    "points": _history_points_from_closes(closes, days=90),
+                }
+            )
+        chart = charts[0] if charts else fetch_yahoo_chart(cfg["chart"])
+    else:
+        chart = fetch_yahoo_chart(cfg["chart"])
+
+    payload = {
         "section": section,
         "title": cfg["title"],
         "priceMode": cfg.get("priceMode", "price"),
@@ -1462,6 +1618,9 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         "source": "Yahoo Finance via yfinance",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
+    if charts is not None:
+        payload["charts"] = charts
+    return payload
 
 
 def get_tradfi_payload(section, heroes_override=None, symbols_override=None):

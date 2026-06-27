@@ -535,10 +535,35 @@ function renderCompaniesHeroes(section, data) {
   restoreTickerFocus(focus);
 }
 
+function tfFmtPerf(n) {
+  return tfFmtPct(n, 1);
+}
+
 function renderTradfiTable(section, data) {
   const body = tfEl(`tradfi-${section}-table-body`);
   if (!body) return;
   const mode = data.priceMode || "price";
+
+  if (section === "stocks-indices") {
+    body.innerHTML = (data.table || [])
+      .map((q) => {
+        const perf = q.perf || {};
+        return `
+      <tr>
+        <td>${q.name}<span class="tradfi-symbol-tag">${q.symbol}</span></td>
+        <td class="mono">${tfFmtPrice(q, mode)}</td>
+        <td class="mono ${tfChangeClass(q.change)}">${tfFmtChange(q.change, mode)}</td>
+        <td class="mono ${tfChangeClass(q.changePct)}">${tfFmtPct(q.changePct)}</td>
+        <td class="mono ${tfChangeClass(perf.w1)}">${tfFmtPerf(perf.w1)}</td>
+        <td class="mono ${tfChangeClass(perf.m1)}">${tfFmtPerf(perf.m1)}</td>
+        <td class="mono ${tfChangeClass(perf.m3)}">${tfFmtPerf(perf.m3)}</td>
+        <td class="mono ${tfChangeClass(perf.m12)}">${tfFmtPerf(perf.m12)}</td>
+        <td class="mono ${tfChangeClass(perf.ytd)}">${tfFmtPerf(perf.ytd)}</td>
+      </tr>`;
+      })
+      .join("");
+    return;
+  }
 
   body.innerHTML = (data.table || [])
     .map(
@@ -609,11 +634,12 @@ function renderCompaniesEditable(section, data) {
   renderTradfiCompaniesTable(section, data);
 }
 
-function paintTradfiChart(data, w, h) {
+function paintTradfiChart(data, w, h, canvasOverride) {
   const pts = data.chart?.points || [];
   if (!pts.length) return;
 
-  const canvas = tfEl(`tradfi-${data.section}-chart`);
+  const canvas =
+    canvasOverride || tfEl(`tradfi-${data.section}-chart`);
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
@@ -669,6 +695,56 @@ function paintTradfiChart(data, w, h) {
 
   drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
     fmtChartDate(pts[i]?.date, pts.length > 120),
+  );
+}
+
+function renderTradfiCharts(section, data) {
+  const container = tfEl(`tradfi-${section}-charts`);
+  if (!container) return false;
+
+  const charts = data.charts?.length
+    ? data.charts
+    : data.chart?.points?.length
+      ? [data.chart]
+      : [];
+
+  container.innerHTML = charts
+    .map(
+      (ch, i) => `
+    <section class="panel tradfi-chart-panel">
+      <div class="panel-header">
+        <h2>${ch.label || ch.symbol || "Benchmark"}</h2>
+        <span class="panel-meta">3-month · daily</span>
+      </div>
+      <div class="deriv-chart-wrap tradfi-chart-wrap">
+        <canvas id="tradfi-${section}-chart-${i}" height="200"></canvas>
+      </div>
+    </section>`,
+    )
+    .join("");
+
+  charts.forEach((ch, i) => {
+    const canvas = tfEl(`tradfi-${section}-chart-${i}`);
+    scheduleChartDraw(canvas, (w, h) =>
+      paintTradfiChart({ ...data, chart: ch }, w, h, canvas),
+    );
+  });
+
+  return true;
+}
+
+function repaintTradfiCharts(section, data) {
+  if (section === "stocks-indices" && data.charts?.length) {
+    data.charts.forEach((ch, i) => {
+      const canvas = tfEl(`tradfi-${section}-chart-${i}`);
+      scheduleChartDraw(canvas, (w, h) =>
+        paintTradfiChart({ ...data, chart: ch }, w, h, canvas),
+      );
+    });
+    return;
+  }
+  scheduleChartDraw(tfEl(`tradfi-${section}-chart`), (w, h) =>
+    paintTradfiChart(data, w, h),
   );
 }
 
@@ -743,9 +819,9 @@ function renderTradfiScreen(section, data, opts = {}) {
   }
   renderTradfiCommentary(section, data);
 
-  scheduleChartDraw(tfEl(`tradfi-${section}-chart`), (w, h) =>
-    paintTradfiChart(data, w, h),
-  );
+  if (!renderTradfiCharts(section, data)) {
+    repaintTradfiCharts(section, data);
+  }
 
   applyTradfiScreenState(section, opts);
 
@@ -783,8 +859,13 @@ async function loadTradfiSection(section) {
           if (section === "stocks-companies") {
             renderTradfiCompaniesTable(section, { priceMode: "price" });
           } else if (body) {
+            const cols = section === "stocks-indices" ? 9 : 4;
             body.innerHTML =
-              '<tr><td colspan="4">Loading market data…</td></tr>';
+              `<tr><td colspan="${cols}">Loading market data…</td></tr>`;
+          }
+          if (section === "stocks-indices") {
+            const chartsEl = tfEl("tradfi-stocks-indices-charts");
+            if (chartsEl) chartsEl.innerHTML = "";
           }
           return;
         }
@@ -821,9 +902,7 @@ function initTradfiModule() {
     if (!tradfiActiveSection) return;
     const cacheKey = tradfiSectionCacheKey(tradfiActiveSection);
     if (!tradfiCache[cacheKey]) return;
-    scheduleChartDraw(tfEl(`tradfi-${tradfiActiveSection}-chart`), (w, h) =>
-      paintTradfiChart(tradfiCache[cacheKey], w, h),
-    );
+    repaintTradfiCharts(tradfiActiveSection, tradfiCache[cacheKey]);
   });
 }
 
