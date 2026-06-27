@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-06-27T15:04:40Z",
+  "fetchedAt": "2026-06-27T20:18:05Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: Even if you do bite the bullet and reason in purely utilitarian terms, Musk\u2019s net effect from FSD and starlink alone (think how much utility is created from a billion in the global south having internet) is many many times the lost utility from USAID, even if yo",
+      "link": "https://x.com/nic_carter/status/2070906586810237082#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Even if you do bite the bullet and reason in purely utilitarian terms, Musk\u2019s net effect from FSD and starlink alone (think how much utility is created from a billion in the global south having internet) is many many times the lost utility from USAID, even if you pretend USAID wa",
+      "publishedAt": "2026-06-27T16:26:20+00:00",
+      "publishedTs": 1782577580.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: We don\u2019t actually need to have this debate. Just spend an afternoon reading the SEP entry on consequentialism and then read Singers drowning child and then Parfit\u2019s repugnant conclusion and then come back to me and say, yes, Nic you were right. I\u2019m sorry I prete",
+      "link": "https://x.com/nic_carter/status/2070905338878960001#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "We don\u2019t actually need to have this debate. Just spend an afternoon reading the SEP entry on consequentialism and then read Singers drowning child and then Parfit\u2019s repugnant conclusion and then come back to me and say, yes, Nic you were right. I\u2019m sorry I pretended to believe in",
+      "publishedAt": "2026-06-27T16:21:23+00:00",
+      "publishedTs": 1782577283.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 16 years ago, Satoshi wrote their answer to quantum computing breaking Bitcoin: \u201cI think we could come to some agreement about what the honest block chain was before the trouble started, lock that in and continue from there with a new hash function.\"",
+      "link": "https://x.com/DocumentingBTC/status/2070901334354604243#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-06-27T16:05:28+00:00",
+      "publishedTs": 1782576328.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The absolute moral chaos inherent in the debate as to whether Elon \u201ckilled\u201d millions of people in the global south is precisely why we do not as a society reason in raw consequentialist terms. Because everyone with agency ends up with uncountable moral culpability for virtually e",
+      "link": "https://x.com/nic_carter/status/2070893804408762828#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "The absolute moral chaos inherent in the debate as to whether Elon \u201ckilled\u201d millions of people in the global south is precisely why we do not as a society reason in raw consequentialist terms. Because everyone with agency ends up with uncountable moral culpability for virtually e",
+      "publishedAt": "2026-06-27T15:35:32+00:00",
+      "publishedTs": 1782574532.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\"BTC goes below $60k and everyone say it's dead?\" \"Remember when they said the same thing at $500, and then $15k\" Bitcoin always makes higher lows. HODL \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2070881209698128088#m",
@@ -11,19 +63,6 @@
       "summary": "",
       "publishedAt": "2026-06-27T14:45:30+00:00",
       "publishedTs": 1782571530.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Satoshi had a solution to quantum computing",
-      "link": "https://x.com/DocumentingBTC/status/2070875633383596381#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-27T14:23:20+00:00",
-      "publishedTs": 1782570200.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -60,7 +99,7 @@
       "source": "@nic_carter",
       "authorName": "Nic Carter",
       "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "interesting take on STRC Farside Investors (@FarsideUK) Article What to do about STRC? Before addressing anything else, let&apos;s get the most important thing out of the way, $STRC\u2019s supposed price stability mechanism. The dividend-paying product was issued at $100 and there is ",
+      "summary": "interesting take on STRC Farside Investors (@FarsideUK) Article What to do about STRC? Before addressing anything else, let&apos;s get the most important thing out of the way, $STRC\u2019s supposed price stability mechanism. Most of the units of the dividend-paying product were issued",
       "publishedAt": "2026-06-27T13:10:45+00:00",
       "publishedTs": 1782565845.0,
       "category": "x",
@@ -679,6 +718,19 @@
       "isRetweet": false
     },
     {
+      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Financial giant SBI Holdings agrees to buy Japanese Bitcoin exchange 'Bitbank' for $288 million \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2070132598026715165#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-25T13:10:47+00:00",
+      "publishedTs": 1782393047.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Our @DMND_Sv2 pool just mined the first known Bitcoin Stratum V2 block, Block 955,318. Mainnet. A miner built their own block template and mined it through our pool. No pool deciding their transactions for them.",
       "link": "https://x.com/bitentrepreneur/status/2070131040992035235#m",
       "source": "@lopp",
@@ -778,32 +830,6 @@
       "summary": "It\u2019s really quite something Eyal Yakoby (@EYakoby) Daraliza Avila Chevalier is a founder of CUAD. The organization\u2019s stated intentions is to \u201cundermine and eradicate America,\u201d through the use of \u201cviolence in America.\u201d She\u2019s now the Democrat nominee for NY-13. \u2014 https://nitter.net",
       "publishedAt": "2026-06-24T15:12:01+00:00",
       "publishedTs": 1782313921.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: I wish I was exaggerating.",
-      "link": "https://x.com/nic_carter/status/2069792693669044297#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I wish I was exaggerating. Logan Dobson (@LoganDobson) \u2014 https://nitter.net/LoganDobson/status/2069754194626527665#m",
-      "publishedAt": "2026-06-24T14:40:07+00:00",
-      "publishedTs": 1782312007.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "nothing in blue politics should surprise me at this point but I will admit I am a little jarred by new york proudly sending explicitly anti-american communists to congress.",
-      "link": "https://x.com/nic_carter/status/2069791932549669357#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-06-24T14:37:06+00:00",
-      "publishedTs": 1782311826.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1181,19 +1207,6 @@
       "summary": "When I gave this speech in October 2022, Bitcoin traded near $20,000, Strategy held 130,000 BTC worth about $2.6 billion, and $MSTR was ~$24 split-adjusted. Weeks later, after Bitcoin fell below $16,000, our debt exceeded the combined value of our BTC and cash reserves by ~$300 m",
       "publishedAt": "2026-06-20T10:23:52+00:00",
       "publishedTs": 1781951032.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Leveraged Mangos",
-      "link": "https://x.com/EricBalchunas/status/2068119094826516900#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Leveraged Mangos ETF Hearsay by Henry Jim (@ETFhearsay) Leveraged MANGOES ETF Filed \u2022 T-REX 2X LONG MANGOS DAILY TARGET ETF Eff: Sep 1, 2026 Filing: sec.gov/Archives/edgar/data/\u2026 #ETF #NewETF @REXShares \u2014 https://nitter.net/ETFhearsay/status/2068116422216069505#m",
-      "publishedAt": "2026-06-19T23:49:50+00:00",
-      "publishedTs": 1781912990.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
