@@ -77,7 +77,7 @@ function getCompanyPeers() {
   return ["MSFT", "GOOGL", "AMZN"];
 }
 
-function plotLayout(title, height = 420) {
+function plotLayout(title, height = 420, opts = {}) {
   return {
     template: "plotly_dark",
     title: { text: title, font: { size: 14 } },
@@ -85,13 +85,21 @@ function plotLayout(title, height = 420) {
     plot_bgcolor: "rgba(0,0,0,0)",
     margin: { l: 48, r: 24, t: 48, b: 40 },
     height,
-    legend: { orientation: "h", y: 1.12 },
+    legend: opts.compactLegend
+      ? { orientation: "h", y: 1.04, font: { size: 9 }, tracegroupgap: 2 }
+      : { orientation: "h", y: 1.12 },
     font: { family: "IBM Plex Sans, sans-serif", size: 11 },
   };
 }
 
-function renderPerformanceChart(el, data) {
-  if (!window.Plotly || !data?.dates?.length) return;
+function viewportChartHeight(el, min = 380, max = 720, bottomPad = 28) {
+  if (!el) return 440;
+  const top = el.getBoundingClientRect().top;
+  return Math.round(Math.max(min, Math.min(max, window.innerHeight - top - bottomPad)));
+}
+
+function renderPerformanceChart(el, data, opts = {}) {
+  if (!window.Plotly || !data?.dates?.length || !el) return;
   const traces = Object.entries(data.series || {}).map(([name, vals]) => ({
     x: data.dates,
     y: vals,
@@ -99,7 +107,13 @@ function renderPerformanceChart(el, data) {
     type: "scatter",
     mode: "lines",
   }));
-  Plotly.newPlot(el, traces, plotLayout("Normalized Performance (Rebased to 100)", 440), {
+  const height = opts.fillViewport ? viewportChartHeight(el) : 440;
+  const layout = plotLayout("Normalized Performance (Rebased to 100)", height, opts);
+  if (opts.compactLegend) {
+    layout.margin = { l: 48, r: 24, t: 52, b: 40 };
+  }
+  el.style.height = `${height}px`;
+  Plotly.newPlot(el, traces, layout, {
     responsive: true,
     displayModeBar: false,
   });
@@ -306,7 +320,10 @@ function renderGlobalTab(tab, data) {
       renderGlobalOverview(data);
       break;
     case "performance":
-      renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
+      renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance, {
+        fillViewport: true,
+        compactLegend: true,
+      });
       break;
     case "risk":
       renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation);
