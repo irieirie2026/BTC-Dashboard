@@ -441,22 +441,112 @@ function bindEquitySubtabs(containerId, screenKind) {
   onTabSelect(getActiveEquityTab(panel));
 }
 
+function toggleGlobalTicker(ticker) {
+  const selected = new Set(getSelectedGlobalTickers());
+  if (selected.has(ticker)) {
+    if (selected.size <= 1) return;
+    selected.delete(ticker);
+  } else {
+    selected.add(ticker);
+  }
+  setSelectedGlobalTickers([...selected]);
+  loadEquityGlobal();
+}
+
+function syncGlobalTickerPicker() {
+  const wrap = eqEl("equity-global-ticker-picker");
+  if (!wrap) return;
+  const selected = new Set(getSelectedGlobalTickers());
+  const indices = equityCache.global?.indices || {};
+  wrap.innerHTML = Object.entries(indices)
+    .map(([name, ticker]) => {
+      const on = selected.has(ticker) ? "checked" : "";
+      return `<label class="equity-ticker-chip"><input type="checkbox" value="${ticker}" ${on}/> ${name}</label>`;
+    })
+    .join("");
+}
+
+function bindGlobalTickerPicker() {
+  const wrap = eqEl("equity-global-ticker-picker");
+  if (!wrap || wrap.dataset.bound) return;
+  wrap.dataset.bound = "true";
+  wrap.addEventListener("change", (e) => {
+    const inp = e.target;
+    if (inp.tagName !== "INPUT") return;
+    const tickers = [...wrap.querySelectorAll("input:checked")].map((i) => i.value);
+    if (!tickers.length) {
+      inp.checked = true;
+      return;
+    }
+    setSelectedGlobalTickers(tickers);
+    loadEquityGlobal();
+  });
+}
+
+function bindGlobalOverviewRows() {
+  const body = eqEl("equity-global-overview-body");
+  if (!body || body.dataset.bound) return;
+  body.dataset.bound = "true";
+  body.addEventListener("click", (e) => {
+    const row = e.target.closest(".equity-overview-row");
+    if (!row) return;
+    if (e.target.closest("input[type='checkbox']")) return;
+    toggleGlobalTicker(row.dataset.ticker);
+  });
+  body.addEventListener("change", (e) => {
+    const inp = e.target;
+    if (inp.tagName !== "INPUT" || inp.type !== "checkbox") return;
+    const row = inp.closest(".equity-overview-row");
+    if (!row) return;
+    const selected = new Set(getSelectedGlobalTickers());
+    if (inp.checked) {
+      selected.add(row.dataset.ticker);
+    } else if (selected.size > 1) {
+      selected.delete(row.dataset.ticker);
+    } else {
+      inp.checked = true;
+      return;
+    }
+    setSelectedGlobalTickers([...selected]);
+    loadEquityGlobal();
+  });
+  body.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const row = e.target.closest(".equity-overview-row");
+    if (!row) return;
+    e.preventDefault();
+    toggleGlobalTicker(row.dataset.ticker);
+  });
+}
+
 function renderGlobalOverview(data) {
   const body = eqEl("equity-global-overview-body");
   if (!body) return;
-  body.innerHTML = (data.overview || [])
-    .map((r) => `
-    <tr>
-      <td>${r.name}<span class="tradfi-symbol-tag">${r.ticker}</span></td>
-      <td class="mono">${eqFmtNum(r.price)}</td>
-      <td class="mono ${eqChangeClass(r["1D"])}">${eqFmtPct(r["1D"])}</td>
-      <td class="mono ${eqChangeClass(r.WTD)}">${eqFmtPct(r.WTD)}</td>
-      <td class="mono ${eqChangeClass(r.MTD)}">${eqFmtPct(r.MTD)}</td>
-      <td class="mono ${eqChangeClass(r.YTD)}">${eqFmtPct(r.YTD)}</td>
-      <td class="mono ${eqChangeClass(r["1Y"])}">${eqFmtPct(r["1Y"])}</td>
-      <td class="mono">${r.volume != null ? eqFmtNum(r.volume, 0) : "—"}</td>
-    </tr>`)
+  const selected = new Set(getSelectedGlobalTickers());
+  const overviewByTicker = Object.fromEntries((data.overview || []).map((r) => [r.ticker, r]));
+  const indices = data.indices || equityCache.global?.indices || {};
+
+  body.innerHTML = Object.entries(indices)
+    .map(([name, ticker]) => {
+      const r = overviewByTicker[ticker];
+      const isSelected = selected.has(ticker);
+      const rowClass = `equity-overview-row${isSelected ? " equity-overview-row--selected" : ""}`;
+      const checked = isSelected ? "checked" : "";
+      return `
+    <tr class="${rowClass}" data-ticker="${ticker}" role="button" tabindex="0" aria-pressed="${isSelected}">
+      <td class="equity-overview-check-col"><input type="checkbox" class="equity-overview-check" ${checked} aria-label="Include ${name}" /></td>
+      <td>${name}<span class="tradfi-symbol-tag">${ticker}</span></td>
+      <td class="mono">${r ? eqFmtNum(r.price) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r["1D"]) : ""}">${r ? eqFmtPct(r["1D"]) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r.WTD) : ""}">${r ? eqFmtPct(r.WTD) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r.MTD) : ""}">${r ? eqFmtPct(r.MTD) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r.YTD) : ""}">${r ? eqFmtPct(r.YTD) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r["1Y"]) : ""}">${r ? eqFmtPct(r["1Y"]) : "—"}</td>
+      <td class="mono">${r?.volume != null ? eqFmtNum(r.volume, 0) : "—"}</td>
+    </tr>`;
+    })
     .join("");
+  syncGlobalTickerPicker();
 }
 
 function globalDataKey() {
@@ -546,28 +636,7 @@ async function fetchEquityCompany() {
   return res.json();
 }
 
-function buildGlobalTickerPicker() {
-  const wrap = eqEl("equity-global-ticker-picker");
-  if (!wrap || wrap.dataset.bound) return;
-  wrap.dataset.bound = "true";
-  const selected = new Set(getSelectedGlobalTickers());
-  const indices = equityCache.global?.indices || {};
-  wrap.innerHTML = Object.entries(indices)
-    .map(([name, ticker]) => {
-      const on = selected.has(ticker) ? "checked" : "";
-      return `<label class="equity-ticker-chip"><input type="checkbox" value="${ticker}" ${on}/> ${name}</label>`;
-    })
-    .join("");
-  wrap.querySelectorAll("input").forEach((inp) => {
-    inp.addEventListener("change", () => {
-      const tickers = [...wrap.querySelectorAll("input:checked")].map((i) => i.value);
-      if (tickers.length) {
-        setSelectedGlobalTickers(tickers);
-        loadEquityGlobal();
-      }
-    });
-  });
-}
+
 
 function bindEquityControls() {
   document.querySelectorAll(".equity-period-select").forEach((periodSel) => {
@@ -633,6 +702,8 @@ async function loadEquityGlobal() {
   equityActive = "global";
   window.tradfiClearActiveSection?.();
   initEquityModule();
+  bindGlobalTickerPicker();
+  bindGlobalOverviewRows();
   bindEquityControls();
 
   const swr = window.DashboardSWR;
@@ -647,7 +718,6 @@ async function loadEquityGlobal() {
       render: (data, opts = {}) => {
         if (opts.loading) return;
         renderGlobalScreen(data);
-        buildGlobalTickerPicker();
         bindEquitySubtabs("equity-global-subtabs", "global");
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));
