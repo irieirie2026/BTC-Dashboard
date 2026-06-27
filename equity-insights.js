@@ -41,6 +41,17 @@ const DEFAULT_GLOBAL_WATCHLIST = [
   "000001.SS", "^KS11", "^NSEI", "^AXJO", "^GSPTSE", "ACWI", "EEM",
 ];
 
+const COMPANY_WATCHLIST_STORAGE_KEY = "equity:company:watchlist:v1";
+const TRADFI_COMPANIES_STORAGE_KEY = "tradfi:stocks-companies:v1";
+const COMPANY_WATCHLIST_MIN = 8;
+const COMPANY_WATCHLIST_MAX = 24;
+const COMPANY_WATCHLIST_REFETCH_MS = 400;
+
+const DEFAULT_COMPANY_WATCHLIST = [
+  "AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA",
+  "AMD", "TSM", "BABA", "SAP", "0700.HK",
+];
+
 const equityCache = {};
 const equityRenderedTabs = new Set();
 let equityActive = null;
@@ -49,6 +60,9 @@ let equityDataKey = null;
 let globalWatchlist = null;
 let globalRefetchTimer = null;
 let globalWatchlistEventsBound = false;
+let companyWatchlist = null;
+let companyWatchlistEventsBound = false;
+let companyWatchlistTimer = null;
 
 
 const eqEl = (id) => document.getElementById(id);
@@ -276,7 +290,265 @@ function restoreEqTickerFocus(focus) {
 }
 
 function getCompanySymbol() {
-  return sessionStorage.getItem("equity:company:symbol") || "AAPL";
+  const saved = sessionStorage.getItem("equity:company:symbol");
+  if (saved) return normalizeEqTicker(saved);
+  const symbols = getCompanyWatchlistSymbols();
+  return symbols[0] || "AAPL";
+}
+
+function setCompanySymbol(symbol) {
+  const sym = normalizeEqTicker(symbol);
+  if (!sym) return;
+  sessionStorage.setItem("equity:company:symbol", sym);
+}
+
+function defaultCompanyWatchlistSlots() {
+  const slots = DEFAULT_COMPANY_WATCHLIST.map(normalizeEqTicker);
+  while (slots.length < COMPANY_WATCHLIST_MIN) slots.push("");
+  return slots.slice(0, COMPANY_WATCHLIST_MAX);
+}
+
+function normalizeCompanyWatchlistSlots(slots, isDefault = false) {
+  const normalized = (slots || []).map(normalizeEqTicker);
+  if (isDefault) {
+    while (normalized.length < COMPANY_WATCHLIST_MIN) normalized.push("");
+  } else if (!normalized.length) {
+    normalized.push("");
+  }
+  return normalized.slice(0, COMPANY_WATCHLIST_MAX);
+}
+
+function loadCompanyWatchlist() {
+  if (companyWatchlist) return companyWatchlist;
+
+  try {
+    const raw = localStorage.getItem(COMPANY_WATCHLIST_STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (Array.isArray(saved?.slots)) {
+        companyWatchlist = {
+          slots: normalizeCompanyWatchlistSlots(saved.slots, false),
+        };
+        return companyWatchlist;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+
+  try {
+    const tradfiRaw = localStorage.getItem(TRADFI_COMPANIES_STORAGE_KEY);
+    if (tradfiRaw) {
+      const tradfi = JSON.parse(tradfiRaw);
+      const merged = [
+        ...(Array.isArray(tradfi?.heroes) ? tradfi.heroes : []),
+        ...(Array.isArray(tradfi?.table) ? tradfi.table : []),
+      ]
+        .map(normalizeEqTicker)
+        .filter(Boolean);
+      const unique = [...new Set(merged)];
+      if (unique.length) {
+        companyWatchlist = {
+          slots: normalizeCompanyWatchlistSlots(unique, false),
+        };
+        persistCompanyWatchlist();
+        return companyWatchlist;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+
+  companyWatchlist = { slots: defaultCompanyWatchlistSlots() };
+  return companyWatchlist;
+}
+
+function persistCompanyWatchlist() {
+  if (!companyWatchlist) return;
+  localStorage.setItem(COMPANY_WATCHLIST_STORAGE_KEY, JSON.stringify(companyWatchlist));
+}
+
+function getCompanyWatchlistSymbols() {
+  loadCompanyWatchlist();
+  return [...new Set(companyWatchlist.slots.map(normalizeEqTicker).filter(Boolean))];
+}
+
+function updateCompanyWatchlistFromInputs() {
+  loadCompanyWatchlist();
+  const inputs = document.querySelectorAll("#equity-company-watchlist .equity-company-watchlist-input");
+  const slots = [];
+  inputs.forEach((input) => {
+    slots.push(normalizeEqTicker(input.value));
+  });
+  companyWatchlist.slots = normalizeCompanyWatchlistSlots(slots, false);
+  persistCompanyWatchlist();
+}
+
+function addCompanyWatchlistSlot(symbol = "") {
+  loadCompanyWatchlist();
+  if (companyWatchlist.slots.length >= COMPANY_WATCHLIST_MAX) return false;
+  companyWatchlist.slots.push(normalizeEqTicker(symbol));
+  persistCompanyWatchlist();
+  return true;
+}
+
+function ensureCompanyInWatchlist(symbol) {
+  const sym = normalizeEqTicker(symbol);
+  if (!sym) return;
+  loadCompanyWatchlist();
+  if (companyWatchlist.slots.includes(sym)) return;
+  const emptyIdx = companyWatchlist.slots.findIndex((s) => !s);
+  if (emptyIdx >= 0) companyWatchlist.slots[emptyIdx] = sym;
+  else if (companyWatchlist.slots.length < COMPANY_WATCHLIST_MAX) companyWatchlist.slots.push(sym);
+  persistCompanyWatchlist();
+}
+
+function refreshCompanyWatchlistUi() {
+  const data = equityCache.company;
+  renderCompanyWatchlist();
+  if (data) {
+    renderCompanyPeerChips(
+      getCompanyWatchlistSymbols(),
+      data.peers || getCompanyPeers(),
+      data.symbol,
+    );
+  }
+}
+
+function scheduleCompanyWatchlistUiRefresh(immediate = false) {
+  if (companyWatchlistTimer) clearTimeout(companyWatchlistTimer);
+  if (immediate) {
+    refreshCompanyWatchlistUi();
+    return;
+  }
+  companyWatchlistTimer = setTimeout(() => {
+    companyWatchlistTimer = null;
+    if (equityActive === "company") refreshCompanyWatchlistUi();
+  }, COMPANY_WATCHLIST_REFETCH_MS);
+}
+
+function renderCompanyWatchlist() {
+  loadCompanyWatchlist();
+  const wrap = eqEl("equity-company-watchlist");
+  if (!wrap) return;
+
+  const focus = captureEqTickerFocus();
+  const active = getCompanySymbol();
+  const canRemove = companyWatchlist.slots.length > 1;
+
+  wrap.innerHTML = companyWatchlist.slots
+    .map((sym, i) => {
+      const ticker = normalizeEqTicker(sym);
+      const isActive = ticker && ticker === active;
+      return `
+      <div class="equity-company-watchlist-slot${isActive ? " active" : ""}" data-slot="${i}">
+        <input
+          type="text"
+          class="tradfi-ticker-input equity-company-watchlist-input"
+          value="${sym || ""}"
+          data-equity-focus="company-wl-${i}"
+          aria-label="Company ticker ${i + 1}"
+          placeholder="Ticker"
+        />
+        <button
+          type="button"
+          class="equity-company-watchlist-load"
+          title="Load chart"
+          aria-label="Load ${ticker || "ticker"}"
+          ${ticker ? "" : "disabled"}
+        >→</button>
+        <button
+          type="button"
+          class="tradfi-row-remove equity-company-watchlist-remove"
+          aria-label="Remove ${ticker || "slot"}"
+          ${canRemove ? "" : "disabled"}
+        >×</button>
+      </div>`;
+    })
+    .join("");
+
+  restoreEqTickerFocus(focus);
+}
+
+function bindCompanyWatchlistEvents() {
+  if (companyWatchlistEventsBound) return;
+  companyWatchlistEventsBound = true;
+
+  const wrap = eqEl("equity-company-watchlist");
+  const addBtn = eqEl("equity-company-add-ticker");
+
+  const onTickerInput = () => {
+    updateCompanyWatchlistFromInputs();
+    scheduleCompanyWatchlistUiRefresh(false);
+  };
+
+  const onTickerCommit = () => {
+    updateCompanyWatchlistFromInputs();
+    scheduleCompanyWatchlistUiRefresh(true);
+  };
+
+  wrap?.addEventListener("input", (e) => {
+    if (e.target.classList.contains("equity-company-watchlist-input")) onTickerInput();
+  });
+  wrap?.addEventListener("change", (e) => {
+    if (e.target.classList.contains("equity-company-watchlist-input")) onTickerCommit();
+  });
+  wrap?.addEventListener("keydown", (e) => {
+    if (
+      e.target.classList.contains("equity-company-watchlist-input") &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      const sym = normalizeEqTicker(e.target.value);
+      if (!sym) return;
+      updateCompanyWatchlistFromInputs();
+      setCompanySymbol(sym);
+      e.target.blur();
+      loadEquityCompany();
+    }
+  });
+
+  wrap?.addEventListener("click", (e) => {
+    const loadBtn = e.target.closest(".equity-company-watchlist-load");
+    if (loadBtn) {
+      const slot = loadBtn.closest(".equity-company-watchlist-slot");
+      const input = slot?.querySelector(".equity-company-watchlist-input");
+      const sym = normalizeEqTicker(input?.value);
+      if (!sym) return;
+      updateCompanyWatchlistFromInputs();
+      setCompanySymbol(sym);
+      loadEquityCompany();
+      return;
+    }
+
+    const removeBtn = e.target.closest(".equity-company-watchlist-remove");
+    if (removeBtn && !removeBtn.disabled) {
+      const slot = removeBtn.closest(".equity-company-watchlist-slot");
+      const idx = Number(slot?.dataset.slot);
+      if (!Number.isFinite(idx)) return;
+      loadCompanyWatchlist();
+      if (companyWatchlist.slots.length <= 1) return;
+      const removed = normalizeEqTicker(companyWatchlist.slots[idx]);
+      companyWatchlist.slots.splice(idx, 1);
+      if (!companyWatchlist.slots.length) companyWatchlist.slots.push("");
+      persistCompanyWatchlist();
+      if (removed && removed === getCompanySymbol()) {
+        const next = getCompanyWatchlistSymbols()[0];
+        if (next) setCompanySymbol(next);
+        loadEquityCompany();
+      } else {
+        refreshCompanyWatchlistUi();
+      }
+    }
+  });
+
+  addBtn?.addEventListener("click", () => {
+    if (!addCompanyWatchlistSlot("")) return;
+    renderCompanyWatchlist();
+    const inputs = wrap?.querySelectorAll(".equity-company-watchlist-input");
+    const last = inputs?.[inputs.length - 1];
+    last?.focus();
+  });
 }
 
 function getCompanyPeers() {
@@ -1376,15 +1648,6 @@ function renderGlobalScreen(data) {
   }
 }
 
-function refreshCompanySymbolSelect(data) {
-  const symSel = eqEl("equity-company-symbol");
-  if (!symSel) return;
-  const companies = data?.defaultCompanies || ["AAPL", "MSFT", "NVDA", "GOOGL"];
-  symSel.innerHTML = companies.map((c) => `<option value="${c}">${c}</option>`).join("");
-  const sym = getCompanySymbol();
-  if ([...symSel.options].some((o) => o.value === sym)) symSel.value = sym;
-}
-
 function renderCompanyScreen(data) {
   equityCache.company = data;
   resetEquityRenderedTabs(companyDataKey());
@@ -1403,10 +1666,12 @@ function renderCompanyScreen(data) {
   renderCompanyRange52w(data.summary, info);
   renderCompanyCommentary(data);
   renderCompanyNews(data);
-  refreshCompanySymbolSelect(data);
-
-  const companies = data.defaultCompanies || ["AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META"];
-  renderCompanyPeerChips(companies, data.peers || getCompanyPeers(), data.symbol);
+  renderCompanyWatchlist();
+  renderCompanyPeerChips(
+    getCompanyWatchlistSymbols(),
+    data.peers || getCompanyPeers(),
+    data.symbol,
+  );
 
   const panel = eqEl("equity-company-subtabs")?.closest(".equity-panel");
   renderCompanyTab(getActiveEquityTab(panel) || "overview", data);
@@ -1456,23 +1721,16 @@ async function fetchEquityCompany() {
 
 function bindEquityControls() {
   bindCompanyPeriodSelects();
-  const symSel = eqEl("equity-company-symbol");
-  if (symSel && !symSel.dataset.bound) {
-    symSel.dataset.bound = "true";
-    const companies = equityCache.company?.defaultCompanies || ["AAPL", "MSFT", "NVDA", "GOOGL"];
-    symSel.innerHTML = companies.map((c) => `<option value="${c}">${c}</option>`).join("");
-    symSel.value = getCompanySymbol();
-    symSel.addEventListener("change", () => {
-      sessionStorage.setItem("equity:company:symbol", symSel.value);
-      loadEquityCompany();
-    });
-  }
+  bindCompanyWatchlistEvents();
   const customSym = eqEl("equity-company-custom");
   if (customSym && !customSym.dataset.bound) {
     customSym.dataset.bound = "true";
     customSym.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && customSym.value.trim()) {
-        sessionStorage.setItem("equity:company:symbol", customSym.value.trim().toUpperCase());
+        const sym = normalizeEqTicker(customSym.value);
+        ensureCompanyInWatchlist(sym);
+        setCompanySymbol(sym);
+        customSym.value = "";
         loadEquityCompany();
       }
     });
@@ -1518,6 +1776,8 @@ async function loadEquityCompany() {
   equityActive = "company";
   window.tradfiClearActiveSection?.();
   initEquityModule();
+  loadCompanyWatchlist();
+  renderCompanyWatchlist();
   bindEquityControls();
 
   const swr = window.DashboardSWR;

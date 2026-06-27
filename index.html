@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=46" />
+    <link rel="stylesheet" href="styles.css?v=47" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1757,10 +1757,7 @@
             <div class="panel-header equity-toolbar equity-company-toolbar">
               <h2 data-help-key="equity-company-insights">Company Insights</h2>
               <div class="equity-controls">
-                <label class="equity-control-label">Symbol
-                  <select id="equity-company-symbol" class="equity-select" aria-label="Company symbol"></select>
-                </label>
-                <input type="text" id="equity-company-custom" class="equity-select equity-custom-input" placeholder="Custom ticker" aria-label="Custom ticker" />
+                <input type="text" id="equity-company-custom" class="equity-select equity-custom-input" placeholder="Quick load ticker" aria-label="Load any ticker" />
                 <label class="equity-control-label" data-help-key="equity-company-history">History
                   <select class="equity-select equity-company-period-select" aria-label="Price history range">
                     <option value="3M">3 Months</option>
@@ -1777,6 +1774,14 @@
                 <span class="panel-meta" id="equity-company-update">Yahoo Finance · loading</span>
               </div>
             </div>
+            <section class="equity-company-watchlist-panel">
+              <div class="equity-company-watchlist-header">
+                <span class="equity-control-label" data-help-key="equity-company-watchlist">Companies</span>
+                <button type="button" id="equity-company-add-ticker" class="tradfi-add-row-btn">+ Add company</button>
+              </div>
+              <p class="equity-section-note equity-section-note--tight">Edit tickers below, then press → or Enter to load the overview chart. List saves to this browser.</p>
+              <div id="equity-company-watchlist" class="equity-company-watchlist" role="list" aria-label="Editable company watchlist"></div>
+            </section>
             <header class="equity-company-header">
               <div class="equity-company-identity">
                 <h3 class="equity-company-name" id="equity-company-name">Loading…</h3>
@@ -2502,14 +2507,14 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=42"></script>
+    <script src="help.js?v=43"></script>
     <script src="dashboard.js?v=28"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=14"></script>
-    <script src="equity-insights.js?v=18"></script>
+    <script src="equity-insights.js?v=19"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

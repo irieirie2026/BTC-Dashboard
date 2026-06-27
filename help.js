@@ -729,7 +729,11 @@ const METRIC_HELP = {
   },
   "equity-company-insights": {
     title: "Company Equity Insights",
-    body: "Deep single-stock workspace: KPI hero strip with metric hints, 52-week range bar, auto-generated Analysis commentary, peer comparison chips, tabbed charts (overview candlesticks, technicals, financials, valuation, dividends), and Yahoo Finance headlines for the company and peers. Pick a preset symbol or enter a custom ticker; use History to load 3 months through all available daily data; toggle peers to compare valuation and rebased performance.",
+    body: "Deep single-stock workspace: editable company watchlist, KPI hero strip with metric hints, 52-week range bar, auto-generated Analysis commentary, peer comparison chips, tabbed charts (overview candlesticks, technicals, financials, valuation, dividends), and Yahoo Finance headlines for the company and peers. Edit tickers in your watchlist or quick-load any symbol; use History to load 3 months through all available daily data; toggle peers to compare valuation and rebased performance.",
+  },
+  "equity-company-watchlist": {
+    title: "Company Watchlist",
+    body: "Your customizable list of tickers for Company Insights. Edit symbols inline, press → or Enter to load the overview chart, use + Add company for more slots (up to 24), or × to remove. Saves automatically in this browser. On first visit it may import tickers from TradFi Bellwethers if you already customized that list. Peer chips are drawn from this watchlist.",
   },
   "equity-company-history": {
     title: "Chart History",
@@ -741,7 +745,7 @@ const METRIC_HELP = {
   },
   "equity-company-peers": {
     title: "Compare Peers",
-    body: "Toggle competitor tickers to include in the peer multiples table, relative performance chart, and news feed. Selections save in this browser session.",
+    body: "Toggle tickers from your company watchlist to include in the peer multiples table, relative performance chart, and news feed. Selections save in this browser session.",
   },
   "equity-company-52w": {
     title: "52-Week Range",

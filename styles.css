@@ -2953,6 +2953,79 @@ body {
   gap: 0.65rem;
 }
 
+.equity-company-watchlist-panel {
+  margin: 0.5rem 0 0.65rem;
+  padding: 0.55rem 0.65rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.equity-company-watchlist-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.equity-company-watchlist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.equity-company-watchlist-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem 0.2rem 0.15rem 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-2);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.equity-company-watchlist-slot.active {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.equity-company-watchlist-input {
+  width: 5.25rem;
+  min-width: 0;
+  font-size: 0.6875rem;
+}
+
+.equity-company-watchlist-load {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+}
+
+.equity-company-watchlist-load:hover:not(:disabled) {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.equity-company-watchlist-load:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.equity-company-watchlist-remove {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
 .equity-company-header {
   display: flex;
   flex-wrap: wrap;
