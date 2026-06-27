@@ -1330,3 +1330,4 @@ window.loadTradfiDashboard = function () {
 };
 
 window.loadTradfiSection = loadTradfiSection;
+window.mountTradfiChart = mountTradfiChart;

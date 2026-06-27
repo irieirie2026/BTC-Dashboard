@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=38" />
+    <link rel="stylesheet" href="styles.css?v=39" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1719,32 +1719,36 @@
               <button type="button" class="equity-subtab" data-tab="movers">Movers</button>
             </nav>
             <div class="equity-subpanel" data-tab="overview">
-              <div class="panel-header tradfi-companies-header equity-overview-header">
-                <span class="panel-meta">Edit index symbols in the table</span>
-                <div class="tradfi-companies-toolbar">
-                  <button type="button" id="equity-global-add-row" class="tradfi-add-row-btn">+ Add index</button>
+              <section class="deriv-hero-strip tradfi-hero-strip" id="equity-global-heroes"></section>
+              <section class="panel equity-overview-panel">
+                <div class="panel-header tradfi-companies-header equity-overview-header">
+                  <h2>Global Indices</h2>
+                  <div class="tradfi-companies-toolbar">
+                    <button type="button" id="equity-global-add-row" class="tradfi-add-row-btn">+ Add index</button>
+                  </div>
                 </div>
-              </div>
-              <div class="deriv-table-wrap tradfi-indices-table-wrap">
-                <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
-                  <thead>
-                    <tr>
-                      <th>Ticker</th>
-                      <th>Name</th>
-                      <th>Last</th>
-                      <th>Chg</th>
-                      <th>Chg %</th>
-                      <th>1W</th>
-                      <th>1M</th>
-                      <th>3M</th>
-                      <th>12M</th>
-                      <th>YTD</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody id="equity-global-overview-body"></tbody>
-                </table>
-              </div>
+                <div class="deriv-table-wrap tradfi-indices-table-wrap">
+                  <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
+                    <thead>
+                      <tr>
+                        <th>Ticker</th>
+                        <th>Name</th>
+                        <th>Last</th>
+                        <th>Chg</th>
+                        <th>Chg %</th>
+                        <th>1W</th>
+                        <th>1M</th>
+                        <th>3M</th>
+                        <th>12M</th>
+                        <th>YTD</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="equity-global-overview-body"></tbody>
+                  </table>
+                </div>
+              </section>
+              <div class="tradfi-charts-row" id="equity-global-charts"></div>
             </div>
             <div class="equity-subpanel" data-tab="performance" hidden>
               <div id="equity-global-perf-chart" class="equity-plotly-chart"></div>
@@ -2438,7 +2442,7 @@
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=13"></script>
-    <script src="equity-insights.js?v=6"></script>
+    <script src="equity-insights.js?v=7"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

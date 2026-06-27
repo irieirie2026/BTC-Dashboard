@@ -350,35 +350,55 @@ def _df_stmt_json(df: pd.DataFrame, max_cols: int = 6) -> list[dict]:
     return rows
 
 
-def build_global_payload(symbols: list[str], start: str, end: str, movers_key: str = "YTD") -> dict:
-    name_by_ticker = {v: k for k, v in INDICES.items()}
-    labels = {sym: name_by_ticker.get(sym, sym) for sym in symbols}
-    history = download_history(symbols, start, end)
+def history_points_from_closes(close: pd.Series, days: int = 90) -> list[dict]:
+    if close is None or close.empty:
+        return []
+    tail = close.dropna().tail(days)
+    return [
+        {"date": _fmt_date(d), "close": _safe_float(v)}
+        for d, v in tail.items()
+    ]
 
-    overview = []
-    for sym in symbols:
-        df = history.get(sym, pd.DataFrame())
-        close = df["Close"] if not df.empty and "Close" in df.columns else pd.Series(dtype=float)
-        rets = compute_period_returns(close) if not close.empty else {}
-        perf = perf_from_closes(close) or {}
-        price = _safe_float(close.iloc[-1]) if not close.empty else None
-        change = None
-        change_pct = None
-        if len(close) >= 2:
-            last = _safe_float(close.iloc[-1])
-            prev = _safe_float(close.iloc[-2])
-            if last is not None and prev:
-                change = last - prev
-                change_pct = ((last / prev) - 1) * 100
-        overview.append({
-            "name": labels[sym],
-            "ticker": sym,
-            "price": price,
-            "change": change,
-            "changePct": change_pct,
-            "perf": perf,
-            **rets,
-        })
+
+def _overview_row(sym: str, history: dict, labels: dict[str, str]) -> dict:
+    df = history.get(sym, pd.DataFrame())
+    close = df["Close"] if not df.empty and "Close" in df.columns else pd.Series(dtype=float)
+    rets = compute_period_returns(close) if not close.empty else {}
+    perf = perf_from_closes(close) or {}
+    price = _safe_float(close.iloc[-1]) if not close.empty else None
+    change = None
+    change_pct = None
+    if len(close) >= 2:
+        last = _safe_float(close.iloc[-1])
+        prev = _safe_float(close.iloc[-2])
+        if last is not None and prev:
+            change = last - prev
+            change_pct = ((last / prev) - 1) * 100
+    return {
+        "name": labels.get(sym, sym),
+        "ticker": sym,
+        "price": price,
+        "change": change,
+        "changePct": change_pct,
+        "perf": perf,
+        **rets,
+    }
+
+
+def build_global_payload(
+    symbols: list[str],
+    start: str,
+    end: str,
+    movers_key: str = "YTD",
+    hero_symbols: list[str] | None = None,
+) -> dict:
+    hero_symbols = list(hero_symbols or [])
+    name_by_ticker = {v: k for k, v in INDICES.items()}
+    all_syms = list(dict.fromkeys([s for s in hero_symbols + symbols if s]))
+    labels = {sym: name_by_ticker.get(sym, sym) for sym in all_syms}
+    history = download_history(all_syms, start, end)
+
+    overview = [_overview_row(sym, history, labels) for sym in all_syms]
 
     closes = pd.DataFrame({s: h["Close"] for s, h in history.items() if "Close" in h.columns})
     closes = closes.dropna(how="all")
@@ -439,12 +459,27 @@ def build_global_payload(symbols: list[str], start: str, end: str, movers_key: s
         "bottom": [{"name": r["name"], "ticker": r["ticker"], "returnPct": r[mk]} for r in sorted_ov[-5:]],
     }
 
+    chart_order = list(dict.fromkeys([s for s in hero_symbols + symbols if s]))[:10]
+    charts = []
+    for sym in chart_order:
+        df = history.get(sym, pd.DataFrame())
+        close = df["Close"] if not df.empty and "Close" in df.columns else pd.Series(dtype=float)
+        charts.append({
+            "symbol": sym,
+            "label": labels.get(sym, sym),
+            "currency": "USD",
+            "points": history_points_from_closes(close, days=90),
+        })
+
     return {
         "section": "global",
         "start": start,
         "end": end,
         "indices": INDICES,
         "overview": overview,
+        "heroes": hero_symbols,
+        "charts": charts,
+        "priceMode": "price",
         "performance": performance,
         "correlation": correlation,
         "volatility": volatility,
@@ -569,16 +604,27 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
     }
 
 
-def get_equity_global_payload(symbols, start, end, movers_period="YTD", period_preset="1Y"):
+def get_equity_global_payload(
+    symbols,
+    start,
+    end,
+    movers_period="YTD",
+    period_preset="1Y",
+    hero_symbols=None,
+):
     if not start or not end:
         start, end = period_to_dates(period_preset, None, None)
     sym_list = symbols or list(INDICES.values())
-    key = f"equity:global:{','.join(sym_list)}:{start}:{end}:{movers_period}"
+    hero_list = list(hero_symbols or [])
+    key = (
+        f"equity:global:{','.join(hero_list)}:{','.join(sym_list)}"
+        f":{start}:{end}:{movers_period}"
+    )
     now = time.time()
     entry = _cache.get(key)
     if entry and now - entry["ts"] < CACHE_TTL:
         return entry["data"]
-    data = build_global_payload(sym_list, start, end, movers_period)
+    data = build_global_payload(sym_list, start, end, movers_period, hero_list)
     _cache[key] = {"ts": now, "data": data}
     return data
 

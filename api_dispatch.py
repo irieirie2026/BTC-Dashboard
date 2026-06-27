@@ -52,13 +52,16 @@ def dispatch_api(path, query):
         symbols = _parse_tradfi_symbol_list(
             (query.get("symbols") or [""])[0], max_count=20
         )
+        heroes = _parse_tradfi_symbol_list(
+            (query.get("heroes") or [""])[0], max_count=4
+        )
         start = (query.get("start") or [None])[0]
         end = (query.get("end") or [None])[0]
         period = (query.get("period") or ["1Y"])[0]
         movers = (query.get("movers") or ["YTD"])[0]
         if not start or not end:
             start, end = period_to_dates(period, None, None)
-        return get_equity_global_payload(symbols, start, end, movers, period)
+        return get_equity_global_payload(symbols, start, end, movers, period, heroes)
 
     if path == "/api/equity/company":
         symbol = ((query.get("symbol") or [""])[0]).strip().upper()

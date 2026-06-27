@@ -2774,6 +2774,17 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.equity-subpanel .deriv-hero-strip {
+  margin-bottom: 0.5rem;
+}
+
+.equity-overview-panel {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 .equity-overview-header {
   margin-bottom: 0.35rem;
 }
