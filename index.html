@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=45" />
+    <link rel="stylesheet" href="styles.css?v=46" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1761,16 +1761,17 @@
                   <select id="equity-company-symbol" class="equity-select" aria-label="Company symbol"></select>
                 </label>
                 <input type="text" id="equity-company-custom" class="equity-select equity-custom-input" placeholder="Custom ticker" aria-label="Custom ticker" />
-                <label class="equity-control-label">Period
-                  <select class="equity-select equity-period-select" aria-label="Chart period">
-                    <option value="1M">1M</option>
-                    <option value="3M">3M</option>
-                    <option value="6M">6M</option>
-                    <option value="1Y" selected>1Y</option>
-                    <option value="3Y">3Y</option>
-                    <option value="5Y">5Y</option>
-                    <option value="YTD">YTD</option>
-                    <option value="Max">Max</option>
+                <label class="equity-control-label" data-help-key="equity-company-history">History
+                  <select class="equity-select equity-company-period-select" aria-label="Price history range">
+                    <option value="3M">3 Months</option>
+                    <option value="6M">6 Months</option>
+                    <option value="1Y" selected>1 Year</option>
+                    <option value="2Y">2 Years</option>
+                    <option value="3Y">3 Years</option>
+                    <option value="5Y">5 Years</option>
+                    <option value="10Y">10 Years</option>
+                    <option value="YTD">Year to date</option>
+                    <option value="Max">All available</option>
                   </select>
                 </label>
                 <span class="panel-meta" id="equity-company-update">Yahoo Finance · loading</span>
@@ -1816,7 +1817,26 @@
               <button type="button" class="equity-subtab" data-tab="dividends">Dividends</button>
             </nav>
             <div class="equity-subpanel equity-company-subpanel" data-tab="overview">
-              <p class="equity-section-note">Daily candlesticks with volume, 20/50/200-day moving averages, and Bollinger bands — useful for trend direction and volatility context.</p>
+              <div class="equity-company-chart-toolbar">
+                <p class="equity-section-note">Daily candlesticks with volume, 20/50/200-day moving averages, and Bollinger bands — useful for trend direction and volatility context.</p>
+                <div class="equity-company-chart-controls">
+                  <label class="equity-control-label" for="equity-company-history-period" data-help-key="equity-company-history">
+                    Chart history
+                    <select id="equity-company-history-period" class="equity-select equity-company-period-select" aria-label="Overview chart history">
+                      <option value="3M">3 Months</option>
+                      <option value="6M">6 Months</option>
+                      <option value="1Y" selected>1 Year</option>
+                      <option value="2Y">2 Years</option>
+                      <option value="3Y">3 Years</option>
+                      <option value="5Y">5 Years</option>
+                      <option value="10Y">10 Years</option>
+                      <option value="YTD">Year to date</option>
+                      <option value="Max">All available</option>
+                    </select>
+                  </label>
+                  <span class="panel-meta" id="equity-company-history-meta">1 Year · loading…</span>
+                </div>
+              </div>
               <div id="equity-company-candle" class="equity-plotly-chart equity-plotly-chart--company-main"></div>
             </div>
             <div class="equity-subpanel equity-company-subpanel" data-tab="technicals" hidden>
@@ -2482,14 +2502,14 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=41"></script>
+    <script src="help.js?v=42"></script>
     <script src="dashboard.js?v=28"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=14"></script>
-    <script src="equity-insights.js?v=17"></script>
+    <script src="equity-insights.js?v=18"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

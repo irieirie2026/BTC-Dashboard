@@ -1,7 +1,19 @@
 const EQ_COLOR_POS = "#00C853";
 const EQ_COLOR_NEG = "#FF1744";
 const EQ_POLL_MS = 300_000;
-const EQ_PERIODS = ["1M", "3M", "6M", "1Y", "3Y", "5Y", "YTD", "Max"];
+const COMPANY_PERIOD_STORAGE_KEY = "equity:company:period:v1";
+const COMPANY_HISTORY_PERIODS = ["3M", "6M", "1Y", "2Y", "3Y", "5Y", "10Y", "YTD", "Max"];
+const COMPANY_HISTORY_LABELS = {
+  "3M": "3 Months",
+  "6M": "6 Months",
+  "1Y": "1 Year",
+  "2Y": "2 Years",
+  "3Y": "3 Years",
+  "5Y": "5 Years",
+  "10Y": "10 Years",
+  YTD: "Year to date",
+  Max: "All available",
+};
 
 const GLOBAL_WATCHLIST_STORAGE_KEY = "equity:global:watchlist:v1";
 const GLOBAL_HERO_SLOTS = 4;
@@ -86,12 +98,50 @@ function eqFmtPerf(n) {
   return eqFmtPct(n, 1);
 }
 
-function getEquityPeriod() {
-  return sessionStorage.getItem("equity:period") || "1Y";
+function getCompanyPeriod() {
+  const saved = sessionStorage.getItem(COMPANY_PERIOD_STORAGE_KEY);
+  if (COMPANY_HISTORY_PERIODS.includes(saved)) return saved;
+  const legacy = sessionStorage.getItem("equity:period");
+  if (COMPANY_HISTORY_PERIODS.includes(legacy)) return legacy;
+  return "1Y";
 }
 
-function setEquityPeriod(p) {
-  sessionStorage.setItem("equity:period", p);
+function setCompanyPeriod(period) {
+  if (!COMPANY_HISTORY_PERIODS.includes(period)) return;
+  sessionStorage.setItem(COMPANY_PERIOD_STORAGE_KEY, period);
+}
+
+function companyPeriodFetchKey() {
+  return `${getCompanySymbol()}:${getCompanyPeers().join(",")}:${getCompanyPeriod()}`;
+}
+
+function syncCompanyPeriodSelects(data) {
+  const period = getCompanyPeriod();
+  document.querySelectorAll(".equity-company-period-select").forEach((sel) => {
+    sel.value = period;
+  });
+  const meta = eqEl("equity-company-history-meta");
+  if (meta) {
+    const label = COMPANY_HISTORY_LABELS[period] || period;
+    const bars = data?.ohlcv?.length;
+    const range = data?.start && data?.end ? `${data.start} → ${data.end}` : "";
+    meta.textContent = bars
+      ? `${label} · ${range} · ${bars} sessions`
+      : `${label} · loading…`;
+  }
+}
+
+function bindCompanyPeriodSelects() {
+  document.querySelectorAll(".equity-company-period-select").forEach((sel) => {
+    if (sel.dataset.bound) return;
+    sel.dataset.bound = "true";
+    sel.value = getCompanyPeriod();
+    sel.addEventListener("change", () => {
+      setCompanyPeriod(sel.value);
+      syncCompanyPeriodSelects();
+      loadEquityCompany();
+    });
+  });
 }
 
 function normalizeEqTicker(value) {
@@ -1309,7 +1359,7 @@ function renderGlobalOverview(data) {
 }
 
 function companyDataKey() {
-  return `company:${getCompanySymbol()}:${getCompanyPeers().join(",")}:${getEquityPeriod()}`;
+  return `company:${companyPeriodFetchKey()}`;
 }
 
 function renderGlobalScreen(data) {
@@ -1361,9 +1411,12 @@ function renderCompanyScreen(data) {
   const panel = eqEl("equity-company-subtabs")?.closest(".equity-panel");
   renderCompanyTab(getActiveEquityTab(panel) || "overview", data);
 
+  syncCompanyPeriodSelects(data);
+
   const ret = eqEl("equity-company-return");
   if (ret && data.priceReturn != null) {
-    ret.innerHTML = `<span class="mono ${eqChangeClass(data.priceReturn)}">${eqFmtPct(data.priceReturn)}</span> over selected period`;
+    const periodLabel = COMPANY_HISTORY_LABELS[getCompanyPeriod()] || "selected period";
+    ret.innerHTML = `<span class="mono ${eqChangeClass(data.priceReturn)}">${eqFmtPct(data.priceReturn)}</span> over ${periodLabel.toLowerCase()}`;
   }
 
   const meta = eqEl("equity-company-update");
@@ -1392,7 +1445,7 @@ async function fetchEquityGlobal() {
 async function fetchEquityCompany() {
   const symbol = getCompanySymbol();
   const peers = getCompanyPeers();
-  const period = getEquityPeriod();
+  const period = getCompanyPeriod();
   const params = new URLSearchParams({ symbol, peers: peers.join(","), period });
   const res = await fetch(`/api/equity/company?${params}`);
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || res.status);
@@ -1402,18 +1455,7 @@ async function fetchEquityCompany() {
 
 
 function bindEquityControls() {
-  document.querySelectorAll(".equity-period-select").forEach((periodSel) => {
-    if (periodSel.dataset.bound) return;
-    periodSel.dataset.bound = "true";
-    periodSel.value = getEquityPeriod();
-    periodSel.addEventListener("change", () => {
-      setEquityPeriod(periodSel.value);
-      document.querySelectorAll(".equity-period-select").forEach((s) => {
-        if (s !== periodSel) s.value = periodSel.value;
-      });
-      if (equityActive === "company") loadEquityCompany();
-    });
-  });
+  bindCompanyPeriodSelects();
   const symSel = eqEl("equity-company-symbol");
   if (symSel && !symSel.dataset.bound) {
     symSel.dataset.bound = "true";
@@ -1482,13 +1524,16 @@ async function loadEquityCompany() {
   if (!swr) return;
 
   try {
+    const fetchKey = companyPeriodFetchKey();
     await swr.runSWR({
-      key: `equity:company:${getCompanySymbol()}:${getCompanyPeers().join(",")}:${getEquityPeriod()}`,
+      key: `equity:company:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
+      validate: () => companyPeriodFetchKey() === fetchKey,
       fetch: fetchEquityCompany,
       render: (data, opts = {}) => {
         if (opts.loading) return;
+        if (companyPeriodFetchKey() !== fetchKey) return;
         renderCompanyScreen(data);
         bindEquitySubtabs("equity-company-subtabs", "company");
         bindEquityControls();

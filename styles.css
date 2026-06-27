@@ -3108,6 +3108,23 @@ body {
   margin-bottom: 0.4rem;
 }
 
+.equity-company-chart-toolbar {
+  margin-bottom: 0.35rem;
+}
+
+.equity-company-chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 0.35rem;
+}
+
+.equity-company-chart-controls .panel-meta {
+  font-size: 0.6875rem;
+}
+
 .equity-company-chart-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

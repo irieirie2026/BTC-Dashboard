@@ -729,7 +729,11 @@ const METRIC_HELP = {
   },
   "equity-company-insights": {
     title: "Company Equity Insights",
-    body: "Deep single-stock workspace: KPI hero strip with metric hints, 52-week range bar, auto-generated Analysis commentary, peer comparison chips, tabbed charts (overview candlesticks, technicals, financials, valuation, dividends), and Yahoo Finance headlines for the company and peers. Pick a preset symbol or enter a custom ticker; toggle peers to compare valuation and rebased performance.",
+    body: "Deep single-stock workspace: KPI hero strip with metric hints, 52-week range bar, auto-generated Analysis commentary, peer comparison chips, tabbed charts (overview candlesticks, technicals, financials, valuation, dividends), and Yahoo Finance headlines for the company and peers. Pick a preset symbol or enter a custom ticker; use History to load 3 months through all available daily data; toggle peers to compare valuation and rebased performance.",
+  },
+  "equity-company-history": {
+    title: "Chart History",
+    body: "How many daily bars to load for the overview candlestick chart, technical indicators, period return, and peer performance. Options run from 3 months up to all available Yahoo Finance history (from 1990). Longer ranges need a moment to download. Toolbar and overview selectors stay in sync.",
   },
   "equity-company-commentary": {
     title: "Analysis",

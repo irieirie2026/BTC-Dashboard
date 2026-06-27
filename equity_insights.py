@@ -56,7 +56,14 @@ DEFAULT_COMPANIES = [
 ]
 
 PERIOD_DAYS = {
-    "1M": 30, "3M": 90, "6M": 180, "1Y": 365, "3Y": 365 * 3, "5Y": 365 * 5,
+    "1M": 30,
+    "3M": 90,
+    "6M": 180,
+    "1Y": 365,
+    "2Y": 365 * 2,
+    "3Y": 365 * 3,
+    "5Y": 365 * 5,
+    "10Y": 365 * 10,
 }
 
 PERF_PERIOD_PRESETS = frozenset({"1W", "1M", "1Q", "1Y", "WTD", "MTD", "YTD", "3Y", "5Y"})
@@ -967,5 +974,6 @@ def get_equity_company_payload(symbol, peers, start, end, period_preset="1Y"):
     if entry and now - entry["ts"] < CACHE_TTL:
         return entry["data"]
     data = build_company_payload(symbol, peer_list, start, end)
+    data["period"] = period_preset
     _cache[key] = {"ts": now, "data": data}
     return data
