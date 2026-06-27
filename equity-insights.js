@@ -573,50 +573,79 @@ function renderCandlestick(el, ohlcv, opts = {}) {
       });
     }
   });
+  const height = opts.height || 480;
+  el.style.height = `${height}px`;
+
+  const pricePoints = [];
+  ohlcv.forEach((p) => {
+    if (p.low != null) pricePoints.push(p.low);
+    if (p.high != null) pricePoints.push(p.high);
+  });
+  overlays.forEach(([key]) => {
+    if (ohlcv[0][key] != null) {
+      ohlcv.forEach((p) => {
+        if (p[key] != null) pricePoints.push(p[key]);
+      });
+    }
+  });
+
+  let priceMin = pricePoints.length ? Math.min(...pricePoints) : 0;
+  let priceMax = pricePoints.length ? Math.max(...pricePoints) : 1;
+  if (!Number.isFinite(priceMin) || !Number.isFinite(priceMax)) {
+    priceMin = 0;
+    priceMax = 1;
+  }
+  const priceSpan = Math.max(priceMax - priceMin, Math.abs(priceMax) * 0.01, 1e-6);
+  const topPad = priceSpan * 0.03;
+  const volumeBand = priceSpan * (opts.volumeBandPct ?? 0.12);
+  const volumeGap = priceSpan * 0.02;
+
   const hasVolume = ohlcv[0].volume != null;
+  let volBase = null;
   if (hasVolume) {
+    const volumes = ohlcv.map((p) => p.volume ?? 0);
+    const maxVol = Math.max(...volumes, 1);
+    volBase = priceMin - volumeGap - volumeBand;
     traces.push({
       type: "bar",
       x: dates,
-      y: ohlcv.map((p) => p.volume),
+      y: volumes.map((v) => (v / maxVol) * volumeBand),
+      base: volBase,
       name: "Volume",
-      yaxis: "y2",
+      hovertemplate: "%{x}<br>Volume: %{customdata}<extra></extra>",
+      customdata: volumes.map((v) => eqFmtLarge(v)),
       marker: {
         color: ohlcv.map((p) =>
-          p.close >= (p.open ?? p.close) ? "rgba(0, 200, 83, 0.45)" : "rgba(255, 23, 68, 0.45)",
+          p.close >= (p.open ?? p.close) ? "rgba(0, 200, 83, 0.4)" : "rgba(255, 23, 68, 0.4)",
         ),
       },
     });
   }
-  const height = opts.height || 480;
-  el.style.height = `${height}px`;
-  const volumePaneTop = 0.24;
-  const pricePaneBottom = 0.3;
+
   const layout = {
-    ...companyPlotLayout("", height, { y2: hasVolume, hover: "x unified" }),
-    xaxis: {
-      rangeslider: { visible: false },
-      domain: hasVolume ? [0, 1] : undefined,
-      anchor: hasVolume ? "y2" : undefined,
-    },
+    ...companyPlotLayout("", height, { hover: "x unified" }),
+    xaxis: { rangeslider: { visible: false } },
     legend: { orientation: "h", y: 1.08, font: { size: 9 } },
   };
-  if (hasVolume) {
+  if (hasVolume && volBase != null) {
     layout.yaxis = {
       ...layout.yaxis,
-      domain: [pricePaneBottom, 1],
-      side: "right",
+      autorange: false,
+      range: [volBase - priceSpan * 0.01, priceMax + topPad],
+      tickformat: priceMax >= 100 ? ",.2f" : ".4f",
     };
-    layout.yaxis2 = {
-      domain: [0, volumePaneTop],
-      anchor: "x",
-      showgrid: false,
-      zeroline: false,
-      tickfont: { size: 9, color: "#64748b" },
-      tickformat: ".2s",
-      title: { text: "Vol", font: { size: 9, color: "#64748b" } },
-    };
+    layout.shapes = [{
+      type: "line",
+      xref: "paper",
+      yref: "y",
+      x0: 0,
+      x1: 1,
+      y0: priceMin - volumeGap * 0.5,
+      y1: priceMin - volumeGap * 0.5,
+      line: { color: "rgba(148, 163, 184, 0.2)", width: 1 },
+    }];
   }
+
   Plotly.newPlot(el, traces, layout, { responsive: true, displayModeBar: false });
 }
 
