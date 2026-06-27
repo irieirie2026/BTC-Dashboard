@@ -417,6 +417,53 @@ function renderPerformanceChart(el, data, opts = {}) {
   });
 }
 
+function eqFmtNewsTime(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
+function renderGlobalNews(data) {
+  const feed = eqEl("equity-global-news");
+  if (!feed) return;
+
+  const articles = data?.news || [];
+  if (!data?.fetchedAt) {
+    feed.innerHTML = '<p class="news-empty">Loading headlines…</p>';
+    return;
+  }
+  if (!articles.length) {
+    feed.innerHTML = '<p class="news-empty">No recent headlines for these indices.</p>';
+    return;
+  }
+
+  feed.innerHTML = articles
+    .map((art) => {
+      const symbols = (art.symbols || [])
+        .map((s) => `<span class="news-card-symbol">${s}</span>`)
+        .join("");
+      return `
+      <article class="news-card">
+        <div class="news-card-head">
+          <a class="news-card-title" href="${art.link}" target="_blank" rel="noopener noreferrer">${art.title}</a>
+          <div class="news-card-badges">${symbols}</div>
+        </div>
+        <div class="news-card-meta">
+          <span class="news-card-source">${art.source || "Yahoo Finance"}</span>
+          <span class="news-card-time">${eqFmtNewsTime(art.publishedAt)}</span>
+        </div>
+      </article>`;
+    })
+    .join("");
+}
+
 function globalIndexChartStyle(points) {
   const vals = (points || []).map((p) => p.close).filter((v) => v != null);
   if (vals.length < 2) return GLOBAL_INDEX_CHART_FLAT;
@@ -922,6 +969,8 @@ function renderGlobalOverview(data) {
   if (!renderGlobalOverviewCharts(data)) {
     repaintGlobalOverviewCharts(data);
   }
+
+  renderGlobalNews(data);
 }
 
 function companyDataKey() {

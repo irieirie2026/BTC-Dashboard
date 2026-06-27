@@ -148,6 +148,77 @@ def _fmt_date(idx) -> str:
     return str(idx)[:10]
 
 
+def _news_url_from_item(item: dict) -> str | None:
+    content = item.get("content") or item
+    for key in ("canonicalUrl", "clickThroughUrl", "previewUrl"):
+        obj = content.get(key)
+        if isinstance(obj, dict) and obj.get("url"):
+            return obj["url"]
+        if isinstance(obj, str) and obj:
+            return obj
+    return content.get("link") or content.get("url") or item.get("link") or item.get("url")
+
+
+def _news_published_at(item: dict) -> str | None:
+    content = item.get("content") or item
+    raw = (
+        content.get("pubDate")
+        or content.get("displayTime")
+        or item.get("providerPublishTime")
+    )
+    if raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        try:
+            return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(raw)))
+        except (TypeError, ValueError, OSError):
+            return None
+    return str(raw)
+
+
+def _news_source_name(item: dict) -> str:
+    content = item.get("content") or item
+    provider = content.get("provider") or item.get("provider")
+    if isinstance(provider, dict):
+        return provider.get("displayName") or "Yahoo Finance"
+    return item.get("publisher") or "Yahoo Finance"
+
+
+def fetch_stock_news(symbols: list[str], per_symbol: int = 4, max_total: int = 30) -> list[dict]:
+    by_key: dict[str, dict] = {}
+    for sym in symbols:
+        if not sym:
+            continue
+        try:
+            items = yf.Ticker(sym).news or []
+        except Exception:
+            continue
+        for item in items[:per_symbol]:
+            content = item.get("content") or item
+            link = _news_url_from_item(item)
+            key = link or content.get("id") or item.get("id")
+            if not key:
+                continue
+            if key in by_key:
+                if sym not in by_key[key]["symbols"]:
+                    by_key[key]["symbols"].append(sym)
+                continue
+            by_key[key] = {
+                "title": content.get("title") or item.get("title") or "Untitled",
+                "link": link or "#",
+                "source": _news_source_name(item),
+                "publishedAt": _news_published_at(item),
+                "symbols": [sym],
+            }
+
+    articles = sorted(
+        by_key.values(),
+        key=lambda a: a.get("publishedAt") or "",
+        reverse=True,
+    )
+    return articles[:max_total]
+
+
 def _closes_for_symbol(data, symbol, multi):
     if data is None or getattr(data, "empty", True):
         return None
@@ -524,6 +595,9 @@ def build_global_payload(
             "points": history_points_from_closes(close, days=90),
         })
 
+    news_symbols = list(dict.fromkeys([s for s in hero_symbols + symbols if s]))[:15]
+    news = fetch_stock_news(news_symbols)
+
     return {
         "section": "global",
         "start": start,
@@ -538,6 +612,7 @@ def build_global_payload(
         "volatility": volatility,
         "geo": geo,
         "movers": movers,
+        "news": news,
         "source": "Yahoo Finance via yfinance",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
