@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-06-26T22:55:58Z",
+  "fetchedAt": "2026-06-27T09:14:39Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin is working today. So are we.",
+      "link": "https://x.com/saylor/status/2070778349622808768#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-06-27T07:56:46+00:00",
+      "publishedTs": 1782547006.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: I don\u2019t mean payment processors I mean organizations that are on the ground handing out aid, that happen to accept stables",
+      "link": "https://x.com/nic_carter/status/2070717300940902477#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I don\u2019t mean payment processors I mean organizations that are on the ground handing out aid, that happen to accept stables",
+      "publishedAt": "2026-06-27T03:54:11+00:00",
+      "publishedTs": 1782532451.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Garrett(@GarrettBullish) is shorting $ZEC again. He just opened a 2x short on 11,780 $ZEC($4.92M). His previous two $ZEC trades were both profitable, earning him a total of $11.66M. He is also holding a 1,268 $BTC($76.45M) long, which is currently down $20.09M. https://hyperbot.n",
+      "link": "https://x.com/lookonchain/status/2070704327044579815#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Garrett( @GarrettBullish ) is shorting $ZEC again. He just opened a 2x short on 11,780 $ZEC ($4.92M). His previous two $ZEC trades were both profitable, earning him a total of $11.66M. He is also holding a 1,268 $BTC ($76.45M) long, which is currently down $20.09M. hyperbot.netwo",
+      "publishedAt": "2026-06-27T03:02:38+00:00",
+      "publishedTs": 1782529358.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "what's the best organization in Venezuela accepting stablecoins to help with earthquake recovery?",
+      "link": "https://x.com/nic_carter/status/2070687612273115374#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-06-27T01:56:12+00:00",
+      "publishedTs": 1782525372.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Possibly the best video about early Bitcoin history",
+      "link": "https://x.com/DocumentingBTC/status/2070664054725546382#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Possibly the best video about early Bitcoin history Video",
+      "publishedAt": "2026-06-27T00:22:36+00:00",
+      "publishedTs": 1782519756.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Reporter @JoeSquawk defends bitcoin live on air",
+      "link": "https://x.com/DocumentingBTC/status/2070660709491376364#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Reporter @JoeSquawk defends bitcoin live on air Video",
+      "publishedAt": "2026-06-27T00:09:18+00:00",
+      "publishedTs": 1782518958.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: all his critics were weedy nerds who couldn't box really activates the almonds",
+      "link": "https://x.com/nic_carter/status/2070654258983076031#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "all his critics were weedy nerds who couldn't box really activates the almonds",
+      "publishedAt": "2026-06-26T23:43:40+00:00",
+      "publishedTs": 1782517420.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is a check on destructive decision-making by bureaucrats.",
+      "link": "https://x.com/APompliano/status/2070647208983093621#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-06-26T23:15:40+00:00",
+      "publishedTs": 1782515740.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: BTC is at a level that historically marks the bottom of a bear market, according to the \"Bubble-Free Bitcoin Support Rainbow\" \ud83d\udc40 HODL! \u270a",
       "link": "https://x.com/BitcoinMagazine/status/2070613367572639960#m",
@@ -536,19 +640,6 @@
       "isRetweet": false
     },
     {
-      "title": "BlackRock just deposited another 3,410 $BTC($209.64M) and 5,132 $ETH($8.43M) to Coinbase Prime. https://arkm.com/explorer/entity/blackrock",
-      "link": "https://x.com/lookonchain/status/2070098712442081735#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "BlackRock just deposited another 3,410 $BTC ($209.64M) and 5,132 $ETH ($8.43M) to Coinbase Prime. arkm.com/explorer/entity/bla\u2026",
-      "publishedAt": "2026-06-25T10:56:08+00:00",
-      "publishedTs": 1782384968.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto published code to run Bitcoin on Linux",
       "link": "https://x.com/DocumentingBTC/status/2069874894746091816#m",
       "source": "@DocumentingBTC",
@@ -666,19 +757,6 @@
       "isRetweet": false
     },
     {
-      "title": "this courtesy of @ChrisGillett is a freaking great article. can't recommend it enough. https://worksinprogress.co/issue/why-american-data-centers-cant-plug-in/",
-      "link": "https://x.com/nic_carter/status/2069773441931034803#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "this courtesy of @ChrisGillett is a freaking great article. can't recommend it enough. worksinprogress.co/issue/why\u2026 Link Why American data centers can&apos;t plug in The AI buildout is bottlenecked by energy. But America has the electricity to power its data centers; the problem",
-      "publishedAt": "2026-06-24T13:23:37+00:00",
-      "publishedTs": 1782307417.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "We've brought a fifty-year-old book on the history of Scottish banking back into print. For over a century, Scotland ran a stable banking system with no central bank. Banks issued their own notes, redeemable on demand. Competition kept them honest. Banknotes circulated so widely ",
       "link": "https://x.com/SteakhouseFi/status/2069735677978431900#m",
       "source": "@nic_carter",
@@ -716,32 +794,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: i'm off to find the scots on south beach",
-      "link": "https://x.com/nic_carter/status/2069544031424565256#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "i'm off to find the scots on south beach",
-      "publishedAt": "2026-06-23T22:12:02+00:00",
-      "publishedTs": 1782252722.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: 60 years of hurt and likely to continue",
-      "link": "https://x.com/nic_carter/status/2069541643603022243#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "60 years of hurt and likely to continue",
-      "publishedAt": "2026-06-23T22:02:32+00:00",
-      "publishedTs": 1782252152.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "I was on @BloombergTV today discussing the problem Digital Credit is built to solve. Even with recent volatility, $SATA is proving its resilience as a superior income-generating asset vs. traditional income alternatives. The track record is being built in real time.",
@@ -1160,6 +1212,19 @@
       "isRetweet": false
     },
     {
+      "title": "I was in Europe for an entire week, sat through multiple panels, networked with a bunch of ETF people, and did not hear the phrase \"ESG\" one time.",
+      "link": "https://x.com/EricBalchunas/status/2067909209945944569#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-06-19T09:55:50+00:00",
+      "publishedTs": 1781862950.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Markets are closed today. Volatility is never easy. Bitcoin keeps working. So do we. Thank you for your support.",
       "link": "https://x.com/saylor/status/2067861414069375418#m",
       "source": "@saylor",
@@ -1368,19 +1433,6 @@
       "isRetweet": true
     },
     {
-      "title": "Welcome Back to The Hurdle Rate. Episode 61: What\u2019s Your Time Preference? In this week's Hurdle Rate, the crew breaks down the latest corporate Bitcoin market activity and Strive's growing Bitcoin holdings, before turning to Strategy's Bitcoin sale and what the balance sheet math",
-      "link": "https://x.com/HurdleRatePod/status/2066913700188144035#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Welcome Back to The Hurdle Rate. Episode 61: What\u2019s Your Time Preference? In this week's Hurdle Rate, the crew breaks down the latest corporate Bitcoin market activity and Strive's growing Bitcoin holdings, before turning to Strategy's Bitcoin sale and what the balance sheet math",
-      "publishedAt": "2026-06-16T16:00:02+00:00",
-      "publishedTs": 1781625602.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Kudos to ChainQuery for resurrecting and enhancing @khannib's \"UTXO Repartition\" charts that analyze all of the different types of locking scripts currently used to secure BTC. https://chainquery.com/reports/utxo-repartition",
       "link": "https://x.com/lopp/status/2066892152580321609#m",
       "source": "@lopp",
@@ -1493,32 +1545,6 @@
       "summary": "",
       "publishedAt": "2026-06-11T11:32:31+00:00",
       "publishedTs": 1781177551.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On opening day of the previous football World Cup, the price of one bitcoin was only $16,712.",
-      "link": "https://x.com/DocumentingBTC/status/2065032131210793280#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-11T11:23:21+00:00",
-      "publishedTs": 1781177001.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 13 years ago, a baby was born through the world\u2019s first documented fertility treatment ever paid for using bitcoin.",
-      "link": "https://x.com/DocumentingBTC/status/2064827506935447885#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-10T21:50:14+00:00",
-      "publishedTs": 1781128214.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
