@@ -1708,7 +1708,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
                 }
             )
         chart = charts[0] if charts else fetch_yahoo_chart(cfg["chart"])
-        if section == "stocks-companies":
+        if section in ("stocks-companies", "stocks-indices"):
             news = _fetch_stock_news(perf_symbols)
     else:
         chart = fetch_yahoo_chart(cfg["chart"])

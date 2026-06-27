@@ -1101,8 +1101,11 @@ function renderTradfiCompaniesNews(section, data) {
     return;
   }
   if (!articles.length) {
-    feed.innerHTML =
-      '<p class="news-empty">No recent headlines for this watchlist.</p>';
+    const emptyMsg =
+      section === "stocks-indices"
+        ? "No recent headlines for these indices."
+        : "No recent headlines for this watchlist.";
+    feed.innerHTML = `<p class="news-empty">${emptyMsg}</p>`;
     return;
   }
 
@@ -1204,7 +1207,7 @@ function renderTradfiScreen(section, data, opts = {}) {
     repaintTradfiCharts(section, data);
   }
 
-  if (section === "stocks-companies") {
+  if (section === "stocks-companies" || section === "stocks-indices") {
     renderTradfiCompaniesNews(section, data);
   }
 
@@ -1264,8 +1267,8 @@ async function loadTradfiSection(section) {
             const chartsEl = tfEl(`tradfi-${section}-charts`);
             if (chartsEl) chartsEl.innerHTML = "";
           }
-          if (section === "stocks-companies") {
-            const newsEl = tfEl("tradfi-stocks-companies-news");
+          if (section === "stocks-companies" || section === "stocks-indices") {
+            const newsEl = tfEl(`tradfi-${section}-news`);
             if (newsEl) {
               newsEl.innerHTML = '<p class="news-empty">Loading headlines…</p>';
             }

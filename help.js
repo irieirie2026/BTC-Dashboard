@@ -697,7 +697,11 @@ const METRIC_HELP = {
   },
   "tradfi-indices-watchlist": {
     title: "Editable Indices Watchlist",
-    body: "Edit index symbols in the hero strip and table (e.g. ^GSPC, ^FTSE). Changes save automatically to this browser. Use + Add index for more rows. Performance columns and charts update when symbols change.",
+    body: "Edit index symbols in the hero strip and table (e.g. ^GSPC, ^FTSE). Changes save automatically to this browser. Use + Add index for more rows. Performance columns, charts, and news update when symbols change.",
+  },
+  "tradfi-indices-news": {
+    title: "Index News",
+    body: "Recent Yahoo Finance headlines tied to symbols in your indices watchlist. Symbol badges show which index each story relates to.",
   },
   "tradfi-companies-watchlist": {
     title: "Editable Watchlist",
