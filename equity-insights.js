@@ -41,6 +41,26 @@ function eqChangeClass(n) {
   return "";
 }
 
+function eqFmtPrice(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  if (n >= 1000) {
+    return Number(n).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  return eqFmtNum(n, 2);
+}
+
+function eqFmtChange(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  return `${n >= 0 ? "+" : ""}${Number(n).toFixed(2)}`;
+}
+
+function eqFmtPerf(n) {
+  return eqFmtPct(n, 1);
+}
+
 function getEquityPeriod() {
   return sessionStorage.getItem("equity:period") || "1Y";
 }
@@ -532,17 +552,20 @@ function renderGlobalOverview(data) {
       const isSelected = selected.has(ticker);
       const rowClass = `equity-overview-row${isSelected ? " equity-overview-row--selected" : ""}`;
       const checked = isSelected ? "checked" : "";
+      const perf = r?.perf || {};
       return `
     <tr class="${rowClass}" data-ticker="${ticker}" role="button" tabindex="0" aria-pressed="${isSelected}">
       <td class="equity-overview-check-col"><input type="checkbox" class="equity-overview-check" ${checked} aria-label="Include ${name}" /></td>
-      <td>${name}<span class="tradfi-symbol-tag">${ticker}</span></td>
-      <td class="mono">${r ? eqFmtNum(r.price) : "—"}</td>
-      <td class="mono ${r ? eqChangeClass(r["1D"]) : ""}">${r ? eqFmtPct(r["1D"]) : "—"}</td>
-      <td class="mono ${r ? eqChangeClass(r.WTD) : ""}">${r ? eqFmtPct(r.WTD) : "—"}</td>
-      <td class="mono ${r ? eqChangeClass(r.MTD) : ""}">${r ? eqFmtPct(r.MTD) : "—"}</td>
-      <td class="mono ${r ? eqChangeClass(r.YTD) : ""}">${r ? eqFmtPct(r.YTD) : "—"}</td>
-      <td class="mono ${r ? eqChangeClass(r["1Y"]) : ""}">${r ? eqFmtPct(r["1Y"]) : "—"}</td>
-      <td class="mono">${r?.volume != null ? eqFmtNum(r.volume, 0) : "—"}</td>
+      <td class="mono">${ticker}</td>
+      <td class="tradfi-company-name">${name}</td>
+      <td class="mono">${r ? eqFmtPrice(r.price) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r.change) : ""}">${r ? eqFmtChange(r.change) : "—"}</td>
+      <td class="mono ${r ? eqChangeClass(r.changePct) : ""}">${r ? eqFmtPct(r.changePct) : "—"}</td>
+      <td class="mono ${eqChangeClass(perf.w1)}">${eqFmtPerf(perf.w1)}</td>
+      <td class="mono ${eqChangeClass(perf.m1)}">${eqFmtPerf(perf.m1)}</td>
+      <td class="mono ${eqChangeClass(perf.m3)}">${eqFmtPerf(perf.m3)}</td>
+      <td class="mono ${eqChangeClass(perf.m12)}">${eqFmtPerf(perf.m12)}</td>
+      <td class="mono ${eqChangeClass(perf.ytd)}">${eqFmtPerf(perf.ytd)}</td>
     </tr>`;
     })
     .join("");

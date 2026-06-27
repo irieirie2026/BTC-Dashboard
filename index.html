@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=36" />
+    <link rel="stylesheet" href="styles.css?v=37" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1720,19 +1720,21 @@
             </nav>
             <div class="equity-subpanel" data-tab="overview">
               <div id="equity-global-ticker-picker" class="equity-ticker-picker" aria-label="Index selection"></div>
-              <div class="deriv-table-wrap equity-overview-table-wrap">
-                <table class="deriv-table tradfi-markets-table tradfi-markets-table--indices equity-overview-table">
+              <div class="deriv-table-wrap tradfi-indices-table-wrap">
+                <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies equity-overview-table">
                   <thead>
                     <tr>
                       <th class="equity-overview-check-col" aria-label="Include index"></th>
-                      <th>Index</th>
+                      <th>Ticker</th>
+                      <th>Name</th>
                       <th>Last</th>
-                      <th>1D</th>
-                      <th>WTD</th>
-                      <th>MTD</th>
+                      <th>Chg</th>
+                      <th>Chg %</th>
+                      <th>1W</th>
+                      <th>1M</th>
+                      <th>3M</th>
+                      <th>12M</th>
                       <th>YTD</th>
-                      <th>1Y</th>
-                      <th>Volume</th>
                     </tr>
                   </thead>
                   <tbody id="equity-global-overview-body"></tbody>
@@ -2431,7 +2433,7 @@
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=13"></script>
-    <script src="equity-insights.js?v=4"></script>
+    <script src="equity-insights.js?v=5"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

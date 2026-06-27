@@ -172,6 +172,59 @@ def download_history(symbols: list[str], start: str, end: str) -> dict[str, pd.D
     return out
 
 
+def _index_year(idx) -> int | None:
+    if hasattr(idx, "year"):
+        return idx.year
+    try:
+        return int(str(idx)[:4])
+    except (TypeError, ValueError):
+        return None
+
+
+def perf_from_closes(close: pd.Series) -> dict[str, float | None] | None:
+    """Match TradFi indices perf columns (1W/1M/3M/12M/YTD from trading-day offsets)."""
+    if close is None or close.empty:
+        return None
+    closes = close.dropna()
+    count = len(closes)
+    if count < 2:
+        return None
+
+    current = _safe_float(closes.iloc[-1])
+    if not current:
+        return None
+
+    def ret_at(offset: int) -> float | None:
+        pos = count - 1 - offset
+        if pos < 0:
+            return None
+        base = _safe_float(closes.iloc[pos])
+        if not base:
+            return None
+        return ((current / base) - 1) * 100
+
+    ytd = None
+    last_year = _index_year(closes.index[-1])
+    if last_year is not None:
+        base = None
+        for i in range(count):
+            year = _index_year(closes.index[i])
+            if year is not None and year >= last_year:
+                if i > 0:
+                    base = _safe_float(closes.iloc[i - 1])
+                break
+        if base:
+            ytd = ((current / base) - 1) * 100
+
+    return {
+        "w1": ret_at(5),
+        "m1": ret_at(21),
+        "m3": ret_at(63),
+        "m12": ret_at(252),
+        "ytd": ytd,
+    }
+
+
 def compute_period_returns(close: pd.Series) -> dict[str, float | None]:
     if close is None or close.empty:
         return {"1D": None, "WTD": None, "MTD": None, "YTD": None, "1Y": None}
@@ -305,14 +358,25 @@ def build_global_payload(symbols: list[str], start: str, end: str, movers_key: s
     overview = []
     for sym in symbols:
         df = history.get(sym, pd.DataFrame())
-        rets = compute_period_returns(df["Close"]) if not df.empty and "Close" in df.columns else {}
-        vol = _safe_float(df["Volume"].iloc[-1]) if not df.empty and "Volume" in df.columns else None
-        price = _safe_float(df["Close"].iloc[-1]) if not df.empty and "Close" in df.columns else None
+        close = df["Close"] if not df.empty and "Close" in df.columns else pd.Series(dtype=float)
+        rets = compute_period_returns(close) if not close.empty else {}
+        perf = perf_from_closes(close) or {}
+        price = _safe_float(close.iloc[-1]) if not close.empty else None
+        change = None
+        change_pct = None
+        if len(close) >= 2:
+            last = _safe_float(close.iloc[-1])
+            prev = _safe_float(close.iloc[-2])
+            if last is not None and prev:
+                change = last - prev
+                change_pct = ((last / prev) - 1) * 100
         overview.append({
             "name": labels[sym],
             "ticker": sym,
             "price": price,
-            "volume": vol,
+            "change": change,
+            "changePct": change_pct,
+            "perf": perf,
             **rets,
         })
 
