@@ -1373,6 +1373,93 @@ def _history_points_from_closes(closes, days=90):
     return points
 
 
+def _news_url_from_item(item):
+    content = item.get("content") or item
+    for key in ("canonicalUrl", "clickThroughUrl", "previewUrl"):
+        obj = content.get(key)
+        if isinstance(obj, dict) and obj.get("url"):
+            return obj["url"]
+        if isinstance(obj, str) and obj:
+            return obj
+    return content.get("link") or content.get("url") or item.get("link") or item.get("url")
+
+
+def _news_published_at(item):
+    content = item.get("content") or item
+    raw = (
+        content.get("pubDate")
+        or content.get("displayTime")
+        or item.get("providerPublishTime")
+    )
+    if raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        try:
+            return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(raw)))
+        except (TypeError, ValueError, OSError):
+            return None
+    return str(raw)
+
+
+def _news_source_name(item):
+    content = item.get("content") or item
+    provider = content.get("provider") or item.get("provider")
+    if isinstance(provider, dict):
+        return provider.get("displayName") or "Yahoo Finance"
+    return item.get("publisher") or "Yahoo Finance"
+
+
+def _fetch_stock_news(symbols, per_symbol=4, max_total=30):
+    if not YFINANCE_AVAILABLE:
+        return []
+
+    by_key = {}
+    for sym in symbols:
+        if not sym:
+            continue
+        try:
+            items = yf.Ticker(sym).news or []
+        except Exception:
+            continue
+        for item in items[:per_symbol]:
+            content = item.get("content") or item
+            link = _news_url_from_item(item)
+            key = link or content.get("id") or item.get("id")
+            if not key:
+                continue
+            if key in by_key:
+                if sym not in by_key[key]["symbols"]:
+                    by_key[key]["symbols"].append(sym)
+                continue
+            by_key[key] = {
+                "title": content.get("title") or item.get("title") or "Untitled",
+                "link": link or "#",
+                "source": _news_source_name(item),
+                "publishedAt": _news_published_at(item),
+                "symbols": [sym],
+            }
+
+    articles = sorted(
+        by_key.values(),
+        key=lambda a: a.get("publishedAt") or "",
+        reverse=True,
+    )
+    return articles[:max_total]
+
+
+def _watchlist_chart_symbols(hero_symbols, table_symbols):
+    return list(dict.fromkeys([s for s in hero_symbols + table_symbols if s]))
+
+
+def _quote_label_from_rows(symbol, heroes, table):
+    for row in heroes + table:
+        if row.get("symbol") == symbol:
+            name = row.get("name")
+            if name and name != symbol:
+                return name
+    return _symbol_label(symbol)
+
+
 def fetch_yfinance_history_batch(symbols, period="1y"):
     if not YFINANCE_AVAILABLE:
         raise RuntimeError("yfinance is not installed — run: pip3 install yfinance")
@@ -1562,16 +1649,23 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         heroes = table[:4] if len(table) >= 4 else heroes
 
     charts = None
-    if section == "stocks-indices":
-        charts_cfg = cfg.get("charts") or [
-            {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
-        ]
-        perf_symbols = list(
-            dict.fromkeys(
-                [s for s in hero_symbols + table_symbols if s]
-                + [c["symbol"] for c in charts_cfg if c.get("symbol")]
+    news = None
+    if section in ("stocks-indices", "stocks-companies"):
+        if section == "stocks-indices":
+            charts_cfg = cfg.get("charts") or [
+                {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
+            ]
+            perf_symbols = list(
+                dict.fromkeys(
+                    [s for s in hero_symbols + table_symbols if s]
+                    + [c["symbol"] for c in charts_cfg if c.get("symbol")]
+                )
             )
-        )
+            chart_symbol_order = [c["symbol"] for c in charts_cfg if c.get("symbol")]
+        else:
+            perf_symbols = _watchlist_chart_symbols(hero_symbols, table_symbols)
+            chart_symbol_order = perf_symbols
+
         history = fetch_yfinance_history_batch(perf_symbols, period="2y")
 
         def _attach_perf(row):
@@ -1586,10 +1680,17 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         table = [_attach_perf(row) for row in table]
 
         charts = []
-        for entry in charts_cfg:
-            sym = entry.get("symbol")
+        for sym in chart_symbol_order:
             if not sym:
                 continue
+            if section == "stocks-indices":
+                entry = next(
+                    (c for c in charts_cfg if c.get("symbol") == sym),
+                    {"symbol": sym},
+                )
+                label = entry.get("label") or _symbol_label(sym)
+            else:
+                label = _quote_label_from_rows(sym, heroes, table)
             closes = history.get(sym)
             if closes is None:
                 chart_obj = fetch_yahoo_chart(sym)
@@ -1598,12 +1699,14 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
             charts.append(
                 {
                     "symbol": sym,
-                    "label": entry.get("label") or _symbol_label(sym),
+                    "label": label,
                     "currency": "USD",
                     "points": _history_points_from_closes(closes, days=90),
                 }
             )
         chart = charts[0] if charts else fetch_yahoo_chart(cfg["chart"])
+        if section == "stocks-companies":
+            news = _fetch_stock_news(perf_symbols)
     else:
         chart = fetch_yahoo_chart(cfg["chart"])
 
@@ -1620,6 +1723,8 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
     }
     if charts is not None:
         payload["charts"] = charts
+    if news is not None:
+        payload["news"] = news
     return payload
 
 

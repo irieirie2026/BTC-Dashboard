@@ -588,7 +588,7 @@ function renderTradfiCompaniesTable(section, data) {
 
   if (loading) {
     body.innerHTML =
-      `<tr><td colspan="6">Loading market data…</td></tr>`;
+      `<tr><td colspan="11">Loading market data…</td></tr>`;
     return;
   }
 
@@ -596,6 +596,7 @@ function renderTradfiCompaniesTable(section, data) {
     .map((sym, i) => {
       const q = lookupQuote(sym, data);
       const name = companyDisplayName(q, sym);
+      const perf = q?.perf || {};
       return `
       <tr data-row-index="${i}">
         <td>
@@ -614,6 +615,11 @@ function renderTradfiCompaniesTable(section, data) {
         <td class="mono">${tfFmtPrice(q, mode)}</td>
         <td class="mono ${tfChangeClass(q?.change)}">${tfFmtChange(q?.change, mode)}</td>
         <td class="mono ${tfChangeClass(q?.changePct)}">${tfFmtPct(q?.changePct)}</td>
+        <td class="mono ${tfChangeClass(perf.w1)}">${tfFmtPerf(perf.w1)}</td>
+        <td class="mono ${tfChangeClass(perf.m1)}">${tfFmtPerf(perf.m1)}</td>
+        <td class="mono ${tfChangeClass(perf.m3)}">${tfFmtPerf(perf.m3)}</td>
+        <td class="mono ${tfChangeClass(perf.m12)}">${tfFmtPerf(perf.m12)}</td>
+        <td class="mono ${tfChangeClass(perf.ytd)}">${tfFmtPerf(perf.ytd)}</td>
         <td class="tradfi-row-actions">
           <button
             type="button"
@@ -634,29 +640,27 @@ function renderCompaniesEditable(section, data) {
   renderTradfiCompaniesTable(section, data);
 }
 
-function paintTradfiChart(data, w, h, canvasOverride) {
-  const pts = data.chart?.points || [];
-  if (!pts.length) return;
+function tfChartTipTitle(date) {
+  return `<div class="chart-tooltip-title">${fmtChartDate(date, false)}</div>`;
+}
 
-  const canvas =
-    canvasOverride || tfEl(`tradfi-${data.section}-chart`);
-  if (!canvas) return;
+function tfChartTipRow(label, value) {
+  return `<div class="chart-tooltip-row"><span>${label}</span><span class="mono">${value}</span></div>`;
+}
 
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, w, h);
+function tfFmtChartPrice(v, mode) {
+  if (v == null || Number.isNaN(v)) return "—";
+  if (mode === "yield") return tfFmtNum(v, 2) + "%";
+  if (mode === "fx") return tfFmtNum(v, 4);
+  return tfFmtNum(v, 2);
+}
+
+function mountTradfiChart(canvas, chart, priceMode) {
+  const pts = chart?.points || [];
+  if (!canvas || !pts.length || !window.ChartInteraction) return null;
 
   const pad = { top: 18, right: 20, bottom: 36, left: 56 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const closes = pts.map((p) => p.close);
-  const minV = Math.min(...closes);
-  const maxV = Math.max(...closes);
-  const range = maxV - minV || 0.01;
-  const mode = data.priceMode || "price";
+  const mode = priceMode || "price";
 
   const fmtY = (v) => {
     if (mode === "yield") return tfFmtNum(v, 2) + "%";
@@ -664,38 +668,70 @@ function paintTradfiChart(data, w, h, canvasOverride) {
     return tfFmtNum(v, 0);
   };
 
-  ctx.fillStyle = "rgba(148, 163, 184, 0.15)";
-  ctx.beginPath();
-  closes.forEach((v, i) => {
-    const x = pad.left + (i / Math.max(closes.length - 1, 1)) * chartW;
-    const y = pad.top + chartH - ((v - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, pad.top + chartH);
-    ctx.lineTo(x, y);
+  return ChartInteraction.ensure(canvas, {
+    pad,
+    minWindow: 20,
+    maxPoints: 1500,
+    getLength: () => pts.length,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const vals = indices.map((i) => pts[i].close);
+      const drawCount = vals.length;
+      if (!drawCount) return;
+
+      const minV = Math.min(...vals);
+      const maxV = Math.max(...vals);
+      const range = maxV - minV || 0.01;
+      const yAt = (v) =>
+        api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
+
+      ctx.fillStyle = "rgba(148, 163, 184, 0.15)";
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, api.pad.top + api.chartH);
+        ctx.lineTo(x, y);
+      });
+      ctx.lineTo(api.pad.left + api.chartW, api.pad.top + api.chartH);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      vals.forEach((v, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(v);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        const v = pts[api.hoverGlobal].close;
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v));
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtY(maxV), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(fmtY(minV), api.pad.left - 6, h - api.pad.bottom);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(pts[indices[i]]?.date, drawCount > 120),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const pt = pts[globalIdx];
+      return (
+        tfChartTipTitle(pt?.date) +
+        tfChartTipRow("Close", tfFmtChartPrice(pt?.close, mode))
+      );
+    },
   });
-  ctx.lineTo(pad.left + chartW, pad.top + chartH);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.strokeStyle = "#94a3b8";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  closes.forEach((v, i) => {
-    const x = pad.left + (i / Math.max(closes.length - 1, 1)) * chartW;
-    const y = pad.top + chartH - ((v - minV) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.textAlign = "right";
-  ctx.fillText(fmtY(maxV), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtY(minV), pad.left - 6, h - pad.bottom);
-
-  drawTimeAxisLabels(ctx, w, h, pad, pts.length, (i) =>
-    fmtChartDate(pts[i]?.date, pts.length > 120),
-  );
 }
 
 function renderTradfiCharts(section, data) {
@@ -725,27 +761,72 @@ function renderTradfiCharts(section, data) {
 
   charts.forEach((ch, i) => {
     const canvas = tfEl(`tradfi-${section}-chart-${i}`);
-    scheduleChartDraw(canvas, (w, h) =>
-      paintTradfiChart({ ...data, chart: ch }, w, h, canvas),
-    );
+    mountTradfiChart(canvas, ch, data.priceMode);
   });
 
   return true;
 }
 
 function repaintTradfiCharts(section, data) {
-  if (section === "stocks-indices" && data.charts?.length) {
+  if (data.charts?.length && tfEl(`tradfi-${section}-charts`)) {
     data.charts.forEach((ch, i) => {
       const canvas = tfEl(`tradfi-${section}-chart-${i}`);
-      scheduleChartDraw(canvas, (w, h) =>
-        paintTradfiChart({ ...data, chart: ch }, w, h, canvas),
-      );
+      mountTradfiChart(canvas, ch, data.priceMode);
     });
     return;
   }
-  scheduleChartDraw(tfEl(`tradfi-${section}-chart`), (w, h) =>
-    paintTradfiChart(data, w, h),
-  );
+  const canvas = tfEl(`tradfi-${section}-chart`);
+  if (canvas && data.chart) {
+    mountTradfiChart(canvas, data.chart, data.priceMode);
+  }
+}
+
+function tfFmtNewsTime(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
+function renderTradfiCompaniesNews(section, data) {
+  const feed = tfEl(`tradfi-${section}-news`);
+  if (!feed) return;
+
+  const articles = data.news || [];
+  if (!data?.fetchedAt) {
+    feed.innerHTML = '<p class="news-empty">Loading headlines…</p>';
+    return;
+  }
+  if (!articles.length) {
+    feed.innerHTML =
+      '<p class="news-empty">No recent headlines for this watchlist.</p>';
+    return;
+  }
+
+  feed.innerHTML = articles
+    .map((art) => {
+      const symbols = (art.symbols || [])
+        .map((s) => `<span class="news-card-symbol">${s}</span>`)
+        .join("");
+      return `
+      <article class="news-card">
+        <div class="news-card-head">
+          <a class="news-card-title" href="${art.link}" target="_blank" rel="noopener noreferrer">${art.title}</a>
+          <div class="news-card-badges">${symbols}</div>
+        </div>
+        <div class="news-card-meta">
+          <span class="news-card-source">${art.source || "Yahoo Finance"}</span>
+          <span class="news-card-time">${tfFmtNewsTime(art.publishedAt)}</span>
+        </div>
+      </article>`;
+    })
+    .join("");
 }
 
 function renderTradfiCommentary(section, data) {
@@ -823,6 +904,10 @@ function renderTradfiScreen(section, data, opts = {}) {
     repaintTradfiCharts(section, data);
   }
 
+  if (section === "stocks-companies") {
+    renderTradfiCompaniesNews(section, data);
+  }
+
   applyTradfiScreenState(section, opts);
 
   const screen = getTradfiScreen(section);
@@ -863,9 +948,15 @@ async function loadTradfiSection(section) {
             body.innerHTML =
               `<tr><td colspan="${cols}">Loading market data…</td></tr>`;
           }
-          if (section === "stocks-indices") {
-            const chartsEl = tfEl("tradfi-stocks-indices-charts");
+          if (section === "stocks-indices" || section === "stocks-companies") {
+            const chartsEl = tfEl(`tradfi-${section}-charts`);
             if (chartsEl) chartsEl.innerHTML = "";
+          }
+          if (section === "stocks-companies") {
+            const newsEl = tfEl("tradfi-stocks-companies-news");
+            if (newsEl) {
+              newsEl.innerHTML = '<p class="news-empty">Loading headlines…</p>';
+            }
           }
           return;
         }

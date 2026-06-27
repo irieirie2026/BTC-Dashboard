@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=33" />
+    <link rel="stylesheet" href="styles.css?v=34" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1636,23 +1636,38 @@
                 <span class="panel-meta" id="tradfi-stocks-companies-update">Yahoo Finance · delayed</span>
               </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table tradfi-companies-table">
-                <thead><tr><th>Ticker</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th><th></th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Ticker</th>
+                    <th>Name</th>
+                    <th>Last</th>
+                    <th>Chg</th>
+                    <th>Chg %</th>
+                    <th>1W</th>
+                    <th>1M</th>
+                    <th>3M</th>
+                    <th>12M</th>
+                    <th>YTD</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-stocks-companies-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-stocks-companies-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-stocks-companies-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--companies" id="tradfi-stocks-companies-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-stocks-companies-commentary"><p>Loading…</p></div>
+          </section>
+          <section class="panel tradfi-companies-news-panel">
+            <div class="panel-header">
+              <h2 data-help-key="tradfi-companies-news">Company News</h2>
+              <span class="panel-meta">Yahoo Finance · watchlist</span>
+            </div>
+            <div class="news-feed tradfi-companies-news" id="tradfi-stocks-companies-news"><p class="news-empty">Loading headlines…</p></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="futures" data-l3="overview" hidden>
@@ -2245,13 +2260,13 @@
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
-    <script src="help.js?v=31"></script>
+    <script src="help.js?v=32"></script>
     <script src="dashboard.js?v=27"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
-    <script src="tradfi.js?v=10"></script>
+    <script src="tradfi.js?v=11"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

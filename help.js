@@ -697,7 +697,11 @@ const METRIC_HELP = {
   },
   "tradfi-companies-watchlist": {
     title: "Editable Watchlist",
-    body: "Edit ticker symbols in the hero strip and table. Changes save automatically to this browser. Use + Add company for more rows (10 by default).",
+    body: "Edit ticker symbols in the hero strip and table. Changes save automatically to this browser. Use + Add company for more rows (10 by default). Performance columns (1W–YTD) use daily closes; charts and news update when tickers change.",
+  },
+  "tradfi-companies-news": {
+    title: "Company News",
+    body: "Recent Yahoo Finance headlines for tickers in your watchlist. Sorted by publish time; symbol badges show which stocks each story relates to.",
   },
   "tradfi-refresh-status": {
     title: "Data freshness",
