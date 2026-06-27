@@ -1597,14 +1597,18 @@
         <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="indices" data-tradfi-section="stocks-indices">
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-stocks-indices-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Global Indices</h2>
-              <span class="panel-meta" id="tradfi-stocks-indices-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-indices-watchlist">Global Indices</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-stocks-indices-add-row" class="tradfi-add-row-btn">+ Add index</button>
+                <span class="panel-meta" id="tradfi-stocks-indices-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
             <div class="deriv-table-wrap tradfi-indices-table-wrap">
-              <table class="deriv-table tradfi-markets-table tradfi-markets-table--indices">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
                 <thead>
                   <tr>
+                    <th>Ticker</th>
                     <th>Name</th>
                     <th>Last</th>
                     <th>Chg</th>
@@ -1614,6 +1618,7 @@
                     <th>3M</th>
                     <th>12M</th>
                     <th>YTD</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="tradfi-stocks-indices-table-body"></tbody>
@@ -2260,13 +2265,13 @@
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
-    <script src="help.js?v=32"></script>
+    <script src="help.js?v=33"></script>
     <script src="dashboard.js?v=27"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
-    <script src="tradfi.js?v=11"></script>
+    <script src="tradfi.js?v=12"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

@@ -1638,7 +1638,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
             continue
         table.append(_quote_or_stub(sym, quotes))
 
-    if section == "stocks-companies":
+    if section in ("stocks-companies", "stocks-indices"):
         _enrich_quote_rows(heroes + [row for row in table if row.get("symbol")])
 
     if section == "sectors":
@@ -1651,7 +1651,13 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
     charts = None
     news = None
     if section in ("stocks-indices", "stocks-companies"):
-        if section == "stocks-indices":
+        indices_custom = section == "stocks-indices" and (
+            heroes_override is not None or symbols_override is not None
+        )
+        if section == "stocks-companies" or indices_custom:
+            perf_symbols = _watchlist_chart_symbols(hero_symbols, table_symbols)
+            chart_symbol_order = perf_symbols
+        else:
             charts_cfg = cfg.get("charts") or [
                 {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
             ]
@@ -1662,9 +1668,6 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
                 )
             )
             chart_symbol_order = [c["symbol"] for c in charts_cfg if c.get("symbol")]
-        else:
-            perf_symbols = _watchlist_chart_symbols(hero_symbols, table_symbols)
-            chart_symbol_order = perf_symbols
 
         history = fetch_yfinance_history_batch(perf_symbols, period="2y")
 
@@ -1683,7 +1686,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         for sym in chart_symbol_order:
             if not sym:
                 continue
-            if section == "stocks-indices":
+            if section == "stocks-indices" and not indices_custom:
                 entry = next(
                     (c for c in charts_cfg if c.get("symbol") == sym),
                     {"symbol": sym},
@@ -1730,7 +1733,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
 
 def get_tradfi_payload(section, heroes_override=None, symbols_override=None):
     key = f"tradfi:{section}"
-    if section == "stocks-companies" and (
+    if section in ("stocks-companies", "stocks-indices") and (
         heroes_override is not None or symbols_override is not None
     ):
         hero_key = ",".join(heroes_override or [])

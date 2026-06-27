@@ -23,6 +23,20 @@ const DEFAULT_COMPANIES = {
   ],
 };
 
+const INDICES_STORAGE_KEY = "tradfi:stocks-indices:v1";
+const INDICES_HERO_SLOTS = 4;
+const INDICES_TABLE_MIN = 11;
+const INDICES_TABLE_MAX = 50;
+const INDICES_REFETCH_MS = 400;
+
+const DEFAULT_INDICES = {
+  heroes: ["^GSPC", "^DJI", "^IXIC", "^RUT"],
+  table: [
+    "^VIX", "^STOXX50E", "^FTSE", "^GDAXI", "^FCHI",
+    "^N225", "^HSI", "^AXJO", "^BSESN", "^KS11", "^TWII",
+  ],
+};
+
 const tradfiCache = {};
 let tradfiPollTimer = null;
 let tradfiActiveSection = null;
@@ -30,6 +44,9 @@ let tradfiReady = false;
 let companiesWatchlist = null;
 let companiesRefetchTimer = null;
 let companiesEventsBound = false;
+let indicesWatchlist = null;
+let indicesRefetchTimer = null;
+let indicesEventsBound = false;
 const tfEl = (id) => document.getElementById(id);
 
 function tfFmtNum(n, d = 2) {
@@ -127,8 +144,62 @@ function companiesCacheKey() {
   return `stocks-companies:${companiesWatchlist.heroes.join("|")}:${companiesWatchlist.table.join("|")}`;
 }
 
+function defaultIndicesTableSlots() {
+  const slots = DEFAULT_INDICES.table.map((sym) => normalizeTicker(sym));
+  while (slots.length < INDICES_TABLE_MIN) slots.push("");
+  return slots.slice(0, INDICES_TABLE_MAX);
+}
+
+function padIndicesHeroSlots(heroes) {
+  const slots = heroes.map((sym) => normalizeTicker(sym));
+  while (slots.length < INDICES_HERO_SLOTS) slots.push("");
+  return slots.slice(0, INDICES_HERO_SLOTS);
+}
+
+function normalizeIndicesTableSlots(table, isDefault = false) {
+  const slots = table.map((sym) => normalizeTicker(sym));
+  if (isDefault) {
+    while (slots.length < INDICES_TABLE_MIN) slots.push("");
+  } else if (!slots.length) {
+    slots.push("");
+  }
+  return slots.slice(0, INDICES_TABLE_MAX);
+}
+
+function loadSavedIndices() {
+  let saved = null;
+  try {
+    const raw = localStorage.getItem(INDICES_STORAGE_KEY);
+    if (raw) saved = JSON.parse(raw);
+  } catch {
+    saved = null;
+  }
+
+  const heroes = padIndicesHeroSlots(
+    Array.isArray(saved?.heroes) ? saved.heroes : DEFAULT_INDICES.heroes,
+  );
+  const table = Array.isArray(saved?.table)
+    ? normalizeIndicesTableSlots(saved.table, false)
+    : defaultIndicesTableSlots();
+
+  indicesWatchlist = { heroes, table };
+  return indicesWatchlist;
+}
+
+function persistIndicesWatchlist() {
+  if (!indicesWatchlist) return;
+  localStorage.setItem(INDICES_STORAGE_KEY, JSON.stringify(indicesWatchlist));
+}
+
+function indicesCacheKey() {
+  if (!indicesWatchlist) return "stocks-indices";
+  return `stocks-indices:${indicesWatchlist.heroes.join("|")}:${indicesWatchlist.table.join("|")}`;
+}
+
 function tradfiSectionCacheKey(section) {
-  return section === "stocks-companies" ? companiesCacheKey() : section;
+  if (section === "stocks-companies") return companiesCacheKey();
+  if (section === "stocks-indices") return indicesCacheKey();
+  return section;
 }
 
 function getTradfiScreen(section) {
@@ -241,20 +312,32 @@ function restoreTickerFocus(focus) {
   }
 }
 
+function watchlistQueryParams(section) {
+  const watchlist =
+    section === "stocks-companies"
+      ? companiesWatchlist
+      : section === "stocks-indices"
+        ? indicesWatchlist
+        : null;
+  if (!watchlist) return "";
+  const params = new URLSearchParams();
+  const heroes = watchlist.heroes.filter(Boolean);
+  const symbols = watchlist.table.filter(Boolean);
+  if (heroes.length) params.set("heroes", heroes.join(","));
+  if (symbols.length) params.set("symbols", symbols.join(","));
+  return params.toString();
+}
+
 async function fetchTradfiSection(section, opts = {}) {
   let url = `/api/tradfi/${section}`;
-  if (section === "stocks-companies" && companiesWatchlist) {
-    const params = new URLSearchParams();
-    const heroes = companiesWatchlist.heroes.filter(Boolean);
-    const symbols = companiesWatchlist.table.filter(Boolean);
-    if (heroes.length) params.set("heroes", heroes.join(","));
-    if (symbols.length) params.set("symbols", symbols.join(","));
-    const qs = params.toString();
-    if (qs) url += `?${qs}`;
-  }
+  const qs = watchlistQueryParams(section);
+  if (qs) url += `?${qs}`;
 
   const res = await fetch(url, {
-    cache: section === "stocks-companies" ? "no-store" : "default",
+    cache:
+      section === "stocks-companies" || section === "stocks-indices"
+        ? "no-store"
+        : "default",
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -380,6 +463,123 @@ function bindCompaniesEvents() {
   });
 }
 
+function scheduleIndicesRefetch(immediate = false) {
+  if (indicesRefetchTimer) clearTimeout(indicesRefetchTimer);
+  if (immediate) {
+    loadTradfiSection("stocks-indices");
+    return;
+  }
+  indicesRefetchTimer = setTimeout(() => {
+    indicesRefetchTimer = null;
+    if (tradfiActiveSection === "stocks-indices") {
+      loadTradfiSection("stocks-indices");
+    }
+  }, INDICES_REFETCH_MS);
+}
+
+function updateIndicesFromInputs() {
+  if (!indicesWatchlist) loadSavedIndices();
+
+  const heroInputs = document.querySelectorAll(
+    "#tradfi-stocks-indices-heroes .tradfi-ticker-input",
+  );
+  heroInputs.forEach((input, i) => {
+    indicesWatchlist.heroes[i] = normalizeTicker(input.value);
+  });
+
+  const rowInputs = document.querySelectorAll(
+    "#tradfi-stocks-indices-table-body .tradfi-ticker-input",
+  );
+  const table = [];
+  rowInputs.forEach((input) => {
+    table.push(normalizeTicker(input.value));
+  });
+  indicesWatchlist.table = normalizeIndicesTableSlots(table, false);
+  persistIndicesWatchlist();
+}
+
+function bindIndicesEvents() {
+  if (indicesEventsBound) return;
+  indicesEventsBound = true;
+
+  const heroes = tfEl("tradfi-stocks-indices-heroes");
+  const tableBody = tfEl("tradfi-stocks-indices-table-body");
+  const addBtn = tfEl("tradfi-stocks-indices-add-row");
+
+  const onTickerInput = () => {
+    updateIndicesFromInputs();
+    scheduleIndicesRefetch(false);
+  };
+
+  const onTickerCommit = () => {
+    updateIndicesFromInputs();
+    scheduleIndicesRefetch(true);
+  };
+
+  heroes?.addEventListener("input", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerInput();
+  });
+  heroes?.addEventListener("change", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerCommit();
+  });
+  heroes?.addEventListener("keydown", (e) => {
+    if (
+      e.target.classList.contains("tradfi-ticker-input") &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      e.target.blur();
+      onTickerCommit();
+    }
+  });
+
+  tableBody?.addEventListener("input", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerInput();
+  });
+  tableBody?.addEventListener("change", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerCommit();
+  });
+  tableBody?.addEventListener("keydown", (e) => {
+    if (
+      e.target.classList.contains("tradfi-ticker-input") &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      e.target.blur();
+      onTickerCommit();
+    }
+  });
+
+  tableBody?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tradfi-row-remove");
+    if (!btn || btn.disabled) return;
+    const row = btn.closest("tr");
+    const idx = Number(row?.dataset.rowIndex);
+    if (!Number.isFinite(idx)) return;
+    if (!indicesWatchlist) loadSavedIndices();
+    if (indicesWatchlist.table.length <= 1) return;
+    indicesWatchlist.table.splice(idx, 1);
+    if (!indicesWatchlist.table.length) indicesWatchlist.table.push("");
+    persistIndicesWatchlist();
+    scheduleIndicesRefetch(true);
+  });
+
+  addBtn?.addEventListener("click", () => {
+    if (!indicesWatchlist) loadSavedIndices();
+    if (indicesWatchlist.table.length >= INDICES_TABLE_MAX) return;
+    indicesWatchlist.table.push("");
+    persistIndicesWatchlist();
+    const focus = { key: `table-${indicesWatchlist.table.length - 1}`, start: 0, end: 0 };
+    const cached = tradfiCache[indicesCacheKey()];
+    if (cached) {
+      renderIndicesEditable("stocks-indices", cached);
+    } else {
+      renderTradfiIndicesTable("stocks-indices", { priceMode: "price" });
+    }
+    restoreTickerFocus(focus);
+  });
+}
+
 function buildTradfiCommentary(data) {
   const lines = [];
   const mode = data.priceMode || "price";
@@ -479,6 +679,62 @@ function renderTradfiHeroes(section, data) {
     .join("");
 }
 
+function renderIndicesHeroes(section, data) {
+  const strip = tfEl(`tradfi-${section}-heroes`);
+  if (!strip || !indicesWatchlist) return;
+  const mode = data.priceMode || "price";
+  const focus = captureTickerFocus();
+
+  if (!data?.fetchedAt) {
+    strip.innerHTML = indicesWatchlist.heroes
+      .map(
+        (sym, i) => `
+      <article class="deriv-hero-block tradfi-hero-editable">
+        <input
+          type="text"
+          class="tradfi-ticker-input tradfi-ticker-input--hero"
+          value="${sym}"
+          placeholder="Symbol"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Hero index ${i + 1}"
+          data-tradfi-focus="hero-${i}"
+        />
+        <span class="deriv-hero-value">—</span>
+        <span class="deriv-hero-sub">Loading…</span>
+      </article>`,
+      )
+      .join("");
+    restoreTickerFocus(focus);
+    return;
+  }
+
+  strip.innerHTML = indicesWatchlist.heroes
+    .map((sym, i) => {
+      const q = lookupQuote(sym, data);
+      const name = companyDisplayName(q, sym);
+      return `
+      <article class="deriv-hero-block tradfi-hero-editable">
+        <input
+          type="text"
+          class="tradfi-ticker-input tradfi-ticker-input--hero"
+          value="${sym}"
+          placeholder="Symbol"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Hero index ${i + 1}"
+          data-tradfi-focus="hero-${i}"
+        />
+        ${name ? `<span class="deriv-hero-label">${name}</span>` : ""}
+        <span class="deriv-hero-value ${tfChangeClass(q?.changePct)}">${tfFmtPrice(q, mode)}</span>
+        <span class="deriv-hero-sub">${tfFmtChange(q?.change, mode)} · ${tfFmtPct(q?.changePct)}</span>
+      </article>`;
+    })
+    .join("");
+
+  restoreTickerFocus(focus);
+}
+
 function renderCompaniesHeroes(section, data) {
   const strip = tfEl(`tradfi-${section}-heroes`);
   if (!strip || !companiesWatchlist) return;
@@ -539,31 +795,72 @@ function tfFmtPerf(n) {
   return tfFmtPct(n, 1);
 }
 
-function renderTradfiTable(section, data) {
+function renderTradfiIndicesTable(section, data) {
   const body = tfEl(`tradfi-${section}-table-body`);
-  if (!body) return;
+  if (!body || !indicesWatchlist) return;
   const mode = data.priceMode || "price";
+  const focus = captureTickerFocus();
+  const canRemove = indicesWatchlist.table.length > 1;
+  const loading = !data?.fetchedAt;
 
-  if (section === "stocks-indices") {
-    body.innerHTML = (data.table || [])
-      .map((q) => {
-        const perf = q.perf || {};
-        return `
-      <tr>
-        <td>${q.name}<span class="tradfi-symbol-tag">${q.symbol}</span></td>
+  if (loading) {
+    body.innerHTML =
+      `<tr><td colspan="11">Loading market data…</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = indicesWatchlist.table
+    .map((sym, i) => {
+      const q = lookupQuote(sym, data);
+      const name = companyDisplayName(q, sym);
+      const perf = q?.perf || {};
+      return `
+      <tr data-row-index="${i}">
+        <td>
+          <input
+            type="text"
+            class="tradfi-ticker-input"
+            value="${sym}"
+            placeholder="Symbol"
+            spellcheck="false"
+            autocomplete="off"
+            aria-label="Index symbol ${i + 1}"
+            data-tradfi-focus="table-${i}"
+          />
+        </td>
+        <td class="tradfi-company-name">${name}</td>
         <td class="mono">${tfFmtPrice(q, mode)}</td>
-        <td class="mono ${tfChangeClass(q.change)}">${tfFmtChange(q.change, mode)}</td>
-        <td class="mono ${tfChangeClass(q.changePct)}">${tfFmtPct(q.changePct)}</td>
+        <td class="mono ${tfChangeClass(q?.change)}">${tfFmtChange(q?.change, mode)}</td>
+        <td class="mono ${tfChangeClass(q?.changePct)}">${tfFmtPct(q?.changePct)}</td>
         <td class="mono ${tfChangeClass(perf.w1)}">${tfFmtPerf(perf.w1)}</td>
         <td class="mono ${tfChangeClass(perf.m1)}">${tfFmtPerf(perf.m1)}</td>
         <td class="mono ${tfChangeClass(perf.m3)}">${tfFmtPerf(perf.m3)}</td>
         <td class="mono ${tfChangeClass(perf.m12)}">${tfFmtPerf(perf.m12)}</td>
         <td class="mono ${tfChangeClass(perf.ytd)}">${tfFmtPerf(perf.ytd)}</td>
+        <td class="tradfi-row-actions">
+          <button
+            type="button"
+            class="tradfi-row-remove"
+            aria-label="Remove row ${i + 1}"
+            ${canRemove ? "" : "disabled"}
+          >×</button>
+        </td>
       </tr>`;
-      })
-      .join("");
-    return;
-  }
+    })
+    .join("");
+
+  restoreTickerFocus(focus);
+}
+
+function renderIndicesEditable(section, data) {
+  renderIndicesHeroes(section, data);
+  renderTradfiIndicesTable(section, data);
+}
+
+function renderTradfiTable(section, data) {
+  const body = tfEl(`tradfi-${section}-table-body`);
+  if (!body) return;
+  const mode = data.priceMode || "price";
 
   body.innerHTML = (data.table || [])
     .map(
@@ -894,6 +1191,9 @@ function renderTradfiScreen(section, data, opts = {}) {
   if (section === "stocks-companies") {
     bindCompaniesEvents();
     renderCompaniesEditable(section, data);
+  } else if (section === "stocks-indices") {
+    bindIndicesEvents();
+    renderIndicesEditable(section, data);
   } else {
     renderTradfiHeroes(section, data);
     renderTradfiTable(section, data);
@@ -922,6 +1222,10 @@ async function loadTradfiSection(section) {
     loadSavedCompanies();
     bindCompaniesEvents();
   }
+  if (section === "stocks-indices") {
+    loadSavedIndices();
+    bindIndicesEvents();
+  }
 
   const swr = window.DashboardSWR;
   if (!swr) return;
@@ -934,8 +1238,15 @@ async function loadTradfiSection(section) {
       key: `tradfi:${cacheKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
-      validate: () =>
-        section !== "stocks-companies" || companiesCacheKey() === fetchKey,
+      validate: () => {
+        if (section === "stocks-companies") {
+          return companiesCacheKey() === fetchKey;
+        }
+        if (section === "stocks-indices") {
+          return indicesCacheKey() === fetchKey;
+        }
+        return true;
+      },
       fetch: () => fetchTradfiSection(section),
       render: (data, opts = {}) => {
         if (opts.loading) {
@@ -943,10 +1254,11 @@ async function loadTradfiSection(section) {
           const body = tfEl(`tradfi-${section}-table-body`);
           if (section === "stocks-companies") {
             renderTradfiCompaniesTable(section, { priceMode: "price" });
+          } else if (section === "stocks-indices") {
+            renderTradfiIndicesTable(section, { priceMode: "price" });
           } else if (body) {
-            const cols = section === "stocks-indices" ? 9 : 4;
             body.innerHTML =
-              `<tr><td colspan="${cols}">Loading market data…</td></tr>`;
+              '<tr><td colspan="4">Loading market data…</td></tr>';
           }
           if (section === "stocks-indices" || section === "stocks-companies") {
             const chartsEl = tfEl(`tradfi-${section}-charts`);
@@ -963,6 +1275,12 @@ async function loadTradfiSection(section) {
         if (
           section === "stocks-companies" &&
           companiesCacheKey() !== fetchKey
+        ) {
+          return;
+        }
+        if (
+          section === "stocks-indices" &&
+          indicesCacheKey() !== fetchKey
         ) {
           return;
         }

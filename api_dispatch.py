@@ -47,7 +47,7 @@ def dispatch_api(path, query):
         section = path[len("/api/tradfi/") :].strip("/")
         heroes_override = None
         symbols_override = None
-        if section == "stocks-companies":
+        if section in ("stocks-companies", "stocks-indices"):
             if "heroes" in query:
                 heroes_override = _parse_tradfi_symbol_list(
                     query["heroes"][0], max_count=4

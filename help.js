@@ -695,6 +695,10 @@ const METRIC_HELP = {
     title: "TradFi Markets Table",
     body: "Live delayed quotes from Yahoo Finance for the selected asset class. Last is the latest price or yield; Chg and Chg % are versus the prior close. On Global Indices, 1W/1M/3M/12M/YTD are total returns from daily closes (5, 21, 63, and 252 trading days back, and prior year-end for YTD).",
   },
+  "tradfi-indices-watchlist": {
+    title: "Editable Indices Watchlist",
+    body: "Edit index symbols in the hero strip and table (e.g. ^GSPC, ^FTSE). Changes save automatically to this browser. Use + Add index for more rows. Performance columns and charts update when symbols change.",
+  },
   "tradfi-companies-watchlist": {
     title: "Editable Watchlist",
     body: "Edit ticker symbols in the hero strip and table. Changes save automatically to this browser. Use + Add company for more rows (10 by default). Performance columns (1W–YTD) use daily closes; charts and news update when tickers change.",
