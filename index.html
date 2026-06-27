@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=39" />
+    <link rel="stylesheet" href="styles.css?v=40" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1750,20 +1750,20 @@
               </section>
               <div class="tradfi-charts-row" id="equity-global-charts"></div>
             </div>
-            <div class="equity-subpanel" data-tab="performance" hidden>
-              <div id="equity-global-perf-chart" class="equity-plotly-chart"></div>
+            <div class="equity-subpanel equity-subpanel--charts" data-tab="performance" hidden>
+              <div id="equity-global-perf-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
             </div>
-            <div class="equity-subpanel" data-tab="risk" hidden>
-              <div id="equity-global-corr-chart" class="equity-plotly-chart"></div>
-              <div id="equity-global-vol-chart" class="equity-plotly-chart"></div>
+            <div class="equity-subpanel equity-subpanel--charts" data-tab="risk" hidden>
+              <div id="equity-global-corr-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
+              <div id="equity-global-vol-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
             </div>
-            <div class="equity-subpanel" data-tab="map" hidden>
-              <div id="equity-global-geo-chart" class="equity-plotly-chart"></div>
+            <div class="equity-subpanel equity-subpanel--charts" data-tab="map" hidden>
+              <div id="equity-global-geo-chart" class="equity-plotly-chart equity-plotly-chart--fill"></div>
             </div>
-            <div class="equity-subpanel" data-tab="movers" hidden>
-              <div class="equity-movers-grid">
-                <div id="equity-global-movers-top" class="equity-plotly-chart"></div>
-                <div id="equity-global-movers-bottom" class="equity-plotly-chart"></div>
+            <div class="equity-subpanel equity-subpanel--charts" data-tab="movers" hidden>
+              <div class="equity-movers-grid equity-movers-grid--fill">
+                <div id="equity-global-movers-top" class="equity-plotly-chart equity-plotly-chart--fill"></div>
+                <div id="equity-global-movers-bottom" class="equity-plotly-chart equity-plotly-chart--fill"></div>
               </div>
             </div>
           </section>
@@ -2442,7 +2442,7 @@
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=13"></script>
-    <script src="equity-insights.js?v=7"></script>
+    <script src="equity-insights.js?v=8"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

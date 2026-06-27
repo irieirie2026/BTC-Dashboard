@@ -2852,10 +2852,23 @@ body {
   min-height: 12rem;
 }
 
+.equity-subpanel--charts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
 .equity-plotly-chart {
   width: 100%;
   min-height: 280px;
   margin-bottom: 0.5rem;
+}
+
+.equity-plotly-chart--fill {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-bottom: 0;
 }
 
 .equity-plotly-chart--tall {
@@ -2870,6 +2883,16 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+}
+
+.equity-movers-grid--fill {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.equity-movers-grid--fill .equity-plotly-chart {
+  min-height: 0;
 }
 
 .equity-sector-line {

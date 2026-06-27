@@ -241,10 +241,53 @@ function plotLayout(title, height = 420, opts = {}) {
   };
 }
 
-function viewportChartHeight(el, min = 380, max = 720, bottomPad = 28) {
-  if (!el) return 440;
-  const top = el.getBoundingClientRect().top;
-  return Math.round(Math.max(min, Math.min(max, window.innerHeight - top - bottomPad)));
+function viewportChartHeight(el, opts = {}) {
+  const {
+    min = 320,
+    max = 760,
+    bottomPad = 40,
+    panelEl = null,
+    chartCount = 1,
+    gap = 10,
+  } = opts;
+  const anchor = panelEl || el;
+  if (!anchor) return 440;
+  const top = anchor.getBoundingClientRect().top;
+  const available = window.innerHeight - top - bottomPad;
+  const totalGap = Math.max(0, chartCount - 1) * gap;
+  const perChart = (available - totalGap) / Math.max(1, chartCount);
+  return Math.round(Math.max(min, Math.min(max, perChart)));
+}
+
+function resolvePlotlyHeight(el, opts = {}, fallback = 420) {
+  if (!opts.fillViewport) return fallback;
+  const height = viewportChartHeight(el, opts);
+  el.style.height = `${height}px`;
+  el.classList.add("equity-plotly-chart--fill");
+  return height;
+}
+
+function globalSubpanelEl(tab) {
+  return eqEl("equity-global-screen")?.querySelector(`.equity-subpanel[data-tab="${tab}"]`);
+}
+
+function globalChartViewportOpts(tab, chartCount = 1) {
+  const panelEl = globalSubpanelEl(tab);
+  const opts = {
+    fillViewport: true,
+    panelEl,
+    chartCount,
+    gap: 10,
+    bottomPad: 48,
+  };
+  if (chartCount > 1) {
+    opts.min = 240;
+    opts.max = 460;
+  } else {
+    opts.min = 360;
+    opts.max = 760;
+  }
+  return opts;
 }
 
 function renderPerformanceChart(el, data, opts = {}) {
@@ -256,20 +299,20 @@ function renderPerformanceChart(el, data, opts = {}) {
     type: "scatter",
     mode: "lines",
   }));
-  const height = opts.fillViewport ? viewportChartHeight(el) : 440;
+  const height = resolvePlotlyHeight(el, opts, 440);
   const layout = plotLayout("Normalized Performance (Rebased to 100)", height, opts);
   if (opts.compactLegend) {
     layout.margin = { l: 48, r: 24, t: 52, b: 40 };
   }
-  el.style.height = `${height}px`;
   Plotly.newPlot(el, traces, layout, {
     responsive: true,
     displayModeBar: false,
   });
 }
 
-function renderCorrelationChart(el, data) {
-  if (!window.Plotly || !data?.matrix?.length) return;
+function renderCorrelationChart(el, data, opts = {}) {
+  if (!window.Plotly || !data?.matrix?.length || !el) return;
+  const height = resolvePlotlyHeight(el, opts, 400);
   Plotly.newPlot(
     el,
     [{
@@ -280,13 +323,13 @@ function renderCorrelationChart(el, data) {
       colorscale: "RdBu",
       zmid: 0,
     }],
-    { ...plotLayout("Return Correlation", 400), xaxis: { side: "bottom" } },
+    { ...plotLayout("Return Correlation", height), xaxis: { side: "bottom" } },
     { responsive: true, displayModeBar: false },
   );
 }
 
-function renderVolChart(el, data) {
-  if (!window.Plotly || !data?.dates?.length) return;
+function renderVolChart(el, data, opts = {}) {
+  if (!window.Plotly || !data?.dates?.length || !el) return;
   const traces = Object.entries(data.series || {}).map(([name, vals]) => ({
     x: data.dates.slice(-vals.length),
     y: vals,
@@ -294,14 +337,21 @@ function renderVolChart(el, data) {
     type: "scatter",
     mode: "lines",
   }));
-  Plotly.newPlot(el, traces, plotLayout("Rolling Annualized Volatility (%)", 360), {
+  const height = resolvePlotlyHeight(el, opts, 360);
+  const layout = plotLayout("Rolling Annualized Volatility (%)", height, opts);
+  if (opts.fillViewport) {
+    layout.legend = { orientation: "h", y: 1.06, font: { size: 9 } };
+    layout.margin = { l: 48, r: 24, t: 48, b: 40 };
+  }
+  Plotly.newPlot(el, traces, layout, {
     responsive: true,
     displayModeBar: false,
   });
 }
 
-function renderGeoChart(el, rows) {
-  if (!window.Plotly || !rows?.length) return;
+function renderGeoChart(el, rows, opts = {}) {
+  if (!window.Plotly || !rows?.length || !el) return;
+  const height = resolvePlotlyHeight(el, opts, 480);
   Plotly.newPlot(
     el,
     [{
@@ -319,7 +369,7 @@ function renderGeoChart(el, rows) {
       },
     }],
     {
-      ...plotLayout("Global Performance Map", 480),
+      ...plotLayout("Global Performance Map", height),
       geo: {
         projection: { type: "natural earth" },
         showland: true,
@@ -332,9 +382,11 @@ function renderGeoChart(el, rows) {
   );
 }
 
-function renderMoversChart(el, rows, title) {
-  if (!window.Plotly || !rows?.length) return;
+function renderMoversChart(el, rows, title, opts = {}) {
+  if (!window.Plotly || !rows?.length || !el) return;
   const colors = rows.map((r) => (r.returnPct >= 0 ? EQ_COLOR_POS : EQ_COLOR_NEG));
+  const fallback = Math.max(300, rows.length * 40);
+  const height = resolvePlotlyHeight(el, opts, fallback);
   Plotly.newPlot(
     el,
     [{
@@ -344,7 +396,11 @@ function renderMoversChart(el, rows, title) {
       x: rows.map((r) => r.returnPct),
       marker: { color: colors },
     }],
-    { ...plotLayout(title, Math.max(280, rows.length * 36)), xaxis: { ticksuffix: "%" } },
+    {
+      ...plotLayout(title, height, opts),
+      xaxis: { ticksuffix: "%" },
+      margin: { l: 120, r: 24, t: 48, b: 40 },
+    },
     { responsive: true, displayModeBar: false },
   );
 }
@@ -470,29 +526,38 @@ function renderGlobalTab(tab, data) {
       break;
     case "performance":
       renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance, {
-        fillViewport: true,
+        ...globalChartViewportOpts("performance"),
         compactLegend: true,
       });
       break;
-    case "risk":
-      renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation);
-      renderVolChart(eqEl("equity-global-vol-chart"), data.volatility);
+    case "risk": {
+      const riskOpts = globalChartViewportOpts("risk", 2);
+      renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation, riskOpts);
+      renderVolChart(eqEl("equity-global-vol-chart"), data.volatility, {
+        ...riskOpts,
+        compactLegend: true,
+      });
       break;
+    }
     case "map":
-      renderGeoChart(eqEl("equity-global-geo-chart"), data.geo);
+      renderGeoChart(eqEl("equity-global-geo-chart"), data.geo, globalChartViewportOpts("map"));
       break;
-    case "movers":
+    case "movers": {
+      const moversOpts = globalChartViewportOpts("movers");
       renderMoversChart(
         eqEl("equity-global-movers-top"),
         data.movers?.top || [],
         `Top (${data.movers?.period || "YTD"})`,
+        moversOpts,
       );
       renderMoversChart(
         eqEl("equity-global-movers-bottom"),
         data.movers?.bottom || [],
         `Bottom (${data.movers?.period || "YTD"})`,
+        moversOpts,
       );
       break;
+    }
     default:
       break;
   }
@@ -572,6 +637,9 @@ function bindEquitySubtabs(containerId, screenKind) {
 
     const data = equityCache[screenKind];
     if (data) {
+      if (screenKind === "global" && tab !== "overview") {
+        equityRenderedTabs.delete(`global:${tab}`);
+      }
       if (screenKind === "global") renderGlobalTab(tab, data);
       else renderCompanyTab(tab, data);
     }
@@ -1089,9 +1157,15 @@ function initEquityModule() {
   window.addEventListener("resize", () => {
     if (equityActive !== "global") return;
     const panel = eqEl("equity-global-screen")?.querySelector(".equity-panel");
-    if (getActiveEquityTab(panel) !== "overview") return;
+    const tab = getActiveEquityTab(panel);
     const data = equityCache.global;
-    if (data) repaintGlobalOverviewCharts(data);
+    if (!data) return;
+    if (tab === "overview") {
+      repaintGlobalOverviewCharts(data);
+      return;
+    }
+    equityRenderedTabs.delete(`global:${tab}`);
+    renderGlobalTab(tab, data);
   });
 }
 
