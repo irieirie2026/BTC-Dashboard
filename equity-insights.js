@@ -9,8 +9,10 @@ const DEFAULT_GLOBAL_TICKERS = [
 ];
 
 const equityCache = {};
+const equityRenderedTabs = new Set();
 let equityActive = null;
 let equityReady = false;
+let equityDataKey = null;
 
 const eqEl = (id) => document.getElementById(id);
 
@@ -273,19 +275,153 @@ function renderBarFinancial(el, rows, field, title) {
   );
 }
 
-function bindEquitySubtabs(containerId, panelPrefix) {
-  const container = eqEl(containerId);
-  if (!container || container.dataset.bound) return;
-  container.dataset.bound = "true";
-  container.querySelectorAll(".equity-subtab").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tab = btn.dataset.tab;
-      container.querySelectorAll(".equity-subtab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
-      container.querySelectorAll(".equity-subpanel").forEach((p) => {
-        p.hidden = p.dataset.tab !== tab;
-      });
+function resetEquityRenderedTabs(key) {
+  if (key !== equityDataKey) {
+    equityDataKey = key;
+    equityRenderedTabs.clear();
+  }
+}
+
+function resizeEquityChartsIn(el) {
+  if (!window.Plotly || !el) return;
+  requestAnimationFrame(() => {
+    el.querySelectorAll(".equity-plotly-chart").forEach((chart) => {
+      if (chart.querySelector(".plotly")) Plotly.Plots.resize(chart);
     });
   });
+}
+
+function getActiveEquityTab(panel) {
+  const active = panel?.querySelector(".equity-subtab.active");
+  return active?.dataset.tab || "overview";
+}
+
+function renderGlobalTab(tab, data) {
+  const key = `global:${tab}`;
+  if (equityRenderedTabs.has(key)) return;
+  equityRenderedTabs.add(key);
+
+  switch (tab) {
+    case "overview":
+      renderGlobalOverview(data);
+      break;
+    case "performance":
+      renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
+      break;
+    case "risk":
+      renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation);
+      renderVolChart(eqEl("equity-global-vol-chart"), data.volatility);
+      break;
+    case "map":
+      renderGeoChart(eqEl("equity-global-geo-chart"), data.geo);
+      break;
+    case "movers":
+      renderMoversChart(
+        eqEl("equity-global-movers-top"),
+        data.movers?.top || [],
+        `Top (${data.movers?.period || "YTD"})`,
+      );
+      renderMoversChart(
+        eqEl("equity-global-movers-bottom"),
+        data.movers?.bottom || [],
+        `Bottom (${data.movers?.period || "YTD"})`,
+      );
+      break;
+    default:
+      break;
+  }
+}
+
+function renderCompanyTab(tab, data) {
+  const key = `company:${tab}`;
+  if (equityRenderedTabs.has(key)) return;
+  equityRenderedTabs.add(key);
+
+  switch (tab) {
+    case "overview":
+      renderCandlestick(eqEl("equity-company-candle"), data.ohlcv);
+      break;
+    case "technicals":
+      renderIndicatorChart(eqEl("equity-company-rsi"), data.ohlcv, "rsi", "RSI (14)", 70, 30);
+      renderIndicatorChart(eqEl("equity-company-macd"), data.ohlcv, "macd", "MACD", null, null);
+      renderIndicatorChart(eqEl("equity-company-stoch"), data.ohlcv, "stochK", "Stochastic %K", 80, 20);
+      {
+        const signals = eqEl("equity-company-signals");
+        if (signals) {
+          signals.innerHTML = (data.signals || [])
+            .map((s) => `<p class="equity-signal equity-signal--${s.level}">${s.text}</p>`)
+            .join("") || "<p class=\"news-empty\">No strong signals at current levels.</p>";
+        }
+      }
+      break;
+    case "financials": {
+      const rev = (data.financials?.income || []).find((r) => /revenue/i.test(r.line));
+      if (rev) renderBarFinancial(eqEl("equity-company-revenue"), [rev], "p0", "Revenue");
+      const ratios = eqEl("equity-company-ratios-body");
+      if (ratios) {
+        ratios.innerHTML = (data.financials?.ratios || [])
+          .map((r) => `<tr><td>${r.period}</td><td class="mono">${eqFmtNum(r.debtEquity, 2)}</td><td class="mono">${eqFmtNum(r.currentRatio, 2)}</td></tr>`)
+          .join("") || "<tr><td colspan=\"3\">No balance sheet ratios available</td></tr>";
+      }
+      break;
+    }
+    case "valuation": {
+      const peers = eqEl("equity-company-peers-body");
+      if (peers) {
+        peers.innerHTML = (data.peersTable || [])
+          .map((r) => `<tr><td>${r.ticker}</td><td class="mono">${eqFmtLarge(r.marketCap)}</td><td class="mono">${r.pe ?? "—"}</td><td class="mono">${r.forwardPe ?? "—"}</td><td class="mono">${r.priceToBook ?? "—"}</td></tr>`)
+          .join("");
+      }
+      renderPerformanceChart(eqEl("equity-company-peer-chart"), data.peerPerformance);
+      break;
+    }
+    case "dividends":
+      if (data.dividends?.length && window.Plotly) {
+        Plotly.newPlot(
+          eqEl("equity-company-div-chart"),
+          [{ x: data.dividends.map((d) => d.date), y: data.dividends.map((d) => d.amount), type: "bar" }],
+          plotLayout("Dividend History", 320),
+          { responsive: true, displayModeBar: false },
+        );
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+function bindEquitySubtabs(containerId, screenKind) {
+  const container = eqEl(containerId);
+  if (!container) return;
+  const panel = container.closest(".equity-panel");
+  if (!panel) return;
+
+  const onTabSelect = (tab) => {
+    panel.querySelectorAll(".equity-subtab").forEach((b) => {
+      b.classList.toggle("active", b.dataset.tab === tab);
+    });
+    panel.querySelectorAll(".equity-subpanel").forEach((p) => {
+      p.hidden = p.dataset.tab !== tab;
+    });
+
+    const data = equityCache[screenKind];
+    if (data) {
+      if (screenKind === "global") renderGlobalTab(tab, data);
+      else renderCompanyTab(tab, data);
+    }
+
+    const visiblePanel = panel.querySelector(`.equity-subpanel[data-tab="${tab}"]`);
+    resizeEquityChartsIn(visiblePanel);
+  };
+
+  if (!container.dataset.bound) {
+    container.dataset.bound = "true";
+    container.querySelectorAll(".equity-subtab").forEach((btn) => {
+      btn.addEventListener("click", () => onTabSelect(btn.dataset.tab));
+    });
+  }
+
+  onTabSelect(getActiveEquityTab(panel));
 }
 
 function renderGlobalOverview(data) {
@@ -306,15 +442,18 @@ function renderGlobalOverview(data) {
     .join("");
 }
 
+function globalDataKey() {
+  return `global:${getSelectedGlobalTickers().join(",")}:${getEquityPeriod()}:${sessionStorage.getItem("equity:movers") || "YTD"}`;
+}
+
+function companyDataKey() {
+  return `company:${getCompanySymbol()}:${getCompanyPeers().join(",")}:${getEquityPeriod()}`;
+}
+
 function renderGlobalScreen(data) {
   equityCache.global = data;
-  renderGlobalOverview(data);
-  renderPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
-  renderCorrelationChart(eqEl("equity-global-corr-chart"), data.correlation);
-  renderVolChart(eqEl("equity-global-vol-chart"), data.volatility);
-  renderGeoChart(eqEl("equity-global-geo-chart"), data.geo);
-  renderMoversChart(eqEl("equity-global-movers-top"), data.movers?.top || [], `Top (${data.movers?.period || "YTD"})`);
-  renderMoversChart(eqEl("equity-global-movers-bottom"), data.movers?.bottom || [], `Bottom (${data.movers?.period || "YTD"})`);
+  resetEquityRenderedTabs(globalDataKey());
+  renderGlobalTab("overview", data);
 
   const meta = eqEl("equity-global-update");
   const swr = window.DashboardSWR;
@@ -328,6 +467,7 @@ function renderGlobalScreen(data) {
 
 function renderCompanyScreen(data) {
   equityCache.company = data;
+  resetEquityRenderedTabs(companyDataKey());
   const info = data.info || {};
   const grid = eqEl("equity-company-metrics");
   if (grid) {
@@ -351,44 +491,7 @@ function renderCompanyScreen(data) {
     sector.textContent = `${info.name || data.symbol} · ${info.sector || "—"} / ${info.industry || "—"}`;
   }
 
-  renderCandlestick(eqEl("equity-company-candle"), data.ohlcv);
-  renderIndicatorChart(eqEl("equity-company-rsi"), data.ohlcv, "rsi", "RSI (14)", 70, 30);
-  renderIndicatorChart(eqEl("equity-company-macd"), data.ohlcv, "macd", "MACD", null, null);
-  renderIndicatorChart(eqEl("equity-company-stoch"), data.ohlcv, "stochK", "Stochastic %K", 80, 20);
-
-  const signals = eqEl("equity-company-signals");
-  if (signals) {
-    signals.innerHTML = (data.signals || [])
-      .map((s) => `<p class="equity-signal equity-signal--${s.level}">${s.text}</p>`)
-      .join("") || "<p class=\"news-empty\">No strong signals at current levels.</p>";
-  }
-
-  const rev = (data.financials?.income || []).find((r) => /revenue/i.test(r.line));
-  if (rev) renderBarFinancial(eqEl("equity-company-revenue"), [rev], "p0", "Revenue");
-
-  const ratios = eqEl("equity-company-ratios-body");
-  if (ratios) {
-    ratios.innerHTML = (data.financials?.ratios || [])
-      .map((r) => `<tr><td>${r.period}</td><td class="mono">${eqFmtNum(r.debtEquity, 2)}</td><td class="mono">${eqFmtNum(r.currentRatio, 2)}</td></tr>`)
-      .join("") || "<tr><td colspan=\"3\">No balance sheet ratios available</td></tr>";
-  }
-
-  const peers = eqEl("equity-company-peers-body");
-  if (peers) {
-    peers.innerHTML = (data.peersTable || [])
-      .map((r) => `<tr><td>${r.ticker}</td><td class="mono">${eqFmtLarge(r.marketCap)}</td><td class="mono">${r.pe ?? "—"}</td><td class="mono">${r.forwardPe ?? "—"}</td><td class="mono">${r.priceToBook ?? "—"}</td></tr>`)
-      .join("");
-  }
-  renderPerformanceChart(eqEl("equity-company-peer-chart"), data.peerPerformance);
-
-  if (data.dividends?.length && window.Plotly) {
-    Plotly.newPlot(
-      eqEl("equity-company-div-chart"),
-      [{ x: data.dividends.map((d) => d.date), y: data.dividends.map((d) => d.amount), type: "bar" }],
-      plotLayout("Dividend History", 320),
-      { responsive: true, displayModeBar: false },
-    );
-  }
+  renderCompanyTab("overview", data);
 
   const ret = eqEl("equity-company-return");
   if (ret && data.priceReturn != null) {
@@ -511,8 +614,8 @@ function bindEquityControls() {
 
 async function loadEquityGlobal() {
   equityActive = "global";
+  window.tradfiClearActiveSection?.();
   initEquityModule();
-  bindEquitySubtabs("equity-global-subtabs", "global");
   bindEquityControls();
 
   const swr = window.DashboardSWR;
@@ -528,6 +631,7 @@ async function loadEquityGlobal() {
         if (opts.loading) return;
         renderGlobalScreen(data);
         buildGlobalTickerPicker();
+        bindEquitySubtabs("equity-global-subtabs", "global");
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));
       },
@@ -539,8 +643,8 @@ async function loadEquityGlobal() {
 
 async function loadEquityCompany() {
   equityActive = "company";
+  window.tradfiClearActiveSection?.();
   initEquityModule();
-  bindEquitySubtabs("equity-company-subtabs", "company");
   bindEquityControls();
 
   const swr = window.DashboardSWR;
@@ -555,6 +659,7 @@ async function loadEquityCompany() {
       render: (data, opts = {}) => {
         if (opts.loading) return;
         renderCompanyScreen(data);
+        bindEquitySubtabs("equity-company-subtabs", "company");
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-company-screen"));
       },
@@ -568,6 +673,10 @@ function initEquityModule() {
   if (equityReady) return;
   equityReady = true;
 }
+
+window.equityClearActive = () => {
+  equityActive = null;
+};
 
 window.loadEquityGlobal = loadEquityGlobal;
 window.loadEquityCompany = loadEquityCompany;

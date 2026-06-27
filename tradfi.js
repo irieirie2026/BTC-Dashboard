@@ -1219,6 +1219,7 @@ function renderTradfiScreen(section, data, opts = {}) {
 
 async function loadTradfiSection(section) {
   if (!TRADFI_SECTIONS.includes(section)) return;
+  window.equityClearActive?.();
   tradfiActiveSection = section;
 
   if (section === "stocks-companies") {
@@ -1317,6 +1318,10 @@ function initTradfiModule() {
     repaintTradfiCharts(tradfiActiveSection, tradfiCache[cacheKey]);
   });
 }
+
+window.tradfiClearActiveSection = function () {
+  tradfiActiveSection = null;
+};
 
 window.loadTradfiDashboard = function () {
   initTradfiModule();
