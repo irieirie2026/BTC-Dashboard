@@ -721,7 +721,7 @@ const METRIC_HELP = {
   },
   "equity-global-insights": {
     title: "Global Equity Insights",
-    body: "Editable global index watchlist matching TradFi Indices: four hero quotes, performance table (1W–YTD), and 3-month daily charts per symbol. Edit tickers in the hero row or table, or use + Add index. Data from Yahoo Finance (~15 min delayed).",
+    body: "Editable global index watchlist matching TradFi Indices: four hero quotes, performance table (1W–YTD), a normalized 1Y performance chart (rebased to 100), and 3-month daily charts per symbol. Edit tickers in the hero row or table, or use + Add index. Data from Yahoo Finance (~15 min delayed).",
   },
   "equity-company-insights": {
     title: "Company Equity Insights",

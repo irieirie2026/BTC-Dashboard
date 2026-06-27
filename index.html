@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=40" />
+    <link rel="stylesheet" href="styles.css?v=41" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1717,7 +1717,14 @@
                 </table>
               </div>
             </section>
-            <div class="tradfi-charts-row" id="equity-global-charts"></div>
+            <section class="panel equity-global-perf-panel">
+              <div class="panel-header">
+                <h2>Performance</h2>
+                <span class="panel-meta">1Y · normalized · rebased to 100</span>
+              </div>
+              <div id="equity-global-perf-chart" class="equity-plotly-chart equity-global-perf-chart"></div>
+            </section>
+            <div class="tradfi-charts-row tradfi-charts-row--global" id="equity-global-charts"></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="companyInsights" id="equity-company-screen" hidden>
@@ -2386,14 +2393,14 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=37"></script>
+    <script src="help.js?v=38"></script>
     <script src="dashboard.js?v=28"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
-    <script src="tradfi.js?v=13"></script>
-    <script src="equity-insights.js?v=9"></script>
+    <script src="tradfi.js?v=14"></script>
+    <script src="equity-insights.js?v=10"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>

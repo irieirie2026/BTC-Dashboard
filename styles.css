@@ -2485,6 +2485,20 @@ body {
   max-height: 200px;
 }
 
+.tradfi-charts-row--global .tradfi-chart-wrap canvas {
+  height: 280px;
+  max-height: 280px;
+}
+
+.equity-global-perf-panel {
+  padding-bottom: 0.25rem;
+}
+
+.equity-global-perf-chart {
+  min-height: 440px;
+  margin-bottom: 0;
+}
+
 .tradfi-charts-row--companies .tradfi-chart-panel {
   min-width: 0;
 }

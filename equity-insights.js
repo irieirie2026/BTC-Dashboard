@@ -11,6 +11,15 @@ const GLOBAL_REFETCH_MS = 400;
 
 const DEFAULT_GLOBAL_HEROES = ["^GSPC", "^DJI", "^IXIC", "^RUT"];
 
+const GLOBAL_PERF_COLORS = [
+  "#38bdf8", "#a78bfa", "#34d399", "#fbbf24", "#fb7185",
+  "#2dd4bf", "#60a5fa", "#c084fc", "#4ade80", "#f472b6",
+];
+
+const GLOBAL_INDEX_CHART_UP = { line: "#4ade80", fill: "rgba(74, 222, 128, 0.22)" };
+const GLOBAL_INDEX_CHART_DOWN = { line: "#fb7185", fill: "rgba(251, 113, 133, 0.22)" };
+const GLOBAL_INDEX_CHART_FLAT = { line: "#38bdf8", fill: "rgba(56, 189, 248, 0.2)" };
+
 const DEFAULT_GLOBAL_WATCHLIST = [
   "^GSPC", "^DJI", "^IXIC", "^FTSE", "^GDAXI", "^FCHI", "^N225", "^HSI",
   "000001.SS", "^KS11", "^NSEI", "^AXJO", "^GSPTSE", "ACWI", "EEM",
@@ -266,6 +275,76 @@ function resolvePlotlyHeight(el, opts = {}, fallback = 420) {
   return height;
 }
 
+function globalPerfChartHeight(el) {
+  if (!el) return 480;
+  const top = el.getBoundingClientRect().top;
+  return Math.round(Math.max(440, Math.min(560, window.innerHeight - top - 80)));
+}
+
+function renderGlobalPerformanceChart(el, data) {
+  if (!window.Plotly || !data?.dates?.length || !el) return;
+  const series = Object.entries(data.series || {});
+  if (!series.length) return;
+
+  const height = globalPerfChartHeight(el);
+  el.style.height = `${height}px`;
+
+  const traces = series.map(([name, vals], i) => ({
+    x: data.dates,
+    y: vals,
+    name,
+    type: "scatter",
+    mode: "lines",
+    line: { width: 2.5, color: GLOBAL_PERF_COLORS[i % GLOBAL_PERF_COLORS.length] },
+    connectgaps: true,
+  }));
+
+  Plotly.newPlot(
+    el,
+    traces,
+    {
+      template: "plotly_dark",
+      title: { text: "", font: { size: 1 } },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(255,255,255,0.025)",
+      margin: { l: 52, r: 20, t: 12, b: 72 },
+      height,
+      hovermode: "x unified",
+      hoverlabel: {
+        bgcolor: "#1e293b",
+        bordercolor: "rgba(148, 163, 184, 0.35)",
+        font: { family: "IBM Plex Sans, sans-serif", size: 12, color: "#e2e8f0" },
+      },
+      legend: {
+        orientation: "h",
+        y: -0.18,
+        x: 0,
+        font: { size: 11, color: "#cbd5e1" },
+        bgcolor: "rgba(0,0,0,0)",
+        tracegroupgap: 10,
+      },
+      xaxis: {
+        showgrid: true,
+        gridcolor: "rgba(148, 163, 184, 0.16)",
+        gridwidth: 1,
+        tickfont: { size: 10, color: "#94a3b8" },
+        linecolor: "rgba(148, 163, 184, 0.3)",
+      },
+      yaxis: {
+        title: { text: "Rebased (100)", font: { size: 11, color: "#94a3b8" } },
+        showgrid: true,
+        gridcolor: "rgba(148, 163, 184, 0.16)",
+        gridwidth: 1,
+        tickfont: { size: 10, color: "#94a3b8" },
+        linecolor: "rgba(148, 163, 184, 0.3)",
+        zeroline: false,
+      },
+      font: { family: "IBM Plex Sans, sans-serif", size: 11 },
+    },
+    { responsive: true, displayModeBar: false },
+  );
+}
+
 function renderPerformanceChart(el, data, opts = {}) {
   if (!window.Plotly || !data?.dates?.length || !el) return;
   const traces = Object.entries(data.series || {}).map(([name, vals]) => ({
@@ -284,6 +363,15 @@ function renderPerformanceChart(el, data, opts = {}) {
     responsive: true,
     displayModeBar: false,
   });
+}
+
+function globalIndexChartStyle(points) {
+  const vals = (points || []).map((p) => p.close).filter((v) => v != null);
+  if (vals.length < 2) return GLOBAL_INDEX_CHART_FLAT;
+  const delta = vals[vals.length - 1] - vals[0];
+  if (delta > 0) return GLOBAL_INDEX_CHART_UP;
+  if (delta < 0) return GLOBAL_INDEX_CHART_DOWN;
+  return GLOBAL_INDEX_CHART_FLAT;
 }
 
 function renderCandlestick(el, ohlcv) {
@@ -679,7 +767,7 @@ function renderGlobalOverviewCharts(data) {
         <span class="panel-meta">3-month · daily</span>
       </div>
       <div class="deriv-chart-wrap tradfi-chart-wrap">
-        <canvas id="equity-global-chart-${i}" height="200"></canvas>
+        <canvas id="equity-global-chart-${i}" height="280"></canvas>
       </div>
     </section>`,
     )
@@ -687,18 +775,33 @@ function renderGlobalOverviewCharts(data) {
 
   charts.forEach((ch, i) => {
     const canvas = eqEl(`equity-global-chart-${i}`);
-    window.mountTradfiChart?.(canvas, ch, mode);
+    const trend = globalIndexChartStyle(ch.points);
+    window.mountTradfiChart?.(canvas, ch, mode, {
+      ...trend,
+      showGrid: true,
+      lineWidth: 2.5,
+      axisColor: "#a8b4c8",
+    });
   });
 
   return charts.length > 0;
 }
 
 function repaintGlobalOverviewCharts(data) {
+  if (data?.performance) {
+    renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
+  }
   if (!data?.charts?.length) return;
   const mode = data.priceMode || "price";
   data.charts.forEach((ch, i) => {
     const canvas = eqEl(`equity-global-chart-${i}`);
-    window.mountTradfiChart?.(canvas, ch, mode);
+    const trend = globalIndexChartStyle(ch.points);
+    window.mountTradfiChart?.(canvas, ch, mode, {
+      ...trend,
+      showGrid: true,
+      lineWidth: 2.5,
+      axisColor: "#a8b4c8",
+    });
   });
 }
 
@@ -761,6 +864,8 @@ function renderGlobalOverview(data) {
     .join("");
 
   restoreEqTickerFocus(focus);
+
+  renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
 
   if (!renderGlobalOverviewCharts(data)) {
     repaintGlobalOverviewCharts(data);

@@ -952,12 +952,17 @@ function tfFmtChartPrice(v, mode) {
   return tfFmtNum(v, 2);
 }
 
-function mountTradfiChart(canvas, chart, priceMode) {
+function mountTradfiChart(canvas, chart, priceMode, styleOpts = {}) {
   const pts = chart?.points || [];
   if (!canvas || !pts.length || !window.ChartInteraction) return null;
 
-  const pad = { top: 18, right: 20, bottom: 36, left: 56 };
+  const pad = styleOpts.pad || { top: 18, right: 20, bottom: 36, left: 56 };
   const mode = priceMode || "price";
+  const lineColor = styleOpts.lineColor || "#94a3b8";
+  const fillColor = styleOpts.fillColor || "rgba(148, 163, 184, 0.15)";
+  const showGrid = Boolean(styleOpts.showGrid);
+  const lineWidth = styleOpts.lineWidth || 2;
+  const axisColor = styleOpts.axisColor || "#7d8799";
 
   const fmtY = (v) => {
     if (mode === "yield") return tfFmtNum(v, 2) + "%";
@@ -983,7 +988,19 @@ function mountTradfiChart(canvas, chart, priceMode) {
       const yAt = (v) =>
         api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
 
-      ctx.fillStyle = "rgba(148, 163, 184, 0.15)";
+      if (showGrid) {
+        ctx.strokeStyle = "rgba(148, 163, 184, 0.14)";
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i += 1) {
+          const y = api.pad.top + (api.chartH * i) / 4;
+          ctx.beginPath();
+          ctx.moveTo(api.pad.left, y);
+          ctx.lineTo(api.pad.left + api.chartW, y);
+          ctx.stroke();
+        }
+      }
+
+      ctx.fillStyle = fillColor;
       ctx.beginPath();
       vals.forEach((v, i) => {
         const x = api.xAt(i, drawCount);
@@ -995,8 +1012,10 @@ function mountTradfiChart(canvas, chart, priceMode) {
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = lineWidth;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
       ctx.beginPath();
       vals.forEach((v, i) => {
         const x = api.xAt(i, drawCount);
@@ -1006,13 +1025,21 @@ function mountTradfiChart(canvas, chart, priceMode) {
       });
       ctx.stroke();
 
+      const lastIdx = drawCount - 1;
+      const lastX = api.xAt(lastIdx, drawCount);
+      const lastY = yAt(vals[lastIdx]);
+      ctx.fillStyle = lineColor;
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
       if (api.hoverGlobal != null) {
         const v = pts[api.hoverGlobal].close;
         api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
         api.drawDot(api.xAtGlobal(api.hoverGlobal), yAt(v));
       }
 
-      ctx.fillStyle = "#7d8799";
+      ctx.fillStyle = axisColor;
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
       ctx.fillText(fmtY(maxV), api.pad.left - 6, api.pad.top + 10);
