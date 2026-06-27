@@ -745,7 +745,7 @@ const METRIC_HELP = {
   },
   "equity-company-peers": {
     title: "Compare Peers",
-    body: "Toggle tickers from your company watchlist to include in the peer multiples table, relative performance chart, and news feed. Selections save in this browser session.",
+    body: "Toggle tickers from your company watchlist to include in the peer multiples table and relative performance chart. Selections save in this browser session.",
   },
   "equity-company-52w": {
     title: "52-Week Range",
@@ -797,7 +797,7 @@ const METRIC_HELP = {
   },
   "equity-company-news": {
     title: "Company News",
-    body: "Recent Yahoo Finance headlines for the selected company and active peers. Sorted by publish time; symbol badges show related tickers.",
+    body: "Recent Yahoo Finance headlines for the currently selected company only — updates when you load a different ticker from your watchlist. Sorted by publish time.",
   },
   "defi-protocols-table": {
     title: "BTC Protocols",

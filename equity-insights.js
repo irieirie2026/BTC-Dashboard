@@ -1093,22 +1093,32 @@ function renderCompanyCommentary(data) {
     : "<p>No analysis available for this symbol yet.</p>";
 }
 
+function filterNewsForSymbol(articles, symbol) {
+  const sym = normalizeEqTicker(symbol);
+  if (!sym) return articles || [];
+  return (articles || []).filter((art) =>
+    (art.symbols || []).some((s) => normalizeEqTicker(s) === sym),
+  );
+}
+
 function renderCompanyNews(data) {
   const feed = eqEl("equity-company-news");
   if (!feed) return;
-  const articles = sortNewsArticles(data?.news || []);
+  const symbol = data?.symbol || getCompanySymbol();
+  const articles = sortNewsArticles(filterNewsForSymbol(data?.news || [], symbol));
   if (!data?.fetchedAt) {
     feed.innerHTML = '<p class="news-empty">Loading headlines…</p>';
     return;
   }
   if (!articles.length) {
-    feed.innerHTML = '<p class="news-empty">No recent headlines for this company or peers.</p>';
+    feed.innerHTML = `<p class="news-empty">No recent headlines for ${symbol}.</p>`;
     return;
   }
   const latest = articles[0];
   const latestMeta = eqEl("equity-company-news-latest");
   if (latestMeta) {
-    latestMeta.textContent = `Latest: ${eqFmtNewsTime(latest.publishedAt, latest.publishedAtMs)}`;
+    const name = data?.info?.name || symbol;
+    latestMeta.textContent = `${name} · latest ${eqFmtNewsTime(latest.publishedAt, latest.publishedAtMs)}`;
   }
   feed.innerHTML = articles
     .map((art) => {

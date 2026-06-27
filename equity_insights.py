@@ -908,7 +908,7 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
     commentary = build_company_commentary(
         symbol, company_info, df, signals, price_return, fin, peers
     )
-    news = fetch_stock_news(all_syms[:6], per_symbol=5, max_total=25)
+    news = fetch_stock_news([symbol], per_symbol=12, max_total=25)
 
     return {
         "section": "company",
