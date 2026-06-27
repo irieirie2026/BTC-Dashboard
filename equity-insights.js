@@ -20,6 +20,10 @@ const GLOBAL_INDEX_CHART_UP = { line: "#4ade80", fill: "rgba(74, 222, 128, 0.22)
 const GLOBAL_INDEX_CHART_DOWN = { line: "#fb7185", fill: "rgba(251, 113, 133, 0.22)" };
 const GLOBAL_INDEX_CHART_FLAT = { line: "#38bdf8", fill: "rgba(56, 189, 248, 0.2)" };
 
+const GLOBAL_PERF_PERIODS = ["1W", "1M", "1Q", "1Y", "WTD", "MTD", "YTD", "3Y", "5Y"];
+const GLOBAL_PERF_PERIOD_STORAGE_KEY = "equity:global:perf-period:v1";
+const GLOBAL_PERF_FETCH_PERIOD = "5Y";
+
 const DEFAULT_GLOBAL_WATCHLIST = [
   "^GSPC", "^DJI", "^IXIC", "^FTSE", "^GDAXI", "^FCHI", "^N225", "^HSI",
   "000001.SS", "^KS11", "^NSEI", "^AXJO", "^GSPTSE", "ACWI", "EEM",
@@ -33,6 +37,7 @@ let equityDataKey = null;
 let globalWatchlist = null;
 let globalRefetchTimer = null;
 let globalWatchlistEventsBound = false;
+let globalPerfPeriodEventsBound = false;
 
 const eqEl = (id) => document.getElementById(id);
 
@@ -275,16 +280,125 @@ function resolvePlotlyHeight(el, opts = {}, fallback = 420) {
   return height;
 }
 
+function getGlobalPerfPeriod() {
+  const saved = sessionStorage.getItem(GLOBAL_PERF_PERIOD_STORAGE_KEY);
+  return GLOBAL_PERF_PERIODS.includes(saved) ? saved : "1Y";
+}
+
+function setGlobalPerfPeriod(period) {
+  if (!GLOBAL_PERF_PERIODS.includes(period)) return;
+  sessionStorage.setItem(GLOBAL_PERF_PERIOD_STORAGE_KEY, period);
+}
+
+function perfPeriodStartDate(lastDateStr, period) {
+  const end = new Date(`${lastDateStr}T12:00:00`);
+  const start = new Date(end);
+  switch (period) {
+    case "1W":
+      start.setDate(start.getDate() - 7);
+      break;
+    case "1M":
+      start.setDate(start.getDate() - 30);
+      break;
+    case "1Q":
+      start.setDate(start.getDate() - 90);
+      break;
+    case "1Y":
+      start.setDate(start.getDate() - 365);
+      break;
+    case "3Y":
+      start.setDate(start.getDate() - 365 * 3);
+      break;
+    case "5Y":
+      start.setDate(start.getDate() - 365 * 5);
+      break;
+    case "WTD": {
+      const weekday = start.getDay();
+      start.setDate(start.getDate() - (weekday === 0 ? 6 : weekday - 1));
+      break;
+    }
+    case "MTD":
+      start.setDate(1);
+      break;
+    case "YTD":
+      start.setMonth(0, 1);
+      break;
+    default:
+      start.setDate(start.getDate() - 365);
+  }
+  return start;
+}
+
+function findPerfStartIndex(dates, period) {
+  if (!dates.length) return 0;
+  const startMs = perfPeriodStartDate(dates[dates.length - 1], period).getTime();
+  let idx = 0;
+  for (let i = 0; i < dates.length; i += 1) {
+    if (new Date(`${dates[i]}T12:00:00`).getTime() >= startMs) {
+      idx = i;
+      break;
+    }
+    idx = i;
+  }
+  return Math.min(idx, Math.max(0, dates.length - 2));
+}
+
+function slicePerformanceForPeriod(performance, period) {
+  const dates = performance?.dates || [];
+  const series = performance?.series || {};
+  if (!dates.length) return { dates: [], series: {} };
+
+  const startIdx = findPerfStartIndex(dates, period);
+  const slicedDates = dates.slice(startIdx);
+  const slicedSeries = {};
+
+  Object.entries(series).forEach(([name, vals]) => {
+    const base = vals[startIdx];
+    slicedSeries[name] = vals.slice(startIdx).map((v) => {
+      if (v == null || base == null || base === 0) return null;
+      return (v / base) * 100;
+    });
+  });
+
+  return { dates: slicedDates, series: slicedSeries };
+}
+
+function syncGlobalPerfPeriodButtons() {
+  const period = getGlobalPerfPeriod();
+  document.querySelectorAll("#equity-global-perf-periods .equity-perf-period").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.period === period);
+  });
+  const meta = eqEl("equity-global-perf-meta");
+  if (meta) meta.textContent = `${period} · normalized · rebased to 100`;
+}
+
+function bindGlobalPerfPeriodEvents() {
+  if (globalPerfPeriodEventsBound) return;
+  globalPerfPeriodEventsBound = true;
+
+  const nav = eqEl("equity-global-perf-periods");
+  nav?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".equity-perf-period");
+    if (!btn?.dataset.period) return;
+    setGlobalPerfPeriod(btn.dataset.period);
+    syncGlobalPerfPeriodButtons();
+    const perf = equityCache.global?.performance;
+    if (perf) renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), perf);
+  });
+}
+
 function globalPerfChartHeight(el) {
   if (!el) return 480;
   const top = el.getBoundingClientRect().top;
   return Math.round(Math.max(440, Math.min(560, window.innerHeight - top - 80)));
 }
 
-function renderGlobalPerformanceChart(el, data) {
-  if (!window.Plotly || !data?.dates?.length || !el) return;
+function renderGlobalPerformanceChart(el, performance) {
+  if (!window.Plotly || !performance?.dates?.length || !el) return;
+  const period = getGlobalPerfPeriod();
+  const data = slicePerformanceForPeriod(performance, period);
   const series = Object.entries(data.series || {});
-  if (!series.length) return;
+  if (!series.length || !data.dates.length) return;
 
   const height = globalPerfChartHeight(el);
   el.style.height = `${height}px`;
@@ -934,7 +1048,7 @@ async function fetchEquityGlobal() {
   loadGlobalWatchlist();
   const heroes = globalWatchlist.heroes.filter(Boolean);
   const symbols = globalWatchlist.table.filter(Boolean);
-  const params = new URLSearchParams({ period: "1Y" });
+  const params = new URLSearchParams({ period: GLOBAL_PERF_FETCH_PERIOD });
   if (heroes.length) params.set("heroes", heroes.join(","));
   if (symbols.length) params.set("symbols", symbols.join(","));
   else if (!heroes.length) params.set("symbols", "^GSPC");
@@ -1011,6 +1125,7 @@ async function loadEquityGlobal() {
   initEquityModule();
   loadGlobalWatchlist();
   bindGlobalWatchlistEvents();
+  bindGlobalPerfPeriodEvents();
   bindEquityControls();
 
   const swr = window.DashboardSWR;
@@ -1028,6 +1143,7 @@ async function loadEquityGlobal() {
         if (opts.loading) return;
         if (globalWatchlistCacheKey() !== fetchKey) return;
         renderGlobalScreen(data);
+        syncGlobalPerfPeriodButtons();
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));
       },

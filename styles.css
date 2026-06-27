@@ -2494,9 +2494,59 @@ body {
   padding-bottom: 0.25rem;
 }
 
+.equity-perf-header {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.equity-perf-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-left: auto;
+}
+
+.equity-perf-periods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.equity-perf-period {
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.45rem;
+  cursor: pointer;
+}
+
+.equity-perf-period:hover {
+  color: var(--text);
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+.equity-perf-period.active {
+  color: var(--text);
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
 .equity-global-perf-chart {
   min-height: 440px;
   margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .equity-perf-toolbar {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .tradfi-charts-row--companies .tradfi-chart-panel {
