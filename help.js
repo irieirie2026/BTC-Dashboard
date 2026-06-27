@@ -719,6 +719,14 @@ const METRIC_HELP = {
     title: "Benchmark Chart",
     body: "Three-month daily close for the section's primary benchmark (e.g. S&P 500, WTI crude, 10Y yield). Useful for medium-term trend context.",
   },
+  "equity-global-insights": {
+    title: "Global Equity Insights",
+    body: "Curated global index analytics ported from the Equity Insights app: overview table (1D through 1Y), rebased performance, return correlation and rolling volatility, geographic performance map, and top/bottom movers. Select indices via chips; period and movers horizon apply to charts. Data from Yahoo Finance (~15 min delayed).",
+  },
+  "equity-company-insights": {
+    title: "Company Equity Insights",
+    body: "Deep single-stock analysis: KPIs, candlestick with SMAs and Bollinger bands, RSI/MACD/Stochastic indicators with signal commentary, revenue and balance-sheet ratios, peer valuation multiples, normalized peer performance, and dividend history. Pick a symbol or enter a custom ticker; multi-select peers for comparison.",
+  },
   "defi-protocols-table": {
     title: "BTC Protocols",
     body: "Wrapped and bridged Bitcoin representations tracked by DeFi Llama — wBTC, cbBTC, tBTC, LBTC, and related issuers. TVL is USD value locked in each protocol.",

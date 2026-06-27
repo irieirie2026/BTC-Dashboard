@@ -3,6 +3,11 @@
 import json
 from urllib.parse import parse_qs, urlparse
 
+from equity_insights import (
+    get_equity_company_payload,
+    get_equity_global_payload,
+    period_to_dates,
+)
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
@@ -43,6 +48,30 @@ def resolve_path_and_query(handler):
 
 
 def dispatch_api(path, query):
+    if path == "/api/equity/global":
+        symbols = _parse_tradfi_symbol_list(
+            (query.get("symbols") or [""])[0], max_count=20
+        )
+        start = (query.get("start") or [None])[0]
+        end = (query.get("end") or [None])[0]
+        period = (query.get("period") or ["1Y"])[0]
+        movers = (query.get("movers") or ["YTD"])[0]
+        if not start or not end:
+            start, end = period_to_dates(period, None, None)
+        return get_equity_global_payload(symbols, start, end, movers, period)
+
+    if path == "/api/equity/company":
+        symbol = ((query.get("symbol") or [""])[0]).strip().upper()
+        peers = _parse_tradfi_symbol_list(
+            (query.get("peers") or [""])[0], max_count=12
+        )
+        start = (query.get("start") or [None])[0]
+        end = (query.get("end") or [None])[0]
+        period = (query.get("period") or ["1Y"])[0]
+        if not start or not end:
+            start, end = period_to_dates(period, None, None)
+        return get_equity_company_payload(symbol, peers, start, end, period)
+
     if path.startswith("/api/tradfi/"):
         section = path[len("/api/tradfi/") :].strip("/")
         heroes_override = None
