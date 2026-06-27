@@ -721,7 +721,7 @@ const METRIC_HELP = {
   },
   "equity-global-insights": {
     title: "Global Equity Insights",
-    body: "Curated global index analytics ported from the Equity Insights app: overview table (1D through 1Y), rebased performance, return correlation and rolling volatility, geographic performance map, and top/bottom movers. Select indices via chips; period and movers horizon apply to charts. Data from Yahoo Finance (~15 min delayed).",
+    body: "Curated global index analytics: editable overview watchlist (same layout as TradFi Indices), rebased performance, return correlation and rolling volatility, geographic performance map, and top/bottom movers. Edit symbols in the table or use + Add index; period and movers horizon apply to charts. Data from Yahoo Finance (~15 min delayed).",
   },
   "equity-company-insights": {
     title: "Company Equity Insights",

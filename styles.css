@@ -2774,46 +2774,12 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.equity-overview-check-col {
-  width: 2rem;
-  text-align: center !important;
-  padding-left: 0.35rem !important;
-  padding-right: 0.35rem !important;
+.equity-overview-header {
+  margin-bottom: 0.35rem;
 }
 
-.equity-overview-table.tradfi-companies-table th:nth-child(3),
-.equity-overview-table.tradfi-companies-table td:nth-child(3) {
-  text-align: left;
-}
-
-.equity-overview-table.tradfi-markets-table--companies th:nth-child(n + 4),
-.equity-overview-table.tradfi-markets-table--companies td:nth-child(n + 4) {
-  text-align: right;
-  white-space: nowrap;
-  min-width: 3.25rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.equity-overview-row {
-  cursor: pointer;
-}
-
-.equity-overview-row:hover {
-  background: rgba(148, 163, 184, 0.06);
-}
-
-.equity-overview-row--selected {
-  background: rgba(148, 163, 184, 0.1);
-}
-
-.equity-overview-row:not(.equity-overview-row--selected) .tradfi-company-name,
-.equity-overview-row:not(.equity-overview-row--selected) td:nth-child(n + 4) {
-  color: var(--text-muted);
-}
-
-.equity-overview-check {
-  accent-color: #94a3b8;
-  cursor: pointer;
+.equity-overview-header .panel-meta {
+  font-size: 0.6875rem;
 }
 
 .equity-ticker-chip {
