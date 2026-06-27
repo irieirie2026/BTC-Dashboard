@@ -729,7 +729,67 @@ const METRIC_HELP = {
   },
   "equity-company-insights": {
     title: "Company Equity Insights",
-    body: "Deep single-stock analysis: KPIs, candlestick with SMAs and Bollinger bands, RSI/MACD/Stochastic indicators with signal commentary, revenue and balance-sheet ratios, peer valuation multiples, normalized peer performance, and dividend history. Pick a symbol or enter a custom ticker; multi-select peers for comparison.",
+    body: "Deep single-stock workspace: KPI hero strip with metric hints, 52-week range bar, auto-generated Analysis commentary, peer comparison chips, tabbed charts (overview candlesticks, technicals, financials, valuation, dividends), and Yahoo Finance headlines for the company and peers. Pick a preset symbol or enter a custom ticker; toggle peers to compare valuation and rebased performance.",
+  },
+  "equity-company-commentary": {
+    title: "Analysis",
+    body: "Plain-language summary generated from price action, 52-week range position, valuation multiples, technical indicators, and peer context. Use alongside your own research — not a trading recommendation.",
+  },
+  "equity-company-peers": {
+    title: "Compare Peers",
+    body: "Toggle competitor tickers to include in the peer multiples table, relative performance chart, and news feed. Selections save in this browser session.",
+  },
+  "equity-company-52w": {
+    title: "52-Week Range",
+    body: "Shows where the current price sits between the lowest and highest trades over the past year. The marker position is (price − low) ÷ (high − low). Near the top often means momentum; near the bottom can attract value-focused attention.",
+  },
+  "equity-company-price": {
+    title: "Price",
+    body: "Last traded price from Yahoo Finance (typically ~15 min delayed). Sub-label shows today's percentage change.",
+  },
+  "equity-company-mcap": {
+    title: "Market Cap",
+    body: "Total equity market value — shares outstanding × current price. Useful for size context vs peers.",
+  },
+  "equity-company-pe": {
+    title: "P/E (Trailing)",
+    body: "Price divided by trailing twelve-month earnings per share. Higher P/E often implies growth expectations; compare within the same sector.",
+  },
+  "equity-company-fpe": {
+    title: "Forward P/E",
+    body: "Price divided by analyst consensus next-year EPS estimates. Often lower than trailing P/E when earnings are expected to grow.",
+  },
+  "equity-company-eps": {
+    title: "EPS",
+    body: "Earnings per share over the trailing twelve months — net income allocated to each outstanding share.",
+  },
+  "equity-company-divyield": {
+    title: "Dividend Yield",
+    body: "Trailing twelve-month cash dividends divided by current price, expressed as a percentage.",
+  },
+  "equity-company-beta": {
+    title: "Beta",
+    body: "Sensitivity of the stock's returns vs the broad market (usually S&P 500). Beta > 1 means historically more volatile than the market.",
+  },
+  "equity-company-rsi": {
+    title: "RSI (14)",
+    body: "Relative Strength Index over 14 days — measures recent up vs down closes on a 0–100 scale. Above 70 is often labeled overbought; below 30 oversold. Dotted lines mark those thresholds.",
+  },
+  "equity-company-macd": {
+    title: "MACD",
+    body: "Moving Average Convergence Divergence — difference between 12- and 26-day EMAs (blue line) vs its 9-day signal line (orange). Crossovers hint at short-term momentum shifts.",
+  },
+  "equity-company-stoch": {
+    title: "Stochastic %K",
+    body: "Where the close sits within the recent 14-day high/low range. %K (blue) and %D (dotted purple, 3-day average of %K). Above 80 = hot; below 20 = cold.",
+  },
+  "equity-company-signals": {
+    title: "Signal Summary",
+    body: "Readable interpretation of current RSI, moving-average cross, MACD, and Stochastic states. Color-coded bullish (green), bearish (red), or neutral — combine with price and fundamentals before acting.",
+  },
+  "equity-company-news": {
+    title: "Company News",
+    body: "Recent Yahoo Finance headlines for the selected company and active peers. Sorted by publish time; symbol badges show related tickers.",
   },
   "defi-protocols-table": {
     title: "BTC Protocols",

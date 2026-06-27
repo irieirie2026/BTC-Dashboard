@@ -2949,11 +2949,146 @@ body {
   margin: 0;
 }
 
-.equity-company-peers-row {
+.equity-company-panel {
+  gap: 0.65rem;
+}
+
+.equity-company-header {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.equity-company-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.equity-company-sector-line {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0;
+}
+
+.equity-company-metrics .deriv-hero-block {
+  min-width: 7.5rem;
+}
+
+.equity-company-metrics .deriv-hero-hint {
+  display: block;
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  line-height: 1.3;
+  opacity: 0.9;
+}
+
+.equity-company-range {
+  padding: 0.35rem 0 0.15rem;
+}
+
+.equity-company-range-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  margin-bottom: 0.35rem;
+}
+
+.equity-company-range-title {
+  font-family: inherit;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.equity-company-range-track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.15);
+  overflow: visible;
+}
+
+.equity-company-range-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(251, 113, 133, 0.35), rgba(74, 222, 128, 0.45));
+  width: 100%;
+}
+
+.equity-company-range-marker {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #38bdf8;
+  border: 2px solid var(--surface);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+}
+
+.equity-company-commentary-panel {
+  margin: 0;
+}
+
+.equity-company-commentary-panel .stats-commentary {
+  max-height: none;
+}
+
+.equity-company-peers-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 0.75rem 1.25rem;
+}
+
+.equity-company-peers-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.equity-peer-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.equity-peer-chip {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.equity-peer-chip:hover {
+  color: var(--text);
+  border-color: rgba(148, 163, 184, 0.45);
+}
+
+.equity-peer-chip.active {
+  color: var(--text);
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.45);
 }
 
 .equity-return-line {
@@ -2962,13 +3097,102 @@ body {
   margin: 0;
 }
 
+.equity-section-note {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin: 0 0 0.5rem;
+}
+
+.equity-section-note--tight {
+  margin-bottom: 0.4rem;
+}
+
+.equity-company-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.equity-chart-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.45rem 0.5rem 0.35rem;
+  min-width: 0;
+}
+
+.equity-chart-card--wide {
+  margin-top: 0.5rem;
+}
+
+.equity-chart-card-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+.equity-chart-card-hint {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0.35rem;
+  line-height: 1.35;
+}
+
+.equity-company-table-panel {
+  margin-top: 0.5rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.equity-table-legend {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0.5rem 0 0;
+}
+
+.equity-plotly-chart--company-main {
+  min-height: 480px;
+}
+
+.equity-plotly-chart--company-mid {
+  min-height: 340px;
+}
+
+.equity-plotly-chart--company-indicator {
+  min-height: 220px;
+  margin-bottom: 0;
+}
+
+.equity-company-news-panel {
+  margin-top: 0.25rem;
+}
+
+.equity-signals-panel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+}
+
 .equity-signals-panel h3 {
   font-size: 0.8125rem;
   font-weight: 600;
-  margin: 0 0 0.5rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  margin: 0 0 0.35rem;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .equity-company-chart-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .equity-signal {

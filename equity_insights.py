@@ -482,22 +482,150 @@ def interpret_signals(df: pd.DataFrame) -> list[dict]:
     rsi = _safe_float(row.get("RSI"))
     if rsi is not None:
         if rsi > 70:
-            msgs.append({"level": "warning", "text": f"RSI overbought at {rsi:.1f} (>70)"})
+            msgs.append({
+                "level": "bearish",
+                "text": f"RSI at {rsi:.1f} — overbought territory (>70). Price may be extended; watch for pullback or consolidation.",
+            })
         elif rsi < 30:
-            msgs.append({"level": "info", "text": f"RSI oversold at {rsi:.1f} (<30)"})
+            msgs.append({
+                "level": "bullish",
+                "text": f"RSI at {rsi:.1f} — oversold territory (<30). Selling pressure may be exhausted; bounce risk rises.",
+            })
+        else:
+            msgs.append({
+                "level": "neutral",
+                "text": f"RSI at {rsi:.1f} — neutral zone (30–70). No extreme momentum signal from RSI alone.",
+            })
     s50, s200 = _safe_float(row.get("SMA50")), _safe_float(row.get("SMA200"))
     if s50 is not None and s200 is not None:
         if s50 > s200:
-            msgs.append({"level": "info", "text": "Golden cross active (SMA50 > SMA200)"})
+            msgs.append({
+                "level": "bullish",
+                "text": "Golden cross: 50-day average above 200-day. Medium-term trend often considered constructive.",
+            })
         else:
-            msgs.append({"level": "warning", "text": "Death cross active (SMA50 < SMA200)"})
+            msgs.append({
+                "level": "bearish",
+                "text": "Death cross: 50-day average below 200-day. Medium-term trend often considered weak.",
+            })
     macd, sig = _safe_float(row.get("MACD")), _safe_float(row.get("MACD_Signal"))
     if macd is not None and sig is not None:
         if macd > sig:
-            msgs.append({"level": "info", "text": "MACD above signal line (bullish momentum)"})
+            msgs.append({
+                "level": "bullish",
+                "text": "MACD above its signal line — short-term momentum skews positive.",
+            })
         else:
-            msgs.append({"level": "warning", "text": "MACD below signal line (bearish momentum)"})
+            msgs.append({
+                "level": "bearish",
+                "text": "MACD below its signal line — short-term momentum skews negative.",
+            })
+    stoch = _safe_float(row.get("STOCH_K"))
+    if stoch is not None:
+        if stoch > 80:
+            msgs.append({
+                "level": "bearish",
+                "text": f"Stochastic %K at {stoch:.1f} — near overbought (>80).",
+            })
+        elif stoch < 20:
+            msgs.append({
+                "level": "bullish",
+                "text": f"Stochastic %K at {stoch:.1f} — near oversold (<20).",
+            })
     return msgs
+
+
+def _company_summary(info: dict, price_return: float | None) -> dict:
+    price = _safe_float(info.get("price"))
+    high = _safe_float(info.get("fiftyTwoWeekHigh"))
+    low = _safe_float(info.get("fiftyTwoWeekLow"))
+    range_pct = None
+    if price is not None and high is not None and low is not None and high > low:
+        range_pct = _safe_float((price - low) / (high - low) * 100)
+    return {
+        "priceReturn": price_return,
+        "range52wPct": range_pct,
+        "fiftyTwoWeekHigh": high,
+        "fiftyTwoWeekLow": low,
+    }
+
+
+def build_company_commentary(
+    symbol: str,
+    info: dict,
+    df: pd.DataFrame,
+    signals: list[dict],
+    price_return: float | None,
+    fin: dict,
+    peers: list[str],
+) -> list[str]:
+    name = info.get("name") or symbol
+    sector = info.get("sector") or "its sector"
+    industry = info.get("industry")
+    paragraphs: list[str] = []
+
+    intro = f"{name} ({symbol})"
+    if industry:
+        intro += f" operates in {industry}"
+    intro += f" within {sector}."
+    if price_return is not None:
+        direction = "up" if price_return >= 0 else "down"
+        intro += f" Over the selected period the share price is {direction} {abs(price_return):.1f}%."
+    paragraphs.append(intro)
+
+    price = _safe_float(info.get("price"))
+    high = _safe_float(info.get("fiftyTwoWeekHigh"))
+    low = _safe_float(info.get("fiftyTwoWeekLow"))
+    if price is not None and high is not None and low is not None and high > low:
+        pos = (price - low) / (high - low) * 100
+        if pos >= 85:
+            paragraphs.append(
+                f"Price ${price:,.2f} sits near the 52-week high (${high:,.2f}), "
+                f"about {pos:.0f}% through the annual range — momentum traders often watch for breakout or fade here."
+            )
+        elif pos <= 15:
+            paragraphs.append(
+                f"Price ${price:,.2f} is near the 52-week low (${low:,.2f}), "
+                f"only {pos:.0f}% above the bottom of the range — value and mean-reversion setups get attention."
+            )
+        else:
+            paragraphs.append(
+                f"Trading at ${price:,.2f}, roughly {pos:.0f}% of the way between "
+                f"52-week low ${low:,.2f} and high ${high:,.2f}."
+            )
+
+    pe = _safe_float(info.get("pe"))
+    if pe is not None:
+        if pe > 35:
+            paragraphs.append(
+                f"Trailing P/E of {pe:.1f}× prices in above-average growth expectations — "
+                "compare to peers and forward earnings before judging cheap vs expensive."
+            )
+        elif pe < 15:
+            paragraphs.append(
+                f"Trailing P/E of {pe:.1f}× is modest versus many large-cap tech names — "
+                "confirm whether that reflects value or slower growth."
+            )
+
+    if signals:
+        lead = signals[0]["text"].split("—")[0].strip()
+        paragraphs.append(f"Technical snapshot: {lead}. See the Technicals tab for RSI, MACD, and stochastic detail.")
+
+    ratios = fin.get("ratios") or []
+    if ratios and ratios[0].get("debtEquity") is not None:
+        de = ratios[0]["debtEquity"]
+        paragraphs.append(
+            f"Latest balance-sheet debt/equity is {de:.2f}× — "
+            "higher leverage amplifies both earnings upside and downside risk."
+        )
+
+    if peers:
+        paragraphs.append(
+            f"Peer comparison includes {', '.join(peers[:4])}. "
+            "Use the Valuation tab to compare multiples and rebased performance."
+        )
+
+    return paragraphs
 
 
 def _ohlcv_json(df: pd.DataFrame, include_indicators: bool = False) -> list[dict]:
@@ -719,8 +847,10 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
         pass
 
     price_return = None
-    if not df.empty and "Close" in df.columns and len(df) >= 2:
-        price_return = _safe_float((df["Close"].iloc[-1] / df["Close"].iloc[0] - 1) * 100)
+    if not df.empty and "Close" in df.columns:
+        closes = df["Close"].dropna()
+        if len(closes) >= 2:
+            price_return = _safe_float((closes.iloc[-1] / closes.iloc[0] - 1) * 100)
 
     peer_rows = []
     peer_perf = {"dates": [], "series": {}}
@@ -750,34 +880,46 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
             "profitMargin": _safe_float((inf.get("profitMargins") or 0) * 100),
         })
 
+    company_info = {
+        "name": info.get("longName") or info.get("shortName") or symbol,
+        "sector": info.get("sector"),
+        "industry": info.get("industry"),
+        "currency": info.get("currency") or "USD",
+        "exchange": info.get("exchange") or info.get("fullExchangeName"),
+        "price": _safe_float(info.get("currentPrice") or info.get("regularMarketPrice")),
+        "changePct": _safe_float(info.get("regularMarketChangePercent")),
+        "marketCap": info.get("marketCap"),
+        "pe": _safe_float(info.get("trailingPE")),
+        "forwardPe": _safe_float(info.get("forwardPE")),
+        "eps": _safe_float(info.get("trailingEps")),
+        "divYield": _safe_float((info.get("dividendYield") or 0) * 100) if info.get("dividendYield") else None,
+        "beta": _safe_float(info.get("beta")),
+        "fiftyTwoWeekHigh": _safe_float(info.get("fiftyTwoWeekHigh")),
+        "fiftyTwoWeekLow": _safe_float(info.get("fiftyTwoWeekLow")),
+    }
+    signals = interpret_signals(df)
+    commentary = build_company_commentary(
+        symbol, company_info, df, signals, price_return, fin, peers
+    )
+    news = fetch_stock_news(all_syms[:6], per_symbol=5, max_total=25)
+
     return {
         "section": "company",
         "symbol": symbol,
         "peers": peers,
         "start": start,
         "end": end,
-        "info": {
-            "name": info.get("longName") or info.get("shortName") or symbol,
-            "sector": info.get("sector"),
-            "industry": info.get("industry"),
-            "currency": info.get("currency") or "USD",
-            "price": _safe_float(info.get("currentPrice") or info.get("regularMarketPrice")),
-            "changePct": _safe_float(info.get("regularMarketChangePercent")),
-            "marketCap": info.get("marketCap"),
-            "pe": _safe_float(info.get("trailingPE")),
-            "eps": _safe_float(info.get("trailingEps")),
-            "divYield": _safe_float((info.get("dividendYield") or 0) * 100) if info.get("dividendYield") else None,
-            "beta": _safe_float(info.get("beta")),
-            "fiftyTwoWeekHigh": _safe_float(info.get("fiftyTwoWeekHigh")),
-            "fiftyTwoWeekLow": _safe_float(info.get("fiftyTwoWeekLow")),
-        },
+        "info": company_info,
+        "summary": _company_summary(company_info, price_return),
+        "commentary": commentary,
         "ohlcv": _ohlcv_json(df, include_indicators=True) if not df.empty else [],
-        "signals": interpret_signals(df),
+        "signals": signals,
         "financials": fin,
         "dividends": dividends,
         "priceReturn": price_return,
         "peersTable": peer_rows,
         "peerPerformance": peer_perf,
+        "news": news,
         "defaultCompanies": DEFAULT_COMPANIES,
         "source": "Yahoo Finance via yfinance",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),

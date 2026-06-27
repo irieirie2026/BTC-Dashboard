@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=44" />
+    <link rel="stylesheet" href="styles.css?v=45" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1753,8 +1753,8 @@
           </section>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="companyInsights" id="equity-company-screen" hidden>
-          <section class="panel equity-panel">
-            <div class="panel-header equity-toolbar">
+          <section class="panel equity-panel equity-company-panel">
+            <div class="panel-header equity-toolbar equity-company-toolbar">
               <h2 data-help-key="equity-company-insights">Company Insights</h2>
               <div class="equity-controls">
                 <label class="equity-control-label">Symbol
@@ -1776,13 +1776,37 @@
                 <span class="panel-meta" id="equity-company-update">Yahoo Finance · loading</span>
               </div>
             </div>
-            <p class="equity-sector-line" id="equity-company-sector">Loading…</p>
-            <section class="deriv-hero-strip tradfi-hero-strip" id="equity-company-metrics"></section>
-            <div class="equity-company-peers-row">
-              <label class="equity-control-label">Peers
-                <select id="equity-company-peers" class="equity-select equity-peers-select" multiple size="4" aria-label="Peer companies"></select>
-              </label>
+            <header class="equity-company-header">
+              <div class="equity-company-identity">
+                <h3 class="equity-company-name" id="equity-company-name">Loading…</h3>
+                <p class="equity-company-sector-line" id="equity-company-sector">Loading…</p>
+              </div>
               <p class="equity-return-line" id="equity-company-return"></p>
+            </header>
+            <section class="deriv-hero-strip tradfi-hero-strip equity-company-metrics" id="equity-company-metrics"></section>
+            <div class="equity-company-range" id="equity-company-range" hidden>
+              <div class="equity-company-range-labels">
+                <span id="equity-company-range-low">—</span>
+                <span class="equity-company-range-title" data-help-key="equity-company-52w">52-week range</span>
+                <span id="equity-company-range-high">—</span>
+              </div>
+              <div class="equity-company-range-track">
+                <div class="equity-company-range-fill" id="equity-company-range-fill"></div>
+                <div class="equity-company-range-marker" id="equity-company-range-marker"></div>
+              </div>
+            </div>
+            <section class="panel stats-commentary-panel equity-company-commentary-panel">
+              <div class="panel-header">
+                <h2 data-help-key="equity-company-commentary">Analysis</h2>
+                <span class="panel-meta">Auto-generated from price, fundamentals &amp; technicals</span>
+              </div>
+              <div class="stats-commentary" id="equity-company-commentary"><p>Loading analysis…</p></div>
+            </section>
+            <div class="equity-company-peers-row">
+              <div class="equity-company-peers-block">
+                <span class="equity-control-label" data-help-key="equity-company-peers">Compare peers</span>
+                <div id="equity-company-peer-chips" class="equity-peer-chips" role="group" aria-label="Peer companies"></div>
+              </div>
             </div>
             <nav id="equity-company-subtabs" class="equity-subtabs" aria-label="Company insights sections">
               <button type="button" class="equity-subtab active" data-tab="overview">Overview</button>
@@ -1791,39 +1815,79 @@
               <button type="button" class="equity-subtab" data-tab="valuation">Valuation</button>
               <button type="button" class="equity-subtab" data-tab="dividends">Dividends</button>
             </nav>
-            <div class="equity-subpanel" data-tab="overview">
-              <div id="equity-company-candle" class="equity-plotly-chart equity-plotly-chart--tall"></div>
+            <div class="equity-subpanel equity-company-subpanel" data-tab="overview">
+              <p class="equity-section-note">Daily candlesticks with volume, 20/50/200-day moving averages, and Bollinger bands — useful for trend direction and volatility context.</p>
+              <div id="equity-company-candle" class="equity-plotly-chart equity-plotly-chart--company-main"></div>
             </div>
-            <div class="equity-subpanel" data-tab="technicals" hidden>
-              <div id="equity-company-rsi" class="equity-plotly-chart equity-plotly-chart--short"></div>
-              <div id="equity-company-macd" class="equity-plotly-chart equity-plotly-chart--short"></div>
-              <div id="equity-company-stoch" class="equity-plotly-chart equity-plotly-chart--short"></div>
+            <div class="equity-subpanel equity-company-subpanel" data-tab="technicals" hidden>
+              <p class="equity-section-note">Momentum and trend indicators derived from daily closes. Dotted lines mark standard overbought/oversold thresholds — not buy/sell signals on their own.</p>
+              <div class="equity-company-chart-grid">
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-rsi">RSI (14)</h3>
+                  <p class="equity-chart-card-hint">Relative Strength Index — &gt;70 overbought, &lt;30 oversold.</p>
+                  <div id="equity-company-rsi" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-macd">MACD</h3>
+                  <p class="equity-chart-card-hint">Moving-average convergence/divergence — line crossovers hint at momentum shifts.</p>
+                  <div id="equity-company-macd" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-stoch">Stochastic %K</h3>
+                  <p class="equity-chart-card-hint">Position within recent high/low range — &gt;80 hot, &lt;20 cold.</p>
+                  <div id="equity-company-stoch" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+              </div>
               <div class="equity-signals-panel">
-                <h3>Signals</h3>
+                <h3 data-help-key="equity-company-signals">Signal summary</h3>
+                <p class="equity-section-note equity-section-note--tight">Plain-language read of current indicator states. Combine with price action and fundamentals before acting.</p>
                 <div id="equity-company-signals"></div>
               </div>
             </div>
-            <div class="equity-subpanel" data-tab="financials" hidden>
-              <div id="equity-company-revenue" class="equity-plotly-chart"></div>
-              <div class="deriv-table-wrap">
-                <table class="deriv-table tradfi-markets-table">
-                  <thead><tr><th>Period</th><th>Debt/Equity</th><th>Current Ratio</th></tr></thead>
-                  <tbody id="equity-company-ratios-body"></tbody>
-                </table>
+            <div class="equity-subpanel equity-company-subpanel" data-tab="financials" hidden>
+              <p class="equity-section-note">Reported revenue and balance-sheet health from Yahoo Finance filings. Ratios help gauge leverage and short-term liquidity.</p>
+              <div id="equity-company-revenue" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
+              <section class="panel equity-company-table-panel">
+                <div class="panel-header"><h2>Balance sheet ratios</h2></div>
+                <div class="deriv-table-wrap">
+                  <table class="deriv-table tradfi-markets-table tradfi-companies-table">
+                    <thead><tr><th>Period</th><th>Debt/Equity</th><th>Current Ratio</th></tr></thead>
+                    <tbody id="equity-company-ratios-body"></tbody>
+                  </table>
+                </div>
+                <p class="equity-table-legend"><strong>Debt/Equity</strong> — total debt vs shareholder equity. <strong>Current ratio</strong> — current assets ÷ current liabilities (&gt;1 suggests coverage of near-term obligations).</p>
+              </section>
+            </div>
+            <div class="equity-subpanel equity-company-subpanel" data-tab="valuation" hidden>
+              <p class="equity-section-note">Compare valuation multiples and rebased price performance vs selected peers. Lower P/E is not automatically cheaper — growth and margins matter.</p>
+              <section class="panel equity-company-table-panel">
+                <div class="panel-header"><h2>Peer multiples</h2></div>
+                <div class="deriv-table-wrap">
+                  <table class="deriv-table tradfi-markets-table tradfi-companies-table">
+                    <thead><tr><th>Ticker</th><th>Mkt Cap</th><th>P/E</th><th>Fwd P/E</th><th>P/B</th></tr></thead>
+                    <tbody id="equity-company-peers-body"></tbody>
+                  </table>
+                </div>
+              </section>
+              <section class="equity-chart-card equity-chart-card--wide">
+                <h3 class="equity-chart-card-title">Relative performance</h3>
+                <p class="equity-chart-card-hint">All series rebased to 100 at the start of the selected period.</p>
+                <div id="equity-company-peer-chart" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
+              </section>
+            </div>
+            <div class="equity-subpanel equity-company-subpanel" data-tab="dividends" hidden>
+              <p class="equity-section-note">Historical cash dividends per share. Yield in the hero strip uses trailing twelve-month payments vs current price.</p>
+              <div id="equity-company-div-chart" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
+            </div>
+            <section class="panel tradfi-companies-news-panel equity-company-news-panel">
+              <div class="panel-header">
+                <h2 data-help-key="equity-company-news">Company News</h2>
+                <span class="panel-meta" id="equity-company-news-latest">Yahoo Finance · watchlist</span>
               </div>
-            </div>
-            <div class="equity-subpanel" data-tab="valuation" hidden>
-              <div class="deriv-table-wrap">
-                <table class="deriv-table tradfi-markets-table">
-                  <thead><tr><th>Ticker</th><th>Mkt Cap</th><th>P/E</th><th>Fwd P/E</th><th>P/B</th></tr></thead>
-                  <tbody id="equity-company-peers-body"></tbody>
-                </table>
+              <div class="news-feed tradfi-companies-news" id="equity-company-news">
+                <p class="news-empty">Loading headlines…</p>
               </div>
-              <div id="equity-company-peer-chart" class="equity-plotly-chart"></div>
-            </div>
-            <div class="equity-subpanel" data-tab="dividends" hidden>
-              <div id="equity-company-div-chart" class="equity-plotly-chart"></div>
-            </div>
+            </section>
           </section>
           <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
@@ -2418,14 +2482,14 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=4"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=40"></script>
+    <script src="help.js?v=41"></script>
     <script src="dashboard.js?v=28"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=14"></script>
-    <script src="equity-insights.js?v=14"></script>
+    <script src="equity-insights.js?v=15"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=1"></script>
