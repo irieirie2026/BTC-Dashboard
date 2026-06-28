@@ -9,12 +9,12 @@ let mbSnapshot = null;
 let mbDistribution = null;
 let mbReady = false;
 let mbActiveTab = "overview";
-let mbSelectedIndicator = "mvrv";
+let mbSelectedIndicator = "fear_greed";
 let mbSeriesCache = {};
 
 const mbState = {
   timespan: "1year",
-  indicator: "mvrv",
+  indicator: "fear_greed",
 };
 
 const MB_PLOTLY_CONFIG = { responsive: true, displayModeBar: false };
@@ -121,21 +121,37 @@ function mbIndicatorMeta(key) {
   };
 }
 
+function mbParseApiError(text, status) {
+  const raw = String(text || "").trim();
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed?.error) return String(parsed.error);
+  } catch {
+    /* not JSON */
+  }
+  return raw.slice(0, 200) || `HTTP ${status}`;
+}
+
 async function mbFetchJson(path, force = false) {
   const [base, qs = ""] = path.split("?");
   const params = new URLSearchParams(qs);
   if (force) params.set("refresh", "1");
   const url = `/api/misc/btc/${base}?${params}`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error((await res.text()).slice(0, 200) || `HTTP ${res.status}`);
-  return res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(mbParseApiError(text, res.status));
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error("Invalid JSON response");
+  }
 }
 
 async function mbLoadMeta(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbMeta = await swr.runSWR({
-    key: "misc:btc:meta:v1",
+    key: "misc:btc:meta:v2",
     l1: "misc",
     source: "BTC indicator catalog",
     persist: true,
@@ -151,7 +167,7 @@ async function mbLoadSnapshot(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbSnapshot = await swr.runSWR({
-    key: "misc:btc:snapshot:v1",
+    key: "misc:btc:snapshot:v2",
     l1: "misc",
     source: mbSnapshot?.sourceChain || "Multi-source BTC feed",
     persist: true,
@@ -168,7 +184,7 @@ async function mbLoadDistribution(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbDistribution = await swr.runSWR({
-    key: "misc:btc:distribution:v1",
+    key: "misc:btc:distribution:v2",
     l1: "misc",
     source: "BitInfoCharts",
     persist: true,
@@ -315,9 +331,11 @@ function mbRenderSnapshot() {
   const stats = mbEl("mb-stats");
   if (stats) {
     const errCount = (mbSnapshot.errors || []).length;
+    const filled = Object.values(mbSnapshot.cells || {}).filter((c) => c?.value != null).length;
     stats.textContent = errCount
-      ? `${mbSnapshot.indicators?.length || 0} indicators · ${errCount} source warning(s)`
+      ? `${filled}/${mbSnapshot.indicators?.length || 0} indicators live · ${errCount} source warning(s)`
       : `${mbSnapshot.indicators?.length || 0} indicators · multi-source snapshot`;
+    stats.classList.toggle("md-stats--warn", errCount > 0);
   }
   mbRenderKpis();
   mbRenderHeroes();
@@ -519,7 +537,9 @@ function mbSetTab(tab) {
   mbPopulateIndicatorSelect();
   mbRenderKpis();
 
-  if (tab === "distribution") mbLoadDistribution();
+  if (tab === "distribution") {
+    mbLoadDistribution().then(() => mbRenderDistribution());
+  }
   if (tab === "sentiment") {
     window.setFngElementPrefix?.("mb-fng");
     window.loadMiscGreedFear?.();
@@ -626,16 +646,30 @@ async function loadMiscBitcoin(force = false) {
   const body = mbEl("mb-table-body");
   if (body && !mbSnapshot) body.innerHTML = '<tr><td colspan="4">Loading…</td></tr>';
 
+  let loadError = null;
   try {
     await mbLoadMeta(force);
+  } catch (err) {
+    loadError = err;
+  }
+
+  try {
     await mbLoadSnapshot(force);
+  } catch (err) {
+    loadError = err;
+    if (body && !mbSnapshot?.cells) {
+      body.innerHTML = `<tr><td colspan="4">Snapshot unavailable — ${err.message || "error"}</td></tr>`;
+    }
+  }
+
+  if (mbMeta || mbSnapshot) {
     mbPopulateIndicatorSelect();
     mbSetTab(mbActiveTab);
     window.decorateHelpLabels?.(
       document.querySelector('#dashboard-misc .menu-screen[data-l2="bitcoin"]'),
     );
-  } catch (err) {
-    if (body) body.innerHTML = `<tr><td colspan="4">Load failed — ${err.message || "error"}</td></tr>`;
+  } else if (body) {
+    body.innerHTML = `<tr><td colspan="4">Load failed — ${loadError?.message || "error"}</td></tr>`;
   }
 }
 

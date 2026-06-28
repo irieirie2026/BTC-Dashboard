@@ -795,6 +795,10 @@ body[data-l1="misc"] .logo-icon::before {
   color: var(--muted, #8b9cb3);
 }
 
+.md-stats--warn {
+  color: #fbbf24;
+}
+
 .mb-fng-hero-strip .deriv-hero-value {
   font-size: 1.2rem;
 }
