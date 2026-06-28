@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-06-28T08:34:34Z",
+  "fetchedAt": "2026-06-28T15:00:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "\u20bfREAKING: Bitcoin becomes more decentralized with first StratumV2 block mined. Users often \u2018pool\u2019 and share rewards for more consistent income, but give operators control over transactions. This open protocol lets miners keep the benefits while choosing transactions themselves.",
+      "link": "https://x.com/DocumentingBTC/status/2071204735424647474#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-06-28T12:11:04+00:00",
+      "publishedTs": 1782648664.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints that Strategy bought more bitcoin \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2071202473155473871#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-06-28T12:02:05+00:00",
+      "publishedTs": 1782648125.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin began as one network, but different views about its rules led to new \u2018forks\u2019 of code. These copies became separate blockchains. The original chain is by far the most valuable to this day, despite many attempts to change. Here is the version history of Bitcoin projects:",
+      "link": "https://x.com/DocumentingBTC/status/2071200271246442677#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-06-28T11:53:20+00:00",
+      "publishedTs": 1782647600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We\u2019re gonna need more charts.",
+      "link": "https://x.com/saylor/status/2071191288129433925#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-06-28T11:17:38+00:00",
+      "publishedTs": 1782645458.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "A newly created wallet bc1q4m withdrew 1,350 $BTC($81.87M) from #Binance. https://arkm.com/explorer/address/bc1q4me3lh923cktf8j0au9gccdmzdnfvgk0x8n078",
       "link": "https://x.com/lookonchain/status/2071041817521614979#m",
@@ -1394,19 +1446,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin has already won as Digital Capital. The next wave is Digital Credit, Digital Money, Digital Yield, and Bitcoin-backed capital markets \u2014 products that can bring trillions of dollars of traditional credit and money market capital onto Bitcoin. My interview with @Cointelegra",
-      "link": "https://x.com/saylor/status/2066945726861492262#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin has already won as Digital Capital. The next wave is Digital Credit, Digital Money, Digital Yield, and Bitcoin-backed capital markets \u2014 products that can bring trillions of dollars of traditional credit and money market capital onto Bitcoin. My interview with @Cointelegra",
-      "publishedAt": "2026-06-16T18:07:17+00:00",
-      "publishedTs": 1781633237.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The \"Digital Asset Stack\" by @saylor outlines a structured approach to Bitcoin-native finance. Strata's USDat markets address two of its components: \u2022 Senior USDat = Digital Money - fixed 7.8% APY, with built-in downside protection. \u2022 Junior USDat = Digital Yield - amplified expo",
       "link": "https://x.com/strata_markets/status/2066943741450137926#m",
       "source": "@saylor",
@@ -1454,32 +1493,6 @@
       "summary": "",
       "publishedAt": "2026-06-15T14:36:02+00:00",
       "publishedTs": 1781534162.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "As of last night, new bitcoins are 10.09% easier to mine as the network programmatically adjusted difficulty at block 953,568, marking the 11th-largest automatic decreased change in history.",
-      "link": "https://x.com/DocumentingBTC/status/2066213245468229849#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-14T17:36:40+00:00",
-      "publishedTs": 1781458600.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 54% Loading\u2026Please HODL Current Block: 953,624 Halving Block: 1,050,000 Blocks Remaining: 96,376 Days Remaining: ~669",
-      "link": "https://x.com/DocumentingBTC/status/2066122807679827991#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-14T11:37:18+00:00",
-      "publishedTs": 1781437038.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
