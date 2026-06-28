@@ -90,6 +90,7 @@ function formatPanelMeta(opts = {}) {
   if (opts.stale && opts.refreshing) return `Saved ${time}${source} · updating…`;
   if (opts.state === "loading") return `Loading…${source}`;
   if (opts.state === "error") return `Unavailable${source}`;
+  if (opts.fromCache) return `Cached ${time}${source}`;
   return `Updated ${time}${source}`;
 }
 
@@ -166,9 +167,24 @@ async function runSWR({
   validate,
   updateHeader = true,
   persist = true,
+  revalidate = true,
 }) {
   const persisted = loadPersisted(key);
   const stampOpts = { source };
+
+  if (persisted?.data && !revalidate) {
+    render(persisted.data, {
+      stale: false,
+      fromCache: true,
+      fetchedAt: persisted.fetchedAt,
+    });
+    stampHeader(
+      l1,
+      { ...stampOpts, fetchedAt: persisted.fetchedAt, stale: false },
+      updateHeader,
+    );
+    return persisted.data;
+  }
 
   if (persisted?.data) {
     render(persisted.data, {

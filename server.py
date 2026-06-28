@@ -1075,6 +1075,14 @@ TRADFI_SECTIONS = {
         "table": ["CL=F", "GC=F", "SI=F", "NG=F", "ZB=F", "ZN=F", "ZF=F", "6E=F", "6J=F"],
         "chart": "ES=F",
         "chartLabel": "S&P 500 E-mini",
+        "charts": [
+            {"symbol": "ES=F", "label": "S&P 500 E-mini"},
+            {"symbol": "NQ=F", "label": "Nasdaq E-mini"},
+            {"symbol": "CL=F", "label": "WTI Crude"},
+            {"symbol": "GC=F", "label": "Gold"},
+            {"symbol": "ZN=F", "label": "10Y T-Note"},
+            {"symbol": "6E=F", "label": "Euro FX"},
+        ],
         "priceMode": "price",
     },
     "rates": {
@@ -1083,6 +1091,14 @@ TRADFI_SECTIONS = {
         "table": ["TLT", "IEF", "SHY", "LQD", "HYG", "TIP", "AGG", "BND"],
         "chart": "^TNX",
         "chartLabel": "10-Year Treasury Yield",
+        "charts": [
+            {"symbol": "^TNX", "label": "10-Year Treasury"},
+            {"symbol": "^FVX", "label": "5-Year Treasury"},
+            {"symbol": "^TYX", "label": "30-Year Treasury"},
+            {"symbol": "TLT", "label": "20+ Year Treasuries"},
+            {"symbol": "IEF", "label": "7-10 Year Treasuries"},
+            {"symbol": "HYG", "label": "High Yield"},
+        ],
         "priceMode": "yield",
     },
     "currencies": {
@@ -1094,6 +1110,14 @@ TRADFI_SECTIONS = {
         ],
         "chart": "DX-Y.NYB",
         "chartLabel": "US Dollar Index",
+        "charts": [
+            {"symbol": "DX-Y.NYB", "label": "US Dollar Index"},
+            {"symbol": "EURUSD=X", "label": "EUR / USD"},
+            {"symbol": "USDJPY=X", "label": "USD / JPY"},
+            {"symbol": "GBPUSD=X", "label": "GBP / USD"},
+            {"symbol": "AUDUSD=X", "label": "AUD / USD"},
+            {"symbol": "USDCNH=X", "label": "USD / CNH"},
+        ],
         "priceMode": "fx",
     },
     "commodities": {
@@ -1102,6 +1126,14 @@ TRADFI_SECTIONS = {
         "table": ["HG=F", "NG=F", "ZC=F", "ZS=F", "KC=F", "CT=F", "PL=F", "PA=F"],
         "chart": "CL=F",
         "chartLabel": "WTI Crude",
+        "charts": [
+            {"symbol": "CL=F", "label": "WTI Crude"},
+            {"symbol": "BZ=F", "label": "Brent Crude"},
+            {"symbol": "GC=F", "label": "Gold"},
+            {"symbol": "SI=F", "label": "Silver"},
+            {"symbol": "HG=F", "label": "Copper"},
+            {"symbol": "NG=F", "label": "Natural Gas"},
+        ],
         "priceMode": "price",
     },
     "sectors": {
@@ -1113,6 +1145,14 @@ TRADFI_SECTIONS = {
         ],
         "chart": "SPY",
         "chartLabel": "S&P 500 (SPY)",
+        "charts": [
+            {"symbol": "SPY", "label": "S&P 500"},
+            {"symbol": "XLK", "label": "Technology"},
+            {"symbol": "XLF", "label": "Financials"},
+            {"symbol": "XLE", "label": "Energy"},
+            {"symbol": "XLV", "label": "Health Care"},
+            {"symbol": "XLU", "label": "Utilities"},
+        ],
         "priceMode": "price",
     },
     "energy": {
@@ -1121,9 +1161,42 @@ TRADFI_SECTIONS = {
         "table": ["USO", "UNG", "XOM", "CVX", "COP", "OXY", "SLB", "HAL"],
         "chart": "CL=F",
         "chartLabel": "WTI Crude",
+        "charts": [
+            {"symbol": "CL=F", "label": "WTI Crude"},
+            {"symbol": "BZ=F", "label": "Brent Crude"},
+            {"symbol": "NG=F", "label": "Natural Gas"},
+            {"symbol": "XLE", "label": "Energy Sector"},
+            {"symbol": "USO", "label": "US Oil Fund"},
+            {"symbol": "XOM", "label": "Exxon Mobil"},
+        ],
         "priceMode": "price",
     },
 }
+
+TRADFI_WATCHLIST_SECTIONS = frozenset(
+    {
+        "stocks-companies",
+        "stocks-indices",
+        "futures",
+        "rates",
+        "currencies",
+        "commodities",
+        "sectors",
+        "energy",
+    }
+)
+
+TRADFI_CHART_CFG_SECTIONS = frozenset(
+    {
+        "stocks-indices",
+        "futures",
+        "rates",
+        "currencies",
+        "commodities",
+        "sectors",
+        "energy",
+    }
+)
 
 SECTOR_LABELS = {
     "XLK": "Technology",
@@ -1638,10 +1711,11 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
             continue
         table.append(_quote_or_stub(sym, quotes))
 
-    if section in ("stocks-companies", "stocks-indices"):
+    if section in TRADFI_WATCHLIST_SECTIONS:
         _enrich_quote_rows(heroes + [row for row in table if row.get("symbol")])
 
-    if section == "sectors":
+    has_override = heroes_override is not None or symbols_override is not None
+    if section == "sectors" and not has_override:
         table.sort(
             key=lambda x: x.get("changePct") if x.get("changePct") is not None else 0,
             reverse=True,
@@ -1650,17 +1724,17 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
 
     charts = None
     news = None
-    if section in ("stocks-indices", "stocks-companies"):
-        indices_custom = section == "stocks-indices" and (
-            heroes_override is not None or symbols_override is not None
+    if section in TRADFI_WATCHLIST_SECTIONS:
+        watchlist_custom = section == "stocks-companies" or (
+            has_override and section in TRADFI_WATCHLIST_SECTIONS
         )
-        if section == "stocks-companies" or indices_custom:
+        charts_cfg = cfg.get("charts") or [
+            {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
+        ]
+        if watchlist_custom:
             perf_symbols = _watchlist_chart_symbols(hero_symbols, table_symbols)
-            chart_symbol_order = perf_symbols
+            chart_symbol_order = perf_symbols[:8]
         else:
-            charts_cfg = cfg.get("charts") or [
-                {"symbol": cfg["chart"], "label": cfg.get("chartLabel", cfg["chart"])}
-            ]
             perf_symbols = list(
                 dict.fromkeys(
                     [s for s in hero_symbols + table_symbols if s]
@@ -1683,10 +1757,13 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
         table = [_attach_perf(row) for row in table]
 
         charts = []
+        use_chart_cfg_labels = (
+            not watchlist_custom and section in TRADFI_CHART_CFG_SECTIONS
+        )
         for sym in chart_symbol_order:
             if not sym:
                 continue
-            if section == "stocks-indices" and not indices_custom:
+            if use_chart_cfg_labels:
                 entry = next(
                     (c for c in charts_cfg if c.get("symbol") == sym),
                     {"symbol": sym},
@@ -1733,7 +1810,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
 
 def get_tradfi_payload(section, heroes_override=None, symbols_override=None):
     key = f"tradfi:{section}"
-    if section in ("stocks-companies", "stocks-indices") and (
+    if section in TRADFI_WATCHLIST_SECTIONS and (
         heroes_override is not None or symbols_override is not None
     ):
         hero_key = ",".join(heroes_override or [])
@@ -1835,11 +1912,14 @@ def _fetch_macro_section(section):
     }
 
 
+MACRO_SECTION_CACHE_TTL = 3 * 24 * 3600  # 3 days — Yahoo quotes; refresh on request
+
+
 def get_macro_payload(section):
     key = f"macro:{section}"
     now = time.time()
     entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
+    if entry and now - entry["ts"] < MACRO_SECTION_CACHE_TTL:
         return entry["data"]
     data = _fetch_macro_section(section)
     _cache[key] = {"ts": now, "data": data}
@@ -2645,6 +2725,70 @@ def get_news_payload(section):
     if entry and now - entry["ts"] < CACHE_TTL:
         return entry["data"]
     data = _fetch_news_section(section)
+    _cache[key] = {"ts": now, "data": data}
+    return data
+
+
+FEAR_GREED_API = "https://api.alternative.me/fng/"
+FEAR_GREED_CACHE_TTL = 14_400  # 4 hours — index updates daily
+
+FEAR_GREED_ZONES = [
+    {"max": 24, "label": "Extreme Fear", "color": "#ea3943"},
+    {"max": 44, "label": "Fear", "color": "#ea8c00"},
+    {"max": 55, "label": "Neutral", "color": "#f3d42f"},
+    {"max": 75, "label": "Greed", "color": "#93d900"},
+    {"max": 100, "label": "Extreme Greed", "color": "#16c784"},
+]
+
+
+def _fear_greed_zone(value: int) -> dict:
+    for zone in FEAR_GREED_ZONES:
+        if value <= zone["max"]:
+            return zone
+    return FEAR_GREED_ZONES[-1]
+
+
+def _fetch_fear_greed_index(*, limit: int = 0) -> dict:
+    url = f"{FEAR_GREED_API}?limit={limit}"
+    raw = fetch_json(url, timeout=45)
+    rows = raw.get("data") or []
+    points = []
+    for row in rows:
+        try:
+            val = int(row.get("value"))
+            ts = int(row.get("timestamp"))
+        except (TypeError, ValueError):
+            continue
+        points.append(
+            {
+                "timestamp": ts,
+                "date": time.strftime("%Y-%m-%d", time.gmtime(ts)),
+                "value": val,
+                "classification": row.get("value_classification") or _fear_greed_zone(val)["label"],
+            }
+        )
+    latest = points[0] if points else None
+    if latest:
+        zone = _fear_greed_zone(latest["value"])
+        latest = {**latest, "zone": zone["label"], "color": zone["color"]}
+    chronological = list(reversed(points))
+    return {
+        "latest": latest,
+        "series": chronological,
+        "zones": FEAR_GREED_ZONES,
+        "source": "Alternative.me · Crypto Fear & Greed Index",
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+
+def get_fear_greed_payload(*, refresh: bool = False) -> dict:
+    key = "misc:fear-greed"
+    now = time.time()
+    if not refresh:
+        entry = _cache.get(key)
+        if entry and now - entry["ts"] < FEAR_GREED_CACHE_TTL:
+            return entry["data"]
+    data = _fetch_fear_greed_index(limit=0)
     _cache[key] = {"ts": now, "data": data}
     return data
 
@@ -4311,6 +4455,18 @@ class Handler(SimpleHTTPRequestHandler):
             super().log_message(fmt, *args)
 
 
+def _warm_macro_caches() -> None:
+    try:
+        from macro_data.hierarchy import get_store
+        from macro_data.liquidity import _load_component_store
+
+        get_store()
+        _load_component_store()
+        print("Macro Drivers caches warmed")
+    except Exception as exc:
+        print(f"Macro cache warm skipped: {exc}")
+
+
 if __name__ == "__main__":
     port = 5173
     try:
@@ -4320,5 +4476,8 @@ if __name__ == "__main__":
             print(f"Port {port} is already in use — dashboard likely running at http://localhost:{port}")
             raise SystemExit(0)
         raise
+    import threading
+
+    threading.Thread(target=_warm_macro_caches, daemon=True).start()
     print(f"Serving at http://localhost:{port}")
     server.serve_forever()

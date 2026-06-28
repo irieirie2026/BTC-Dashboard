@@ -719,9 +719,13 @@ const METRIC_HELP = {
     title: "Benchmark Chart",
     body: "Three-month daily close for the section's primary benchmark (e.g. S&P 500, WTI crude, 10Y yield). Useful for medium-term trend context.",
   },
+  "home-page": {
+    title: "The Buccaneers — Home",
+    body: "Landing page for the full Bitcoin dashboard collection. The banner highlights the Buccaneers command-deck theme; each card below opens a live section — Market, On Chain, Exchanges, Derivatives, ETFs, DATCO treasuries, Stats, TradFi equity insights, DeFi, Macro, and News. Your last visited section is remembered in this browser.",
+  },
   "equity-global-insights": {
     title: "Global Equity Insights",
-    body: "Editable global index watchlist matching TradFi Indices: four hero quotes, performance table (1W–YTD), an interactive normalized performance chart (1W, 1M, 1Q, 1Y, WTD, MTD, YTD, 3Y, 5Y — rebased to 100), 3-month daily charts per symbol, and Yahoo Finance headlines for your watchlist. Edit tickers in the hero row or table, or use + Add index. Data from Yahoo Finance (~15 min delayed).",
+    body: "Editable global index watchlist: four hero quotes, performance table (1W–YTD), an interactive normalized performance chart (1W, 1M, 1Q, 1Y, WTD, MTD, YTD, 3Y, 5Y — rebased to 100), 3-month daily charts per symbol, and Yahoo Finance headlines for your watchlist. Edit tickers in the hero row or table, or use + Add index. Data from Yahoo Finance (~15 min delayed).",
   },
   "equity-global-news": {
     title: "Global Index News",
@@ -733,7 +737,7 @@ const METRIC_HELP = {
   },
   "equity-company-watchlist": {
     title: "Company Watchlist",
-    body: "Your customizable list of tickers for Company Insights. Edit symbols inline, press → or Enter to load the overview chart, use + Add company for more slots (up to 24), or × to remove. Saves automatically in this browser. On first visit it may import tickers from TradFi Bellwethers if you already customized that list. Peer chips are drawn from this watchlist.",
+    body: "Your customizable list of tickers for Company Insights. Edit symbols inline, press → or Enter to load the overview chart, use + Add company for more slots (up to 24), or × to remove. Saves automatically in this browser. Peer chips are drawn from this watchlist.",
   },
   "equity-company-history": {
     title: "Chart History",
@@ -742,6 +746,22 @@ const METRIC_HELP = {
   "equity-company-commentary": {
     title: "Analysis",
     body: "Plain-language summary generated from price action, 52-week range position, valuation multiples, technical indicators, and peer context. Use alongside your own research — not a trading recommendation.",
+  },
+  "equity-company-commentary-technicals": {
+    title: "Technicals Analysis",
+    body: "Tab-specific commentary on RSI, MACD, moving averages, Williams %R, CCI, and ATR — summarizing momentum, trend, and volatility for the selected history range.",
+  },
+  "equity-company-commentary-financials": {
+    title: "Financials Analysis",
+    body: "Commentary on quarterly and annual revenue, net income, margins, free cash flow, and balance-sheet ratios drawn from Yahoo Finance filings.",
+  },
+  "equity-company-commentary-valuation": {
+    title: "Valuation Analysis",
+    body: "Compares trailing and forward P/E to peer medians and highlights the leader and laggard in rebased relative performance over the selected period.",
+  },
+  "equity-company-commentary-dividends": {
+    title: "Dividend Analysis",
+    body: "Summarizes indicated yield, trailing payments, and whether recent dividends are rising, stable, or declining.",
   },
   "equity-company-peers": {
     title: "Compare Peers",
@@ -788,8 +808,20 @@ const METRIC_HELP = {
     body: "Moving Average Convergence Divergence — difference between 12- and 26-day EMAs (blue line) vs its 9-day signal line (orange). Crossovers hint at short-term momentum shifts.",
   },
   "equity-company-stoch": {
-    title: "Stochastic %K",
+    title: "Stochastic",
     body: "Where the close sits within the recent 14-day high/low range. %K (blue) and %D (dotted purple, 3-day average of %K). Above 80 = hot; below 20 = cold.",
+  },
+  "equity-company-willr": {
+    title: "Williams %R",
+    body: "14-day momentum oscillator from −100 to 0. Readings above −20 suggest overbought conditions; below −80 suggest oversold. Similar spirit to Stochastic but inverted scale.",
+  },
+  "equity-company-cci": {
+    title: "CCI (20)",
+    body: "Commodity Channel Index — measures how far price deviates from its 20-day statistical mean. Above +100 often flags strong upside momentum; below −100 flags weak momentum.",
+  },
+  "equity-company-atr": {
+    title: "ATR (14)",
+    body: "Average True Range over 14 sessions — a volatility gauge in price units (not percent). Rising ATR means larger daily swings; falling ATR means quieter trading.",
   },
   "equity-company-signals": {
     title: "Signal Summary",
@@ -947,6 +979,158 @@ const METRIC_HELP = {
     title: "Macro Analysis",
     body: "Bitcoin-centric commentary linking macro indicator moves to typical BTC correlation patterns.",
   },
+  "macro-drivers-title": {
+    title: "Macro Drivers",
+    body: "Unified global macro dashboard — 217 countries and regional aggregates, 13 economy indicators with strict source hierarchy (World Bank → IMF → DBnomics → Proxy). Liquidity tab: global proxy = CB balance sheet + broad money + FX reserves (ex-gold), with choropleth map, BIS credit-to-GDP gap overlay, regional aggregates, country drill-down, true 3m SAR on monthly FRED feeds (US/Japan/Euro area), YoY charts, and optional Yahoo market overlay (TLT, HYG, VIX).",
+  },
+  "md-year": {
+    title: "Year",
+    body: "Sets the reference year for table values, KPI medians, world map coloring, and the Charts ranking bar. The multi-country time-series chart still shows full history across years.",
+  },
+  "md-metric": {
+    title: "Map / chart indicator",
+    body: "On Overview, colors the world map only — the table above always shows all indicators. On Charts, drives the multi-country line chart and top-20 ranking. Economy tab columns are set by the Growth / Prices / Trade / Labor sub-tabs, not this dropdown.",
+  },
+  "md-region": {
+    title: "Region",
+    body: "Filters which countries appear in the Overview and Economy tables, the world map, and Charts ranking. KPI medians recalculate for the filtered country set.",
+  },
+  "md-income": {
+    title: "Income group",
+    body: "Same as Region but filters by World Bank income class (e.g. High income, Upper middle income). Affects tables, map, ranking, and KPI medians.",
+  },
+  "md-search": {
+    title: "Country search",
+    body: "Narrows table rows and Charts ranking by country name or ISO code. Does not filter the world map — use Region or Income to scope the map.",
+  },
+  "md-show-aggregates": {
+    title: "Regional aggregates",
+    body: "Controls rows in the Overview and Economy & Growth tables below (not the choropleth map, which always shows countries). When checked, World Bank regional and income-group totals appear alongside countries — e.g. World, Euro area, East Asia & Pacific, Sub-Saharan Africa — marked with an AGG badge. Uncheck to list sovereign countries only.",
+  },
+  "md-featured-aggs": {
+    title: "Featured aggregates only",
+    body: "Narrows which aggregate rows appear in the Overview and Economy & Growth tables. Only applies when Regional aggregates is on. Checked: keeps a short list of major WB groups (World, EU, Euro area, regional blocs like EAS/ECS/NAC/LCN/MEA/SAS, SSA, etc.). Unchecked: also shows niche income and demographic aggregates (e.g. low-income only, IBRD-only, early-demographic dividend). Does not affect the map or Liquidity tab.",
+  },
+  "md-refresh-data": {
+    title: "Refresh data",
+    body: "Fetches fresh economy indicators from World Bank and IMF APIs. Normal navigation uses data saved in your browser for up to a few days — no automatic background refresh. Click here only when you want updated numbers. First uncached load can take 30–60 seconds. Does not affect the Liquidity tab.",
+  },
+  "md-refresh-liquidity": {
+    title: "Refresh liquidity",
+    body: "Fetches fresh liquidity components (CB balance sheet, broad money, FX reserves) and rebuilds proxies from WB → IMF IFS → DBnomics → Proxy. Cached locally for days until you click this button. If Market overlay is enabled, also refreshes delayed Yahoo quotes (TLT, HYG, VIX). Also refreshes BIS credit-gap bulk data.",
+  },
+  "md-lq-title": {
+    title: "Global Liquidity Proxy",
+    body: "42Macro-style liquidity stock estimate for the selected view (global, region, or country). Formula: Central bank balance sheet + broad money supply + FX reserves excluding gold, all in USD. Annual history drives the stacked chart; monthly FRED feeds power true 3m SAR where available. Use the breadcrumb and View selector to drill down.",
+  },
+  "md-lq-view": {
+    title: "View",
+    body: "Scope for all charts, KPIs, and the growth series: World (WLD), regional aggregates (Advanced, EM, East Asia, etc.), or a single country. Changing view reloads the liquidity payload and syncs the breadcrumb. Does not change the country table year or map metric.",
+  },
+  "md-lq-year": {
+    title: "Table year",
+    body: "Reference year for the country ranking table, map coloring, and KPI proxy-share statistic. Charts above use full available history for the selected view, not only this year.",
+  },
+  "md-lq-map-metric": {
+    title: "Map metric",
+    body: "Proxy (USD): total liquidity stock per country for the table year — darker teal = larger stock. YoY %: year-over-year change in that stock — green = faster growth, red = contraction. Click any country on the map to load its charts.",
+  },
+  "md-lq-overlay": {
+    title: "Market overlay",
+    body: "Optional delayed Yahoo Finance layer for market-priced liquidity/risk: TLT (long Treasuries), HYG (high yield credit), and VIX (volatility). Useful as a real-time cross-check vs slow-moving official stock data. Not included in the liquidity proxy formula.",
+  },
+  "md-lq-export": {
+    title: "Export CSV",
+    body: "Downloads featured-country table rows for the selected table year: proxy total, YoY, each component value, per-component source (WB / IMF / DB / Proxy), aggregate sources, and derived ratios (CB/GDP, money/GDP, liquidity impulse).",
+  },
+  "md-lq-methodology": {
+    title: "Sources & Methodology",
+    body: "Opens the full data hierarchy (WB → IMF IFS → DBnomics → Proxy), YoY and 3m SAR definitions, BIS credit-gap notes, market overlay sources, and proxy-coverage statistics for the current build.",
+  },
+  "md-lq-kpi-proxy": {
+    title: "Liquidity proxy",
+    body: "Total liquidity stock for the selected view in USD: sum of central bank assets, broad money, and FX reserves (ex-gold) for the latest annual observation. Source badges show which tiers contributed (WB, IMF, DB, Proxy).",
+  },
+  "md-lq-kpi-yoy": {
+    title: "YoY growth",
+    body: "Year-over-year % change in the total liquidity proxy using annual World Bank–frequency data: (proxyₜ / proxyₜ₋₁ − 1) × 100. Positive = expanding liquidity stock vs the prior year.",
+  },
+  "md-lq-kpi-sar": {
+    title: "3m SAR",
+    body: "Three-month seasonally adjusted annualized rate on monthly FRED feeds where available: ((Lₜ / Lₜ₋₃)⁴ − 1) × 100 on the monthly proxy (US, Japan, Euro area, or their composite). Shows the true uncapped rate. Falls back to annualized YoY approximation when monthly feeds are unavailable.",
+  },
+  "md-lq-kpi-credit-gap": {
+    title: "BIS credit gap",
+    body: "BIS credit-to-GDP gap for the selected view: private non-financial sector credit/GDP minus its HP-filter long-term trend (quarterly, percentage points of GDP). Above +10 pp is a BIS early-warning zone; negative = credit below trend. Color hints: amber above trend, red warning, cyan below trend.",
+  },
+  "md-lq-kpi-cb-gdp": {
+    title: "CB / GDP",
+    body: "Central bank balance sheet as % of GDP for the latest year in view. High readings mean monetary authorities hold a large share of economic footprint — relevant for QE/QT and policy footprint.",
+  },
+  "md-lq-kpi-money-gdp": {
+    title: "Money / GDP",
+    body: "Broad money supply as % of GDP. Tracks how large the monetary stock is relative to economic output — a scale-free way to compare countries and time periods.",
+  },
+  "md-lq-kpi-impulse": {
+    title: "Liquidity impulse",
+    body: "Change in broad money divided by GDP, in percentage points: (Mₜ − Mₜ₋₁) / GDP × 100. Measures how much new money was added relative to the economy — a flow-style pulse on top of the stock proxy.",
+  },
+  "md-lq-kpi-proxy-share": {
+    title: "Proxy share",
+    body: "Share of component cells in the country table that had to use constructed Proxy tier (vs WB / IMF / DB) for the table year. Lower is better data quality; high % means more estimated CB or money series.",
+  },
+  "md-lq-map": {
+    title: "Global liquidity map",
+    body: "Choropleth of all countries with liquidity data for the table year. Color scale depends on Map metric (stock or YoY). Hover for country name, value, proxy size, and data sources. Click a country to set View and reload charts for that economy.",
+  },
+  "md-lq-global-chart": {
+    title: "Liquidity proxy · USD",
+    body: "Stacked bars: three components in USD (CB balance sheet, broad money, FX reserves ex-gold). Teal line: total proxy. Hover a bar segment for value and source badge. Shows full history for the selected View — use to see QE expansions and component mix shifts.",
+  },
+  "md-lq-growth-chart": {
+    title: "YoY growth & 3m SAR",
+    body: "Annual YoY % (green, filled) on the left axis from WDI-frequency proxy. When monthly FRED feeds exist: solid gold 3m SAR on the right axis (true rate, no clipping); dashed cyan = monthly YoY on the left. Both % axes share a coincident 0% line so you can compare momentum vs structural growth. SAR tracks near-term pulses; annual YoY tracks slower change.",
+  },
+  "md-lq-credit-gap-chart": {
+    title: "BIS credit-to-GDP gap",
+    body: "Quarterly private credit cycle vs HP-filter trend (BIS). Zero line = credit on trend; +10 pp dashed red = BIS warning threshold. Complements the liquidity stock proxy: stocks can be high while private credit growth is below trend (or vice versa).",
+  },
+  "md-lq-regional-chart": {
+    title: "Regional aggregates",
+    body: "Lines compare liquidity proxy levels (USD) across fixed regional scopes — Global, Advanced, EM, East Asia, Europe, North America — independent of the View selector. Useful for relative scale: which bloc is largest and how paths diverged over time.",
+  },
+  "md-lq-overlay-chart": {
+    title: "Market liquidity overlay",
+    body: "Delayed Yahoo prices: TLT and HYG on the left axis (bond/credit demand), VIX on the right axis (fear gauge). Rising TLT often means flight-to-quality; rising HYG reflects risk credit appetite; VIX spikes signal stress. Compare visually against official liquidity stock charts above.",
+  },
+  "md-lq-country-table": {
+    title: "Country liquidity proxies",
+    body: "Featured economies ranked by proxy size for the table year. Each row sums CB + broad money + FX reserves (ex-gold) in USD. Component cells show value and source badge. Click a row to drill into that country’s charts. Export CSV for full sources and derived ratios.",
+  },
+  "md-lq-col-proxy": {
+    title: "Proxy (USD)",
+    body: "Total liquidity stock for the country in US dollars for the table year.",
+  },
+  "md-lq-col-yoy": {
+    title: "YoY %",
+    body: "Year-over-year % change in the country’s total liquidity proxy vs the prior year.",
+  },
+  "md-lq-col-cb": {
+    title: "CB Balance Sheet",
+    body: "Central bank total assets in USD. Source badge: WB, IMF IFS, DBnomics (e.g. FRED WALCL), or Proxy (12% of broad money when direct series missing).",
+  },
+  "md-lq-col-money": {
+    title: "Broad Money",
+    body: "Broad money supply in USD. From local-currency level ÷ FX, IMF IFS, or GDP × money/GDP ratio (Proxy).",
+  },
+  "md-lq-col-fx": {
+    title: "FX Reserves",
+    body: "Official FX reserves excluding gold in USD. Gold is subtracted when World Bank gold line item exists; otherwise total reserves may be used with a methodology note.",
+  },
+  "md-lq-col-sources": {
+    title: "Sources",
+    body: "Unique data tiers used for that country’s three components: WB, IMF, DB, and/or Proxy.",
+  },
   "news-headlines-feed": {
     title: "All Headlines",
     body: "Aggregated Bitcoin news from RSS feeds — Bitcoin Magazine, Cointelegraph, Decrypt, and Bitcoin.com.",
@@ -986,6 +1170,90 @@ const METRIC_HELP = {
   "news-sentiment": {
     title: "BTC Price Sentiment",
     body: "Keyword-based label for how each headline or post may read for Bitcoin price: Bullish (positive demand/price cues), Bearish (negative risk/price cues), or Neutral when signals are mixed or absent.",
+  },
+  "mb-title": {
+    title: "Bitcoin Indicators",
+    body: "BTC-only on-chain, distribution, valuation, and sentiment metrics grouped for macro context. Sources are labeled per cell; BGeometrics data is disk-cached to respect free API limits.",
+  },
+  "mb-indicator": {
+    title: "Chart indicator",
+    body: "Select which metric to plot in the overview chart. Click a KPI card or table row to jump directly to that series.",
+  },
+  "mb-timespan": {
+    title: "Chart range",
+    body: "Historical window for Blockchain.info and BGeometrics series. Snapshot-only metrics (dominance, OI) ignore this control.",
+  },
+  "mb-refresh": {
+    title: "Refresh data",
+    body: "Bypasses disk and memory caches and re-fetches all BTC indicator endpoints. BGeometrics free tier allows ~10 requests/hour — use sparingly.",
+  },
+  "mb-wealth-dist": {
+    title: "Wealth concentration",
+    body: "Share of circulating BTC held by the richest addresses (top 10 / 100 / 1,000 / 10,000). Address-level data from BitInfoCharts — not entity-adjusted; exchange cold wallets can inflate whale counts.",
+  },
+  "mb-wallet-cohorts": {
+    title: "Wallet size distribution",
+    body: "Breakdown of addresses and supply by BTC balance bands. Shows how supply concentrates in larger wallets versus retail cohorts.",
+  },
+  "mb-rich-top100": {
+    title: "Top 100 addresses",
+    body: "Percentage of total BTC supply held by the 100 richest addresses. Rising concentration can signal whale accumulation; falling may indicate distribution.",
+  },
+  "mb-rich-top1000": {
+    title: "Top 1,000 addresses",
+    body: "Percentage of supply held by the 1,000 richest addresses — broader whale cohort than top 100 alone.",
+  },
+  "mb-wealth-top10": {
+    title: "Top 10 addresses",
+    body: "Share of supply in the ten largest addresses. Often dominated by exchange cold storage — interpret with caution.",
+  },
+  "mb-active-addresses": {
+    title: "Active addresses",
+    body: "Unique addresses active on the network in the last 24 hours. Proxy for user adoption and network usage.",
+  },
+  "mb-exchange-netflow": {
+    title: "Exchange netflow",
+    body: "Net BTC moving to/from exchanges. Positive netflow often interpreted as potential sell pressure; negative as accumulation. Entity-adjusted when sourced from BGeometrics.",
+  },
+  "mb-hash-rate": {
+    title: "Hash rate",
+    body: "Estimated network compute securing Bitcoin. Also available under On Chain → Mining for deeper history.",
+  },
+  "mb-puell": {
+    title: "Puell Multiple",
+    body: "Daily miner revenue divided by its 365-day average. Values above ~4 historically coincided with cycle tops; below ~0.5 with bottoms. Computed locally from Blockchain.info miner revenue.",
+  },
+  "mb-mvrv": {
+    title: "MVRV",
+    body: "Market value to realized value — spot price relative to the average cost basis of the supply. Above 3 often signals overheating; below 1 undervaluation zones.",
+  },
+  "mb-mvrv-z": {
+    title: "MVRV Z-Score",
+    body: "Standard-deviation distance of MVRV from its historical mean. Extreme positive readings marked prior cycle tops.",
+  },
+  "mb-realized-price": {
+    title: "Realized price",
+    body: "Aggregate cost basis of the circulating supply in USD. Price below realized price means the average coin is underwater.",
+  },
+  "mb-hodl-waves": {
+    title: "HODL waves (1y+)",
+    body: "Share of supply last moved more than one year ago. Rising long-term holder supply often aligns with accumulation phases.",
+  },
+  "mb-fear-greed": {
+    title: "Fear & Greed Index",
+    body: "Alternative.me composite sentiment score (0–100) blending volatility, momentum, social, surveys, dominance, and trends.",
+  },
+  "mb-funding-rate": {
+    title: "Median funding rate",
+    body: "Cross-venue median perpetual funding rate. Positive = longs pay shorts. See Derivatives → Perp for venue-level detail.",
+  },
+  "mb-open-interest": {
+    title: "Open interest",
+    body: "Binance BTCUSDT perpetual open interest in BTC. Rising OI with price can signal leveraged trend strength.",
+  },
+  "mb-btc-dominance": {
+    title: "BTC dominance",
+    body: "Bitcoin share of total crypto market capitalization. Rising dominance often accompanies risk-off rotation into BTC.",
   },
 };
 
@@ -1065,6 +1333,7 @@ function initMetricHelp() {
 }
 
 window.decorateHelpLabels = decorateHelpLabels;
+window.getMetricHelp = (key) => METRIC_HELP[key] || null;
 
 function bindHelpListeners() {
   const tooltip = document.getElementById("metric-tooltip");

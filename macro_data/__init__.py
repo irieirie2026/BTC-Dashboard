@@ -1,0 +1,1 @@
+"""Unified macro data layer — WB → IMF → DBnomics → Proxy hierarchy."""

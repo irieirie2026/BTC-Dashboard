@@ -1,0 +1,1 @@
+"""Bitcoin indicator data layer for Misc → Bitcoin dashboard."""

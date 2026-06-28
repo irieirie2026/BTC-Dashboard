@@ -7,9 +7,7 @@ const MACRO_SECTIONS = [
   "commodities",
 ];
 
-const MACRO_POLL_MS = 300_000;
 const macroCache = {};
-let macroPollTimer = null;
 let macroActiveSection = null;
 let macroReady = false;
 
@@ -282,6 +280,8 @@ async function loadMacroSection(section) {
       key: `macro:${section}`,
       l1: "macro",
       source: "Yahoo Finance",
+      persist: true,
+      revalidate: false,
       fetch: () => fetchMacroSection(section),
       render: (data, opts = {}) => {
         if (opts.loading) {
@@ -301,13 +301,6 @@ async function loadMacroSection(section) {
   }
 }
 
-function startMacroPoll() {
-  if (macroPollTimer) return;
-  macroPollTimer = setInterval(() => {
-    if (macroActiveSection) loadMacroSection(macroActiveSection);
-  }, MACRO_POLL_MS);
-}
-
 function initMacroModule() {
   if (macroReady) return;
   macroReady = true;
@@ -321,7 +314,7 @@ function initMacroModule() {
 
 window.loadMacroDashboard = function () {
   initMacroModule();
-  startMacroPoll();
+  window.initMacroDrivers?.();
   window.decorateHelpLabels?.(document.getElementById("dashboard-macro"));
 };
 

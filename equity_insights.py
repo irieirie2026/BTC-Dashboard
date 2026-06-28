@@ -300,6 +300,15 @@ def _closes_for_symbol(data, symbol, multi):
     return None
 
 
+def _sanitize_ohlcv_df(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop rows without a settled close (incomplete same-day bars from yfinance)."""
+    if df is None or df.empty:
+        return pd.DataFrame()
+    if "Close" in df.columns:
+        df = df.dropna(subset=["Close"])
+    return df.dropna(how="all")
+
+
 def _extract_ohlcv(data: pd.DataFrame, ticker: str) -> pd.DataFrame:
     if data is None or data.empty:
         return pd.DataFrame()
@@ -314,7 +323,9 @@ def _extract_ohlcv(data: pd.DataFrame, ticker: str) -> pd.DataFrame:
         df = data.copy()
     df = df.rename(columns=str.title)
     cols = [c for c in ["Open", "High", "Low", "Close", "Volume"] if c in df.columns]
-    return df[cols].dropna(how="all") if cols else pd.DataFrame()
+    if not cols:
+        return pd.DataFrame()
+    return _sanitize_ohlcv_df(df[cols])
 
 
 def download_history(symbols: list[str], start: str, end: str) -> dict[str, pd.DataFrame]:
@@ -478,6 +489,20 @@ def add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     high14 = high.rolling(14).max()
     out["STOCH_K"] = 100 * (close - low14) / (high14 - low14).replace(0, np.nan)
     out["STOCH_D"] = out["STOCH_K"].rolling(3).mean()
+    out["WILLR"] = -100 * (high14 - close) / (high14 - low14).replace(0, np.nan)
+    prev_close = close.shift(1)
+    tr = pd.concat(
+        [high - low, (high - prev_close).abs(), (low - prev_close).abs()],
+        axis=1,
+    ).max(axis=1)
+    out["ATR"] = tr.rolling(14).mean()
+    typical = (high + low + close) / 3
+    tp_sma = typical.rolling(20).mean()
+    tp_mad = typical.rolling(20).apply(
+        lambda x: float(np.abs(x - x.mean()).mean()),
+        raw=True,
+    )
+    out["CCI"] = (typical - tp_sma) / (0.015 * tp_mad.replace(0, np.nan))
     return out
 
 
@@ -635,13 +660,259 @@ def build_company_commentary(
     return paragraphs
 
 
+def _series_pct_change(series: dict | None) -> float | None:
+    if not series:
+        return None
+    values = [v for v in (series.get("values") or []) if v is not None]
+    if len(values) < 2 or values[-2] == 0:
+        return None
+    return _safe_float((values[-1] - values[-2]) / abs(values[-2]) * 100)
+
+
+def _fmt_large_usd(val: float | None) -> str:
+    if val is None:
+        return "—"
+    abs_v = abs(val)
+    if abs_v >= 1e12:
+        return f"${val / 1e12:.2f}T"
+    if abs_v >= 1e9:
+        return f"${val / 1e9:.2f}B"
+    if abs_v >= 1e6:
+        return f"${val / 1e6:.1f}M"
+    return f"${val:,.0f}"
+
+
+def build_company_tab_commentary(
+    symbol: str,
+    info: dict,
+    df: pd.DataFrame,
+    signals: list[dict],
+    fin: dict,
+    peers_table: list[dict],
+    peer_perf: dict,
+    dividends: list[dict],
+) -> dict[str, list[str]]:
+    name = info.get("name") or symbol
+
+    technicals: list[str] = []
+    if df.empty or "Close" not in df.columns:
+        technicals.append("Not enough price history to compute technical indicators for this range.")
+    else:
+        row = df.dropna(subset=["Close"]).iloc[-1]
+        close = _safe_float(row.get("Close"))
+        parts: list[str] = []
+        if signals:
+            parts.append(signals[0]["text"].split("—")[0].strip())
+            if len(signals) > 1:
+                parts.append(signals[1]["text"].split("—")[0].strip())
+        willr = _safe_float(row.get("WILLR"))
+        if willr is not None:
+            if willr > -20:
+                parts.append(f"Williams %R at {willr:.1f} (overbought zone above −20)")
+            elif willr < -80:
+                parts.append(f"Williams %R at {willr:.1f} (oversold zone below −80)")
+        cci = _safe_float(row.get("CCI"))
+        if cci is not None:
+            if cci > 100:
+                parts.append(f"CCI at {cci:.1f} — price extended above its recent average")
+            elif cci < -100:
+                parts.append(f"CCI at {cci:.1f} — price depressed vs its recent average")
+        atr = _safe_float(row.get("ATR"))
+        if atr is not None and close:
+            atr_pct = atr / close * 100
+            if atr_pct >= 3:
+                parts.append(
+                    f"ATR implies ~{atr_pct:.1f}% daily swings — elevated volatility vs calmer names"
+                )
+            else:
+                parts.append(f"ATR implies ~{atr_pct:.1f}% typical daily range — moderate volatility")
+        sma20 = _safe_float(row.get("SMA20"))
+        if close is not None and sma20 is not None:
+            if close > sma20 * 1.02:
+                parts.append("Price trades above the 20-day average — short-term trend is up")
+            elif close < sma20 * 0.98:
+                parts.append("Price trades below the 20-day average — short-term trend is soft")
+        if parts:
+            technicals.append(
+                f"Technical read for {name}: " + "; ".join(parts[:4]) + "."
+            )
+        else:
+            technicals.append(
+                "Indicators are in neutral territory — no strong overbought or oversold extremes."
+            )
+        technicals.append(
+            "These readings describe momentum and volatility context only; "
+            "combine with fundamentals and your own risk limits before acting."
+        )
+
+    financials: list[str] = []
+    charts = fin.get("charts") or {}
+    q = charts.get("quarterly") or {}
+    a = charts.get("annual") or {}
+    rev_q_chg = _series_pct_change(q.get("revenue"))
+    if rev_q_chg is not None:
+        direction = "rose" if rev_q_chg >= 0 else "fell"
+        financials.append(
+            f"Quarterly revenue {direction} {abs(rev_q_chg):.1f}% vs the prior reported quarter."
+        )
+    ni_q_chg = _series_pct_change(q.get("netIncome"))
+    if ni_q_chg is not None:
+        direction = "improved" if ni_q_chg >= 0 else "declined"
+        financials.append(
+            f"Quarterly net income {direction} {abs(ni_q_chg):.1f}% sequentially."
+        )
+    margin_vals = [v for v in (q.get("netMargin") or {}).get("values") or [] if v is not None]
+    if len(margin_vals) >= 2:
+        financials.append(
+            f"Net margin moved from {margin_vals[-2]:.1f}% to {margin_vals[-1]:.1f}% in the latest quarter."
+        )
+    rev_a = a.get("revenue")
+    if rev_a:
+        a_vals = [v for v in rev_a.get("values") or [] if v is not None]
+        if len(a_vals) >= 2 and a_vals[-2]:
+            yoy = (a_vals[-1] - a_vals[-2]) / abs(a_vals[-2]) * 100
+            direction = "grew" if yoy >= 0 else "shrank"
+            financials.append(
+                f"Annual revenue {direction} {abs(yoy):.1f}% year over year "
+                f"({_fmt_large_usd(a_vals[-2])} → {_fmt_large_usd(a_vals[-1])})."
+            )
+    fcf_chg = _series_pct_change(q.get("freeCashFlow"))
+    if fcf_chg is not None:
+        tone = "stronger" if fcf_chg >= 0 else "weaker"
+        financials.append(f"Free cash flow looks {tone} sequentially ({fcf_chg:+.1f}%).")
+    ratios = fin.get("ratios") or []
+    if ratios:
+        latest = ratios[0]
+        de = latest.get("debtEquity")
+        cr = latest.get("currentRatio")
+        bits = []
+        if de is not None:
+            bits.append(f"debt/equity {de:.2f}×")
+        if cr is not None:
+            bits.append(f"current ratio {cr:.2f}")
+        if bits:
+            financials.append(f"Latest balance-sheet snapshot ({latest.get('period', 'recent')}): {', '.join(bits)}.")
+    if not financials:
+        financials.append(
+            "Financial statement data is limited for this symbol — charts and ratios may fill in after Yahoo updates filings."
+        )
+
+    valuation: list[str] = []
+    pe = _safe_float(info.get("pe"))
+    fpe = _safe_float(info.get("forwardPe"))
+    if pe is not None:
+        valuation.append(f"{name} trades at {pe:.1f}× trailing earnings.")
+    if fpe is not None and pe is not None:
+        if fpe < pe * 0.85:
+            valuation.append(
+                f"Forward P/E of {fpe:.1f}× is below trailing — analysts may expect earnings growth."
+            )
+        elif fpe > pe * 1.15:
+            valuation.append(
+                f"Forward P/E of {fpe:.1f}× exceeds trailing — consensus may embed slower near-term profits."
+            )
+    peer_pes = [
+        _safe_float(r.get("pe"))
+        for r in peers_table
+        if r.get("ticker") != symbol and _safe_float(r.get("pe")) is not None
+    ]
+    if pe is not None and peer_pes:
+        med = float(np.median(peer_pes))
+        if pe > med * 1.2:
+            valuation.append(
+                f"Trailing P/E is above the peer median ({med:.1f}×) — market may be paying a premium for growth or quality."
+            )
+        elif pe < med * 0.8:
+            valuation.append(
+                f"Trailing P/E sits below the peer median ({med:.1f}×) — verify whether that is value or weaker growth."
+            )
+        else:
+            valuation.append(f"Trailing P/E is near the peer median ({med:.1f}×).")
+    perf_dates = peer_perf.get("dates") or []
+    perf_series = peer_perf.get("series") or {}
+    if perf_dates and symbol in perf_series:
+        end_vals = {
+            sym: vals[-1]
+            for sym, vals in perf_series.items()
+            if vals and vals[-1] is not None
+        }
+        if len(end_vals) >= 2:
+            leader = max(end_vals, key=end_vals.get)
+            laggard = min(end_vals, key=end_vals.get)
+            valuation.append(
+                f"Over the selected period, {leader} leads rebased performance "
+                f"({end_vals[leader]:.1f}) vs {laggard} ({end_vals[laggard]:.1f})."
+            )
+    if not valuation:
+        valuation.append(
+            "Valuation multiples are sparse for this symbol — add peers from your watchlist for richer comparison."
+        )
+
+    dividends_tab: list[str] = []
+    div_yield = _safe_float(info.get("divYield"))
+    if div_yield is not None and div_yield > 0:
+        dividends_tab.append(f"Indicated dividend yield is {div_yield:.2f}% based on trailing payments vs current price.")
+    if dividends:
+        amounts = [d["amount"] for d in dividends if d.get("amount") is not None]
+        if amounts:
+            recent = amounts[-4:]
+            ttm = sum(recent)
+            dividends_tab.append(
+                f"Trailing four payments total ${ttm:.2f} per share; latest distribution was ${amounts[-1]:.2f}."
+            )
+            if len(amounts) >= 2:
+                chg = (amounts[-1] - amounts[-2]) / amounts[-2] * 100 if amounts[-2] else None
+                if chg is not None:
+                    if chg > 1:
+                        dividends_tab.append(
+                            f"Most recent dividend is {chg:.1f}% above the prior payment — payout may be rising."
+                        )
+                    elif chg < -1:
+                        dividends_tab.append(
+                            f"Most recent dividend is {abs(chg):.1f}% below the prior payment — check for cuts or specials."
+                        )
+                    else:
+                        dividends_tab.append("Recent dividends are stable versus the prior payment.")
+        if len(amounts) >= 8:
+            older_avg = sum(amounts[-8:-4]) / 4
+            recent_avg = sum(amounts[-4:]) / 4
+            if older_avg and recent_avg:
+                growth = (recent_avg - older_avg) / older_avg * 100
+                if growth > 3:
+                    dividends_tab.append(
+                        f"Average quarterly payout rose ~{growth:.1f}% vs the prior four quarters."
+                    )
+                elif growth < -3:
+                    dividends_tab.append(
+                        f"Average quarterly payout fell ~{abs(growth):.1f}% vs the prior four quarters."
+                    )
+    if not dividends_tab:
+        dividends_tab.append(
+            "No regular dividend history on file — common for growth companies that reinvest cash flow."
+        )
+
+    return {
+        "technicals": technicals,
+        "financials": financials,
+        "valuation": valuation,
+        "dividends": dividends_tab,
+    }
+
+
 def _ohlcv_json(df: pd.DataFrame, include_indicators: bool = False) -> list[dict]:
+    if df is None or df.empty:
+        return []
+    if "Close" in df.columns:
+        df = df.dropna(subset=["Close"])
+    if df.empty:
+        return []
     key_map = {
         "Open": "open", "High": "high", "Low": "low", "Close": "close", "Volume": "volume",
         "SMA20": "sma20", "SMA50": "sma50", "SMA200": "sma200",
         "BB_Upper": "bbUpper", "BB_Mid": "bbMid", "BB_Lower": "bbLower",
         "RSI": "rsi", "MACD": "macd", "MACD_Signal": "macdSignal",
         "MACD_Hist": "macdHist", "STOCH_K": "stochK", "STOCH_D": "stochD",
+        "WILLR": "willr", "ATR": "atr", "CCI": "cci",
     }
     cols = list(key_map.keys()) if include_indicators else list(key_map.keys())[:5]
     rows = []
@@ -654,17 +925,111 @@ def _ohlcv_json(df: pd.DataFrame, include_indicators: bool = False) -> list[dict
     return rows
 
 
-def _df_stmt_json(df: pd.DataFrame, max_cols: int = 6) -> list[dict]:
+def _df_stmt_json(df: pd.DataFrame, max_cols: int | None = None) -> list[dict]:
     if df is None or df.empty:
         return []
+    col_count = len(df.columns) if max_cols is None else min(max_cols, len(df.columns))
     rows = []
-    for label in df.index[:12]:
+    for label in df.index[:24]:
         row = {"line": str(label)}
-        for i, col in enumerate(df.columns[:max_cols]):
+        for i, col in enumerate(df.columns[:col_count]):
             row[f"p{i}"] = _safe_float(df.loc[label, col])
             row[f"period_{i}"] = _fmt_date(col) if hasattr(col, "strftime") else str(col)[:10]
         rows.append(row)
     return rows
+
+
+FIN_STMT_ALIASES: dict[str, list[str]] = {
+    "revenue": ["Total Revenue", "Revenue", "Operating Revenue"],
+    "netIncome": [
+        "Net Income",
+        "Net Income Common Stockholders",
+        "Net Income From Continuing Operation Net Minority Interest",
+    ],
+    "grossProfit": ["Gross Profit"],
+    "operatingIncome": ["Operating Income", "EBIT"],
+    "operatingCashFlow": [
+        "Operating Cash Flow",
+        "Cash Flow From Continuing Operating Activities",
+    ],
+    "freeCashFlow": ["Free Cash Flow"],
+}
+
+INCOME_CHART_KEYS = ("revenue", "netIncome", "grossProfit", "operatingIncome")
+CASHFLOW_CHART_KEYS = ("operatingCashFlow", "freeCashFlow")
+
+
+def _extract_stmt_series(df: pd.DataFrame, labels: list[str]) -> dict | None:
+    if df is None or df.empty:
+        return None
+    for label in labels:
+        if label not in df.index:
+            continue
+        periods: list[str] = []
+        values: list[float | None] = []
+        for col in reversed(df.columns):
+            val = _safe_float(df.loc[label, col])
+            if val is None:
+                continue
+            periods.append(_fmt_date(col))
+            values.append(val)
+        if values:
+            return {"periods": periods, "values": values, "label": label}
+    return None
+
+
+def _margin_series(
+    numerator: dict | None,
+    denominator: dict | None,
+    label: str,
+) -> dict | None:
+    if not numerator or not denominator:
+        return None
+    periods = numerator.get("periods") or []
+    num_vals = numerator.get("values") or []
+    den_map = dict(zip(denominator.get("periods") or [], denominator.get("values") or []))
+    out_periods: list[str] = []
+    out_vals: list[float | None] = []
+    for period, num in zip(periods, num_vals):
+        den = den_map.get(period)
+        if num is None or den in (None, 0):
+            continue
+        out_periods.append(period)
+        out_vals.append(_safe_float(num / den * 100))
+    if not out_vals:
+        return None
+    return {"periods": out_periods, "values": out_vals, "label": label}
+
+
+def build_financial_charts(
+    income_q: pd.DataFrame,
+    income_a: pd.DataFrame,
+    cashflow_q: pd.DataFrame,
+    cashflow_a: pd.DataFrame,
+) -> dict:
+    quarterly: dict[str, dict | None] = {}
+    annual: dict[str, dict | None] = {}
+
+    for key in INCOME_CHART_KEYS:
+        quarterly[key] = _extract_stmt_series(income_q, FIN_STMT_ALIASES[key])
+        annual[key] = _extract_stmt_series(income_a, FIN_STMT_ALIASES[key])
+
+    for key in CASHFLOW_CHART_KEYS:
+        quarterly[key] = _extract_stmt_series(cashflow_q, FIN_STMT_ALIASES[key])
+        annual[key] = _extract_stmt_series(cashflow_a, FIN_STMT_ALIASES[key])
+
+    quarterly["netMargin"] = _margin_series(
+        quarterly.get("netIncome"),
+        quarterly.get("revenue"),
+        "Net Margin %",
+    )
+    annual["netMargin"] = _margin_series(
+        annual.get("netIncome"),
+        annual.get("revenue"),
+        "Net Margin %",
+    )
+
+    return {"quarterly": quarterly, "annual": annual}
 
 
 def history_points_from_closes(close: pd.Series, days: int = 90) -> list[dict]:
@@ -680,6 +1045,7 @@ def history_points_from_closes(close: pd.Series, days: int = 90) -> list[dict]:
 def _overview_row(sym: str, history: dict, labels: dict[str, str]) -> dict:
     df = history.get(sym, pd.DataFrame())
     close = df["Close"] if not df.empty and "Close" in df.columns else pd.Series(dtype=float)
+    close = close.dropna()
     rets = compute_period_returns(close) if not close.empty else {}
     perf = perf_from_closes(close) or {}
     price = _safe_float(close.iloc[-1]) if not close.empty else None
@@ -718,7 +1084,9 @@ def build_global_payload(
 
     overview = [_overview_row(sym, history, labels) for sym in all_syms]
 
-    closes = pd.DataFrame({s: h["Close"] for s, h in history.items() if "Close" in h.columns})
+    closes = pd.DataFrame({
+        s: h["Close"].dropna() for s, h in history.items() if "Close" in h.columns
+    })
     closes = closes.dropna(how="all")
 
     performance = build_performance_series(closes, labels, perf_period)
@@ -818,22 +1186,30 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
         pass
 
     df = history.get(symbol, pd.DataFrame())
+    if not df.empty and "Close" in df.columns:
+        df = df.dropna(subset=["Close"])
     if not df.empty:
         df = add_indicators(df)
 
-    fin = {"income": [], "balance": [], "cashflow": [], "ratios": []}
+    fin = {"income": [], "balance": [], "cashflow": [], "ratios": [], "charts": {}}
     dividends = []
     try:
         t = yf.Ticker(symbol)
-        income = t.financials
+        income_a = getattr(t, "income_stmt", None)
+        if income_a is None or income_a.empty:
+            income_a = t.financials
+        income_q = getattr(t, "quarterly_income_stmt", None)
+        if income_q is None or income_q.empty:
+            income_q = t.quarterly_financials
         balance = t.balance_sheet
-        cashflow = t.cashflow
+        cashflow_a = t.cashflow
+        cashflow_q = t.quarterly_cashflow
         divs = t.dividends
-        if income is not None and not income.empty:
-            fin["income"] = _df_stmt_json(income)
+        if income_a is not None and not income_a.empty:
+            fin["income"] = _df_stmt_json(income_a)
         if balance is not None and not balance.empty:
             fin["balance"] = _df_stmt_json(balance)
-            for i, col in enumerate(balance.columns[:4]):
+            for i, col in enumerate(balance.columns):
                 try:
                     debt = balance.loc["Total Debt", col] if "Total Debt" in balance.index else np.nan
                     equity = balance.loc["Stockholders Equity", col] if "Stockholders Equity" in balance.index else np.nan
@@ -846,8 +1222,9 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
                     })
                 except Exception:
                     continue
-        if cashflow is not None and not cashflow.empty:
-            fin["cashflow"] = _df_stmt_json(cashflow)
+        if cashflow_a is not None and not cashflow_a.empty:
+            fin["cashflow"] = _df_stmt_json(cashflow_a)
+        fin["charts"] = build_financial_charts(income_q, income_a, cashflow_q, cashflow_a)
         if divs is not None and not divs.empty:
             dividends = [{"date": _fmt_date(d), "amount": _safe_float(v)} for d, v in divs.items()]
     except Exception:
@@ -908,6 +1285,16 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
     commentary = build_company_commentary(
         symbol, company_info, df, signals, price_return, fin, peers
     )
+    tab_commentary = build_company_tab_commentary(
+        symbol,
+        company_info,
+        df,
+        signals,
+        fin,
+        peer_rows,
+        peer_perf,
+        dividends,
+    )
     news = fetch_stock_news([symbol], per_symbol=12, max_total=25)
 
     return {
@@ -919,6 +1306,7 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
         "info": company_info,
         "summary": _company_summary(company_info, price_return),
         "commentary": commentary,
+        "tabCommentary": tab_commentary,
         "ohlcv": _ohlcv_json(df, include_indicators=True) if not df.empty else [],
         "signals": signals,
         "financials": fin,

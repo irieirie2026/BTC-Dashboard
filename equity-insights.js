@@ -67,6 +67,22 @@ let companyWatchlistTimer = null;
 
 const eqEl = (id) => document.getElementById(id);
 
+function sanitizeCompanyOhlcv(ohlcv) {
+  return (ohlcv || []).filter(
+    (p) => p?.close != null && Number.isFinite(Number(p.close)),
+  );
+}
+
+function lastValidOhlcvBar(ohlcv) {
+  const clean = sanitizeCompanyOhlcv(ohlcv);
+  return clean.length ? clean[clean.length - 1] : null;
+}
+
+function safeNum(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
 function eqFmtPct(n, d = 2) {
   if (n == null || Number.isNaN(n)) return "—";
   return `${n >= 0 ? "+" : ""}${Number(n).toFixed(d)}%`;
@@ -971,8 +987,26 @@ function renderCandlestick(el, ohlcv, opts = {}) {
   Plotly.newPlot(el, traces, layout, { responsive: true, displayModeBar: false });
 }
 
-function renderIndicatorChart(el, ohlcv, field, title, upper, lower, extraTraces = []) {
-  if (!window.Plotly || !ohlcv?.length || ohlcv[0][field] == null || !el) return;
+function ohlcvHasField(ohlcv, field) {
+  return Boolean(ohlcv?.some((p) => p[field] != null));
+}
+
+function renderIndicatorEmpty(el, message) {
+  if (!el) return;
+  el.style.height = "220px";
+  el.innerHTML = `<p class="equity-chart-empty">${message}</p>`;
+}
+
+function renderIndicatorChart(el, ohlcv, field, title, upper, lower, extraTraces = [], opts = {}) {
+  if (!el) return;
+  if (!window.Plotly || !ohlcv?.length) {
+    renderIndicatorEmpty(el, "Loading indicator…");
+    return;
+  }
+  if (!ohlcvHasField(ohlcv, field)) {
+    renderIndicatorEmpty(el, "Not enough price history for this indicator.");
+    return;
+  }
   const shapes = [];
   if (upper != null) {
     shapes.push({
@@ -993,41 +1027,145 @@ function renderIndicatorChart(el, ohlcv, field, title, upper, lower, extraTraces
       type: "scatter",
       mode: "lines",
       name: title,
-      line: { width: 2, color: "#38bdf8" },
+      line: { width: 2, color: opts.lineColor || "#38bdf8" },
     },
     ...extraTraces,
   ];
   const height = 220;
   el.style.height = `${height}px`;
+  el.innerHTML = "";
+  const layout = { ...companyPlotLayout("", height), shapes };
+  if (opts.yRange) {
+    layout.yaxis = { ...layout.yaxis, range: opts.yRange, autorange: false };
+  }
+  if (opts.hover) layout.hovermode = opts.hover;
+  Plotly.newPlot(el, traces, layout, { responsive: true, displayModeBar: false });
+}
+
+function renderMacdChart(el, ohlcv) {
+  if (!el) return;
+  if (!window.Plotly || !ohlcv?.length) {
+    renderIndicatorEmpty(el, "Loading MACD…");
+    return;
+  }
+  if (!ohlcvHasField(ohlcv, "macd")) {
+    renderIndicatorEmpty(el, "Not enough price history for MACD.");
+    return;
+  }
+  const dates = ohlcv.map((p) => p.date);
+  const traces = [
+    {
+      x: dates,
+      y: ohlcv.map((p) => p.macdHist),
+      type: "bar",
+      name: "Histogram",
+      marker: {
+        color: ohlcv.map((p) =>
+          (p.macdHist ?? 0) >= 0 ? "rgba(0, 200, 83, 0.45)" : "rgba(255, 23, 68, 0.45)",
+        ),
+      },
+    },
+    {
+      x: dates,
+      y: ohlcv.map((p) => p.macd),
+      type: "scatter",
+      mode: "lines",
+      name: "MACD",
+      line: { width: 2, color: "#38bdf8" },
+    },
+  ];
+  if (ohlcvHasField(ohlcv, "macdSignal")) {
+    traces.push({
+      x: dates,
+      y: ohlcv.map((p) => p.macdSignal),
+      type: "scatter",
+      mode: "lines",
+      name: "Signal",
+      line: { width: 1.5, color: "#f59e0b" },
+    });
+  }
+  const height = 220;
+  el.style.height = `${height}px`;
+  el.innerHTML = "";
   Plotly.newPlot(
     el,
     traces,
-    { ...companyPlotLayout("", height), shapes },
+    { ...companyPlotLayout("", height, { hover: "x unified" }), barmode: "overlay" },
     { responsive: true, displayModeBar: false },
   );
 }
 
-function renderBarFinancial(el, row, title) {
-  if (!window.Plotly || !row || !el) return;
-  const periods = [];
-  const vals = [];
-  for (let i = 0; i < 6; i += 1) {
-    const v = row[`p${i}`];
-    if (v == null) break;
-    periods.push(row[`period_${i}`] || `P${i}`);
-    vals.push(v);
+function formatFinPeriod(period) {
+  if (!period) return "—";
+  const d = new Date(period);
+  if (Number.isNaN(d.getTime())) return String(period).slice(0, 7);
+  const q = Math.floor(d.getMonth() / 3) + 1;
+  return `${d.getFullYear()} Q${q}`;
+}
+
+function formatFinPeriodAnnual(period) {
+  if (!period) return "—";
+  const d = new Date(period);
+  if (Number.isNaN(d.getTime())) return String(period).slice(0, 4);
+  return String(d.getFullYear());
+}
+
+function renderFinancialSeriesChart(el, series, title, opts = {}) {
+  if (!el) return;
+  if (!window.Plotly || !series?.periods?.length || !series?.values?.length) {
+    renderIndicatorEmpty(el, opts.empty || "No reported data for this metric.");
+    return;
   }
-  if (!vals.length) return;
-  periods.reverse();
-  vals.reverse();
-  const height = 340;
+  const isPct = Boolean(opts.percent);
+  const periods = series.periods.map(opts.annual ? formatFinPeriodAnnual : formatFinPeriod);
+  const height = opts.height || 200;
   el.style.height = `${height}px`;
+  el.innerHTML = "";
+  const layout = companyPlotLayout(title, height);
+  layout.margin = { l: isPct ? 44 : 58, r: 12, t: 32, b: 48 };
+  layout.bargap = Math.max(0.12, 0.58 - series.periods.length * 0.045);
+  layout.yaxis = {
+    ...layout.yaxis,
+    tickformat: isPct ? ".1f" : ".2s",
+    ticksuffix: isPct ? "%" : "",
+    tickprefix: isPct ? "" : "$",
+  };
   Plotly.newPlot(
     el,
-    [{ x: periods, y: vals, type: "bar", marker: { color: "#38bdf8" } }],
-    companyPlotLayout(title, height),
+    [{
+      x: periods,
+      y: series.values,
+      type: "bar",
+      marker: { color: opts.color || "#38bdf8" },
+      hovertemplate: isPct
+        ? "%{x}<br>%{y:.2f}%<extra></extra>"
+        : "%{x}<br>$%{y:.2s}<extra></extra>",
+    }],
+    layout,
     { responsive: true, displayModeBar: false },
   );
+}
+
+function renderCompanyFinancials(data) {
+  const charts = data.financials?.charts || {};
+  const quarterly = charts.quarterly || {};
+  const annual = charts.annual || {};
+
+  const specs = [
+    ["equity-company-fin-revenue-q", quarterly.revenue, "Revenue · quarterly", { color: "#38bdf8" }],
+    ["equity-company-fin-netincome-q", quarterly.netIncome, "Net income · quarterly", { color: "#34d399" }],
+    ["equity-company-fin-grossprofit-q", quarterly.grossProfit, "Gross profit · quarterly", { color: "#a78bfa" }],
+    ["equity-company-fin-opcashflow-q", quarterly.operatingCashFlow, "Operating cash flow · quarterly", { color: "#2dd4bf" }],
+    ["equity-company-fin-fcf-q", quarterly.freeCashFlow, "Free cash flow · quarterly", { color: "#fbbf24" }],
+    ["equity-company-fin-margin-q", quarterly.netMargin, "Net margin · quarterly", { color: "#fb7185", percent: true }],
+    ["equity-company-fin-revenue-a", annual.revenue, "Revenue · annual", { color: "#38bdf8", annual: true }],
+    ["equity-company-fin-netincome-a", annual.netIncome, "Net income · annual", { color: "#34d399", annual: true }],
+    ["equity-company-fin-opcashflow-a", annual.operatingCashFlow, "Operating cash flow · annual", { color: "#2dd4bf", annual: true }],
+  ];
+
+  specs.forEach(([id, series, title, chartOpts]) => {
+    renderFinancialSeriesChart(eqEl(id), series, title, chartOpts);
+  });
 }
 
 function formatCompanyMetric(id, info) {
@@ -1052,18 +1190,111 @@ function formatCompanyMetric(id, info) {
   }
 }
 
+function escapeMetricAttr(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildCompanyMetricTooltipHtml(metric) {
+  const help = window.getMetricHelp?.(metric.help);
+  const hintRow = metric.hint
+    ? `<p class="tooltip-metric-hint">${metric.hint}</p>`
+    : "";
+  const bodyRow = help?.body ? `<p class="tooltip-body">${help.body}</p>` : "";
+  return `<p class="tooltip-title">${metric.label}</p>${hintRow}${bodyRow}`;
+}
+
+let companyMetricTipBound = false;
+let companyMetricHideTimer = null;
+
+function positionCompanyMetricTooltip(tooltip, trigger) {
+  tooltip.hidden = false;
+  tooltip.style.visibility = "hidden";
+  tooltip.style.display = "block";
+
+  const rect = trigger.getBoundingClientRect();
+  const tipRect = tooltip.getBoundingClientRect();
+  const margin = 8;
+
+  let top = rect.bottom + margin;
+  let left = rect.left + rect.width / 2 - tipRect.width / 2;
+  left = Math.max(margin, Math.min(left, window.innerWidth - tipRect.width - margin));
+  if (top + tipRect.height > window.innerHeight - margin) {
+    top = rect.top - tipRect.height - margin;
+  }
+
+  tooltip.style.top = `${Math.max(margin, top)}px`;
+  tooltip.style.left = `${left}px`;
+  tooltip.style.visibility = "visible";
+}
+
+function bindCompanyMetricTooltips() {
+  if (companyMetricTipBound) return;
+  const tooltip = eqEl("metric-tooltip");
+  if (!tooltip) return;
+  companyMetricTipBound = true;
+
+  const hideTooltip = () => {
+    tooltip.hidden = true;
+  };
+
+  document.addEventListener(
+    "mouseover",
+    (e) => {
+      const block = e.target.closest(".deriv-hero-block--company");
+      if (!block?.dataset.metricTip) return;
+      clearTimeout(companyMetricHideTimer);
+      tooltip.innerHTML = block.dataset.metricTip;
+      positionCompanyMetricTooltip(tooltip, block);
+    },
+    true,
+  );
+
+  document.addEventListener(
+    "mouseout",
+    (e) => {
+      const block = e.target.closest(".deriv-hero-block--company");
+      if (!block) return;
+      const related = e.relatedTarget;
+      if (related && (block.contains(related) || tooltip.contains(related))) return;
+      companyMetricHideTimer = setTimeout(hideTooltip, 80);
+    },
+    true,
+  );
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (tooltip.hidden) return;
+      const block = document.querySelector(".deriv-hero-block--company:hover");
+      if (block) positionCompanyMetricTooltip(tooltip, block);
+    },
+    true,
+  );
+}
+
 function renderCompanyMetrics(info) {
   const grid = eqEl("equity-company-metrics");
   if (!grid) return;
+  bindCompanyMetricTooltips();
   grid.innerHTML = COMPANY_METRICS.map((m) => {
     const fmt = formatCompanyMetric(m.id, info);
-    const helpAttr = m.help ? ` data-help-key="${m.help}"` : "";
+    const changeCls = eqChangeClass(fmt.change);
+    const toneCls = changeCls ? ` deriv-hero-block--${changeCls}` : "";
+    const tip = escapeMetricAttr(buildCompanyMetricTooltipHtml(m));
     return `
-      <article class="deriv-hero-block"${helpAttr}>
+      <article
+        class="deriv-hero-block deriv-hero-block--company${toneCls}"
+        data-metric-tip="${tip}"
+        tabindex="0"
+        aria-label="${escapeMetricAttr(`${m.label}: ${fmt.value}${fmt.sub ? `, ${fmt.sub}` : ""}`)}"
+      >
         <span class="deriv-hero-label">${m.label}</span>
-        <span class="deriv-hero-value ${eqChangeClass(fmt.change)}">${fmt.value}</span>
-        ${fmt.sub ? `<span class="deriv-hero-sub ${eqChangeClass(fmt.change)}">${fmt.sub}</span>` : ""}
-        <span class="deriv-hero-hint">${m.hint}</span>
+        <div class="deriv-hero-metric-body">
+          <span class="deriv-hero-value ${changeCls}">${fmt.value}</span>
+          ${fmt.sub ? `<span class="deriv-hero-sub ${changeCls}">${fmt.sub}</span>` : ""}
+        </div>
       </article>`;
   }).join("");
 }
@@ -1084,13 +1315,214 @@ function renderCompanyRange52w(summary, info) {
   if (marker) marker.style.left = `${Math.max(0, Math.min(100, summary.range52wPct))}%`;
 }
 
-function renderCompanyCommentary(data) {
-  const el = eqEl("equity-company-commentary");
+function renderCommentaryEl(id, paragraphs, emptyText) {
+  const el = eqEl(id);
   if (!el) return;
-  const paras = data?.commentary || [];
+  const paras = paragraphs || [];
   el.innerHTML = paras.length
     ? paras.map((p) => `<p>${p}</p>`).join("")
-    : "<p>No analysis available for this symbol yet.</p>";
+    : `<p>${emptyText || "No analysis available for this symbol yet."}</p>`;
+}
+
+function renderCompanyCommentary(data) {
+  renderCommentaryEl("equity-company-commentary", data?.commentary);
+}
+
+function seriesPctChange(series) {
+  const values = (series?.values || []).filter((v) => v != null);
+  if (values.length < 2 || !values[values.length - 2]) return null;
+  return ((values[values.length - 1] - values[values.length - 2]) / Math.abs(values[values.length - 2])) * 100;
+}
+
+function median(nums) {
+  const sorted = nums.filter((n) => n != null && !Number.isNaN(n)).sort((a, b) => a - b);
+  if (!sorted.length) return null;
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+function buildTabCommentaryFallback(data) {
+  const symbol = data?.symbol;
+  const info = data?.info || {};
+  const name = info.name || symbol || "This symbol";
+  const signals = data?.signals || [];
+  const last = lastValidOhlcvBar(data?.ohlcv);
+  const fin = data?.financials || {};
+  const charts = fin.charts || {};
+  const q = charts.quarterly || {};
+  const a = charts.annual || {};
+
+  const technicals = [];
+  if (!last) {
+    technicals.push("Not enough price history to compute technical indicators for this range.");
+  } else {
+    const parts = [];
+    if (signals[0]?.text) parts.push(signals[0].text.split("—")[0].trim());
+    if (signals[1]?.text) parts.push(signals[1].text.split("—")[0].trim());
+    const rsi = safeNum(last.rsi);
+    if (rsi != null) {
+      if (rsi > 70) parts.push(`RSI ${rsi.toFixed(1)} — overbought`);
+      else if (rsi < 30) parts.push(`RSI ${rsi.toFixed(1)} — oversold`);
+    }
+    const willr = safeNum(last.willr);
+    if (willr != null) {
+      if (willr > -20) parts.push(`Williams %R ${willr.toFixed(1)} — hot`);
+      else if (willr < -80) parts.push(`Williams %R ${willr.toFixed(1)} — cold`);
+    }
+    const atr = safeNum(last.atr);
+    const close = safeNum(last.close);
+    if (atr != null && close) {
+      parts.push(`~${((atr / close) * 100).toFixed(1)}% typical daily range (ATR)`);
+    }
+    technicals.push(
+      parts.length
+        ? `Technical read for ${name}: ${parts.slice(0, 4).join("; ")}.`
+        : "Indicators are in neutral territory — no strong overbought or oversold extremes.",
+    );
+    technicals.push(
+      "These readings describe momentum and volatility context only; combine with fundamentals before acting.",
+    );
+  }
+
+  const financials = [];
+  const revQ = seriesPctChange(q.revenue);
+  if (revQ != null) {
+    financials.push(
+      `Quarterly revenue ${revQ >= 0 ? "rose" : "fell"} ${Math.abs(revQ).toFixed(1)}% vs the prior quarter.`,
+    );
+  }
+  const niQ = seriesPctChange(q.netIncome);
+  if (niQ != null) {
+    financials.push(
+      `Quarterly net income ${niQ >= 0 ? "improved" : "declined"} ${Math.abs(niQ).toFixed(1)}% sequentially.`,
+    );
+  }
+  const marginVals = (q.netMargin?.values || []).map((v) => safeNum(v)).filter((v) => v != null);
+  if (marginVals.length >= 2) {
+    financials.push(
+      `Net margin moved from ${marginVals[marginVals.length - 2].toFixed(1)}% to ${marginVals[marginVals.length - 1].toFixed(1)}% in the latest quarter.`,
+    );
+  }
+  const ratios = fin.ratios || [];
+  if (ratios[0]) {
+    const r = ratios[0];
+    const bits = [];
+    if (r.debtEquity != null) bits.push(`debt/equity ${Number(r.debtEquity).toFixed(2)}×`);
+    if (r.currentRatio != null) bits.push(`current ratio ${Number(r.currentRatio).toFixed(2)}`);
+    if (bits.length) financials.push(`Latest balance sheet (${r.period || "recent"}): ${bits.join(", ")}.`);
+  }
+  if (!financials.length) {
+    financials.push(
+      "Financial statement data is limited for this symbol — charts and ratios may fill in after Yahoo updates filings.",
+    );
+  }
+
+  const valuation = [];
+  const pe = safeNum(info.pe);
+  const fpe = safeNum(info.forwardPe);
+  if (pe != null) valuation.push(`${name} trades at ${pe.toFixed(1)}× trailing earnings.`);
+  if (fpe != null && pe != null) {
+    if (fpe < pe * 0.85) {
+      valuation.push(`Forward P/E ${fpe.toFixed(1)}× is below trailing — earnings growth may be expected.`);
+    } else if (fpe > pe * 1.15) {
+      valuation.push(`Forward P/E ${fpe.toFixed(1)}× exceeds trailing — near-term profits may be softer.`);
+    }
+  }
+  const peerPes = (data.peersTable || [])
+    .filter((r) => r.ticker !== symbol)
+    .map((r) => safeNum(r.pe))
+    .filter((v) => v != null);
+  const medPe = median(peerPes);
+  if (pe != null && medPe != null) {
+    if (pe > medPe * 1.2) {
+      valuation.push(`Trailing P/E is above the peer median (${medPe.toFixed(1)}×).`);
+    } else if (pe < medPe * 0.8) {
+      valuation.push(`Trailing P/E is below the peer median (${medPe.toFixed(1)}×).`);
+    } else {
+      valuation.push(`Trailing P/E is near the peer median (${medPe.toFixed(1)}×).`);
+    }
+  }
+  const perf = data.peerPerformance?.series || {};
+  const endVals = Object.entries(perf)
+    .map(([sym, vals]) => [sym, safeNum(vals?.[vals.length - 1])])
+    .filter(([, val]) => val != null);
+  if (endVals.length >= 2) {
+    endVals.sort((x, y) => y[1] - x[1]);
+    valuation.push(
+      `Over the selected period, ${endVals[0][0]} leads rebased performance (${endVals[0][1].toFixed(1)}) vs ${endVals[endVals.length - 1][0]} (${endVals[endVals.length - 1][1].toFixed(1)}).`,
+    );
+  }
+  if (!valuation.length) {
+    valuation.push("Add peers from your watchlist for richer valuation comparison.");
+  }
+
+  const dividends = [];
+  const divYield = safeNum(info.divYield);
+  if (divYield != null && divYield > 0) {
+    dividends.push(`Indicated dividend yield is ${divYield.toFixed(2)}%.`);
+  }
+  const amounts = (data.dividends || []).map((d) => safeNum(d.amount)).filter((v) => v != null);
+  if (amounts.length) {
+    const ttm = amounts.slice(-4).reduce((s, v) => s + v, 0);
+    dividends.push(
+      `Trailing four payments total $${ttm.toFixed(2)} per share; latest was $${amounts[amounts.length - 1].toFixed(2)}.`,
+    );
+    if (amounts.length >= 2 && amounts[amounts.length - 2]) {
+      const chg = ((amounts[amounts.length - 1] - amounts[amounts.length - 2]) / amounts[amounts.length - 2]) * 100;
+      if (chg > 1) dividends.push(`Most recent dividend is ${chg.toFixed(1)}% above the prior payment.`);
+      else if (chg < -1) dividends.push(`Most recent dividend is ${Math.abs(chg).toFixed(1)}% below the prior payment.`);
+      else dividends.push("Recent dividends are stable versus the prior payment.");
+    }
+  }
+  if (!dividends.length) {
+    dividends.push("No regular dividend history on file — common for growth companies that reinvest cash flow.");
+  }
+
+  return { technicals, financials, valuation, dividends };
+}
+
+function resolveTabCommentary(data) {
+  const server = data?.tabCommentary;
+  let fallback = null;
+  const tabs = ["technicals", "financials", "valuation", "dividends"];
+  const out = {};
+  tabs.forEach((tab) => {
+    const serverParas = (server?.[tab] || []).filter((p) => p && String(p).trim());
+    if (serverParas.length) {
+      out[tab] = serverParas;
+      return;
+    }
+    if (!fallback) {
+      try {
+        fallback = buildTabCommentaryFallback(data);
+      } catch (err) {
+        console.error("Tab commentary fallback failed:", err);
+        fallback = {
+          technicals: ["Technical commentary is temporarily unavailable."],
+          financials: ["Financial commentary is temporarily unavailable."],
+          valuation: ["Valuation commentary is temporarily unavailable."],
+          dividends: ["Dividend commentary is temporarily unavailable."],
+        };
+      }
+    }
+    out[tab] = fallback[tab] || ["No tab-specific analysis available yet."];
+  });
+  return out;
+}
+
+const COMPANY_TAB_COMMENTARY_IDS = {
+  technicals: "equity-company-commentary-technicals",
+  financials: "equity-company-commentary-financials",
+  valuation: "equity-company-commentary-valuation",
+  dividends: "equity-company-commentary-dividends",
+};
+
+function renderCompanyTabCommentaries(data) {
+  if (!data?.symbol) return;
+  const tabCommentary = resolveTabCommentary(data);
+  Object.entries(COMPANY_TAB_COMMENTARY_IDS).forEach(([tab, id]) => {
+    renderCommentaryEl(id, tabCommentary[tab], "No tab-specific analysis available yet.");
+  });
 }
 
 function filterNewsForSymbol(articles, symbol) {
@@ -1223,32 +1655,37 @@ function renderCompanyTab(tab, data) {
 
   switch (tab) {
     case "overview":
-      renderCandlestick(eqEl("equity-company-candle"), data.ohlcv);
+      renderCandlestick(eqEl("equity-company-candle"), sanitizeCompanyOhlcv(data.ohlcv));
       break;
     case "technicals": {
-      renderIndicatorChart(eqEl("equity-company-rsi"), data.ohlcv, "rsi", "RSI (14)", 70, 30);
-      const macdExtra = data.ohlcv?.[0]?.macdSignal != null
+      const ohlcv = sanitizeCompanyOhlcv(data.ohlcv);
+      renderIndicatorChart(eqEl("equity-company-rsi"), ohlcv, "rsi", "RSI", 70, 30, [], {
+        yRange: [0, 100],
+      });
+      const stochExtra = ohlcvHasField(ohlcv, "stochD")
         ? [{
-          x: data.ohlcv.map((p) => p.date),
-          y: data.ohlcv.map((p) => p.macdSignal),
-          type: "scatter",
-          mode: "lines",
-          name: "Signal",
-          line: { width: 1.5, color: "#f59e0b" },
-        }]
-        : [];
-      renderIndicatorChart(eqEl("equity-company-macd"), data.ohlcv, "macd", "MACD", null, null, macdExtra);
-      const stochExtra = data.ohlcv?.[0]?.stochD != null
-        ? [{
-          x: data.ohlcv.map((p) => p.date),
-          y: data.ohlcv.map((p) => p.stochD),
+          x: ohlcv.map((p) => p.date),
+          y: ohlcv.map((p) => p.stochD),
           type: "scatter",
           mode: "lines",
           name: "%D",
           line: { width: 1.5, color: "#a78bfa", dash: "dot" },
         }]
         : [];
-      renderIndicatorChart(eqEl("equity-company-stoch"), data.ohlcv, "stochK", "Stochastic %K", 80, 20, stochExtra);
+      renderIndicatorChart(eqEl("equity-company-stoch"), ohlcv, "stochK", "%K", 80, 20, stochExtra, {
+        yRange: [0, 100],
+      });
+      renderIndicatorChart(eqEl("equity-company-willr"), ohlcv, "willr", "%R", -20, -80, [], {
+        yRange: [-100, 0],
+        lineColor: "#34d399",
+      });
+      renderMacdChart(eqEl("equity-company-macd"), ohlcv);
+      renderIndicatorChart(eqEl("equity-company-cci"), ohlcv, "cci", "CCI", 100, -100, [], {
+        lineColor: "#fbbf24",
+      });
+      renderIndicatorChart(eqEl("equity-company-atr"), ohlcv, "atr", "ATR", null, null, [], {
+        lineColor: "#fb7185",
+      });
       {
         const signals = eqEl("equity-company-signals");
         if (signals) {
@@ -1260,8 +1697,7 @@ function renderCompanyTab(tab, data) {
       break;
     }
     case "financials": {
-      const rev = (data.financials?.income || []).find((r) => /revenue/i.test(r.line));
-      if (rev) renderBarFinancial(eqEl("equity-company-revenue"), rev, "Revenue (reported)");
+      renderCompanyFinancials(data);
       const ratios = eqEl("equity-company-ratios-body");
       if (ratios) {
         ratios.innerHTML = (data.financials?.ratios || [])
@@ -1658,9 +2094,18 @@ function renderGlobalScreen(data) {
   }
 }
 
+function normalizeCompanyPayload(data) {
+  if (!data) return data;
+  const ohlcv = sanitizeCompanyOhlcv(data.ohlcv);
+  if (ohlcv === data.ohlcv) return data;
+  return { ...data, ohlcv };
+}
+
 function renderCompanyScreen(data) {
+  if (!data?.symbol) return;
+  data = normalizeCompanyPayload(data);
   equityCache.company = data;
-  resetEquityRenderedTabs(companyDataKey());
+  equityRenderedTabs.clear();
   const info = data.info || {};
 
   const nameEl = eqEl("equity-company-name");
@@ -1675,6 +2120,7 @@ function renderCompanyScreen(data) {
   renderCompanyMetrics(info);
   renderCompanyRange52w(data.summary, info);
   renderCompanyCommentary(data);
+  renderCompanyTabCommentaries(data);
   renderCompanyNews(data);
   renderCompanyWatchlist();
   renderCompanyPeerChips(
@@ -1763,7 +2209,7 @@ async function loadEquityGlobal() {
   try {
     const fetchKey = `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}`;
     await swr.runSWR({
-      key: `equity:global:${fetchKey}`,
+      key: `equity:global:v2:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
       validate: () => `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}` === fetchKey,
@@ -1796,7 +2242,7 @@ async function loadEquityCompany() {
   try {
     const fetchKey = companyPeriodFetchKey();
     await swr.runSWR({
-      key: `equity:company:${fetchKey}`,
+      key: `equity:company:v3:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
       validate: () => companyPeriodFetchKey() === fetchKey,

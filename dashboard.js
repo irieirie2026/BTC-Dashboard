@@ -4,6 +4,19 @@ const MENU_L3_KEY = "btc-menu-l3";
 const MENU_L4_KEY = "btc-menu-l4";
 
 const MENU_TREE = {
+  home: {
+    label: "Home",
+    accent: "#D50A0A",
+    accentDim: "rgba(213, 10, 10, 0.18)",
+    children: {
+      landing: {
+        label: "Home",
+        accent: "#D50A0A",
+        accentDim: "rgba(213, 10, 10, 0.18)",
+        onShow: () => window.initHomePage?.(),
+      },
+    },
+  },
   market: {
     label: "Market",
     accent: "#0ecb81",
@@ -445,18 +458,6 @@ const MENU_TREE = {
         accent: "#64748b",
         accentDim: "rgba(100, 116, 139, 0.18)",
         children: {
-          indices: {
-            label: "Indices",
-            accent: "#64748b",
-            accentDim: "rgba(100, 116, 139, 0.18)",
-            onShow: () => window.loadTradfiSection?.("stocks-indices"),
-          },
-          companies: {
-            label: "Companies",
-            accent: "#64748b",
-            accentDim: "rgba(100, 116, 139, 0.18)",
-            onShow: () => window.loadTradfiSection?.("stocks-companies"),
-          },
           globalInsights: {
             label: "Global Insights",
             accent: "#64748b",
@@ -641,6 +642,23 @@ const MENU_TREE = {
     accent: "#14b8a6",
     accentDim: "rgba(20, 184, 166, 0.18)",
     children: {
+      drivers: {
+        label: "Macro Drivers",
+        accent: "#14b8a6",
+        accentDim: "rgba(20, 184, 166, 0.18)",
+        children: {
+          overview: {
+            label: "Overview",
+            accent: "#14b8a6",
+            accentDim: "rgba(20, 184, 166, 0.18)",
+            onShow: () => {
+              window.initMacroDrivers?.();
+              window.loadMacroDrivers?.();
+            },
+          },
+        },
+      },
+
       rates: {
         label: "Rates",
         accent: "#0d9488",
@@ -667,19 +685,7 @@ const MENU_TREE = {
           },
         },
       },
-      liquidity: {
-        label: "Liquidity",
-        accent: "#5eead4",
-        accentDim: "rgba(94, 234, 212, 0.18)",
-        children: {
-          overview: {
-            label: "Overview",
-            accent: "#5eead4",
-            accentDim: "rgba(94, 234, 212, 0.18)",
-            onShow: () => window.loadMacroSection?.("liquidity"),
-          },
-        },
-      },
+
       risk: {
         label: "Risk",
         accent: "#f43f5e",
@@ -832,9 +838,33 @@ const MENU_TREE = {
       },
     },
   },
+  misc: {
+    label: "Misc",
+    accent: "#e879f9",
+    accentDim: "rgba(232, 121, 249, 0.18)",
+    children: {
+      park: {
+        label: "Park",
+        accent: "#d946ef",
+        accentDim: "rgba(217, 70, 239, 0.18)",
+        onShow: () => window.initMiscPage?.(),
+      },
+      bitcoin: {
+        label: "Bitcoin",
+        accent: "#f59e0b",
+        accentDim: "rgba(245, 158, 11, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(),
+      },
+    },
+  },
 };
 
 const DASHBOARD_META = {
+  home: {
+    title: "The Buccaneers",
+    subtitle: "Bitcoin command center · All dashboards",
+    pageTitle: "Home — BTC Dashboard",
+  },
   market: {
     title: "BTC / USDT",
     subtitle: "Binance Spot · Real-time",
@@ -882,7 +912,7 @@ const DASHBOARD_META = {
   },
   macro: {
     title: "BTC Macro",
-    subtitle: "Rates · Dollar · Liquidity · Risk",
+    subtitle: "Macro Drivers · Rates · Dollar · Risk",
     pageTitle: "BTC Macro — Live Dashboard",
   },
   news: {
@@ -890,9 +920,15 @@ const DASHBOARD_META = {
     subtitle: "Bitcoin-centric headlines by topic",
     pageTitle: "BTC News — Live Dashboard",
   },
+  misc: {
+    title: "Misc",
+    subtitle: "Bitcoin indicators · Parking lot",
+    pageTitle: "Misc — BTC Dashboard",
+  },
 };
 
 const LEGACY_L2 = {
+  home: { overview: "landing", landing: "landing" },
   market: { st1: "overview", st2: "orderbook", overview: "overview", orderbook: "orderbook" },
   onchain: {
     st1: "overview",
@@ -979,15 +1015,19 @@ const LEGACY_L2 = {
     hub: "wrapped",
   },
   macro: {
-    st1: "rates",
-    st2: "dollar",
-    st3: "liquidity",
-    st4: "risk",
-    st5: "inflation",
-    st6: "commodities",
+    st0: "drivers",
+    st1: "drivers",
+    st2: "rates",
+    st3: "dollar",
+    st4: "drivers",
+    st5: "risk",
+    st6: "inflation",
+    st7: "commodities",
+    drivers: "drivers",
+    global: "drivers",
     rates: "rates",
     dollar: "dollar",
-    liquidity: "liquidity",
+    liquidity: "drivers",
     risk: "risk",
     inflation: "inflation",
     commodities: "commodities",
@@ -1011,6 +1051,15 @@ const LEGACY_L2 = {
     x: "x",
     headlines: "all",
   },
+  misc: {
+    park: "park",
+    lab: "park",
+    bitcoin: "bitcoin",
+    btc: "bitcoin",
+    "greed-fear": "bitcoin",
+    greed: "bitcoin",
+    fear: "bitcoin",
+  },
 };
 
 const LEGACY_L3 = {
@@ -1030,9 +1079,9 @@ const LEGACY_L3 = {
   "stats/markov": { panel: "markov" },
   "stats/powerlaw": { panel: "powerlaw" },
   "tradfi/stocks": {
-    overview: "indices",
-    indices: "indices",
-    companies: "companies",
+    overview: "globalInsights",
+    indices: "globalInsights",
+    companies: "globalInsights",
     globalInsights: "globalInsights",
     companyInsights: "companyInsights",
     insights: "globalInsights",
@@ -1060,9 +1109,10 @@ const LEGACY_L3 = {
   "onchain/supply": { overview: "overview" },
   "onchain/addresses": { overview: "overview" },
   "onchain/lightning": { overview: "overview" },
+  "macro/drivers": { overview: "overview" },
+
   "macro/rates": { overview: "overview" },
   "macro/dollar": { overview: "overview" },
-  "macro/liquidity": { overview: "overview" },
   "macro/risk": { overview: "overview" },
   "macro/inflation": { overview: "overview" },
   "macro/commodities": { overview: "overview" },
@@ -1074,6 +1124,7 @@ const LEGACY_L3 = {
   "news/technology": { overview: "overview" },
   "news/onchain": { overview: "overview" },
   "news/x": { overview: "overview" },
+  "misc/bitcoin": { overview: "overview" },
 };
 
 const LEGACY_L4 = {
@@ -1190,6 +1241,11 @@ function renderLevelNav(slotId, level, l1, l2, activeId, onSelect, parentL3) {
 
   slot.innerHTML = "";
   if (!items || Object.keys(items).length === 0) {
+    slot.hidden = true;
+    return;
+  }
+
+  if (level === 2 && Object.keys(items).length === 1) {
     slot.hidden = true;
     return;
   }
@@ -1334,7 +1390,7 @@ function runOnShow(l1, l2, l3, l4) {
 }
 
 const MenuController = {
-  l1: "market",
+  l1: "home",
   l2: null,
   l3: null,
   l4: null,
@@ -1465,11 +1521,14 @@ const MenuController = {
     const usesDashboardMeta = [
       "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news",
     ];
-    if (marketMeta) marketMeta.hidden = l1 !== "market";
-    if (derivativesMeta) derivativesMeta.hidden = l1 !== "derivatives";
-    if (etfMeta) etfMeta.hidden = l1 !== "etf";
-    if (treasuryMeta) treasuryMeta.hidden = l1 !== "treasury";
-    if (dashboardMeta) dashboardMeta.hidden = !usesDashboardMeta.includes(l1);
+    const hideAllHeaderMeta = l1 === "home";
+    if (marketMeta) marketMeta.hidden = hideAllHeaderMeta || l1 !== "market";
+    if (derivativesMeta) derivativesMeta.hidden = hideAllHeaderMeta || l1 !== "derivatives";
+    if (etfMeta) etfMeta.hidden = hideAllHeaderMeta || l1 !== "etf";
+    if (treasuryMeta) treasuryMeta.hidden = hideAllHeaderMeta || l1 !== "treasury";
+    if (dashboardMeta) dashboardMeta.hidden = hideAllHeaderMeta || !usesDashboardMeta.includes(l1);
+
+    document.body.dataset.l1 = l1;
 
     if (l1 === "onchain" && typeof loadOnchainDashboard === "function") {
       loadOnchainDashboard();
@@ -1495,6 +1554,9 @@ const MenuController = {
     }
     if (l1 === "news" && typeof loadNewsDashboard === "function") {
       loadNewsDashboard();
+    }
+    if (l1 === "misc" && typeof initMiscPage === "function") {
+      initMiscPage();
     }
     if (l1 === "exchanges" && typeof loadExchangesDashboard === "function") {
       loadExchangesDashboard();
@@ -1536,7 +1598,7 @@ function initDashboardSwitcher() {
 
   const savedL1 = localStorage.getItem(MENU_L1_KEY);
   const validL1 = Object.keys(MENU_TREE);
-  MenuController.setLevel1(validL1.includes(savedL1) ? savedL1 : "market");
+  MenuController.setLevel1(validL1.includes(savedL1) ? savedL1 : "home");
 }
 
 window.MenuController = MenuController;

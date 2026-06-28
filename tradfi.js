@@ -37,6 +37,75 @@ const DEFAULT_INDICES = {
   ],
 };
 
+const EDITABLE_TRADFI = {
+  futures: {
+    storageKey: "tradfi:futures:v1",
+    defaults: {
+      heroes: ["ES=F", "NQ=F", "YM=F", "RTY=F"],
+      table: [
+        "CL=F", "GC=F", "SI=F", "NG=F", "ZB=F", "ZN=F", "ZF=F", "6E=F", "6J=F",
+      ],
+    },
+    tableMin: 9,
+    placeholder: "Contract",
+  },
+  rates: {
+    storageKey: "tradfi:rates:v1",
+    defaults: {
+      heroes: ["^TNX", "^FVX", "^TYX", "^IRX"],
+      table: ["TLT", "IEF", "SHY", "LQD", "HYG", "TIP", "AGG", "BND"],
+    },
+    tableMin: 8,
+    placeholder: "Symbol",
+  },
+  currencies: {
+    storageKey: "tradfi:currencies:v1",
+    defaults: {
+      heroes: ["DX-Y.NYB", "EURUSD=X", "USDJPY=X", "GBPUSD=X"],
+      table: [
+        "AUDUSD=X", "USDCAD=X", "USDCHF=X", "USDCNH=X",
+        "EURJPY=X", "EURGBP=X", "NZDUSD=X",
+      ],
+    },
+    tableMin: 7,
+    placeholder: "Pair",
+  },
+  commodities: {
+    storageKey: "tradfi:commodities:v1",
+    defaults: {
+      heroes: ["CL=F", "BZ=F", "GC=F", "SI=F"],
+      table: ["HG=F", "NG=F", "ZC=F", "ZS=F", "KC=F", "CT=F", "PL=F", "PA=F"],
+    },
+    tableMin: 8,
+    placeholder: "Contract",
+  },
+  sectors: {
+    storageKey: "tradfi:sectors:v1",
+    defaults: {
+      heroes: ["XLK", "XLF", "XLE", "XLV"],
+      table: [
+        "XLK", "XLF", "XLE", "XLV", "XLI", "XLP", "XLY", "XLU",
+        "XLRE", "XLB", "XLC",
+      ],
+    },
+    tableMin: 11,
+    placeholder: "ETF",
+  },
+  energy: {
+    storageKey: "tradfi:energy:v1",
+    defaults: {
+      heroes: ["CL=F", "BZ=F", "NG=F", "XLE"],
+      table: ["USO", "UNG", "XOM", "CVX", "COP", "OXY", "SLB", "HAL"],
+    },
+    tableMin: 8,
+    placeholder: "Symbol",
+  },
+};
+const EDITABLE_TRADFI_SECTIONS = Object.keys(EDITABLE_TRADFI);
+const EDITABLE_REFETCH_MS = 400;
+const EDITABLE_HERO_SLOTS = 4;
+const EDITABLE_TABLE_MAX = 50;
+
 const tradfiCache = {};
 let tradfiPollTimer = null;
 let tradfiActiveSection = null;
@@ -47,7 +116,27 @@ let companiesEventsBound = false;
 let indicesWatchlist = null;
 let indicesRefetchTimer = null;
 let indicesEventsBound = false;
+const editableState = {};
 const tfEl = (id) => document.getElementById(id);
+
+function getEditableCfg(section) {
+  return EDITABLE_TRADFI[section] || null;
+}
+
+function isEditableTradfiSection(section) {
+  return !!getEditableCfg(section);
+}
+
+function ensureEditableState(section) {
+  if (!editableState[section]) {
+    editableState[section] = {
+      watchlist: null,
+      refetchTimer: null,
+      eventsBound: false,
+    };
+  }
+  return editableState[section];
+}
 
 function tfFmtNum(n, d = 2) {
   if (n == null || Number.isNaN(n)) return "—";
@@ -196,9 +285,76 @@ function indicesCacheKey() {
   return `stocks-indices:${indicesWatchlist.heroes.join("|")}:${indicesWatchlist.table.join("|")}`;
 }
 
+function defaultEditableTableSlots(section) {
+  const cfg = getEditableCfg(section);
+  const slots = cfg.defaults.table.map((sym) => normalizeTicker(sym));
+  while (slots.length < cfg.tableMin) slots.push("");
+  return slots.slice(0, EDITABLE_TABLE_MAX);
+}
+
+function padEditableHeroSlots(heroes) {
+  const slots = heroes.map((sym) => normalizeTicker(sym));
+  while (slots.length < EDITABLE_HERO_SLOTS) slots.push("");
+  return slots.slice(0, EDITABLE_HERO_SLOTS);
+}
+
+function normalizeEditableTableSlots(section, table, isDefault = false) {
+  const cfg = getEditableCfg(section);
+  const slots = table.map((sym) => normalizeTicker(sym));
+  if (isDefault) {
+    while (slots.length < cfg.tableMin) slots.push("");
+  } else if (!slots.length) {
+    slots.push("");
+  }
+  return slots.slice(0, EDITABLE_TABLE_MAX);
+}
+
+function loadEditableWatchlist(section) {
+  const cfg = getEditableCfg(section);
+  if (!cfg) return null;
+  const state = ensureEditableState(section);
+
+  let saved = null;
+  try {
+    const raw = localStorage.getItem(cfg.storageKey);
+    if (raw) saved = JSON.parse(raw);
+  } catch {
+    saved = null;
+  }
+
+  const heroes = padEditableHeroSlots(
+    Array.isArray(saved?.heroes) ? saved.heroes : cfg.defaults.heroes,
+  );
+  const table = Array.isArray(saved?.table)
+    ? normalizeEditableTableSlots(section, saved.table, false)
+    : defaultEditableTableSlots(section);
+
+  state.watchlist = { heroes, table };
+  return state.watchlist;
+}
+
+function getEditableWatchlist(section) {
+  const state = ensureEditableState(section);
+  return state.watchlist || loadEditableWatchlist(section);
+}
+
+function persistEditableWatchlist(section) {
+  const cfg = getEditableCfg(section);
+  const state = ensureEditableState(section);
+  if (!cfg || !state.watchlist) return;
+  localStorage.setItem(cfg.storageKey, JSON.stringify(state.watchlist));
+}
+
+function editableCacheKey(section) {
+  const watchlist = getEditableWatchlist(section);
+  if (!watchlist) return section;
+  return `${section}:${watchlist.heroes.join("|")}:${watchlist.table.join("|")}`;
+}
+
 function tradfiSectionCacheKey(section) {
   if (section === "stocks-companies") return companiesCacheKey();
   if (section === "stocks-indices") return indicesCacheKey();
+  if (isEditableTradfiSection(section)) return editableCacheKey(section);
   return section;
 }
 
@@ -318,7 +474,9 @@ function watchlistQueryParams(section) {
       ? companiesWatchlist
       : section === "stocks-indices"
         ? indicesWatchlist
-        : null;
+        : isEditableTradfiSection(section)
+          ? getEditableWatchlist(section)
+          : null;
   if (!watchlist) return "";
   const params = new URLSearchParams();
   const heroes = watchlist.heroes.filter(Boolean);
@@ -335,7 +493,9 @@ async function fetchTradfiSection(section, opts = {}) {
 
   const res = await fetch(url, {
     cache:
-      section === "stocks-companies" || section === "stocks-indices"
+      section === "stocks-companies" ||
+      section === "stocks-indices" ||
+      isEditableTradfiSection(section)
         ? "no-store"
         : "default",
   });
@@ -580,7 +740,681 @@ function bindIndicesEvents() {
   });
 }
 
+function scheduleEditableRefetch(section, immediate = false) {
+  const state = ensureEditableState(section);
+  if (state.refetchTimer) clearTimeout(state.refetchTimer);
+  if (immediate) {
+    loadTradfiSection(section);
+    return;
+  }
+  state.refetchTimer = setTimeout(() => {
+    state.refetchTimer = null;
+    if (tradfiActiveSection === section) {
+      loadTradfiSection(section);
+    }
+  }, EDITABLE_REFETCH_MS);
+}
+
+function updateEditableFromInputs(section) {
+  const watchlist = getEditableWatchlist(section);
+  if (!watchlist) return;
+
+  const heroInputs = document.querySelectorAll(
+    `#tradfi-${section}-heroes .tradfi-ticker-input`,
+  );
+  heroInputs.forEach((input, i) => {
+    watchlist.heroes[i] = normalizeTicker(input.value);
+  });
+
+  const rowInputs = document.querySelectorAll(
+    `#tradfi-${section}-table-body .tradfi-ticker-input`,
+  );
+  const table = [];
+  rowInputs.forEach((input) => {
+    table.push(normalizeTicker(input.value));
+  });
+  watchlist.table = normalizeEditableTableSlots(section, table, false);
+  persistEditableWatchlist(section);
+}
+
+function bindEditableEvents(section) {
+  const state = ensureEditableState(section);
+  if (state.eventsBound) return;
+  state.eventsBound = true;
+
+  const heroes = tfEl(`tradfi-${section}-heroes`);
+  const tableBody = tfEl(`tradfi-${section}-table-body`);
+  const addBtn = tfEl(`tradfi-${section}-add-row`);
+
+  const onTickerInput = () => {
+    updateEditableFromInputs(section);
+    scheduleEditableRefetch(section, false);
+  };
+
+  const onTickerCommit = () => {
+    updateEditableFromInputs(section);
+    scheduleEditableRefetch(section, true);
+  };
+
+  heroes?.addEventListener("input", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerInput();
+  });
+  heroes?.addEventListener("change", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerCommit();
+  });
+  heroes?.addEventListener("keydown", (e) => {
+    if (
+      e.target.classList.contains("tradfi-ticker-input") &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      e.target.blur();
+      onTickerCommit();
+    }
+  });
+
+  tableBody?.addEventListener("input", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerInput();
+  });
+  tableBody?.addEventListener("change", (e) => {
+    if (e.target.classList.contains("tradfi-ticker-input")) onTickerCommit();
+  });
+  tableBody?.addEventListener("keydown", (e) => {
+    if (
+      e.target.classList.contains("tradfi-ticker-input") &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      e.target.blur();
+      onTickerCommit();
+    }
+  });
+
+  tableBody?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tradfi-row-remove");
+    if (!btn || btn.disabled) return;
+    const row = btn.closest("tr");
+    const idx = Number(row?.dataset.rowIndex);
+    if (!Number.isFinite(idx)) return;
+    const watchlist = getEditableWatchlist(section);
+    if (watchlist.table.length <= 1) return;
+    watchlist.table.splice(idx, 1);
+    if (!watchlist.table.length) watchlist.table.push("");
+    persistEditableWatchlist(section);
+    scheduleEditableRefetch(section, true);
+  });
+
+  addBtn?.addEventListener("click", () => {
+    const watchlist = getEditableWatchlist(section);
+    if (watchlist.table.length >= EDITABLE_TABLE_MAX) return;
+    watchlist.table.push("");
+    persistEditableWatchlist(section);
+    const focus = {
+      key: `table-${watchlist.table.length - 1}`,
+      start: 0,
+      end: 0,
+    };
+    const cached = tradfiCache[editableCacheKey(section)];
+    if (cached) {
+      renderEditableSection(section, cached);
+    } else {
+      renderEditableTable(section, {
+        priceMode:
+          section === "rates"
+            ? "yield"
+            : section === "currencies"
+              ? "fx"
+              : "price",
+      });
+    }
+    restoreTickerFocus(focus);
+  });
+}
+
+function tradfiQuoteBySymbol(symbol, data) {
+  const sym = normalizeTicker(symbol);
+  const heroes = data?.heroes || [];
+  const table = data?.table || [];
+  return (
+    heroes.find((r) => normalizeTicker(r?.symbol) === sym) ||
+    table.find((r) => normalizeTicker(r?.symbol) === sym)
+  );
+}
+
+function appendTradfiMovers(lines, rows) {
+  const sorted = [...rows].sort(
+    (a, b) => (b.changePct ?? -Infinity) - (a.changePct ?? -Infinity),
+  );
+  const gainers = sorted.filter((r) => (r.changePct ?? 0) > 0).slice(0, 3);
+  const losers = sorted.filter((r) => (r.changePct ?? 0) < 0).slice(-3).reverse();
+  if (gainers.length) {
+    lines.push(
+      `Strongest: ${gainers
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+  if (losers.length) {
+    lines.push(
+      `Weakest: ${losers
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+}
+
+function appendTradfiChartMoves(lines, data) {
+  const charts = data.charts?.length
+    ? data.charts
+    : data.chart?.points?.length
+      ? [data.chart]
+      : [];
+  if (!charts.length) return;
+  const moves = charts
+    .map((ch) => {
+      const pts = ch.points || [];
+      if (pts.length < 2) return null;
+      const first = pts[0].close;
+      const last = pts[pts.length - 1].close;
+      if (!first) return null;
+      return {
+        label: ch.label || ch.symbol,
+        ret: ((last - first) / first) * 100,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => Math.abs(b.ret) - Math.abs(a.ret))
+    .slice(0, 3);
+  if (moves.length) {
+    lines.push(
+      `3-month leaders: ${moves
+        .map((m) => `${m.label} ${tfFmtPct(m.ret)}`)
+        .join(" · ")}.`,
+    );
+  }
+}
+
+function appendTradfiW1Momentum(lines, rows) {
+  const w1Leaders = rows
+    .filter((r) => r.perf?.w1 != null)
+    .sort((a, b) => (b.perf.w1 ?? 0) - (a.perf.w1 ?? 0))
+    .slice(0, 2);
+  if (w1Leaders.length >= 2) {
+    lines.push(
+      `1-week momentum: ${w1Leaders
+        .map((r) => `${r.name || r.symbol} ${tfFmtPerf(r.perf.w1)}`)
+        .join(" vs ")}.`,
+    );
+  }
+}
+
+function appendEditableFooter(lines) {
+  lines.push(
+    "Edit hero symbols and table rows — changes save locally and refresh quotes automatically.",
+  );
+}
+
+function buildFuturesCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "price";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+
+  if (!heroes.length && !table.length) {
+    return ["Futures data unavailable — check tickers (Yahoo suffix =F)."];
+  }
+
+  const equitySyms = new Set(["ES=F", "NQ=F", "YM=F", "RTY=F", "MES=F", "MNQ=F"]);
+  const commoditySyms = new Set([
+    "CL=F", "BZ=F", "GC=F", "SI=F", "NG=F", "HG=F", "ZC=F", "ZS=F",
+  ]);
+  const ratesSyms = new Set(["ZB=F", "ZN=F", "ZF=F", "ZT=F", "TN=F"]);
+  const fxSyms = new Set(["6E=F", "6J=F", "6B=F", "6A=F", "6C=F", "6S=F"]);
+
+  const bucket = (sym) => {
+    if (equitySyms.has(sym)) return "equity";
+    if (commoditySyms.has(sym)) return "commodity";
+    if (ratesSyms.has(sym)) return "rates";
+    if (fxSyms.has(sym)) return "fx";
+    return "other";
+  };
+
+  const es = tradfiQuoteBySymbol("ES=F", data);
+  const nq = tradfiQuoteBySymbol("NQ=F", data);
+  const lead = es || nq || heroes[0] || table[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `Front-month CME contracts via Yahoo Finance · delayed.`,
+  );
+
+  const equityRows = [...heroes, ...table].filter(
+    (r) => bucket(r.symbol) === "equity" && r.price != null,
+  );
+  if (equityRows.length >= 2) {
+    const avgPct =
+      equityRows.reduce((s, r) => s + (r.changePct ?? 0), 0) / equityRows.length;
+    const tone =
+      avgPct > 0.15 ? "risk-on" : avgPct < -0.15 ? "risk-off" : "mixed";
+    lines.push(
+      `Equity index complex (${equityRows.map((r) => r.symbol).join(", ")}): ` +
+        `avg session ${tfFmtPct(avgPct)} — ${tone} tone across US benchmarks.`,
+    );
+  } else if (es && nq && es.changePct != null && nq.changePct != null) {
+    const spread = nq.changePct - es.changePct;
+    if (Math.abs(spread) >= 0.1) {
+      lines.push(
+        `Nasdaq vs S&P spread ${tfFmtPct(spread)} — ` +
+          `${spread > 0 ? "growth/tech leading" : "defensive large-cap tone"}.`,
+      );
+    }
+  }
+
+  const commodityRows = [...heroes, ...table].filter(
+    (r) => bucket(r.symbol) === "commodity" && r.price != null,
+  );
+  if (commodityRows.length) {
+    const cl = commodityRows.find((r) => r.symbol === "CL=F");
+    const gc = commodityRows.find((r) => r.symbol === "GC=F");
+    const parts = commodityRows
+      .slice(0, 4)
+      .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`);
+    let extra = "";
+    if (cl && gc) {
+      const inflationRead =
+        cl.changePct > 0 && gc.changePct > 0
+          ? "inflation-hedge bid"
+          : cl.changePct < 0 && gc.changePct < 0
+            ? "growth scare / USD firmness"
+            : "divergent commodity signals";
+      extra = ` (${inflationRead})`;
+    }
+    lines.push(`Commodities: ${parts.join(" · ")}${extra}.`);
+  }
+
+  const ratesRows = [...heroes, ...table].filter(
+    (r) => bucket(r.symbol) === "rates" && r.price != null,
+  );
+  if (ratesRows.length) {
+    const zn = ratesRows.find((r) => r.symbol === "ZN=F");
+    const zb = ratesRows.find((r) => r.symbol === "ZB=F");
+    const note = zn || ratesRows[0];
+    let curveHint = "";
+    if (zn && zb && zn.changePct != null && zb.changePct != null) {
+      const durLead = zb.changePct - zn.changePct;
+      if (Math.abs(durLead) >= 0.05) {
+        curveHint =
+          durLead > 0
+            ? " Long end outperforming — duration bid."
+            : " Front-end firmer — policy-path repricing.";
+      }
+    }
+    lines.push(
+      `Rates futures: ${note.name || note.symbol} ${tfFmtPct(note.changePct)}` +
+        `${curveHint}`,
+    );
+  }
+
+  const fxRows = [...heroes, ...table].filter(
+    (r) => bucket(r.symbol) === "fx" && r.price != null,
+  );
+  if (fxRows.length) {
+    lines.push(
+      `FX futures: ${fxRows
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")} — dollar cross-asset anchor.`,
+    );
+  }
+
+  const allRows = [...heroes, ...table];
+  appendTradfiMovers(lines, allRows);
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+function buildRatesCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "yield";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+  const allRows = [...heroes, ...table];
+
+  if (!allRows.length) {
+    return ["Rates data unavailable — try ^TNX, ^FVX, TLT, IEF."];
+  }
+
+  const tnx = tradfiQuoteBySymbol("^TNX", data);
+  const fvx = tradfiQuoteBySymbol("^FVX", data);
+  const tyx = tradfiQuoteBySymbol("^TYX", data);
+  const irx = tradfiQuoteBySymbol("^IRX", data);
+  const lead = tnx || heroes[0] || table[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `Treasury yields and bond ETF proxies · delayed.`,
+  );
+
+  if (tnx && irx && tnx.price != null && irx.price != null) {
+    const slope = tnx.price - irx.price;
+    lines.push(
+      `Curve snapshot: 10Y ${tfFmtNum(tnx.price, 2)}% vs 13-week ${tfFmtNum(irx.price, 2)}% ` +
+        `(10Y–bill spread ${tfFmtNum(slope, 2)} pp).`,
+    );
+  }
+  if (tnx && fvx && tyx) {
+    const belly = fvx.changePct ?? 0;
+    const longEnd = tyx.changePct ?? 0;
+    if (Math.abs(longEnd - belly) >= 0.05) {
+      lines.push(
+        longEnd > belly
+          ? "Long end moving more than belly — duration-sensitive ETFs (TLT) in focus."
+          : "Front/middle of curve leading — front-end policy repricing tone.",
+      );
+    }
+  }
+
+  const tlt = tradfiQuoteBySymbol("TLT", data);
+  const ief = tradfiQuoteBySymbol("IEF", data);
+  const hyg = tradfiQuoteBySymbol("HYG", data);
+  const lqd = tradfiQuoteBySymbol("LQD", data);
+  if (tlt && ief) {
+    lines.push(
+      `Duration ETFs: TLT ${tfFmtPct(tlt.changePct)} · IEF ${tfFmtPct(ief.changePct)}.`,
+    );
+  }
+  if (hyg && lqd) {
+    const spread = (hyg.changePct ?? 0) - (lqd.changePct ?? 0);
+    lines.push(
+      `Credit: HYG ${tfFmtPct(hyg.changePct)} vs LQD ${tfFmtPct(lqd.changePct)} ` +
+        `(${spread > 0 ? "risk-on credit" : "defensive IG tone"}).`,
+    );
+  }
+
+  appendTradfiMovers(lines, allRows);
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+function buildCurrenciesCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "fx";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+  const allRows = [...heroes, ...table];
+
+  if (!allRows.length) {
+    return ["FX data unavailable — try DX-Y.NYB, EURUSD=X, USDJPY=X."];
+  }
+
+  const dxy = tradfiQuoteBySymbol("DX-Y.NYB", data);
+  const eur = tradfiQuoteBySymbol("EURUSD=X", data);
+  const jpy = tradfiQuoteBySymbol("USDJPY=X", data);
+  const lead = dxy || eur || heroes[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `G10 and dollar index quotes · delayed.`,
+  );
+
+  if (dxy) {
+    const tone =
+      (dxy.changePct ?? 0) > 0.1
+        ? "firm dollar"
+        : (dxy.changePct ?? 0) < -0.1
+          ? "soft dollar"
+          : "range-bound dollar";
+    lines.push(
+      `Dollar tone: ${tfFmtPct(dxy.changePct)} — ${tone}; often pressures commodities and EM FX when firm.`,
+    );
+  }
+
+  const g10 = [eur, jpy, tradfiQuoteBySymbol("GBPUSD=X", data)].filter(Boolean);
+  if (g10.length >= 2) {
+    lines.push(
+      `G10: ${g10
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+
+  const cnh = tradfiQuoteBySymbol("USDCNH=X", data);
+  const aud = tradfiQuoteBySymbol("AUDUSD=X", data);
+  if (cnh || aud) {
+    const parts = [cnh, aud].filter(Boolean).map(
+      (r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`,
+    );
+    lines.push(`Risk-sensitive crosses: ${parts.join(" · ")}.`);
+  }
+
+  appendTradfiMovers(lines, allRows);
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+function buildCommoditiesCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "price";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+  const allRows = [...heroes, ...table];
+
+  if (!allRows.length) {
+    return ["Commodity data unavailable — try CL=F, GC=F, SI=F."];
+  }
+
+  const cl = tradfiQuoteBySymbol("CL=F", data);
+  const gc = tradfiQuoteBySymbol("GC=F", data);
+  const lead = cl || gc || heroes[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `Energy, metals, and ag futures · delayed.`,
+  );
+
+  const energy = allRows.filter((r) =>
+    ["CL=F", "BZ=F", "NG=F"].includes(r.symbol),
+  );
+  const metals = allRows.filter((r) =>
+    ["GC=F", "SI=F", "HG=F", "PL=F", "PA=F"].includes(r.symbol),
+  );
+  if (energy.length) {
+    lines.push(
+      `Energy: ${energy
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+  if (metals.length) {
+    lines.push(
+      `Metals: ${metals
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+  if (cl && gc) {
+    const read =
+      cl.changePct > 0 && gc.changePct > 0
+        ? "inflation-hedge bid across energy and gold"
+        : cl.changePct < 0 && gc.changePct < 0
+          ? "growth/USD headwinds on real assets"
+          : "mixed commodity signals";
+    lines.push(`Cross-asset read: ${read}.`);
+  }
+
+  appendTradfiMovers(lines, allRows);
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+function buildSectorsCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "price";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+  const allRows = [...heroes, ...table];
+
+  if (!allRows.length) {
+    return ["Sector data unavailable — try XLK, XLF, XLE, SPY."];
+  }
+
+  const spy = tradfiQuoteBySymbol("SPY", data);
+  const xlk = tradfiQuoteBySymbol("XLK", data);
+  const xlu = tradfiQuoteBySymbol("XLU", data);
+  const lead = spy || heroes[0] || table[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `US sector ETF performance · delayed.`,
+  );
+
+  const cyclical = ["XLK", "XLF", "XLY", "XLI", "XLE"];
+  const defensive = ["XLU", "XLP", "XLV"];
+  const cycRows = allRows.filter((r) => cyclical.includes(r.symbol));
+  const defRows = allRows.filter((r) => defensive.includes(r.symbol));
+  if (cycRows.length && defRows.length) {
+    const cycAvg =
+      cycRows.reduce((s, r) => s + (r.changePct ?? 0), 0) / cycRows.length;
+    const defAvg =
+      defRows.reduce((s, r) => s + (r.changePct ?? 0), 0) / defRows.length;
+    const rot = cycAvg - defAvg;
+    lines.push(
+      `Rotation: cyclicals avg ${tfFmtPct(cycAvg)} vs defensives ${tfFmtPct(defAvg)} ` +
+        `(${rot > 0.1 ? "risk-on sector tilt" : rot < -0.1 ? "defensive leadership" : "balanced"}).`,
+    );
+  }
+
+  const ranked = [...allRows]
+    .filter((r) => r.changePct != null)
+    .sort((a, b) => (b.changePct ?? 0) - (a.changePct ?? 0));
+  if (ranked.length >= 3) {
+    lines.push(
+      `Leaders: ${ranked
+        .slice(0, 3)
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+    lines.push(
+      `Laggards: ${ranked
+        .slice(-3)
+        .reverse()
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+
+  if (xlk && xlu && xlk.changePct != null && xlu.changePct != null) {
+    const growthDef = xlk.changePct - xlu.changePct;
+    if (Math.abs(growthDef) >= 0.1) {
+      lines.push(
+        `Tech vs Utilities spread ${tfFmtPct(growthDef)} — ` +
+          `${growthDef > 0 ? "growth bid" : "bond-proxy bid"}.`,
+      );
+    }
+  }
+
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+function buildEnergyCommentary(data) {
+  const lines = [];
+  const mode = data.priceMode || "price";
+  const heroes = (data.heroes || []).filter((h) => h.symbol && h.price != null);
+  const table = (data.table || []).filter((r) => r.symbol && r.price != null);
+  const allRows = [...heroes, ...table];
+
+  if (!allRows.length) {
+    return ["Energy data unavailable — try CL=F, NG=F, XLE, XOM."];
+  }
+
+  const cl = tradfiQuoteBySymbol("CL=F", data);
+  const ng = tradfiQuoteBySymbol("NG=F", data);
+  const xle = tradfiQuoteBySymbol("XLE", data);
+  const lead = cl || xle || heroes[0];
+
+  lines.push(
+    `${data.title}: ${lead.name || lead.symbol} at ${tfFmtPrice(lead, mode)} ` +
+      `(${tfFmtChange(lead.change, mode)}, ${tfFmtPct(lead.changePct)}). ` +
+      `Crude, gas, and energy equities · delayed.`,
+  );
+
+  if (cl && ng) {
+    lines.push(
+      `Futures: WTI ${tfFmtPct(cl.changePct)} · Nat Gas ${tfFmtPct(ng.changePct)}.`,
+    );
+  }
+
+  const oils = allRows.filter((r) =>
+    ["XOM", "CVX", "COP", "OXY"].includes(r.symbol),
+  );
+  const services = allRows.filter((r) =>
+    ["SLB", "HAL"].includes(r.symbol),
+  );
+  if (oils.length) {
+    lines.push(
+      `Integrated oils: ${oils
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+  if (services.length) {
+    lines.push(
+      `Services: ${services
+        .map((r) => `${r.name || r.symbol} ${tfFmtPct(r.changePct)}`)
+        .join(" · ")}.`,
+    );
+  }
+
+  const uso = tradfiQuoteBySymbol("USO", data);
+  if (cl && uso && cl.changePct != null && uso.changePct != null) {
+    const etfLag = uso.changePct - cl.changePct;
+    if (Math.abs(etfLag) >= 0.15) {
+      lines.push(
+        `USO vs WTI spread ${tfFmtPct(etfLag)} — ETF tracking/roll dynamics.`,
+      );
+    }
+  }
+  if (xle && cl) {
+    lines.push(
+      `Equity beta: XLE ${tfFmtPct(xle.changePct)} vs crude ${tfFmtPct(cl.changePct)}.`,
+    );
+  }
+
+  appendTradfiMovers(lines, allRows);
+  appendTradfiChartMoves(lines, data);
+  appendTradfiW1Momentum(lines, allRows);
+  appendEditableFooter(lines);
+  return lines;
+}
+
+const TRADFI_COMMENTARY_BUILDERS = {
+  futures: buildFuturesCommentary,
+  rates: buildRatesCommentary,
+  currencies: buildCurrenciesCommentary,
+  commodities: buildCommoditiesCommentary,
+  sectors: buildSectorsCommentary,
+  energy: buildEnergyCommentary,
+};
+
 function buildTradfiCommentary(data) {
+  const builder = TRADFI_COMMENTARY_BUILDERS[data.section];
+  if (builder) return builder(data);
+
   const lines = [];
   const mode = data.priceMode || "price";
   const heroes = data.heroes || [];
@@ -627,24 +1461,7 @@ function buildTradfiCommentary(data) {
     );
   }
 
-  if (data.section === "rates") {
-    const tnx = heroes.find((h) => h.symbol === "^TNX");
-    const irx = heroes.find((h) => h.symbol === "^IRX");
-    if (tnx && irx) {
-      lines.push(
-        `Curve snapshot: 10Y ${tfFmtNum(tnx.price, 2)}% vs 13-week ${tfFmtNum(irx.price, 2)}%. ` +
-          `Watch TLT/IEF for duration risk.`,
-      );
-    }
-  } else if (data.section === "currencies") {
-    lines.push(
-      `Dollar tone sets the cross-asset backdrop — firm DXY often pressures commodities and EM FX.`,
-    );
-  } else if (data.section === "energy") {
-    lines.push(
-      `Energy complex led by crude and nat gas; equity beta via XLE and supermajors in the table.`,
-    );
-  } else if (data.section === "stocks-indices") {
+  if (data.section === "stocks-indices") {
     const vix = table.find((r) => r.symbol === "^VIX");
     if (vix) {
       lines.push(
@@ -855,6 +1672,129 @@ function renderTradfiIndicesTable(section, data) {
 function renderIndicesEditable(section, data) {
   renderIndicesHeroes(section, data);
   renderTradfiIndicesTable(section, data);
+}
+
+function renderEditableHeroes(section, data) {
+  const cfg = getEditableCfg(section);
+  const watchlist = getEditableWatchlist(section);
+  const strip = tfEl(`tradfi-${section}-heroes`);
+  if (!strip || !cfg || !watchlist) return;
+  const mode = data.priceMode || "price";
+  const focus = captureTickerFocus();
+  const placeholder = cfg.placeholder || "Symbol";
+
+  if (!data?.fetchedAt) {
+    strip.innerHTML = watchlist.heroes
+      .map(
+        (sym, i) => `
+      <article class="deriv-hero-block tradfi-hero-editable">
+        <input
+          type="text"
+          class="tradfi-ticker-input tradfi-ticker-input--hero"
+          value="${sym}"
+          placeholder="${placeholder}"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Hero symbol ${i + 1}"
+          data-tradfi-focus="hero-${i}"
+        />
+        <span class="deriv-hero-value">—</span>
+        <span class="deriv-hero-sub">Loading…</span>
+      </article>`,
+      )
+      .join("");
+    restoreTickerFocus(focus);
+    return;
+  }
+
+  strip.innerHTML = watchlist.heroes
+    .map((sym, i) => {
+      const q = lookupQuote(sym, data);
+      const name = companyDisplayName(q, sym);
+      return `
+      <article class="deriv-hero-block tradfi-hero-editable">
+        <input
+          type="text"
+          class="tradfi-ticker-input tradfi-ticker-input--hero"
+          value="${sym}"
+          placeholder="${placeholder}"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Hero symbol ${i + 1}"
+          data-tradfi-focus="hero-${i}"
+        />
+        ${name ? `<span class="deriv-hero-label">${name}</span>` : ""}
+        <span class="deriv-hero-value ${tfChangeClass(q?.changePct)}">${tfFmtPrice(q, mode)}</span>
+        <span class="deriv-hero-sub">${tfFmtChange(q?.change, mode)} · ${tfFmtPct(q?.changePct)}</span>
+      </article>`;
+    })
+    .join("");
+
+  restoreTickerFocus(focus);
+}
+
+function renderEditableTable(section, data) {
+  const cfg = getEditableCfg(section);
+  const watchlist = getEditableWatchlist(section);
+  const body = tfEl(`tradfi-${section}-table-body`);
+  if (!body || !cfg || !watchlist) return;
+  const mode = data.priceMode || "price";
+  const focus = captureTickerFocus();
+  const canRemove = watchlist.table.length > 1;
+  const loading = !data?.fetchedAt;
+  const placeholder = cfg.placeholder || "Symbol";
+
+  if (loading) {
+    body.innerHTML = `<tr><td colspan="11">Loading market data…</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = watchlist.table
+    .map((sym, i) => {
+      const q = lookupQuote(sym, data);
+      const name = companyDisplayName(q, sym);
+      const perf = q?.perf || {};
+      return `
+      <tr data-row-index="${i}">
+        <td>
+          <input
+            type="text"
+            class="tradfi-ticker-input"
+            value="${sym}"
+            placeholder="${placeholder}"
+            spellcheck="false"
+            autocomplete="off"
+            aria-label="Row symbol ${i + 1}"
+            data-tradfi-focus="table-${i}"
+          />
+        </td>
+        <td class="tradfi-company-name">${name}</td>
+        <td class="mono">${tfFmtPrice(q, mode)}</td>
+        <td class="mono ${tfChangeClass(q?.change)}">${tfFmtChange(q?.change, mode)}</td>
+        <td class="mono ${tfChangeClass(q?.changePct)}">${tfFmtPct(q?.changePct)}</td>
+        <td class="mono ${tfChangeClass(perf.w1)}">${tfFmtPerf(perf.w1)}</td>
+        <td class="mono ${tfChangeClass(perf.m1)}">${tfFmtPerf(perf.m1)}</td>
+        <td class="mono ${tfChangeClass(perf.m3)}">${tfFmtPerf(perf.m3)}</td>
+        <td class="mono ${tfChangeClass(perf.m12)}">${tfFmtPerf(perf.m12)}</td>
+        <td class="mono ${tfChangeClass(perf.ytd)}">${tfFmtPerf(perf.ytd)}</td>
+        <td class="tradfi-row-actions">
+          <button
+            type="button"
+            class="tradfi-row-remove"
+            aria-label="Remove row ${i + 1}"
+            ${canRemove ? "" : "disabled"}
+          >×</button>
+        </td>
+      </tr>`;
+    })
+    .join("");
+
+  restoreTickerFocus(focus);
+}
+
+function renderEditableSection(section, data) {
+  renderEditableHeroes(section, data);
+  renderEditableTable(section, data);
 }
 
 function renderTradfiTable(section, data) {
@@ -1224,6 +2164,9 @@ function renderTradfiScreen(section, data, opts = {}) {
   } else if (section === "stocks-indices") {
     bindIndicesEvents();
     renderIndicesEditable(section, data);
+  } else if (isEditableTradfiSection(section)) {
+    bindEditableEvents(section);
+    renderEditableSection(section, data);
   } else {
     renderTradfiHeroes(section, data);
     renderTradfiTable(section, data);
@@ -1257,6 +2200,10 @@ async function loadTradfiSection(section) {
     loadSavedIndices();
     bindIndicesEvents();
   }
+  if (isEditableTradfiSection(section)) {
+    loadEditableWatchlist(section);
+    bindEditableEvents(section);
+  }
 
   const swr = window.DashboardSWR;
   if (!swr) return;
@@ -1276,6 +2223,9 @@ async function loadTradfiSection(section) {
         if (section === "stocks-indices") {
           return indicesCacheKey() === fetchKey;
         }
+        if (isEditableTradfiSection(section)) {
+          return editableCacheKey(section) === fetchKey;
+        }
         return true;
       },
       fetch: () => fetchTradfiSection(section),
@@ -1287,11 +2237,24 @@ async function loadTradfiSection(section) {
             renderTradfiCompaniesTable(section, { priceMode: "price" });
           } else if (section === "stocks-indices") {
             renderTradfiIndicesTable(section, { priceMode: "price" });
+          } else if (isEditableTradfiSection(section)) {
+            const priceMode =
+              data?.priceMode ||
+              (section === "rates"
+                ? "yield"
+                : section === "currencies"
+                  ? "fx"
+                  : "price");
+            renderEditableTable(section, { priceMode });
           } else if (body) {
             body.innerHTML =
               '<tr><td colspan="4">Loading market data…</td></tr>';
           }
-          if (section === "stocks-indices" || section === "stocks-companies") {
+          if (
+            section === "stocks-indices" ||
+            section === "stocks-companies" ||
+            isEditableTradfiSection(section)
+          ) {
             const chartsEl = tfEl(`tradfi-${section}-charts`);
             if (chartsEl) chartsEl.innerHTML = "";
           }
@@ -1313,6 +2276,9 @@ async function loadTradfiSection(section) {
           section === "stocks-indices" &&
           indicesCacheKey() !== fetchKey
         ) {
+          return;
+        }
+        if (isEditableTradfiSection(section) && editableCacheKey(section) !== fetchKey) {
           return;
         }
         renderTradfiScreen(section, data, opts);

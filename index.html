@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=47" />
+    <link rel="stylesheet" href="styles.css?v=70" />
   </head>
   <body>
     <div class="app app--compact">
@@ -48,7 +48,8 @@
 
       <div id="menu-tree" class="menu-tree menu-tree--compact">
         <nav class="dashboard-nav menu-l1" aria-label="Main sections">
-          <button type="button" class="dash-tab dash-tab--l1 active" data-dashboard="market">Market</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="home">Home</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="market">Market</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="onchain">On Chain</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="exchanges">Exchanges</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="derivatives">Derivatives</button>
@@ -59,6 +60,7 @@
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="defi">DeFi</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="macro">Macro</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="news">News</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="misc">Misc</button>
         </nav>
         <div id="menu-l2-slot" class="menu-l2-slot">
           <nav class="dashboard-nav menu-l2" aria-label="Market sections">
@@ -75,7 +77,61 @@
         <div id="menu-l4-slot" class="menu-l4-slot" hidden></div>
       </div>
 
-      <div id="dashboard-market" class="dashboard-view">
+      <div id="dashboard-home" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="home" data-l2="landing">
+          <div class="home-page">
+            <header class="home-banner">
+              <div class="home-banner-media" aria-hidden="true">
+                <img
+                  src="assets/home-banner.jpg"
+                  alt=""
+                  class="home-banner-img"
+                  width="1920"
+                  height="640"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+              </div>
+              <div class="home-banner-scrim" aria-hidden="true"></div>
+              <div class="home-banner-body">
+                <div class="home-banner-crest" aria-hidden="true">
+                  <svg viewBox="0 0 80 80" class="home-crest-svg">
+                    <circle cx="40" cy="40" r="36" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                    <circle cx="40" cy="40" r="28" fill="rgba(213,10,10,0.12)" stroke="currentColor" stroke-width="1"/>
+                    <path d="M40 14 L44 36 L40 32 L36 36 Z" fill="currentColor"/>
+                    <path d="M40 66 L36 44 L40 48 L44 44 Z" fill="currentColor" opacity="0.35"/>
+                    <path d="M14 40 L36 36 L32 40 L36 44 Z" fill="currentColor" opacity="0.55"/>
+                    <path d="M66 40 L44 44 L48 40 L44 36 Z" fill="currentColor" opacity="0.55"/>
+                    <circle cx="40" cy="40" r="4" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="home-banner-copy">
+                  <p class="home-banner-eyebrow">Command deck · Twelve live dashboards</p>
+                  <h2 class="home-banner-title" data-help-key="home-page">The Buccaneers</h2>
+                  <p class="home-banner-lead">
+                    Navigate spot markets, on-chain metrics, derivatives, corporate treasuries,
+                    macro drivers, and TradFi equity — all from one bridge.
+                  </p>
+                </div>
+                <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">12</span><span class="home-banner-chip-lbl">Dashboards</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">Live</span><span class="home-banner-chip-lbl">Spot &amp; perps</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">On-chain</span><span class="home-banner-chip-lbl">Network data</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">TradFi</span><span class="home-banner-chip-lbl">Equity insights</span></li>
+                </ul>
+              </div>
+            </header>
+            <section class="home-grid-section">
+              <h3 class="home-grid-title">Choose your course</h3>
+              <div id="home-section-grid" class="home-section-grid" role="list"></div>
+            </section>
+            <footer class="home-footer">
+              <p>For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div id="dashboard-market" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="market" data-l2="overview" data-l3="spot">
       <section class="price-hero">
         <div class="price-main">
@@ -1594,95 +1650,7 @@
           <span class="tradfi-refresh-dot"></span>
           <span class="tradfi-refresh-text"></span>
         </div>
-        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="indices" data-tradfi-section="stocks-indices">
-          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-stocks-indices-heroes"></section>
-          <section class="panel">
-            <div class="panel-header tradfi-companies-header">
-              <h2 data-help-key="tradfi-indices-watchlist">Global Indices</h2>
-              <div class="tradfi-companies-toolbar">
-                <button type="button" id="tradfi-stocks-indices-add-row" class="tradfi-add-row-btn">+ Add index</button>
-                <span class="panel-meta" id="tradfi-stocks-indices-update">Yahoo Finance · delayed</span>
-              </div>
-            </div>
-            <div class="deriv-table-wrap tradfi-indices-table-wrap">
-              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--indices tradfi-markets-table--companies">
-                <thead>
-                  <tr>
-                    <th>Ticker</th>
-                    <th>Name</th>
-                    <th>Last</th>
-                    <th>Chg</th>
-                    <th>Chg %</th>
-                    <th>1W</th>
-                    <th>1M</th>
-                    <th>3M</th>
-                    <th>12M</th>
-                    <th>YTD</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="tradfi-stocks-indices-table-body"></tbody>
-              </table>
-            </div>
-          </section>
-          <div class="tradfi-charts-row" id="tradfi-stocks-indices-charts"></div>
-          <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2>Market Analysis</h2></div>
-            <div class="stats-commentary" id="tradfi-stocks-indices-commentary"><p>Loading…</p></div>
-          </section>
-          <section class="panel tradfi-companies-news-panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-indices-news">Index News</h2>
-              <span class="panel-meta">Yahoo Finance · watchlist</span>
-            </div>
-            <div class="news-feed tradfi-companies-news" id="tradfi-stocks-indices-news"><p class="news-empty">Loading headlines…</p></div>
-          </section>
-        </div>
-        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="companies" data-tradfi-section="stocks-companies" hidden>
-          <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-stocks-companies-heroes"></section>
-          <section class="panel">
-            <div class="panel-header tradfi-companies-header">
-              <h2 data-help-key="tradfi-companies-watchlist">Bellwethers</h2>
-              <div class="tradfi-companies-toolbar">
-                <button type="button" id="tradfi-stocks-companies-add-row" class="tradfi-add-row-btn">+ Add company</button>
-                <span class="panel-meta" id="tradfi-stocks-companies-update">Yahoo Finance · delayed</span>
-              </div>
-            </div>
-            <div class="deriv-table-wrap tradfi-companies-table-wrap">
-              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
-                <thead>
-                  <tr>
-                    <th>Ticker</th>
-                    <th>Name</th>
-                    <th>Last</th>
-                    <th>Chg</th>
-                    <th>Chg %</th>
-                    <th>1W</th>
-                    <th>1M</th>
-                    <th>3M</th>
-                    <th>12M</th>
-                    <th>YTD</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="tradfi-stocks-companies-table-body"></tbody>
-              </table>
-            </div>
-          </section>
-          <div class="tradfi-charts-row tradfi-charts-row--companies" id="tradfi-stocks-companies-charts"></div>
-          <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2>Market Analysis</h2></div>
-            <div class="stats-commentary" id="tradfi-stocks-companies-commentary"><p>Loading…</p></div>
-          </section>
-          <section class="panel tradfi-companies-news-panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-companies-news">Company News</h2>
-              <span class="panel-meta">Yahoo Finance · watchlist</span>
-            </div>
-            <div class="news-feed tradfi-companies-news" id="tradfi-stocks-companies-news"><p class="news-empty">Loading headlines…</p></div>
-          </section>
-        </div>
-        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="globalInsights" id="equity-global-screen" hidden>
+        <div class="menu-screen" data-l1="tradfi" data-l2="stocks" data-l3="globalInsights" id="equity-global-screen">
           <section class="panel equity-panel">
             <div class="panel-header equity-toolbar">
               <h2 data-help-key="equity-global-insights">Global Insights</h2>
@@ -1843,6 +1811,15 @@
                 </div>
               </div>
               <div id="equity-company-candle" class="equity-plotly-chart equity-plotly-chart--company-main"></div>
+              <section class="panel tradfi-companies-news-panel equity-company-news-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="equity-company-news">Company News</h2>
+                  <span class="panel-meta" id="equity-company-news-latest">Selected company · loading</span>
+                </div>
+                <div class="news-feed tradfi-companies-news" id="equity-company-news">
+                  <p class="news-empty">Loading headlines…</p>
+                </div>
+              </section>
             </div>
             <div class="equity-subpanel equity-company-subpanel" data-tab="technicals" hidden>
               <p class="equity-section-note">Momentum and trend indicators derived from daily closes. Dotted lines mark standard overbought/oversold thresholds — not buy/sell signals on their own.</p>
@@ -1853,14 +1830,29 @@
                   <div id="equity-company-rsi" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
                 </section>
                 <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-stoch">Stochastic</h3>
+                  <p class="equity-chart-card-hint">%K and %D vs recent range — &gt;80 hot, &lt;20 cold.</p>
+                  <div id="equity-company-stoch" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-willr">Williams %R</h3>
+                  <p class="equity-chart-card-hint">Momentum oscillator — above −20 overbought, below −80 oversold.</p>
+                  <div id="equity-company-willr" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+                <section class="equity-chart-card">
                   <h3 class="equity-chart-card-title" data-help-key="equity-company-macd">MACD</h3>
-                  <p class="equity-chart-card-hint">Moving-average convergence/divergence — line crossovers hint at momentum shifts.</p>
+                  <p class="equity-chart-card-hint">MACD line, signal, and histogram — crossovers hint at momentum shifts.</p>
                   <div id="equity-company-macd" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
                 </section>
                 <section class="equity-chart-card">
-                  <h3 class="equity-chart-card-title" data-help-key="equity-company-stoch">Stochastic %K</h3>
-                  <p class="equity-chart-card-hint">Position within recent high/low range — &gt;80 hot, &lt;20 cold.</p>
-                  <div id="equity-company-stoch" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-cci">CCI (20)</h3>
+                  <p class="equity-chart-card-hint">Commodity Channel Index — &gt;100 strong, &lt;−100 weak vs recent mean.</p>
+                  <div id="equity-company-cci" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title" data-help-key="equity-company-atr">ATR (14)</h3>
+                  <p class="equity-chart-card-hint">Average True Range — higher values mean larger daily price swings.</p>
+                  <div id="equity-company-atr" class="equity-plotly-chart equity-plotly-chart--company-indicator"></div>
                 </section>
               </div>
               <div class="equity-signals-panel">
@@ -1868,10 +1860,67 @@
                 <p class="equity-section-note equity-section-note--tight">Plain-language read of current indicator states. Combine with price action and fundamentals before acting.</p>
                 <div id="equity-company-signals"></div>
               </div>
+              <section class="panel stats-commentary-panel equity-tab-commentary-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="equity-company-commentary-technicals">Technicals analysis</h2>
+                  <span class="panel-meta">Momentum, trend &amp; volatility context</span>
+                </div>
+                <div class="stats-commentary" id="equity-company-commentary-technicals"><p>Loading analysis…</p></div>
+              </section>
             </div>
             <div class="equity-subpanel equity-company-subpanel" data-tab="financials" hidden>
-              <p class="equity-section-note">Reported revenue and balance-sheet health from Yahoo Finance filings. Ratios help gauge leverage and short-term liquidity.</p>
-              <div id="equity-company-revenue" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
+              <p class="equity-section-note">Quarterly and annual figures from Yahoo Finance filings — up to 7 quarters and 5 fiscal years where available. Charts are compact; hover for exact values.</p>
+              <h3 class="equity-fin-section-title">Quarterly</h3>
+              <div class="equity-company-chart-grid equity-financial-chart-grid">
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Revenue</h3>
+                  <p class="equity-chart-card-hint">Total revenue per fiscal quarter.</p>
+                  <div id="equity-company-fin-revenue-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Net income</h3>
+                  <p class="equity-chart-card-hint">Bottom-line profit after expenses and tax.</p>
+                  <div id="equity-company-fin-netincome-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Gross profit</h3>
+                  <p class="equity-chart-card-hint">Revenue minus cost of goods sold.</p>
+                  <div id="equity-company-fin-grossprofit-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Operating cash flow</h3>
+                  <p class="equity-chart-card-hint">Cash generated from core operations.</p>
+                  <div id="equity-company-fin-opcashflow-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Free cash flow</h3>
+                  <p class="equity-chart-card-hint">Operating cash flow minus capex.</p>
+                  <div id="equity-company-fin-fcf-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Net margin</h3>
+                  <p class="equity-chart-card-hint">Net income ÷ revenue per quarter.</p>
+                  <div id="equity-company-fin-margin-q" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+              </div>
+              <h3 class="equity-fin-section-title">Annual</h3>
+              <div class="equity-company-chart-grid equity-financial-chart-grid equity-financial-chart-grid--annual">
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Revenue</h3>
+                  <p class="equity-chart-card-hint">Fiscal-year total revenue.</p>
+                  <div id="equity-company-fin-revenue-a" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Net income</h3>
+                  <p class="equity-chart-card-hint">Fiscal-year net profit.</p>
+                  <div id="equity-company-fin-netincome-a" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+                <section class="equity-chart-card">
+                  <h3 class="equity-chart-card-title">Operating cash flow</h3>
+                  <p class="equity-chart-card-hint">Full-year cash from operations.</p>
+                  <div id="equity-company-fin-opcashflow-a" class="equity-plotly-chart equity-plotly-chart--financial"></div>
+                </section>
+              </div>
               <section class="panel equity-company-table-panel">
                 <div class="panel-header"><h2>Balance sheet ratios</h2></div>
                 <div class="deriv-table-wrap">
@@ -1881,6 +1930,13 @@
                   </table>
                 </div>
                 <p class="equity-table-legend"><strong>Debt/Equity</strong> — total debt vs shareholder equity. <strong>Current ratio</strong> — current assets ÷ current liabilities (&gt;1 suggests coverage of near-term obligations).</p>
+              </section>
+              <section class="panel stats-commentary-panel equity-tab-commentary-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="equity-company-commentary-financials">Financials analysis</h2>
+                  <span class="panel-meta">Revenue, margins &amp; balance-sheet trends</span>
+                </div>
+                <div class="stats-commentary" id="equity-company-commentary-financials"><p>Loading analysis…</p></div>
               </section>
             </div>
             <div class="equity-subpanel equity-company-subpanel" data-tab="valuation" hidden>
@@ -1899,178 +1955,210 @@
                 <p class="equity-chart-card-hint">All series rebased to 100 at the start of the selected period.</p>
                 <div id="equity-company-peer-chart" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
               </section>
+              <section class="panel stats-commentary-panel equity-tab-commentary-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="equity-company-commentary-valuation">Valuation analysis</h2>
+                  <span class="panel-meta">Multiples vs peers &amp; relative performance</span>
+                </div>
+                <div class="stats-commentary" id="equity-company-commentary-valuation"><p>Loading analysis…</p></div>
+              </section>
             </div>
             <div class="equity-subpanel equity-company-subpanel" data-tab="dividends" hidden>
               <p class="equity-section-note">Historical cash dividends per share. Yield in the hero strip uses trailing twelve-month payments vs current price.</p>
               <div id="equity-company-div-chart" class="equity-plotly-chart equity-plotly-chart--company-mid"></div>
+              <section class="panel stats-commentary-panel equity-tab-commentary-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="equity-company-commentary-dividends">Dividend analysis</h2>
+                  <span class="panel-meta">Yield, payout level &amp; trend</span>
+                </div>
+                <div class="stats-commentary" id="equity-company-commentary-dividends"><p>Loading analysis…</p></div>
+              </section>
             </div>
-            <section class="panel tradfi-companies-news-panel equity-company-news-panel">
-              <div class="panel-header">
-                <h2 data-help-key="equity-company-news">Company News</h2>
-                <span class="panel-meta" id="equity-company-news-latest">Selected company · loading</span>
-              </div>
-              <div class="news-feed tradfi-companies-news" id="equity-company-news">
-                <p class="news-empty">Loading headlines…</p>
-              </div>
-            </section>
           </section>
           <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="futures" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-futures-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-futures-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Futures Markets</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-futures-add-row" class="tradfi-add-row-btn">+ Add contract</button>
+                <span class="panel-meta" id="tradfi-futures-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Contract</th>
+                    <th>Name</th>
+                    <th>Last</th>
+                    <th>Chg</th>
+                    <th>Chg %</th>
+                    <th>1W</th>
+                    <th>1M</th>
+                    <th>3M</th>
+                    <th>12M</th>
+                    <th>YTD</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-futures-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-futures-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-futures-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--futures" id="tradfi-futures-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-futures-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="rates" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-rates-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-rates-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Rates &amp; Bonds</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-rates-add-row" class="tradfi-add-row-btn">+ Add symbol</button>
+                <span class="panel-meta" id="tradfi-rates-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Symbol</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th>
+                    <th>1W</th><th>1M</th><th>3M</th><th>12M</th><th>YTD</th><th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-rates-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-rates-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-rates-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--rates" id="tradfi-rates-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-rates-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="currencies" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-currencies-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-currencies-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Currencies</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-currencies-add-row" class="tradfi-add-row-btn">+ Add pair</button>
+                <span class="panel-meta" id="tradfi-currencies-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Pair</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th>
+                    <th>1W</th><th>1M</th><th>3M</th><th>12M</th><th>YTD</th><th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-currencies-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-currencies-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-currencies-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--currencies" id="tradfi-currencies-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-currencies-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="commodities" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-commodities-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-commodities-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Commodities</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-commodities-add-row" class="tradfi-add-row-btn">+ Add commodity</button>
+                <span class="panel-meta" id="tradfi-commodities-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Contract</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th>
+                    <th>1W</th><th>1M</th><th>3M</th><th>12M</th><th>YTD</th><th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-commodities-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-commodities-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-commodities-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--commodities" id="tradfi-commodities-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-commodities-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="sectors" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-sectors-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-sectors-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Sector ETFs</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-sectors-add-row" class="tradfi-add-row-btn">+ Add sector</button>
+                <span class="panel-meta" id="tradfi-sectors-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Sector</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>ETF</th><th>Sector</th><th>Last</th><th>Chg</th><th>Chg %</th>
+                    <th>1W</th><th>1M</th><th>3M</th><th>12M</th><th>YTD</th><th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-sectors-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-sectors-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-sectors-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--sectors" id="tradfi-sectors-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-sectors-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
         <div class="menu-screen" data-l1="tradfi" data-l2="energy" data-l3="overview" hidden>
           <section class="deriv-hero-strip tradfi-hero-strip" id="tradfi-energy-heroes"></section>
           <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-markets-table">Markets</h2>
-              <span class="panel-meta" id="tradfi-energy-update">Yahoo Finance · delayed</span>
+            <div class="panel-header tradfi-companies-header">
+              <h2 data-help-key="tradfi-markets-table">Energy Markets</h2>
+              <div class="tradfi-companies-toolbar">
+                <button type="button" id="tradfi-energy-add-row" class="tradfi-add-row-btn">+ Add symbol</button>
+                <span class="panel-meta" id="tradfi-energy-update">Yahoo Finance · delayed</span>
+              </div>
             </div>
-            <div class="deriv-table-wrap">
-              <table class="deriv-table tradfi-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+            <div class="deriv-table-wrap tradfi-companies-table-wrap">
+              <table class="deriv-table tradfi-markets-table tradfi-companies-table tradfi-markets-table--companies">
+                <thead>
+                  <tr>
+                    <th>Symbol</th><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th>
+                    <th>1W</th><th>1M</th><th>3M</th><th>12M</th><th>YTD</th><th></th>
+                  </tr>
+                </thead>
                 <tbody id="tradfi-energy-table-body"></tbody>
               </table>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header">
-              <h2 data-help-key="tradfi-benchmark-chart" id="tradfi-energy-chart-title">Benchmark</h2>
-              <span class="panel-meta">3-month · daily</span>
-            </div>
-            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="tradfi-energy-chart" height="140"></canvas></div>
-          </section>
+          <div class="tradfi-charts-row tradfi-charts-row--energy" id="tradfi-energy-charts"></div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header"><h2>Market Analysis</h2></div>
             <div class="stats-commentary" id="tradfi-energy-commentary"><p>Loading…</p></div>
           </section>
+          <p class="equity-disclaimer">Data from Yahoo Finance (~15 min delayed). For educational use only — not financial advice.</p>
         </div>
       </div>
 
@@ -2229,7 +2317,289 @@
       </div>
 
       <div id="dashboard-macro" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="macro" data-l2="rates" data-l3="overview">
+        <div class="menu-screen" data-l1="macro" data-l2="drivers" data-l3="overview">
+          <section class="panel md-toolbar">
+            <div class="panel-header md-toolbar-header">
+              <h2 data-help-key="macro-drivers-title">Macro Drivers</h2>
+              <span class="panel-meta" id="macro-drivers-update">WB → IMF → DBnomics</span>
+            </div>
+            <p class="md-stats" id="md-stats"></p>
+          </section>
+          <nav class="macro-drivers-subnav" aria-label="Macro Drivers sections">
+            <button type="button" class="macro-drivers-subtab active" data-md-sub="overview">Overview</button>
+            <button type="button" class="macro-drivers-subtab" data-md-sub="economy">Economy &amp; Growth</button>
+            <button type="button" class="macro-drivers-subtab" data-md-sub="charts">Charts</button>
+            <button type="button" class="macro-drivers-subtab" data-md-sub="liquidity">Liquidity</button>
+            <button type="button" class="macro-drivers-subtab" data-md-sub="commentary">Commentary</button>
+          </nav>
+          <section class="panel md-filters" id="md-filters-panel">
+            <div class="md-controls">
+              <div class="md-control-group" data-md-control-group="overview,economy,charts">
+                <span class="md-control-group-label">Scope</span>
+                <div class="md-control-group-fields">
+                  <label class="md-field">
+                    <span class="md-field-label">Year<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-year" aria-label="Explain year">?</button></span>
+                    <select id="md-year" class="md-select"></select>
+                  </label>
+                  <label class="md-field">
+                    <span class="md-field-label">Region<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-region" aria-label="Explain region">?</button></span>
+                    <select id="md-region" class="md-select"></select>
+                  </label>
+                  <label class="md-field">
+                    <span class="md-field-label">Income group<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-income" aria-label="Explain income group">?</button></span>
+                    <select id="md-income" class="md-select"></select>
+                  </label>
+                  <label class="md-field md-field--search">
+                    <span class="md-field-label">Country search<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-search" aria-label="Explain country search">?</button></span>
+                    <input id="md-search" class="md-input" type="search" placeholder="Search country or code" />
+                  </label>
+                </div>
+              </div>
+              <div class="md-control-group" data-md-control-group="overview,charts">
+                <span class="md-control-group-label">Visualization</span>
+                <div class="md-control-group-fields">
+                  <label class="md-field">
+                    <span class="md-field-label"><span id="md-metric-label-text">Map indicator</span><button type="button" class="help-trigger help-trigger--inline" data-help-key="md-metric" aria-label="Explain map indicator">?</button></span>
+                    <select id="md-metric" class="md-select"></select>
+                  </label>
+                </div>
+              </div>
+              <div class="md-control-group" data-md-control-group="overview,economy">
+                <span class="md-control-group-label">Table options</span>
+                <div class="md-control-group-fields md-control-group-fields--checks">
+                  <label class="md-check">
+                    <input type="checkbox" id="md-show-aggregates" checked />
+                    <span>Regional aggregates</span>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-show-aggregates" aria-label="Explain regional aggregates">?</button>
+                  </label>
+                  <label class="md-check">
+                    <input type="checkbox" id="md-featured-aggs" />
+                    <span>Featured aggregates only</span>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-featured-aggs" aria-label="Explain featured aggregates only">?</button>
+                  </label>
+                </div>
+              </div>
+              <div class="md-control-group" data-md-control-group="overview,economy,charts">
+                <span class="md-control-group-label">Actions</span>
+                <div class="md-control-group-fields md-control-group-fields--actions">
+                  <span class="md-btn-group">
+                    <button type="button" id="md-refresh" class="md-btn">Refresh data</button>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-refresh-data" aria-label="Explain refresh data">?</button>
+                  </span>
+                  <button type="button" id="md-export" class="md-btn md-btn--secondary">Export CSV</button>
+                  <button type="button" id="md-methodology-btn" class="md-btn md-btn--secondary">Sources &amp; Methodology</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="md-kpi-section">
+            <div id="md-kpis" class="md-kpi-grid"></div>
+          </div>
+          <div class="macro-drivers-panel" data-md-sub="overview">
+            <section class="panel">
+              <div class="panel-header"><h2 id="md-table-title">Global snapshot</h2><span class="panel-meta">Every value shows source badge · click rows for charts</span></div>
+              <div class="deriv-table-wrap md-table-wrap">
+                <table class="deriv-table md-table">
+                  <thead id="md-table-head"></thead>
+                  <tbody id="md-table-body"><tr><td colspan="12">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header"><h2>World map</h2><span class="panel-meta">Map indicator + Year + Region/Income · hover for value + source</span></div>
+              <div id="md-map" class="md-plotly"></div>
+            </section>
+          </div>
+          <div class="macro-drivers-panel" data-md-sub="economy" hidden>
+            <nav class="md-economy-subnav" aria-label="Economy indicator groups">
+              <button type="button" class="md-economy-subtab active" data-md-eco="growth">Growth &amp; Income</button>
+              <button type="button" class="md-economy-subtab" data-md-eco="prices">Prices &amp; Stability</button>
+              <button type="button" class="md-economy-subtab" data-md-eco="trade">Trade &amp; Investment</button>
+              <button type="button" class="md-economy-subtab" data-md-eco="labor">Labor Market</button>
+            </nav>
+            <section class="panel">
+              <div class="panel-header"><h2>Economy data table</h2><span class="panel-meta">Columns from sub-tab below · filtered by Region, Income, Search</span></div>
+              <div class="deriv-table-wrap md-table-wrap">
+                <table class="deriv-table md-table">
+                  <thead id="md-table-head-eco"></thead>
+                  <tbody id="md-table-body-eco"><tr><td colspan="12">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <div class="macro-drivers-panel" data-md-sub="charts" hidden>
+            <section class="panel">
+              <div class="panel-header"><h2>Multi-country time series</h2><span class="panel-meta">Chart indicator · select countries in Overview table</span></div>
+              <div id="md-timeseries" class="md-plotly"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header"><h2>Country ranking</h2><span class="panel-meta">Chart indicator + Year · top 20 countries in current scope</span></div>
+              <div id="md-ranking" class="md-plotly"></div>
+            </section>
+          </div>
+          <div class="macro-drivers-panel" data-md-sub="liquidity" hidden>
+            <section class="panel md-lq-toolbar">
+              <div class="panel-header">
+                <h2 data-help-key="md-lq-title">Global Liquidity Proxy</h2>
+                <span class="panel-meta" id="md-lq-update">CB BS + Broad Money + FX Reserves</span>
+              </div>
+              <nav id="md-lq-breadcrumb" class="md-lq-breadcrumb" aria-label="Liquidity scope"></nav>
+              <p class="md-lq-formula" id="md-lq-formula"></p>
+              <div class="md-lq-controls">
+                <label class="md-field"><span class="md-field-label">View<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-view" aria-label="Explain view">?</button></span><select id="md-lq-entity" class="md-select"></select></label>
+                <label class="md-field"><span class="md-field-label">Table year<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-year" aria-label="Explain table year">?</button></span><select id="md-lq-year" class="md-select"></select></label>
+                <label class="md-field"><span class="md-field-label">Map metric<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-map-metric" aria-label="Explain map metric">?</button></span><select id="md-lq-map-metric" class="md-select"><option value="proxy">Proxy (USD)</option><option value="yoy">YoY %</option></select></label>
+                <label class="md-check"><input type="checkbox" id="md-lq-overlay" /> <span class="md-field-label">Market overlay (TLT · HYG · VIX)<button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-overlay" aria-label="Explain market overlay">?</button></span></label>
+                <span class="md-btn-group">
+                  <button type="button" id="md-lq-export" class="md-btn md-btn--secondary">Export CSV</button>
+                  <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-export" aria-label="Explain export CSV">?</button>
+                  <button type="button" id="md-lq-methodology-btn" class="md-btn md-btn--secondary">Sources &amp; Methodology</button>
+                  <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-lq-methodology" aria-label="Explain sources and methodology">?</button>
+                  <button type="button" id="md-lq-refresh" class="md-btn">Refresh liquidity</button>
+                  <button type="button" class="help-trigger help-trigger--inline" data-help-key="md-refresh-liquidity" aria-label="Explain refresh liquidity">?</button>
+                </span>
+              </div>
+              <div id="md-lq-kpis" class="md-lq-kpi-grid"></div>
+            </section>
+            <section class="panel md-lq-chart-panel">
+              <div class="panel-header"><h2 data-help-key="md-lq-map">Global liquidity map</h2><span class="panel-meta">Click a country to sync charts</span></div>
+              <div class="md-lq-chart-detail">
+                <p>Geographic snapshot for the <strong>table year</strong>. Each country is colored by either total liquidity stock or its YoY change, depending on Map metric.</p>
+                <ul>
+                  <li><strong>Proxy (USD):</strong> dark ocean base → bright teal = larger CB + money + reserves stock.</li>
+                  <li><strong>YoY %:</strong> muted green = growth; dark red = contraction (diverging dark-theme scale).</li>
+                  <li>Hover for country name, value, proxy size, and data sources (WB · IMF · DB · Proxy).</li>
+                  <li>Click any country to set View and reload all charts below for that economy.</li>
+                </ul>
+              </div>
+              <div id="md-lq-map" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel md-lq-chart-panel">
+              <div class="panel-header"><h2 data-help-key="md-lq-global-chart">Liquidity proxy · USD</h2><span class="panel-meta">Stacked components</span></div>
+              <div class="md-lq-chart-detail">
+                <p>Historical <strong>liquidity stock</strong> for the selected View. X-axis = calendar years (same scale as Regional chart).</p>
+                <ul>
+                  <li><strong>Teal bars (left axis):</strong> three stacked components — central bank assets, broad money, FX reserves ex-gold.</li>
+                  <li><strong>Teal line (right axis):</strong> total proxy = sum of the three components in USD.</li>
+                  <li>Bar segments use the 4-tier hierarchy; hover shows USD value and source badge per component.</li>
+                  <li>Rising stacks = expanding official liquidity; shifts in color mix show whether CB, money, or reserves drove the change.</li>
+                </ul>
+              </div>
+              <div id="md-lq-global-chart" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel md-lq-chart-panel">
+              <div class="panel-header"><h2 data-help-key="md-lq-growth-chart">YoY growth &amp; 3m SAR</h2><span class="panel-meta">Monthly SAR · dashed = projected through Dec 2026</span></div>
+              <div class="md-lq-chart-detail">
+                <p><strong>Growth rates</strong> for the selected View — how fast the liquidity stock is changing, not its level.</p>
+                <ul>
+                  <li><strong>Green filled (annual):</strong> YoY % from World Bank–frequency proxy — (stockₜ / stockₜ₋₁ − 1) × 100.</li>
+                  <li><strong>Left axis (green / cyan):</strong> YoY % — annual (filled green) and monthly (dashed cyan) on the World Bank / FRED proxy.</li>
+                  <li><strong>Right axis (gold):</strong> true 3m SAR from FRED — ((Lₜ / Lₜ₋₃)⁴ − 1) × 100 on US / Japan / Euro area feeds. Own scale so COVID QE spikes stay readable.</li>
+                  <li>Both axes share a <strong>coincident 0%</strong> line — compare whether near-term SAR and YoY growth are above or below flat liquidity.</li>
+                  <li>X-axis uses <strong>calendar years</strong> when only annual data exists; switches to a <strong>date axis</strong> (year ticks) when monthly FRED feeds are available.</li>
+                </ul>
+              </div>
+              <div id="md-lq-growth-chart" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel md-lq-chart-panel" id="md-lq-credit-gap-panel" hidden>
+              <div class="panel-header"><h2 data-help-key="md-lq-credit-gap-chart">BIS credit-to-GDP gap</h2><span class="panel-meta" id="md-lq-credit-gap-meta">Private NFC · BIS quarterly</span></div>
+              <div class="md-lq-chart-detail">
+                <p><strong>Private credit cycle</strong> (BIS) — complements the liquidity stock charts above. Measures whether private non-financial credit is above or below its long-term trend.</p>
+                <ul>
+                  <li><strong>Formula:</strong> credit-to-GDP ratio minus HP-filter trend, in percentage points of GDP.</li>
+                  <li><strong>Zero line:</strong> credit on trend; positive = above trend; negative = below trend.</li>
+                  <li><strong>+10 pp dashed red:</strong> BIS early-warning threshold for systemic credit risk.</li>
+                  <li><strong>−10 pp dashed cyan:</strong> deep below-trend reference.</li>
+                  <li>X-axis = <strong>quarter-end dates</strong> with yearly ticks — aligned with the date scale used on Growth and Market overlay charts.</li>
+                  <li>Hover shows the BIS quarter label (e.g. 2025-Q4) and gap value.</li>
+                </ul>
+              </div>
+              <div id="md-lq-credit-gap-chart" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel md-lq-chart-panel">
+              <div class="panel-header"><h2 data-help-key="md-lq-regional-chart">Regional aggregates</h2><span class="panel-meta">Fixed regional scopes</span></div>
+              <div class="md-lq-chart-detail">
+                <p>Cross-bloc comparison of <strong>liquidity stock levels</strong> (USD), fixed scopes — not affected by the View selector.</p>
+                <ul>
+                  <li>Each line = one regional aggregate (Global, Advanced, EM, East Asia, Europe, North America).</li>
+                  <li>X-axis = calendar years, same linear year scale as the stacked proxy chart.</li>
+                  <li>Use to judge relative size and divergence between blocs; steeper slopes = faster stock accumulation.</li>
+                </ul>
+              </div>
+              <div id="md-lq-regional-chart" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel md-lq-chart-panel" id="md-lq-overlay-panel" hidden>
+              <div class="panel-header"><h2 data-help-key="md-lq-overlay-chart">Market liquidity overlay</h2><span class="panel-meta">Yahoo Finance · delayed</span></div>
+              <div class="md-lq-chart-detail">
+                <p><strong>Market-priced liquidity</strong> (delayed Yahoo) — optional cross-check vs slow official stock data.</p>
+                <ul>
+                  <li><strong>TLT / HYG (left axis):</strong> long Treasuries and high-yield credit — rising prices often mean easier financial conditions.</li>
+                  <li><strong>VIX (right axis):</strong> equity volatility — spikes signal stress even when official liquidity stocks look stable.</li>
+                  <li>X-axis = trade dates with month/year ticks, consistent with the Growth chart’s date mode.</li>
+                  <li>Not included in the liquidity proxy formula — use for timing and risk appetite only.</li>
+                </ul>
+              </div>
+              <div id="md-lq-overlay-heroes" class="md-lq-hero-strip"></div>
+              <div id="md-lq-overlay-chart" class="md-plotly md-lq-plotly"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="md-lq-country-table">Country liquidity proxies</h2>
+                <span class="panel-meta">Click a row to drill down</span>
+              </div>
+              <p class="md-lq-table-note">Featured economies ranked by proxy size for the table year. Each row sums <strong>CB + broad money + FX reserves (ex-gold)</strong> in USD with per-component source badges. Click a row to sync charts to that country.</p>
+              <div class="deriv-table-wrap md-table-wrap">
+                <table class="deriv-table md-table">
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th class="mono" data-help-key="md-lq-col-proxy">Proxy (USD)</th>
+                      <th class="mono" data-help-key="md-lq-col-yoy">YoY %</th>
+                      <th class="mono" data-help-key="md-lq-col-cb">CB Balance Sheet</th>
+                      <th class="mono" data-help-key="md-lq-col-money">Broad Money</th>
+                      <th class="mono" data-help-key="md-lq-col-fx">FX Reserves</th>
+                      <th class="md-col-sources" data-help-key="md-lq-col-sources">Sources</th>
+                    </tr>
+                  </thead>
+                  <tbody id="md-lq-table-body"><tr><td colspan="7">Loading liquidity data…</td></tr></tbody>
+                </table>
+              </div>
+              <div id="md-lq-country-detail" class="md-lq-detail" hidden></div>
+            </section>
+          </div>
+          <div class="macro-drivers-panel" data-md-sub="commentary" hidden>
+            <section class="panel stats-commentary-panel">
+              <div class="panel-header"><h2>Commentary &amp; Outlook</h2></div>
+              <div id="macro-drivers-regime-commentary" class="mb-2"></div>
+              <h3 class="macro-drivers-h3">Key observations</h3>
+              <ul id="macro-drivers-observations" class="macro-drivers-bullets"></ul>
+              <h3 class="macro-drivers-h3">Equity &amp; BTC market implications</h3>
+              <ul id="macro-drivers-equity-implications" class="macro-drivers-bullets"></ul>
+              <h3 class="macro-drivers-h3">Your macro notes</h3>
+              <textarea id="macro-drivers-commentary-text" class="macro-drivers-commentary" rows="14"></textarea>
+              <div class="macro-drivers-commentary-actions">
+                <button type="button" id="macro-drivers-save-commentary" class="macro-drivers-refresh-btn macro-drivers-refresh-btn--secondary">Save notes</button>
+                <button type="button" id="macro-drivers-download-commentary" class="macro-drivers-refresh-btn macro-drivers-refresh-btn--secondary">Download .md</button>
+                <span id="macro-drivers-commentary-status" class="macro-drivers-hint"></span>
+              </div>
+            </section>
+          </div>
+          <dialog id="md-methodology-dialog" class="md-methodology-dialog">
+            <div class="md-methodology-header">
+              <h2>Data Sources &amp; Methodology</h2>
+              <button type="button" id="md-methodology-close" class="md-btn md-btn--secondary">Close</button>
+            </div>
+            <div id="md-methodology-body" class="md-methodology-body"></div>
+          </dialog>
+          <dialog id="md-lq-methodology-dialog" class="md-methodology-dialog">
+            <div class="md-methodology-header">
+              <h2>Liquidity Sources &amp; Methodology</h2>
+              <button type="button" id="md-lq-methodology-close" class="md-btn md-btn--secondary">Close</button>
+            </div>
+            <div id="md-lq-methodology-body" class="md-methodology-body"></div>
+          </dialog>
+        </div>
+        <div class="menu-screen" data-l1="macro" data-l2="rates" data-l3="overview" hidden>
           <section class="deriv-hero-strip macro-hero-strip" id="macro-rates-heroes"></section>
           <section class="panel">
             <div class="panel-header">
@@ -2238,7 +2608,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-rates-table-body"></tbody>
               </table>
             </div>
@@ -2264,7 +2634,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-dollar-table-body"></tbody>
               </table>
             </div>
@@ -2290,7 +2660,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-liquidity-table-body"></tbody>
               </table>
             </div>
@@ -2316,7 +2686,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-risk-table-body"></tbody>
               </table>
             </div>
@@ -2342,7 +2712,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-inflation-table-body"></tbody>
               </table>
             </div>
@@ -2368,7 +2738,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table macro-markets-table">
-                <thead><tr><th>Name</th><th>Last</th><th>Chg</th><th>Chg %</th></tr></thead>
+                <thead><tr><th>Name</th><th class="mono">Last</th><th class="mono">Chg</th><th class="mono">Chg %</th></tr></thead>
                 <tbody id="macro-commodities-table-body"></tbody>
               </table>
             </div>
@@ -2500,26 +2870,245 @@
           </section>
         </div>
       </div>
+      <div id="dashboard-misc" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="misc" data-l2="park">
+          <div class="misc-page">
+            <header class="misc-hero">
+              <div class="misc-hero-glow" aria-hidden="true"></div>
+              <p class="misc-hero-eyebrow">Work in progress · No pressure</p>
+              <h2 class="misc-hero-title">The Parking Lot</h2>
+              <p class="misc-hero-lead">
+                Half-baked charts, wild experiments, and “what if we…” ideas dock here until they’re
+                ready to join the fleet. Empty berths are features, not bugs.
+              </p>
+              <p class="misc-hero-meta" id="misc-slot-counter">0 parked · 6 open berths</p>
+            </header>
+            <section class="misc-lot" aria-label="Parked ideas">
+              <div id="misc-slot-grid" class="misc-slot-grid"></div>
+            </section>
+            <footer class="misc-footer">
+              <p>
+                To park something new, add it to <code>misc.js</code> — or claim an open berth when
+                you’re ready to ship.
+              </p>
+            </footer>
+          </div>
+        </div>
+        <div class="menu-screen" data-l1="misc" data-l2="bitcoin" hidden>
+          <section class="panel md-toolbar mb-toolbar">
+            <div class="panel-header md-toolbar-header">
+              <h2 data-help-key="mb-title">Bitcoin Indicators</h2>
+              <span class="panel-meta" id="mb-update">Loading sources…</span>
+            </div>
+            <p class="md-stats" id="mb-stats"></p>
+          </section>
+          <nav class="mb-bitcoin-subnav macro-drivers-subnav" aria-label="Bitcoin indicator sections">
+            <button type="button" class="macro-drivers-subtab mb-subtab active" data-mb-sub="overview">Overview</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="distribution">Distribution &amp; Whales</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="onchain">On-Chain Activity</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="valuation">Valuation &amp; Cycles</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="sentiment">Sentiment &amp; Market</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="methodology">Sources</button>
+          </nav>
+          <section class="panel md-filters mb-filters" id="mb-filters-panel">
+            <div class="md-controls">
+              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,valuation,sentiment">
+                <span class="md-control-group-label">Chart</span>
+                <div class="md-control-group-fields">
+                  <label class="md-field">
+                    <span class="md-field-label">Indicator<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-indicator" aria-label="Explain indicator">?</button></span>
+                    <select id="mb-indicator" class="md-select"></select>
+                  </label>
+                  <label class="md-field">
+                    <span class="md-field-label">Range<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-timespan" aria-label="Explain range">?</button></span>
+                    <select id="mb-timespan" class="md-select">
+                      <option value="30days">30 days</option>
+                      <option value="90days">90 days</option>
+                      <option value="1year" selected>1 year</option>
+                      <option value="2years">2 years</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,valuation,sentiment">
+                <span class="md-control-group-label">Actions</span>
+                <div class="md-control-group-fields md-control-group-fields--actions">
+                  <span class="md-btn-group">
+                    <button type="button" id="mb-refresh" class="md-btn">Refresh data</button>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-refresh" aria-label="Explain refresh">?</button>
+                  </span>
+                  <button type="button" id="mb-export" class="md-btn md-btn--secondary">Export CSV</button>
+                  <button type="button" id="mb-methodology-btn" class="md-btn md-btn--secondary">Sources &amp; Methodology</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="md-kpi-section" id="mb-kpi-section">
+            <div id="mb-kpis" class="md-kpi-grid"></div>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="overview">
+            <section class="deriv-hero-strip mb-hero-strip" id="mb-heroes"></section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Indicator snapshot</h2>
+                <span class="panel-meta">Every value shows source badge · click row to chart</span>
+              </div>
+              <div class="deriv-table-wrap md-table-wrap">
+                <table class="deriv-table md-table">
+                  <thead>
+                    <tr>
+                      <th>Indicator</th>
+                      <th>Value</th>
+                      <th>Source</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mb-table-body"><tr><td colspan="4">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 id="mb-chart-title">Selected indicator</h2>
+                <span class="panel-meta" id="mb-chart-meta"></span>
+              </div>
+              <div id="mb-main-chart" class="md-plotly mb-plotly" aria-label="Bitcoin indicator chart"></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="distribution" hidden>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="mb-wealth-dist">Wealth concentration</h2>
+                <span class="panel-meta" id="mb-wealth-meta">BitInfoCharts · address-level</span>
+              </div>
+              <div id="mb-wealth-chart" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="mb-wallet-cohorts">Wallet size distribution</h2>
+                <span class="panel-meta">Supply % by balance cohort</span>
+              </div>
+              <div id="mb-cohort-chart" class="md-plotly mb-plotly"></div>
+              <div class="deriv-table-wrap md-table-wrap">
+                <table class="deriv-table md-table">
+                  <thead>
+                    <tr>
+                      <th>Balance range (BTC)</th>
+                      <th>Addresses</th>
+                      <th>% addresses</th>
+                      <th>BTC held</th>
+                      <th>% supply</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mb-cohort-table"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="onchain" hidden>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>Active addresses</h2><span class="panel-meta">Blockchain.info</span></div>
+              <div id="mb-chart-active" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>Hash rate</h2><span class="panel-meta">Blockchain.info · also On Chain → Mining</span></div>
+              <div id="mb-chart-hash" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>Exchange netflow</h2><span class="panel-meta">BGeometrics · entity-adjusted proxy</span></div>
+              <div id="mb-chart-netflow" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>Puell Multiple</h2><span class="panel-meta">Computed · miner revenue / 365d MA</span></div>
+              <div id="mb-chart-puell" class="md-plotly mb-plotly"></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="valuation" hidden>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>MVRV</h2><span class="panel-meta">BGeometrics</span></div>
+              <div id="mb-chart-mvrv" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>MVRV Z-Score</h2><span class="panel-meta">BGeometrics</span></div>
+              <div id="mb-chart-mvrvz" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>Realized price</h2><span class="panel-meta">BGeometrics · USD</span></div>
+              <div id="mb-chart-realized" class="md-plotly mb-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>HODL waves (1y+ supply)</h2><span class="panel-meta">BGeometrics · when available</span></div>
+              <div id="mb-chart-hodl" class="md-plotly mb-plotly"></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="sentiment" hidden>
+            <section class="deriv-hero-strip misc-fng-hero-strip mb-fng-hero-strip" id="mb-fng-heroes"></section>
+            <section class="panel misc-fng-panel">
+              <div class="panel-header">
+                <h2>Crypto Fear &amp; Greed</h2>
+                <span class="panel-meta" id="mb-fng-update">Alternative.me</span>
+              </div>
+              <div class="misc-fng-current">
+                <div id="mb-fng-gauge" class="misc-fng-gauge md-plotly" aria-label="Fear and Greed gauge"></div>
+                <div class="misc-fng-aside">
+                  <p class="misc-fng-aside-lead">
+                    Sentiment tracker for Bitcoin and crypto. Combines volatility, momentum, social media,
+                    surveys, dominance, and trends into a 0–100 score.
+                  </p>
+                  <div class="misc-fng-zones" id="mb-fng-zones" aria-label="Index zones"></div>
+                </div>
+              </div>
+            </section>
+            <section class="panel misc-fng-panel">
+              <div class="panel-header"><h2>Fear &amp; Greed history</h2><span class="panel-meta">Daily · last 12 months</span></div>
+              <div id="mb-fng-history" class="misc-fng-history md-plotly"></div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2>BTC dominance</h2><span class="panel-meta">CoinGecko global market cap</span></div>
+              <div id="mb-chart-dominance" class="md-plotly mb-plotly"></div>
+            </section>
+            <p class="md-hint mb-crosslink">Funding rate and open interest snapshots are in the overview KPIs — see <strong>Derivatives → Perp</strong> for venue breakdown.</p>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="methodology" hidden>
+            <section class="panel">
+              <div class="panel-header"><h2>Sources &amp; methodology</h2></div>
+              <div id="mb-methodology-inline" class="mb-methodology-inline"></div>
+            </section>
+          </div>
+          <dialog id="mb-methodology-dialog" class="md-methodology-dialog">
+            <div class="md-methodology-header">
+              <h2>Bitcoin indicators — sources</h2>
+              <button type="button" id="mb-methodology-close" class="md-btn md-btn--secondary">Close</button>
+            </div>
+            <div id="mb-methodology-body" class="md-methodology-body"></div>
+          </dialog>
+        </div>
+      </div>
     </div>
 
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=6"></script>
-    <script src="swr-cache.js?v=4"></script>
+    <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=44"></script>
-    <script src="dashboard.js?v=28"></script>
+    <script src="help.js?v=58"></script>
+    <script src="home.js?v=2"></script>
+    <script src="dashboard.js?v=35"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="stats.js?v=21"></script>
-    <script src="tradfi.js?v=14"></script>
-    <script src="equity-insights.js?v=20"></script>
+    <script src="tradfi.js?v=16"></script>
+    <script src="equity-insights.js?v=29"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
-    <script src="macro.js?v=1"></script>
+    <script src="macro.js?v=4"></script>
+    <script src="macro-drivers.js?v=33"></script>
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
+    <script src="misc.js?v=3"></script>
+    <script src="misc-greed-fear.js?v=2"></script>
+    <script src="misc-bitcoin.js?v=1"></script>
     <script src="indicators.js?v=3"></script>
     <script src="app.js?v=18"></script>
   </body>

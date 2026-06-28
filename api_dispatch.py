@@ -1,6 +1,9 @@
 """Shared API routing for local server.py and Vercel serverless."""
 
+from __future__ import annotations
+
 import json
+import math
 from urllib.parse import parse_qs, urlparse
 
 from equity_insights import (
@@ -8,11 +11,30 @@ from equity_insights import (
     get_equity_global_payload,
     period_to_dates,
 )
+from global_macro import clear_all_caches as clear_global_macro_cache
+from global_macro import get_global_macro_payload
+from macro_drivers_api import (
+    clear_all_caches as clear_macro_drivers_api_cache,
+    get_liquidity_api_payload,
+    get_liquidity_map_api_payload,
+    get_map_payload,
+    get_meta_payload,
+    get_series_payload,
+    get_snapshot_payload,
+)
+from btc_indicators_api import (
+    clear_all_caches as clear_btc_indicators_cache,
+    get_distribution_payload,
+    get_meta_payload as get_btc_meta_payload,
+    get_series_payload as get_btc_series_payload,
+    get_snapshot_payload as get_btc_snapshot_payload,
+)
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
     get_etf_payload,
     get_exchanges_payload,
+    get_fear_greed_payload,
     get_macro_payload,
     get_news_payload,
     get_onchain_chart_payload,
@@ -82,7 +104,16 @@ def dispatch_api(path, query):
         section = path[len("/api/tradfi/") :].strip("/")
         heroes_override = None
         symbols_override = None
-        if section in ("stocks-companies", "stocks-indices"):
+        if section in (
+            "stocks-companies",
+            "stocks-indices",
+            "futures",
+            "rates",
+            "currencies",
+            "commodities",
+            "sectors",
+            "energy",
+        ):
             if "heroes" in query:
                 heroes_override = _parse_tradfi_symbol_list(
                     query["heroes"][0], max_count=4
@@ -101,8 +132,81 @@ def dispatch_api(path, query):
         section = path[len("/api/defi/") :].strip("/")
         return get_defi_payload(section)
 
+    if path == "/api/macro/drivers" or path.startswith("/api/macro/drivers/"):
+        sub = path[len("/api/macro/drivers") :].strip("/") or "snapshot"
+        refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+        if refresh:
+            clear_macro_drivers_api_cache()
+            clear_global_macro_cache()
+
+        def _int_param(name: str) -> int | None:
+            raw = (query.get(name) or [None])[0]
+            return int(raw) if raw and str(raw).isdigit() else None
+
+        def _bool_param(name: str, default: bool = False) -> bool:
+            raw = (query.get(name) or [None])[0]
+            if raw is None:
+                return default
+            return str(raw).lower() in ("1", "true", "yes")
+
+        if sub in ("", "snapshot"):
+            return get_snapshot_payload(
+                year=_int_param("year"),
+                region=(query.get("region") or [""])[0],
+                income=(query.get("income") or [""])[0],
+                show_aggregates=_bool_param("aggregates", True),
+                featured_only=_bool_param("featuredAggs"),
+                search=(query.get("search") or [""])[0],
+                tab=(query.get("tab") or [""])[0],
+                refresh=refresh,
+            )
+        if sub == "meta":
+            return get_meta_payload(refresh=refresh)
+        if sub == "map":
+            return get_map_payload(
+                metric=(query.get("metric") or ["gdp_growth"])[0],
+                year=_int_param("year"),
+                region=(query.get("region") or [""])[0],
+                income=(query.get("income") or [""])[0],
+                refresh=refresh,
+            )
+        if sub == "series":
+            entities = [
+                e.strip()
+                for e in (query.get("entities") or [""])[0].split(",")
+                if e.strip()
+            ]
+            return get_series_payload(
+                indicator=(query.get("indicator") or ["gdp_growth"])[0],
+                entities=entities,
+                start_year=_int_param("start"),
+                end_year=_int_param("end"),
+                refresh=refresh,
+            )
+        if sub == "liquidity/map":
+            return get_liquidity_map_api_payload(
+                metric=(query.get("metric") or ["proxy"])[0],
+                year=_int_param("year"),
+                refresh=refresh,
+            )
+        if sub == "liquidity":
+            return get_liquidity_api_payload(
+                entity=(query.get("entity") or ["WLD"])[0],
+                year=_int_param("year"),
+                overlay=_bool_param("overlay"),
+                refresh=refresh,
+            )
+        raise ValueError(f"Unknown macro drivers endpoint: {sub}")
+
     if path.startswith("/api/macro/"):
         section = path[len("/api/macro/") :].strip("/")
+        if section == "global":
+            refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+            year_raw = (query.get("year") or [None])[0]
+            year = int(year_raw) if year_raw and str(year_raw).isdigit() else None
+            if refresh:
+                clear_global_macro_cache()
+            return get_global_macro_payload(refresh=refresh, year=year)
         return get_macro_payload(section)
 
     if path.startswith("/api/exchanges/"):
@@ -112,6 +216,29 @@ def dispatch_api(path, query):
     if path.startswith("/api/news/"):
         section = path[len("/api/news/") :].strip("/")
         return get_news_payload(section)
+
+    if path == "/api/misc/fear-greed":
+        refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+        return get_fear_greed_payload(refresh=refresh)
+
+    if path == "/api/misc/btc" or path.startswith("/api/misc/btc/"):
+        sub = path[len("/api/misc/btc") :].strip("/") or "snapshot"
+        refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+        if refresh:
+            clear_btc_indicators_cache()
+        if sub in ("", "snapshot"):
+            return get_btc_snapshot_payload(refresh=refresh)
+        if sub == "meta":
+            return get_btc_meta_payload(refresh=refresh)
+        if sub == "distribution":
+            return get_distribution_payload(refresh=refresh)
+        if sub == "series":
+            indicator = (query.get("indicator") or [""])[0]
+            timespan = (query.get("timespan") or ["1year"])[0]
+            if not indicator:
+                raise ValueError("Missing indicator parameter")
+            return get_btc_series_payload(indicator, timespan=timespan, refresh=refresh)
+        raise ValueError(f"Unknown BTC indicators endpoint: {sub}")
 
     if path == "/api/onchain/chart":
         name = (query.get("name") or [None])[0]
@@ -132,14 +259,31 @@ def dispatch_api(path, query):
     raise ValueError(f"Unknown API route: {path}")
 
 
+def _sanitize_json_value(value):
+    if isinstance(value, float):
+        if math.isnan(value) or math.isinf(value):
+            return None
+        return value
+    if isinstance(value, dict):
+        return {k: _sanitize_json_value(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_sanitize_json_value(v) for v in value]
+    return value
+
+
 def send_json(handler, status, payload):
-    body = json.dumps(payload, default=str).encode()
-    handler.send_response(status)
-    handler.send_header("Content-Type", "application/json")
-    handler.send_header("Access-Control-Allow-Origin", "*")
-    handler.send_header("Cache-Control", "public, max-age=300")
-    handler.end_headers()
-    handler.wfile.write(body)
+    safe_payload = _sanitize_json_value(payload)
+    body = json.dumps(safe_payload, default=str, allow_nan=False).encode()
+    try:
+        handler.send_response(status)
+        handler.send_header("Content-Type", "application/json")
+        handler.send_header("Access-Control-Allow-Origin", "*")
+        handler.send_header("Cache-Control", "public, max-age=300")
+        handler.end_headers()
+        handler.wfile.write(body)
+    except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+        # Client disconnected (duplicate/aborted fetch) — response already irrelevant.
+        return
 
 
 def handle_api(handler):
@@ -149,5 +293,7 @@ def handle_api(handler):
         send_json(handler, 200, payload)
     except ValueError as exc:
         send_json(handler, 404, {"error": str(exc)})
+    except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+        return
     except Exception as exc:
         send_json(handler, 502, {"error": str(exc)})
