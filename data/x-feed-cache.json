@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-06-27T20:18:05Z",
+  "fetchedAt": "2026-06-28T08:34:34Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A newly created wallet bc1q4m withdrew 1,350 $BTC($81.87M) from #Binance. https://arkm.com/explorer/address/bc1q4me3lh923cktf8j0au9gccdmzdnfvgk0x8n078",
+      "link": "https://x.com/lookonchain/status/2071041817521614979#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A newly created wallet bc1q4m withdrew 1,350 $BTC ($81.87M) from #Binance . arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-06-28T01:23:42+00:00",
+      "publishedTs": 1782609822.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 12 years ago, the Silicon Valley investor Tim Draper won all 29,657 bitcoin seized from the illegal Silk Road marketplace in a US Marshals Service government auction, paying approximately $19 million. The same bitcoins are now worth $1,785,256,201 today.",
+      "link": "https://x.com/DocumentingBTC/status/2070987791748477378#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "On this day in history, 12 years ago, the Silicon Valley investor Tim Draper won all 29,657 bitcoin seized from the illegal Silk Road marketplace in a US Marshals Service government auction, paying approximately $19 million. The same bitcoins are now worth $1,785,256,201 today. V",
+      "publishedAt": "2026-06-27T21:49:01+00:00",
+      "publishedTs": 1782596941.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @nic_carter: Even if you do bite the bullet and reason in purely utilitarian terms, Musk\u2019s net effect from FSD and starlink alone (think how much utility is created from a billion in the global south having internet) is many many times the lost utility from USAID, even if yo",
       "link": "https://x.com/nic_carter/status/2070906586810237082#m",
@@ -653,19 +679,6 @@
       "isRetweet": true
     },
     {
-      "title": "June 25 Update: #Bitcoin ETFs: 1D NetFlow: -7,439 $BTC(-$441.88M)\ud83d\udd34 7D NetFlow: -12,619 $BTC(-$749.58M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -21,234 $ETH(-$33.23M)\ud83d\udd34 7D NetFlow: -116,744 $ETH(-$182.7M)\ud83d\udd34",
-      "link": "https://x.com/lookonchain/status/2070153273986949137#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "June 25 Update: #Bitcoin ETFs: 1D NetFlow: -7,439 $BTC (-$441.88M)\ud83d\udd34 7D NetFlow: -12,619 $BTC (-$749.58M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -21,234 $ETH (-$33.23M)\ud83d\udd34 7D NetFlow: -116,744 $ETH (-$182.7M)\ud83d\udd34 Lookonchain (@lookonchain) June 24 Update: #Bitcoin ETFs: 1D NetFlow: -2,548 $BTC (",
-      "publishedAt": "2026-06-25T14:32:56+00:00",
-      "publishedTs": 1782397976.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "No Tradeoffs, no compromises. Just your Bitcoin, activated! Self-custody Bitcoin optionality has arrived. Learn more @ http://VerifiedX.io",
       "link": "https://x.com/BitcoinMagazine/status/2070152460862210378#m",
       "source": "@BitcoinMagazine",
@@ -679,32 +692,6 @@
       "isRetweet": true
     },
     {
-      "title": "The market crash just wiped out whale 0xf79C's longs. His 809.9 $BTC($47.68M) and 27.92M $XRP($28.45M) long positions were fully liquidated, resulting in a $8.42M loss. https://hyperbot.network/trader/0xf79C163305387F940f49999Ff2AbFf5410129BbD",
-      "link": "https://x.com/lookonchain/status/2070150000311779556#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The market crash just wiped out whale 0xf79C's longs. His 809.9 $BTC ($47.68M) and 27.92M $XRP ($28.45M) long positions were fully liquidated, resulting in a $8.42M loss. hyperbot.network/trader/0xf7\u2026",
-      "publishedAt": "2026-06-25T14:19:56+00:00",
-      "publishedTs": 1782397196.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The market crash has hit this #Matrixport(@BITofficial_EN)-linked whale hard. The whale's holdings of 120,000 $ETH($187M) and 500 $BTC($29.33M) are now sitting on a loss of more than $92.5M. https://hypurrscan.io/address/0x6C8512516Ce5669d35113A11Ca8B8DE322fD84F6#perps https://hy",
-      "link": "https://x.com/lookonchain/status/2070146989287940297#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The market crash has hit this #Matrixport ( @BITofficial_EN )-linked whale hard. The whale's holdings of 120,000 $ETH ($187M) and 500 $BTC ($29.33M) are now sitting on a loss of more than $92.5M. hypurrscan.io/address/0x6C85\u2026 hypurrscan.io/address/0xa5B0\u2026 hypurrscan.io/address/0x",
-      "publishedAt": "2026-06-25T14:07:58+00:00",
-      "publishedTs": 1782396478.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "sickening images out of Venezuela. Trump ought to muster serious resources and help them recover and rebuild. the US wanted responsibility for the western hemisphere. they cannot shirk this.",
       "link": "https://x.com/nic_carter/status/2070134178125951293#m",
       "source": "@nic_carter",
@@ -713,19 +700,6 @@
       "summary": "",
       "publishedAt": "2026-06-25T13:17:03+00:00",
       "publishedTs": 1782393423.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Financial giant SBI Holdings agrees to buy Japanese Bitcoin exchange 'Bitbank' for $288 million \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2070132598026715165#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-06-25T13:10:47+00:00",
-      "publishedTs": 1782393047.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1134,19 +1108,6 @@
       "isRetweet": false
     },
     {
-      "title": "The LeverageShares 2x SpaceX ETF $SPCH did $4b of volume by itself last week, making it the biggest first week of trading for an ETF ever. Better than the first week for $IBIT, $DRAM, $BITO, you name it. And further it did it in 4 days not 5 (bc fri was a holiday). Amazing.",
-      "link": "https://x.com/EricBalchunas/status/2068411817861451808#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "The LeverageShares 2x SpaceX ETF $SPCH did $4b of volume by itself last week, making it the biggest first week of trading for an ETF ever. Better than the first week for $IBIT , $DRAM , $BITO , you name it. And further it did it in 4 days not 5 (bc fri was a holiday). Amazing. Na",
-      "publishedAt": "2026-06-20T19:13:01+00:00",
-      "publishedTs": 1781982781.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "If you're upset about \"Bitcoiner infighting\" just remember a few simple truths that cause controversy to be inevitable: 1) Bitcoin is for enemies. 2) Bitcoin is a scarce, shared resource over which people compete to use in a variety of ways. 3)",
       "link": "https://x.com/lopp/status/2068379525809869256#m",
       "source": "@lopp",
@@ -1168,19 +1129,6 @@
       "summary": "",
       "publishedAt": "2026-06-20T16:41:54+00:00",
       "publishedTs": 1781973714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Agree, we talk about how well the title has aged. Joel gets the credit. My titles were pretty laughable looking back. It was somewhat of a play on the HBO show \u201cBillions\u201d as ETFs, which aren\u2019t as sexy (at least to drama writers), absolutely crush HFs on flows/growth (and perf in ",
-      "link": "https://x.com/EricBalchunas/status/2068319000858144904#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Agree, we talk about how well the title has aged. Joel gets the credit. My titles were pretty laughable looking back. It was somewhat of a play on the HBO show \u201cBillions\u201d as ETFs, which aren\u2019t as sexy (at least to drama writers), absolutely crush HFs on flows/growth (and perf in ",
-      "publishedAt": "2026-06-20T13:04:11+00:00",
-      "publishedTs": 1781960651.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1532,19 +1480,6 @@
       "summary": "",
       "publishedAt": "2026-06-14T11:37:18+00:00",
       "publishedTs": 1781437038.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Coinbase adds new feature allowing your AI agents to buy and sell bitcoin for you in their wallet",
-      "link": "https://x.com/DocumentingBTC/status/2065408405645177165#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Coinbase adds new feature allowing your AI agents to buy and sell bitcoin for you in their wallet Video",
-      "publishedAt": "2026-06-12T12:18:31+00:00",
-      "publishedTs": 1781266711.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
