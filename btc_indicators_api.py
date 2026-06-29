@@ -9,7 +9,9 @@ from typing import Any, Callable
 from btc_data.config import INDICATORS, METHODOLOGY, TABS
 from btc_data.fetchers import (
     BGEOMETRICS_SERIES,
+    bgeometrics_status,
     compute_puell_multiple,
+    fetch_bgeometrics_last,
     fetch_bgeometrics_series,
     fetch_binance_open_interest,
     fetch_bitinfo_snapshot,
@@ -65,6 +67,7 @@ def get_meta_payload(*, refresh: bool = False) -> dict[str, Any]:
             "Binance Futures",
             "Exchange APIs",
         ],
+        "bgeometrics": bgeometrics_status(),
     }
 
 
@@ -123,12 +126,13 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
         "oi": (fetch_binance_open_interest, (), {"refresh": refresh}),
         "fng": (get_fear_greed_payload, (), {"refresh": refresh}),
         "perp": (get_exchanges_payload, ("perp",), {}),
-        "mvrv": (fetch_bgeometrics_series, ("mvrv",), {"refresh": refresh}),
-        "mvrv_z": (fetch_bgeometrics_series, ("mvrv_z_score",), {"refresh": refresh}),
-        "realized": (fetch_bgeometrics_series, ("realized_price",), {"refresh": refresh}),
-        "netflow": (fetch_bgeometrics_series, ("exchange_netflow",), {"refresh": refresh}),
-        "hodl": (fetch_bgeometrics_series, ("hodl_waves",), {"refresh": refresh}),
-        "puell": (compute_puell_multiple, (), {"refresh": refresh}),
+        "mvrv": (fetch_bgeometrics_last, ("mvrv",), {"refresh": refresh}),
+        "mvrv_z": (fetch_bgeometrics_last, ("mvrv_z_score",), {"refresh": refresh}),
+        "realized": (fetch_bgeometrics_last, ("realized_price",), {"refresh": refresh}),
+        "netflow": (fetch_bgeometrics_last, ("exchange_netflow",), {"refresh": refresh}),
+        "hodl": (fetch_bgeometrics_last, ("hodl_waves",), {"refresh": refresh}),
+        "puell": (fetch_bgeometrics_last, ("puell_multiple",), {"refresh": refresh}),
+        "puell_fallback": (compute_puell_multiple, (), {"refresh": refresh}),
         "active_chart": (fetch_blockchain_chart, ("n-unique-addresses", "30days"), {"refresh": refresh}),
         "hash_chart": (fetch_blockchain_chart, ("hash-rate", "30days"), {"refresh": refresh}),
     }
@@ -153,6 +157,9 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     netflow = data["netflow"]
     hodl = data["hodl"]
     puell = data["puell"]
+    puell_fb = data.get("puell_fallback") or {}
+    if (puell.get("latest") or {}).get("value") is None and (puell_fb.get("latest") or {}).get("value") is not None:
+        puell = puell_fb
     active_chart = data["active_chart"]
     hash_chart = data["hash_chart"]
 
@@ -190,8 +197,12 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
         ),
         "puell_multiple": _cell(
             (puell.get("latest") or {}).get("value"),
-            "Computed · Blockchain.info",
-            {"fetchedAt": puell.get("fetchedAt"), "isEstimate": True},
+            puell.get("source") or "BGeometrics",
+            {
+                "fetchedAt": puell.get("fetchedAt"),
+                "isEstimate": puell.get("source", "").startswith("Computed"),
+                "error": puell.get("error"),
+            },
         ),
         "mvrv": _cell(
             (mvrv.get("latest") or {}).get("value"),
@@ -316,8 +327,7 @@ def get_series_payload(
             indicator = "hodl_waves"
 
         if indicator in BGEOMETRICS_SERIES:
-            metric = BGEOMETRICS_SERIES[indicator]
-            data = _safe_fetch("bgeometrics", fetch_bgeometrics_series, metric, refresh=refresh)
+            data = _safe_fetch("bgeometrics", fetch_bgeometrics_series, indicator, refresh=refresh)
             return {"indicator": indicator, **data}
 
         bc_map = {

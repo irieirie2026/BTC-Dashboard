@@ -151,7 +151,7 @@ async function mbLoadMeta(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbMeta = await swr.runSWR({
-    key: "misc:btc:meta:v2",
+    key: "misc:btc:meta:v3",
     l1: "misc",
     source: "BTC indicator catalog",
     persist: true,
@@ -167,7 +167,7 @@ async function mbLoadSnapshot(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbSnapshot = await swr.runSWR({
-    key: "misc:btc:snapshot:v2",
+    key: "misc:btc:snapshot:v3",
     l1: "misc",
     source: mbSnapshot?.sourceChain || "Multi-source BTC feed",
     persist: true,
@@ -332,9 +332,10 @@ function mbRenderSnapshot() {
   if (stats) {
     const errCount = (mbSnapshot.errors || []).length;
     const filled = Object.values(mbSnapshot.cells || {}).filter((c) => c?.value != null).length;
+    const bgAuth = mbMeta?.bgeometrics?.configured ? "BGeometrics token ✓" : "BGeometrics free tier";
     stats.textContent = errCount
-      ? `${filled}/${mbSnapshot.indicators?.length || 0} indicators live · ${errCount} source warning(s)`
-      : `${mbSnapshot.indicators?.length || 0} indicators · multi-source snapshot`;
+      ? `${filled}/${mbSnapshot.indicators?.length || 0} indicators live · ${bgAuth} · ${errCount} warning(s)`
+      : `${mbSnapshot.indicators?.length || 0} indicators · ${bgAuth} · multi-source snapshot`;
     stats.classList.toggle("md-stats--warn", errCount > 0);
   }
   mbRenderKpis();

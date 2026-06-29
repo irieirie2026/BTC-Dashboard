@@ -20,8 +20,8 @@ BROWSER_UA = (
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
 
-BGEOMETRICS_BASE = os.environ.get("BGEOMETRICS_API_BASE", "https://api.bgeometrics.com/v1")
-BGEOMETRICS_KEY = os.environ.get("BGEOMETRICS_API_KEY", "").strip()
+# Canonical API: https://bitcoin-data.com/v1/ (see bitcoin-data.com/bguser/free-features.html)
+BGEOMETRICS_DEFAULT_BASE = "https://bitcoin-data.com/v1"
 
 BLOCKCHAIN_CHARTS = {
     "hash-rate": "hash-rate",
@@ -30,16 +30,39 @@ BLOCKCHAIN_CHARTS = {
     "market-price": "market-price",
 }
 
-BGEOMETRICS_SERIES = {
-    "mvrv": "mvrv",
-    "mvrv_z_score": "mvrv_z_score",
-    "realized_price": "realized_price",
-    "exchange_netflow": "exchange_netflow",
-    "exchange_inflow": "exchange_inflow",
-    "exchange_outflow": "exchange_outflow",
-    "hodl_waves": "hodl_waves",
-    "puell_multiple": "puell_multiple",
+# Internal key → {path, value_key, requires_token}
+BGEOMETRICS_SERIES: dict[str, dict[str, Any]] = {
+    "mvrv": {"path": "mvrv", "value_key": "mvrv"},
+    "mvrv_z_score": {"path": "mvrv-zscore", "value_key": "mvrvZscore"},
+    "realized_price": {"path": "realized-price", "value_key": "realizedPrice"},
+    "puell_multiple": {"path": "puell-multiple", "value_key": "puellMultiple"},
+    "hodl_waves": {"path": "hodl-waves-supply", "value_key": "_hodl_1y_plus_pct"},
+    "exchange_netflow": {
+        "path": "exchange-netflow-btc",
+        "value_key": "exchangeNetflowBtc",
+        "requires_token": True,
+    },
+    "exchange_inflow": {
+        "path": "exchange-inflow-btc",
+        "value_key": "exchangeInflowBtc",
+        "requires_token": True,
+    },
+    "exchange_outflow": {
+        "path": "exchange-outflow-btc",
+        "value_key": "exchangeOutflowBtc",
+        "requires_token": True,
+    },
 }
+
+HODL_1Y_PLUS_KEYS = (
+    "age_1y_2y",
+    "age_2y_3y",
+    "age_3y_4y",
+    "age_4y_5y",
+    "age_5y_7y",
+    "age_7y_10y",
+    "age_10y",
+)
 
 
 def _now_iso() -> str:
@@ -61,26 +84,166 @@ def fetch_html(url: str, *, timeout: int = 45) -> str:
         return resp.read().decode("utf-8", errors="replace")
 
 
-def _bgeometrics_url(metric: str) -> str:
-    base = BGEOMETRICS_BASE.rstrip("/")
-    url = f"{base}/{metric}"
-    if BGEOMETRICS_KEY:
-        sep = "&" if "?" in url else "?"
-        url = f"{url}{sep}api_key={BGEOMETRICS_KEY}"
-    return url
+def bgeometrics_token() -> str:
+    """Read at runtime — supports BGEOMETRICS_API_KEY or BGEOMETRICS_TOKEN."""
+    return (
+        os.environ.get("BGEOMETRICS_API_KEY", "").strip()
+        or os.environ.get("BGEOMETRICS_TOKEN", "").strip()
+    )
 
 
-def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str, Any]:
-    cache_key = f"btc:bg:{metric}:v1"
+def bgeometrics_base() -> str:
+    return os.environ.get("BGEOMETRICS_API_BASE", BGEOMETRICS_DEFAULT_BASE).rstrip("/")
+
+
+def bgeometrics_status() -> dict[str, Any]:
+    token = bgeometrics_token()
+    return {
+        "configured": bool(token),
+        "base": bgeometrics_base(),
+        "auth": "Bearer token" if token else "free tier (no token)",
+    }
+
+
+def _hodl_1y_plus_pct(row: dict) -> float | None:
+    age_keys = [k for k in row if str(k).startswith("age_")]
+    if not age_keys:
+        return None
+    total = sum(float(row.get(k) or 0) for k in age_keys)
+    if total <= 0:
+        return None
+    one_y = sum(float(row.get(k) or 0) for k in HODL_1Y_PLUS_KEYS if k in row)
+    return round(one_y / total * 100, 2)
+
+
+def _bgeometrics_endpoint(metric: str) -> dict[str, Any] | None:
+    return BGEOMETRICS_SERIES.get(metric)
+
+
+def _bgeometrics_request(path: str) -> tuple[str, dict[str, str]]:
+    url = f"{bgeometrics_base()}/{path.lstrip('/')}"
+    headers: dict[str, str] = {}
+    token = bgeometrics_token()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return url, headers
+
+
+def _parse_bgeometrics_http_error(exc: urllib.error.HTTPError) -> str:
+    try:
+        body = exc.read().decode("utf-8", errors="replace")
+        parsed = json.loads(body)
+        err = parsed.get("error")
+        if isinstance(err, dict) and err.get("message"):
+            return str(err["message"])
+        if isinstance(parsed.get("message"), str):
+            return parsed["message"]
+        return body[:200] or str(exc)
+    except (json.JSONDecodeError, OSError, AttributeError):
+        return str(exc)
+
+
+def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, Any]:
+    """Latest value only — uses /last to minimize API quota (for snapshot KPIs)."""
+    spec = _bgeometrics_endpoint(metric)
+    if not spec:
+        return {
+            "latest": None,
+            "source": "BGeometrics",
+            "error": f"Unknown BGeometrics metric: {metric}",
+            "fetchedAt": _now_iso(),
+        }
+
+    token = bgeometrics_token()
+    if spec.get("requires_token") and not token:
+        return {
+            "latest": None,
+            "source": "BGeometrics",
+            "error": "Advanced plan token required (set BGEOMETRICS_API_KEY in env)",
+            "fetchedAt": _now_iso(),
+            "requiresToken": True,
+        }
+
+    cache_key = f"btc:bg:last:v2:{metric}:{'auth' if token else 'free'}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
             return {**cached, "fromCache": True}
 
-    url = _bgeometrics_url(metric)
+    url, headers = _bgeometrics_request(f"{spec['path']}/last")
     try:
-        raw = fetch_json(url, timeout=60)
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
+        raw = fetch_json(url, timeout=45, headers=headers)
+    except urllib.error.HTTPError as exc:
+        msg = _parse_bgeometrics_http_error(exc)
+        stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        return {"latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+        stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": str(exc)}
+        return {"latest": None, "source": "BGeometrics", "error": str(exc), "fetchedAt": _now_iso()}
+
+    if isinstance(raw, dict) and raw.get("error"):
+        err = raw["error"]
+        msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
+        stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        return {"latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
+
+    series = _normalize_bgeometrics(raw, spec)
+    latest = series[-1] if series else None
+    payload = {
+        "latest": latest,
+        "source": "BGeometrics · bitcoin-data.com",
+        "fetchedAt": _now_iso(),
+        "fromCache": False,
+        "authenticated": bool(token),
+    }
+    cache_set(cache_key, payload)
+    return payload
+
+
+def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str, Any]:
+    spec = _bgeometrics_endpoint(metric)
+    if not spec:
+        return {
+            "series": [],
+            "latest": None,
+            "source": "BGeometrics",
+            "error": f"Unknown BGeometrics metric: {metric}",
+            "fetchedAt": _now_iso(),
+        }
+
+    token = bgeometrics_token()
+    if spec.get("requires_token") and not token:
+        return {
+            "series": [],
+            "latest": None,
+            "source": "BGeometrics",
+            "error": "Advanced plan token required (set BGEOMETRICS_API_KEY in env)",
+            "fetchedAt": _now_iso(),
+            "requiresToken": True,
+        }
+
+    cache_key = f"btc:bg:v2:{metric}:{'auth' if token else 'free'}"
+    if not refresh:
+        cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
+        if cached is not None:
+            return {**cached, "fromCache": True}
+
+    url, headers = _bgeometrics_request(spec["path"])
+    try:
+        raw = fetch_json(url, timeout=60, headers=headers)
+    except urllib.error.HTTPError as exc:
+        msg = _parse_bgeometrics_http_error(exc)
+        stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        return {"series": [], "latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         if stale:
             return {**stale, "fromCache": True, "stale": True, "error": str(exc)}
@@ -88,51 +251,78 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
 
     if isinstance(raw, dict) and raw.get("error"):
         err = raw["error"]
-        if isinstance(err, dict):
-            stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-            if stale:
-                return {**stale, "fromCache": True, "stale": True, "error": err.get("message", str(err))}
-            return {
-                "series": [],
-                "latest": None,
-                "source": "BGeometrics",
-                "error": err.get("message", str(err)),
-                "fetchedAt": _now_iso(),
-            }
+        msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
+        stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        return {
+            "series": [],
+            "latest": None,
+            "source": "BGeometrics",
+            "error": msg,
+            "fetchedAt": _now_iso(),
+        }
 
-    series = _normalize_bgeometrics(raw, metric)
+    series = _normalize_bgeometrics(raw, spec)
     latest = series[-1] if series else None
     payload = {
         "series": series,
         "latest": latest,
-        "source": "BGeometrics",
+        "source": "BGeometrics · bitcoin-data.com",
         "fetchedAt": _now_iso(),
         "fromCache": False,
+        "authenticated": bool(token),
     }
     cache_set(cache_key, payload)
     return payload
 
 
-def _normalize_bgeometrics(raw: Any, metric: str) -> list[dict]:
+def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
+    value_key = spec.get("value_key")
+    if value_key == "_hodl_1y_plus_pct":
+        return _hodl_1y_plus_pct(row)
+
+    if value_key and value_key in row and row[value_key] is not None:
+        return float(row[value_key])
+
+    if value_key:
+        for k, v in row.items():
+            if k.lower() == str(value_key).lower() and v is not None:
+                return float(v)
+
+    for k, v in row.items():
+        if k in ("d", "unixTs", "date", "timestamp", "t"):
+            continue
+        if isinstance(v, (int, float)):
+            return float(v)
+    return None
+
+
+def _normalize_bgeometrics(raw: Any, spec: dict[str, Any]) -> list[dict]:
+    if isinstance(raw, dict):
+        if raw.get("error"):
+            return []
+        for key in ("data", "values", "series"):
+            if key in raw:
+                return _normalize_bgeometrics(raw[key], spec)
+        val = _extract_bgeometrics_value(raw, spec)
+        if val is not None:
+            ts = raw.get("unixTs") or raw.get("t") or raw.get("timestamp")
+            date = raw.get("d") or raw.get("date")
+            if isinstance(ts, str) and ts.isdigit():
+                ts = int(ts)
+            return [{"timestamp": ts, "date": str(date or "")[:10], "value": val}]
+
     if isinstance(raw, list):
         out = []
         for row in raw:
             if not isinstance(row, dict):
                 continue
-            val = None
-            for k in (metric, metric.replace("_", ""), "v", "value", "y"):
-                if k in row and row[k] is not None:
-                    val = row[k]
-                    break
-            if val is None:
-                for k, v in row.items():
-                    if k in ("d", "unixTs", "date", "timestamp", "t"):
-                        continue
-                    if isinstance(v, (int, float)):
-                        val = v
-                        break
+            val = _extract_bgeometrics_value(row, spec)
             ts = row.get("unixTs") or row.get("t") or row.get("timestamp")
             date = row.get("d") or row.get("date")
+            if isinstance(ts, str) and str(ts).isdigit():
+                ts = int(ts)
             if ts is None and date:
                 try:
                     ts = int(time.mktime(time.strptime(str(date)[:10], "%Y-%m-%d")))
@@ -144,10 +334,6 @@ def _normalize_bgeometrics(raw: Any, metric: str) -> list[dict]:
         out.sort(key=lambda p: p.get("timestamp") or 0)
         return out
 
-    if isinstance(raw, dict):
-        for key in ("data", "values", "series"):
-            if key in raw:
-                return _normalize_bgeometrics(raw[key], metric)
     return []
 
 

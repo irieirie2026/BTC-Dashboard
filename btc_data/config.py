@@ -184,8 +184,9 @@ METHODOLOGY: list[dict[str, str]] = [
         "title": "Valuation & cycles",
         "body": (
             "MVRV, MVRV Z-Score, realized price, and HODL-wave supply bands come from "
-            "BGeometrics on-chain models. Set BGEOMETRICS_API_KEY for higher rate limits. "
-            "Without API access, cached or stale values may be shown with a clear timestamp."
+            "BGeometrics on-chain models via bitcoin-data.com/v1. Set BGEOMETRICS_API_KEY "
+            "(portal token) as a Bearer token for Advanced metrics (exchange flows) and "
+            "higher rate limits. Free-tier endpoints work without a token (last 4 years)."
         ),
     },
     {
