@@ -6,7 +6,15 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable
 
-from btc_data.config import INDICATORS, METHODOLOGY, TABS
+from btc_data.config import (
+    BGEOMETRICS_TTL,
+    CHART_INFO,
+    INDICATORS,
+    METHODOLOGY,
+    TABS,
+    VALUATION_SERIES_KEYS,
+)
+from macro_data.cache import cache_get, cache_set
 from btc_data.fetchers import (
     BGEOMETRICS_SERIES,
     bgeometrics_status,
@@ -68,6 +76,7 @@ def get_meta_payload(*, refresh: bool = False) -> dict[str, Any]:
             "Exchange APIs",
         ],
         "bgeometrics": bgeometrics_status(),
+        "chartInfo": CHART_INFO,
     }
 
 
@@ -310,6 +319,50 @@ def get_distribution_payload(*, refresh: bool = False) -> dict[str, Any]:
         "errors": errors,
         "partial": bool(errors),
     }
+
+
+def get_valuation_payload(
+    *,
+    timespan: str = "1year",
+    refresh: bool = False,
+) -> dict[str, Any]:
+    """Fetch valuation charts sequentially to respect BGeometrics rate limits."""
+    cache_key = f"btc:bundle:valuation:v1:{timespan}"
+    if not refresh:
+        cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
+        if cached is not None:
+            return {**cached, "fromCache": True}
+
+    charts: dict[str, dict[str, Any]] = {}
+    errors: list[str] = []
+    for key in VALUATION_SERIES_KEYS:
+        data = _safe_fetch("bgeometrics", fetch_bgeometrics_series, key, refresh=refresh)
+        chart_payload = {
+            "indicator": key,
+            "series": data.get("series") or [],
+            "latest": data.get("latest"),
+            "source": data.get("source") or "BGeometrics",
+            "fetchedAt": data.get("fetchedAt"),
+            "error": data.get("error"),
+            "stale": data.get("stale"),
+            "fromCache": data.get("fromCache"),
+            "note": data.get("note"),
+        }
+        charts[key] = chart_payload
+        if data.get("error"):
+            errors.append(f"{key}: {data['error']}")
+
+    payload = {
+        "charts": charts,
+        "timespan": timespan,
+        "fetchedAt": _now_iso(),
+        "errors": sorted(set(errors)),
+        "partial": bool(errors),
+        "chartInfo": CHART_INFO,
+        "sourceChain": "BGeometrics · bitcoin-data.com (sequential fetch)",
+    }
+    cache_set(cache_key, payload)
+    return payload
 
 
 def get_series_payload(

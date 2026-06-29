@@ -2,6 +2,7 @@
 """Static file server with BTC market, ETF, and treasury data APIs (Bitbo)."""
 
 import json
+import os
 import re
 import time
 import urllib.error
@@ -15,6 +16,30 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+
+
+def _load_dotenv_files() -> None:
+    """Load .env.local and .env without overriding existing env vars."""
+    for name in (".env.local", ".env"):
+        path = ROOT / name
+        if not path.is_file():
+            continue
+        for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            key = key.strip()
+            if not key:
+                continue
+            val = val.strip()
+            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
+                val = val[1:-1]
+            os.environ.setdefault(key, val)
+
+
+_load_dotenv_files()
+
 CACHE_TTL = 900  # 15 minutes
 STATS_HISTORY_CACHE_TTL = 21_600  # 6 hours
 SYMBOL_NAME_CACHE_TTL = 604800  # 7 days

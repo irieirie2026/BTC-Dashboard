@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -53,6 +54,30 @@ BGEOMETRICS_SERIES: dict[str, dict[str, Any]] = {
         "requires_token": True,
     },
 }
+
+# Serialize BGeometrics HTTP calls — free tier allows ~8–10 req/hour.
+_BG_LAST_REQUEST_AT = 0.0
+_BG_MIN_INTERVAL_SEC = 2.5
+_BG_THROTTLE_LOCK = threading.Lock()
+
+
+def _bgeometrics_throttle() -> None:
+    global _BG_LAST_REQUEST_AT
+    with _BG_THROTTLE_LOCK:
+        elapsed = time.monotonic() - _BG_LAST_REQUEST_AT
+        if elapsed < _BG_MIN_INTERVAL_SEC:
+            time.sleep(_BG_MIN_INTERVAL_SEC - elapsed)
+        _BG_LAST_REQUEST_AT = time.monotonic()
+
+
+def _friendly_bgeometrics_error(exc: urllib.error.HTTPError, raw_msg: str) -> str:
+    if exc.code == 429:
+        return (
+            "BGeometrics rate limit (429) — cached data shown when available. "
+            "Set BGEOMETRICS_API_KEY in .env.local for higher limits."
+        )
+    return raw_msg
+
 
 HODL_1Y_PLUS_KEYS = (
     "age_1y_2y",
@@ -172,9 +197,10 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
 
     url, headers = _bgeometrics_request(f"{spec['path']}/last")
     try:
+        _bgeometrics_throttle()
         raw = fetch_json(url, timeout=45, headers=headers)
     except urllib.error.HTTPError as exc:
-        msg = _parse_bgeometrics_http_error(exc)
+        msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         if stale:
             return {**stale, "fromCache": True, "stale": True, "error": msg}
@@ -236,9 +262,10 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
 
     url, headers = _bgeometrics_request(spec["path"])
     try:
+        _bgeometrics_throttle()
         raw = fetch_json(url, timeout=60, headers=headers)
     except urllib.error.HTTPError as exc:
-        msg = _parse_bgeometrics_http_error(exc)
+        msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         if stale:
             return {**stale, "fromCache": True, "stale": True, "error": msg}

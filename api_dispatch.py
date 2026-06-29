@@ -28,6 +28,7 @@ from btc_indicators_api import (
     get_meta_payload as get_btc_meta_payload,
     get_series_payload as get_btc_series_payload,
     get_snapshot_payload as get_btc_snapshot_payload,
+    get_valuation_payload as get_btc_valuation_payload,
 )
 from server import (
     _parse_tradfi_symbol_list,
@@ -238,6 +239,9 @@ def dispatch_api(path, query):
             if not indicator:
                 raise ValueError("Missing indicator parameter")
             return get_btc_series_payload(indicator, timespan=timespan, refresh=refresh)
+        if sub == "valuation":
+            timespan = (query.get("timespan") or ["1year"])[0]
+            return get_btc_valuation_payload(timespan=timespan, refresh=refresh)
         raise ValueError(f"Unknown BTC indicators endpoint: {sub}")
 
     if path == "/api/onchain/chart":

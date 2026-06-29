@@ -210,3 +210,124 @@ METHODOLOGY: list[dict[str, str]] = [
 BGEOMETRICS_TTL = 86_400  # 24h — free tier ~10 req/hour
 BITINFO_TTL = 43_200  # 12h
 DEFAULT_SERIES_TIMESPAN = "1year"
+
+# Rich chart copy for Misc → Bitcoin panels (descriptions + hover context).
+CHART_INFO: dict[str, dict[str, Any]] = {
+    "mvrv": {
+        "title": "MVRV",
+        "description": (
+            "Market Value to Realized Value — spot market cap divided by the aggregate "
+            "cost basis of circulating BTC. Compares what the market pays today versus "
+            "what holders paid on average when coins last moved."
+        ),
+        "readings": (
+            "≥3.5× historically marked overheated tops; 2–3× elevated; 1–2× neutral; "
+            "<1× means price sits below average holder cost (often near cycle lows)."
+        ),
+        "source": "BGeometrics · bitcoin-data.com",
+    },
+    "mvrv_z_score": {
+        "title": "MVRV Z-Score",
+        "description": (
+            "Standard-deviation distance of MVRV from its long-run mean. Normalizes "
+            "valuation extremes across cycles so you can compare how unusual today's "
+            "reading is versus history."
+        ),
+        "readings": (
+            "≥7σ extreme top zone; 3–7σ overheated; around 0 neutral; negative readings "
+            "often coincide with accumulation and undervaluation phases."
+        ),
+        "source": "BGeometrics · bitcoin-data.com",
+    },
+    "realized_price": {
+        "title": "Realized price",
+        "description": (
+            "Aggregate USD cost basis of the circulating supply — effectively the "
+            "volume-weighted average price at which coins last transacted on-chain."
+        ),
+        "readings": (
+            "Spot above realized price: network in aggregate profit. Spot below: average "
+            "coin underwater — a support zone bulls often defend in bear markets."
+        ),
+        "source": "BGeometrics · bitcoin-data.com",
+    },
+    "hodl_waves_1y_plus": {
+        "title": "HODL waves (1y+ supply)",
+        "description": (
+            "Share of circulating BTC whose last on-chain move was more than one year ago. "
+            "Proxy for long-term holder conviction versus short-term speculative supply."
+        ),
+        "readings": (
+            "Rising 1y+ share often aligns with accumulation and reduced sell pressure; "
+            "sharp drops can signal old coins waking up (distribution or profit-taking)."
+        ),
+        "source": "BGeometrics · bitcoin-data.com",
+    },
+    "hodl_waves": {
+        "title": "HODL waves (1y+ supply)",
+        "description": (
+            "Share of circulating BTC whose last on-chain move was more than one year ago. "
+            "Proxy for long-term holder conviction versus short-term speculative supply."
+        ),
+        "readings": (
+            "Rising 1y+ share often aligns with accumulation and reduced sell pressure; "
+            "sharp drops can signal old coins waking up (distribution or profit-taking)."
+        ),
+        "source": "BGeometrics · bitcoin-data.com",
+    },
+    "active_addresses": {
+        "title": "Active addresses",
+        "description": "Unique addresses active on the Bitcoin network in the selected window.",
+        "readings": (
+            "Rising activity suggests broader usage; sustained declines can mean quieter "
+            "on-chain participation (not always bearish — L2 activity is off-chain)."
+        ),
+        "source": "Blockchain.info",
+    },
+    "hash_rate": {
+        "title": "Hash rate",
+        "description": "Estimated network hashing power securing Bitcoin (exahashes per second).",
+        "readings": (
+            "Trending higher reflects miner investment and security; sharp drops may follow "
+            "price stress, energy costs, or difficulty adjustments."
+        ),
+        "source": "Blockchain.info",
+    },
+    "exchange_netflow": {
+        "title": "Exchange netflow",
+        "description": "Net BTC flowing into minus out of tracked exchange wallets.",
+        "readings": (
+            "Positive netflow: more BTC arriving at exchanges (potential sell pressure). "
+            "Negative: net withdrawals (often interpreted as accumulation)."
+        ),
+        "source": "BGeometrics · Advanced token",
+    },
+    "puell_multiple": {
+        "title": "Puell Multiple",
+        "description": "Daily miner revenue divided by its 365-day moving average.",
+        "readings": (
+            ">4 historically near cycle tops (miners earning unusually high); <0.5 often "
+            "near bottoms when miner income is depressed."
+        ),
+        "source": "Computed · Blockchain.info",
+    },
+    "btc_dominance": {
+        "title": "BTC dominance",
+        "description": "Bitcoin share of total crypto market capitalization.",
+        "readings": (
+            "Rising dominance often accompanies flight-to-quality into BTC; falling "
+            "dominance can coincide with alt-season risk-on rotations."
+        ),
+        "source": "CoinGecko",
+    },
+    "fear_greed": {
+        "title": "Fear & Greed",
+        "description": "Composite sentiment score (0–100) from volatility, momentum, social, surveys, and dominance.",
+        "readings": (
+            "0–24 Extreme Fear; 25–44 Fear; 45–55 Neutral; 56–74 Greed; 75–100 Extreme Greed."
+        ),
+        "source": "Alternative.me",
+    },
+}
+
+VALUATION_SERIES_KEYS = ("mvrv", "mvrv_z_score", "realized_price", "hodl_waves")

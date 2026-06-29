@@ -3007,37 +3007,45 @@
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="onchain" hidden>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>Active addresses</h2><span class="panel-meta">Blockchain.info</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-active-addresses">Active addresses</h2><span class="panel-meta">Blockchain.info</span></div>
+              <p class="mb-chart-desc" id="mb-desc-active_addresses"></p>
               <div id="mb-chart-active" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>Hash rate</h2><span class="panel-meta">Blockchain.info · also On Chain → Mining</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-hash-rate">Hash rate</h2><span class="panel-meta">Blockchain.info · also On Chain → Mining</span></div>
+              <p class="mb-chart-desc" id="mb-desc-hash_rate"></p>
               <div id="mb-chart-hash" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>Exchange netflow</h2><span class="panel-meta">BGeometrics · entity-adjusted proxy</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-exchange-netflow">Exchange netflow</h2><span class="panel-meta">BGeometrics · entity-adjusted proxy</span></div>
+              <p class="mb-chart-desc" id="mb-desc-exchange_netflow"></p>
               <div id="mb-chart-netflow" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>Puell Multiple</h2><span class="panel-meta">Computed · miner revenue / 365d MA</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-puell">Puell Multiple</h2><span class="panel-meta">Computed · miner revenue / 365d MA</span></div>
+              <p class="mb-chart-desc" id="mb-desc-puell_multiple"></p>
               <div id="mb-chart-puell" class="md-plotly mb-plotly"></div>
             </section>
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="valuation" hidden>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>MVRV</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-mvrv">MVRV</h2><span class="panel-meta">BGeometrics</span></div>
+              <p class="mb-chart-desc" id="mb-desc-mvrv"></p>
               <div id="mb-chart-mvrv" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>MVRV Z-Score</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-mvrv-z">MVRV Z-Score</h2><span class="panel-meta">BGeometrics</span></div>
+              <p class="mb-chart-desc" id="mb-desc-mvrv_z_score"></p>
               <div id="mb-chart-mvrvz" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>Realized price</h2><span class="panel-meta">BGeometrics · USD</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-realized-price">Realized price</h2><span class="panel-meta">BGeometrics · USD</span></div>
+              <p class="mb-chart-desc" id="mb-desc-realized_price"></p>
               <div id="mb-chart-realized" class="md-plotly mb-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>HODL waves (1y+ supply)</h2><span class="panel-meta">BGeometrics · when available</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-hodl-waves">HODL waves (1y+ supply)</h2><span class="panel-meta">BGeometrics · when available</span></div>
+              <p class="mb-chart-desc" id="mb-desc-hodl_waves_1y_plus"></p>
               <div id="mb-chart-hodl" class="md-plotly mb-plotly"></div>
             </section>
           </div>
@@ -3064,7 +3072,8 @@
               <div id="mb-fng-history" class="misc-fng-history md-plotly"></div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2>BTC dominance</h2><span class="panel-meta">CoinGecko global market cap</span></div>
+              <div class="panel-header"><h2 data-help-key="mb-btc-dominance">BTC dominance</h2><span class="panel-meta">CoinGecko global market cap</span></div>
+              <p class="mb-chart-desc" id="mb-desc-btc_dominance"></p>
               <div id="mb-chart-dominance" class="md-plotly mb-plotly"></div>
             </section>
             <p class="md-hint mb-crosslink">Funding rate and open interest snapshots are in the overview KPIs — see <strong>Derivatives → Perp</strong> for venue breakdown.</p>
@@ -3108,7 +3117,7 @@
     <script src="news.js?v=3"></script>
     <script src="misc.js?v=3"></script>
     <script src="misc-greed-fear.js?v=2"></script>
-    <script src="misc-bitcoin.js?v=3"></script>
+    <script src="misc-bitcoin.js?v=4"></script>
     <script src="indicators.js?v=3"></script>
     <script src="app.js?v=18"></script>
   </body>

@@ -11,6 +11,7 @@ let mbReady = false;
 let mbActiveTab = "overview";
 let mbSelectedIndicator = "fear_greed";
 let mbSeriesCache = {};
+let mbValuationBundle = null;
 
 const mbState = {
   timespan: "1year",
@@ -121,6 +122,67 @@ function mbIndicatorMeta(key) {
   };
 }
 
+function mbChartInfo(key) {
+  const info = mbMeta?.chartInfo?.[key] || mbValuationBundle?.chartInfo?.[key];
+  if (info) return info;
+  const ind = mbIndicatorMeta(key);
+  return {
+    title: ind.label,
+    description: ind.help ? "" : "",
+    readings: "",
+    source: ind.source,
+  };
+}
+
+function mbInterpretValue(key, val) {
+  const n = Number(val);
+  if (!Number.isFinite(n)) return "";
+  switch (key) {
+    case "mvrv":
+      if (n >= 3.5) return "Overheated zone (≥3.5×) — prior cycle tops";
+      if (n >= 2) return "Elevated — watch for distribution";
+      if (n < 1) return "Below cost basis — deep value zone";
+      return "Neutral range (1–2×)";
+    case "mvrv_z_score":
+      if (n >= 7) return "Extreme top zone (≥7σ)";
+      if (n >= 3) return "Overheated vs history";
+      if (n <= -0.5) return "Undervalued / accumulation zone";
+      return "Within historical norm";
+    case "realized_price":
+      return "Compare spot price to this cost-basis line";
+    case "hodl_waves":
+    case "hodl_waves_1y_plus":
+      if (n >= 65) return "High long-term holder share";
+      if (n <= 55) return "More short-term supply active";
+      return "Moderate HODL conviction";
+    case "puell_multiple":
+      if (n >= 4) return "Miner revenue extreme — cycle top risk";
+      if (n <= 0.5) return "Depressed miner income — bottom zone";
+      return "Normal miner revenue band";
+    case "fear_greed":
+      if (n >= 75) return "Extreme Greed";
+      if (n >= 56) return "Greed";
+      if (n <= 24) return "Extreme Fear";
+      if (n <= 44) return "Fear";
+      return "Neutral sentiment";
+    case "btc_dominance":
+      if (n >= 55) return "BTC leading crypto market";
+      if (n <= 45) return "Alts gaining share";
+      return "Balanced dominance";
+    default:
+      return "";
+  }
+}
+
+function mbRenderChartDescription(indicator, containerId) {
+  const descEl = mbEl(`mb-desc-${indicator}`) || mbEl(containerId?.replace("mb-chart-", "mb-desc-"));
+  if (!descEl) return;
+  const info = mbChartInfo(indicator);
+  const parts = [info.description, info.readings].filter(Boolean);
+  descEl.textContent = parts.join(" ");
+  descEl.title = info.readings || info.description || "";
+}
+
 function mbParseApiError(text, status) {
   const raw = String(text || "").trim();
   try {
@@ -151,7 +213,7 @@ async function mbLoadMeta(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbMeta = await swr.runSWR({
-    key: "misc:btc:meta:v3",
+    key: "misc:btc:meta:v4",
     l1: "misc",
     source: "BTC indicator catalog",
     persist: true,
@@ -167,7 +229,7 @@ async function mbLoadSnapshot(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbSnapshot = await swr.runSWR({
-    key: "misc:btc:snapshot:v3",
+    key: "misc:btc:snapshot:v4",
     l1: "misc",
     source: mbSnapshot?.sourceChain || "Multi-source BTC feed",
     persist: true,
@@ -202,6 +264,20 @@ async function mbLoadSeries(indicator, timespan, force = false) {
   if (!force && mbSeriesCache[cacheKey]) return mbSeriesCache[cacheKey];
   const data = await mbFetchJson(`series?indicator=${encodeURIComponent(indicator)}&timespan=${encodeURIComponent(timespan)}`, force);
   mbSeriesCache[cacheKey] = data;
+  return data;
+}
+
+async function mbLoadValuationBundle(timespan, force = false) {
+  const cacheKey = `valuation:${timespan}`;
+  if (!force && mbValuationBundle?.timespan === timespan && mbValuationBundle?.charts) {
+    return mbValuationBundle;
+  }
+  const data = await mbFetchJson(`valuation?timespan=${encodeURIComponent(timespan)}`, force);
+  mbValuationBundle = data;
+  const charts = data.charts || {};
+  for (const [key, chart] of Object.entries(charts)) {
+    mbSeriesCache[`${key}:${timespan}`] = { indicator: key, ...chart };
+  }
   return data;
 }
 
@@ -343,19 +419,38 @@ function mbRenderSnapshot() {
   mbRenderTable();
 }
 
-function mbSeriesToPlotly(series, color = "#f59e0b") {
+function mbSeriesToPlotly(series, color = "#f59e0b", indicator = "", opts = {}) {
+  const ind = mbIndicatorMeta(indicator);
+  const info = mbChartInfo(indicator);
   const pts = (series || []).filter((p) => p.value != null && Number.isFinite(Number(p.value)));
   const x = pts.map((p) => new Date((p.timestamp || 0) * 1000));
   const y = pts.map((p) => Number(p.value));
+  const customdata = pts.map((p) => {
+    const val = Number(p.value);
+    return [
+      mbFmtValue(val, ind.format),
+      mbInterpretValue(indicator, val),
+      opts.source || info.source || ind.source || "",
+      opts.stale ? " · cached" : "",
+    ];
+  });
+  const title = info.title || ind.label || indicator;
   return {
     x,
     y,
+    customdata,
     type: "scatter",
     mode: "lines",
     line: { color, width: 2 },
-    fill: "tozeroy",
-    fillcolor: `${color}22`,
-    hovertemplate: "%{y}<br>%{x|%b %d, %Y}<extra></extra>",
+    fill: opts.fill === false ? undefined : "tozeroy",
+    fillcolor: opts.fill === false ? undefined : `${color}22`,
+    hovertemplate:
+      `<b>${title}</b><br>` +
+      "Value: %{customdata[0]}<br>" +
+      "Date: %{x|%b %d, %Y}<br>" +
+      "%{customdata[1]}<br>" +
+      "<span style='font-size:10px;color:#94a3b8'>Source: %{customdata[2]}%{customdata[3]}</span>" +
+      "<extra></extra>",
   };
 }
 
@@ -379,7 +474,10 @@ async function mbRenderMainChart(force = false) {
       el.innerHTML = `<p class="misc-fng-empty">No series data — ${data.error || "try Refresh or check API limits"}</p>`;
       return;
     }
-    const trace = mbSeriesToPlotly(series, "#e879f9");
+    const trace = mbSeriesToPlotly(series, "#e879f9", mbState.indicator, {
+      source: data.source || ind.source,
+      stale: data.stale,
+    });
     const layout = mbPlotLayout(ind.label, 360, { yTitle: ind.unit });
     Plotly.react(el, [trace], layout, MB_PLOTLY_CONFIG);
   } catch (err) {
@@ -458,20 +556,71 @@ function mbRenderDistribution() {
   }
 }
 
+function mbRenderSingleChart(elId, indicator, color, data, displayKey) {
+  const el = mbEl(elId);
+  if (!el) return;
+  const showKey = displayKey || indicator;
+  mbRenderChartDescription(showKey, elId);
+  const series = data?.series || [];
+  const hasData = series.length && series.some((p) => p.value != null);
+  if (!hasData) {
+    const msg = data?.error
+      ? String(data.error).replace(/^HTTP Error 429.*$/i, "Rate limited — set BGEOMETRICS_API_KEY in .env.local or wait for cache")
+      : "No data";
+    el.innerHTML = `<p class="misc-fng-empty">${msg}</p>`;
+    return;
+  }
+  const meta = mbIndicatorMeta(showKey);
+  const trace = mbSeriesToPlotly(series, color, showKey, {
+    source: data.source || meta.source,
+    stale: data.stale,
+  });
+  const staleNote = data.stale ? " · cached" : "";
+  Plotly.react(
+    el,
+    [trace],
+    mbPlotLayout(`${meta.label}${staleNote}`, 300, { yTitle: meta.unit }),
+    MB_PLOTLY_CONFIG,
+  );
+}
+
+async function mbRenderValuationCharts(force = false) {
+  if (!window.Plotly) return;
+  const chartMap = [
+    ["mb-chart-mvrv", "mvrv", "mvrv", "#e879f9"],
+    ["mb-chart-mvrvz", "mvrv_z_score", "mvrv_z_score", "#a78bfa"],
+    ["mb-chart-realized", "realized_price", "realized_price", "#34d399"],
+    ["mb-chart-hodl", "hodl_waves", "hodl_waves_1y_plus", "#60a5fa"],
+  ];
+  for (const [elId] of chartMap) {
+    const el = mbEl(elId);
+    if (el) el.innerHTML = '<p class="misc-fng-empty">Loading chart…</p>';
+  }
+  try {
+    const bundle = await mbLoadValuationBundle(mbState.timespan, force);
+    for (const [elId, seriesKey, displayKey, color] of chartMap) {
+      mbRenderSingleChart(elId, seriesKey, color, bundle.charts?.[seriesKey], displayKey);
+    }
+  } catch (err) {
+    for (const [elId] of chartMap) {
+      const el = mbEl(elId);
+      if (el) el.innerHTML = `<p class="misc-fng-empty">${err.message || "Load failed"}</p>`;
+    }
+  }
+}
+
 async function mbRenderTabCharts(tab, force = false) {
   if (!window.Plotly) return;
+  if (tab === "valuation") {
+    await mbRenderValuationCharts(force);
+    return;
+  }
   const chartMap = {
     onchain: [
       ["mb-chart-active", "active_addresses", "#38bdf8"],
       ["mb-chart-hash", "hash_rate", "#14b8a6"],
       ["mb-chart-netflow", "exchange_netflow", "#f472b6"],
       ["mb-chart-puell", "puell_multiple", "#fbbf24"],
-    ],
-    valuation: [
-      ["mb-chart-mvrv", "mvrv", "#e879f9"],
-      ["mb-chart-mvrvz", "mvrv_z_score", "#a78bfa"],
-      ["mb-chart-realized", "realized_price", "#34d399"],
-      ["mb-chart-hodl", "hodl_waves_1y_plus", "#60a5fa"],
     ],
     sentiment: [["mb-chart-dominance", "btc_dominance", "#f59e0b"]],
   };
@@ -480,17 +629,11 @@ async function mbRenderTabCharts(tab, force = false) {
     jobs.map(async ([elId, indicator, color]) => {
       const el = mbEl(elId);
       if (!el) return;
+      el.innerHTML = '<p class="misc-fng-empty">Loading chart…</p>';
       try {
         const indKey = indicator === "hodl_waves_1y_plus" ? "hodl_waves" : indicator;
         const data = await mbLoadSeries(indKey, mbState.timespan, force);
-        const series = data.series || [];
-        if (!series.length) {
-          el.innerHTML = `<p class="misc-fng-empty">${data.error || "No data"}</p>`;
-          return;
-        }
-        const trace = mbSeriesToPlotly(series, color);
-        const meta = mbIndicatorMeta(indicator);
-        Plotly.react(el, [trace], mbPlotLayout(meta.label, 300, { yTitle: meta.unit }), MB_PLOTLY_CONFIG);
+        mbRenderSingleChart(elId, indKey, color, data, indicator);
       } catch (err) {
         el.innerHTML = `<p class="misc-fng-empty">${err.message || "Load failed"}</p>`;
       }
@@ -612,6 +755,7 @@ function mbBindUi() {
 
   mbEl("mb-refresh")?.addEventListener("click", async () => {
     mbSeriesCache = {};
+    mbValuationBundle = null;
     await Promise.all([mbLoadMeta(true), mbLoadSnapshot(true), mbLoadDistribution(true)]);
     mbRenderTabCharts(mbActiveTab, true);
     if (mbActiveTab === "overview") mbRenderMainChart(true);
@@ -664,6 +808,9 @@ async function loadMiscBitcoin(force = false) {
   }
 
   if (mbMeta || mbSnapshot) {
+    ["mvrv", "mvrv_z_score", "realized_price", "hodl_waves_1y_plus", "active_addresses", "hash_rate", "exchange_netflow", "puell_multiple", "btc_dominance"].forEach(
+      (k) => mbRenderChartDescription(k),
+    );
     mbPopulateIndicatorSelect();
     mbSetTab(mbActiveTab);
     window.decorateHelpLabels?.(
