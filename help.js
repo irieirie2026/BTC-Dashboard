@@ -291,61 +291,57 @@ const METRIC_HELP = {
     title: "Detected Patterns",
     body: "Only one pattern on the chart at a time. Filter by category, click a row to display it. Pattern Detail spans the full panel width below the chart — every chart label explained, plus trigger rules (what close confirms or invalidates the setup).",
   },
-  "prediction-markets-overview": {
-    title: "Prediction Markets",
-    body: "BTC-price-centric prediction markets from Polymarket and Kalshi. Only includes economic, regulatory, and geopolitical events with clear direct impact on Bitcoin (rate decisions, ETF flows, price targets). Generic politics excluded. Auto-refreshes every 60 seconds.",
+  "social-overview": {
+    title: "BTC Social Intelligence",
+    body: "Bitcoin-only social metrics from LunarCrush: sentiment, volume, Galaxy Score, AltRank, dominance, momentum, and top influencers. Cached 10 minutes server-side to stay within free-tier API limits.",
   },
-  "prediction-markets-question": {
-    title: "Market Question",
-    body: "The resolution question for the contract. Click any row or card for full details and a direct link to trade on the source platform.",
+  "social-sentiment": {
+    title: "Social Sentiment",
+    body: "Bullish vs bearish share of BTC social conversation. Trend arrow reflects 24h sentiment or Galaxy Score direction.",
   },
-  "prediction-markets-yes": {
-    title: "Yes Odds",
-    body: "Implied probability of Yes resolving, derived from market prices (0–100%). Green when ≥50% — market leans bullish on the stated outcome.",
+  "social-volume": {
+    title: "Social Volume",
+    body: "Mentions and posts across tracked social sources in the last 24 hours, with percent change vs prior period.",
   },
-  "prediction-markets-no": {
-    title: "No Odds",
-    body: "Implied probability of No resolving. Complements Yes; useful for hedging or contrarian reads on BTC-linked events.",
+  "social-galaxy": {
+    title: "Galaxy Score",
+    body: "LunarCrush proprietary 0–100 score blending engagement, sentiment, and social momentum for Bitcoin.",
   },
-  "prediction-markets-volume": {
-    title: "24h Volume",
-    body: "Notional traded in the last 24 hours. Higher volume usually means tighter pricing and more reliable implied probabilities.",
+  "social-altrank": {
+    title: "AltRank",
+    body: "Cross-asset social rank — lower numbers indicate stronger relative social performance vs other assets.",
   },
-  "prediction-markets-end": {
-    title: "End Date",
-    body: "When the market is scheduled to resolve. Short-dated contracts (Today / This week) reflect near-term sentiment; long-term brackets capture cycle positioning.",
+  "social-dominance": {
+    title: "Social Dominance",
+    body: "Bitcoin's share of total cryptocurrency social conversation volume.",
   },
-  "prediction-markets-platform": {
-    title: "Platform",
-    body: "Source venue — Polymarket (crypto-native prediction market) or Kalshi (US-regulated event contracts). Data via public APIs with mock fallback for development.",
+  "social-momentum": {
+    title: "Social Momentum",
+    body: "Seven-day social volume sparkline and percent change from week start — short-term narrative acceleration.",
   },
-  "prediction-markets-category": {
-    title: "Category",
-    body: "Price Targets = BTC level/timing bets; Regulation = ETF, SEC, policy; Macro = Fed/rates/inflation events with documented BTC transmission.",
+  "social-influencers": {
+    title: "Top Influencers",
+    body: "Top five creators driving BTC conversation with engagements, post count, and followers. Hover or click for profile links when available.",
   },
-  "prediction-markets-outlook": {
-    title: "BTC Outlook Summary",
-    body: "Aggregated read across filtered markets — e.g. implied probability BTC exceeds $100k by a stated deadline. Compare with spot technicals on Indicators for confluence. Not financial advice.",
+  "social-influencer-name": {
+    title: "Creator",
+    body: "Display name of the influencer or account discussing Bitcoin.",
   },
-  "prediction-markets-btc-price": {
-    title: "BTC Price Markets",
-    body: "Direct Bitcoin price brackets and timing contracts from Polymarket and Kalshi — levels, dates, and short-term direction. Filtered to explicit BTC/BTC-USDT resolution sources.",
+  "social-influencer-engagements": {
+    title: "Engagements",
+    body: "Likes, shares, comments, and interactions attributed to this creator on BTC content.",
   },
-  "prediction-markets-financial": {
-    title: "Financial Events",
-    body: "Worldwide financial and economic prediction markets: Fed, ECB, BOE, BOJ, RBA, inflation prints, GDP, recession odds, yields, oil/OPEC, and liquidity — not limited to the US or Bitcoin-linked contracts.",
+  "social-influencer-posts": {
+    title: "Posts",
+    body: "Number of posts mentioning Bitcoin in the measurement window.",
   },
-  "prediction-markets-financial-outlook": {
-    title: "Macro Outlook",
-    body: "Aggregated read on global macro prediction markets — central bank paths, inflation, and growth. These often correlate with BTC via real yields, USD, and risk appetite. Heuristic commentary only.",
+  "social-influencer-followers": {
+    title: "Followers",
+    body: "Follower count for the creator's primary social profile.",
   },
-  "prediction-markets-geopolitical": {
-    title: "Geopolitical & Policy",
-    body: "Worldwide politics and geopolitics: elections (UK, EU, India, Brazil, etc.), conflicts, sanctions, NATO, trade wars, and regulation. Sports and celebrity markets excluded — no BTC requirement.",
-  },
-  "prediction-markets-geopolitical-outlook": {
-    title: "Policy Outlook",
-    body: "How global political and geopolitical prediction markets may shift risk appetite, trade flows, and policy. Heuristic commentary on worldwide coverage — not financial advice.",
+  "social-commentary": {
+    title: "Social Outlook",
+    body: "Heuristic read on BTC social narrative from aggregated LunarCrush metrics — not financial advice.",
   },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",

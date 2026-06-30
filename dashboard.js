@@ -105,50 +105,15 @@ const MENU_TREE = {
           },
         },
       },
-      "prediction-markets": {
-        label: "Prediction Markets",
-        accent: "#f59e0b",
-        accentDim: "rgba(245, 158, 11, 0.18)",
-        children: {
-          "btc-price": {
-            label: "BTC Price",
-            accent: "#f59e0b",
-            accentDim: "rgba(245, 158, 11, 0.18)",
-            onShow: () => {
-              const panel =
-                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="btc-price"]';
-              const boot = () => window.initPredictionMarkets?.("btc-price");
-              boot();
-              requestAnimationFrame(boot);
-              window.decorateHelpLabels?.(document.querySelector(panel));
-            },
-          },
-          financial: {
-            label: "Financial Events",
-            accent: "#38bdf8",
-            accentDim: "rgba(56, 189, 248, 0.18)",
-            onShow: () => {
-              const panel =
-                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="financial"]';
-              const boot = () => window.initPredictionMarkets?.("financial");
-              boot();
-              requestAnimationFrame(boot);
-              window.decorateHelpLabels?.(document.querySelector(panel));
-            },
-          },
-          geopolitical: {
-            label: "Geopolitical",
-            accent: "#a78bfa",
-            accentDim: "rgba(167, 139, 250, 0.18)",
-            onShow: () => {
-              const panel =
-                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="geopolitical"]';
-              const boot = () => window.initPredictionMarkets?.("geopolitical");
-              boot();
-              requestAnimationFrame(boot);
-              window.decorateHelpLabels?.(document.querySelector(panel));
-            },
-          },
+      social: {
+        label: "Social",
+        accent: "#8b5cf6",
+        accentDim: "rgba(139, 92, 246, 0.18)",
+        onShow: () => {
+          window.initSocialSection?.();
+          window.decorateHelpLabels?.(
+            document.querySelector('#dashboard-market .menu-screen[data-l2="social"]'),
+          );
         },
       },
     },
@@ -980,15 +945,16 @@ const LEGACY_L2 = {
     st2: "indicators",
     st3: "chart-patterns",
     st4: "orderbook",
-    st5: "prediction-markets",
+    st5: "social",
     overview: "spot",
     spot: "spot",
     indicators: "indicators",
     "chart-patterns": "chart-patterns",
     chartpatterns: "chart-patterns",
     orderbook: "orderbook",
-    "prediction-markets": "prediction-markets",
-    predictionmarkets: "prediction-markets",
+    social: "social",
+    "prediction-markets": "social",
+    predictionmarkets: "social",
   },
   onchain: {
     st1: "overview",
@@ -1125,18 +1091,7 @@ const LEGACY_L2 = {
 const LEGACY_L3 = {
   "market/indicators": { st1: "1h", "1h": "1h", "4h": "4h", d: "d", daily: "d" },
   "market/orderbook": { st1: "depth", depth: "depth", ladder: "ladder" },
-  "market/prediction-markets": {
-    st1: "btc-price",
-    "btc-price": "btc-price",
-    btcprice: "btc-price",
-    price: "btc-price",
-    financial: "financial",
-    finance: "financial",
-    macro: "financial",
-    geopolitical: "geopolitical",
-    geo: "geopolitical",
-    political: "geopolitical",
-  },
+
   "derivatives/perp": { st1: "price", price: "price", sentiment: "sentiment", indicators: "indicators" },
   "derivatives/futures": { contracts: "contracts" },
   "derivatives/options": { st1: "volatility", volatility: "volatility", oi: "oi" },
@@ -1670,13 +1625,12 @@ function migrateMarketMenu() {
   localStorage.removeItem(MENU_L4_KEY);
 }
 
-function migratePredictionMarketsMenu() {
+function migrateSocialMenu() {
   if (localStorage.getItem(MENU_L1_KEY) !== "market") return;
-  if (localStorage.getItem(MENU_L2_KEY) !== "prediction-markets") return;
-  const l3 = localStorage.getItem(MENU_L3_KEY);
-  const valid = ["btc-price", "financial", "geopolitical"];
-  if (!l3 || !valid.includes(l3)) {
-    localStorage.setItem(MENU_L3_KEY, "btc-price");
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 === "prediction-markets" || l2 === "predictionmarkets") {
+    localStorage.setItem(MENU_L2_KEY, "social");
+    localStorage.removeItem(MENU_L3_KEY);
   }
 }
 
@@ -1700,7 +1654,7 @@ function initDashboardSwitcher() {
 
   migrateStatsValuationMenu();
   migrateMarketMenu();
-  migratePredictionMarketsMenu();
+  migrateSocialMenu();
   migrateMiscMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 

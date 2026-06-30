@@ -7646,3 +7646,210 @@ body[data-l1="misc"] .logo-icon::before {
 @media (max-width: 420px) {
   .pm-detail-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Social (LunarCrush) ── */
+.social-powered {
+  margin: 0;
+  padding: 0 1rem 0.65rem;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.35);
+}
+
+.social-powered a {
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+.social-powered a:hover {
+  text-decoration: underline;
+}
+
+.social-refresh-btn {
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  background: rgba(139, 92, 246, 0.12);
+  color: #c4b5fd;
+  border-radius: 8px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.social-refresh-btn:hover {
+  background: rgba(139, 92, 246, 0.22);
+}
+
+.social-loading,
+.social-error {
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+}
+
+.social-loading { color: var(--text-muted); }
+
+.social-error {
+  color: #f6465d;
+  background: rgba(246, 70, 93, 0.1);
+  border-bottom: 1px solid rgba(246, 70, 93, 0.2);
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  padding: 0.75rem 1rem 0.5rem;
+}
+
+.social-card {
+  padding: 0.85rem 0.95rem;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(42, 49, 66, 0.55);
+}
+
+.social-card--wide {
+  grid-column: span 2;
+}
+
+.social-card--sentiment {
+  grid-column: span 2;
+}
+
+.social-card__title {
+  margin: 0 0 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.social-card__value {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.social-card__sub {
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+.social-metric-delta {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+}
+
+.social-sentiment-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.social-sentiment-side {
+  text-align: center;
+}
+
+.social-sentiment-label {
+  display: block;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.social-sentiment-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.social-sentiment-mid {
+  text-align: center;
+}
+
+.social-sentiment-arrow {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.social-sentiment-status {
+  display: block;
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.social-momentum-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-momentum-chg {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.social-spark {
+  display: block;
+}
+
+.social-secondary-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  padding: 0.35rem 1rem 0.85rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.35);
+}
+
+.social-table-wrap {
+  overflow-x: auto;
+  padding: 0 1rem 1rem;
+}
+
+.social-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.social-table th,
+.social-table td {
+  padding: 0.5rem 0.55rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.45);
+}
+
+.social-table th {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.social-table a {
+  color: #c4b5fd;
+  text-decoration: none;
+}
+
+.social-table a:hover {
+  text-decoration: underline;
+}
+
+.social-influencer-row:hover {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+@media (max-width: 720px) {
+  .social-card--wide,
+  .social-card--sentiment {
+    grid-column: span 1;
+  }
+}
