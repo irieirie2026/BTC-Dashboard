@@ -71,38 +71,71 @@ BTC_EXCLUDE = re.compile(
 
 FINANCIAL_GLOBAL = re.compile(
     r"\b("
+    # US
     r"fed\b|fomc|federal\s+reserve|powell|"
+    r"treasury\s+yield|yield\s+curve|"
+    # Europe
+    r"ecb\b|european\s+central\s+bank|lagarde|"
+    r"bank\s+of\s+england|boe\b|andrew\s+bailey|"
+    r"eurozone|euro\s+area|euro\s+inflation|"
+    r"gilt|bund|german\s+inflation|"
+    # Asia-Pacific
+    r"bank\s+of\s+japan|boj\b|ueda|yen|"
+    r"pboc|people'?s\s+bank|china\s+gdp|china\s+inflation|yuan|renminbi|"
+    r"rba\b|reserve\s+bank\s+of\s+australia|"
+    r"rbi\b|reserve\s+bank\s+of\s+india|"
+    r"bok\b|bank\s+of\s+korea|"
+    # Other major CBs / macro
+    r"snb\b|swiss\s+national\s+bank|"
+    r"banco\s+central|central\s+bank|"
+    r"opec|oil\s+price|crude\s+oil|brent|wti|"
+    # Universal macro
     r"rate\s+cut|rate\s+hike|interest\s+rate|"
-    r"basis\s+points|bps|dot\s+plot|"
+    r"basis\s+points|bps|dot\s+plot|monetary\s+policy|"
     r"cpi|pce|inflation|deflation|"
     r"recession|soft\s+landing|hard\s+landing|"
     r"unemployment|nonfarm|payroll|jobs\s+report|"
-    r"gdp|treasury\s+yield|yield\s+curve|"
-    r"liquidity|qe\b|qt\b|balance\s+sheet"
+    r"gdp|pmi\b|ism\b|"
+    r"liquidity|qe\b|qt\b|balance\s+sheet|"
+    r"imf\b|world\s+bank|"
+    r"emerging\s+market|fx\s+crisis|currency\s+crisis"
     r")\b",
     re.I,
 )
 
-GEO_BTC = re.compile(
+GEO_POLITICAL = re.compile(
     r"\b("
-    r"sanction|tariff|trade\s+war|"
-    r"ceasefire|geopolit|invasion|"
+    # Conflict & security
+    r"sanction|tariff|trade\s+war|embargo|"
+    r"ceasefire|geopolit|invasion|military|"
+    r"nato|un\s+security\s+council|"
+    r"ukraine|russia|gaza|israel|iran|"
+    r"taiwan|south\s+china\s+sea|north\s+korea|"
+    r"middle\s+east|red\s+sea|"
+    # Elections & politics (worldwide)
+    r"election|referendum|parliament|"
+    r"prime\s+minister|president|chancellor|"
+    r"congress|senate|house\s+of\s+commons|"
+    r"coalition\s+government|snap\s+election|"
+    # Regions & countries
+    r"european\s+union|\beu\b|eurocrisis|brexit|"
+    r"united\s+kingdom|\buk\b|france|germany|italy|spain|"
+    r"india|brazil|mexico|canada|australia|"
+    r"japan|south\s+korea|china|"
+    # Policy & regulation (not BTC-specific)
+    r"immigration|border|asylum|"
+    r"executive\s+order|legislation|bill\s+passed|bill\s+signed|signed\s+into\s+law|"
+    r"regulation|regulatory|market\s+structure|"
+    r"crypto\s+regulation|regulate\s+crypto|stablecoin\s+bill|crypto\s+bill|"
     r"strategic\s+(bitcoin|crypto)\s+reserve|"
-    r"crypto\s+regulation|regulate\s+crypto|"
-    r"sec\s+.*(crypto|bitcoin)|"
-    r"executive\s+order.*(crypto|bitcoin)|"
-    r"bitcoin\s+ban|crypto\s+ban|"
-    r"election.*(bitcoin|btc|crypto)|"
-    r"(bitcoin|btc|crypto).*(election|president|congress|senate)|"
-    r"congress.*(bitcoin|btc|crypto)|"
-    r"war.*(bitcoin|btc|market)|"
-    r"risk.off|safe\s+haven"
+    r"sec\s+approve|etf\s+approval"
     r")\b",
     re.I,
 )
 
-GEO_GLOBAL = re.compile(
-    r"\b(sanction|tariff|trade\s+war|ceasefire|nato|taiwan|middle\s+east)\b",
+BTC_PRICE_MARKET = re.compile(
+    r"\b(bitcoin|btc\b).*(price|reach|hit|above|below|\$\d|(?:\d+)[kK]\b|ath|high|low|up\s+on)|"
+    r"(price|reach|hit|above|below).*(bitcoin|btc\b)",
     re.I,
 )
 
@@ -143,9 +176,11 @@ def _parse_prices(raw) -> tuple[float | None, float | None]:
 
 def _classify_category(question: str, description: str = "") -> str:
     text = f"{question} {description}".lower()
-    if re.search(r"etf|sec|regulat|approve|ban|legislat|stablecoin|reserve", text):
+    if re.search(r"etf|sec\b|\bregulat|\bapprove\b|\bban\b|legislat|stablecoin|strategic\s+reserve", text):
         return "regulation"
-    if BTC_MACRO.search(text) and not re.search(r"price|reach|hit|above|below|\$|k\b", text):
+    if FINANCIAL_GLOBAL.search(text) or (
+        BTC_MACRO.search(text) and not re.search(r"price|reach|hit|above|below|\$|k\b", text)
+    ):
         return "macro"
     return "price-targets"
 
@@ -153,19 +188,16 @@ def _classify_category(question: str, description: str = "") -> str:
 def _classify_section(question: str, description: str = "", category: str | None = None) -> str:
     text = f"{question} {description}"
     lower = text.lower()
-    if re.search(
-        r"bitcoin|btc\b|btc/usdt",
-        lower,
-    ) and re.search(r"price|reach|hit|above|below|\$\d|(?:\d+)[kK]\b|ath|high|low|up\s+on", lower):
+    if BTC_PRICE_MARKET.search(text) or (
+        category == "price-targets" and re.search(r"bitcoin|btc\b", lower)
+    ):
         return "btc-price"
-    if GEO_BTC.search(text) or (category == "regulation" and re.search(r"etf|sec|regulat|reserve|ban", lower)):
-        return "geopolitical"
     if FINANCIAL_GLOBAL.search(text) or BTC_MACRO.search(text) or category == "macro":
         return "financial"
-    if category == "price-targets" or re.search(r"bitcoin|btc\b", lower):
-        return "btc-price"
-    if GEO_GLOBAL.search(text) and re.search(r"bitcoin|btc|crypto|market|risk", lower):
+    if GEO_POLITICAL.search(text) or category == "regulation":
         return "geopolitical"
+    if re.search(r"bitcoin|btc\b", lower):
+        return "btc-price"
     return "btc-price"
 
 
@@ -173,8 +205,8 @@ def _is_financial_market(question: str, description: str = "") -> bool:
     text = f"{question} {description}"
     if BTC_EXCLUDE.search(text):
         return False
-    if re.search(r"bitcoin|btc\b|crypto", text, re.I):
-        return True
+    if BTC_PRICE_MARKET.search(text):
+        return False
     return bool(FINANCIAL_GLOBAL.search(text) or BTC_MACRO.search(text))
 
 
@@ -182,11 +214,11 @@ def _is_geopolitical_market(question: str, description: str = "") -> bool:
     text = f"{question} {description}"
     if BTC_EXCLUDE.search(text):
         return False
-    if GEO_BTC.search(text):
-        return True
-    if GEO_GLOBAL.search(text) and re.search(r"bitcoin|btc|crypto|risk.off|market|oil|dollar", text, re.I):
-        return True
-    return bool(re.search(r"etf|sec\s+approve|regulation.*crypto|stablecoin\s+bill", text, re.I))
+    if BTC_PRICE_MARKET.search(text):
+        return False
+    if FINANCIAL_GLOBAL.search(text) and not GEO_POLITICAL.search(text):
+        return False
+    return bool(GEO_POLITICAL.search(text))
 
 
 def _classify_timeframe(end_date: str | None) -> str:
@@ -416,19 +448,42 @@ def _fetch_polymarket_live() -> list[dict]:
         results,
     )
     _polymarket_search(
-        ["fed rate decision", "fomc", "cpi inflation", "recession", "fed rate cut", "treasury yield"],
+        [
+            "fed rate decision",
+            "fomc",
+            "cpi inflation",
+            "recession",
+            "fed rate cut",
+            "treasury yield",
+            "ecb rate",
+            "european central bank",
+            "bank of england rate",
+            "bank of japan",
+            "eurozone inflation",
+            "uk cpi",
+            "china gdp",
+            "opec oil",
+            "rba rate",
+        ],
         _is_financial_market,
         seen,
         results,
     )
     _polymarket_search(
         [
-            "bitcoin etf",
-            "strategic bitcoin reserve",
+            "uk election",
+            "france election",
+            "germany election",
+            "india election",
+            "ukraine ceasefire",
+            "taiwan invasion",
+            "eu sanctions",
+            "nato",
             "crypto regulation",
-            "bitcoin ban",
-            "tariff bitcoin",
-            "sanctions crypto",
+            "strategic bitcoin reserve",
+            "tariff trade war",
+            "israel ceasefire",
+            "brazil election",
         ],
         _is_geopolitical_market,
         seen,
@@ -753,7 +808,7 @@ def _mock_markets() -> list[dict]:
         },
         {
             "id": "mock-poly-tariff-risk",
-            "question": "New US tariffs on China before Q4 2026 trigger BTC risk-off week?",
+            "question": "New US tariffs on China before Q4 2026?",
             "yesOdds": 0.33,
             "noOdds": 0.67,
             "yesProb": 33.0,
@@ -764,9 +819,154 @@ def _mock_markets() -> list[dict]:
             "category": "regulation",
             "section": "geopolitical",
             "timeframe": "long-term",
-            "url": "https://polymarket.com/event/tariff-btc-risk",
-            "description": "Trade-war escalations hit global growth and USD liquidity — historically correlated with BTC drawdowns.",
+            "url": "https://polymarket.com/event/tariff-china-2026",
+            "description": "Trade-war escalations affect global growth, USD liquidity, and risk appetite.",
             "sparkline": [0.36, 0.34, 0.33],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-ecb-cut-sep",
+            "question": "Will the ECB cut rates at the September 2026 meeting?",
+            "yesOdds": 0.48,
+            "noOdds": 0.52,
+            "yesProb": 48.0,
+            "noProb": 52.0,
+            "volume24h": 198_000,
+            "liquidity": 265_000,
+            "endDate": "2026-09-18",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "y2026",
+            "url": "https://polymarket.com/event/ecb-september-2026",
+            "description": "Eurozone monetary policy — ECB path shapes EUR liquidity and global risk pricing.",
+            "sparkline": [0.44, 0.46, 0.48],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-boe-hold-aug",
+            "question": "Will the Bank of England hold rates at the August 2026 MPC meeting?",
+            "yesOdds": 0.55,
+            "noOdds": 0.45,
+            "yesProb": 55.0,
+            "noProb": 45.0,
+            "volume24h": 124_000,
+            "endDate": "2026-08-07",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "y2026",
+            "url": "https://polymarket.com/event/boe-august-2026",
+            "description": "UK rates and gilt yields — BOE decisions feed into global financial conditions.",
+            "sparkline": [0.51, 0.53, 0.55],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-boj-hike",
+            "question": "Will the Bank of Japan raise rates before end of 2026?",
+            "yesOdds": 0.39,
+            "noOdds": 0.61,
+            "yesProb": 39.0,
+            "noProb": 61.0,
+            "volume24h": 156_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/boj-rate-2026",
+            "description": "BOJ normalization affects yen carry trades and global liquidity flows.",
+            "sparkline": [0.35, 0.37, 0.39],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-china-gdp",
+            "question": "Will China 2026 GDP growth exceed 5%?",
+            "yesOdds": 0.44,
+            "noOdds": 0.56,
+            "yesProb": 44.0,
+            "noProb": 56.0,
+            "volume24h": 88_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/china-gdp-2026",
+            "description": "China growth outlook — key driver for commodities, EM risk, and global cycle.",
+            "sparkline": [0.41, 0.42, 0.44],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-uk-election",
+            "question": "Will the UK hold a general election before end of 2026?",
+            "yesOdds": 0.22,
+            "noOdds": 0.78,
+            "yesProb": 22.0,
+            "noProb": 78.0,
+            "volume24h": 142_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/uk-election-2026",
+            "description": "UK political calendar — fiscal and trade policy shifts affect European risk.",
+            "sparkline": [0.25, 0.23, 0.22],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-ukraine-ceasefire",
+            "question": "Ukraine–Russia ceasefire before end of 2026?",
+            "yesOdds": 0.31,
+            "noOdds": 0.69,
+            "yesProb": 31.0,
+            "noProb": 69.0,
+            "volume24h": 312_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/ukraine-ceasefire-2026",
+            "description": "Geopolitical de-escalation market — energy and defense spending implications globally.",
+            "sparkline": [0.28, 0.29, 0.31],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-taiwan",
+            "question": "China military action against Taiwan before 2027?",
+            "yesOdds": 0.12,
+            "noOdds": 0.88,
+            "yesProb": 12.0,
+            "noProb": 88.0,
+            "volume24h": 245_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/taiwan-2027",
+            "description": "Tail-risk geopolitical contract — semiconductor supply chain and global risk-off.",
+            "sparkline": [0.11, 0.11, 0.12],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-india-election",
+            "question": "Will BJP retain majority in 2026 Indian general election?",
+            "yesOdds": 0.58,
+            "noOdds": 0.42,
+            "yesProb": 58.0,
+            "noProb": 42.0,
+            "volume24h": 96_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/india-election-2026",
+            "description": "India political outlook — reform continuity and EM capital flows.",
+            "sparkline": [0.54, 0.56, 0.58],
             "active": True,
         },
     ]
@@ -778,31 +978,31 @@ def _section_outlook(markets: list[dict], section: str) -> dict:
     if section == "btc-price":
         return _build_outlook(subset)
     if section == "financial":
-        fed = next((m for m in subset if re.search(r"fed|fomc|rate", m.get("question", ""), re.I)), None)
-        headline = "Financial events — liquidity & macro odds"
-        if fed:
-            headline = f"Fed-linked market leans {fed['yesProb']:.0f}% Yes — {fed['question'][:60]}"
+        lead = max(subset, key=lambda m: m.get("volume24h") or 0, default=None)
+        headline = "Financial & economic events — worldwide macro odds"
+        if lead:
+            headline = f"Lead macro market: {lead['yesProb']:.0f}% Yes — {lead['question'][:60]}"
         return {
             "headline": headline,
             "lines": [
-                "Fed decisions, inflation prints, and growth scares transmit to BTC via real yields, USD, and risk appetite.",
-                f"Tracking {len(subset)} financial markets with global macro relevance to Bitcoin.",
-                "Compare with Macro dashboard and spot Indicators for confluence — not financial advice.",
+                "Central bank decisions, inflation, growth, and commodity markets from the US, Europe, Asia-Pacific, and beyond.",
+                f"Tracking {len(subset)} financial/economic markets — no Bitcoin price requirement.",
+                "Macro moves often transmit to BTC via real yields, USD, and risk appetite. Compare with Macro tab — not financial advice.",
             ],
             "activeMarkets": len(subset),
             "totalVolume24h": sum(m.get("volume24h") or 0 for m in subset),
         }
     if section == "geopolitical":
-        headline = "Geopolitical & policy — BTC transmission odds"
+        headline = "Geopolitics & politics — worldwide coverage"
         top = max(subset, key=lambda m: m.get("volume24h") or 0, default=None)
         if top:
-            headline = f"Top policy/geo market: {top['yesProb']:.0f}% Yes on {top['question'][:55]}…"
+            headline = f"Top geo/politics market: {top['yesProb']:.0f}% Yes on {top['question'][:55]}…"
         return {
             "headline": headline,
             "lines": [
-                "Regulation, sanctions, trade policy, and geopolitical risk feed BTC through compliance, flows, and risk-off channels.",
-                f"Tracking {len(subset)} political/geopolitical markets filtered for Bitcoin relevance.",
-                "Generic election/celebrity markets excluded unless tied to crypto policy or macro risk.",
+                "Elections, conflicts, sanctions, trade policy, and regulation across major economies — not US-only.",
+                f"Tracking {len(subset)} geopolitical and political markets worldwide.",
+                "Sports and celebrity markets excluded. Policy and risk events may affect BTC through global risk channels.",
             ],
             "activeMarkets": len(subset),
             "totalVolume24h": sum(m.get("volume24h") or 0 for m in subset),
@@ -827,15 +1027,19 @@ def _section_heroes(markets: list[dict], section: str) -> list[dict]:
             {"name": "Bullish bets", "value": str(bullish), "sub": "Yes ≥ 50%"},
         ]
     if section == "financial":
-        fed = next((m for m in subset if re.search(r"fed|fomc", m.get("question", ""), re.I)), None)
+        lead = max(subset, key=lambda m: m.get("volume24h") or 0, default=None)
         return [
-            {"name": "Fed / rates", "value": f"{fed['yesProb']:.0f}%" if fed else "—", "sub": "Lead market Yes"},
-            {"name": "Macro markets", "value": str(len(subset)), "sub": "Active"},
+            {
+                "name": "Lead macro",
+                "value": f"{lead['yesProb']:.0f}%" if lead else "—",
+                "sub": "Highest-volume Yes",
+            },
+            {"name": "Macro markets", "value": str(len(subset)), "sub": "Worldwide"},
             {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
             {"name": "Bullish macro", "value": str(bullish), "sub": "Yes ≥ 50%"},
         ]
     return [
-        {"name": "Policy / geo", "value": str(len(subset)), "sub": "BTC-relevant"},
+        {"name": "Geo / politics", "value": str(len(subset)), "sub": "Worldwide"},
         {"name": "Bullish odds", "value": str(bullish), "sub": "Yes ≥ 50%"},
         {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
         {
@@ -893,27 +1097,41 @@ def _outlook_commentary(markets, above_100, avg_yes) -> list[str]:
     return lines
 
 
-PM_MAX_MARKETS = 96
+PM_SECTION_CAPS = {"btc-price": 40, "financial": 50, "geopolitical": 50}
 
 
 def _rank_markets(markets: list[dict]) -> list[dict]:
     return sorted(markets, key=lambda m: m.get("volume24h") or 0, reverse=True)
 
 
+def _cap_by_section(markets: list[dict]) -> list[dict]:
+    buckets: dict[str, list[dict]] = {sid: [] for sid in PM_SECTION_CAPS}
+    for m in markets:
+        sec = m.get("section") or "btc-price"
+        if sec not in buckets:
+            sec = "btc-price"
+        cap = PM_SECTION_CAPS[sec]
+        if len(buckets[sec]) < cap:
+            buckets[sec].append(m)
+    out: list[dict] = []
+    for sid in ("btc-price", "financial", "geopolitical"):
+        out.extend(buckets[sid])
+    return out
+
+
 def _merge_live_with_mock(live: list[dict], mock: list[dict]) -> list[dict]:
     if not live:
-        return _rank_markets(mock)[:PM_MAX_MARKETS]
-    # Prefer live; fill gaps from mock when live set is thin
+        return _cap_by_section(_rank_markets(mock))
+    ranked_live = _rank_markets(live)
     if len(live) >= 6:
-        ranked = _rank_markets(live)
-        return ranked[:PM_MAX_MARKETS]
+        return _cap_by_section(ranked_live)
     seen_q = {m["question"].lower()[:60] for m in live}
     merged = list(live)
     for m in mock:
         key = m["question"].lower()[:60]
         if key not in seen_q:
             merged.append(m)
-    return _rank_markets(merged)[:PM_MAX_MARKETS]
+    return _cap_by_section(_rank_markets(merged))
 
 
 def _cache_get(key: str, refresh: bool) -> dict | None:
@@ -964,8 +1182,14 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
     outlook = _build_outlook(markets)
     sections_meta = {
         "btc-price": {"label": "BTC Price", "description": "Direct BTC level and timing markets"},
-        "financial": {"label": "Financial Events", "description": "Fed, rates, inflation, growth — macro drivers for BTC"},
-        "geopolitical": {"label": "Geopolitical", "description": "Policy, regulation, trade & geopolitical risk with BTC transmission"},
+        "financial": {
+            "label": "Financial Events",
+            "description": "Worldwide financial & economic events — central banks, inflation, growth, commodities",
+        },
+        "geopolitical": {
+            "label": "Geopolitical",
+            "description": "Worldwide politics & geopolitics — elections, conflicts, sanctions, trade & policy",
+        },
     }
     section_payload = {
         sid: {"heroes": _section_heroes(markets, sid), "outlook": _section_outlook(markets, sid)}

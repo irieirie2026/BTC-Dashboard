@@ -333,19 +333,19 @@ const METRIC_HELP = {
   },
   "prediction-markets-financial": {
     title: "Financial Events",
-    body: "Macro and financial markets with global relevance to BTC: Fed/FOMC decisions, rate cuts/hikes, CPI/inflation, recession odds, yields, and liquidity. These transmit to Bitcoin via real rates, USD, and risk appetite.",
+    body: "Worldwide financial and economic prediction markets: Fed, ECB, BOE, BOJ, RBA, inflation prints, GDP, recession odds, yields, oil/OPEC, and liquidity — not limited to the US or Bitcoin-linked contracts.",
   },
   "prediction-markets-financial-outlook": {
     title: "Macro Outlook",
-    body: "Section commentary on how financial prediction markets imply liquidity and growth paths that historically correlate with BTC beta and cycle positioning.",
+    body: "Aggregated read on global macro prediction markets — central bank paths, inflation, and growth. These often correlate with BTC via real yields, USD, and risk appetite. Heuristic commentary only.",
   },
   "prediction-markets-geopolitical": {
     title: "Geopolitical & Policy",
-    body: "Political and geopolitical contracts filtered for Bitcoin relevance: crypto regulation, ETF/policy bills, strategic reserve, sanctions/tariffs with risk-off channels, and elections tied to crypto law — not generic celebrity politics.",
+    body: "Worldwide politics and geopolitics: elections (UK, EU, India, Brazil, etc.), conflicts, sanctions, NATO, trade wars, and regulation. Sports and celebrity markets excluded — no BTC requirement.",
   },
   "prediction-markets-geopolitical-outlook": {
     title: "Policy Outlook",
-    body: "How policy and geopolitical prediction markets may affect BTC through compliance, capital flows, and flight-to-quality dynamics. Heuristic commentary only.",
+    body: "How global political and geopolitical prediction markets may shift risk appetite, trade flows, and policy. Heuristic commentary on worldwide coverage — not financial advice.",
   },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
