@@ -411,110 +411,6 @@
         </section>
         </div>
 
-        <div class="menu-screen" data-l1="market" data-l2="social">
-        <section class="deriv-hero-strip social-hero-strip" id="social-heroes"></section>
-        <section class="panel social-panel">
-          <div class="panel-header">
-            <h2 data-help-key="social-overview">BTC Social Intelligence</h2>
-            <span class="panel-meta" id="social-meta">Loading…</span>
-            <button type="button" class="social-refresh-btn" aria-label="Refresh social metrics">↻</button>
-          </div>
-          <p class="social-powered">
-            Powered by <a href="https://lunarcrush.com" target="_blank" rel="noopener noreferrer">LunarCrush</a>
-            · Bitcoin-only · refreshes every 10 min
-          </p>
-          <div class="social-loading" id="social-loading">Loading BTC social metrics…</div>
-          <div class="social-error" id="social-error" hidden></div>
-
-          <div class="social-grid">
-            <article class="social-card social-card--sentiment" data-help-key="social-sentiment">
-              <h3 class="social-card__title">Social Sentiment</h3>
-              <div class="social-sentiment-row">
-                <div class="social-sentiment-side positive">
-                  <span class="social-sentiment-label">Bullish</span>
-                  <span class="social-sentiment-value mono" id="social-sentiment-bull">—</span>
-                </div>
-                <div class="social-sentiment-mid">
-                  <span class="social-sentiment-arrow" id="social-sentiment-trend">→</span>
-                  <span class="social-sentiment-status" id="social-sentiment-label">—</span>
-                </div>
-                <div class="social-sentiment-side negative">
-                  <span class="social-sentiment-label">Bearish</span>
-                  <span class="social-sentiment-value mono" id="social-sentiment-bear">—</span>
-                </div>
-              </div>
-            </article>
-
-            <article class="social-card" data-help-key="social-volume">
-              <h3 class="social-card__title">Social Volume</h3>
-              <p class="social-card__value mono" id="social-metric-volume">—</p>
-              <p class="social-metric-delta mono" id="social-metric-volume-chg">—</p>
-              <p class="social-card__sub">Mentions / posts · 24h change</p>
-            </article>
-
-            <article class="social-card" data-help-key="social-galaxy">
-              <h3 class="social-card__title">Galaxy Score</h3>
-              <p class="social-card__value mono" id="social-metric-galaxy">—</p>
-              <p class="social-card__sub">LunarCrush social health (0–100)</p>
-            </article>
-
-            <article class="social-card" data-help-key="social-altrank">
-              <h3 class="social-card__title">AltRank</h3>
-              <p class="social-card__value mono" id="social-metric-altrank">—</p>
-              <p class="social-card__sub">Cross-asset social rank (lower = stronger)</p>
-            </article>
-
-            <article class="social-card" data-help-key="social-dominance">
-              <h3 class="social-card__title">Social Dominance</h3>
-              <p class="social-card__value mono" id="social-metric-dominance">—</p>
-              <p class="social-card__sub">Share of total crypto social volume</p>
-            </article>
-
-            <article class="social-card social-card--wide" data-help-key="social-momentum">
-              <h3 class="social-card__title">Social Momentum</h3>
-              <div class="social-momentum-row">
-                <div id="social-momentum-spark" class="social-momentum-spark"></div>
-                <p class="social-momentum-chg mono" id="social-momentum-chg">—</p>
-              </div>
-              <p class="social-card__sub">7-day social volume trend</p>
-            </article>
-          </div>
-
-          <div class="social-secondary-metrics">
-            <span>Mentions 24h: <strong class="mono" id="social-metric-mentions">—</strong></span>
-            <span>Active creators: <strong class="mono" id="social-metric-creators">—</strong></span>
-          </div>
-        </section>
-
-        <section class="panel social-panel">
-          <div class="panel-header">
-            <h2 data-help-key="social-influencers">Top Influencers</h2>
-            <span class="panel-meta">Top 5 creators discussing BTC</span>
-          </div>
-          <p class="social-influencers-note" id="social-influencers-note" hidden></p>
-          <div class="social-table-wrap">
-            <table class="social-table" aria-label="BTC top social influencers">
-              <thead><tr>
-                <th class="mono">#</th>
-                <th data-help-key="social-influencer-name">Creator</th>
-                <th class="mono" data-help-key="social-influencer-engagements">Engagements</th>
-                <th class="mono" data-help-key="social-influencer-posts">Posts</th>
-                <th class="mono" data-help-key="social-influencer-followers">Followers</th>
-              </tr></thead>
-              <tbody id="social-influencers-body"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="panel stats-commentary-panel">
-          <div class="panel-header">
-            <h2 data-help-key="social-commentary">Social Outlook</h2>
-            <span class="panel-meta">BTC narrative read</span>
-          </div>
-          <div class="stats-commentary" id="social-commentary"><p>Loading commentary…</p></div>
-        </section>
-        </div>
-
         <div class="menu-screen" data-l1="market" data-l2="prediction-markets">
         <section class="deriv-hero-strip pm-hero-strip" id="pm-heroes"></section>
         <section class="panel pm-panel">
@@ -3738,9 +3634,9 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=70"></script>
+    <script src="help.js?v=71"></script>
     <script src="home.js?v=4"></script>
-    <script src="dashboard.js?v=43"></script>
+    <script src="dashboard.js?v=44"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -3760,7 +3656,7 @@
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
     <script src="chart-patterns.js?v=15"></script>
-    <script src="social.js?v=2"></script>
+
     <script src="prediction-markets.js?v=2"></script>
     <script src="app.js?v=20"></script>
   </body>

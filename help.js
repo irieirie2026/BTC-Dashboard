@@ -291,58 +291,6 @@ const METRIC_HELP = {
     title: "Detected Patterns",
     body: "Only one pattern on the chart at a time. Filter by category, click a row to display it. Pattern Detail spans the full panel width below the chart — every chart label explained, plus trigger rules (what close confirms or invalidates the setup).",
   },
-  "social-overview": {
-    title: "BTC Social Intelligence",
-    body: "Bitcoin social metrics from LunarCrush when your API key has an active Individual plan. Otherwise live Santiment social volume + Crypto Fear & Greed sentiment proxy. Cached 10 minutes server-side.",
-  },
-  "social-sentiment": {
-    title: "Social Sentiment",
-    body: "Bullish vs bearish share of BTC social conversation. Trend arrow reflects 24h sentiment or Galaxy Score direction.",
-  },
-  "social-volume": {
-    title: "Social Volume",
-    body: "Mentions and posts across tracked social sources in the last 24 hours, with percent change vs prior period.",
-  },
-  "social-galaxy": {
-    title: "Galaxy Score",
-    body: "LunarCrush proprietary 0–100 score blending engagement, sentiment, and social momentum for Bitcoin.",
-  },
-  "social-altrank": {
-    title: "AltRank",
-    body: "Cross-asset social rank — lower numbers indicate stronger relative social performance vs other assets.",
-  },
-  "social-dominance": {
-    title: "Social Dominance",
-    body: "Bitcoin's share of total cryptocurrency social conversation volume.",
-  },
-  "social-momentum": {
-    title: "Social Momentum",
-    body: "Seven-day social volume sparkline and percent change from week start — short-term narrative acceleration.",
-  },
-  "social-influencers": {
-    title: "Top Influencers",
-    body: "Top five creators driving BTC conversation with engagements, post count, and followers. Hover or click for profile links when available.",
-  },
-  "social-influencer-name": {
-    title: "Creator",
-    body: "Display name of the influencer or account discussing Bitcoin.",
-  },
-  "social-influencer-engagements": {
-    title: "Engagements",
-    body: "Likes, shares, comments, and interactions attributed to this creator on BTC content.",
-  },
-  "social-influencer-posts": {
-    title: "Posts",
-    body: "Number of posts mentioning Bitcoin in the measurement window.",
-  },
-  "social-influencer-followers": {
-    title: "Followers",
-    body: "Follower count for the creator's primary social profile.",
-  },
-  "social-commentary": {
-    title: "Social Outlook",
-    body: "Heuristic read on BTC social narrative from aggregated LunarCrush metrics — not financial advice.",
-  },
   "prediction-markets-overview": {
     title: "Prediction Markets",
     body: "Live prediction markets from Polymarket (Gamma API) and Kalshi. Filter by Bitcoin, finance, economics, politics, and geopolitics. BTC-related markets are highlighted. Auto-refreshes every 60 seconds with server-side cache.",

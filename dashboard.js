@@ -105,17 +105,6 @@ const MENU_TREE = {
           },
         },
       },
-      social: {
-        label: "Social",
-        accent: "#8b5cf6",
-        accentDim: "rgba(139, 92, 246, 0.18)",
-        onShow: () => {
-          window.initSocialSection?.();
-          window.decorateHelpLabels?.(
-            document.querySelector('#dashboard-market .menu-screen[data-l2="social"]'),
-          );
-        },
-      },
       "prediction-markets": {
         label: "Prediction Markets",
         accent: "#f59e0b",
@@ -956,7 +945,7 @@ const LEGACY_L2 = {
     st2: "indicators",
     st3: "chart-patterns",
     st4: "orderbook",
-    st5: "social",
+    st5: "prediction-markets",
     st6: "prediction-markets",
     overview: "spot",
     spot: "spot",
@@ -964,7 +953,7 @@ const LEGACY_L2 = {
     "chart-patterns": "chart-patterns",
     chartpatterns: "chart-patterns",
     orderbook: "orderbook",
-    social: "social",
+    social: "prediction-markets",
     "prediction-markets": "prediction-markets",
     predictionmarkets: "prediction-markets",
   },
@@ -1651,12 +1640,22 @@ function migrateMiscMenu() {
   localStorage.removeItem(MENU_L4_KEY);
 }
 
+function migrateSocialMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "market") return;
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 === "social") {
+    localStorage.setItem(MENU_L2_KEY, "prediction-markets");
+    localStorage.removeItem(MENU_L3_KEY);
+  }
+}
+
 function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
 
   migrateStatsValuationMenu();
   migrateMarketMenu();
+  migrateSocialMenu();
 
   migrateMiscMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
