@@ -1,5 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/favicon.ico",
+      "headers": [{ "key": "Content-Type", "value": "image/x-icon" }]
+    },
+    {
+      "source": "/(favicon|apple-touch-icon)(-16|-32|-48)?\\.png",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
