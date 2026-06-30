@@ -838,19 +838,13 @@ const MENU_TREE = {
       },
     },
   },
-  misc: {
-    label: "Misc",
-    accent: "#e879f9",
-    accentDim: "rgba(232, 121, 249, 0.18)",
+  valuation: {
+    label: "Valuation",
+    accent: "#f59e0b",
+    accentDim: "rgba(245, 158, 11, 0.18)",
     children: {
-      park: {
-        label: "Park",
-        accent: "#d946ef",
-        accentDim: "rgba(217, 70, 239, 0.18)",
-        onShow: () => window.initMiscPage?.(),
-      },
-      bitcoin: {
-        label: "Bitcoin",
+      indicators: {
+        label: "Indicators",
         accent: "#f59e0b",
         accentDim: "rgba(245, 158, 11, 0.18)",
         onShow: () => window.loadMiscBitcoin?.(),
@@ -920,10 +914,10 @@ const DASHBOARD_META = {
     subtitle: "Bitcoin-centric headlines by topic",
     pageTitle: "BTC News — Live Dashboard",
   },
-  misc: {
-    title: "Misc",
-    subtitle: "Bitcoin indicators · Parking lot",
-    pageTitle: "Misc — BTC Dashboard",
+  valuation: {
+    title: "BTC Valuation",
+    subtitle: "On-chain indicators · cycles · sentiment · distribution",
+    pageTitle: "BTC Valuation — Live Dashboard",
   },
 };
 
@@ -1051,14 +1045,14 @@ const LEGACY_L2 = {
     x: "x",
     headlines: "all",
   },
-  misc: {
-    park: "park",
-    lab: "park",
-    bitcoin: "bitcoin",
-    btc: "bitcoin",
-    "greed-fear": "bitcoin",
-    greed: "bitcoin",
-    fear: "bitcoin",
+  valuation: {
+    indicators: "indicators",
+    bitcoin: "indicators",
+    btc: "indicators",
+    overview: "indicators",
+    "greed-fear": "indicators",
+    greed: "indicators",
+    fear: "indicators",
   },
 };
 
@@ -1124,7 +1118,6 @@ const LEGACY_L3 = {
   "news/technology": { overview: "overview" },
   "news/onchain": { overview: "overview" },
   "news/x": { overview: "overview" },
-  "misc/bitcoin": { overview: "overview" },
 };
 
 const LEGACY_L4 = {
@@ -1519,7 +1512,7 @@ const MenuController = {
     const treasuryMeta = document.getElementById("header-treasury-meta");
     const dashboardMeta = document.getElementById("header-dashboard-meta");
     const usesDashboardMeta = [
-      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news",
+      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news", "valuation",
     ];
     const hideAllHeaderMeta = l1 === "home";
     if (marketMeta) marketMeta.hidden = hideAllHeaderMeta || l1 !== "market";
@@ -1555,9 +1548,6 @@ const MenuController = {
     if (l1 === "news" && typeof loadNewsDashboard === "function") {
       loadNewsDashboard();
     }
-    if (l1 === "misc" && typeof initMiscPage === "function") {
-      initMiscPage();
-    }
     if (l1 === "exchanges" && typeof loadExchangesDashboard === "function") {
       loadExchangesDashboard();
     }
@@ -1579,11 +1569,26 @@ function migrateStatsValuationMenu() {
   }
 }
 
+function migrateMiscMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "misc") return;
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 === "bitcoin" || l2 === "btc" || l2 === "greed-fear" || l2 === "greed" || l2 === "fear") {
+    localStorage.setItem(MENU_L1_KEY, "valuation");
+    localStorage.setItem(MENU_L2_KEY, "indicators");
+  } else {
+    localStorage.setItem(MENU_L1_KEY, "home");
+    localStorage.setItem(MENU_L2_KEY, "landing");
+  }
+  localStorage.removeItem(MENU_L3_KEY);
+  localStorage.removeItem(MENU_L4_KEY);
+}
+
 function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
 
   migrateStatsValuationMenu();
+  migrateMiscMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 
   const tree = document.getElementById("menu-tree");

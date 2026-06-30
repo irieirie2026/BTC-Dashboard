@@ -7,6 +7,7 @@ from __future__ import annotations
 import time
 from typing import Any
 
+from cache.config import TTL_COLD
 from macro_data.cache import cache_get, cache_set
 from macro_data.imf_ifs import load_ifs_store
 from macro_data.liquidity_config import (
@@ -37,8 +38,7 @@ from macro_data.liquidity_resolver import (
 from macro_data.worldbank import fetch_countries, fetch_indicator_all_countries
 
 _COMPONENT_CACHE: dict[str, Any] | None = None
-_PAYLOAD_CACHE: dict[str, dict[str, Any]] = {}
-_MAP_CACHE: dict[str, dict[str, Any]] = {}
+_LIQUIDITY_CACHE_TTL = TTL_COLD
 
 _OVERLAY_SYMBOLS = [
     ("TLT", "20+ Year Treasuries (TLT)", "#38bdf8"),
@@ -50,8 +50,10 @@ _OVERLAY_SYMBOLS = [
 def clear_liquidity_cache() -> None:
     global _COMPONENT_CACHE
     _COMPONENT_CACHE = None
-    _PAYLOAD_CACHE.clear()
-    _MAP_CACHE.clear()
+    from cache.service import get_cache_service
+
+    get_cache_service().invalidate_prefix("lq:")
+    get_cache_service().invalidate_prefix("macro:liquidity:")
     clear_projection_cache()
     clear_gdp_cache()
     clear_euro_cache()
@@ -484,11 +486,10 @@ def get_liquidity_map_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     cache_key = f"lq:map:v2:{metric}:{year}"
-    now = time.time()
     if not refresh:
-        cached = _MAP_CACHE.get(cache_key)
-        if cached and now - cached["ts"] < 3 * 24 * 3600:
-            return cached["data"]
+        cached = cache_get(cache_key, ttl=_LIQUIDITY_CACHE_TTL)
+        if cached is not None:
+            return cached
 
     store = _load_component_store(refresh=refresh)
     countries = fetch_countries(refresh=refresh)
@@ -533,7 +534,7 @@ def get_liquidity_map_payload(
         "points": points,
         "fetchedAt": store["fetchedAt"],
     }
-    _MAP_CACHE[cache_key] = {"ts": now, "data": payload}
+    cache_set(cache_key, payload, ttl=_LIQUIDITY_CACHE_TTL)
     return payload
 
 
@@ -545,11 +546,10 @@ def get_liquidity_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     cache_key = f"lq:v4:{entity}:{year}:{overlay}"
-    now = time.time()
     if not refresh:
-        cached = _PAYLOAD_CACHE.get(cache_key)
-        if cached and now - cached["ts"] < 3 * 24 * 3600:
-            return cached["data"]
+        cached = cache_get(cache_key, ttl=_LIQUIDITY_CACHE_TTL)
+        if cached is not None:
+            return cached
 
     store = _load_component_store(refresh=refresh)
     countries = fetch_countries(refresh=refresh)
@@ -615,5 +615,5 @@ def get_liquidity_payload(
         "source": "WB → IMF IFS → DBnomics → Proxy → IMF WEO projection (+ optional Yahoo overlay)",
     }
 
-    _PAYLOAD_CACHE[cache_key] = {"ts": now, "data": payload}
+    cache_set(cache_key, payload, ttl=_LIQUIDITY_CACHE_TTL)
     return payload

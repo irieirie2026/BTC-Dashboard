@@ -9,7 +9,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
-from macro_data.cache import clear_cache
+from cache.config import HIERARCHY_STORE_TTL
+from cache.keys import macro_hierarchy_store
+from macro_data.cache import cache_get, cache_set, clear_cache
 from macro_data.config import (
     AGGREGATE_COMPOSITE_REGIONS,
     DEFAULT_YEAR,
@@ -35,6 +37,9 @@ _store: dict[str, Any] | None = None
 def clear_all() -> None:
     global _store
     _store = None
+    from cache.service import get_cache_service
+
+    get_cache_service().delete(macro_hierarchy_store())
     clear_cache()
     clear_wb_memory()
 
@@ -480,6 +485,13 @@ def get_store(*, refresh: bool = False) -> dict[str, Any]:
     if _store is not None and not refresh:
         return _store
 
+    store_key = macro_hierarchy_store()
+    if not refresh:
+        cached = cache_get(store_key, ttl=HIERARCHY_STORE_TTL)
+        if cached is not None:
+            _store = cached
+            return _store
+
     countries = fetch_countries(refresh=refresh)
     years = data_years()
     cells: dict[str, dict[str, dict[str, dict[str, Any]]]] = {}
@@ -552,6 +564,7 @@ def get_store(*, refresh: bool = False) -> dict[str, Any]:
         "projectionSources": projection_meta(),
         "oecdPublication": oecd_publication_meta(),
     }
+    cache_set(store_key, _store, ttl=HIERARCHY_STORE_TTL)
     return _store
 
 

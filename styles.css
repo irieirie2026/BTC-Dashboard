@@ -763,6 +763,82 @@ body[data-l1="misc"] .logo-icon::before {
   min-height: 280px;
 }
 
+.mb-plotly--tall {
+  min-height: 420px;
+}
+
+.mb-miner-snapshot {
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.mb-prefetch-status {
+  padding: 0.5rem 1rem 1.25rem;
+  font-size: 0.78rem;
+  color: var(--text-muted, #94a3b8);
+}
+
+.mb-prefetch-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.mb-prefetch-env {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.mb-prefetch-flag {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.08);
+  color: #64748b;
+}
+
+.mb-prefetch-flag--on {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+}
+
+.mb-prefetch-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 0.85rem;
+}
+
+.mb-prefetch-table {
+  font-size: 0.72rem;
+}
+
+.mb-prefetch-stale {
+  margin: 0.25rem 0 0.75rem;
+  padding-left: 1.1rem;
+  line-height: 1.55;
+}
+
+.mb-prefetch-stale li {
+  margin-bottom: 0.25rem;
+}
+
+.mb-prefetch-hint {
+  font-size: 0.72rem;
+  margin: 0.5rem 0 0;
+}
+
+.mb-prefetch-hint code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+}
+
+.mb-prefetch-empty {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--text-muted, #64748b);
+}
+
 .mb-charts-row {
   margin-bottom: 0.5rem;
 }
@@ -776,6 +852,410 @@ body[data-l1="misc"] .logo-icon::before {
   max-width: 72ch;
 }
 
+.mb-chart-desc--inline {
+  margin-top: 0.35rem;
+}
+
+.mb-chart-block {
+  width: 100%;
+  padding: 0 1rem 0.85rem;
+  box-sizing: border-box;
+}
+
+.mb-chart-block--multi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mb-chart-unit + .mb-chart-unit {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.mb-chart-plot {
+  width: 100%;
+  margin: 0;
+}
+
+.mb-chart-copy {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.mb-chart-copy--above {
+  margin-bottom: 0.45rem;
+}
+
+.mb-chart-copy--below {
+  margin-top: 0.45rem;
+}
+
+.mb-chart-copy .mb-chart-desc {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.mb-chart-commentary p strong,
+.mb-chart-copy .mb-chart-commentary strong {
+  color: #e2e8f0;
+}
+
+.mb-chart-copy .mb-chart-commentary {
+  padding: 0;
+  max-width: none;
+}
+
+.mb-bitcoin-panel[data-mb-sub="intelligence"] .mb-chart-desc,
+.mb-bitcoin-panel[data-mb-sub="intelligence"] .mb-chart-commentary p,
+.mb-bitcoin-panel[data-mb-sub="onchain"] .mb-chart-desc,
+.mb-bitcoin-panel[data-mb-sub="onchain"] .mb-chart-commentary p,
+.mb-bitcoin-panel[data-mb-sub="miner"] .mb-chart-desc,
+.mb-bitcoin-panel[data-mb-sub="miner"] .mb-chart-commentary p,
+.mb-bitcoin-panel[data-mb-sub="valuation"] .mb-chart-desc,
+.mb-bitcoin-panel[data-mb-sub="valuation"] .mb-chart-commentary p,
+.mb-bitcoin-panel[data-mb-sub="sentiment"] .mb-chart-desc,
+.mb-bitcoin-panel[data-mb-sub="sentiment"] .mb-chart-commentary p {
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.mb-bitcoin-panel[data-mb-sub="onchain"] .mb-mempool-panel {
+  padding: 0 1rem;
+}
+
+.mb-sentiment-market-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 0 1rem 0.35rem;
+}
+
+.mb-sentiment-market-kpis .deriv-hero-block {
+  flex: 1 1 10rem;
+  min-width: 9rem;
+}
+
+.mb-bitcoin-panel[data-mb-sub="sentiment"] .misc-fng-current.mb-chart-plot {
+  padding: 0 1rem;
+}
+
+.mb-chart-subhead {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0.5rem 0 0.35rem;
+  padding: 0 0.15rem;
+}
+
+.mb-chart-unit .mb-chart-subhead {
+  margin-top: 0;
+}
+
+.mb-chart-commentary p {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted, #94a3b8);
+  margin: 0 0 0.45rem;
+}
+
+.mb-chart-commentary p:last-child {
+  margin-bottom: 0;
+}
+
+.mb-tab-outlook-panel,
+.mb-intelligence-outlook-panel,
+.mb-overview-exec-panel {
+  margin-top: 0.75rem;
+}
+
+.mb-overview-exec-panel .stats-commentary p {
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.mb-overview-exec-panel .stats-commentary em {
+  color: #94a3b8;
+  font-style: normal;
+  font-size: 0.74rem;
+}
+
+.mb-tab-outlook-head,
+.mb-intelligence-outlook-head {
+  padding: 0 1rem 0.35rem;
+}
+
+.mb-cycle-phase-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mb-cycle-phase-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.mb-cycle-phase-badge--accumulation {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.38);
+}
+
+.mb-cycle-phase-badge--markup {
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
+  border-color: rgba(125, 211, 252, 0.32);
+}
+
+.mb-cycle-phase-badge--distribution {
+  background: rgba(251, 191, 36, 0.16);
+  color: #fcd34d;
+  border-color: rgba(251, 191, 36, 0.34);
+}
+
+.mb-cycle-phase-badge--capitulation {
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.38);
+}
+
+.mb-cycle-phase-conf {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.mb-cycle-phase-blurb {
+  flex: 1 1 100%;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted, #94a3b8);
+}
+
+.mb-tab-outlook-panel .stats-commentary,
+.mb-intelligence-outlook-panel .stats-commentary {
+  padding-top: 0.35rem;
+}
+
+.mb-tab-outlook-panel .stats-commentary p,
+.mb-intelligence-outlook-panel .stats-commentary p {
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.mb-tab-outlook-panel .stats-commentary strong,
+.mb-intelligence-outlook-panel .stats-commentary strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.mb-vm-intro-body {
+  padding: 0 1rem 1rem;
+}
+
+.mb-vm-prose {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-muted, #94a3b8);
+  margin: 0 0 0.65rem;
+  max-width: 78ch;
+}
+
+.mb-vm-category-nav {
+  margin-bottom: 0.5rem;
+}
+
+.mb-frameworks-section {
+  margin-top: 0.35rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.mb-frameworks-section .mb-vm-models-root {
+  padding: 0 0 0.5rem;
+}
+
+.mb-vm-models-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mb-vm-model-card {
+  margin-bottom: 0;
+}
+
+.mb-vm-card-header {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.mb-vm-card-titles h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.mb-vm-tagline {
+  font-size: 0.75rem;
+  color: var(--text-muted, #94a3b8);
+  margin: 0.2rem 0 0;
+}
+
+.mb-vm-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.mb-vm-kpi-row {
+  padding: 0 1rem 0.5rem;
+}
+
+.mb-vm-kpi {
+  max-width: 220px;
+}
+
+.mb-vm-chart {
+  min-height: 260px;
+  margin: 0 0.5rem 0.5rem;
+}
+
+.mb-vm-chart-block {
+  padding-bottom: 0.25rem;
+}
+
+.mb-chart-education {
+  margin: 0 1rem 0.75rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.mb-chart-education .mb-vm-details:first-child {
+  border-top: none;
+}
+
+.mb-chart-education .mb-vm-details {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mb-vm-details {
+  margin: 0 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.mb-vm-details-summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  padding: 0.55rem 0;
+  list-style: none;
+}
+
+.mb-vm-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.mb-vm-details-summary::before {
+  content: "▸ ";
+  color: #64748b;
+}
+
+.mb-vm-details[open] .mb-vm-details-summary::before {
+  content: "▾ ";
+}
+
+.mb-vm-details-body {
+  padding: 0 0 0.75rem;
+}
+
+.mb-vm-formula {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.mb-vm-formula code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+}
+
+.mb-vm-zone-table {
+  font-size: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.mb-vm-bullets {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted, #94a3b8);
+}
+
+.mb-vm-bullets li {
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .mb-vm-card-meta {
+    align-items: flex-start;
+  }
+  .mb-vm-kpi {
+    max-width: 100%;
+  }
+}
+
+.md-kpi-card .md-kpi-hint {
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0.2rem;
+  min-height: 0.9rem;
+}
+
+.mb-mempool-panel {
+  padding: 0.25rem 0 0.5rem;
+}
+
+.mb-mempool-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
 .mb-table-row {
   cursor: pointer;
 }
@@ -783,6 +1263,268 @@ body[data-l1="misc"] .logo-icon::before {
 .mb-table-row:hover,
 .mb-table-row:focus-visible {
   background: rgba(245, 158, 11, 0.08);
+}
+
+.mb-snapshot-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.mb-snapshot-table col.mb-col-indicator {
+  width: 22%;
+}
+
+.mb-snapshot-table col.mb-col-value {
+  width: 14%;
+}
+
+.mb-snapshot-table col.mb-col-signal {
+  width: 30%;
+}
+
+.mb-snapshot-table col.mb-col-source {
+  width: 16%;
+}
+
+.mb-snapshot-table col.mb-col-updated {
+  width: 18%;
+}
+
+.mb-snapshot-table th,
+.mb-snapshot-table td {
+  vertical-align: middle;
+  white-space: normal;
+}
+
+.mb-snapshot-table th.mb-col-indicator,
+.mb-snapshot-table td.mb-col-indicator {
+  text-align: left;
+}
+
+.mb-snapshot-table th.mb-col-value,
+.mb-snapshot-table td.mb-col-value,
+.mb-snapshot-table td.mono.mb-col-value {
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mb-snapshot-table td.mb-col-value--combined {
+  white-space: normal;
+  overflow: visible;
+  padding-right: 0.35rem;
+}
+
+.mb-snapshot-table .mb-combined-val {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 0.35rem;
+  line-height: 1.35;
+  font-size: 0.72rem;
+}
+
+.mb-snapshot-table .mb-combined-tag {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.mb-snapshot-table .mb-combined-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.mb-snapshot-table th.mb-col-signal,
+.mb-snapshot-table td.mb-col-signal,
+.mb-snapshot-table .mb-signal-col {
+  text-align: left;
+  white-space: normal;
+  min-width: 9.5rem;
+  overflow: hidden;
+}
+
+.mb-snapshot-table th.mb-col-source,
+.mb-snapshot-table td.mb-col-source {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mb-snapshot-table th.mb-col-updated,
+.mb-snapshot-table td.mb-col-updated {
+  text-align: right;
+  white-space: normal;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.mb-snapshot-table .mb-updated-abs {
+  display: block;
+  white-space: nowrap;
+}
+
+.mb-snapshot-table .mb-updated-elapsed {
+  display: block;
+  font-size: 0.6rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+  white-space: nowrap;
+}
+
+.mb-snapshot-table .mb-col-indicator {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mb-snapshot-table thead th .help-trigger {
+  margin-left: 0.2rem;
+  vertical-align: middle;
+}
+
+.mb-table-section td {
+  background: rgba(15, 23, 42, 0.45);
+  padding-top: 0.55rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.5);
+}
+
+.mb-table-section-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+}
+
+.mb-table-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.mb-table-section-phase {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+}
+
+.mb-table-section-phase .mb-cycle-phase-badge {
+  font-size: 0.58rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.mb-table-section-conf {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.mb-table-row--combined .mb-signal-col {
+  padding-left: 0.25rem;
+}
+
+.mb-table-value--cached {
+  color: #a5b4fc;
+}
+
+.mb-signal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+  align-items: center;
+}
+
+.mb-signal-badges--na {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.mb-signal-badge {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.14rem 0.44rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.mb-table-row[title],
+.mb-table-row .mb-col-indicator[title],
+.mb-table-row .mb-col-value[title] {
+  cursor: help;
+}
+
+.mb-signal-badge--bull2 {
+  background: rgba(16, 185, 129, 0.22);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.38);
+}
+
+.mb-signal-badge--bull {
+  background: rgba(52, 211, 153, 0.14);
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.28);
+}
+
+.mb-signal-badge--neutral {
+  background: rgba(148, 163, 184, 0.1);
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.mb-signal-badge--info {
+  background: rgba(56, 189, 248, 0.12);
+  color: #7dd3fc;
+  border-color: rgba(125, 211, 252, 0.28);
+}
+
+.mb-signal-badge--warn {
+  background: rgba(251, 191, 36, 0.16);
+  color: #fcd34d;
+  border-color: rgba(251, 191, 36, 0.32);
+}
+
+.mb-signal-badge--bear {
+  background: rgba(248, 113, 113, 0.14);
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.mb-signal-badge--bear2 {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.42);
+}
+
+.mb-signal-badge--kind-valuation {
+  box-shadow: inset 2px 0 0 rgba(167, 139, 250, 0.75);
+}
+
+.mb-signal-badge--kind-sentiment {
+  box-shadow: inset 2px 0 0 rgba(251, 191, 36, 0.75);
+}
+
+.mb-signal-badge--kind-flow {
+  box-shadow: inset 2px 0 0 rgba(45, 212, 191, 0.75);
+}
+
+.mb-signal-badge--kind-network,
+.mb-signal-badge--kind-structural {
+  box-shadow: inset 2px 0 0 rgba(96, 165, 250, 0.65);
 }
 
 .mb-methodology-inline {
@@ -1907,7 +2649,6 @@ body[data-l1="misc"] .logo-icon::before {
 .depth-chart-legend span,
 .etf-hero-label,
 .deriv-hero-label,
-.stats-metrics-table td:first-child,
 .panel-header h2[data-help-key],
 .panel-meta[data-help-key] {
   display: inline-flex;
@@ -2959,6 +3700,16 @@ body[data-l1="misc"] .logo-icon::before {
   padding: 0.25rem 0.5rem 0.5rem;
 }
 
+#dashboard-stats .markov-matrix-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#dashboard-stats .markov-matrix-table th,
+#dashboard-stats .markov-matrix-table td {
+  display: table-cell;
+}
+
 .markov-matrix-table th,
 .markov-matrix-table td {
   text-align: center;
@@ -3044,9 +3795,114 @@ body[data-l1="misc"] .logo-icon::before {
   box-shadow: none;
 }
 
-.stats-metrics-table td:first-child {
+/* Stats L1 — fixed columns so headers line up with body cells */
+#dashboard-stats .stats-l1-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#dashboard-stats .stats-l1-table th,
+#dashboard-stats .stats-l1-table td {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#dashboard-stats .stats-l1-table--metric col.stats-col-label {
+  width: 58%;
+}
+
+#dashboard-stats .stats-l1-table--metric col.stats-col-value {
+  width: 42%;
+}
+
+#dashboard-stats .stats-l1-table--metric th:nth-child(2),
+#dashboard-stats .stats-l1-table--metric td.mono {
+  text-align: right;
+}
+
+#dashboard-stats .stats-metrics-table td:first-child {
   color: var(--text-muted);
-  width: 55%;
+}
+
+#dashboard-stats .stats-metrics-table td:first-child .help-trigger {
+  margin-left: 0.2rem;
+  vertical-align: middle;
+}
+
+#dashboard-stats .stats-l1-table--cols-3num col.stats-col-label {
+  width: 38%;
+}
+
+#dashboard-stats .stats-l1-table--cols-3num col.stats-col-num {
+  width: 31%;
+}
+
+#dashboard-stats .stats-l1-table--cols-3num th:nth-child(n + 2),
+#dashboard-stats .stats-l1-table--cols-3num td:nth-child(n + 2) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dashboard-stats .stats-l1-table--cols-4num col.stats-col-label {
+  width: 28%;
+}
+
+#dashboard-stats .stats-l1-table--cols-4num col.stats-col-num {
+  width: 24%;
+}
+
+#dashboard-stats .stats-l1-table--cols-4num th:nth-child(n + 2),
+#dashboard-stats .stats-l1-table--cols-4num td:nth-child(n + 2) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dashboard-stats .stats-l1-table--cols-5num col.stats-col-label {
+  width: 22%;
+}
+
+#dashboard-stats .stats-l1-table--cols-5num col.stats-col-num {
+  width: 19.5%;
+}
+
+#dashboard-stats .stats-l1-table--cols-5num th:nth-child(n + 2),
+#dashboard-stats .stats-l1-table--cols-5num td:nth-child(n + 2) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dashboard-stats .stats-l1-table--relations col.stats-col-label {
+  width: 22%;
+}
+
+#dashboard-stats .stats-l1-table--relations col.stats-col-num {
+  width: 18%;
+}
+
+#dashboard-stats .stats-l1-table--relations col.stats-col-note {
+  width: 60%;
+}
+
+#dashboard-stats .stats-l1-table--relations th:nth-child(2),
+#dashboard-stats .stats-l1-table--relations td:nth-child(2) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dashboard-stats .stats-l1-table--milestone col.stats-col-num {
+  width: 28%;
+}
+
+#dashboard-stats .stats-l1-table--milestone col.stats-col-note {
+  width: 44%;
+}
+
+#dashboard-stats .stats-l1-table--milestone th:nth-child(1),
+#dashboard-stats .stats-l1-table--milestone th:nth-child(2),
+#dashboard-stats .stats-l1-table--milestone td:nth-child(1),
+#dashboard-stats .stats-l1-table--milestone td:nth-child(2) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .stats-commentary-panel .stats-commentary {

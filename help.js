@@ -1179,13 +1179,17 @@ const METRIC_HELP = {
     title: "Chart indicator",
     body: "Select which metric to plot in the overview chart. Click a KPI card or table row to jump directly to that series.",
   },
+  "mb-signal-badges": {
+    title: "Signal badges",
+    body: "Up to three color-coded tags per row summarizing model context. Green = bullish / undervalued; amber = caution; red = bearish / overheated; gray = neutral. Left accent: purple = valuation, gold = sentiment, teal = flow, blue = network/structural. Hover a badge for the full reading. Not investment advice — heuristic labels from published cycle bands.",
+  },
   "mb-timespan": {
     title: "Chart range",
     body: "Historical window for Blockchain.info and BGeometrics series. Snapshot-only metrics (dominance, OI) ignore this control.",
   },
   "mb-refresh": {
     title: "Refresh data",
-    body: "Bypasses disk and memory caches and re-fetches all BTC indicator endpoints. BGeometrics free tier allows ~10 requests/hour — use sparingly.",
+    body: "Bypasses disk and memory caches and re-fetches all BTC indicator endpoints. BGeometrics free tier allows 8 requests/hour and 15/day — use sparingly.",
   },
   "mb-wealth-dist": {
     title: "Wealth concentration",
@@ -1213,7 +1217,35 @@ const METRIC_HELP = {
   },
   "mb-exchange-netflow": {
     title: "Exchange netflow",
-    body: "Net BTC moving to/from exchanges. Positive netflow often interpreted as potential sell pressure; negative as accumulation. Entity-adjusted when sourced from BGeometrics.",
+    body: "Daily net BTC flowing into exchanges minus outflows (Coin Metrics Community). Positive: more deposits — potential sell pressure. Negative: net withdrawals — often read as accumulation.",
+  },
+  "mb-exchange-balance": {
+    title: "Exchange balance",
+    body: "Total BTC held on tracked exchange wallets. Rising balance means more supply readily available to sell; falling balance suggests coins moving to cold storage.",
+  },
+  "mb-tx-count": {
+    title: "Transaction count",
+    body: "Daily on-chain Bitcoin transactions. Higher counts reflect more network usage; sustained drops can mean quieter on-chain activity.",
+  },
+  "mb-mempool-fees": {
+    title: "Mempool fees",
+    body: "Recommended sat/vB fees from Mempool.space to confirm in upcoming blocks. Spikes signal congestion; low readings mean cheap block space.",
+  },
+  "mb-nupl": {
+    title: "NUPL",
+    body: "Net Unrealized Profit/Loss — network-wide paper profit as a share of market cap. High NUPL often precedes distribution; near zero or negative readings align with capitulation zones.",
+  },
+  "mb-sopr": {
+    title: "SOPR",
+    body: "Spent Output Profit Ratio — sale price divided by purchase price for moved coins. Above 1 means profit-taking; below 1 means coins moved at a loss.",
+  },
+  "mb-supply-profit": {
+    title: "Supply in profit",
+    body: "Percentage of circulating BTC trading above its on-chain cost basis. Very high readings often precede tops; low readings near bear-market floors.",
+  },
+  "mb-etf-flow": {
+    title: "ETF net flow",
+    body: "Daily net BTC flow across US spot Bitcoin ETFs (BGeometrics aggregate). Positive: net creation/buying; negative: net redemptions.",
   },
   "mb-hash-rate": {
     title: "Hash rate",
@@ -1222,6 +1254,82 @@ const METRIC_HELP = {
   "mb-puell": {
     title: "Puell Multiple",
     body: "Daily miner revenue divided by its 365-day average. Values above ~4 historically coincided with cycle tops; below ~0.5 with bottoms. Computed locally from Blockchain.info miner revenue.",
+  },
+  "mb-sth-mvrv": {
+    title: "STH vs LTH MVRV",
+    body: "Dual-cohort market-value-to-realized-value. Short-term holders (<155 days) react quickly to price; long-term holders (155d+) reflect seasoned cost basis. STH spikes often precede near-term tops; LTH extremes lag macro turns.",
+  },
+  "mb-lth-mvrv": {
+    title: "LTH MVRV",
+    body: "MVRV for coins held 155+ days. Less noisy than aggregate MVRV — LTH cost basis moves slowly and peaks can persist after spot price rolls over.",
+  },
+  "mb-sth-nupl": {
+    title: "STH vs LTH NUPL",
+    body: "Net Unrealized Profit/Loss split by holder age. High STH NUPL means recent buyers sit on large paper gains (sell-pressure risk); LTH NUPL extremes often align with euphoria or capitulation at cycle scale.",
+  },
+  "mb-lth-nupl": {
+    title: "LTH NUPL",
+    body: "NUPL for long-term holders only. More stable than network-wide NUPL; deep negative readings historically coincided with bear-market accumulation zones.",
+  },
+  "mb-asopr": {
+    title: "ASOPR",
+    body: "Adjusted Spent Output Profit Ratio — SOPR excluding same-block spends. Above 1: profit-taking dominates; below 1: coins moved at a loss. Cleaner than raw SOPR for spotting capitulation.",
+  },
+  "mb-vdd-multiple": {
+    title: "VDD Multiple",
+    body: "Value Days Destroyed divided by its yearly average — flags when old, seasoned coins move. High readings (David Puell framework) historically clustered near cycle distribution phases.",
+  },
+  "mb-nrpl-usd": {
+    title: "Net Realized P/L (USD)",
+    body: "Daily realized profit minus realized loss in USD. Large positive spikes = distribution and profit-taking; deep negative = capitulation selling hitting the ledger.",
+  },
+  "mb-utxos-profit": {
+    title: "UTXOs in profit %",
+    body: "Share of unspent outputs (not supply-weighted) currently in profit. Finer stress gauge than supply-in-profit — drops faster when recent buyers go underwater.",
+  },
+  "mb-san-active-addresses": {
+    title: "Active addresses (Santiment)",
+    body: "Santiment daily active addresses for Bitcoin. Cross-check with Blockchain.info; rising trend supports network adoption narrative. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-exchange-inflow": {
+    title: "Exchange inflow (Santiment)",
+    body: "USD value estimated flowing into exchanges via Santiment. Rising inflows can precede sell pressure. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-exchange-outflow": {
+    title: "Exchange outflow (Santiment)",
+    body: "USD value leaving exchanges (Santiment estimate). Sustained outflows often align with accumulation and self-custody trends. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-transaction-volume": {
+    title: "Transaction volume (Santiment)",
+    body: "USD on-chain transfer volume from Santiment. Complements BGeometrics flow metrics. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-mvrv-usd": {
+    title: "MVRV USD (Santiment)",
+    body: "Santiment MVRV in USD terms — cross-check with BGeometrics MVRV for valuation context. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-price-usd": {
+    title: "Price USD (Santiment)",
+    body: "Santiment daily BTC/USD reference price. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-san-social-volume": {
+    title: "Social volume (Santiment)",
+    body: "Aggregate social mentions volume for Bitcoin from Santiment. Requires SANTIMENT_API_KEY.",
+  },
+  "mb-hashprice": {
+    title: "Hashprice",
+    body: "Miner revenue per unit of hash power (USD). Low hashprice stresses miner margins and can precede capitulation; recovery supports network security investment.",
+  },
+  "mb-hashrate-bg": {
+    title: "Hash rate (BGeometrics)",
+    body: "Network hashing power from BGeometrics — complements Blockchain.info snapshot. Trending higher = miner confidence; sharp drops may follow price stress or geographic shifts.",
+  },
+  "mb-difficulty": {
+    title: "Mining difficulty",
+    body: "Bitcoin difficulty retargets roughly every two weeks. Rising difficulty = more competition; consecutive drops signal miner capitulation and margin stress.",
+  },
+  "mb-miners-revenue": {
+    title: "Miner revenue",
+    body: "Daily USD miner revenue (block subsidy + fees) from Blockchain.info. Feeds the Puell Multiple; halving eras step-change the baseline.",
   },
   "mb-mvrv": {
     title: "MVRV",
@@ -1253,7 +1361,59 @@ const METRIC_HELP = {
   },
   "mb-btc-dominance": {
     title: "BTC dominance",
-    body: "Bitcoin share of total crypto market capitalization. Rising dominance often accompanies risk-off rotation into BTC.",
+    body: "Bitcoin share of total crypto market capitalization. Chart history from BGeometrics free tier (last 4 years); KPI snapshot from CoinGecko.",
+  },
+  "mb-vm-intro": {
+    title: "Bitcoin Valuation Models",
+    body: "Educational hub for scarcity, on-chain, miner, network, and composite BTC valuation frameworks. Models are lenses — not trading signals. All data from free public APIs.",
+  },
+  "mb-vm-s2f": {
+    title: "Stock-to-Flow (S2F)",
+    body: "Ratio of circulating stock to annual issuance. Scarce assets with high S2F (gold ~62) command premiums; Bitcoin's halvings step S2F higher over time.",
+  },
+  "mb-vm-s2fx": {
+    title: "Stock-to-Flow Cross Asset (S2FX)",
+    body: "Extends S2F with halving-era phases, arguing Bitcoin reprices across scarcity clusters like precious metals.",
+  },
+  "mb-vm-power-law": {
+    title: "Power Law Model",
+    body: "Santostasi Power Law Theory: price scales as a power of time since Genesis. See Stats → Valuation → Power Law for full corridor charts.",
+  },
+  "mb-vm-delta-balanced": {
+    title: "Delta / Balanced Price",
+    body: "David Puell framework: Delta Cap isolates active economic base; Balanced Price estimates long-run equilibrium between bulls and bears.",
+  },
+  "mb-vm-pi-cycle": {
+    title: "Pi Cycle Top",
+    body: "Signals when 111-day MA crosses above 2× the 350-day MA — historically within weeks of cycle tops (2013, 2017, 2021).",
+  },
+  "mb-vm-hash-ribbons": {
+    title: "Hash Ribbons",
+    body: "Hash-rate moving-average cross indicating miner capitulation (ribbon inversion) and recovery (bullish cross).",
+  },
+  "mb-vm-difficulty-ribbon": {
+    title: "Difficulty Ribbon",
+    body: "Stacked SMAs of mining difficulty. Compression signals miner stress; expansion signals network confidence returning.",
+  },
+  "mb-vm-nvt": {
+    title: "NVT Ratio (Signal)",
+    body: "Network Value to Transactions — market cap divided by smoothed on-chain transfer volume. High NVT = expensive vs economic throughput.",
+  },
+  "mb-vm-metcalfe": {
+    title: "Metcalfe's Law",
+    body: "Network value proportional to n² (users/addresses). Compares price to addresses² to gauge network-effect valuation.",
+  },
+  "mb-vm-rainbow": {
+    title: "Rainbow Chart",
+    body: "Log regression color bands on BTC price — meme-educational map of hysteria (red) vs fire-sale (blue) zones.",
+  },
+  "mb-vm-cost-production": {
+    title: "Cost of Production",
+    body: "Thermo Price from cumulative miner revenue divided by supply — a thermodynamic production-cost floor proxy.",
+  },
+  "mb-vm-cdd": {
+    title: "Coin Days Destroyed",
+    body: "Sum of (BTC moved × days held). Spikes indicate old, seasoned coins changing hands — often distribution.",
   },
 };
 

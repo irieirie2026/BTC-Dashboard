@@ -88,12 +88,12 @@ const HOME_SECTIONS = [
     blurb: "Bitcoin-centric headlines filtered by market, regulation, mining, tech, and on-chain.",
   },
   {
-    id: "misc",
-    label: "Misc",
-    icon: "🅿",
-    accent: "#e879f9",
-    accentDim: "rgba(232, 121, 249, 0.18)",
-    blurb: "Parking lot for experiments — half-built ideas stay here until they’re ready to sail.",
+    id: "valuation",
+    label: "Valuation",
+    icon: "◎",
+    accent: "#f59e0b",
+    accentDim: "rgba(245, 158, 11, 0.18)",
+    blurb: "Bitcoin on-chain indicators — distribution, cycles, miner economics, and sentiment.",
   },
 ];
 

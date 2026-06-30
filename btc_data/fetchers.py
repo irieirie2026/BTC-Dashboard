@@ -38,22 +38,45 @@ BGEOMETRICS_SERIES: dict[str, dict[str, Any]] = {
     "realized_price": {"path": "realized-price", "value_key": "realizedPrice"},
     "puell_multiple": {"path": "puell-multiple", "value_key": "puellMultiple"},
     "hodl_waves": {"path": "hodl-waves-supply", "value_key": "_hodl_1y_plus_pct"},
-    "exchange_netflow": {
-        "path": "exchange-netflow-btc",
-        "value_key": "exchangeNetflowBtc",
-        "requires_token": True,
-    },
-    "exchange_inflow": {
-        "path": "exchange-inflow-btc",
-        "value_key": "exchangeInflowBtc",
-        "requires_token": True,
-    },
-    "exchange_outflow": {
-        "path": "exchange-outflow-btc",
-        "value_key": "exchangeOutflowBtc",
-        "requires_token": True,
-    },
+    "bitcoin_dominance": {"path": "bitcoin-dominance", "value_key": "bitcoinDominance"},
+    "nupl": {"path": "nupl", "value_key": "nupl"},
+    "sopr": {"path": "sopr", "value_key": "sopr"},
+    "supply_in_profit": {"path": "profit-loss", "value_key": "profitLoss", "scale": 100},
+    "etf_flow_btc": {"path": "etf-flow-btc", "value_key": "etfFlow"},
+    # Valuation Models extensions
+    "btc_price": {"path": "btc-price", "value_key": "btcPrice"},
+    "supply_current": {"path": "supply-current", "value_key": "supplyCurrent"},
+    "delta_cap": {"path": "delta-cap", "value_key": "deltaCap"},
+    "investor_price": {"path": "investor-price", "value_key": "investorPrice"},
+    "thermo_price": {"path": "thermo-price", "value_key": "thermoPrice"},
+    "cdd": {"path": "cdd", "value_key": "cdd"},
+    "cdd_90dma": {"path": "cdd-90dma", "value_key": "cdd90dma"},
+    "hashribbons": {"path": "hashribbons", "value_key": "hashribbons"},
+    "difficulty": {"path": "difficulty-BTC", "value_key": "difficultyBTC"},
+    "nvts": {"path": "nvts", "value_key": "nvts"},
+    # Extended free-tier endpoints (prefetch registry)
+    "sth_mvrv": {"path": "sth-mvrv", "value_key": "sthMvrv"},
+    "lth_mvrv": {"path": "lth-mvrv", "value_key": "lthMvrv"},
+    "sth_nupl": {"path": "nupl-sth", "value_key": "nuplSth"},
+    "lth_nupl": {"path": "nupl-lth", "value_key": "nuplLth"},
+    "asopr": {"path": "asopr", "value_key": "asopr"},
+    "vdd_multiple": {"path": "vdd-multiple", "value_key": "vddMultiple"},
+    "terminal_price": {"path": "terminal-price", "value_key": "terminalPrice"},
+    "nrpl_usd": {"path": "nrpl-usd", "value_key": "nrplUsd"},
+    "hashprice": {"path": "hashprice", "value_key": "hashprice"},
+    "hashrate_bg": {"path": "hashrate", "value_key": "hashrate"},
+    "etf_btc_total": {"path": "etf-btc-total", "value_key": "etfBtcTotal"},
+    "stablecoin_supply": {"path": "stablecoin-supply", "value_key": "stablecoinSupply"},
+    "utxos_in_profit_pct": {"path": "utxos-in-profit-pct", "value_key": "utxosInProfitPct"},
 }
+
+MEMPOOL_BASE = "https://mempool.space/api"
+MEMPOOL_TTL = 300
+
+# Free-plan endpoints only (bitcoin-data.com/v1 — 8 req/hr, 15/day, last 4 years).
+FREE_BGEOMETRICS_METRICS = frozenset(BGEOMETRICS_SERIES.keys())
+
+SNAPSHOT_KPI_METRICS = ("mvrv", "mvrv_z_score", "realized_price", "hodl_waves")
 
 # Serialize BGeometrics HTTP calls — free tier allows ~8–10 req/hour.
 _BG_LAST_REQUEST_AT = 0.0
@@ -74,9 +97,45 @@ def _friendly_bgeometrics_error(exc: urllib.error.HTTPError, raw_msg: str) -> st
     if exc.code == 429:
         return (
             "BGeometrics rate limit (429) — cached data shown when available. "
-            "Set BGEOMETRICS_API_KEY in .env.local for higher limits."
+            "Free tier allows 8 requests/hour; data is cached 24h."
         )
     return raw_msg
+
+
+def _bgeometrics_stale_series(stale: dict[str, Any] | None, *, note: str | None = None) -> dict[str, Any] | None:
+    """Return stale cached series without error when points exist."""
+    if not stale or not stale.get("series"):
+        return None
+    return {
+        **stale,
+        "fromCache": True,
+        "stale": True,
+        "error": None,
+        "note": note or stale.get("note"),
+    }
+
+
+def _bgeometrics_stale_last(stale: dict[str, Any] | None, *, note: str | None = None) -> dict[str, Any] | None:
+    """Return stale cached latest value without error when data exists."""
+    if not stale:
+        return None
+    if stale.get("latest") is not None:
+        has_data = True
+    elif stale.get("series"):
+        has_data = True
+        if stale.get("latest") is None:
+            stale = {**stale, "latest": stale["series"][-1]}
+    else:
+        has_data = False
+    if not has_data:
+        return None
+    return {
+        **stale,
+        "fromCache": True,
+        "stale": True,
+        "error": None,
+        "note": note or stale.get("note"),
+    }
 
 
 HODL_1Y_PLUS_KEYS = (
@@ -126,7 +185,10 @@ def bgeometrics_status() -> dict[str, Any]:
     return {
         "configured": bool(token),
         "base": bgeometrics_base(),
-        "auth": "Bearer token" if token else "free tier (no token)",
+        "auth": "free tier (no token)" if not token else "optional token",
+        "freeOnly": True,
+        "limits": {"perHour": 8, "perDay": 15, "history": "4 years"},
+        "strategy": "sequential fetch + 24h disk cache",
     }
 
 
@@ -168,6 +230,21 @@ def _parse_bgeometrics_http_error(exc: urllib.error.HTTPError) -> str:
         return str(exc)
 
 
+def fetch_bgeometrics_kpi_bundle(*, refresh: bool = False) -> dict[str, dict[str, Any]]:
+    """Sequential /last fetches for snapshot KPIs — respects free-tier rate limits."""
+    cache_key = "btc:bundle:bg-kpis:v2"
+    if not refresh:
+        cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
+        if cached is not None:
+            return cached
+
+    out: dict[str, dict[str, Any]] = {}
+    for metric in SNAPSHOT_KPI_METRICS:
+        out[metric] = fetch_bgeometrics_last(metric, refresh=refresh)
+    cache_set(cache_key, out)
+    return out
+
+
 def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, Any]:
     """Latest value only — uses /last to minimize API quota (for snapshot KPIs)."""
     spec = _bgeometrics_endpoint(metric)
@@ -179,16 +256,15 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
             "fetchedAt": _now_iso(),
         }
 
-    token = bgeometrics_token()
-    if spec.get("requires_token") and not token:
+    if metric not in FREE_BGEOMETRICS_METRICS:
         return {
             "latest": None,
             "source": "BGeometrics",
-            "error": "Advanced plan token required (set BGEOMETRICS_API_KEY in env)",
+            "error": f"Metric not available on free plan: {metric}",
             "fetchedAt": _now_iso(),
-            "requiresToken": True,
         }
 
+    token = bgeometrics_token()
     cache_key = f"btc:bg:last:v2:{metric}:{'auth' if token else 'free'}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
@@ -202,21 +278,24 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
     except urllib.error.HTTPError as exc:
         msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        cached = _bgeometrics_stale_last(stale, note=msg)
+        if cached:
+            return cached
         return {"latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": str(exc)}
+        cached = _bgeometrics_stale_last(stale, note=str(exc))
+        if cached:
+            return cached
         return {"latest": None, "source": "BGeometrics", "error": str(exc), "fetchedAt": _now_iso()}
 
     if isinstance(raw, dict) and raw.get("error"):
         err = raw["error"]
         msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        cached = _bgeometrics_stale_last(stale, note=msg)
+        if cached:
+            return cached
         return {"latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
 
     series = _normalize_bgeometrics(raw, spec)
@@ -243,17 +322,16 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
             "fetchedAt": _now_iso(),
         }
 
-    token = bgeometrics_token()
-    if spec.get("requires_token") and not token:
+    if metric not in FREE_BGEOMETRICS_METRICS:
         return {
             "series": [],
             "latest": None,
             "source": "BGeometrics",
-            "error": "Advanced plan token required (set BGEOMETRICS_API_KEY in env)",
+            "error": f"Metric not available on free plan: {metric}",
             "fetchedAt": _now_iso(),
-            "requiresToken": True,
         }
 
+    token = bgeometrics_token()
     cache_key = f"btc:bg:v2:{metric}:{'auth' if token else 'free'}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
@@ -267,21 +345,24 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
     except urllib.error.HTTPError as exc:
         msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        cached = _bgeometrics_stale_series(stale, note=msg)
+        if cached:
+            return cached
         return {"series": [], "latest": None, "source": "BGeometrics", "error": msg, "fetchedAt": _now_iso()}
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": str(exc)}
+        cached = _bgeometrics_stale_series(stale, note=str(exc))
+        if cached:
+            return cached
         return {"series": [], "latest": None, "source": "BGeometrics", "error": str(exc), "fetchedAt": _now_iso()}
 
     if isinstance(raw, dict) and raw.get("error"):
         err = raw["error"]
         msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
-        if stale:
-            return {**stale, "fromCache": True, "stale": True, "error": msg}
+        cached = _bgeometrics_stale_series(stale, note=msg)
+        if cached:
+            return cached
         return {
             "series": [],
             "latest": None,
@@ -304,18 +385,49 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
     return payload
 
 
+def _hashribbons_signal_value(raw: Any) -> float | None:
+    if raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    mapped = {
+        "up": 1.0,
+        "down": -1.0,
+        "buy": 1.0,
+        "recovery": 1.0,
+        "capitulation": -1.0,
+    }
+    return mapped.get(str(raw).strip().lower())
+
+
 def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
     value_key = spec.get("value_key")
     if value_key == "_hodl_1y_plus_pct":
         return _hodl_1y_plus_pct(row)
 
+    scale = float(spec.get("scale") or 1)
     if value_key and value_key in row and row[value_key] is not None:
-        return float(row[value_key])
+        raw_val = row[value_key]
+        if value_key == "hashribbons":
+            mapped = _hashribbons_signal_value(raw_val)
+            if mapped is not None:
+                return mapped
+        try:
+            return float(raw_val) * scale
+        except (TypeError, ValueError):
+            pass
 
     if value_key:
         for k, v in row.items():
             if k.lower() == str(value_key).lower() and v is not None:
-                return float(v)
+                if value_key == "hashribbons":
+                    mapped = _hashribbons_signal_value(v)
+                    if mapped is not None:
+                        return mapped
+                try:
+                    return float(v) * scale
+                except (TypeError, ValueError):
+                    continue
 
     for k, v in row.items():
         if k in ("d", "unixTs", "date", "timestamp", "t"):
@@ -522,6 +634,43 @@ def fetch_bitinfo_wallet_cohorts(*, refresh: bool = False) -> dict[str, Any]:
     return payload
 
 
+def fetch_mempool_fees(*, refresh: bool = False) -> dict[str, Any]:
+    cache_key = "btc:mempool:fees:v1"
+    if not refresh:
+        cached = cache_get(cache_key, ttl=MEMPOOL_TTL)
+        if cached is not None:
+            return {**cached, "fromCache": True}
+
+    try:
+        fees = fetch_json(f"{MEMPOOL_BASE}/v1/fees/recommended", timeout=20)
+        mempool = fetch_json(f"{MEMPOOL_BASE}/mempool", timeout=20)
+    except Exception as exc:
+        stale = cache_get(cache_key, ttl=MEMPOOL_TTL * 12)
+        if stale:
+            return {**stale, "fromCache": True, "stale": True, "error": str(exc)}
+        return {
+            "value": None,
+            "source": "Mempool.space",
+            "error": str(exc),
+            "fetchedAt": _now_iso(),
+        }
+
+    fast = fees.get("fastestFee")
+    payload = {
+        "value": float(fast) if fast is not None else None,
+        "fast_fee": fees.get("fastestFee"),
+        "hour_fee": fees.get("hourFee"),
+        "economy_fee": fees.get("economyFee"),
+        "mempool_count": mempool.get("count"),
+        "mempool_mb": round(mempool.get("vsize", 0) / 1e6, 2) if mempool.get("vsize") else None,
+        "source": "Mempool.space",
+        "fetchedAt": _now_iso(),
+        "fromCache": False,
+    }
+    cache_set(cache_key, payload)
+    return payload
+
+
 def fetch_coingecko_dominance(*, refresh: bool = False) -> dict[str, Any]:
     cache_key = "btc:coingecko:dominance:v1"
     if not refresh:
@@ -598,3 +747,32 @@ def blockchain_hashrate_to_ehs(ths: float | None) -> float | None:
     if ths is None:
         return None
     return ths / 1e6
+
+
+def normalize_hash_rate_ehs(
+    raw: float | int | None,
+    *,
+    unit: str | None = None,
+    from_store: bool = False,
+) -> float | None:
+    """Normalize hash-rate readings to EH/s (Bitcoin network is typically 50–5000 EH/s)."""
+    if raw is None:
+        return None
+    try:
+        val = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if unit == "EH/s" or from_store:
+        return val
+    if 50 <= val <= 5000:
+        return val
+    if val >= 1e5:
+        return blockchain_hashrate_to_ehs(val)
+    if 0 < val < 50:
+        fixed = val * 1e6
+        if 50 <= fixed <= 5000:
+            return fixed
+    converted = blockchain_hashrate_to_ehs(val)
+    if converted is not None and 50 <= converted <= 5000:
+        return converted
+    return val if val >= 50 else converted

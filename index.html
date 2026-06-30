@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=71" />
+    <link rel="stylesheet" href="styles.css?v=72" />
   </head>
   <body>
     <div class="app app--compact">
@@ -60,7 +60,7 @@
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="defi">DeFi</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="macro">Macro</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="news">News</button>
-          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="misc">Misc</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="valuation">Valuation</button>
         </nav>
         <div id="menu-l2-slot" class="menu-l2-slot">
           <nav class="dashboard-nav menu-l2" aria-label="Market sections">
@@ -1144,7 +1144,11 @@
               <span class="panel-meta">Full sample · simple daily returns</span>
             </div>
             <div class="deriv-table-wrap stats-metrics-table-wrap stats-metrics-table-wrap--scroll">
-              <table class="deriv-table stats-metrics-table">
+              <table class="deriv-table stats-metrics-table stats-l1-table stats-l1-table--metric">
+                <colgroup>
+                  <col class="stats-col-label">
+                  <col class="stats-col-value">
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Metric</th>
@@ -1162,7 +1166,12 @@
                 <span class="panel-meta">Last 30 trading days</span>
               </div>
               <div class="deriv-table-wrap">
-                <table class="deriv-table">
+                <table class="deriv-table stats-l1-table stats-l1-table--cols-3num">
+                  <colgroup>
+                    <col class="stats-col-label">
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -1180,7 +1189,12 @@
                 <span class="panel-meta">Calendar month · last 24 months</span>
               </div>
               <div class="deriv-table-wrap">
-                <table class="deriv-table">
+                <table class="deriv-table stats-l1-table stats-l1-table--cols-3num">
+                  <colgroup>
+                    <col class="stats-col-label">
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Month</th>
@@ -1284,7 +1298,11 @@
               <span class="panel-meta">BTC/USD daily returns</span>
             </div>
             <div class="deriv-table-wrap">
-              <table class="deriv-table stats-metrics-table">
+              <table class="deriv-table stats-metrics-table stats-l1-table stats-l1-table--metric">
+                <colgroup>
+                  <col class="stats-col-label">
+                  <col class="stats-col-value">
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Metric</th>
@@ -1355,7 +1373,12 @@
               <span class="panel-meta">Days breaching 95% historical VaR</span>
             </div>
             <div class="deriv-table-wrap">
-              <table class="deriv-table">
+              <table class="deriv-table stats-l1-table stats-l1-table--cols-3num">
+                <colgroup>
+                  <col class="stats-col-label">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -1373,7 +1396,14 @@
               <span class="panel-meta">1-day horizon · BTC/USD</span>
             </div>
             <div class="deriv-table-wrap">
-              <table class="deriv-table">
+              <table class="deriv-table stats-l1-table stats-l1-table--cols-5num">
+                <colgroup>
+                  <col class="stats-col-label">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Method</th>
@@ -1452,7 +1482,13 @@
               <span class="panel-meta">Occupancy · self-transition · expected duration</span>
             </div>
             <div class="deriv-table-wrap">
-              <table class="deriv-table">
+              <table class="deriv-table stats-l1-table stats-l1-table--cols-4num">
+                <colgroup>
+                  <col class="stats-col-label">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                  <col class="stats-col-num">
+                </colgroup>
                 <thead>
                   <tr>
                     <th>State</th>
@@ -1535,7 +1571,11 @@
                 <span class="panel-meta">Giovanni Santostasi constants + empirical fit</span>
               </div>
               <div class="deriv-table-wrap">
-                <table class="deriv-table stats-metrics-table">
+                <table class="deriv-table stats-metrics-table stats-l1-table stats-l1-table--metric">
+                  <colgroup>
+                    <col class="stats-col-label">
+                    <col class="stats-col-value">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Parameter</th>
@@ -1552,7 +1592,12 @@
                 <span class="panel-meta">Linked power laws in Santostasi theory</span>
               </div>
               <div class="deriv-table-wrap stats-metrics-table-wrap--scroll">
-                <table class="deriv-table">
+                <table class="deriv-table stats-l1-table stats-l1-table--relations">
+                  <colgroup>
+                    <col class="stats-col-label">
+                    <col class="stats-col-num">
+                    <col class="stats-col-note">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Link</th>
@@ -1572,7 +1617,14 @@
                 <span class="panel-meta">Bear −60% · Neutral fair · Bull +50% (bitcoinpower.law scenarios)</span>
               </div>
               <div class="deriv-table-wrap">
-                <table class="deriv-table">
+                <table class="deriv-table stats-l1-table stats-l1-table--cols-5num">
+                  <colgroup>
+                    <col class="stats-col-label">
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Horizon</th>
@@ -1592,7 +1644,12 @@
                 <span class="panel-meta">Estimated crossing dates from PLT inversion</span>
               </div>
               <div class="deriv-table-wrap">
-                <table class="deriv-table">
+                <table class="deriv-table stats-l1-table stats-l1-table--milestone">
+                  <colgroup>
+                    <col class="stats-col-num">
+                    <col class="stats-col-num">
+                    <col class="stats-col-note">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>Target</th>
@@ -2894,7 +2951,9 @@
             </footer>
           </div>
         </div>
-        <div class="menu-screen" data-l1="misc" data-l2="bitcoin" hidden>
+      </div>
+      <div id="dashboard-valuation" class="dashboard-view" hidden>
+        <div class="menu-screen" data-l1="valuation" data-l2="indicators">
           <section class="panel md-toolbar mb-toolbar">
             <div class="panel-header md-toolbar-header">
               <h2 data-help-key="mb-title">Bitcoin Indicators</h2>
@@ -2906,13 +2965,15 @@
             <button type="button" class="macro-drivers-subtab mb-subtab active" data-mb-sub="overview">Overview</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="distribution">Distribution &amp; Whales</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="onchain">On-Chain Activity</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="intelligence">On-Chain Intelligence</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="miner">Miner &amp; Network</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="valuation">Valuation &amp; Cycles</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="sentiment">Sentiment &amp; Market</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="methodology">Sources</button>
           </nav>
           <section class="panel md-filters mb-filters" id="mb-filters-panel">
             <div class="md-controls">
-              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,valuation,sentiment">
+              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,intelligence,miner,valuation,sentiment">
                 <span class="md-control-group-label">Chart</span>
                 <div class="md-control-group-fields">
                   <label class="md-field">
@@ -2926,11 +2987,12 @@
                       <option value="90days">90 days</option>
                       <option value="1year" selected>1 year</option>
                       <option value="2years">2 years</option>
+                      <option value="4years">4 years</option>
                     </select>
                   </label>
                 </div>
               </div>
-              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,valuation,sentiment">
+              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,intelligence,miner,valuation,sentiment">
                 <span class="md-control-group-label">Actions</span>
                 <div class="md-control-group-fields md-control-group-fields--actions">
                   <span class="md-btn-group">
@@ -2951,19 +3013,27 @@
             <section class="panel">
               <div class="panel-header">
                 <h2>Indicator snapshot</h2>
-                <span class="panel-meta">Every value shows source badge · click row to chart</span>
+                <span class="panel-meta">Signal badges: valuation · sentiment · flow · signal · click row to chart</span>
               </div>
               <div class="deriv-table-wrap md-table-wrap">
-                <table class="deriv-table md-table">
+                <table class="deriv-table md-table mb-snapshot-table">
+                  <colgroup>
+                    <col class="mb-col-indicator" />
+                    <col class="mb-col-value" />
+                    <col class="mb-col-signal" />
+                    <col class="mb-col-source" />
+                    <col class="mb-col-updated" />
+                  </colgroup>
                   <thead>
                     <tr>
-                      <th>Indicator</th>
-                      <th>Value</th>
-                      <th>Source</th>
-                      <th>Updated</th>
+                      <th class="mb-col-indicator">Indicator</th>
+                      <th class="mono mb-col-value">Value</th>
+                      <th class="mb-col-signal">Signal<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-signal-badges" aria-label="Explain signal badges">?</button></th>
+                      <th class="mb-col-source">Source</th>
+                      <th class="mb-col-updated">Updated</th>
                     </tr>
                   </thead>
-                  <tbody id="mb-table-body"><tr><td colspan="4">Loading…</td></tr></tbody>
+                  <tbody id="mb-table-body"><tr><td colspan="5">Loading…</td></tr></tbody>
                 </table>
               </div>
             </section>
@@ -2974,21 +3044,37 @@
               </div>
               <div id="mb-main-chart" class="md-plotly mb-plotly" aria-label="Bitcoin indicator chart"></div>
             </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel mb-overview-exec-panel">
+              <div class="panel-header">
+                <h2>BTC cycle executive summary</h2>
+                <span class="panel-meta">Cross-tab synthesis · cycle phase &amp; forward outlook · not financial advice</span>
+              </div>
+              <div class="mb-tab-outlook-head" id="mb-overview-outlook-head"></div>
+              <div class="stats-commentary" id="mb-overview-commentary"><p>Loading executive summary…</p></div>
+            </section>
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="distribution" hidden>
-            <section class="panel">
+            <section class="panel mb-charts-row">
               <div class="panel-header">
                 <h2 data-help-key="mb-wealth-dist">Wealth concentration</h2>
                 <span class="panel-meta" id="mb-wealth-meta">BitInfoCharts · address-level</span>
               </div>
-              <div id="mb-wealth-chart" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-wealth_concentration"></p></div>
+                <div id="mb-wealth-chart" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wealth_concentration"></div></div><div class="mb-chart-education" id="mb-edu-wealth_concentration"></div>
+              </div>
             </section>
-            <section class="panel">
+            <section class="panel mb-charts-row">
               <div class="panel-header">
                 <h2 data-help-key="mb-wallet-cohorts">Wallet size distribution</h2>
                 <span class="panel-meta">Supply % by balance cohort</span>
               </div>
-              <div id="mb-cohort-chart" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-wallet_cohorts"></p></div>
+                <div id="mb-cohort-chart" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wallet_cohorts"></div></div><div class="mb-chart-education" id="mb-edu-wallet_cohorts"></div>
+              </div>
               <div class="deriv-table-wrap md-table-wrap">
                 <table class="deriv-table md-table">
                   <thead>
@@ -3008,77 +3094,360 @@
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="onchain" hidden>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-active-addresses">Active addresses</h2><span class="panel-meta">Blockchain.info</span></div>
-              <p class="mb-chart-desc" id="mb-desc-active_addresses"></p>
-              <div id="mb-chart-active" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-active_addresses"></p></div>
+                <div id="mb-chart-active" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-active_addresses"></div></div><div class="mb-chart-education" id="mb-edu-active_addresses"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-hash-rate">Hash rate</h2><span class="panel-meta">Blockchain.info · also On Chain → Mining</span></div>
-              <p class="mb-chart-desc" id="mb-desc-hash_rate"></p>
-              <div id="mb-chart-hash" class="md-plotly mb-plotly"></div>
-            </section>
-            <section class="panel mb-charts-row">
-              <div class="panel-header"><h2 data-help-key="mb-exchange-netflow">Exchange netflow</h2><span class="panel-meta">BGeometrics · entity-adjusted proxy</span></div>
-              <p class="mb-chart-desc" id="mb-desc-exchange_netflow"></p>
-              <div id="mb-chart-netflow" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hash_rate"></p></div>
+                <div id="mb-chart-hash" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hash_rate"></div></div><div class="mb-chart-education" id="mb-edu-hash_rate"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-puell">Puell Multiple</h2><span class="panel-meta">Computed · miner revenue / 365d MA</span></div>
-              <p class="mb-chart-desc" id="mb-desc-puell_multiple"></p>
-              <div id="mb-chart-puell" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-puell_multiple"></p></div>
+                <div id="mb-chart-puell" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-puell_multiple"></div></div><div class="mb-chart-education" id="mb-edu-puell_multiple"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-exchange-netflow">Exchange netflow</h2><span class="panel-meta">Coin Metrics Community</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-exchange_netflow"></p></div>
+                <div id="mb-chart-netflow" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-exchange_netflow"></div></div><div class="mb-chart-education" id="mb-edu-exchange_netflow"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-exchange-balance">Exchange balance</h2><span class="panel-meta">Coin Metrics Community</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-exchange_balance"></p></div>
+                <div id="mb-chart-ex-balance" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-exchange_balance"></div></div><div class="mb-chart-education" id="mb-edu-exchange_balance"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-tx-count">Transaction count</h2><span class="panel-meta">Coin Metrics Community</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-tx_count"></p></div>
+                <div id="mb-chart-tx" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-tx_count"></div></div><div class="mb-chart-education" id="mb-edu-tx_count"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-mempool-fees">Mempool fees</h2><span class="panel-meta">Mempool.space · live</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-mempool_fees"></p></div>
+                <div id="mb-mempool-panel" class="mb-mempool-panel mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-mempool_fees"></div></div><div class="mb-chart-education" id="mb-edu-mempool_fees"></div>
+              </div>
+            </section>
+            <section class="panel mb-frameworks-section">
+              <div class="panel-header">
+                <h2 data-help-key="mb-vm-nvt">Network valuation frameworks</h2>
+                <span class="panel-meta">NVT · Metcalfe · coin days destroyed</span>
+              </div>
+              <div id="mb-onchain-frameworks-root" class="mb-vm-models-root"></div>
+            </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel">
+              <div class="panel-header"><h2>What this means for BTC</h2><span class="panel-meta">Network &amp; flow synthesis · not financial advice</span></div>
+              <div class="mb-tab-outlook-head" id="mb-onchain-outlook-head"></div>
+              <div class="stats-commentary" id="mb-onchain-commentary"><p>Loading commentary…</p></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="intelligence" hidden>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-sth-mvrv">STH vs LTH MVRV</h2><span class="panel-meta">BGeometrics · holder cohorts</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-sth_lth_mvrv"></p></div>
+                <div id="mb-chart-sth-lth-mvrv" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-sth_lth_mvrv"></div></div><div class="mb-chart-education" id="mb-edu-sth_lth_mvrv"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-sth-nupl">STH vs LTH NUPL</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-sth_lth_nupl"></p></div>
+                <div id="mb-chart-sth-lth-nupl" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-sth_lth_nupl"></div></div><div class="mb-chart-education" id="mb-edu-sth_lth_nupl"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-asopr">ASOPR</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-asopr"></p></div>
+                <div id="mb-chart-asopr" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-asopr"></div></div><div class="mb-chart-education" id="mb-edu-asopr"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-vdd-multiple">VDD Multiple</h2><span class="panel-meta">BGeometrics · David Puell</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-vdd_multiple"></p></div>
+                <div id="mb-chart-vdd" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-vdd_multiple"></div></div><div class="mb-chart-education" id="mb-edu-vdd_multiple"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-nrpl-usd">Net realized P/L</h2><span class="panel-meta">BGeometrics · USD</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-nrpl_usd"></p></div>
+                <div id="mb-chart-nrpl" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-nrpl_usd"></div></div><div class="mb-chart-education" id="mb-edu-nrpl_usd"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-utxos-profit">UTXOs in profit</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-utxos_in_profit_pct"></p></div>
+                <div id="mb-chart-utxos-profit" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-utxos_in_profit_pct"></div></div><div class="mb-chart-education" id="mb-edu-utxos_in_profit_pct"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row" id="mb-santiment-section">
+              <div class="panel-header"><h2 data-help-key="mb-san-exchange-inflow">Santiment flows</h2><span class="panel-meta" id="mb-santiment-meta">Requires SANTIMENT_API_KEY</span></div>
+              <div class="mb-chart-block mb-chart-block--multi">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-santiment-flows">Exchange inflow/outflow and active addresses from Santiment when SANTIMENT_API_KEY is configured.</p></div>
+                <div class="mb-chart-unit">
+                  <p class="mb-chart-subhead">Exchange inflow</p>
+                  <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-san_exchange_inflow"></p></div>
+                  <div id="mb-chart-san-inflow" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                  <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-san_exchange_inflow"></div></div><div class="mb-chart-education" id="mb-edu-san_exchange_inflow"></div>
+                </div>
+                <div class="mb-chart-unit">
+                  <p class="mb-chart-subhead">Exchange outflow</p>
+                  <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-san_exchange_outflow"></p></div>
+                  <div id="mb-chart-san-outflow" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                  <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-san_exchange_outflow"></div></div><div class="mb-chart-education" id="mb-edu-san_exchange_outflow"></div>
+                </div>
+                <div class="mb-chart-unit">
+                  <p class="mb-chart-subhead">Active addresses</p>
+                  <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-san_daily_active_addresses"></p></div>
+                  <div id="mb-chart-san-active" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                  <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-san_daily_active_addresses"></div></div><div class="mb-chart-education" id="mb-edu-san_daily_active_addresses"></div>
+                </div>
+              </div>
+            </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel">
+              <div class="panel-header"><h2>What this means for BTC</h2><span class="panel-meta">Forward-looking synthesis · not financial advice</span></div>
+              <div class="mb-tab-outlook-head" id="mb-intelligence-outlook-head"></div>
+              <div class="stats-commentary" id="mb-intelligence-commentary"><p>Loading commentary…</p></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="miner" hidden>
+            <section class="deriv-hero-strip mb-hero-strip mb-miner-snapshot" id="mb-miner-snapshot"></section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-puell">Puell Multiple</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-puell_multiple_miner"></p></div>
+                <div id="mb-chart-puell-miner" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-puell_multiple_miner"></div></div><div class="mb-chart-education" id="mb-edu-puell_multiple_miner"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-hashprice">Hashprice</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hashprice"></p></div>
+                <div id="mb-chart-hashprice" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hashprice"></div></div><div class="mb-chart-education" id="mb-edu-hashprice"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-hashrate-bg">Hash rate</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hashrate_bg"></p></div>
+                <div id="mb-chart-hashrate-bg" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hashrate_bg"></div></div><div class="mb-chart-education" id="mb-edu-hashrate_bg"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-vm-hash-ribbons">Hash ribbons</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hashribbons"></p></div>
+                <div id="mb-chart-hashribbons" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hashribbons"></div></div><div class="mb-chart-education" id="mb-edu-hashribbons"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-difficulty">Difficulty</h2><span class="panel-meta">BGeometrics</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-difficulty"></p></div>
+                <div id="mb-chart-difficulty" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-difficulty"></div></div><div class="mb-chart-education" id="mb-edu-difficulty"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-vm-cost-production">Thermo price</h2><span class="panel-meta">BGeometrics · cost floor proxy</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-thermo_price"></p></div>
+                <div id="mb-chart-thermo" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-thermo_price"></div></div><div class="mb-chart-education" id="mb-edu-thermo_price"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-miners-revenue">Miner revenue</h2><span class="panel-meta">Blockchain.info</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-miners_revenue"></p></div>
+                <div id="mb-chart-miners-rev" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-miners_revenue"></div></div><div class="mb-chart-education" id="mb-edu-miners_revenue"></div>
+              </div>
+            </section>
+            <section class="panel mb-frameworks-section">
+              <div class="panel-header">
+                <h2 data-help-key="mb-vm-difficulty-ribbon">Mining frameworks</h2>
+                <span class="panel-meta">Difficulty ribbon · computed SMA bands</span>
+              </div>
+              <div id="mb-miner-frameworks-root" class="mb-vm-models-root"></div>
+            </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel">
+              <div class="panel-header"><h2>What this means for BTC</h2><span class="panel-meta">Miner &amp; network synthesis · not financial advice</span></div>
+              <div class="mb-tab-outlook-head" id="mb-miner-outlook-head"></div>
+              <div class="stats-commentary" id="mb-miner-commentary"><p>Loading commentary…</p></div>
             </section>
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="valuation" hidden>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-mvrv">MVRV</h2><span class="panel-meta">BGeometrics</span></div>
-              <p class="mb-chart-desc" id="mb-desc-mvrv"></p>
-              <div id="mb-chart-mvrv" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-mvrv"></p></div>
+                <div id="mb-chart-mvrv" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-mvrv"></div></div><div class="mb-chart-education" id="mb-edu-mvrv"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-mvrv-z">MVRV Z-Score</h2><span class="panel-meta">BGeometrics</span></div>
-              <p class="mb-chart-desc" id="mb-desc-mvrv_z_score"></p>
-              <div id="mb-chart-mvrvz" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-mvrv_z_score"></p></div>
+                <div id="mb-chart-mvrvz" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-mvrv_z_score"></div></div><div class="mb-chart-education" id="mb-edu-mvrv_z_score"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-realized-price">Realized price</h2><span class="panel-meta">BGeometrics · USD</span></div>
-              <p class="mb-chart-desc" id="mb-desc-realized_price"></p>
-              <div id="mb-chart-realized" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-realized_price"></p></div>
+                <div id="mb-chart-realized" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-realized_price"></div></div><div class="mb-chart-education" id="mb-edu-realized_price"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-hodl-waves">HODL waves (1y+ supply)</h2><span class="panel-meta">BGeometrics · when available</span></div>
-              <p class="mb-chart-desc" id="mb-desc-hodl_waves_1y_plus"></p>
-              <div id="mb-chart-hodl" class="md-plotly mb-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hodl_waves_1y_plus"></p></div>
+                <div id="mb-chart-hodl" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hodl_waves_1y_plus"></div></div><div class="mb-chart-education" id="mb-edu-hodl_waves_1y_plus"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-nupl">NUPL</h2><span class="panel-meta">BGeometrics · Net Unrealized P/L</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-nupl"></p></div>
+                <div id="mb-chart-nupl" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-nupl"></div></div><div class="mb-chart-education" id="mb-edu-nupl"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-sopr">SOPR</h2><span class="panel-meta">BGeometrics · spent output profit ratio</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-sopr"></p></div>
+                <div id="mb-chart-sopr" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-sopr"></div></div><div class="mb-chart-education" id="mb-edu-sopr"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-supply-profit">Supply in profit</h2><span class="panel-meta">BGeometrics · % of supply</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-supply_in_profit"></p></div>
+                <div id="mb-chart-supply-profit" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-supply_in_profit"></div></div><div class="mb-chart-education" id="mb-edu-supply_in_profit"></div>
+              </div>
+            </section>
+            <section class="panel mb-frameworks-section">
+              <div class="panel-header">
+                <h2 data-help-key="mb-vm-intro">Valuation frameworks</h2>
+                <span class="panel-meta">Scarcity · cycle signals · equilibrium models</span>
+              </div>
+              <div id="mb-valuation-frameworks-root" class="mb-vm-models-root"></div>
+            </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel">
+              <div class="panel-header"><h2>What this means for BTC</h2><span class="panel-meta">Valuation &amp; cycle synthesis · not financial advice</span></div>
+              <div class="mb-tab-outlook-head" id="mb-valuation-outlook-head"></div>
+              <div class="stats-commentary" id="mb-valuation-commentary"><p>Loading commentary…</p></div>
             </section>
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="sentiment" hidden>
             <section class="deriv-hero-strip misc-fng-hero-strip mb-fng-hero-strip" id="mb-fng-heroes"></section>
             <section class="panel misc-fng-panel">
               <div class="panel-header">
-                <h2>Crypto Fear &amp; Greed</h2>
+                <h2 data-help-key="mb-fear-greed">Crypto Fear &amp; Greed</h2>
                 <span class="panel-meta" id="mb-fng-update">Alternative.me</span>
               </div>
-              <div class="misc-fng-current">
-                <div id="mb-fng-gauge" class="misc-fng-gauge md-plotly" aria-label="Fear and Greed gauge"></div>
-                <div class="misc-fng-aside">
-                  <p class="misc-fng-aside-lead">
-                    Sentiment tracker for Bitcoin and crypto. Combines volatility, momentum, social media,
-                    surveys, dominance, and trends into a 0–100 score.
-                  </p>
-                  <div class="misc-fng-zones" id="mb-fng-zones" aria-label="Index zones"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above">
+                  <p class="mb-chart-desc">Sentiment tracker for Bitcoin and crypto — volatility, momentum, social media, surveys, dominance, and trends combined into a 0–100 score.</p>
                 </div>
+                <div class="misc-fng-current mb-chart-plot">
+                  <div id="mb-fng-gauge" class="misc-fng-gauge md-plotly" aria-label="Fear and Greed gauge"></div>
+                  <div class="misc-fng-aside">
+                    <div class="misc-fng-zones" id="mb-fng-zones" aria-label="Index zones"></div>
+                  </div>
+                </div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-fear_greed"></div></div><div class="mb-chart-education" id="mb-edu-fear_greed"></div>
               </div>
             </section>
             <section class="panel misc-fng-panel">
               <div class="panel-header"><h2>Fear &amp; Greed history</h2><span class="panel-meta">Daily · last 12 months</span></div>
-              <div id="mb-fng-history" class="misc-fng-history md-plotly"></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-fear_greed_history"></p></div>
+                <div id="mb-fng-history" class="misc-fng-history md-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-fear_greed_history"></div></div><div class="mb-chart-education" id="mb-edu-fear_greed_history"></div>
+              </div>
             </section>
             <section class="panel mb-charts-row">
-              <div class="panel-header"><h2 data-help-key="mb-btc-dominance">BTC dominance</h2><span class="panel-meta">CoinGecko global market cap</span></div>
-              <p class="mb-chart-desc" id="mb-desc-btc_dominance"></p>
-              <div id="mb-chart-dominance" class="md-plotly mb-plotly"></div>
+              <div class="panel-header"><h2 data-help-key="mb-btc-dominance">BTC dominance</h2><span class="panel-meta">BGeometrics · last 4 years</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-btc_dominance"></p></div>
+                <div id="mb-chart-dominance" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-btc_dominance"></div></div><div class="mb-chart-education" id="mb-edu-btc_dominance"></div>
+              </div>
             </section>
-            <p class="md-hint mb-crosslink">Funding rate and open interest snapshots are in the overview KPIs — see <strong>Derivatives → Perp</strong> for venue breakdown.</p>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-etf-flow">ETF net flow</h2><span class="panel-meta">BGeometrics · US spot ETFs</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-etf_flow_btc"></p></div>
+                <div id="mb-chart-etf" class="md-plotly mb-plotly mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-etf_flow_btc"></div></div><div class="mb-chart-education" id="mb-edu-etf_flow_btc"></div>
+              </div>
+            </section>
+            <section class="panel mb-charts-row">
+              <div class="panel-header"><h2 data-help-key="mb-funding-rate">Perp market structure</h2><span class="panel-meta">Exchange APIs · Binance OI</span></div>
+              <div class="mb-chart-block">
+                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-market_structure">Median perpetual funding rate and Binance BTCUSDT open interest — leverage and positioning gauges.</p></div>
+                <div id="mb-sentiment-market-kpis" class="mb-sentiment-market-kpis mb-chart-plot"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-market_structure"></div></div><div class="mb-chart-education" id="mb-edu-market_structure"></div>
+              </div>
+            </section>
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel">
+              <div class="panel-header"><h2>What this means for BTC</h2><span class="panel-meta">Sentiment &amp; market synthesis · not financial advice</span></div>
+              <div class="mb-tab-outlook-head" id="mb-sentiment-outlook-head"></div>
+              <div class="stats-commentary" id="mb-sentiment-commentary"><p>Loading commentary…</p></div>
+            </section>
+            <p class="md-hint mb-crosslink">Venue-level perp detail: <strong>Derivatives → Perp</strong>.</p>
           </div>
           <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="methodology" hidden>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Prefetch &amp; data store</h2>
+                <span class="panel-meta" id="mb-prefetch-meta">data/btc-series/</span>
+              </div>
+              <div id="mb-prefetch-status" class="mb-prefetch-status"><p class="misc-fng-empty">Loading prefetch status…</p></div>
+            </section>
             <section class="panel">
               <div class="panel-header"><h2>Sources &amp; methodology</h2></div>
               <div id="mb-methodology-inline" class="mb-methodology-inline"></div>
@@ -3100,9 +3469,9 @@
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-    <script src="help.js?v=58"></script>
-    <script src="home.js?v=2"></script>
-    <script src="dashboard.js?v=35"></script>
+    <script src="help.js?v=61"></script>
+    <script src="home.js?v=4"></script>
+    <script src="dashboard.js?v=37"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -3115,9 +3484,10 @@
     <script src="macro-drivers.js?v=33"></script>
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
-    <script src="misc.js?v=3"></script>
-    <script src="misc-greed-fear.js?v=2"></script>
-    <script src="misc-bitcoin.js?v=4"></script>
+    <script src="misc.js?v=4"></script>
+    <script src="misc-greed-fear.js?v=3"></script>
+    <script src="misc-bitcoin-valuation-models.js?v=7"></script>
+    <script src="misc-bitcoin.js?v=16"></script>
     <script src="indicators.js?v=3"></script>
     <script src="app.js?v=18"></script>
   </body>

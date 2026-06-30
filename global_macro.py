@@ -15,15 +15,17 @@ from global_macro_config import (
 )
 from global_macro_imf import clear_cache as clear_imf_cache
 from global_macro_imf import fetch_indicator_series, imf_code_for_country
+from cache.config import TTL_WARM
+from cache.keys import macro_global_payload
 from global_macro_worldbank import clear_cache as clear_wb_cache
 from global_macro_worldbank import fetch_countries, fetch_indicator_all_countries
-
-_PAYLOAD_CACHE: dict[str, dict[str, Any]] = {}
-_PAYLOAD_TTL = 3600
+from macro_data.cache import cache_get, cache_set
 
 
 def clear_payload_cache() -> None:
-    _PAYLOAD_CACHE.clear()
+    from cache.service import get_cache_service
+
+    get_cache_service().invalidate_prefix("macro:global:")
 
 
 def clear_all_caches() -> None:
@@ -58,12 +60,11 @@ def _best_default_year(years: list[int], cells: dict) -> int:
 
 
 def get_global_macro_payload(*, refresh: bool = False, year: int | None = None) -> dict[str, Any]:
-    cache_key = f"global:{year or 'auto'}"
-    now = time.time()
+    cache_key = macro_global_payload(year or "auto")
     if not refresh:
-        cached = _PAYLOAD_CACHE.get(cache_key)
-        if cached and now - cached["ts"] < _PAYLOAD_TTL:
-            return cached["data"]
+        cached = cache_get(cache_key, ttl=TTL_WARM)
+        if cached is not None:
+            return cached
 
     countries = fetch_countries(refresh=refresh)
     country_by_id = {c["id"]: c for c in countries}
@@ -180,5 +181,5 @@ def get_global_macro_payload(*, refresh: bool = False, year: int | None = None) 
         },
     }
 
-    _PAYLOAD_CACHE[cache_key] = {"ts": now, "data": payload}
+    cache_set(cache_key, payload, ttl=TTL_WARM)
     return payload

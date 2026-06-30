@@ -9,16 +9,7 @@ const MISC_SLOTS = [
   { id: "berth-f", label: "Berth F", status: "open" },
 ];
 
-const MISC_PARKED = [
-  {
-    slot: "berth-a",
-    title: "Bitcoin Indicators",
-    status: "Live",
-    blurb: "Distribution, on-chain, valuation, and sentiment — BTC-only macro suite.",
-    note: "Open via L2 tab →",
-    navL2: "bitcoin",
-  },
-];
+const MISC_PARKED = [];
 
 function miscSlotMarkup(slot, parked) {
   if (!parked) {

@@ -28,7 +28,15 @@ from btc_indicators_api import (
     get_meta_payload as get_btc_meta_payload,
     get_series_payload as get_btc_series_payload,
     get_snapshot_payload as get_btc_snapshot_payload,
+    get_flows_payload as get_btc_flows_payload,
+    get_network_payload as get_btc_network_payload,
     get_valuation_payload as get_btc_valuation_payload,
+    get_intelligence_payload as get_btc_intelligence_payload,
+    get_miner_payload as get_btc_miner_payload,
+    get_prefetch_status_payload,
+    get_stored_series_payload,
+    get_valuation_models_meta_payload,
+    get_valuation_models_bundle_payload,
 )
 from server import (
     _parse_tradfi_symbol_list,
@@ -70,8 +78,13 @@ def resolve_path_and_query(handler):
     return parsed.path.split("?")[0], query
 
 
+def _query_refresh(query) -> bool:
+    return (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+
+
 def dispatch_api(path, query):
     if path == "/api/equity/global":
+        refresh = _query_refresh(query)
         symbols = _parse_tradfi_symbol_list(
             (query.get("symbols") or [""])[0], max_count=20
         )
@@ -86,10 +99,11 @@ def dispatch_api(path, query):
         if not start or not end:
             start, end = period_to_dates(period, None, None)
         return get_equity_global_payload(
-            symbols, start, end, movers, period, heroes, perf_period
+            symbols, start, end, movers, period, heroes, perf_period, refresh=refresh
         )
 
     if path == "/api/equity/company":
+        refresh = _query_refresh(query)
         symbol = ((query.get("symbol") or [""])[0]).strip().upper()
         peers = _parse_tradfi_symbol_list(
             (query.get("peers") or [""])[0], max_count=12
@@ -99,9 +113,10 @@ def dispatch_api(path, query):
         period = (query.get("period") or ["1Y"])[0]
         if not start or not end:
             start, end = period_to_dates(period, None, None)
-        return get_equity_company_payload(symbol, peers, start, end, period)
+        return get_equity_company_payload(symbol, peers, start, end, period, refresh=refresh)
 
     if path.startswith("/api/tradfi/"):
+        refresh = _query_refresh(query)
         section = path[len("/api/tradfi/") :].strip("/")
         heroes_override = None
         symbols_override = None
@@ -127,11 +142,13 @@ def dispatch_api(path, query):
             section,
             heroes_override=heroes_override,
             symbols_override=symbols_override,
+            refresh=refresh,
         )
 
     if path.startswith("/api/defi/"):
         section = path[len("/api/defi/") :].strip("/")
-        return get_defi_payload(section)
+        refresh = _query_refresh(query)
+        return get_defi_payload(section, refresh=refresh)
 
     if path == "/api/macro/drivers" or path.startswith("/api/macro/drivers/"):
         sub = path[len("/api/macro/drivers") :].strip("/") or "snapshot"
@@ -208,15 +225,18 @@ def dispatch_api(path, query):
             if refresh:
                 clear_global_macro_cache()
             return get_global_macro_payload(refresh=refresh, year=year)
-        return get_macro_payload(section)
+        refresh = _query_refresh(query)
+        return get_macro_payload(section, refresh=refresh)
 
     if path.startswith("/api/exchanges/"):
         section = path[len("/api/exchanges/") :].strip("/")
-        return get_exchanges_payload(section)
+        refresh = _query_refresh(query)
+        return get_exchanges_payload(section, refresh=refresh)
 
     if path.startswith("/api/news/"):
         section = path[len("/api/news/") :].strip("/")
-        return get_news_payload(section)
+        refresh = _query_refresh(query)
+        return get_news_payload(section, refresh=refresh)
 
     if path == "/api/misc/fear-greed":
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
@@ -242,6 +262,32 @@ def dispatch_api(path, query):
         if sub == "valuation":
             timespan = (query.get("timespan") or ["1year"])[0]
             return get_btc_valuation_payload(timespan=timespan, refresh=refresh)
+        if sub == "flows":
+            timespan = (query.get("timespan") or ["1year"])[0]
+            return get_btc_flows_payload(timespan=timespan, refresh=refresh)
+        if sub == "network":
+            timespan = (query.get("timespan") or ["1year"])[0]
+            return get_btc_network_payload(timespan=timespan, refresh=refresh)
+        if sub == "intelligence":
+            timespan = (query.get("timespan") or ["1year"])[0]
+            return get_btc_intelligence_payload(timespan=timespan, refresh=refresh)
+        if sub == "miner":
+            timespan = (query.get("timespan") or ["1year"])[0]
+            return get_btc_miner_payload(timespan=timespan, refresh=refresh)
+        if sub == "valuation-models/meta":
+            return get_valuation_models_meta_payload(refresh=refresh)
+        if sub == "valuation-models/bundle":
+            tab = (query.get("tab") or query.get("category") or [""])[0]
+            if not tab:
+                raise ValueError("Missing tab parameter")
+            return get_valuation_models_bundle_payload(tab, refresh=refresh)
+        if sub == "prefetch/status":
+            return get_prefetch_status_payload(refresh=refresh)
+        if sub == "stored":
+            metric_id = (query.get("metric") or [""])[0]
+            if not metric_id:
+                raise ValueError("Missing metric parameter")
+            return get_stored_series_payload(metric_id)
         raise ValueError(f"Unknown BTC indicators endpoint: {sub}")
 
     if path == "/api/onchain/chart":
@@ -251,14 +297,33 @@ def dispatch_api(path, query):
             raise ValueError("Missing chart name")
         return get_onchain_chart_payload(name, timespan)
 
-    static_routes = {
-        "/api/etf": get_etf_payload,
-        "/api/treasury": get_treasury_payload,
-        "/api/options": get_options_payload,
-        "/api/stats/btc-history": get_stats_btc_history_payload,
-    }
-    if path in static_routes:
-        return static_routes[path]()
+    if path == "/api/cache/stats":
+        from cache.legacy import clear_legacy_cache
+        from cache.service import get_cache_service, reset_stats
+
+        if _query_refresh(query):
+            reset_stats()
+        cleared = 0
+        prefix = (query.get("prefix") or [""])[0].strip()
+        if prefix:
+            cleared = clear_legacy_cache(prefix)
+        stats = get_cache_service().stats()
+        if prefix:
+            stats["invalidated"] = cleared
+            stats["prefix"] = prefix
+        return stats
+
+    if path == "/api/etf":
+        return get_etf_payload(refresh=_query_refresh(query))
+
+    if path == "/api/treasury":
+        return get_treasury_payload(refresh=_query_refresh(query))
+
+    if path == "/api/stats/btc-history":
+        return get_stats_btc_history_payload(refresh=_query_refresh(query))
+
+    if path == "/api/options":
+        return get_options_payload(refresh=_query_refresh(query))
 
     raise ValueError(f"Unknown API route: {path}")
 

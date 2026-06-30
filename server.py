@@ -43,7 +43,24 @@ _load_dotenv_files()
 CACHE_TTL = 900  # 15 minutes
 STATS_HISTORY_CACHE_TTL = 21_600  # 6 hours
 SYMBOL_NAME_CACHE_TTL = 604800  # 7 days
-_cache = {}
+
+
+def _cget(key, ttl, *, refresh=False):
+    from cache.legacy import legacy_cache_get
+
+    return legacy_cache_get(key, ttl, refresh=refresh)
+
+
+def _cset(key, data, ttl):
+    from cache.legacy import legacy_cache_set
+
+    legacy_cache_set(key, data, ttl)
+
+
+def clear_server_caches(*, prefix="legacy:"):
+    from cache.legacy import clear_legacy_cache
+
+    return clear_legacy_cache(prefix)
 
 ETF_TICKERS = [
     "IBIT", "FBTC", "GBTC", "BTC", "BITB", "ARKB", "HODL",
@@ -82,14 +99,12 @@ def fetch_html(url):
         return resp.read().decode("utf-8", errors="replace")
 
 
-def cached_fetch(key, url, parser):
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
-
+def cached_fetch(key, url, parser, *, refresh=False):
+    cached = _cget(f"scrape:{key}", CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = parser(fetch_html(url))
-    _cache[key] = {"ts": now, "data": data}
+    _cset(f"scrape:{key}", data, CACHE_TTL)
     return data
 
 
@@ -643,8 +658,8 @@ def _fetch_treasury_payload(_html=""):
     return payload
 
 
-def get_treasury_payload():
-    return cached_fetch("treasury", BT_DATA_URL, _fetch_treasury_payload)
+def get_treasury_payload(*, refresh=False):
+    return cached_fetch("treasury", BT_DATA_URL, _fetch_treasury_payload, refresh=refresh)
 
 
 def _fetch_json_url(url):
@@ -674,13 +689,12 @@ def _fetch_options_payload(_html=""):
     }
 
 
-def get_options_payload():
-    now = time.time()
-    entry = _cache.get("options")
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+def get_options_payload(*, refresh=False):
+    cached = _cget("options", CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_options_payload()
-    _cache["options"] = {"ts": now, "data": data}
+    _cset("options", data, CACHE_TTL)
     return data
 
 
@@ -703,16 +717,15 @@ def get_onchain_chart_payload(name, timespan="30days"):
     if timespan not in allowed_timespans:
         timespan = "30days"
     key = f"onchain-chart:{name}:{timespan}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
     url = (
         f"https://api.blockchain.info/charts/{name}"
         f"?timespan={timespan}&format=json"
     )
     data = fetch_json(url)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -957,26 +970,20 @@ def _build_btc_stats_history():
     }
 
 
-def get_stats_btc_history_payload():
+def get_stats_btc_history_payload(*, refresh=False):
     key = "stats:btc-history"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < STATS_HISTORY_CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, STATS_HISTORY_CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
 
     try:
         days, meta = _build_btc_stats_history()
         payload = _stats_history_payload_from_days(days, meta)
-        _cache[key] = {"ts": now, "data": payload}
+        _cset(key, payload, STATS_HISTORY_CACHE_TTL)
         _save_stats_history_disk_cache(payload)
         return payload
     except Exception as exc:
-        stale_entry = _cache.get(key)
-        stale_payload = (
-            stale_entry["data"]
-            if stale_entry and stale_entry.get("data", {}).get("days")
-            else _load_stats_history_disk_cache()
-        )
+        stale_payload = _cget(key, STATS_HISTORY_CACHE_TTL * 7) or _load_stats_history_disk_cache()
         if stale_payload and stale_payload.get("days"):
             fallback = dict(stale_payload)
             fallback["stale"] = True
@@ -989,12 +996,12 @@ def get_stats_btc_history_payload():
         ) from exc
 
 
-def get_etf_payload():
+def get_etf_payload(*, refresh=False):
     holdings = cached_fetch(
-        "holdings", "https://bitbo.io/treasuries/us-etfs/", parse_holdings
+        "holdings", "https://bitbo.io/treasuries/us-etfs/", parse_holdings, refresh=refresh
     )
     flows = cached_fetch(
-        "flows", "https://bitbo.io/treasuries/etf-flows/", parse_flows
+        "flows", "https://bitbo.io/treasuries/etf-flows/", parse_flows, refresh=refresh
     )
     return {
         "holdings": holdings,
@@ -1308,16 +1315,12 @@ def _quote_from_closes(symbol, closes):
 
 
 def _cached_symbol_name(symbol):
-    key = f"name:{symbol}"
-    entry = _cache.get(key)
-    if entry and time.time() - entry["ts"] < SYMBOL_NAME_CACHE_TTL:
-        return entry["data"]
-    return None
+    return _cget(f"name:{symbol}", SYMBOL_NAME_CACHE_TTL)
 
 
 def _store_symbol_name(symbol, name):
     if symbol and name:
-        _cache[f"name:{symbol}"] = {"ts": time.time(), "data": name}
+        _cset(f"name:{symbol}", name, SYMBOL_NAME_CACHE_TTL)
 
 
 def _enrich_quote_names(by_symbol):
@@ -1833,7 +1836,7 @@ def _fetch_tradfi_section(section, heroes_override=None, symbols_override=None):
     return payload
 
 
-def get_tradfi_payload(section, heroes_override=None, symbols_override=None):
+def get_tradfi_payload(section, heroes_override=None, symbols_override=None, *, refresh=False):
     key = f"tradfi:{section}"
     if section in TRADFI_WATCHLIST_SECTIONS and (
         heroes_override is not None or symbols_override is not None
@@ -1841,12 +1844,11 @@ def get_tradfi_payload(section, heroes_override=None, symbols_override=None):
         hero_key = ",".join(heroes_override or [])
         sym_key = ",".join(symbols_override or [])
         key = f"tradfi:{section}:heroes={hero_key}:symbols={sym_key}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_tradfi_section(section, heroes_override, symbols_override)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -1940,14 +1942,13 @@ def _fetch_macro_section(section):
 MACRO_SECTION_CACHE_TTL = 3 * 24 * 3600  # 3 days — Yahoo quotes; refresh on request
 
 
-def get_macro_payload(section):
+def get_macro_payload(section, *, refresh=False):
     key = f"macro:{section}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < MACRO_SECTION_CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, MACRO_SECTION_CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_macro_section(section)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, MACRO_SECTION_CACHE_TTL)
     return data
 
 
@@ -2397,12 +2398,11 @@ def _x_feed_bundle(tweets, feed_mode, mirror_source=None, cache_fetched_at=None)
 
 def _fetch_all_x_tweets():
     key = "news:x-tweets"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
 
-    stale_entry = _cache.get(f"{key}:stale")
+    stale_cached = _cget(f"{key}:stale", X_FEED_STALE_TTL)
     tweets, mirror_host = _fetch_x_tweets_live()
     if tweets:
         bundle = _x_feed_bundle(
@@ -2410,12 +2410,12 @@ def _fetch_all_x_tweets():
             "live",
             mirror_source=mirror_host,
         )
-        _cache[key] = {"ts": now, "data": bundle}
-        _cache[f"{key}:stale"] = {"ts": now, "data": bundle}
+        _cset(key, bundle, CACHE_TTL)
+        _cset(f"{key}:stale", bundle, X_FEED_STALE_TTL)
         return bundle
 
-    if stale_entry and now - stale_entry["ts"] < X_FEED_STALE_TTL:
-        return stale_entry["data"]
+    if stale_cached is not None:
+        return stale_cached
 
     disk_cache = _load_x_feed_cache()
     if disk_cache:
@@ -2425,11 +2425,11 @@ def _fetch_all_x_tweets():
             mirror_source=disk_cache.get("source"),
             cache_fetched_at=disk_cache.get("fetchedAt"),
         )
-        _cache[key] = {"ts": now, "data": bundle}
+        _cset(key, bundle, CACHE_TTL)
         return bundle
 
     bundle = _x_feed_bundle([], "empty")
-    _cache[key] = {"ts": now, "data": bundle}
+    _cset(key, bundle, CACHE_TTL)
     return bundle
 
 
@@ -2584,10 +2584,9 @@ def _classify_news_article(article):
 
 def _fetch_all_news_articles():
     key = "news:all-articles"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
 
     seen = set()
     articles = []
@@ -2607,7 +2606,7 @@ def _fetch_all_news_articles():
             articles.append(item)
 
     articles.sort(key=lambda a: a.get("publishedTs") or 0, reverse=True)
-    _cache[key] = {"ts": now, "data": articles}
+    _cset(key, articles, CACHE_TTL)
     return articles
 
 
@@ -2743,14 +2742,13 @@ def _fetch_news_section(section):
     }
 
 
-def get_news_payload(section):
+def get_news_payload(section, *, refresh=False):
     key = f"news:{section}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_news_section(section)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -2808,13 +2806,11 @@ def _fetch_fear_greed_index(*, limit: int = 0) -> dict:
 
 def get_fear_greed_payload(*, refresh: bool = False) -> dict:
     key = "misc:fear-greed"
-    now = time.time()
-    if not refresh:
-        entry = _cache.get(key)
-        if entry and now - entry["ts"] < FEAR_GREED_CACHE_TTL:
-            return entry["data"]
+    cached = _cget(key, FEAR_GREED_CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_fear_greed_index(limit=0)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, FEAR_GREED_CACHE_TTL)
     return data
 
 
@@ -3520,10 +3516,9 @@ def _fetch_gate_perp():
 
 def _fetch_all_exchange_data():
     key = "exchanges:raw:v2"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
 
     spot_fetchers = [
         _fetch_binance_spot,
@@ -3574,7 +3569,7 @@ def _fetch_all_exchange_data():
             errors.append(f"{fn.__name__}: {exc}")
 
     data = {"spot": spot, "perp": perp, "errors": errors}
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -3947,14 +3942,13 @@ def _fetch_exchanges_section(section):
     }
 
 
-def get_exchanges_payload(section):
+def get_exchanges_payload(section, *, refresh=False):
     key = f"exchanges:{section}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
     data = _fetch_exchanges_section(section)
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -3995,15 +3989,14 @@ def _fmt_usd_short(value):
 
 def get_defillama_protocols():
     key = "defillama:protocols"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
 
     data = fetch_json(f"{DEFILLAMA_API}/protocols")
     by_slug = {p.get("slug"): p for p in data if p.get("slug")}
     payload = {"list": data, "by_slug": by_slug}
-    _cache[key] = {"ts": now, "data": payload}
+    _cset(key, payload, CACHE_TTL)
     return payload
 
 
@@ -4243,10 +4236,9 @@ def _fetch_defi_bridges():
 
 def _btc_yield_pools():
     key = "defillama:btc-yields"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL)
+    if cached is not None:
+        return cached
 
     data = fetch_json(f"{YIELDS_API}/pools")
     pools = data.get("data") or []
@@ -4261,7 +4253,7 @@ def _btc_yield_pools():
         if "btc" in blob or "wbtc" in blob or "cbbtc" in blob or "lbtc" in blob:
             btc_pools.append(pool)
 
-    _cache[key] = {"ts": now, "data": btc_pools}
+    _cset(key, btc_pools, CACHE_TTL)
     return btc_pools
 
 
@@ -4447,19 +4439,18 @@ DEFI_FETCHERS = {
 }
 
 
-def get_defi_payload(section):
+def get_defi_payload(section, *, refresh=False):
     fetcher = DEFI_FETCHERS.get(section)
     if not fetcher:
         raise ValueError(f"Unknown DeFi section: {section}")
 
     key = f"defi:{section}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _cget(key, CACHE_TTL, refresh=refresh)
+    if cached is not None:
+        return cached
 
     data = fetcher()
-    _cache[key] = {"ts": now, "data": data}
+    _cset(key, data, CACHE_TTL)
     return data
 
 
@@ -4492,6 +4483,15 @@ def _warm_macro_caches() -> None:
         print(f"Macro cache warm skipped: {exc}")
 
 
+def _warm_btc_series() -> None:
+    try:
+        from btc_data.scheduler import run_background_tick
+
+        run_background_tick(max_fetches=2)
+    except Exception as exc:
+        print(f"BTC series prefetch skipped: {exc}")
+
+
 if __name__ == "__main__":
     port = 5173
     try:
@@ -4504,5 +4504,6 @@ if __name__ == "__main__":
     import threading
 
     threading.Thread(target=_warm_macro_caches, daemon=True).start()
+    threading.Thread(target=_warm_btc_series, daemon=True).start()
     print(f"Serving at http://localhost:{port}")
     server.serve_forever()

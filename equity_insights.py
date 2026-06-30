@@ -11,8 +11,27 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-CACHE_TTL = 300
-_cache: dict[str, dict] = {}
+from cache.config import TTL_HOT
+
+CACHE_TTL = TTL_HOT  # 5 min — yfinance equity snapshots
+
+
+def _equity_cget(key: str, *, refresh: bool = False):
+    from cache.legacy import legacy_cache_get
+
+    return legacy_cache_get(key, CACHE_TTL, refresh=refresh)
+
+
+def _equity_cset(key: str, data) -> None:
+    from cache.legacy import legacy_cache_set
+
+    legacy_cache_set(key, data, CACHE_TTL)
+
+
+def clear_equity_caches() -> int:
+    from cache.legacy import clear_legacy_cache
+
+    return clear_legacy_cache("legacy:equity:")
 
 INDICES: dict[str, str] = {
     "S&P 500": "^GSPC",
@@ -1329,6 +1348,8 @@ def get_equity_global_payload(
     period_preset="1Y",
     hero_symbols=None,
     perf_period="1Y",
+    *,
+    refresh=False,
 ):
     if not start or not end:
         start, end = period_to_dates(period_preset, None, None)
@@ -1339,29 +1360,27 @@ def get_equity_global_payload(
         f"equity:global:{','.join(hero_list)}:{','.join(sym_list)}"
         f":{start}:{end}:{movers_period}:{perf_key}"
     )
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _equity_cget(key, refresh=refresh)
+    if cached is not None:
+        return cached
     data = build_global_payload(
         sym_list, start, end, movers_period, hero_list, perf_key
     )
-    _cache[key] = {"ts": now, "data": data}
+    _equity_cset(key, data)
     return data
 
 
-def get_equity_company_payload(symbol, peers, start, end, period_preset="1Y"):
+def get_equity_company_payload(symbol, peers, start, end, period_preset="1Y", *, refresh=False):
     if not symbol:
         raise ValueError("Missing symbol")
     if not start or not end:
         start, end = period_to_dates(period_preset, None, None)
     peer_list = peers or []
     key = f"equity:company:{symbol}:{','.join(peer_list)}:{start}:{end}"
-    now = time.time()
-    entry = _cache.get(key)
-    if entry and now - entry["ts"] < CACHE_TTL:
-        return entry["data"]
+    cached = _equity_cget(key, refresh=refresh)
+    if cached is not None:
+        return cached
     data = build_company_payload(symbol, peer_list, start, end)
     data["period"] = period_preset
-    _cache[key] = {"ts": now, "data": data}
+    _equity_cset(key, data)
     return data

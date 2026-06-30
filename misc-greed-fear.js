@@ -227,7 +227,24 @@ function fngRenderHistory(series) {
     line: { color: "#e879f9", width: 2 },
     fill: "tozeroy",
     fillcolor: "rgba(232, 121, 249, 0.12)",
-    hovertemplate: "%{y}<br>%{x|%b %d, %Y}<extra>Fear & Greed</extra>",
+    customdata: hist.map((p) => {
+      const zone = fngZone(p.value);
+      const reading =
+        p.value >= 75 ? "Extreme greed — euphoria risk"
+        : p.value >= 56 ? "Greed — bullish sentiment"
+        : p.value <= 24 ? "Extreme fear — capitulation zone"
+        : p.value <= 44 ? "Fear — cautious market"
+        : "Neutral sentiment";
+      return [zone.label, p.classification || zone.label, reading];
+    }),
+    hovertemplate:
+      "<b>Fear & Greed</b><br>" +
+      "Score: %{y}<br>" +
+      "Zone: %{customdata[0]}<br>" +
+      "%{customdata[2]}<br>" +
+      "Date: %{x|%b %d, %Y}<br>" +
+      "<span style='font-size:10px;color:#94a3b8'>Source: Alternative.me</span>" +
+      "<extra></extra>",
   };
 
   const markers = {
@@ -295,9 +312,9 @@ async function loadMiscGreedFear(force = false) {
     fngData = await fngFetch(force);
     fngReady = true;
     fngRenderAll();
+    window.mbRefreshSentimentFngCommentary?.();
     window.decorateHelpLabels?.(
-      document.querySelector('#dashboard-misc .menu-screen[data-l2="bitcoin"]')
-        || document.querySelector('#dashboard-misc .menu-screen[data-l2="greed-fear"]'),
+      document.querySelector('#dashboard-valuation .menu-screen[data-l2="indicators"]'),
     );
   } catch (err) {
     if (gauge) gauge.innerHTML = `<p class="misc-fng-empty">Load failed — ${err.message || "try again"}</p>`;
@@ -313,3 +330,4 @@ function initMiscGreedFearPoll() {
 window.loadMiscGreedFear = loadMiscGreedFear;
 window.initMiscGreedFearPoll = initMiscGreedFearPoll;
 window.setFngElementPrefix = setFngElementPrefix;
+window.mbGetFngData = () => fngData;
