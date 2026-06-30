@@ -33,6 +33,7 @@
     { "source": "/misc", "destination": "/index.html" },
     { "source": "/misc/metrics", "destination": "/index.html" },
     { "source": "/misc/whale-proxies", "destination": "/index.html" },
+    { "source": "/misc/knowledge-graph", "destination": "/index.html" },
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
   "functions": {

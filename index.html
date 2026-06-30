@@ -30,7 +30,8 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=86" />
+    <link rel="stylesheet" href="styles.css?v=87" />
+    <link rel="stylesheet" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
   </head>
   <body>
     <div class="app app--compact">
@@ -3144,6 +3145,64 @@
             </footer>
           </section>
         </div>
+        <div class="menu-screen" data-l1="misc" data-l2="knowledge-graph" hidden>
+          <section class="panel kg-panel">
+            <div class="panel-header">
+              <h2 data-help-key="kg-overview">Knowledge Graph</h2>
+              <span class="panel-meta" id="kg-meta">Loading…</span>
+            </div>
+            <p class="mm-section-note">Unified schema designer, multi-format ingestion, and topic search + RAG. Persisted in <code>localStorage</code>. Server ingest/RAG optional (set <code>OPENAI_API_KEY</code> for LLM answers).</p>
+            <nav class="kg-subnav macro-drivers-subnav" aria-label="Knowledge graph sections">
+              <button type="button" class="macro-drivers-subtab kg-subtab active" data-kg-tab="schema">Schema Designer</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="ingest">Ingestion</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="search">Topic Search + RAG</button>
+            </nav>
+
+            <div class="kg-tab-panel" data-kg-tab="schema">
+              <div class="kg-schema-toolbar">
+                <button type="button" class="kg-btn" id="kg-add-node">+ Node</button>
+                <button type="button" class="kg-btn" id="kg-add-edge">+ Edge</button>
+                <button type="button" class="kg-btn" id="kg-save-store">Save</button>
+                <button type="button" class="kg-btn kg-btn--secondary" id="kg-export-json">Export JSON</button>
+                <label class="kg-btn kg-btn--secondary kg-import-label">Import JSON<input type="file" id="kg-import-json" accept="application/json,.json" hidden></label>
+              </div>
+              <div class="kg-schema-layout">
+                <div id="kg-graph-canvas" class="kg-graph-canvas" aria-label="Knowledge graph editor"></div>
+                <aside class="kg-sidebar">
+                  <h3 class="kg-sidebar-title">Inspector</h3>
+                  <div id="kg-sidebar-body" class="kg-sidebar-body"></div>
+                </aside>
+              </div>
+            </div>
+
+            <div class="kg-tab-panel" data-kg-tab="ingest" hidden>
+              <div class="kg-ingest-grid">
+                <label class="kg-field">Source URL<input id="kg-ingest-url" type="url" placeholder="https://article…, YouTube, RSS/podcast feed"></label>
+                <label class="kg-field">Title (optional)<input id="kg-ingest-title" type="text" placeholder="Document title"></label>
+                <label class="kg-field">Plain text / Markdown<textarea id="kg-ingest-text" rows="5" placeholder="Paste text or markdown…"></textarea></label>
+                <div class="kg-drop-zone" id="kg-drop-zone" tabindex="0" role="button" aria-label="Upload files">
+                  <p><strong>Bulk upload</strong> — PDF, audio, video, SRT/VTT, TXT, MD, RSS</p>
+                  <p class="kg-drop-hint">Drop files here or click to browse (batch supported)</p>
+                  <input type="file" id="kg-ingest-files" multiple accept=".pdf,.txt,.md,.markdown,.srt,.vtt,.mp3,.wav,.m4a,.mp4,.webm,.mov,.rss,.xml">
+                </div>
+                <button type="button" class="kg-btn kg-btn--wide" id="kg-run-ingest">Ingest &amp; update graph</button>
+                <p class="kg-ingest-status" id="kg-ingest-status"></p>
+              </div>
+              <div class="panel mm-whales-subpanel">
+                <div class="panel-header"><h3 data-help-key="kg-ingest-log">Ingestion log</h3></div>
+                <div id="kg-ingest-log" class="deriv-table-wrap"></div>
+              </div>
+            </div>
+
+            <div class="kg-tab-panel" data-kg-tab="search" hidden>
+              <div class="kg-search-bar">
+                <input id="kg-search-input" type="search" placeholder="Ask about Bitcoin, macro, mining, regulation…" autocomplete="off">
+                <button type="button" class="kg-btn" id="kg-run-search">Search</button>
+              </div>
+              <div id="kg-search-results" class="kg-search-results"><p class="kg-sidebar-hint">Search returns graph paths, document snippets (with timestamps when available), and an LLM answer when configured.</p></div>
+            </div>
+          </section>
+        </div>
       </div>
       <div id="dashboard-valuation" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="valuation" data-l2="indicators">
@@ -3663,9 +3722,9 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=73"></script>
+    <script src="help.js?v=74"></script>
     <script src="home.js?v=5"></script>
-    <script src="dashboard.js?v=46"></script>
+    <script src="dashboard.js?v=47"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -3680,6 +3739,8 @@
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=3"></script>
     <script src="misc-whales.js?v=1"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="misc-knowledge-graph.js?v=1"></script>
     <script src="misc-greed-fear.js?v=3"></script>
     <script src="misc-bitcoin-valuation-models.js?v=7"></script>
     <script src="misc-bitcoin.js?v=16"></script>

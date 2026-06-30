@@ -82,7 +82,21 @@ def _query_refresh(query) -> bool:
     return (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
 
 
-def dispatch_api(path, query):
+def read_post_json(handler) -> dict:
+    length = int(handler.headers.get("Content-Length") or 0)
+    if length <= 0:
+        return {}
+    raw = handler.rfile.read(length)
+    if not raw:
+        return {}
+    try:
+        data = json.loads(raw.decode("utf-8", errors="replace"))
+        return data if isinstance(data, dict) else {}
+    except json.JSONDecodeError:
+        return {}
+
+
+def dispatch_api(path, query, body: dict | None = None):
     path = (path or "").split("?")[0].rstrip("/") or "/"
 
     if path == "/api/equity/global":
@@ -259,6 +273,16 @@ def dispatch_api(path, query):
 
         return get_misc_whales_payload(refresh=refresh)
 
+    if path == "/api/misc/knowledge-graph/ingest":
+        from macro_data.knowledge_graph import process_ingest
+
+        return process_ingest(body or {})
+
+    if path == "/api/misc/knowledge-graph/rag":
+        from macro_data.knowledge_graph import process_rag
+
+        return process_rag(body or {})
+
     if path == "/api/misc/fear-greed":
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         return get_fear_greed_payload(refresh=refresh)
@@ -378,8 +402,9 @@ def send_json(handler, status, payload):
 
 def handle_api(handler):
     path, query = resolve_path_and_query(handler)
+    body = read_post_json(handler) if handler.command == "POST" else None
     try:
-        payload = dispatch_api(path, query)
+        payload = dispatch_api(path, query, body)
         send_json(handler, 200, payload)
     except ValueError as exc:
         send_json(handler, 404, {"error": str(exc)})

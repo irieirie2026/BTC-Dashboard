@@ -427,6 +427,14 @@ const METRIC_HELP = {
     title: "Addresses >1,000 BTC",
     body: "Global count snapshot plus tracked exchange-wallet proxy count. Live network-wide rich lists need paid labeling APIs.",
   },
+  "kg-overview": {
+    title: "Knowledge Graph",
+    body: "Unified schema designer (vis.js), multi-format ingestion engine, and topic search + RAG. Graph and documents persist in localStorage. Server routes handle URL/PDF/YouTube/RSS parsing; set OPENAI_API_KEY for LLM answers.",
+  },
+  "kg-ingest-log": {
+    title: "Ingestion Log",
+    body: "Recent ingest jobs with chunk and entity counts. Each ingestion auto-extracts entities/relationships and merges them into the graph.",
+  },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
     body: "Live BTC spot prices from major exchanges via public APIs. Compare last price, 24h change, volume, and distance from the cross-venue median. Scaffold hub — extend with depth, arb, and flows later.",

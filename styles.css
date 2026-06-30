@@ -1081,6 +1081,259 @@ body[data-l1="misc"] .logo-icon::before {
   }
 }
 
+/* Misc — Knowledge Graph */
+.kg-panel {
+  padding-bottom: 1rem;
+}
+
+.kg-subnav {
+  margin: 0 1rem 0.85rem;
+}
+
+.kg-tab-panel {
+  padding: 0 1rem 1rem;
+}
+
+.kg-schema-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.kg-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  background: rgba(167, 139, 250, 0.16);
+  color: #e9d5ff;
+  cursor: pointer;
+}
+
+.kg-btn:hover {
+  background: rgba(167, 139, 250, 0.28);
+}
+
+.kg-btn--secondary {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(148, 163, 184, 0.25);
+  color: #cbd5e1;
+}
+
+.kg-btn--danger {
+  border-color: rgba(246, 70, 93, 0.4);
+  background: rgba(246, 70, 93, 0.12);
+  color: #fca5a5;
+}
+
+.kg-btn--wide {
+  width: 100%;
+}
+
+.kg-import-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.kg-schema-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0.75rem;
+  min-height: 420px;
+}
+
+.kg-graph-canvas {
+  min-height: 420px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.kg-sidebar {
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(15, 23, 42, 0.55);
+  padding: 0.85rem 1rem;
+}
+
+.kg-sidebar-title {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kg-sidebar-body,
+.kg-sidebar-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.kg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 0.65rem;
+}
+
+.kg-field input,
+.kg-field select,
+.kg-field textarea,
+.kg-search-bar input {
+  font-size: 0.82rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.75);
+  color: #f1f5f9;
+}
+
+.kg-sidebar-actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.kg-ingest-grid {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.kg-drop-zone {
+  border: 2px dashed rgba(167, 139, 250, 0.35);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(88, 28, 135, 0.1);
+}
+
+.kg-drop-zone--over {
+  border-color: #e879f9;
+  background: rgba(167, 139, 250, 0.12);
+}
+
+.kg-drop-zone input[type="file"] {
+  display: none;
+}
+
+.kg-drop-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.kg-ingest-status {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #a78bfa;
+}
+
+.kg-table th,
+.kg-table td {
+  font-size: 0.72rem;
+}
+
+.kg-search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.kg-search-bar input {
+  flex: 1;
+}
+
+.kg-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.kg-answer-panel,
+.kg-snippets,
+.kg-paths,
+.kg-hit-nodes {
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(15, 23, 42, 0.5);
+  padding: 0.85rem 1rem;
+}
+
+.kg-answer-panel h4,
+.kg-snippets h4,
+.kg-paths h4,
+.kg-hit-nodes h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.kg-answer {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+.kg-snippet {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.kg-snippet:last-child {
+  border-bottom: none;
+}
+
+.kg-snippet p {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.kg-ts,
+.kg-doc {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: #a78bfa;
+  margin-right: 0.5rem;
+}
+
+.kg-node-pill {
+  display: inline-block;
+  margin: 0.15rem 0.35rem 0.15rem 0;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(167, 139, 250, 0.18);
+  color: #e9d5ff;
+  font-size: 0.68rem;
+}
+
+.kg-path-item {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: 0.25rem;
+}
+
+.kg-loading {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 960px) {
+  .kg-schema-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .mb-toolbar .md-stats {
   margin: 0 1rem 0.75rem;
 }

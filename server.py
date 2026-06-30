@@ -4466,6 +4466,14 @@ class Handler(SimpleHTTPRequestHandler):
             return
         return super().do_GET()
 
+    def do_POST(self):
+        if self.path.startswith("/api/"):
+            from api_dispatch import handle_api
+
+            handle_api(self)
+            return
+        self.send_error(405)
+
     def log_message(self, fmt, *args):
         if self.path.startswith("/api/"):
             super().log_message(fmt, *args)

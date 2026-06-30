@@ -890,6 +890,12 @@ const MENU_TREE = {
           );
         },
       },
+      "knowledge-graph": {
+        label: "Knowledge Graph",
+        accent: "#a78bfa",
+        accentDim: "rgba(167, 139, 250, 0.18)",
+        onShow: () => window.initMiscKnowledgeGraph?.(),
+      },
     },
   },
 };
@@ -1124,6 +1130,10 @@ const LEGACY_L2 = {
     whales: "whale-proxies",
     "whale-proxies": "whale-proxies",
     whaleproxies: "whale-proxies",
+    kg: "knowledge-graph",
+    "knowledge-graph": "knowledge-graph",
+    knowledgegraph: "knowledge-graph",
+    graph: "knowledge-graph",
   },
 };
 
@@ -1687,6 +1697,11 @@ function bootstrapPathMenu() {
   } else if (path === "/misc/whale-proxies") {
     localStorage.setItem(MENU_L1_KEY, "misc");
     localStorage.setItem(MENU_L2_KEY, "whale-proxies");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/misc/knowledge-graph") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "knowledge-graph");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
   }
