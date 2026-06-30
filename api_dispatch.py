@@ -253,6 +253,12 @@ def dispatch_api(path, query):
 
         return get_misc_metrics_payload(refresh=refresh)
 
+    if path == "/api/misc/whales" or path.startswith("/api/misc/whales/"):
+        refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+        from macro_data.misc_whales import get_misc_whales_payload
+
+        return get_misc_whales_payload(refresh=refresh)
+
     if path == "/api/misc/fear-greed":
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         return get_fear_greed_payload(refresh=refresh)

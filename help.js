@@ -367,6 +367,66 @@ const METRIC_HELP = {
     title: "About these metrics",
     body: "Derived ratios are approximations for dashboard context, not trading signals. Sources are free-tier public endpoints with no API keys; partial failures may leave some cards empty.",
   },
+  "mm-whales-overview": {
+    title: "Whale Proxies",
+    body: "Free Mempool.space-based whale activity proxies: labeled exchange wallet balances/flows, large-transaction scanner (≥100 BTC), dormant-movement spike score, and rich-address snapshots. Not a substitute for paid entity attribution.",
+  },
+  "mw-exchange-panel": {
+    title: "Exchange Address Tracking",
+    body: "Configurable list of major exchange hot/cold wallets (public labels). Balance from chain UTXO sums; 24h inflow/outflow parsed from recent confirmed txs.",
+  },
+  "mw-exchange-label": {
+    title: "Wallet Label",
+    body: "Best-effort public label (e.g. Binance Cold). Addresses are examples — exchanges rotate wallets.",
+  },
+  "mw-exchange-venue": {
+    title: "Venue",
+    body: "Exchange or custodian associated with the address label.",
+  },
+  "mw-exchange-balance": {
+    title: "Balance",
+    body: "Current on-chain balance (BTC) from Mempool.space address stats.",
+  },
+  "mw-exchange-inflow": {
+    title: "24h Inflow",
+    body: "BTC received by this address in confirmed txs over the last 24 hours.",
+  },
+  "mw-exchange-outflow": {
+    title: "24h Outflow",
+    body: "BTC sent from this address in confirmed txs over the last 24 hours.",
+  },
+  "mw-exchange-txs": {
+    title: "24h Transactions",
+    body: "Count of confirmed transactions touching this address in the last 24 hours.",
+  },
+  "mw-large-panel": {
+    title: "Large Transaction Proxy",
+    body: "Scans mempool recent txs plus the first page of txs from the last 10 blocks for outputs ≥100 BTC. Sample-based, not exhaustive.",
+  },
+  "mw-large-1h": {
+    title: "Large Txs (1h)",
+    body: "Count and total BTC volume of ≥100 BTC transactions detected in the last hour.",
+  },
+  "mw-large-24h": {
+    title: "Large Txs (24h)",
+    body: "Count and total BTC volume of ≥100 BTC transactions in the last 24 hours (sample window).",
+  },
+  "mw-large-spark": {
+    title: "24h Large-Tx Activity",
+    body: "Hourly count of large transactions in the sampled window.",
+  },
+  "mw-dormant": {
+    title: "Dormant Movement Proxy",
+    body: "CDD-style approximation: spike score when ≥100 BTC movements in the last hour exceed the 24h hourly average. True coin-age dormancy requires input-age data from paid providers.",
+  },
+  "mw-rich-100": {
+    title: "Addresses >100 BTC",
+    body: "Global count from public BitInfoCharts distribution snapshot. Tracked proxy counts how many labeled exchange wallets in this panel exceed 100 BTC.",
+  },
+  "mw-rich-1k": {
+    title: "Addresses >1,000 BTC",
+    body: "Global count snapshot plus tracked exchange-wallet proxy count. Live network-wide rich lists need paid labeling APIs.",
+  },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
     body: "Live BTC spot prices from major exchanges via public APIs. Compare last price, 24h change, volume, and distance from the cross-venue median. Scaffold hub — extend with depth, arb, and flows later.",

@@ -916,6 +916,171 @@ body[data-l1="misc"] .logo-icon::before {
   }
 }
 
+/* Misc — Whale Proxies */
+.mm-whales-panel {
+  margin-top: 0.25rem;
+}
+
+.mm-whales-panel .panel-header h2,
+.mm-whales-subpanel .panel-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.mm-whales-subpanel {
+  margin: 0 1rem 1rem;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mm-whales-subpanel .panel-header {
+  padding: 0.75rem 1rem 0.35rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.mw-hero-strip .mw-hero-block {
+  border-left-color: #e879f9;
+}
+
+.mw-hero-strip {
+  margin: 0 1rem 0.85rem;
+}
+
+.mw-table-wrap {
+  max-height: 420px;
+  overflow: auto;
+}
+
+.mw-table th,
+.mw-table td {
+  font-size: 0.75rem;
+}
+
+.mw-table td.positive {
+  color: #0ecb81;
+}
+
+.mw-table td.negative {
+  color: #f6465d;
+}
+
+.mw-venue-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(232, 121, 249, 0.14);
+  color: #f0abfc;
+}
+
+.mw-addr-link {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.mw-addr-link:hover {
+  text-decoration: underline;
+}
+
+.mw-whales-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.85rem;
+  margin: 0 1rem 1rem;
+}
+
+.mw-large-tx-body {
+  padding: 0 1rem 1rem;
+}
+
+.mw-large-tx-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.mw-mini-card {
+  min-height: 120px;
+}
+
+.mw-mini-card--spark .mw-large-spark {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.mw-large-tx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.mw-large-tx-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  font-size: 0.72rem;
+}
+
+.mw-large-tx-val {
+  font-weight: 700;
+  color: #f8fafc;
+  font-family: var(--mono);
+}
+
+.mw-large-tx-src {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.mw-proxy-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mw-proxy-card {
+  min-height: 140px;
+}
+
+.mm-whales-about {
+  margin: 0 1rem 1rem;
+  padding: 0.65rem 0.15rem 0;
+  border-top: 1px solid rgba(177, 179, 179, 0.12);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.mm-section-note a {
+  color: #93c5fd;
+}
+
+@media (max-width: 960px) {
+  .mw-whales-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mw-large-tx-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+
 .mb-toolbar .md-stats {
   margin: 0 1rem 0.75rem;
 }

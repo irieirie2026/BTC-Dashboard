@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=85" />
+    <link rel="stylesheet" href="styles.css?v=86" />
   </head>
   <body>
     <div class="app app--compact">
@@ -3106,6 +3106,35 @@
             <div class="mm-error" id="mm-error" hidden></div>
             <div class="mm-grid" id="mm-grid" aria-label="Misc metrics"></div>
           </section>
+          <section class="panel mm-whales-panel" aria-label="Whale proxies">
+            <div class="panel-header">
+              <h2 data-help-key="mm-whales-overview">Whale Proxies</h2>
+              <span class="panel-meta" id="mw-meta">Loading…</span>
+              <button type="button" class="mm-refresh-btn mw-refresh-btn" aria-label="Refresh whale proxies">↻</button>
+            </div>
+            <p class="mm-section-note">Exchange hot/cold wallet tracking, large-tx scanner, and CDD-style proxies. Data from <a href="https://mempool.space" target="_blank" rel="noopener noreferrer">Mempool.space</a> (free). Full entity labeling requires paid analytics.</p>
+            <div class="mm-loading" id="mw-loading">Loading whale proxies…</div>
+            <div class="mm-error" id="mw-error" hidden></div>
+            <section class="deriv-hero-strip mw-hero-strip" id="mw-heroes"></section>
+            <div class="panel mm-whales-subpanel">
+              <div class="panel-header">
+                <h3 data-help-key="mw-exchange-panel">Exchange Address Tracking</h3>
+              </div>
+              <div class="deriv-table-wrap mw-table-wrap" id="mw-exchange-table"></div>
+            </div>
+            <div class="mw-whales-row">
+              <div class="panel mm-whales-subpanel">
+                <div class="panel-header">
+                  <h3 data-help-key="mw-large-panel">Large Transaction Proxy</h3>
+                </div>
+                <div id="mw-large-tx-body" class="mw-large-tx-body"></div>
+              </div>
+              <div class="mw-proxy-cards" id="mw-proxy-cards" aria-label="Whale proxy indicators"></div>
+            </div>
+            <footer class="stats-commentary mm-whales-about">
+              <div id="mw-about-body"><p>Loading…</p></div>
+            </footer>
+          </section>
           <section class="panel stats-commentary-panel mm-about-panel">
             <div class="panel-header">
               <h2 data-help-key="mm-about">About these metrics</h2>
@@ -3632,7 +3661,7 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=72"></script>
+    <script src="help.js?v=73"></script>
     <script src="home.js?v=5"></script>
     <script src="dashboard.js?v=45"></script>
     <script src="etf.js?v=12"></script>
@@ -3648,6 +3677,7 @@
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=3"></script>
+    <script src="misc-whales.js?v=1"></script>
     <script src="misc-greed-fear.js?v=3"></script>
     <script src="misc-bitcoin-valuation-models.js?v=7"></script>
     <script src="misc-bitcoin.js?v=16"></script>
