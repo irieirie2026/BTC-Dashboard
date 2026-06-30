@@ -30,12 +30,13 @@
   ],
   "rewrites": [
     { "source": "/favicon.ico", "destination": "/favicon-32.png" },
+    { "source": "/misc", "destination": "/index.html" },
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
   "functions": {
     "api/handler.py": {
       "maxDuration": 60,
-      "includeFiles": "{server.py,api_dispatch.py,equity_insights.py,macro_drivers_api.py,btc_indicators_api.py,cache/**,macro_data/**,btc_data/**,global_macro.py,global_macro_*.py,macro_drivers*.py,requirements.txt,data/x-feed-cache.json,data/stats-btc-history-cache.json}",
+      "includeFiles": "{server.py,api_dispatch.py,misc_metrics.py,equity_insights.py,macro_drivers_api.py,btc_indicators_api.py,cache/**,macro_data/**,btc_data/**,global_macro.py,global_macro_*.py,macro_drivers*.py,requirements.txt,data/x-feed-cache.json,data/stats-btc-history-cache.json}",
       "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command,**/*.js,**/*.html,**/*.css,**/*.md}"
     }
   }

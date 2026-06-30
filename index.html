@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=84" />
+    <link rel="stylesheet" href="styles.css?v=85" />
   </head>
   <body>
     <div class="app app--compact">
@@ -80,6 +80,7 @@
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="macro">Macro</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="news">News</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="valuation">Valuation</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="misc">Misc</button>
         </nav>
         <div id="menu-l2-slot" class="menu-l2-slot">
           <nav class="dashboard-nav menu-l2" aria-label="Market sections">
@@ -3092,28 +3093,25 @@
         </div>
       </div>
       <div id="dashboard-misc" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="misc" data-l2="park">
-          <div class="misc-page">
-            <header class="misc-hero">
-              <div class="misc-hero-glow" aria-hidden="true"></div>
-              <p class="misc-hero-eyebrow">Work in progress · No pressure</p>
-              <h2 class="misc-hero-title">The Parking Lot</h2>
-              <p class="misc-hero-lead">
-                Half-baked charts, wild experiments, and “what if we…” ideas dock here until they’re
-                ready to join the fleet. Empty berths are features, not bugs.
-              </p>
-              <p class="misc-hero-meta" id="misc-slot-counter">0 parked · 6 open berths</p>
-            </header>
-            <section class="misc-lot" aria-label="Parked ideas">
-              <div id="misc-slot-grid" class="misc-slot-grid"></div>
-            </section>
-            <footer class="misc-footer">
-              <p>
-                To park something new, add it to <code>misc.js</code> — or claim an open berth when
-                you’re ready to ship.
-              </p>
-            </footer>
-          </div>
+        <div class="menu-screen" data-l1="misc" data-l2="metrics">
+          <section class="deriv-hero-strip mm-hero-strip" id="mm-heroes"></section>
+          <section class="panel mm-panel">
+            <div class="panel-header">
+              <h2 data-help-key="mm-overview">Misc Metrics</h2>
+              <span class="panel-meta" id="mm-meta">Loading…</span>
+              <button type="button" class="mm-refresh-btn" aria-label="Refresh metrics">↻</button>
+            </div>
+            <p class="mm-section-note">Free public APIs only — CoinGecko, Mempool.space, Blockchain.info, Alternative.me. Refreshes every 5 min.</p>
+            <div class="mm-loading" id="mm-loading">Loading metrics…</div>
+            <div class="mm-error" id="mm-error" hidden></div>
+            <div class="mm-grid" id="mm-grid" aria-label="Misc metrics"></div>
+          </section>
+          <section class="panel stats-commentary-panel mm-about-panel">
+            <div class="panel-header">
+              <h2 data-help-key="mm-about">About these metrics</h2>
+            </div>
+            <div class="stats-commentary mm-about-body" id="mm-about-body"><p>Loading…</p></div>
+          </section>
         </div>
       </div>
       <div id="dashboard-valuation" class="dashboard-view" hidden>
@@ -3634,9 +3632,9 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=71"></script>
-    <script src="home.js?v=4"></script>
-    <script src="dashboard.js?v=44"></script>
+    <script src="help.js?v=72"></script>
+    <script src="home.js?v=5"></script>
+    <script src="dashboard.js?v=45"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -3649,7 +3647,7 @@
     <script src="macro-drivers.js?v=33"></script>
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
-    <script src="misc.js?v=4"></script>
+    <script src="misc-metrics.js?v=1"></script>
     <script src="misc-greed-fear.js?v=3"></script>
     <script src="misc-bitcoin-valuation-models.js?v=7"></script>
     <script src="misc-bitcoin.js?v=16"></script>

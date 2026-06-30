@@ -247,6 +247,12 @@ def dispatch_api(path, query):
         refresh = _query_refresh(query)
         return get_news_payload(section, refresh=refresh)
 
+    if path == "/api/misc/metrics":
+        refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
+        from misc_metrics import get_misc_metrics_payload
+
+        return get_misc_metrics_payload(refresh=refresh)
+
     if path == "/api/misc/fear-greed":
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         return get_fear_greed_payload(refresh=refresh)

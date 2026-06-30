@@ -327,6 +327,46 @@ const METRIC_HELP = {
     title: "Market Outlook",
     body: "Aggregated sentiment by topic, lead macro contracts, and automated arb scan across Polymarket/Kalshi: cross-venue spreads (>5pp), Yes+No sum discounts, and BTC strike-ladder inconsistencies. Edges are pre-fee; not financial advice.",
   },
+  "mm-overview": {
+    title: "Misc Metrics",
+    body: "Cross-source BTC dashboard metrics from free public APIs only: CoinGecko, Mempool.space, Blockchain.info, and Alternative.me. Server cache refreshes every 5 minutes.",
+  },
+  "mm-btc-dominance": {
+    title: "Bitcoin Dominance",
+    body: "BTC share of total crypto market cap from CoinGecko /global. Sparkline uses BTC/ETH market-cap ratio scaled to current dominance when historical global dominance is unavailable on the free tier.",
+  },
+  "mm-fear-greed": {
+    title: "Fear & Greed Index",
+    body: "Alternative.me composite sentiment index (0–100). Color-coded zones from Extreme Fear to Extreme Greed. Seven-day sparkline shows recent mood shifts.",
+  },
+  "mm-mayer-multiple": {
+    title: "Mayer Multiple",
+    body: "Spot BTC price divided by its 200-day simple moving average (CoinGecko daily prices). Historically <1 suggests undervaluation; >2.4 often coincides with overheated cycles.",
+  },
+  "mm-puell-multiple": {
+    title: "Puell Multiple",
+    body: "Daily miner issuance revenue (3.125 BTC × 144 blocks) vs its 365-day average. Elevated readings reflect strong issuance-dollar flows relative to the yearly norm.",
+  },
+  "mm-nvt-ratio": {
+    title: "NVT Ratio (approx)",
+    body: "Market cap divided by Blockchain.info estimated daily on-chain USD transfer volume. Higher values imply price is rich relative to on-chain settlement activity.",
+  },
+  "mm-hashprice": {
+    title: "Hashprice",
+    body: "Estimated daily miner revenue (block subsidy + fees) per exahash of network hashrate. Combines Mempool.space hashrate and fee estimates with CoinGecko BTC price.",
+  },
+  "mm-mempool-pressure": {
+    title: "Mempool Pressure Score",
+    body: "Composite 0–100 score from mempool vsize vs a typical full block (~1.5M vbytes) and recommended fast fee rate. Higher = more congestion and fee urgency.",
+  },
+  "mm-dom-fg-composite": {
+    title: "Dominance × F&G Composite",
+    body: "BTC dominance multiplied by Fear & Greed ÷ 50. Weights market-share strength by sentiment — higher when BTC leads in a greedy tape.",
+  },
+  "mm-about": {
+    title: "About these metrics",
+    body: "Derived ratios are approximations for dashboard context, not trading signals. Sources are free-tier public endpoints with no API keys; partial failures may leave some cards empty.",
+  },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
     body: "Live BTC spot prices from major exchanges via public APIs. Compare last price, 24h change, volume, and distance from the cross-venue median. Scaffold hub — extend with depth, arb, and flows later.",

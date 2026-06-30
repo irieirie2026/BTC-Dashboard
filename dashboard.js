@@ -868,6 +868,19 @@ const MENU_TREE = {
       },
     },
   },
+  misc: {
+    label: "Misc",
+    accent: "#e879f9",
+    accentDim: "rgba(232, 121, 249, 0.18)",
+    children: {
+      metrics: {
+        label: "Metrics",
+        accent: "#e879f9",
+        accentDim: "rgba(232, 121, 249, 0.18)",
+        onShow: () => window.initMiscMetrics?.(),
+      },
+    },
+  },
 };
 
 const DASHBOARD_META = {
@@ -935,6 +948,11 @@ const DASHBOARD_META = {
     title: "BTC Valuation",
     subtitle: "On-chain indicators · cycles · sentiment · distribution",
     pageTitle: "BTC Valuation — Live Dashboard",
+  },
+  misc: {
+    title: "BTC Misc",
+    subtitle: "Dominance · sentiment · on-chain ratios · mempool pressure",
+    pageTitle: "BTC Misc Metrics — Live Dashboard",
   },
 };
 
@@ -1086,6 +1104,12 @@ const LEGACY_L2 = {
     "greed-fear": "indicators",
     greed: "indicators",
     fear: "indicators",
+  },
+  misc: {
+    metrics: "metrics",
+    park: "metrics",
+    parking: "metrics",
+    overview: "metrics",
   },
 };
 
@@ -1548,7 +1572,7 @@ const MenuController = {
     const treasuryMeta = document.getElementById("header-treasury-meta");
     const dashboardMeta = document.getElementById("header-dashboard-meta");
     const usesDashboardMeta = [
-      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news", "valuation",
+      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news", "valuation", "misc",
     ];
     const hideAllHeaderMeta = l1 === "home";
     if (marketMeta) marketMeta.hidden = hideAllHeaderMeta || l1 !== "market";
@@ -1632,12 +1656,21 @@ function migrateMiscMenu() {
   if (l2 === "bitcoin" || l2 === "btc" || l2 === "greed-fear" || l2 === "greed" || l2 === "fear") {
     localStorage.setItem(MENU_L1_KEY, "valuation");
     localStorage.setItem(MENU_L2_KEY, "indicators");
-  } else {
-    localStorage.setItem(MENU_L1_KEY, "home");
-    localStorage.setItem(MENU_L2_KEY, "landing");
+  } else if (!l2 || l2 === "park" || l2 === "parking") {
+    localStorage.setItem(MENU_L2_KEY, "metrics");
   }
   localStorage.removeItem(MENU_L3_KEY);
   localStorage.removeItem(MENU_L4_KEY);
+}
+
+function bootstrapPathMenu() {
+  const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
+  if (path === "/misc") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "metrics");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  }
 }
 
 function migrateSocialMenu() {
@@ -1658,6 +1691,7 @@ function initDashboardSwitcher() {
   migrateSocialMenu();
 
   migrateMiscMenu();
+  bootstrapPathMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 
   const tree = document.getElementById("menu-tree");
