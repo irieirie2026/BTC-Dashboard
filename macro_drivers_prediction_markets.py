@@ -737,13 +737,34 @@ def _mock_markets() -> list[dict]:
             "active": True,
         },
         {
+            "id": "mock-kalshi-btc-100k-2026",
+            "question": "Will Bitcoin reach $100,000 before 2027?",
+            "eventTitle": "Bitcoin price before 2027",
+            "yesOdds": 0.48,
+            "noOdds": 0.50,
+            "yesProb": 48.0,
+            "noProb": 50.0,
+            "volume24h": 112_400,
+            "volumeTotal": 1_980_000,
+            "liquidity": 198_000,
+            "endDate": "2026-12-31",
+            "platform": "kalshi",
+            "category": "price-targets",
+            "section": "btc-price",
+            "timeframe": "long-term",
+            "url": "https://kalshi.com/markets/kxbtcmax",
+            "description": "Kalshi BTC $100k bracket — cross-venue vs Polymarket pricing.",
+            "sparkline": [0.44, 0.46, 0.48],
+            "active": True,
+        },
+        {
             "id": "mock-poly-btc-120k-2026",
             "question": "Will Bitcoin reach $120,000 before 2027?",
             "eventTitle": "Bitcoin price before 2027",
-            "yesOdds": 0.34,
-            "noOdds": 0.66,
-            "yesProb": 34.0,
-            "noProb": 66.0,
+            "yesOdds": 0.62,
+            "noOdds": 0.36,
+            "yesProb": 62.0,
+            "noProb": 36.0,
             "volume24h": 198_200,
             "liquidity": 285_000,
             "endDate": "2026-12-31",
@@ -1151,6 +1172,239 @@ def _mock_markets() -> list[dict]:
     return _enrich_markets(seed)
 
 
+ARB_MIN_CROSS_SPREAD = 5.0
+ARB_MIN_JACCARD = 0.38
+ARB_MIN_SUM_DISCOUNT = 1.5
+
+
+def _question_tokens(question: str) -> set[str]:
+    q = question.lower()
+    q = re.sub(r"[^\w\s$]", " ", q)
+    stop = {
+        "will", "the", "a", "an", "on", "at", "before", "end", "of", "in", "this",
+        "week", "by", "be", "is", "to", "for", "and", "or", "with", "does", "did",
+        "what", "how", "any", "than", "into", "from",
+    }
+    return {t for t in q.split() if t not in stop and len(t) > 1}
+
+
+def _strike_values(question: str) -> set[int]:
+    strikes: set[int] = set()
+    for m in re.finditer(r"\$?\s*([\d,]+)\s*(k|000)?", question, re.I):
+        num = int(m.group(1).replace(",", ""))
+        suffix = (m.group(2) or "").lower()
+        if suffix in ("k", "000") or num < 1000:
+            num = num * 1000 if num < 1000 else num
+        if num >= 10_000:
+            strikes.add(num)
+    return strikes
+
+
+def _jaccard(a: set[str], b: set[str]) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _ladder_similarity(qa: str, qb: str) -> float:
+    def _norm(q: str) -> set[str]:
+        q = re.sub(r"\$?[\d,]+k?", " strike ", q.lower())
+        return _question_tokens(q)
+
+    return _jaccard(_norm(qa), _norm(qb))
+
+
+def _active_markets(markets: list[dict]) -> list[dict]:
+    return [m for m in markets if not m.get("resolved") and m.get("active", True)]
+
+
+def _find_sum_discount_arbs(markets: list[dict]) -> list[dict]:
+    opps: list[dict] = []
+    for m in _active_markets(markets):
+        yes_o = m.get("yesOdds")
+        no_o = m.get("noOdds")
+        if yes_o is None or no_o is None:
+            continue
+        total = yes_o + no_o
+        discount = (1.0 - total) * 100
+        if discount < ARB_MIN_SUM_DISCOUNT:
+            continue
+        opps.append(
+            {
+                "type": "sum-discount",
+                "edgePct": round(discount, 1),
+                "confidence": "high" if discount >= 3 else "medium",
+                "title": f"Yes+No discount · {discount:.1f}% edge",
+                "summary": f"Combined odds {total * 100:.1f}¢ — buy both sides for ${total:.2f} to lock $1",
+                "action": (
+                    f"Buy Yes ({m['yesProb']:.0f}%) + No ({m['noProb']:.0f}%) on "
+                    f"{m['platform'].title()} — net {discount:.1f}% below par"
+                ),
+                "description": m["question"],
+                "markets": [_arb_market_ref(m)],
+            }
+        )
+    return sorted(opps, key=lambda x: x["edgePct"], reverse=True)
+
+
+def _arb_market_ref(m: dict) -> dict:
+    return {
+        "id": m.get("id"),
+        "platform": m.get("platform"),
+        "question": m.get("question"),
+        "yesProb": m.get("yesProb"),
+        "noProb": m.get("noProb"),
+        "url": m.get("url"),
+    }
+
+
+def _find_cross_platform_arbs(markets: list[dict]) -> list[dict]:
+    opps: list[dict] = []
+    active = _active_markets(markets)
+    poly = [m for m in active if m.get("platform") == "polymarket"]
+    kalshi = [m for m in active if m.get("platform") == "kalshi"]
+    if not poly or not kalshi:
+        return opps
+
+    seen_pairs: set[str] = set()
+    for a in poly:
+        tok_a = _question_tokens(a["question"])
+        strike_a = _strike_values(a["question"])
+        for b in kalshi:
+            tok_b = _question_tokens(b["question"])
+            strike_b = _strike_values(b["question"])
+            sim = _jaccard(tok_a, tok_b)
+            btc_related = bool({"bitcoin", "btc"} & (tok_a | tok_b))
+            strike_match = bool(strike_a & strike_b) and btc_related
+            if strike_a and strike_b and not strike_match:
+                continue
+            if not strike_match and sim < max(ARB_MIN_JACCARD, 0.48):
+                continue
+            spread = abs((a.get("yesProb") or 0) - (b.get("yesProb") or 0))
+            if spread < ARB_MIN_CROSS_SPREAD:
+                continue
+            pair_key = "|".join(sorted([a["id"], b["id"]]))
+            if pair_key in seen_pairs:
+                continue
+            seen_pairs.add(pair_key)
+            low, high = (a, b) if (a.get("yesProb") or 0) <= (b.get("yesProb") or 0) else (b, a)
+            confidence = "high" if strike_match or sim >= 0.5 else "medium"
+            opps.append(
+                {
+                    "type": "cross-platform",
+                    "edgePct": round(spread, 1),
+                    "confidence": confidence,
+                    "title": f"Cross-venue · {spread:.0f}pp spread",
+                    "summary": (
+                        f"{low['platform'].title()} Yes {low['yesProb']:.0f}% vs "
+                        f"{high['platform'].title()} Yes {high['yesProb']:.0f}%"
+                    ),
+                    "action": (
+                        f"Buy Yes on {low['platform'].title()} ({low['yesProb']:.0f}%) · "
+                        f"Buy No on {high['platform'].title()} ({high['noProb']:.0f}%)"
+                    ),
+                    "description": low["question"],
+                    "markets": [_arb_market_ref(low), _arb_market_ref(high)],
+                }
+            )
+    return sorted(opps, key=lambda x: x["edgePct"], reverse=True)
+
+
+def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
+    """Higher BTC strike should not have higher Yes prob than lower strike (same horizon)."""
+    opps: list[dict] = []
+    buckets: dict[str, list[dict]] = {}
+    for m in _active_markets(markets):
+        strikes = _strike_values(m["question"])
+        if not strikes or m.get("category") != "price-targets":
+            continue
+        strike = max(strikes)
+        end = m.get("endDate") or "unknown"
+        end_key = end[:7] if len(end) >= 7 else end
+        key = f"{m.get('platform')}|{end_key}"
+        buckets.setdefault(key, []).append({**m, "_strike": strike})
+
+    for group in buckets.values():
+        if len(group) < 2:
+            continue
+        group.sort(key=lambda x: x["_strike"])
+        for i in range(len(group) - 1):
+            low_m, high_m = group[i], group[i + 1]
+            same_event = (
+                low_m.get("eventTitle")
+                and low_m.get("eventTitle") == high_m.get("eventTitle")
+            )
+            if not same_event and _ladder_similarity(low_m["question"], high_m["question"]) < 0.55:
+                continue
+            low_p = low_m.get("yesProb") or 0
+            high_p = high_m.get("yesProb") or 0
+            if high_p <= low_p + 2:
+                continue
+            violation = high_p - low_p
+            opps.append(
+                {
+                    "type": "monotonicity",
+                    "edgePct": round(violation, 1),
+                    "confidence": "medium",
+                    "title": f"Strike ladder mismatch · {violation:.0f}pp",
+                    "summary": (
+                        f"${low_m['_strike']:,} Yes {low_p:.0f}% vs "
+                        f"${high_m['_strike']:,} Yes {high_p:.0f}%"
+                    ),
+                    "action": (
+                        f"Sell Yes on ${high_m['_strike']:,} ({high_p:.0f}%) · "
+                        f"Buy Yes on ${low_m['_strike']:,} ({low_p:.0f}%)"
+                    ),
+                    "description": (
+                        f"Higher strike implies lower probability — "
+                        f"${high_m['_strike']:,} priced richer than ${low_m['_strike']:,}."
+                    ),
+                    "markets": [_arb_market_ref(low_m), _arb_market_ref(high_m)],
+                }
+            )
+    return sorted(opps, key=lambda x: x["edgePct"], reverse=True)
+
+
+def _find_arbitrage_opportunities(markets: list[dict]) -> list[dict]:
+    combined: list[dict] = []
+    combined.extend(_find_cross_platform_arbs(markets))
+    combined.extend(_find_sum_discount_arbs(markets))
+    combined.extend(_find_monotonicity_arbs(markets))
+    combined.sort(key=lambda x: (x.get("edgePct") or 0), reverse=True)
+    return combined[:12]
+
+
+def _topic_sentiment(markets: list[dict]) -> list[dict]:
+    topics = ("bitcoin", "finance", "economics", "politics", "geopolitics")
+    labels = {
+        "bitcoin": "Bitcoin",
+        "finance": "Finance",
+        "economics": "Economics",
+        "politics": "Politics",
+        "geopolitics": "Geopolitics",
+    }
+    signals: list[dict] = []
+    active = _active_markets(markets)
+    for tid in topics:
+        subset = [m for m in active if tid in (m.get("topics") or [])]
+        if not subset:
+            continue
+        avg_yes = sum(m.get("yesProb") or 0 for m in subset) / len(subset)
+        vol = sum(m.get("volume24h") or 0 for m in subset)
+        bias = "bullish" if avg_yes >= 55 else "bearish" if avg_yes <= 45 else "neutral"
+        signals.append(
+            {
+                "topic": tid,
+                "label": labels[tid],
+                "avgYes": round(avg_yes, 1),
+                "count": len(subset),
+                "volume24h": vol,
+                "bias": bias,
+            }
+        )
+    return sorted(signals, key=lambda s: s["volume24h"], reverse=True)
+
+
 def _section_outlook(markets: list[dict], section: str) -> dict:
     subset = [m for m in markets if m.get("section") == section]
     if section == "btc-price":
@@ -1229,7 +1483,8 @@ def _section_heroes(markets: list[dict], section: str) -> list[dict]:
 
 
 def _build_outlook(markets: list[dict]) -> dict:
-    price_markets = [m for m in markets if m.get("category") == "price-targets"]
+    active = _active_markets(markets)
+    price_markets = [m for m in active if m.get("category") == "price-targets"]
     above_100 = next(
         (m for m in price_markets if re.search(r"100[,.]?000|100k", m.get("question", ""), re.I)),
         None,
@@ -1240,38 +1495,97 @@ def _build_outlook(markets: list[dict]) -> dict:
         if price_markets
         else None
     )
-    headline = "BTC prediction markets — aggregated outlook"
-    if above_100:
-        headline = f"Market-implied probability BTC > $100k: {above_100['yesProb']:.0f}%"
+    arbitrage = _find_arbitrage_opportunities(markets)
+    signals = _topic_sentiment(markets)
+
+    cross_spreads = [a for a in arbitrage if a["type"] == "cross-platform"]
+    max_cross = max((a["edgePct"] for a in cross_spreads), default=0)
+
+    headline = "Prediction markets — outlook & arb scan"
+    if arbitrage:
+        headline = f"{len(arbitrage)} arb opportunit{'y' if len(arbitrage) == 1 else 'ies'} · max spread {max_cross:.0f}pp"
+    elif above_100:
+        headline = f"BTC > $100k implied: {above_100['yesProb']:.0f}% · no cross-venue gaps detected"
     elif avg_yes is not None:
-        headline = f"Avg implied probability across {len(price_markets)} price markets: {avg_yes:.0f}%"
+        headline = f"Avg BTC price-market Yes: {avg_yes:.0f}% · arb scan clear"
+
+    lead_macro = max(
+        [m for m in active if "finance" in (m.get("topics") or []) or "economics" in (m.get("topics") or [])],
+        key=lambda m: m.get("volume24h") or 0,
+        default=None,
+    )
+
     return {
         "headline": headline,
         "btc100kProb": above_100["yesProb"] if above_100 else None,
         "bullishCount": len(bullish),
-        "activeMarkets": len(markets),
-        "totalVolume24h": sum(m.get("volume24h") or 0 for m in markets),
-        "lines": _outlook_commentary(markets, above_100, avg_yes),
+        "activeMarkets": len(active),
+        "totalVolume24h": sum(m.get("volume24h") or 0 for m in active),
+        "arbCount": len(arbitrage),
+        "maxArbEdge": arbitrage[0]["edgePct"] if arbitrage else 0,
+        "signals": signals,
+        "arbitrage": arbitrage,
+        "lines": _outlook_commentary(markets, above_100, avg_yes, arbitrage, signals, lead_macro),
     }
 
 
-def _outlook_commentary(markets, above_100, avg_yes) -> list[str]:
+def _outlook_commentary(markets, above_100, avg_yes, arbitrage, signals, lead_macro) -> list[str]:
     lines = []
+    active = _active_markets(markets)
+
     if above_100:
         lines.append(
-            f"Polymarket/Kalshi-style pricing implies a {above_100['yesProb']:.0f}% chance of BTC reaching "
-            f"$100k before the stated deadline — a common benchmark for cycle sentiment."
+            f"Benchmark: {above_100['yesProb']:.0f}% implied probability BTC reaches $100k "
+            f"({above_100['platform'].title()}) — primary cycle sentiment gauge."
         )
-    platforms = {}
-    for m in markets:
+
+    if signals:
+        top = signals[0]
+        lines.append(
+            f"Highest-volume topic: {top['label']} — avg Yes {top['avgYes']:.0f}% across "
+            f"{top['count']} active markets ({_fmt_usd(top['volume24h'])} 24h)."
+        )
+
+    if lead_macro:
+        lines.append(
+            f"Lead macro contract: {lead_macro['yesProb']:.0f}% Yes on "
+            f"“{lead_macro['question'][:70]}…” ({lead_macro['platform'].title()})."
+        )
+
+    if arbitrage:
+        cross = [a for a in arbitrage if a["type"] == "cross-platform"]
+        sum_d = [a for a in arbitrage if a["type"] == "sum-discount"]
+        mono = [a for a in arbitrage if a["type"] == "monotonicity"]
+        parts = []
+        if cross:
+            parts.append(f"{len(cross)} cross-venue")
+        if sum_d:
+            parts.append(f"{len(sum_d)} sum-discount")
+        if mono:
+            parts.append(f"{len(mono)} strike-ladder")
+        lines.append(
+            f"Arb scan: {', '.join(parts)} gap{'s' if len(arbitrage) != 1 else ''} detected — "
+            "review legs below; edges are pre-fee and may not be executable."
+        )
+        best = arbitrage[0]
+        lines.append(f"Top opportunity ({best['edgePct']:.1f}% edge): {best['action']}")
+    else:
+        lines.append(
+            "Arb scan: no material cross-venue or pricing gaps (>5pp) across Polymarket/Kalshi pairs in the current universe."
+        )
+
+    price_count = len([m for m in active if m.get("category") == "price-targets"])
+    if avg_yes is not None and price_count:
+        lines.append(
+            f"BTC price-target basket averages {avg_yes:.0f}% Yes across {price_count} contracts — "
+            "cross-check with Market → Indicators for technical confluence."
+        )
+
+    platforms: dict[str, int] = {}
+    for m in active:
         platforms[m["platform"]] = platforms.get(m["platform"], 0) + 1
     plat_txt = ", ".join(f"{k}: {v}" for k, v in sorted(platforms.items()))
-    lines.append(f"Tracking {len(markets)} BTC-relevant markets ({plat_txt}). Generic politics excluded.")
-    if avg_yes is not None:
-        lines.append(
-            f"Mean Yes probability across price-target markets is {avg_yes:.0f}% — compare with spot technicals "
-            "on the Indicators tab for confluence."
-        )
+    lines.append(f"Universe: {len(active)} active markets ({plat_txt}). Not financial advice.")
     return lines
 
 
@@ -1407,19 +1721,23 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
                 "sub": "Implied probability",
             },
             {
-                "name": "Active markets",
-                "value": str(outlook["activeMarkets"]),
-                "sub": "BTC-relevant",
+                "name": "Arb opportunities",
+                "value": str(outlook.get("arbCount", 0)),
+                "sub": (
+                    f"Max {outlook['maxArbEdge']:.0f}pp edge"
+                    if outlook.get("arbCount")
+                    else "Scan clear"
+                ),
             },
             {
                 "name": "24h volume",
                 "value": _fmt_usd(outlook["totalVolume24h"]),
-                "sub": "Combined",
+                "sub": "Active universe",
             },
             {
-                "name": "Bullish price bets",
-                "value": str(outlook["bullishCount"]),
-                "sub": "Yes ≥ 50%",
+                "name": "Active markets",
+                "value": str(outlook["activeMarkets"]),
+                "sub": "Polymarket + Kalshi",
             },
         ],
         "outlook": outlook,

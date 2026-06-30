@@ -179,7 +179,26 @@ function pmMockPayload() {
       { name: "Platforms", value: "2", sub: "Polymarket + Kalshi" },
     ],
     outlook: {
-      headline: "Market-implied probability BTC > $100k: 58%",
+      headline: "1 arb opportunity · max spread 10pp",
+      arbCount: 1,
+      maxArbEdge: 10,
+      signals: [
+        { topic: "bitcoin", label: "Bitcoin", avgYes: 53, count: 2, volume24h: 370900, bias: "neutral" },
+      ],
+      arbitrage: [
+        {
+          type: "cross-platform",
+          edgePct: 10,
+          confidence: "high",
+          title: "Cross-venue · 10pp spread",
+          summary: "Kalshi Yes 48% vs Polymarket Yes 58%",
+          action: "Buy Yes on Kalshi (48%) · Buy No on Polymarket (42%)",
+          markets: [
+            { platform: "kalshi", question: "BTC above $108,000 this week?", yesProb: 48, url: "https://kalshi.com/markets/kxbtc" },
+            { platform: "polymarket", question: "Will Bitcoin reach $100,000 before 2027?", yesProb: 58, url: "https://polymarket.com/event/bitcoin-price-before-2027" },
+          ],
+        },
+      ],
       lines: ["Client mock — deploy API for live Polymarket/Kalshi feed."],
     },
     filters: {
@@ -281,15 +300,77 @@ function pmRenderHeroes() {
     .join("");
 }
 
+function pmArbTypeLabel(type) {
+  return (
+    { "cross-platform": "Cross-venue", "sum-discount": "Sum discount", monotonicity: "Strike ladder" }[type] ||
+    type
+  );
+}
+
 function pmRenderOutlook() {
   const head = pmEl("pm-outlook-head");
   const body = pmEl("pm-outlook-body");
   const outlook = pmData?.outlook;
   if (head) head.textContent = outlook?.headline || "Aggregated outlook";
-  if (body) {
-    const lines = outlook?.lines || [];
-    body.innerHTML = lines.map((p) => `<p>${p}</p>`).join("") || "<p>Loading outlook…</p>";
+  if (!body) return;
+
+  const lines = outlook?.lines || [];
+  const signals = outlook?.signals || [];
+  const arbs = outlook?.arbitrage || [];
+
+  let html = lines.map((p) => `<p>${p}</p>`).join("");
+
+  if (signals.length) {
+    html += `<div class="pm-signals"><h4 class="pm-outlook-subhead">Topic sentiment</h4><div class="pm-signal-grid">`;
+    html += signals
+      .slice(0, 5)
+      .map(
+        (s) => `
+      <article class="pm-signal-card pm-signal-card--${s.bias}">
+        <span class="pm-signal-label">${s.label}</span>
+        <span class="pm-signal-value mono">${s.avgYes.toFixed(0)}% Yes</span>
+        <span class="pm-signal-sub">${s.count} mkts · ${pmFmtUsd(s.volume24h)} 24h</span>
+      </article>`,
+      )
+      .join("");
+    html += `</div></div>`;
   }
+
+  if (arbs.length) {
+    html += `<div class="pm-arb-section"><h4 class="pm-outlook-subhead">Arbitrage opportunities <span class="mono">${arbs.length}</span></h4>`;
+    html += `<div class="pm-arb-list">`;
+    html += arbs
+      .map(
+        (a) => `
+      <article class="pm-arb-card pm-arb-card--${a.type}">
+        <div class="pm-arb-card__head">
+          <span class="pm-arb-type">${pmArbTypeLabel(a.type)}</span>
+          <span class="pm-arb-edge mono">+${a.edgePct.toFixed(1)}%</span>
+          <span class="pm-arb-confidence">${a.confidence} confidence</span>
+        </div>
+        <p class="pm-arb-summary">${a.summary}</p>
+        <p class="pm-arb-action"><strong>Play:</strong> ${a.action}</p>
+        <div class="pm-arb-legs">
+          ${(a.markets || [])
+            .map(
+              (m) => `
+            <a class="pm-arb-leg" href="${m.url || "#"}" target="_blank" rel="noopener noreferrer" ${m.url ? "" : 'aria-disabled="true"'}>
+              <span class="pm-arb-leg-platform">${PM_PLATFORM_LABELS[m.platform] || m.platform}</span>
+              <span class="pm-arb-leg-q">${m.question}</span>
+              <span class="pm-arb-leg-odds mono">Yes ${pmFmtPct(m.yesProb)}</span>
+            </a>`,
+            )
+            .join("")}
+        </div>
+      </article>`,
+      )
+      .join("");
+    html += `</div><p class="pm-arb-disclaimer">Edges are pre-fee estimates. Resolution rules, liquidity, and capital lock-up may prevent execution.</p></div>`;
+  } else if (!pmLoading) {
+    html += `<p class="pm-arb-clear">No material arbitrage gaps detected in the current active universe.</p>`;
+  }
+
+  body.innerHTML = html || "<p>Loading outlook…</p>";
 }
 
 function pmRenderMeta() {

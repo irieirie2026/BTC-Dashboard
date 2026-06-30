@@ -377,7 +377,7 @@ const METRIC_HELP = {
   },
   "prediction-markets-outlook": {
     title: "Market Outlook",
-    body: "Aggregated read across filtered markets — e.g. implied BTC > $100k probability. Not financial advice.",
+    body: "Aggregated sentiment by topic, lead macro contracts, and automated arb scan across Polymarket/Kalshi: cross-venue spreads (>5pp), Yes+No sum discounts, and BTC strike-ladder inconsistencies. Edges are pre-fee; not financial advice.",
   },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",

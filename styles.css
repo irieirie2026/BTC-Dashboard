@@ -7505,6 +7505,170 @@ body[data-l1="misc"] .logo-icon::before {
   margin: 0 0 0.55rem;
 }
 
+.pm-outlook-subhead {
+  margin: 0.85rem 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fbbf24;
+}
+
+.pm-signals {
+  margin-top: 0.65rem;
+}
+
+.pm-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.45rem;
+}
+
+.pm-signal-card {
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(42, 49, 66, 0.55);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.pm-signal-card--bullish { border-color: rgba(14, 203, 129, 0.35); }
+.pm-signal-card--bearish { border-color: rgba(246, 70, 93, 0.35); }
+
+.pm-signal-label {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pm-signal-value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.pm-signal-sub {
+  display: block;
+  font-size: 0.58rem;
+  color: #94a3b8;
+  margin-top: 0.1rem;
+}
+
+.pm-arb-section {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(42, 49, 66, 0.45);
+}
+
+.pm-arb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.pm-arb-card {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  background: rgba(245, 158, 11, 0.06);
+}
+
+.pm-arb-card--cross-platform { border-color: rgba(99, 102, 241, 0.35); background: rgba(99, 102, 241, 0.08); }
+.pm-arb-card--sum-discount { border-color: rgba(16, 185, 129, 0.35); background: rgba(16, 185, 129, 0.06); }
+.pm-arb-card--monotonicity { border-color: rgba(245, 158, 11, 0.4); }
+
+.pm-arb-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.65rem;
+  margin-bottom: 0.35rem;
+}
+
+.pm-arb-type {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #cbd5e1;
+}
+
+.pm-arb-edge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6ee7b7;
+}
+
+.pm-arb-confidence {
+  font-size: 0.58rem;
+  color: #94a3b8;
+  margin-left: auto;
+}
+
+.pm-arb-summary {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+}
+
+.pm-arb-action {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+.pm-arb-legs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.pm-arb-leg {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.35rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(10, 14, 20, 0.55);
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.68rem;
+}
+
+.pm-arb-leg:hover {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.pm-arb-leg-platform {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.pm-arb-leg-q {
+  color: #e2e8f0;
+  line-height: 1.3;
+}
+
+.pm-arb-leg-odds {
+  color: #fbbf24;
+  white-space: nowrap;
+}
+
+.pm-arb-disclaimer,
+.pm-arb-clear {
+  margin: 0.55rem 0 0;
+  font-size: 0.65rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+
 .pm-dialog {
   border: none;
   padding: 0;
