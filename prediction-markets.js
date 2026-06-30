@@ -21,8 +21,8 @@ const PM_DEFAULT_FILTERS = { timeframe: "all", category: "all", platform: "all" 
 function pmDefaultFiltersBySection() {
   return {
     "btc-price": { ...PM_DEFAULT_FILTERS },
-    financial: { ...PM_DEFAULT_FILTERS },
-    geopolitical: { ...PM_DEFAULT_FILTERS },
+    financial: { timeframe: "all", category: "all", platform: "all" },
+    geopolitical: { timeframe: "all", category: "all", platform: "all" },
   };
 }
 
@@ -32,23 +32,59 @@ function pmFiltersFor(section = pmActiveSection) {
   return pmFiltersBySection[section] || pmFiltersBySection["btc-price"];
 }
 
+function pmResetFilters(section) {
+  pmFiltersBySection[section] = { ...PM_DEFAULT_FILTERS };
+  pmSanitizeFilters(section);
+}
+
+function pmResetAllFilters() {
+  pmFiltersBySection = pmDefaultFiltersBySection();
+}
+
+/** BTC tab only — category sub-filter built from markets actually in the section. */
 function pmCategoryOptions(section = pmActiveSection) {
-  if (!pmData?.filters?.categories) return [];
-  if (section === "financial") {
-    return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "macro");
-  }
-  if (section === "geopolitical") {
-    return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "regulation");
-  }
-  return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "price-targets");
+  if (section !== "btc-price") return [];
+  const present = new Set(pmSectionMarkets(section).map((m) => m.category).filter(Boolean));
+  const catalog = pmData?.filters?.categories || [
+    { id: "all", label: "All" },
+    { id: "price-targets", label: "Price Targets" },
+    { id: "macro", label: "Macro" },
+    { id: "regulation", label: "Regulation" },
+  ];
+  const items = catalog.filter((c) => c.id === "all" || present.has(c.id));
+  return items.length > 1 ? items : catalog.filter((c) => c.id === "all" || c.id === "price-targets");
 }
 
 function pmSanitizeFilters(section = pmActiveSection) {
   const filters = pmFiltersFor(section);
+  if (section !== "btc-price") {
+    filters.category = "all";
+    return;
+  }
   const validCats = new Set(pmCategoryOptions(section).map((c) => c.id));
   if (!validCats.has(filters.category)) {
     filters.category = "all";
   }
+}
+
+function pmFilterGroups(section = pmActiveSection) {
+  if (!pmData?.filters) return [];
+  const groups = [
+    { key: "timeframe", label: "Timeframe", items: pmData.filters.timeframes },
+    { key: "platform", label: "Platform", items: pmData.filters.platforms },
+  ];
+  if (section === "btc-price") {
+    const catItems = pmCategoryOptions(section);
+    if (catItems.length > 1) {
+      groups.splice(1, 0, { key: "category", label: "Category", items: catItems });
+    }
+  }
+  return groups;
+}
+
+function pmFiltersActive(section = pmActiveSection) {
+  const f = pmFiltersFor(section);
+  return f.timeframe !== "all" || f.platform !== "all" || (section === "btc-price" && f.category !== "all");
 }
 let pmSelected = null;
 
@@ -118,11 +154,18 @@ function pmSparklineSvg(points, width = 56, height = 20) {
   return `<svg class="pm-spark" width="${width}" height="${height}" aria-hidden="true"><polyline fill="none" stroke="${trend}" stroke-width="1.5" points="${coords.join(" ")}"/></svg>`;
 }
 
+function pmIsBtcRelated(m) {
+  const text = `${m.question || ""} ${m.description || ""}`;
+  return /\b(bitcoin|btc\b|btc\/usdt|bitcoin\s+etf|spot\s+bitcoin\s+etf|crypto\s+etf|strategic\s+(bitcoin|crypto)\s+reserve|halving)\b/i.test(
+    text,
+  );
+}
+
 function pmTagSection(m) {
   if (m.section && PM_SECTIONS[m.section]) return m.section;
+  if (pmIsBtcRelated(m)) return "btc-price";
   const text = `${m.question || ""} ${m.description || ""}`;
-  if (/\b(bitcoin|btc\b).*(price|reach|hit|above|below|\$\d|\d+k\b)/i.test(text)) return "btc-price";
-  if (/\b(fed|fomc|ecb|boe|boj|cpi|inflation|gdp|recession|rate cut|rate hike|opec)\b/i.test(text)) {
+  if (/\b(fed|fomc|ecb|boe|boj|cpi|inflation|gdp|recession|rate cut|rate hike|opec|central bank)\b/i.test(text)) {
     return "financial";
   }
   if (/\b(election|sanction|tariff|ceasefire|nato|ukraine|taiwan|invasion|parliament|president|prime minister)\b/i.test(text)) {
@@ -151,6 +194,36 @@ function pmMockPayload() {
       url: "https://polymarket.com/event/bitcoin-price-before-2027",
       description: "Resolves Yes if BTC trades at or above $100k before Jan 1, 2027.",
       sparkline: [0.52, 0.55, 0.58],
+    },
+    {
+      id: "mock-poly-etf-flow",
+      question: "US spot Bitcoin ETF net inflows positive every week in Q3 2026?",
+      yesProb: 44,
+      noProb: 56,
+      yesOdds: 0.44,
+      noOdds: 0.56,
+      volume24h: 38900,
+      endDate: "2026-09-30",
+      platform: "polymarket",
+      category: "regulation",
+      section: "btc-price",
+      timeframe: "y2026",
+      sparkline: [0.48, 0.46, 0.44],
+    },
+    {
+      id: "mock-poly-strategic-reserve",
+      question: "US Strategic Bitcoin Reserve holds ≥10k BTC by end of 2026?",
+      yesProb: 27,
+      noProb: 73,
+      yesOdds: 0.27,
+      noOdds: 0.73,
+      volume24h: 67500,
+      endDate: "2026-12-31",
+      platform: "polymarket",
+      category: "regulation",
+      section: "btc-price",
+      timeframe: "y2026",
+      sparkline: [0.22, 0.25, 0.27],
     },
     {
       id: "mock-kalshi-btc-above-week",
@@ -231,22 +304,6 @@ function pmMockPayload() {
       sparkline: [0.35, 0.37, 0.39],
     },
     {
-      id: "mock-poly-strategic-reserve",
-      question: "US Strategic Bitcoin Reserve holds ≥10k BTC by end of 2026?",
-      yesProb: 27,
-      noProb: 73,
-      yesOdds: 0.27,
-      noOdds: 0.73,
-      volume24h: 67500,
-      endDate: "2026-12-31",
-      platform: "polymarket",
-      category: "regulation",
-      section: "geopolitical",
-      timeframe: "y2026",
-      url: "https://polymarket.com/event/strategic-bitcoin-reserve",
-      sparkline: [0.22, 0.25, 0.27],
-    },
-    {
       id: "mock-poly-crypto-bill",
       question: "US crypto market structure bill signed into law in 2026?",
       yesProb: 35,
@@ -257,7 +314,7 @@ function pmMockPayload() {
       endDate: "2026-12-31",
       platform: "polymarket",
       category: "regulation",
-      section: "geopolitical",
+      section: "btc-price",
       timeframe: "y2026",
       sparkline: [0.3, 0.33, 0.35],
     },
@@ -485,17 +542,18 @@ function pmRenderFilters(section = pmActiveSection) {
 
   pmSanitizeFilters(section);
   const filters = pmFiltersFor(section);
-  const catItems = pmCategoryOptions(section);
+  const groups = pmFilterGroups(section);
+  const total = pmSectionMarkets(section).length;
+  const resetCls = pmFiltersActive(section) ? "" : " hidden";
 
-  const groups = [
-    { key: "timeframe", label: "Timeframe", items: pmData.filters.timeframes },
-    { key: "category", label: "Category", items: catItems },
-    { key: "platform", label: "Platform", items: pmData.filters.platforms },
-  ];
-
-  wrap.innerHTML = groups
-    .map(
-      (g) => `
+  wrap.innerHTML = `
+    <div class="pm-filter-toolbar">
+      <span class="pm-filter-scope">${total} markets · ${section === "btc-price" ? "use category to narrow" : "timeframe & platform only"}</span>
+      <button type="button" class="pm-reset-filters${resetCls}" data-pm-reset="${section}">Reset filters</button>
+    </div>
+    ${groups
+      .map(
+        (g) => `
       <div class="pm-filter-group">
         <span class="pm-filter-label">${g.label}</span>
         <div class="pm-filter-chips" role="group" aria-label="${g.label}">
@@ -508,8 +566,8 @@ function pmRenderFilters(section = pmActiveSection) {
             .join("")}
         </div>
       </div>`,
-    )
-    .join("");
+      )
+      .join("")}`;
 }
 
 function pmPlatformBadge(platform) {
@@ -720,6 +778,16 @@ function pmBindEvents() {
       return;
     }
 
+    const resetBtn = e.target.closest("[data-pm-reset]");
+    if (resetBtn && root.contains(resetBtn)) {
+      const sec = resetBtn.dataset.pmReset || pmActiveSection;
+      if (PM_SECTIONS[sec]) {
+        pmResetFilters(sec);
+        pmRenderAllScreens();
+      }
+      return;
+    }
+
     const filterBtn = e.target.closest("[data-pm-filter]");
     if (filterBtn && root.contains(filterBtn)) {
       const key = filterBtn.dataset.pmFilter;
@@ -727,6 +795,7 @@ function pmBindEvents() {
       const sec = filterBtn.dataset.pmSection || pmActiveSection;
       if (key && value && PM_SECTIONS[sec]) {
         pmFiltersFor(sec)[key] = value;
+        pmSanitizeFilters(sec);
         pmRenderAllScreens();
       }
       return;
@@ -752,10 +821,11 @@ function pmBindEvents() {
 
 function initPredictionMarkets(section = "btc-price") {
   pmActiveSection = PM_SECTIONS[section] ? section : "btc-price";
-  pmFiltersBySection[pmActiveSection] = { ...PM_DEFAULT_FILTERS };
-  pmSanitizeFilters(pmActiveSection);
+  pmResetFilters(pmActiveSection);
   pmBindEvents();
   if (!pmData) {
+    pmResetAllFilters();
+    pmResetFilters(pmActiveSection);
     pmLoad();
     pmStartPoll();
   } else {

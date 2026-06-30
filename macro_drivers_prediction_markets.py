@@ -187,20 +187,43 @@ def _classify_category(question: str, description: str = "") -> str:
     return "price-targets"
 
 
-def _classify_section(question: str, description: str = "", category: str | None = None) -> str:
+def _is_btc_section_market(question: str, description: str = "", tags: list | None = None) -> bool:
+    """Bitcoin/BTC-tagged markets — price, ETF, halving, crypto policy, explicit BTC macro links."""
     text = f"{question} {description}"
-    lower = text.lower()
-    if BTC_PRICE_MARKET.search(text) or (
-        category == "price-targets" and re.search(r"bitcoin|btc\b", lower)
+    if BTC_EXCLUDE.search(text):
+        return False
+    if re.search(
+        r"bitcoin|btc\b|btc/usdt|btc-usdt|"
+        r"crypto\s+etf|spot\s+bitcoin\s+etf|bitcoin\s+etf|"
+        r"strategic\s+(bitcoin|crypto)\s+reserve|halving|"
+        r"crypto\s+regulation|regulate\s+crypto|crypto\s+bill|crypto\s+market\s+structure",
+        text,
+        re.I,
     ):
+        return True
+    if BTC_INCLUDE.search(text):
+        return True
+    if tags:
+        slugs = {str(t.get("slug", "")).lower() for t in tags if isinstance(t, dict)}
+        if "bitcoin" in slugs or "crypto-prices" in slugs:
+            return True
+    return False
+
+
+def _classify_section(
+    question: str,
+    description: str = "",
+    category: str | None = None,
+    tags: list | None = None,
+) -> str:
+    text = f"{question} {description}"
+    if _is_btc_section_market(question, description, tags):
         return "btc-price"
     if FINANCIAL_GLOBAL.search(text) or BTC_MACRO.search(text) or category == "macro":
         return "financial"
     if GEO_POLITICAL.search(text) or category == "regulation":
         return "geopolitical"
-    if re.search(r"bitcoin|btc\b", lower):
-        return "btc-price"
-    return "btc-price"
+    return "financial"
 
 
 def _is_financial_market(question: str, description: str = "") -> bool:
@@ -289,6 +312,7 @@ def _normalize_market(
     liquidity: float | None = None,
     active: bool = True,
     event_title: str | None = None,
+    tags: list | None = None,
 ) -> dict | None:
     if not question or yes_p is None:
         return None
@@ -297,7 +321,7 @@ def _normalize_market(
     yes_p = max(0.0, min(1.0, yes_p))
     no_p = max(0.0, min(1.0, no_p))
     cat = category or _classify_category(question, description)
-    sec = _classify_section(question, description, cat)
+    sec = _classify_section(question, description, cat, tags=tags)
     tf = timeframe or _classify_timeframe(end_date)
     return {
         "id": mid,
@@ -354,6 +378,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
                 liquidity=_as_float(m.get("liquidity") or m.get("liquidityClob")),
                 active=bool(m.get("active", True)),
                 event_title=event_title,
+                tags=tags,
             )
             if row:
                 markets_out.append(row)
@@ -378,6 +403,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
         sparkline=_sparkline_from_change(event.get("oneWeekPriceChange"), yes_p),
         liquidity=_as_float(event.get("liquidity")),
         active=bool(event.get("active", True)),
+        tags=tags,
     )
     return [row] if row else []
 
@@ -406,6 +432,7 @@ def _parse_polymarket_market(m: dict, event: dict | None = None) -> dict | None:
         liquidity=_as_float(m.get("liquidity") or m.get("liquidityClob")),
         active=bool(m.get("active", True)),
         event_title=(event or {}).get("title"),
+        tags=tags,
     )
 
 
@@ -422,7 +449,7 @@ def _polymarket_search(queries: list[str], relevance_fn, seen: set[str], results
     for q in queries:
         url = (
             f"{POLYMARKET_GAMMA}/public-search?"
-            + urllib.parse.urlencode({"q": q, "limit_per_type": 10, "events_status": "active"})
+            + urllib.parse.urlencode({"q": q, "limit_per_type": 15, "events_status": "active"})
         )
         try:
             payload = _fetch_json(url)
@@ -444,8 +471,20 @@ def _fetch_polymarket_live() -> list[dict]:
     seen: set[str] = set()
 
     _polymarket_search(
-        ["bitcoin price", "bitcoin 2026", "btc above", "bitcoin all time high"],
-        _is_btc_relevant,
+        [
+            "bitcoin price",
+            "bitcoin 2026",
+            "btc above",
+            "bitcoin all time high",
+            "bitcoin etf",
+            "spot bitcoin etf",
+            "bitcoin halving",
+            "strategic bitcoin reserve",
+            "bitcoin regulation",
+            "crypto bitcoin",
+            "btc usdt",
+        ],
+        _is_btc_section_market,
         seen,
         results,
     )
@@ -466,6 +505,10 @@ def _fetch_polymarket_live() -> list[dict]:
             "china gdp",
             "opec oil",
             "rba rate",
+            "monetary policy",
+            "interest rate",
+            "unemployment",
+            "gdp growth",
         ],
         _is_financial_market,
         seen,
@@ -482,10 +525,13 @@ def _fetch_polymarket_live() -> list[dict]:
             "eu sanctions",
             "nato",
             "crypto regulation",
-            "strategic bitcoin reserve",
             "tariff trade war",
             "israel ceasefire",
             "brazil election",
+            "presidential election",
+            "prime minister",
+            "congress election",
+            "trade war",
         ],
         _is_geopolitical_market,
         seen,
@@ -495,7 +541,7 @@ def _fetch_polymarket_live() -> list[dict]:
     tag_url = (
         f"{POLYMARKET_GAMMA}/events?"
         + urllib.parse.urlencode(
-            {"tag_slug": "bitcoin", "active": "true", "closed": "false", "limit": 24, "order": "volume24hr"}
+            {"tag_slug": "bitcoin", "active": "true", "closed": "false", "limit": 48, "order": "volume24hr"}
         )
     )
     try:
@@ -671,7 +717,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-09-30",
             "platform": "polymarket",
             "category": "regulation",
-            "section": "geopolitical",
+            "section": "btc-price",
             "timeframe": "y2026",
             "url": "https://polymarket.com/event/bitcoin-etf",
             "description": "Tracks sustained spot ETF demand — a key BTC flow driver.",
@@ -690,7 +736,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "macro",
-            "section": "financial",
+            "section": "btc-price",
             "timeframe": "long-term",
             "url": "https://polymarket.com/event/fed-btc",
             "description": "Macro linkage market: liquidity easing coinciding with BTC $100k retest.",
@@ -709,7 +755,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "regulation",
-            "section": "geopolitical",
+            "section": "btc-price",
             "timeframe": "y2026",
             "url": "https://polymarket.com/event/strategic-bitcoin-reserve",
             "description": "Policy market with direct supply/demand implications for BTC.",
@@ -801,7 +847,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "regulation",
-            "section": "geopolitical",
+            "section": "btc-price",
             "timeframe": "y2026",
             "url": "https://polymarket.com/event/crypto-market-structure-2026",
             "description": "Federal legislation on digital assets — direct policy risk for US BTC access and flows.",
@@ -1099,7 +1145,7 @@ def _outlook_commentary(markets, above_100, avg_yes) -> list[str]:
     return lines
 
 
-PM_SECTION_CAPS = {"btc-price": 40, "financial": 50, "geopolitical": 50}
+PM_SECTION_CAPS = {"btc-price": 60, "financial": 60, "geopolitical": 60}
 
 
 def _rank_markets(markets: list[dict]) -> list[dict]:
@@ -1202,14 +1248,17 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
 
     outlook = _build_outlook(markets)
     sections_meta = {
-        "btc-price": {"label": "BTC Price", "description": "Direct BTC level and timing markets"},
+        "btc-price": {
+            "label": "BTC Price",
+            "description": "All BTC-related markets — price, ETF, halving, policy; use Category filter to narrow",
+        },
         "financial": {
             "label": "Financial Events",
-            "description": "Worldwide financial & economic events — central banks, inflation, growth, commodities",
+            "description": "All worldwide financial & economic markets — central banks, inflation, growth, commodities",
         },
         "geopolitical": {
             "label": "Geopolitical",
-            "description": "Worldwide politics & geopolitics — elections, conflicts, sanctions, trade & policy",
+            "description": "All worldwide politics & geopolitics — elections, conflicts, sanctions, trade & policy",
         },
     }
     section_payload = {
