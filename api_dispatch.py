@@ -233,7 +233,7 @@ def dispatch_api(path, query):
     if path == "/api/prediction-markets":
         refresh = _query_refresh(query)
         mock_only = (query.get("mock") or ["0"])[0] in ("1", "true", "yes")
-        from prediction_markets_api import get_prediction_markets_payload
+        from macro_drivers_prediction_markets import get_prediction_markets_payload
 
         return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
 
