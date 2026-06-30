@@ -1,0 +1,23 @@
+{
+  "metricId": "mempool_fees",
+  "series": [
+    {
+      "timestamp": 1782743066,
+      "date": "2026-06-29",
+      "value": 3.0
+    }
+  ],
+  "latest": {
+    "timestamp": 1782743066,
+    "date": "2026-06-29",
+    "value": 3.0
+  },
+  "source": "Mempool.space",
+  "unit": "sat/vB",
+  "note": null,
+  "error": null,
+  "stale": false,
+  "fetchedAt": "2026-06-29T14:24:26Z",
+  "storedAt": "2026-06-29T14:24:26Z",
+  "pointCount": 1
+}

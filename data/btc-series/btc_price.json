@@ -1,0 +1,13 @@
+{
+  "metricId": "btc_price",
+  "series": [],
+  "latest": null,
+  "source": "BGeometrics",
+  "unit": "USD",
+  "note": null,
+  "error": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
+  "stale": false,
+  "fetchedAt": "2026-06-29T13:39:28Z",
+  "storedAt": "2026-06-29T13:39:28Z",
+  "pointCount": 0
+}

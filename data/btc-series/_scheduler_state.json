@@ -1,0 +1,97 @@
+{
+  "runs": [
+    {
+      "metricId": "san_transaction_volume",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-06-29T16:48:41Z",
+      "at": "2026-06-29T16:48:41Z"
+    },
+    {
+      "metricId": "exchange_inflow",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-06-29T16:45:37Z",
+      "at": "2026-06-29T16:45:37Z"
+    },
+    {
+      "metricId": "san_price_usd",
+      "source": "santiment",
+      "ok": true,
+      "points": 0,
+      "error": "error code: 1010\n",
+      "fetchedAt": "2026-06-29T16:14:45Z",
+      "at": "2026-06-29T16:14:45Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-06-29T14:06:45Z",
+      "at": "2026-06-29T14:06:45Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-06-29T14:06:43Z",
+      "at": "2026-06-29T14:06:43Z"
+    },
+    {
+      "metricId": "market_price",
+      "source": "blockchain",
+      "ok": true,
+      "points": 731,
+      "error": null,
+      "fetchedAt": "2026-06-29T13:39:30Z",
+      "at": "2026-06-29T13:39:30Z"
+    },
+    {
+      "metricId": "btc_price",
+      "source": "bgeometrics",
+      "ok": true,
+      "points": 0,
+      "error": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
+      "fetchedAt": "2026-06-29T13:39:28Z",
+      "at": "2026-06-29T13:39:28Z"
+    },
+    {
+      "metricId": "tx_count",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-06-29T12:36:39Z",
+      "at": "2026-06-29T12:36:39Z"
+    }
+  ],
+  "lastSourceFetch": {
+    "coinmetrics": "2026-06-29T16:45:37Z",
+    "bgeometrics": "2026-06-29T13:39:28Z",
+    "blockchain": "2026-06-29T13:39:30Z",
+    "mempool": "2026-06-29T14:06:43Z",
+    "blockchair": "2026-06-29T14:06:45Z",
+    "santiment": "2026-06-29T16:48:41Z"
+  },
+  "errors": {
+    "btc_price": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
+    "san_price_usd": "error code: 1010\n"
+  },
+  "lastSourceFetchMono": {
+    "coinmetrics": 252.381501708,
+    "bgeometrics": 5.913402375,
+    "blockchain": 7.680553208,
+    "mempool": 284.777582375,
+    "blockchair": 286.65622925,
+    "santiment": 436.538587666
+  },
+  "updatedAt": "2026-06-29T16:48:41Z"
+}

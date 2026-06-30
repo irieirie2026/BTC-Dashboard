@@ -2,8 +2,26 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=7>; rel=icon; type=image/png"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=7>; rel=icon; type=image/png"
+        }
+      ]
+    },
+    {
       "source": "/favicon.ico",
-      "headers": [{ "key": "Content-Type", "value": "image/x-icon" }]
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
     },
     {
       "source": "/(favicon|apple-touch-icon)(-16|-32|-48|-64)?\\.png",
@@ -11,6 +29,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/favicon.ico", "destination": "/favicon-32.png" },
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
   "functions": {
