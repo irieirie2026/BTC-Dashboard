@@ -11,6 +11,12 @@
       "src": "/assets/brand/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/brand/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png",
       "purpose": "any"
     },
     {
