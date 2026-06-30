@@ -3,15 +3,20 @@
 const PM_POLL_MS = 60_000;
 const PM_API = "/api/prediction-markets";
 
+const PM_SECTIONS = {
+  "btc-price": { label: "BTC Price", short: "price" },
+  financial: { label: "Financial Events", short: "financial" },
+  geopolitical: { label: "Geopolitical", short: "geo" },
+};
+
 let pmReady = false;
 let pmPollTimer = null;
 let pmData = null;
 let pmLoading = false;
 let pmError = null;
+let pmActiveSection = "btc-price";
 let pmFilters = { timeframe: "all", category: "all", platform: "all" };
 let pmSelected = null;
-
-const pmEl = (id) => document.getElementById(id);
 
 const PM_PLATFORM_LABELS = { polymarket: "Polymarket", kalshi: "Kalshi" };
 const PM_CATEGORY_LABELS = {
@@ -25,6 +30,19 @@ const PM_TF_LABELS = {
   y2026: "2026",
   "long-term": "Long-term",
 };
+
+function pmScreen() {
+  return (
+    document.querySelector(
+      `#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="${pmActiveSection}"]`,
+    ) ||
+    document.querySelector('#dashboard-market .menu-screen[data-l2="prediction-markets"]:not([hidden])')
+  );
+}
+
+function pmQ(sel) {
+  return pmScreen()?.querySelector(sel);
+}
 
 function pmFmtUsd(n) {
   if (n == null || Number.isNaN(n)) return "—";
@@ -66,121 +84,153 @@ function pmSparklineSvg(points, width = 56, height = 20) {
   return `<svg class="pm-spark" width="${width}" height="${height}" aria-hidden="true"><polyline fill="none" stroke="${trend}" stroke-width="1.5" points="${coords.join(" ")}"/></svg>`;
 }
 
+function pmTagSection(m) {
+  return m.section || (m.category === "macro" ? "financial" : m.category === "regulation" ? "geopolitical" : "btc-price");
+}
+
 function pmMockPayload() {
   const markets = [
     {
       id: "mock-poly-btc-100k-2026",
       question: "Will Bitcoin reach $100,000 before 2027?",
-      eventTitle: "Bitcoin price before 2027",
       yesOdds: 0.58,
       noOdds: 0.42,
       yesProb: 58,
       noProb: 42,
       volume24h: 284500,
-      liquidity: 412000,
       endDate: "2026-12-31",
       platform: "polymarket",
       category: "price-targets",
+      section: "btc-price",
       timeframe: "long-term",
       url: "https://polymarket.com/event/bitcoin-price-before-2027",
-      description: "Resolves Yes if BTC trades at or above $100k on Binance BTC/USDT before Jan 1, 2027.",
+      description: "Resolves Yes if BTC trades at or above $100k before Jan 1, 2027.",
       sparkline: [0.52, 0.55, 0.58],
-      active: true,
-    },
-    {
-      id: "mock-poly-btc-120k-2026",
-      question: "Will Bitcoin reach $120,000 before 2027?",
-      eventTitle: "Bitcoin price before 2027",
-      yesOdds: 0.34,
-      noOdds: 0.66,
-      yesProb: 34,
-      noProb: 66,
-      volume24h: 198200,
-      endDate: "2026-12-31",
-      platform: "polymarket",
-      category: "price-targets",
-      timeframe: "long-term",
-      url: "https://polymarket.com/event/bitcoin-price-before-2027",
-      description: "Resolves Yes if BTC trades at or above $120k before Jan 1, 2027.",
-      sparkline: [0.29, 0.31, 0.34],
-      active: true,
     },
     {
       id: "mock-kalshi-btc-above-week",
       question: "BTC above $108,000 this week?",
-      yesOdds: 0.47,
-      noOdds: 0.53,
       yesProb: 47,
       noProb: 53,
+      yesOdds: 0.47,
+      noOdds: 0.53,
       volume24h: 86400,
       endDate: "2026-07-04",
       platform: "kalshi",
       category: "price-targets",
+      section: "btc-price",
       timeframe: "week",
       url: "https://kalshi.com/markets/kxbtc",
-      description: "Kalshi short-term binary on Binance BTC/USDT close above strike.",
       sparkline: [0.41, 0.44, 0.47],
-      active: true,
     },
     {
-      id: "mock-poly-etf-flow",
-      question: "US spot Bitcoin ETF net inflows positive every week in Q3 2026?",
-      yesOdds: 0.44,
-      noOdds: 0.56,
-      yesProb: 44,
-      noProb: 56,
-      volume24h: 38900,
-      endDate: "2026-09-30",
-      platform: "polymarket",
-      category: "regulation",
-      timeframe: "y2026",
-      url: "https://polymarket.com/event/bitcoin-etf",
-      description: "Tracks sustained spot ETF demand — a key BTC flow driver.",
-      sparkline: [0.48, 0.46, 0.44],
-      active: true,
-    },
-    {
-      id: "mock-poly-fed-cut-btc",
-      question: "Fed cuts rates at least once before BTC retests $100k?",
-      yesOdds: 0.52,
-      noOdds: 0.48,
-      yesProb: 52,
-      noProb: 48,
-      volume24h: 29100,
-      endDate: "2026-12-31",
+      id: "mock-poly-fed-cut-jul",
+      question: "Will the Fed cut rates at the July 2026 FOMC meeting?",
+      yesProb: 62,
+      noProb: 38,
+      yesOdds: 0.62,
+      noOdds: 0.38,
+      volume24h: 412000,
+      endDate: "2026-07-30",
       platform: "polymarket",
       category: "macro",
-      timeframe: "long-term",
-      url: "https://polymarket.com/event/fed-btc",
-      description: "Macro linkage: liquidity easing coinciding with BTC $100k retest.",
-      sparkline: [0.46, 0.49, 0.52],
-      active: true,
+      section: "financial",
+      timeframe: "y2026",
+      url: "https://polymarket.com/event/fed-decision-july-2026",
+      description: "Fed funds path drives liquidity and risk appetite — primary macro channel into BTC.",
+      sparkline: [0.55, 0.58, 0.62],
+    },
+    {
+      id: "mock-poly-cpi-jun",
+      question: "Will June 2026 CPI come in below 2.5% YoY?",
+      yesProb: 41,
+      noProb: 59,
+      yesOdds: 0.41,
+      noOdds: 0.59,
+      volume24h: 186000,
+      endDate: "2026-07-15",
+      platform: "polymarket",
+      category: "macro",
+      section: "financial",
+      timeframe: "y2026",
+      sparkline: [0.38, 0.4, 0.41],
+    },
+    {
+      id: "mock-poly-strategic-reserve",
+      question: "US Strategic Bitcoin Reserve holds ≥10k BTC by end of 2026?",
+      yesProb: 27,
+      noProb: 73,
+      yesOdds: 0.27,
+      noOdds: 0.73,
+      volume24h: 67500,
+      endDate: "2026-12-31",
+      platform: "polymarket",
+      category: "regulation",
+      section: "geopolitical",
+      timeframe: "y2026",
+      url: "https://polymarket.com/event/strategic-bitcoin-reserve",
+      sparkline: [0.22, 0.25, 0.27],
+    },
+    {
+      id: "mock-poly-crypto-bill",
+      question: "US crypto market structure bill signed into law in 2026?",
+      yesProb: 35,
+      noProb: 65,
+      yesOdds: 0.35,
+      noOdds: 0.65,
+      volume24h: 156000,
+      endDate: "2026-12-31",
+      platform: "polymarket",
+      category: "regulation",
+      section: "geopolitical",
+      timeframe: "y2026",
+      sparkline: [0.3, 0.33, 0.35],
     },
   ];
-  const outlook = {
-    headline: "Market-implied probability BTC > $100k: 58%",
-    btc100kProb: 58,
-    bullishCount: 2,
-    activeMarkets: markets.length,
-    totalVolume24h: markets.reduce((s, m) => s + (m.volume24h || 0), 0),
-    lines: [
-      "Showing client-side mock data — API route unavailable. Deploy latest backend or run python3 server.py locally.",
-      "Polymarket/Kalshi live feed loads via GET /api/prediction-markets when the serverless handler includes prediction_markets_api.py.",
-    ],
-  };
   return {
     updatedAt: new Date().toISOString(),
     source: "client-mock",
     mockOnly: true,
     errors: [],
-    heroes: [
-      { name: "BTC > $100k", value: "58%", sub: "Implied probability" },
-      { name: "Active markets", value: String(markets.length), sub: "BTC-relevant" },
-      { name: "24h volume", value: pmFmtUsd(outlook.totalVolume24h), sub: "Combined" },
-      { name: "Bullish price bets", value: "2", sub: "Yes ≥ 50%" },
-    ],
-    outlook,
     markets,
+    sectionData: {
+      "btc-price": {
+        heroes: [
+          { name: "BTC > $100k", value: "58%", sub: "Implied probability" },
+          { name: "Price markets", value: "2", sub: "Active" },
+          { name: "24h volume", value: pmFmtUsd(370900), sub: "Section total" },
+          { name: "Bullish bets", value: "1", sub: "Yes ≥ 50%" },
+        ],
+        outlook: {
+          headline: "Market-implied probability BTC > $100k: 58%",
+          lines: ["Client mock — deploy API for live Polymarket/Kalshi feed."],
+        },
+      },
+      financial: {
+        heroes: [
+          { name: "Fed / rates", value: "62%", sub: "Lead market Yes" },
+          { name: "Macro markets", value: "2", sub: "Active" },
+          { name: "24h volume", value: pmFmtUsd(598000), sub: "Section total" },
+          { name: "Bullish macro", value: "1", sub: "Yes ≥ 50%" },
+        ],
+        outlook: {
+          headline: "Fed-linked market leans 62% Yes on July 2026 cut",
+          lines: ["Fed decisions transmit to BTC via liquidity and real yields."],
+        },
+      },
+      geopolitical: {
+        heroes: [
+          { name: "Policy / geo", value: "2", sub: "BTC-relevant" },
+          { name: "Bullish odds", value: "0", sub: "Yes ≥ 50%" },
+          { name: "24h volume", value: pmFmtUsd(223500), sub: "Section total" },
+          { name: "Top Yes", value: "35%", sub: "Highest implied" },
+        ],
+        outlook: {
+          headline: "Top policy/geo market: 35% Yes on crypto market structure bill…",
+          lines: ["Regulation and policy markets filtered for Bitcoin transmission."],
+        },
+      },
+    },
     filters: {
       timeframes: [
         { id: "all", label: "All" },
@@ -213,22 +263,24 @@ async function pmFetch(refresh = false) {
     const err = await res.json().catch(() => ({}));
     const msg = err.error || `Prediction markets ${res.status}`;
     if (res.status === 404 || /unknown api route/i.test(msg)) {
-      console.warn("Prediction markets API unavailable, using client mock:", msg);
       return pmMockPayload();
     }
     throw new Error(msg);
   } catch (err) {
     if (err instanceof TypeError || /failed to fetch/i.test(err.message || "")) {
-      console.warn("Prediction markets fetch failed, using client mock:", err);
       return pmMockPayload();
     }
     throw err;
   }
 }
 
-function pmFilteredMarkets() {
+function pmSectionMarkets() {
   const rows = pmData?.markets || [];
-  return rows.filter((m) => {
+  return rows.filter((m) => pmTagSection(m) === pmActiveSection);
+}
+
+function pmFilteredMarkets() {
+  return pmSectionMarkets().filter((m) => {
     if (pmFilters.timeframe !== "all" && m.timeframe !== pmFilters.timeframe) return false;
     if (pmFilters.category !== "all" && m.category !== pmFilters.category) return false;
     if (pmFilters.platform !== "all" && m.platform !== pmFilters.platform) return false;
@@ -236,10 +288,15 @@ function pmFilteredMarkets() {
   });
 }
 
+function pmSectionBundle() {
+  return pmData?.sectionData?.[pmActiveSection] || {};
+}
+
 function pmRenderHeroes() {
-  const strip = pmEl("pm-heroes");
+  const strip = pmQ(".pm-heroes");
   if (!strip) return;
-  strip.innerHTML = (pmData?.heroes || [])
+  const heroes = pmSectionBundle().heroes || pmData?.heroes || [];
+  strip.innerHTML = heroes
     .map(
       (h) => `
       <article class="deriv-hero-block pm-hero-block">
@@ -252,10 +309,10 @@ function pmRenderHeroes() {
 }
 
 function pmRenderOutlook() {
-  const head = pmEl("pm-outlook-head");
-  const body = pmEl("pm-outlook-body");
-  const outlook = pmData?.outlook;
-  if (head) head.textContent = outlook?.headline || "BTC prediction outlook";
+  const head = pmQ(".pm-outlook-head");
+  const body = pmQ(".pm-outlook-body");
+  const outlook = pmSectionBundle().outlook || pmData?.outlook;
+  if (head) head.textContent = outlook?.headline || "Aggregated outlook";
   if (body) {
     const lines = outlook?.lines || [];
     body.innerHTML = lines.map((p) => `<p>${p}</p>`).join("") || "<p>Loading outlook…</p>";
@@ -263,7 +320,7 @@ function pmRenderOutlook() {
 }
 
 function pmRenderMeta() {
-  const meta = pmEl("pm-meta");
+  const meta = pmQ(".pm-meta");
   if (!meta) return;
   if (pmLoading) {
     meta.textContent = "Loading markets…";
@@ -278,16 +335,24 @@ function pmRenderMeta() {
     ? new Date(pmData.updatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
     : "—";
   const count = pmFilteredMarkets().length;
-  meta.textContent = `${count} markets · ${src} · updated ${updated} · refreshes every 60s`;
+  const sec = PM_SECTIONS[pmActiveSection]?.label || pmActiveSection;
+  meta.textContent = `${sec} · ${count} markets · ${src} · updated ${updated}`;
 }
 
 function pmRenderFilters() {
-  const wrap = pmEl("pm-filters");
+  const wrap = pmQ(".pm-filters");
   if (!wrap || !pmData?.filters) return;
+
+  const catItems =
+    pmActiveSection === "financial"
+      ? pmData.filters.categories.filter((c) => c.id === "all" || c.id === "macro")
+      : pmActiveSection === "geopolitical"
+        ? pmData.filters.categories.filter((c) => c.id === "all" || c.id === "regulation")
+        : pmData.filters.categories.filter((c) => c.id === "all" || c.id === "price-targets");
 
   const groups = [
     { key: "timeframe", label: "Timeframe", items: pmData.filters.timeframes },
-    { key: "category", label: "Category", items: pmData.filters.categories },
+    { key: "category", label: "Category", items: catItems },
     { key: "platform", label: "Platform", items: pmData.filters.platforms },
   ];
 
@@ -316,9 +381,9 @@ function pmPlatformBadge(platform) {
 }
 
 function pmRenderTable() {
-  const tbody = pmEl("pm-table-body");
-  const cards = pmEl("pm-cards");
-  const empty = pmEl("pm-empty");
+  const tbody = pmQ(".pm-table-body");
+  const cards = pmQ(".pm-cards");
+  const empty = pmQ(".pm-empty");
   const rows = pmFilteredMarkets();
 
   if (empty) empty.hidden = rows.length > 0;
@@ -372,8 +437,8 @@ function pmRenderTable() {
 }
 
 function pmRenderStatus() {
-  const loading = pmEl("pm-loading");
-  const errBox = pmEl("pm-error");
+  const loading = pmQ(".pm-loading");
+  const errBox = pmQ(".pm-error");
   if (loading) loading.hidden = !pmLoading;
   if (errBox) {
     errBox.hidden = !pmError;
@@ -381,7 +446,21 @@ function pmRenderStatus() {
   }
 }
 
-function pmRenderAll() {
+function pmRenderAllScreens() {
+  const prev = pmActiveSection;
+  Object.keys(PM_SECTIONS).forEach((sec) => {
+    pmActiveSection = sec;
+    pmRenderHeroes();
+    pmRenderOutlook();
+    pmRenderMeta();
+    pmRenderFilters();
+    pmRenderTable();
+    pmRenderStatus();
+  });
+  pmActiveSection = prev;
+}
+
+function pmRenderActiveScreen() {
   pmRenderHeroes();
   pmRenderOutlook();
   pmRenderMeta();
@@ -391,12 +470,12 @@ function pmRenderAll() {
 }
 
 function pmOpenModal(market) {
-  const dlg = pmEl("pm-detail-dialog");
+  const dlg = document.getElementById("pm-detail-dialog");
   if (!dlg || !market) return;
   pmSelected = market;
-  const title = pmEl("pm-detail-title");
-  const body = pmEl("pm-detail-body");
-  const link = pmEl("pm-detail-link");
+  const title = document.getElementById("pm-detail-title");
+  const body = document.getElementById("pm-detail-body");
+  const link = document.getElementById("pm-detail-link");
   if (title) title.textContent = market.question;
   if (link) {
     if (market.url) {
@@ -434,6 +513,7 @@ function pmOpenModal(market) {
       <div class="pm-detail-tags">
         ${pmPlatformBadge(market.platform)}
         <span class="pm-cat-tag">${PM_CATEGORY_LABELS[market.category] || market.category}</span>
+        <span class="pm-cat-tag">${PM_SECTIONS[pmTagSection(market)]?.label || pmTagSection(market)}</span>
         <span class="pm-cat-tag">${PM_TF_LABELS[market.timeframe] || market.timeframe}</span>
       </div>
       ${market.sparkline?.length ? `<div class="pm-detail-spark">${pmSparklineSvg(market.sparkline, 200, 36)}<span class="pm-detail-spark-label">7d implied prob trend (approx)</span></div>` : ""}`;
@@ -442,7 +522,7 @@ function pmOpenModal(market) {
 }
 
 function pmCloseModal() {
-  pmEl("pm-detail-dialog")?.close();
+  document.getElementById("pm-detail-dialog")?.close();
   pmSelected = null;
 }
 
@@ -454,7 +534,7 @@ function pmSelectById(id) {
 async function pmLoad({ refresh = false, silent = false } = {}) {
   if (!silent) {
     pmLoading = true;
-    pmRenderStatus();
+    pmRenderActiveScreen();
   }
   try {
     pmData = await pmFetch(refresh);
@@ -467,7 +547,7 @@ async function pmLoad({ refresh = false, silent = false } = {}) {
     }
   } finally {
     pmLoading = false;
-    pmRenderAll();
+    pmRenderAllScreens();
   }
 }
 
@@ -487,41 +567,47 @@ function pmBindEvents() {
   if (pmReady) return;
   pmReady = true;
 
-  pmEl("pm-filters")?.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-pm-filter]");
-    if (!btn) return;
-    const key = btn.dataset.pmFilter;
-    const value = btn.dataset.pmValue;
-    if (key && value) {
-      pmFilters[key] = value;
-      pmRenderFilters();
-      pmRenderTable();
-      pmRenderMeta();
+  const root = document.getElementById("dashboard-market");
+  root?.addEventListener("click", (e) => {
+    const filterBtn = e.target.closest("[data-pm-filter]");
+    if (filterBtn && root.contains(filterBtn)) {
+      const key = filterBtn.dataset.pmFilter;
+      const value = filterBtn.dataset.pmValue;
+      if (key && value) {
+        pmFilters[key] = value;
+        pmRenderAllScreens();
+      }
+      return;
+    }
+
+    const refreshBtn = e.target.closest(".pm-refresh-btn");
+    if (refreshBtn && root.contains(refreshBtn)) {
+      pmLoad({ refresh: true });
+      return;
+    }
+
+    const row = e.target.closest("[data-pm-id]");
+    if (row && root.contains(row)) {
+      pmSelectById(row.dataset.pmId);
     }
   });
 
-  pmEl("pm-table-body")?.addEventListener("click", (e) => {
-    const row = e.target.closest("[data-pm-id]");
-    if (row) pmSelectById(row.dataset.pmId);
-  });
-
-  pmEl("pm-cards")?.addEventListener("click", (e) => {
-    const card = e.target.closest("[data-pm-id]");
-    if (card) pmSelectById(card.dataset.pmId);
-  });
-
-  pmEl("pm-refresh")?.addEventListener("click", () => pmLoad({ refresh: true }));
-
-  pmEl("pm-detail-close")?.addEventListener("click", pmCloseModal);
-  pmEl("pm-detail-dialog")?.addEventListener("click", (e) => {
-    if (e.target === pmEl("pm-detail-dialog")) pmCloseModal();
+  document.getElementById("pm-detail-close")?.addEventListener("click", pmCloseModal);
+  document.getElementById("pm-detail-dialog")?.addEventListener("click", (e) => {
+    if (e.target === document.getElementById("pm-detail-dialog")) pmCloseModal();
   });
 }
 
-function initPredictionMarkets() {
+function initPredictionMarkets(section = "btc-price") {
+  pmActiveSection = PM_SECTIONS[section] ? section : "btc-price";
+  pmFilters = { timeframe: "all", category: "all", platform: "all" };
   pmBindEvents();
-  pmLoad();
-  pmStartPoll();
+  if (!pmData) {
+    pmLoad();
+    pmStartPoll();
+  } else {
+    pmRenderAllScreens();
+  }
 }
 
 window.initPredictionMarkets = initPredictionMarkets;

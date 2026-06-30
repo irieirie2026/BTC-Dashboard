@@ -7210,6 +7210,15 @@ body[data-l1="misc"] .logo-icon::before {
   border-bottom: 1px solid rgba(246, 70, 93, 0.2);
 }
 
+.pm-section-note {
+  margin: 0;
+  padding: 0 1rem 0.55rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.35);
+}
+
 .pm-toolbar {
   padding: 0.5rem 1rem 0.75rem;
   border-bottom: 1px solid rgba(42, 49, 66, 0.55);

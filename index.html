@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=77" />
+    <link rel="stylesheet" href="styles.css?v=78" />
   </head>
   <body>
     <div class="app app--compact">
@@ -411,46 +411,123 @@
         </section>
         </div>
 
-        <div class="menu-screen" data-l1="market" data-l2="prediction-markets" hidden>
-        <section class="deriv-hero-strip pm-hero-strip" id="pm-heroes"></section>
+        <div class="menu-screen" data-l1="market" data-l2="prediction-markets" data-l3="btc-price">
+        <section class="deriv-hero-strip pm-hero-strip pm-heroes"></section>
         <section class="panel pm-panel">
           <div class="panel-header">
-            <h2 data-help-key="prediction-markets-overview">Prediction Markets</h2>
-            <span class="panel-meta" id="pm-meta">Loading…</span>
-            <button type="button" class="pm-refresh-btn" id="pm-refresh" aria-label="Refresh markets">↻</button>
+            <h2 class="pm-title" data-help-key="prediction-markets-btc-price">BTC Price Markets</h2>
+            <span class="panel-meta pm-meta">Loading…</span>
+            <button type="button" class="pm-refresh-btn" aria-label="Refresh markets">↻</button>
           </div>
-          <div id="pm-loading" class="pm-loading">Loading prediction markets…</div>
-          <div id="pm-error" class="pm-error" hidden></div>
-          <div class="pm-toolbar">
-            <div id="pm-filters" class="pm-filters" aria-label="Market filters"></div>
-          </div>
+          <p class="pm-section-note pm-note">Direct Bitcoin price levels, timing brackets, and short-term directional contracts.</p>
+          <div class="pm-loading">Loading prediction markets…</div>
+          <div class="pm-error" hidden></div>
+          <div class="pm-toolbar"><div class="pm-filters" aria-label="Market filters"></div></div>
           <div class="pm-table-wrap">
-            <table class="pm-table" aria-label="BTC prediction markets">
-              <thead>
-                <tr>
-                  <th data-help-key="prediction-markets-question">Question</th>
-                  <th class="mono" data-help-key="prediction-markets-yes">Yes</th>
-                  <th class="mono" data-help-key="prediction-markets-no">No</th>
-                  <th class="mono">Trend</th>
-                  <th class="mono" data-help-key="prediction-markets-volume">24h Vol</th>
-                  <th class="mono" data-help-key="prediction-markets-end">End</th>
-                  <th data-help-key="prediction-markets-platform">Platform</th>
-                  <th data-help-key="prediction-markets-category">Category</th>
-                </tr>
-              </thead>
-              <tbody id="pm-table-body"></tbody>
+            <table class="pm-table" aria-label="BTC price prediction markets">
+              <thead><tr>
+                <th data-help-key="prediction-markets-question">Question</th>
+                <th class="mono" data-help-key="prediction-markets-yes">Yes</th>
+                <th class="mono" data-help-key="prediction-markets-no">No</th>
+                <th class="mono">Trend</th>
+                <th class="mono" data-help-key="prediction-markets-volume">24h Vol</th>
+                <th class="mono" data-help-key="prediction-markets-end">End</th>
+                <th data-help-key="prediction-markets-platform">Platform</th>
+                <th data-help-key="prediction-markets-category">Category</th>
+              </tr></thead>
+              <tbody class="pm-table-body"></tbody>
             </table>
           </div>
-          <div id="pm-cards" class="pm-cards" aria-label="Prediction market cards"></div>
-          <p id="pm-empty" class="pm-empty" hidden>No BTC-relevant markets match your filters.</p>
+          <div class="pm-cards" aria-label="Prediction market cards"></div>
+          <p class="pm-empty" hidden>No markets match your filters.</p>
         </section>
         <section class="panel stats-commentary-panel pm-outlook-panel">
           <div class="panel-header">
-            <h2 data-help-key="prediction-markets-outlook">BTC Outlook Summary</h2>
-            <span class="panel-meta" id="pm-outlook-head">Aggregated implied probabilities</span>
+            <h2 class="pm-outlook-title" data-help-key="prediction-markets-outlook">BTC Outlook Summary</h2>
+            <span class="panel-meta pm-outlook-head">Aggregated implied probabilities</span>
           </div>
-          <div class="stats-commentary" id="pm-outlook-body"><p>Loading outlook…</p></div>
+          <div class="stats-commentary pm-outlook-body"><p>Loading outlook…</p></div>
         </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="prediction-markets" data-l3="financial" hidden>
+        <section class="deriv-hero-strip pm-hero-strip pm-heroes"></section>
+        <section class="panel pm-panel">
+          <div class="panel-header">
+            <h2 class="pm-title" data-help-key="prediction-markets-financial">Financial Events</h2>
+            <span class="panel-meta pm-meta">Loading…</span>
+            <button type="button" class="pm-refresh-btn" aria-label="Refresh markets">↻</button>
+          </div>
+          <p class="pm-section-note pm-note">Fed decisions, rates, inflation, and growth markets with global macro transmission into BTC.</p>
+          <div class="pm-loading">Loading prediction markets…</div>
+          <div class="pm-error" hidden></div>
+          <div class="pm-toolbar"><div class="pm-filters" aria-label="Market filters"></div></div>
+          <div class="pm-table-wrap">
+            <table class="pm-table" aria-label="Financial prediction markets">
+              <thead><tr>
+                <th data-help-key="prediction-markets-question">Question</th>
+                <th class="mono" data-help-key="prediction-markets-yes">Yes</th>
+                <th class="mono" data-help-key="prediction-markets-no">No</th>
+                <th class="mono">Trend</th>
+                <th class="mono" data-help-key="prediction-markets-volume">24h Vol</th>
+                <th class="mono" data-help-key="prediction-markets-end">End</th>
+                <th data-help-key="prediction-markets-platform">Platform</th>
+                <th data-help-key="prediction-markets-category">Category</th>
+              </tr></thead>
+              <tbody class="pm-table-body"></tbody>
+            </table>
+          </div>
+          <div class="pm-cards" aria-label="Prediction market cards"></div>
+          <p class="pm-empty" hidden>No markets match your filters.</p>
+        </section>
+        <section class="panel stats-commentary-panel pm-outlook-panel">
+          <div class="panel-header">
+            <h2 class="pm-outlook-title" data-help-key="prediction-markets-financial-outlook">Macro Outlook</h2>
+            <span class="panel-meta pm-outlook-head">Financial event implications</span>
+          </div>
+          <div class="stats-commentary pm-outlook-body"><p>Loading outlook…</p></div>
+        </section>
+        </div>
+
+        <div class="menu-screen" data-l1="market" data-l2="prediction-markets" data-l3="geopolitical" hidden>
+        <section class="deriv-hero-strip pm-hero-strip pm-heroes"></section>
+        <section class="panel pm-panel">
+          <div class="panel-header">
+            <h2 class="pm-title" data-help-key="prediction-markets-geopolitical">Geopolitical &amp; Policy</h2>
+            <span class="panel-meta pm-meta">Loading…</span>
+            <button type="button" class="pm-refresh-btn" aria-label="Refresh markets">↻</button>
+          </div>
+          <p class="pm-section-note pm-note">Regulation, trade, sanctions, and geopolitical risk with clear Bitcoin policy or risk-off transmission.</p>
+          <div class="pm-loading">Loading prediction markets…</div>
+          <div class="pm-error" hidden></div>
+          <div class="pm-toolbar"><div class="pm-filters" aria-label="Market filters"></div></div>
+          <div class="pm-table-wrap">
+            <table class="pm-table" aria-label="Geopolitical prediction markets">
+              <thead><tr>
+                <th data-help-key="prediction-markets-question">Question</th>
+                <th class="mono" data-help-key="prediction-markets-yes">Yes</th>
+                <th class="mono" data-help-key="prediction-markets-no">No</th>
+                <th class="mono">Trend</th>
+                <th class="mono" data-help-key="prediction-markets-volume">24h Vol</th>
+                <th class="mono" data-help-key="prediction-markets-end">End</th>
+                <th data-help-key="prediction-markets-platform">Platform</th>
+                <th data-help-key="prediction-markets-category">Category</th>
+              </tr></thead>
+              <tbody class="pm-table-body"></tbody>
+            </table>
+          </div>
+          <div class="pm-cards" aria-label="Prediction market cards"></div>
+          <p class="pm-empty" hidden>No markets match your filters.</p>
+        </section>
+        <section class="panel stats-commentary-panel pm-outlook-panel">
+          <div class="panel-header">
+            <h2 class="pm-outlook-title" data-help-key="prediction-markets-geopolitical-outlook">Policy Outlook</h2>
+            <span class="panel-meta pm-outlook-head">Geopolitical implications for BTC</span>
+          </div>
+          <div class="stats-commentary pm-outlook-body"><p>Loading outlook…</p></div>
+        </section>
+        </div>
+
         <dialog id="pm-detail-dialog" class="pm-dialog">
           <div class="pm-dialog__inner">
             <header class="pm-dialog__head">
@@ -463,7 +540,6 @@
             </footer>
           </div>
         </dialog>
-        </div>
       </div>
 
       <div id="dashboard-onchain" class="dashboard-view" hidden>
@@ -3635,9 +3711,9 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=64"></script>
+    <script src="help.js?v=65"></script>
     <script src="home.js?v=4"></script>
-    <script src="dashboard.js?v=39"></script>
+    <script src="dashboard.js?v=40"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -3657,7 +3733,7 @@
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
     <script src="chart-patterns.js?v=15"></script>
-    <script src="prediction-markets.js?v=2"></script>
+    <script src="prediction-markets.js?v=3"></script>
     <script src="app.js?v=20"></script>
   </body>
 </html>

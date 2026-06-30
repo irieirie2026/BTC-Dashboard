@@ -63,10 +63,46 @@ BTC_MACRO = re.compile(
 BTC_EXCLUDE = re.compile(
     r"\b("
     r"gta\s+vi|rihanna|playboi\s+carti|jesus\s+christ|"
-    r"super\s+bowl|oscar|grammy|nba|nfl|"
-    r"presidential\s+election|win\s+the\s+election|"
-    r"ukraine|gaza|israel(?!.*etf)"
+    r"super\s+bowl|oscar|grammy|nba|nfl|mvp|"
+    r"album|gta\s+vi|tiktok|influencer"
     r")\b",
+    re.I,
+)
+
+FINANCIAL_GLOBAL = re.compile(
+    r"\b("
+    r"fed\b|fomc|federal\s+reserve|powell|"
+    r"rate\s+cut|rate\s+hike|interest\s+rate|"
+    r"basis\s+points|bps|dot\s+plot|"
+    r"cpi|pce|inflation|deflation|"
+    r"recession|soft\s+landing|hard\s+landing|"
+    r"unemployment|nonfarm|payroll|jobs\s+report|"
+    r"gdp|treasury\s+yield|yield\s+curve|"
+    r"liquidity|qe\b|qt\b|balance\s+sheet"
+    r")\b",
+    re.I,
+)
+
+GEO_BTC = re.compile(
+    r"\b("
+    r"sanction|tariff|trade\s+war|"
+    r"ceasefire|geopolit|invasion|"
+    r"strategic\s+(bitcoin|crypto)\s+reserve|"
+    r"crypto\s+regulation|regulate\s+crypto|"
+    r"sec\s+.*(crypto|bitcoin)|"
+    r"executive\s+order.*(crypto|bitcoin)|"
+    r"bitcoin\s+ban|crypto\s+ban|"
+    r"election.*(bitcoin|btc|crypto)|"
+    r"(bitcoin|btc|crypto).*(election|president|congress|senate)|"
+    r"congress.*(bitcoin|btc|crypto)|"
+    r"war.*(bitcoin|btc|market)|"
+    r"risk.off|safe\s+haven"
+    r")\b",
+    re.I,
+)
+
+GEO_GLOBAL = re.compile(
+    r"\b(sanction|tariff|trade\s+war|ceasefire|nato|taiwan|middle\s+east)\b",
     re.I,
 )
 
@@ -112,6 +148,45 @@ def _classify_category(question: str, description: str = "") -> str:
     if BTC_MACRO.search(text) and not re.search(r"price|reach|hit|above|below|\$|k\b", text):
         return "macro"
     return "price-targets"
+
+
+def _classify_section(question: str, description: str = "", category: str | None = None) -> str:
+    text = f"{question} {description}"
+    lower = text.lower()
+    if re.search(
+        r"bitcoin|btc\b|btc/usdt",
+        lower,
+    ) and re.search(r"price|reach|hit|above|below|\$\d|(?:\d+)[kK]\b|ath|high|low|up\s+on", lower):
+        return "btc-price"
+    if GEO_BTC.search(text) or (category == "regulation" and re.search(r"etf|sec|regulat|reserve|ban", lower)):
+        return "geopolitical"
+    if FINANCIAL_GLOBAL.search(text) or BTC_MACRO.search(text) or category == "macro":
+        return "financial"
+    if category == "price-targets" or re.search(r"bitcoin|btc\b", lower):
+        return "btc-price"
+    if GEO_GLOBAL.search(text) and re.search(r"bitcoin|btc|crypto|market|risk", lower):
+        return "geopolitical"
+    return "btc-price"
+
+
+def _is_financial_market(question: str, description: str = "") -> bool:
+    text = f"{question} {description}"
+    if BTC_EXCLUDE.search(text):
+        return False
+    if re.search(r"bitcoin|btc\b|crypto", text, re.I):
+        return True
+    return bool(FINANCIAL_GLOBAL.search(text) or BTC_MACRO.search(text))
+
+
+def _is_geopolitical_market(question: str, description: str = "") -> bool:
+    text = f"{question} {description}"
+    if BTC_EXCLUDE.search(text):
+        return False
+    if GEO_BTC.search(text):
+        return True
+    if GEO_GLOBAL.search(text) and re.search(r"bitcoin|btc|crypto|risk.off|market|oil|dollar", text, re.I):
+        return True
+    return bool(re.search(r"etf|sec\s+approve|regulation.*crypto|stablecoin\s+bill", text, re.I))
 
 
 def _classify_timeframe(end_date: str | None) -> str:
@@ -188,6 +263,7 @@ def _normalize_market(
     yes_p = max(0.0, min(1.0, yes_p))
     no_p = max(0.0, min(1.0, no_p))
     cat = category or _classify_category(question, description)
+    sec = _classify_section(question, description, cat)
     tf = timeframe or _classify_timeframe(end_date)
     return {
         "id": mid,
@@ -202,6 +278,7 @@ def _normalize_market(
         "endDate": (end_date or "")[:10] or None,
         "platform": platform,
         "category": cat,
+        "section": sec,
         "timeframe": tf,
         "url": url,
         "description": (description or "").strip()[:1200],
@@ -210,7 +287,7 @@ def _normalize_market(
     }
 
 
-def _parse_polymarket_event(event: dict) -> list[dict]:
+def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
     if not event or event.get("closed"):
         return []
     event_slug = event.get("slug")
@@ -225,7 +302,8 @@ def _parse_polymarket_event(event: dict) -> list[dict]:
                 continue
             q = m.get("question") or ""
             desc = m.get("description") or event.get("description") or ""
-            if not _is_btc_relevant(q, desc, tags):
+            rel = relevance_fn or (lambda qq, dd, tg=None: _is_btc_relevant(qq, dd, tg))
+            if not rel(q, desc, tags):
                 continue
             yes_p, no_p = _parse_prices(m.get("outcomePrices"))
             row = _normalize_market(
@@ -249,7 +327,8 @@ def _parse_polymarket_event(event: dict) -> list[dict]:
 
     q = event.get("title") or event.get("question") or ""
     desc = event.get("description") or ""
-    if not _is_btc_relevant(q, desc, tags):
+    rel = relevance_fn or (lambda qq, dd, tg=None: _is_btc_relevant(qq, dd, tg))
+    if not rel(q, desc, tags):
         return []
     yes_p, no_p = _parse_prices(event.get("outcomePrices"))
     row = _normalize_market(
@@ -305,41 +384,61 @@ def _sparkline_from_change(week_change, current_yes: float | None) -> list[float
     return [round(start, 3), round(mid, 3), round(current_yes, 3)]
 
 
-def _fetch_polymarket_live() -> list[dict]:
-    results: list[dict] = []
-    seen: set[str] = set()
-    queries = ["bitcoin price", "bitcoin etf", "bitcoin 2026", "btc above", "strategic bitcoin reserve"]
-
+def _polymarket_search(queries: list[str], relevance_fn, seen: set[str], results: list[dict]) -> None:
     for q in queries:
         url = (
             f"{POLYMARKET_GAMMA}/public-search?"
-            + urllib.parse.urlencode({"q": q, "limit_per_type": 12, "events_status": "active"})
+            + urllib.parse.urlencode({"q": q, "limit_per_type": 10, "events_status": "active"})
         )
         try:
             payload = _fetch_json(url)
         except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError):
             continue
 
+        rel = lambda qq, dd, tg=None: relevance_fn(qq, dd)  # noqa: E731
         for event in payload.get("events") or []:
             if not event.get("active") or event.get("closed"):
                 continue
-            for row in _parse_polymarket_event(event):
+            for row in _parse_polymarket_event(event, relevance_fn=rel):
                 if row["id"] not in seen:
                     seen.add(row["id"])
                     results.append(row)
 
-        for m in payload.get("markets") or []:
-            ev = (m.get("events") or [None])[0]
-            row = _parse_polymarket_market(m, ev)
-            if row and row["id"] not in seen:
-                seen.add(row["id"])
-                results.append(row)
 
-    # Tag-based events feed
+def _fetch_polymarket_live() -> list[dict]:
+    results: list[dict] = []
+    seen: set[str] = set()
+
+    _polymarket_search(
+        ["bitcoin price", "bitcoin 2026", "btc above", "bitcoin all time high"],
+        _is_btc_relevant,
+        seen,
+        results,
+    )
+    _polymarket_search(
+        ["fed rate decision", "fomc", "cpi inflation", "recession", "fed rate cut", "treasury yield"],
+        _is_financial_market,
+        seen,
+        results,
+    )
+    _polymarket_search(
+        [
+            "bitcoin etf",
+            "strategic bitcoin reserve",
+            "crypto regulation",
+            "bitcoin ban",
+            "tariff bitcoin",
+            "sanctions crypto",
+        ],
+        _is_geopolitical_market,
+        seen,
+        results,
+    )
+
     tag_url = (
         f"{POLYMARKET_GAMMA}/events?"
         + urllib.parse.urlencode(
-            {"tag_slug": "bitcoin", "active": "true", "closed": "false", "limit": 30, "order": "volume24hr"}
+            {"tag_slug": "bitcoin", "active": "true", "closed": "false", "limit": 24, "order": "volume24hr"}
         )
     )
     try:
@@ -418,6 +517,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "long-term",
             "url": "https://polymarket.com/event/bitcoin-price-before-2027",
             "description": "Resolves Yes if BTC trades at or above $100k on Binance BTC/USDT before Jan 1, 2027.",
@@ -437,6 +537,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "long-term",
             "url": "https://polymarket.com/event/bitcoin-price-before-2027",
             "description": "Resolves Yes if BTC trades at or above $120k on Binance BTC/USDT before Jan 1, 2027.",
@@ -456,6 +557,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "long-term",
             "url": "https://polymarket.com/event/bitcoin-price-before-2027",
             "description": "Resolves Yes if BTC trades at or above $150k on Binance BTC/USDT before Jan 1, 2027.",
@@ -474,6 +576,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-07-04",
             "platform": "kalshi",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "week",
             "url": "https://kalshi.com/markets/kxbtc",
             "description": "Kalshi short-term binary: Binance BTC/USDT close above strike at expiry.",
@@ -492,6 +595,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "kalshi",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "y2026",
             "url": "https://kalshi.com/markets/kxbtcmax",
             "description": "Resolves Yes if BTC prints a 2026 high above $112,000 on Binance.",
@@ -510,6 +614,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-09-30",
             "platform": "polymarket",
             "category": "regulation",
+            "section": "geopolitical",
             "timeframe": "y2026",
             "url": "https://polymarket.com/event/bitcoin-etf",
             "description": "Tracks sustained spot ETF demand — a key BTC flow driver.",
@@ -528,6 +633,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "macro",
+            "section": "financial",
             "timeframe": "long-term",
             "url": "https://polymarket.com/event/fed-btc",
             "description": "Macro linkage market: liquidity easing coinciding with BTC $100k retest.",
@@ -546,6 +652,7 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-12-31",
             "platform": "polymarket",
             "category": "regulation",
+            "section": "geopolitical",
             "timeframe": "y2026",
             "url": "https://polymarket.com/event/strategic-bitcoin-reserve",
             "description": "Policy market with direct supply/demand implications for BTC.",
@@ -564,14 +671,179 @@ def _mock_markets() -> list[dict]:
             "endDate": "2026-06-30",
             "platform": "kalshi",
             "category": "price-targets",
+            "section": "btc-price",
             "timeframe": "today",
             "url": "https://kalshi.com/markets/kxbtcd",
             "description": "Same-day directional BTC market for near-term sentiment.",
             "sparkline": [0.48, 0.5, 0.51],
             "active": True,
         },
+        {
+            "id": "mock-poly-fed-cut-jul",
+            "question": "Will the Fed cut rates at the July 2026 FOMC meeting?",
+            "yesOdds": 0.62,
+            "noOdds": 0.38,
+            "yesProb": 62.0,
+            "noProb": 38.0,
+            "volume24h": 412_000,
+            "liquidity": 520_000,
+            "endDate": "2026-07-30",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "y2026",
+            "url": "https://polymarket.com/event/fed-decision-july-2026",
+            "description": "Fed funds path drives liquidity and risk appetite — primary macro channel into BTC.",
+            "sparkline": [0.55, 0.58, 0.62],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-cpi-jun",
+            "question": "Will June 2026 CPI come in below 2.5% YoY?",
+            "yesOdds": 0.41,
+            "noOdds": 0.59,
+            "yesProb": 41.0,
+            "noProb": 59.0,
+            "volume24h": 186_000,
+            "endDate": "2026-07-15",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "y2026",
+            "url": "https://polymarket.com/event/cpi-june-2026",
+            "description": "Inflation surprises move real yields and USD — key inputs for BTC risk pricing.",
+            "sparkline": [0.38, 0.4, 0.41],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-recession-2026",
+            "question": "US recession declared before end of 2026?",
+            "yesOdds": 0.28,
+            "noOdds": 0.72,
+            "yesProb": 28.0,
+            "noProb": 72.0,
+            "volume24h": 224_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "macro",
+            "section": "financial",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/us-recession-2026",
+            "description": "Growth scares typically hit BTC beta first, then liquidity response matters.",
+            "sparkline": [0.32, 0.3, 0.28],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-crypto-bill",
+            "question": "US crypto market structure bill signed into law in 2026?",
+            "yesOdds": 0.35,
+            "noOdds": 0.65,
+            "yesProb": 35.0,
+            "noProb": 65.0,
+            "volume24h": 156_000,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "y2026",
+            "url": "https://polymarket.com/event/crypto-market-structure-2026",
+            "description": "Federal legislation on digital assets — direct policy risk for US BTC access and flows.",
+            "sparkline": [0.3, 0.33, 0.35],
+            "active": True,
+        },
+        {
+            "id": "mock-poly-tariff-risk",
+            "question": "New US tariffs on China before Q4 2026 trigger BTC risk-off week?",
+            "yesOdds": 0.33,
+            "noOdds": 0.67,
+            "yesProb": 33.0,
+            "noProb": 67.0,
+            "volume24h": 78_500,
+            "endDate": "2026-12-31",
+            "platform": "polymarket",
+            "category": "regulation",
+            "section": "geopolitical",
+            "timeframe": "long-term",
+            "url": "https://polymarket.com/event/tariff-btc-risk",
+            "description": "Trade-war escalations hit global growth and USD liquidity — historically correlated with BTC drawdowns.",
+            "sparkline": [0.36, 0.34, 0.33],
+            "active": True,
+        },
     ]
     return seed
+
+
+def _section_outlook(markets: list[dict], section: str) -> dict:
+    subset = [m for m in markets if m.get("section") == section]
+    if section == "btc-price":
+        return _build_outlook(subset)
+    if section == "financial":
+        fed = next((m for m in subset if re.search(r"fed|fomc|rate", m.get("question", ""), re.I)), None)
+        headline = "Financial events — liquidity & macro odds"
+        if fed:
+            headline = f"Fed-linked market leans {fed['yesProb']:.0f}% Yes — {fed['question'][:60]}"
+        return {
+            "headline": headline,
+            "lines": [
+                "Fed decisions, inflation prints, and growth scares transmit to BTC via real yields, USD, and risk appetite.",
+                f"Tracking {len(subset)} financial markets with global macro relevance to Bitcoin.",
+                "Compare with Macro dashboard and spot Indicators for confluence — not financial advice.",
+            ],
+            "activeMarkets": len(subset),
+            "totalVolume24h": sum(m.get("volume24h") or 0 for m in subset),
+        }
+    if section == "geopolitical":
+        headline = "Geopolitical & policy — BTC transmission odds"
+        top = max(subset, key=lambda m: m.get("volume24h") or 0, default=None)
+        if top:
+            headline = f"Top policy/geo market: {top['yesProb']:.0f}% Yes on {top['question'][:55]}…"
+        return {
+            "headline": headline,
+            "lines": [
+                "Regulation, sanctions, trade policy, and geopolitical risk feed BTC through compliance, flows, and risk-off channels.",
+                f"Tracking {len(subset)} political/geopolitical markets filtered for Bitcoin relevance.",
+                "Generic election/celebrity markets excluded unless tied to crypto policy or macro risk.",
+            ],
+            "activeMarkets": len(subset),
+            "totalVolume24h": sum(m.get("volume24h") or 0 for m in subset),
+        }
+    return _build_outlook(subset)
+
+
+def _section_heroes(markets: list[dict], section: str) -> list[dict]:
+    subset = [m for m in markets if m.get("section") == section]
+    vol = sum(m.get("volume24h") or 0 for m in subset)
+    bullish = len([m for m in subset if (m.get("yesProb") or 0) >= 50])
+    if section == "btc-price":
+        outlook = _build_outlook(subset)
+        return [
+            {
+                "name": "BTC > $100k",
+                "value": f"{outlook['btc100kProb']:.0f}%" if outlook.get("btc100kProb") is not None else "—",
+                "sub": "Implied probability",
+            },
+            {"name": "Price markets", "value": str(len(subset)), "sub": "Active"},
+            {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
+            {"name": "Bullish bets", "value": str(bullish), "sub": "Yes ≥ 50%"},
+        ]
+    if section == "financial":
+        fed = next((m for m in subset if re.search(r"fed|fomc", m.get("question", ""), re.I)), None)
+        return [
+            {"name": "Fed / rates", "value": f"{fed['yesProb']:.0f}%" if fed else "—", "sub": "Lead market Yes"},
+            {"name": "Macro markets", "value": str(len(subset)), "sub": "Active"},
+            {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
+            {"name": "Bullish macro", "value": str(bullish), "sub": "Yes ≥ 50%"},
+        ]
+    return [
+        {"name": "Policy / geo", "value": str(len(subset)), "sub": "BTC-relevant"},
+        {"name": "Bullish odds", "value": str(bullish), "sub": "Yes ≥ 50%"},
+        {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
+        {
+            "name": "Top Yes",
+            "value": f"{max((m.get('yesProb') or 0 for m in subset), default=0):.0f}%",
+            "sub": "Highest implied",
+        },
+    ]
 
 
 def _build_outlook(markets: list[dict]) -> dict:
@@ -621,7 +893,7 @@ def _outlook_commentary(markets, above_100, avg_yes) -> list[str]:
     return lines
 
 
-PM_MAX_MARKETS = 72
+PM_MAX_MARKETS = 96
 
 
 def _rank_markets(markets: list[dict]) -> list[dict]:
@@ -690,6 +962,15 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
             source = "live+mock"
 
     outlook = _build_outlook(markets)
+    sections_meta = {
+        "btc-price": {"label": "BTC Price", "description": "Direct BTC level and timing markets"},
+        "financial": {"label": "Financial Events", "description": "Fed, rates, inflation, growth — macro drivers for BTC"},
+        "geopolitical": {"label": "Geopolitical", "description": "Policy, regulation, trade & geopolitical risk with BTC transmission"},
+    }
+    section_payload = {
+        sid: {"heroes": _section_heroes(markets, sid), "outlook": _section_outlook(markets, sid)}
+        for sid in sections_meta
+    }
     payload = {
         "updatedAt": _now_iso(),
         "source": source,
@@ -719,6 +1000,8 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
         ],
         "outlook": outlook,
         "markets": markets,
+        "sections": sections_meta,
+        "sectionData": section_payload,
         "filters": {
             "timeframes": [
                 {"id": "all", "label": "All"},

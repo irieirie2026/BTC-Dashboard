@@ -327,6 +327,26 @@ const METRIC_HELP = {
     title: "BTC Outlook Summary",
     body: "Aggregated read across filtered markets — e.g. implied probability BTC exceeds $100k by a stated deadline. Compare with spot technicals on Indicators for confluence. Not financial advice.",
   },
+  "prediction-markets-btc-price": {
+    title: "BTC Price Markets",
+    body: "Direct Bitcoin price brackets and timing contracts from Polymarket and Kalshi — levels, dates, and short-term direction. Filtered to explicit BTC/BTC-USDT resolution sources.",
+  },
+  "prediction-markets-financial": {
+    title: "Financial Events",
+    body: "Macro and financial markets with global relevance to BTC: Fed/FOMC decisions, rate cuts/hikes, CPI/inflation, recession odds, yields, and liquidity. These transmit to Bitcoin via real rates, USD, and risk appetite.",
+  },
+  "prediction-markets-financial-outlook": {
+    title: "Macro Outlook",
+    body: "Section commentary on how financial prediction markets imply liquidity and growth paths that historically correlate with BTC beta and cycle positioning.",
+  },
+  "prediction-markets-geopolitical": {
+    title: "Geopolitical & Policy",
+    body: "Political and geopolitical contracts filtered for Bitcoin relevance: crypto regulation, ETF/policy bills, strategic reserve, sanctions/tariffs with risk-off channels, and elections tied to crypto law — not generic celebrity politics.",
+  },
+  "prediction-markets-geopolitical-outlook": {
+    title: "Policy Outlook",
+    body: "How policy and geopolitical prediction markets may affect BTC through compliance, capital flows, and flight-to-quality dynamics. Heuristic commentary only.",
+  },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
     body: "Live BTC spot prices from major exchanges via public APIs. Compare last price, 24h change, volume, and distance from the cross-venue median. Scaffold hub — extend with depth, arb, and flows later.",
