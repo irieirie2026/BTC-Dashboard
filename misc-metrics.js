@@ -543,10 +543,7 @@ function initMiscMetrics() {
     mmBindControls();
     mmStartPoll();
   }
-  Promise.all([
-    mmFetchMetrics(false),
-    window.initMiscWhales?.(),
-  ])
+  mmFetchMetrics(false)
     .then(() => {
       window.decorateHelpLabels?.(
         document.querySelector('#dashboard-misc .menu-screen[data-l2="metrics"]'),

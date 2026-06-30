@@ -879,6 +879,17 @@ const MENU_TREE = {
         accentDim: "rgba(232, 121, 249, 0.18)",
         onShow: () => window.initMiscMetrics?.(),
       },
+      "whale-proxies": {
+        label: "Whale Proxies",
+        accent: "#d946ef",
+        accentDim: "rgba(217, 70, 239, 0.18)",
+        onShow: () => {
+          window.initMiscWhales?.();
+          window.decorateHelpLabels?.(
+            document.querySelector('#dashboard-misc .menu-screen[data-l2="whale-proxies"]'),
+          );
+        },
+      },
     },
   },
 };
@@ -1110,6 +1121,9 @@ const LEGACY_L2 = {
     park: "metrics",
     parking: "metrics",
     overview: "metrics",
+    whales: "whale-proxies",
+    "whale-proxies": "whale-proxies",
+    whaleproxies: "whale-proxies",
   },
 };
 
@@ -1665,9 +1679,14 @@ function migrateMiscMenu() {
 
 function bootstrapPathMenu() {
   const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
-  if (path === "/misc") {
+  if (path === "/misc" || path === "/misc/metrics") {
     localStorage.setItem(MENU_L1_KEY, "misc");
     localStorage.setItem(MENU_L2_KEY, "metrics");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/misc/whale-proxies") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "whale-proxies");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
   }

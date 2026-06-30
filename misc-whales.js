@@ -468,7 +468,7 @@ function initMiscWhales() {
   }
   return mwFetchWhales(false).then(() => {
     window.decorateHelpLabels?.(
-      document.querySelector("#dashboard-misc .mm-whales-panel"),
+      document.querySelector('#dashboard-misc .menu-screen[data-l2="whale-proxies"]'),
     );
   });
 }
