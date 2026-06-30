@@ -6,7 +6,7 @@
       "headers": [{ "key": "Content-Type", "value": "image/x-icon" }]
     },
     {
-      "source": "/(favicon|apple-touch-icon)(-16|-32|-48)?\\.png",
+      "source": "/(favicon|apple-touch-icon)(-16|-32|-48|-64)?\\.png",
       "headers": [{ "key": "Content-Type", "value": "image/png" }]
     }
   ],
