@@ -1,0 +1,23 @@
+{
+  "name": "The Buccaneers — BTC Command Center",
+  "short_name": "Buccaneers",
+  "description": "Live Bitcoin dashboards: market, on-chain, valuation, macro, and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e11",
+  "theme_color": "#0b0e11",
+  "icons": [
+    {
+      "src": "/assets/brand/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
