@@ -22,63 +22,69 @@ const MENU_TREE = {
     accent: "#0ecb81",
     accentDim: "rgba(14, 203, 129, 0.18)",
     children: {
-      overview: {
-        label: "Overview",
+      spot: {
+        label: "Spot Price",
         accent: "#0ecb81",
         accentDim: "rgba(14, 203, 129, 0.18)",
+        onShow: () => window.refreshPriceChart?.(),
+      },
+      indicators: {
+        label: "Indicators",
+        accent: "#34d399",
+        accentDim: "rgba(52, 211, 153, 0.18)",
         children: {
-          spot: {
-            label: "Spot Price",
-            accent: "#0ecb81",
-            accentDim: "rgba(14, 203, 129, 0.18)",
-            onShow: () => window.refreshPriceChart?.(),
-          },
-          indicators: {
-            label: "Indicators",
+          "1h": {
+            label: "1h",
             accent: "#34d399",
             accentDim: "rgba(52, 211, 153, 0.18)",
-            children: {
-              "1h": {
-                label: "1h",
-                accent: "#34d399",
-                accentDim: "rgba(52, 211, 153, 0.18)",
-                onShow: () => {
-                  window.loadMarketIndicators?.("1h");
-                  window.decorateHelpLabels?.(
-                    document.querySelector(
-                      '#dashboard-market .menu-screen[data-l3="indicators"][data-l4="1h"]',
-                    ),
-                  );
-                },
-              },
-              "4h": {
-                label: "4h",
-                accent: "#2dd4bf",
-                accentDim: "rgba(45, 212, 191, 0.18)",
-                onShow: () => {
-                  window.loadMarketIndicators?.("4h");
-                  window.decorateHelpLabels?.(
-                    document.querySelector(
-                      '#dashboard-market .menu-screen[data-l3="indicators"][data-l4="4h"]',
-                    ),
-                  );
-                },
-              },
-              d: {
-                label: "D",
-                accent: "#14b8a6",
-                accentDim: "rgba(20, 184, 166, 0.18)",
-                onShow: () => {
-                  window.loadMarketIndicators?.("d");
-                  window.decorateHelpLabels?.(
-                    document.querySelector(
-                      '#dashboard-market .menu-screen[data-l3="indicators"][data-l4="d"]',
-                    ),
-                  );
-                },
-              },
+            onShow: () => {
+              window.loadMarketIndicators?.("1h");
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '#dashboard-market .menu-screen[data-l2="indicators"][data-l3="1h"]',
+                ),
+              );
             },
           },
+          "4h": {
+            label: "4h",
+            accent: "#2dd4bf",
+            accentDim: "rgba(45, 212, 191, 0.18)",
+            onShow: () => {
+              window.loadMarketIndicators?.("4h");
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '#dashboard-market .menu-screen[data-l2="indicators"][data-l3="4h"]',
+                ),
+              );
+            },
+          },
+          d: {
+            label: "D",
+            accent: "#14b8a6",
+            accentDim: "rgba(20, 184, 166, 0.18)",
+            onShow: () => {
+              window.loadMarketIndicators?.("d");
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '#dashboard-market .menu-screen[data-l2="indicators"][data-l3="d"]',
+                ),
+              );
+            },
+          },
+        },
+      },
+      "chart-patterns": {
+        label: "Chart Patterns",
+        accent: "#a78bfa",
+        accentDim: "rgba(167, 139, 250, 0.18)",
+        onShow: () => {
+          window.initChartPatterns?.();
+          window.decorateHelpLabels?.(
+            document.querySelector(
+              '#dashboard-market .menu-screen[data-l2="chart-patterns"]',
+            ),
+          );
         },
       },
       orderbook: {
@@ -97,6 +103,19 @@ const MENU_TREE = {
             accent: "#0891b2",
             accentDim: "rgba(8, 145, 178, 0.18)",
           },
+        },
+      },
+      "prediction-markets": {
+        label: "Prediction Markets",
+        accent: "#f59e0b",
+        accentDim: "rgba(245, 158, 11, 0.18)",
+        onShow: () => {
+          window.initPredictionMarkets?.();
+          window.decorateHelpLabels?.(
+            document.querySelector(
+              '#dashboard-market .menu-screen[data-l2="prediction-markets"]',
+            ),
+          );
         },
       },
     },
@@ -923,7 +942,21 @@ const DASHBOARD_META = {
 
 const LEGACY_L2 = {
   home: { overview: "landing", landing: "landing" },
-  market: { st1: "overview", st2: "orderbook", overview: "overview", orderbook: "orderbook" },
+  market: {
+    st1: "spot",
+    st2: "indicators",
+    st3: "chart-patterns",
+    st4: "orderbook",
+    st5: "prediction-markets",
+    overview: "spot",
+    spot: "spot",
+    indicators: "indicators",
+    "chart-patterns": "chart-patterns",
+    chartpatterns: "chart-patterns",
+    orderbook: "orderbook",
+    "prediction-markets": "prediction-markets",
+    predictionmarkets: "prediction-markets",
+  },
   onchain: {
     st1: "overview",
     st2: "network",
@@ -1057,7 +1090,7 @@ const LEGACY_L2 = {
 };
 
 const LEGACY_L3 = {
-  "market/overview": { st1: "spot", spot: "spot" },
+  "market/indicators": { st1: "1h", "1h": "1h", "4h": "4h", d: "d", daily: "d" },
   "market/orderbook": { st1: "depth", depth: "depth", ladder: "ladder" },
   "derivatives/perp": { st1: "price", price: "price", sentiment: "sentiment", indicators: "indicators" },
   "derivatives/futures": { contracts: "contracts" },
@@ -1120,9 +1153,7 @@ const LEGACY_L3 = {
   "news/x": { overview: "overview" },
 };
 
-const LEGACY_L4 = {
-  "market/overview/indicators": { "1h": "1h", "4h": "4h", d: "d", daily: "d" },
-};
+const LEGACY_L4 = {};
 
 function l1Node(l1) {
   return MENU_TREE[l1];
@@ -1426,6 +1457,10 @@ const MenuController = {
     localStorage.setItem(MENU_L2_KEY, l2);
     localStorage.setItem(MENU_L3_KEY, activeL3);
 
+    if (l1 === "market" && l2 === "indicators") {
+      window.setActiveIndicatorTimeframe?.(activeL3);
+    }
+
     renderLevelNav("menu-l3-slot", 3, l1, l2, activeL3, (id) =>
       this.setLevel3(id),
     );
@@ -1569,6 +1604,27 @@ function migrateStatsValuationMenu() {
   }
 }
 
+function migrateMarketMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "market") return;
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 !== "overview") return;
+
+  const l3 = localStorage.getItem(MENU_L3_KEY);
+  const l4 = localStorage.getItem(MENU_L4_KEY);
+
+  if (l3 === "indicators") {
+    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.setItem(MENU_L3_KEY, l4 || "1h");
+  } else if (l3 === "chart-patterns") {
+    localStorage.setItem(MENU_L2_KEY, "chart-patterns");
+    localStorage.removeItem(MENU_L3_KEY);
+  } else {
+    localStorage.setItem(MENU_L2_KEY, "spot");
+    localStorage.removeItem(MENU_L3_KEY);
+  }
+  localStorage.removeItem(MENU_L4_KEY);
+}
+
 function migrateMiscMenu() {
   if (localStorage.getItem(MENU_L1_KEY) !== "misc") return;
   const l2 = localStorage.getItem(MENU_L2_KEY);
@@ -1588,6 +1644,7 @@ function initDashboardSwitcher() {
   menuInitialized = true;
 
   migrateStatsValuationMenu();
+  migrateMarketMenu();
   migrateMiscMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 

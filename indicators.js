@@ -536,42 +536,384 @@ function tallyAll(categories) {
   return total;
 }
 
-function buildTechnicalOverview(categories, spot, chain, timeframeLabel = "1h") {
-  const all = tallyAll(categories);
-  const tf = timeframeLabel || "1h";
-  const lines = [];
+const IND_GAUGE_ZONES = [
+  { max: 24, label: "Extreme Bear", color: "#ea3943" },
+  { max: 44, label: "Bearish", color: "#ea8c00" },
+  { max: 55, label: "Neutral", color: "#f3d42f" },
+  { max: 75, label: "Bullish", color: "#93d900" },
+  { max: 100, label: "Extreme Bull", color: "#16c784" },
+];
 
-  if (spot?.price) {
-    const ch = spot.changePct != null ? (spot.changePct >= 0 ? "+" : "") + spot.changePct.toFixed(2) + "%" : "—";
-    const range =
-      spot.rangePos != null
-        ? `positioned ${spot.rangePos.toFixed(0)}% through the 24h range`
-        : "mid-range on the session";
+const IND_GAUGE_CATEGORIES = [
+  ["momentum", "Momentum"],
+  ["trend", "Trend"],
+  ["movingAverages", "Moving Averages"],
+  ["volatility", "Volatility"],
+  ["volume", "Volume"],
+];
+
+function countsToGaugeScore(counts) {
+  const { bull = 0, bear = 0, total = 0 } = counts;
+  if (!total) return 50;
+  return Math.round(((bull - bear) / total) * 50 + 50);
+}
+
+function indGaugeZone(value) {
+  const v = Number(value);
+  for (const z of IND_GAUGE_ZONES) {
+    if (v <= z.max) return z;
+  }
+  return IND_GAUGE_ZONES[IND_GAUGE_ZONES.length - 1];
+}
+
+const SPORT_GAUGE_START = 225;
+const SPORT_GAUGE_SWEEP = 270;
+let sportGaugeUid = 0;
+
+function scoreToSportAngle(score) {
+  return SPORT_GAUGE_START - (score / 100) * SPORT_GAUGE_SWEEP;
+}
+
+function sportGaugePolar(cx, cy, r, deg) {
+  const rad = (deg * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
+}
+
+function sportGaugeArcPath(cx, cy, r, startDeg, endDeg) {
+  const start = sportGaugePolar(cx, cy, r, startDeg);
+  const end = sportGaugePolar(cx, cy, r, endDeg);
+  const delta = ((startDeg - endDeg) % 360 + 360) % 360;
+  const large = delta > 180 ? 1 : 0;
+  return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+}
+
+function buildSportCarGauge(score, opts = {}) {
+  const { label = "", size = "sm", uid = ++sportGaugeUid } = opts;
+  const zone = indGaugeZone(score);
+  const lg = size === "lg";
+  const cx = 60;
+  const cy = 62;
+  const rOuter = 54;
+  const rTrack = 46;
+  const rTicks = 42;
+  const needleAngle = scoreToSportAngle(score);
+  const needleTip = sportGaugePolar(cx, cy, rTrack - 5, needleAngle);
+  const hubR = lg ? 6 : 4.5;
+  const trackW = lg ? 5 : 3.5;
+
+  const ticks = [];
+  for (let i = 0; i <= 10; i++) {
+    const val = i * 10;
+    const ang = scoreToSportAngle(val);
+    const p1 = sportGaugePolar(cx, cy, rTicks, ang);
+    const p2 = sportGaugePolar(cx, cy, rTicks - (i % 5 === 0 ? 6 : 3), ang);
+    const major = i % 5 === 0;
+    ticks.push(
+      `<line x1="${p1.x.toFixed(2)}" y1="${p1.y.toFixed(2)}" x2="${p2.x.toFixed(2)}" y2="${p2.y.toFixed(2)}" class="sport-gauge__tick${major ? " sport-gauge__tick--major" : ""}"/>`,
+    );
+    if (major && lg) {
+      const lp = sportGaugePolar(cx, cy, rTicks - 12, ang);
+      ticks.push(
+        `<text x="${lp.x.toFixed(2)}" y="${lp.y.toFixed(2)}" class="sport-gauge__tick-label" text-anchor="middle" dominant-baseline="middle">${val}</text>`,
+      );
+    }
+  }
+
+  const zoneArcs = [];
+  let prevScore = 0;
+  IND_GAUGE_ZONES.forEach((z) => {
+    const a1 = scoreToSportAngle(prevScore);
+    const a2 = scoreToSportAngle(z.max);
+    zoneArcs.push(
+      `<path d="${sportGaugeArcPath(cx, cy, rTrack, a1, a2)}" stroke="${z.color}" stroke-width="${trackW}" fill="none" stroke-linecap="butt" opacity="0.55"/>`,
+    );
+    prevScore = z.max;
+  });
+
+  const activeArc = sportGaugeArcPath(cx, cy, rTrack - 1, SPORT_GAUGE_START, needleAngle);
+
+  return `<div class="sport-gauge sport-gauge--${size}" style="--gauge-accent:${zone.color}">
+    <svg viewBox="0 0 120 120" class="sport-gauge__svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="sg-face-${uid}" cx="50%" cy="55%" r="55%">
+          <stop offset="0%" stop-color="#22262f"/>
+          <stop offset="80%" stop-color="#0e1016"/>
+          <stop offset="100%" stop-color="#050608"/>
+        </radialGradient>
+        <linearGradient id="sg-bezel-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b8c0d0"/>
+          <stop offset="30%" stop-color="#f4f6fa"/>
+          <stop offset="55%" stop-color="#6b7588"/>
+          <stop offset="100%" stop-color="#2e3544"/>
+        </linearGradient>
+        <filter id="sg-glow-${uid}" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle cx="${cx}" cy="${cy}" r="${rOuter + 3}" fill="none" stroke="url(#sg-bezel-${uid})" stroke-width="3.5" class="sport-gauge__bezel"/>
+      <circle cx="${cx}" cy="${cy}" r="${rOuter}" fill="url(#sg-face-${uid})"/>
+      <circle cx="${cx}" cy="${cy}" r="${rOuter - 1}" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      ${zoneArcs.join("")}
+      <path d="${activeArc}" fill="none" stroke="${zone.color}" stroke-width="${lg ? 3.5 : 2.5}" stroke-linecap="round" opacity="0.95" filter="url(#sg-glow-${uid})"/>
+      ${ticks.join("")}
+      <line x1="${cx}" y1="${cy}" x2="${needleTip.x.toFixed(2)}" y2="${needleTip.y.toFixed(2)}" class="sport-gauge__needle" style="--needle-color:${zone.color}"/>
+      <circle cx="${cx}" cy="${cy}" r="${hubR}" class="sport-gauge__hub"/>
+      <circle cx="${cx}" cy="${cy}" r="${hubR - 2}" class="sport-gauge__hub-cap"/>
+    </svg>
+    <div class="sport-gauge__readout">
+      <span class="sport-gauge__value">${score}</span>
+      <span class="sport-gauge__status">${zone.label}</span>
+    </div>
+    ${label ? `<span class="sport-gauge__name">${label}</span>` : ""}
+  </div>`;
+}
+
+function renderIndGaugeZonesLegend(container) {
+  if (!container || container.dataset.ready) return;
+  container.innerHTML = IND_GAUGE_ZONES.map((z, i) => {
+    const lo = i === 0 ? 0 : IND_GAUGE_ZONES[i - 1].max + 1;
+    return `<span class="ind-dash__zone" style="--dash-zone-color:${z.color}"><i></i>${lo}–${z.max} ${z.label}</span>`;
+  }).join("");
+  container.dataset.ready = "1";
+}
+
+function resizeIndicatorGauges() {}
+
+function renderIndicatorGauges(rootId, categories, opts = {}) {
+  const root = document.getElementById(rootId);
+  if (!root) return;
+
+  const tf = opts.timeframeLabel || "";
+  const all = tallyAll(categories);
+  const metaEl = root.querySelector('[data-gauge-meta="composite"]');
+  if (metaEl) {
+    metaEl.textContent = tf
+      ? `${tf} · ${dominantLabel(all)}`
+      : dominantLabel(all);
+  }
+
+  renderIndGaugeZonesLegend(root.querySelector("[data-gauge-zones]"));
+
+  const compositeEl = root.querySelector("[data-gauge-composite]");
+  if (compositeEl) {
+    compositeEl.innerHTML = buildSportCarGauge(countsToGaugeScore(all), {
+      label: "COMPOSITE",
+      size: "lg",
+    });
+  }
+
+  IND_GAUGE_CATEGORIES.forEach(([key, label]) => {
+    const cell = root.querySelector(`[data-gauge-cat="${key}"]`);
+    if (!cell) return;
+    const cat = categories[key];
+    const score = cat?.counts?.total ? countsToGaugeScore(cat.counts) : 50;
+    cell.innerHTML = buildSportCarGauge(score, {
+      label: label.toUpperCase(),
+      size: "sm",
+    });
+  });
+}
+
+function tfOutlookMeta(tfLabel) {
+  const raw = String(tfLabel || "1h");
+  const key = raw.toUpperCase() === "D" ? "D" : raw.toLowerCase();
+  const map = {
+    "1h": {
+      horizon: "the next 6–24 hours",
+      session: "intraday",
+      cadence: "hourly candles",
+      biasWindow: "today's session",
+      moveLabel: "hourly swings",
+      invalidation: "a bearish hourly close below EMA 20 with rising volume",
+      bullTarget: "a sustained push through the 24h high on expanding volume",
+    },
+    "4h": {
+      horizon: "the next 2–5 days",
+      session: "short-term swing",
+      cadence: "4-hour candles",
+      biasWindow: "the current swing leg",
+      moveLabel: "multi-session moves",
+      invalidation: "a 4h close back under the EMA 20/50 cluster",
+      bullTarget: "reclaim and hold above the swing high with trend tools aligned",
+    },
+    D: {
+      horizon: "the next 1–4 weeks",
+      session: "medium-term positioning",
+      cadence: "daily candles",
+      biasWindow: "the developing weekly trend",
+      moveLabel: "weekly structure",
+      invalidation: "a daily close below SMA 50 while momentum rolls over",
+      bullTarget: "a weekly close above key moving-average resistance with volume confirmation",
+    },
+  };
+  return map[key] || map["1h"];
+}
+
+function buildForwardOutlook(categories, spot, all, tf, tfMeta) {
+  const lines = [];
+  const dom = dominantSignal(all);
+  const score = countsToGaugeScore(all);
+  const zone = indGaugeZone(score);
+  const mom = categories.momentum;
+  const trend = categories.trend;
+  const ma = categories.movingAverages;
+  const vol = categories.volatility;
+  const volCat = categories.volume;
+
+  const priceLead = spot?.price
+    ? `With BTC at ${indFmtPrice(spot.price)}`
+    : "On this timeframe";
+
+  if (dom === "bull") {
     lines.push(
-      `Spot: BTC ${indFmtPrice(spot.price)} (${ch} 24h), ${range}` +
-        (spot.spreadPct != null ? ` · spread ${spot.spreadPct.toFixed(3)}%` : "") +
-        ".",
+      `${priceLead}, the ${tf} forward outlook for ${tfMeta.horizon} is constructive (composite ${score}/100 · ${zone.label}). ` +
+        `${tfMeta.cadence} across momentum, trend, and flow skew bullish — pullbacks on ${tfMeta.biasWindow} may find buyers unless overhead resistance rejects follow-through.`,
+    );
+  } else if (dom === "bear") {
+    lines.push(
+      `${priceLead}, the ${tf} forward outlook for ${tfMeta.horizon} tilts defensive (composite ${score}/100 · ${zone.label}). ` +
+        `Weak ${tfMeta.cadence} structure implies bounces could be sold into resistance; further downside remains plausible until momentum resets.`,
+    );
+  } else {
+    lines.push(
+      `${priceLead}, the ${tf} forward outlook for ${tfMeta.horizon} is two-sided (composite ${score}/100 · ${zone.label}). ` +
+        `No durable edge on ${tfMeta.cadence} yet — expect range-bound ${tfMeta.moveLabel || "action"} until categories align decisively.`,
     );
   }
 
-  if (chain?.height) {
-    const mempool =
-      chain.mempoolCount != null
-        ? `${chain.mempoolCount.toLocaleString()} pending txs (${chain.mempoolMb?.toFixed(1) ?? "—"} MB)`
-        : "mempool data available";
-    const fee =
-      chain.fastFee != null ? `${chain.fastFee} sat/vB fast` : "fees stable";
-    const diff =
-      chain.diffChange != null
-        ? `${chain.diffChange >= 0 ? "+" : ""}${chain.diffChange.toFixed(2)}% next difficulty`
-        : "difficulty steady";
-    lines.push(`On-chain: ${mempool} · ${fee} · ${diff} · hashrate ${chain.hashrate || "—"}.`);
+  const drivers = [];
+
+  if (trend?.ctx?.adx >= 25) {
+    const dir = trend.ctx.plusDI > trend.ctx.minusDI ? "upside" : "downside";
+    drivers.push(
+      `ADX ${trend.ctx.adx.toFixed(0)} confirms trend strength — favors ${dir} continuation over ${tfMeta.horizon}`,
+    );
+  } else if (trend?.ctx?.macdHist != null) {
+    drivers.push(
+      `MACD histogram ${trend.ctx.macdHist >= 0 ? "positive" : "negative"} — ${tfMeta.session} bias ${trend.ctx.macdHist > 0 ? "supports bulls" : "favors bears"}`,
+    );
   }
 
-  const dom = dominantSignal(all);
-  lines.push(
-    `Indicators (${tf}): ${all.bull} bullish · ${all.bear} bearish · ${all.neutral} neutral (${all.total} ${tf} readings) — composite ${dominantLabel(all)}.`,
-  );
+  if (mom?.ctx?.rsi14 != null) {
+    if (mom.ctx.rsi14 >= 70)
+      drivers.push(
+        `RSI(14) overbought at ${mom.ctx.rsi14.toFixed(0)} — pullback risk within ${tfMeta.horizon}`,
+      );
+    else if (mom.ctx.rsi14 <= 30)
+      drivers.push(
+        `RSI(14) oversold at ${mom.ctx.rsi14.toFixed(0)} — relief bounce potential on upcoming ${tf} bars`,
+      );
+  }
+
+  if (vol?.ctx?.bbWidth != null && vol.ctx.bbWidth < 4) {
+    drivers.push(
+      `Bollinger squeeze (${vol.ctx.bbWidth.toFixed(1)}% width) — breakout risk elevated over ${tfMeta.horizon}`,
+    );
+  } else if (vol?.ctx?.pctB != null) {
+    if (vol.ctx.pctB >= 80)
+      drivers.push("Price at upper Bollinger band — extension risk unless volume expands");
+    else if (vol.ctx.pctB <= 20)
+      drivers.push("Price at lower Bollinger band — bounce setup if selling exhausts");
+  }
+
+  if (vol?.ctx?.atrPct != null) {
+    drivers.push(
+      `ATR ${vol.ctx.atrPct.toFixed(2)}% of price — plan for ${vol.ctx.atrPct > 2 ? "wider" : "tighter"} ${tfMeta.moveLabel || "swings"} ahead`,
+    );
+  }
+
+  if (ma?.ctx?.above200 != null && (tf === "D" || tf === "4h")) {
+    const dist =
+      ma.ctx.dist200 != null
+        ? ` (${ma.ctx.dist200 >= 0 ? "+" : ""}${ma.ctx.dist200.toFixed(1)}%)`
+        : "";
+    drivers.push(
+      `Price ${ma.ctx.above200 ? "above" : "below"} SMA 200${dist} — ${ma.ctx.above200 ? "supports medium-term bull case" : "long-term headwind for sustained rallies"}`,
+    );
+  }
+  if (ma?.ctx?.golden != null && (tf === "D" || tf === "4h")) {
+    drivers.push(
+      ma.ctx.golden
+        ? "SMA 50/200 golden cross underpins constructive weekly structure"
+        : "SMA 50/200 death cross keeps medium-term bias cautious",
+    );
+  }
+
+  if (volCat?.ctx?.volRatio != null) {
+    if (volCat.ctx.volRatio > 1.3)
+      drivers.push(
+        `Volume ${volCat.ctx.volRatio.toFixed(1)}× average — participation backs the prevailing move`,
+      );
+    else if (volCat.ctx.volRatio < 0.7)
+      drivers.push(
+        `Thin volume (${volCat.ctx.volRatio.toFixed(1)}× avg) — breakouts may fail; range tactics preferred`,
+      );
+  }
+  if (volCat?.ctx?.cmf > 0.05)
+    drivers.push("CMF positive — accumulation tone on dips");
+  else if (volCat?.ctx?.cmf < -0.05)
+    drivers.push("CMF negative — distribution tone on rallies");
+
+  if (drivers.length) lines.push(`Key drivers: ${drivers.join("; ")}.`);
+
+  const catKeys = ["momentum", "trend", "movingAverages", "volatility", "volume"];
+  const bullCats = catKeys.filter((k) => dominantSignal(categories[k]?.counts) === "bull").length;
+  const bearCats = catKeys.filter((k) => dominantSignal(categories[k]?.counts) === "bear").length;
+
+  if (dom === "bull" && bullCats >= 4) {
+    lines.push(
+      `Base case (${tfMeta.horizon}): gradual grind higher with shallow dips. Upside confirmation: ${tfMeta.bullTarget}. Invalidation: ${tfMeta.invalidation}.`,
+    );
+  } else if (dom === "bear" && bearCats >= 4) {
+    lines.push(
+      `Base case (${tfMeta.horizon}): lower highs or continued pressure. Watch for momentum reset + volume-led MA reclaim before fading the bearish read. Invalidation: ${tfMeta.bullTarget}.`,
+    );
+  } else if (spot?.changePct != null) {
+    const spotUp = spot.changePct >= 0;
+    if (spotUp && dom !== "bull") {
+      lines.push(
+        `Scenario watch: 24h tape is positive but ${tf} technicals are not fully aligned — upside over ${tfMeta.horizon} may fade unless composite score improves and volume expands.`,
+      );
+    } else if (!spotUp && dom === "bull") {
+      lines.push(
+        `Scenario watch: soft 24h price action vs constructive ${tf} stack — BTC may catch up to the upside over ${tfMeta.horizon} if buyers defend short-term moving averages.`,
+      );
+    } else {
+      lines.push(
+        `Scenario watch: mixed spot vs ${tf} signals — size directional risk only after composite gauge and volume confirm; otherwise trade the range over ${tfMeta.horizon}.`,
+      );
+    }
+  }
+
+  return lines;
+}
+
+function buildTechnicalOverview(categories, spot, chain, timeframeLabel = "1h") {
+  const all = tallyAll(categories);
+  const tf = timeframeLabel || "1h";
+  const tfMeta = tfOutlookMeta(tf);
+  const lines = [];
+
+  lines.push(...buildForwardOutlook(categories, spot, all, tf, tfMeta));
+
+  if (spot?.price) {
+    const ch =
+      spot.changePct != null
+        ? (spot.changePct >= 0 ? "+" : "") + spot.changePct.toFixed(2) + "%"
+        : "—";
+    const range =
+      spot.rangePos != null
+        ? `${spot.rangePos.toFixed(0)}% through the 24h range`
+        : "mid-range";
+    lines.push(
+      `Context: spot ${indFmtPrice(spot.price)} (${ch} 24h) · ${range}` +
+        (spot.high != null && spot.low != null
+          ? ` · range ${indFmtPrice(spot.low)}–${indFmtPrice(spot.high)}`
+          : "") +
+        ".",
+    );
+  }
 
   const catNames = {
     momentum: "Momentum",
@@ -580,43 +922,28 @@ function buildTechnicalOverview(categories, spot, chain, timeframeLabel = "1h") 
     volatility: "Volatility",
     volume: "Volume",
   };
-  Object.entries(categories).forEach(([key, cat]) => {
-    if (cat.counts.total)
-      lines.push(`${catNames[key]}: ${dominantLabel(cat.counts)} (${cat.counts.bull}↑ ${cat.counts.bear}↓).`);
-  });
-
-  if (spot?.price && all.total) {
-    const spotUp = (spot.changePct ?? 0) >= 0;
-    const techBull = dom === "bull";
-    const techBear = dom === "bear";
-    if (spotUp && techBull)
-      lines.push(
-        "Overall: Spot and technicals align bullish — trend, momentum, and flow reinforce the 24h bid.",
-      );
-    else if (!spotUp && techBear)
-      lines.push(
-        "Overall: Spot weakness matches bearish technicals — caution on longs until structure improves.",
-      );
-    else if (spotUp && techBear)
-      lines.push(
-        "Overall: Price is green on the day but indicators lag — rally may be fragile or mean-reverting.",
-      );
-    else if (!spotUp && techBull)
-      lines.push(
-        "Overall: Technicals constructive despite soft 24h tape — watch for spot to catch up to indicators.",
-      );
-    else
-      lines.push(
-        "Overall: Mixed spot and technical signals — no high-conviction directional read; range tactics favored.",
-      );
-  } else if (all.total) {
+  const catSummary = Object.entries(categories)
+    .filter(([, cat]) => cat.counts.total)
+    .map(
+      ([key, cat]) =>
+        `${catNames[key]} ${dominantLabel(cat.counts)} (${cat.counts.bull}↑/${cat.counts.bear}↓)`,
+    )
+    .join(" · ");
+  if (catSummary) {
     lines.push(
-      `Overall: Technical composite is ${dominantLabel(all)} — use category comments above for detail.`,
+      `${tf} stack (${all.total} readings): ${catSummary}. Composite gauge ${countsToGaugeScore(all)}/100.`,
+    );
+  }
+
+  if (chain?.height) {
+    const fee = chain.fastFee != null ? `${chain.fastFee} sat/vB` : "fees stable";
+    lines.push(
+      `Network backdrop: ${fee} fast fee · hashrate ${chain.hashrate || "—"} — on-chain conditions are secondary to ${tf} price structure for this horizon.`,
     );
   }
 
   lines.push(
-    "Heuristic scan only — not financial advice. Cross-check with order book, macro, and risk limits before trading.",
+    "Automated heuristic outlook only — not financial advice. Cross-check order book, funding, macro catalysts, and your risk limits before acting.",
   );
 
   return lines.map((l) => `<p>${l}</p>`).join("");
@@ -1196,3 +1523,6 @@ function buildIndicators(ohlcv, price) {
 window.buildIndicators = buildIndicators;
 window.buildTechnicalOverview = buildTechnicalOverview;
 window.buildIndicatorsOnlyOverview = buildIndicatorsOnlyOverview;
+window.renderIndicatorGauges = renderIndicatorGauges;
+window.resizeIndicatorGauges = resizeIndicatorGauges;
+window.countsToGaugeScore = countsToGaugeScore;

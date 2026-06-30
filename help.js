@@ -141,35 +141,191 @@ const METRIC_HELP = {
   },
   "indicator-rsi": {
     title: "RSI (14)",
-    body: "Relative Strength Index over 14 periods measures momentum on a 0–100 scale. Above 70 is often considered overbought; below 30 oversold. It compares the magnitude of recent gains vs losses using Wilder smoothing.",
+    body: "Relative Strength Index over 14 bars measures how fast price has risen vs fallen (0–100). Above 70 often flags overbought conditions where upside may stall or reverse; below 30 flags oversold conditions where bounces are more likely. On 1h it guides intraday exhaustion; on 4h/D it frames swing and weekly momentum. Bull/bear badge is a quick heuristic, not a standalone signal.",
+  },
+  "indicator-rsi7": {
+    title: "RSI (7)",
+    body: "A faster RSI using 7 bars — more sensitive to recent price changes than RSI(14). Useful for spotting short-term turns earlier, but also more prone to false extremes. On 1h it reacts to the last few hours; on 4h/D it highlights the latest leg of a swing. Pair with slower oscillators before acting.",
   },
   "indicator-macd": {
     title: "MACD (12, 26, 9)",
-    body: "Moving Average Convergence Divergence tracks trend momentum. The MACD line is EMA(12) minus EMA(26); the signal is EMA(9) of that line. The histogram (shown) is MACD minus signal — positive suggests bullish momentum.",
+    body: "Moving Average Convergence Divergence tracks trend momentum. MACD line = EMA(12) − EMA(26); signal = EMA(9) of MACD; histogram = MACD − signal. A rising positive histogram supports bullish continuation; a falling negative histogram supports bearish continuation. Crossovers and histogram flips matter most on 4h and daily for swing direction.",
   },
   "indicator-ema": {
     title: "EMA 20 / 50",
-    body: "Exponential moving averages give more weight to recent prices. EMA 20 captures short-term trend; EMA 50 captures medium-term. Price above both with EMA 20 > EMA 50 often signals bullish structure.",
+    body: "Exponential moving averages weight recent closes more heavily. EMA 20 is the short-term trend filter; EMA 50 is the intermediate filter. Price above both with EMA 20 > EMA 50 is constructive structure; the reverse is defensive. Distance from these levels often acts as dynamic support/resistance on the selected timeframe.",
+  },
+  "indicator-ema9": {
+    title: "EMA 9",
+    body: "Very responsive short-term EMA. Price above EMA 9 suggests immediate bid control; below suggests sellers dominate the latest bars. On 1h it tracks session micro-trend; on 4h/D it marks the front edge of a swing. Frequent crosses — treat as tactical, not structural alone.",
+  },
+  "indicator-ema921": {
+    title: "EMA 9 / 21 Cross",
+    body: "Classic short-term crossover: EMA 9 above EMA 21 (golden) favors upside momentum; below (death) favors downside. Faster than EMA 20/50 — best for timing entries within a broader trend. Confirm with trend (ADX/MACD) and volume on 4h and daily screens.",
+  },
+  "indicator-ema100": {
+    title: "EMA 100",
+    body: "Medium-long trend filter spanning roughly 100 bars on the active timeframe (~4 days on 1h, ~17 days on 4h, ~5 months on daily). Price above EMA 100 supports bullish bias; below warns of deeper correction risk. Reclaims and losses often define swing invalidation levels.",
+  },
+  "indicator-sma50": {
+    title: "SMA 50",
+    body: "Simple 50-bar average — widely watched intermediate trend line. On daily it approximates the ~10-week trend; on 4h it tracks multi-day structure. Holds above SMA 50 support bullish swings; sustained breaks open room toward SMA 100/200.",
+  },
+  "indicator-sma100": {
+    title: "SMA 100",
+    body: "100-bar simple average — a slower swing reference between SMA 50 and SMA 200. Useful for identifying whether pullbacks are shallow (hold above) or structural (break below). Especially relevant on 4h and daily for medium-term BTC direction.",
   },
   "indicator-sma200": {
     title: "SMA 200",
-    body: "Simple moving average of the last 200 hourly closes — a widely watched long-term trend line. Price above it suggests a bull market regime; below it suggests bearish or corrective conditions. Distance % shows how extended price is.",
+    body: "200-bar simple average — the classic long-term trend benchmark on the selected timeframe (~8 days on 1h, ~33 days on 4h, ~200 days on daily). Price above suggests bull regime; below suggests bearish or corrective conditions. Distance % shows how extended BTC is from this anchor.",
+  },
+  "indicator-golden-cross": {
+    title: "SMA 50 / 200 Cross",
+    body: "Golden cross: SMA 50 above SMA 200 — often cited as a medium-term bull regime signal. Death cross: SMA 50 below SMA 200 — defensive longer-term structure. Lags price; most meaningful on daily and 4h for forward weekly outlook, less so for 1h scalping.",
+  },
+  "indicator-vwma": {
+    title: "VWMA (20)",
+    body: "Volume-Weighted Moving Average over 20 bars — averages price weighted by volume, so high-participation levels matter more. Price above VWMA suggests buyers paid up on volume; below suggests acceptance lower. Compare with plain EMA/SMA to see if volume agrees with the trend.",
   },
   "indicator-bb": {
-    title: "Bollinger Bands (20, 2)",
-    body: "Bands placed 2 standard deviations around a 20-period SMA. %B shows where price sits within the bands (0 = lower band, 100 = upper). Touches of the upper band can indicate strength or overextension; lower band the opposite.",
+    title: "Bollinger %B (20, 2)",
+    body: "Bollinger Bands = 20-bar SMA ± 2 standard deviations. %B shows where price sits inside the bands (0 = lower band, 100 = upper). Near 100 can mean strength or overextension; near 0 can mean weakness or overshoot. Band walks in strong trends are common — use with volume and trend tools.",
+  },
+  "indicator-bb-width": {
+    title: "Bollinger Width",
+    body: "Band width as % of the middle band — measures volatility compression vs expansion. Narrow width (squeeze) often precedes a sharp breakout; wide width suggests moves may be extended or choppy. Forward outlook: watch for expansion after squeezes on your timeframe (hours on 1h, days on 4h, weeks on D).",
+  },
+  "indicator-stoch": {
+    title: "Stochastic (14, 3)",
+    body: "%K compares the close to the recent 14-bar high-low range; %D is a 3-bar average of %K. Above 80 = overbought zone; below 20 = oversold zone. Good for timing turns within a range; in strong trends, can stay extreme for many bars. Crossovers near extremes can flag short-term reversals.",
+  },
+  "indicator-stoch-rsi": {
+    title: "Stoch RSI (14)",
+    body: "Stochastic oscillator applied to RSI instead of price — extra sensitivity to momentum shifts. Reaches 0/100 more often than classic Stochastic. Useful for spotting RSI turning points early; confirm with price structure before trading. %D smooths %K.",
+  },
+  "indicator-willr": {
+    title: "Williams %R (14)",
+    body: "Measures close vs the 14-bar high-low range on a −100 to 0 scale. Above −20 = overbought; below −80 = oversold. Similar information to Stochastic but inverted scale. Best for identifying short-term exhaustion on 1h/4h; less reliable alone in strong trends.",
+  },
+  "indicator-roc": {
+    title: "ROC (12)",
+    body: "Rate of Change — percent difference between the current close and the close 12 bars ago. Positive ROC means price is higher than 12 bars back; negative means lower. Captures momentum speed. Large positive/negative readings can flag extended moves due for pause on the active timeframe.",
+  },
+  "indicator-cci": {
+    title: "CCI (20)",
+    body: "Commodity Channel Index measures deviation from a 20-bar average of typical price (H+L+C)/3. Above +100 = extended high; below −100 = extended low. Useful for spotting overbought/oversold vs the recent mean. Mean-reversion tool — trend filters (ADX, MAs) help avoid fading strong moves.",
+  },
+  "indicator-mfi": {
+    title: "MFI (14)",
+    body: "Money Flow Index is volume-weighted RSI (0–100). Incorporates whether closes occur on volume near the high (buying) or low (selling) of each bar. Above 60–70 suggests buying pressure; below 30–40 suggests selling pressure. Divergence vs price can warn of weakening moves ahead on the selected timeframe.",
+  },
+  "indicator-adx": {
+    title: "ADX (14)",
+    body: "Average Directional Index measures trend strength (not direction). Above 25 = strong trend environment where directional signals carry more weight; below 20 = weak/choppy trend. +DI vs −DI shows whether bulls or bears lead. Rising ADX supports continuation trades; falling ADX warns of range conditions ahead.",
+  },
+  "indicator-aroon": {
+    title: "Aroon (25)",
+    body: "Aroon Up/Down track how recently the 25-bar high and low occurred. Oscillator = Aroon Up − Aroon Down. Strongly positive = recent highs dominate (uptrend bias); strongly negative = recent lows dominate (downtrend bias). Helps identify emerging trend direction and whether consolidation is resolving.",
+  },
+  "indicator-trix": {
+    title: "TRIX (15)",
+    body: "Triple-smoothed EMA rate of change — filters noise to show underlying momentum direction. Positive TRIX supports bullish bias; negative supports bearish bias. Small absolute values near zero suggest flat momentum. Best combined with MACD/ADX for confirmation on 4h and daily forward views.",
+  },
+  "indicator-atr": {
+    title: "ATR (14)",
+    body: "Average True Range — expected bar volatility in USDT (not percent). Higher ATR = wider recent swings; lower ATR = quieter market. ATR % of price helps size stops and set realistic move expectations: e.g. 1h ATR for intraday ranges, daily ATR for weekly swing potential.",
+  },
+  "indicator-keltner": {
+    title: "Keltner Channel",
+    body: "EMA(20) channel with bands at ± 2× ATR(10). Shows volatility-adjusted trend envelope. Price near upper band = strong/extended upside; near lower = weak/extended downside. Often compared with Bollinger Bands — Keltner uses ATR, Bollinger uses standard deviation.",
+  },
+  "indicator-donchian": {
+    title: "Donchian Channel (20)",
+    body: "20-bar highest high and lowest low — classic breakout channel. Price at the upper edge flags range highs / breakout potential; at the lower edge flags range lows / breakdown risk. % position shows where BTC sits in the recent range — key for swing high/low context on 4h and daily.",
+  },
+  "indicator-obv": {
+    title: "OBV Trend",
+    body: "On-Balance Volume cumulates volume on up bars minus volume on down bars. The 14-bar slope shown here tracks whether volume flow is rising (accumulation) or falling (distribution). Rising OBV with flat price can precede upside; falling OBV with flat price can precede downside — confirm with price breaks.",
+  },
+  "indicator-cmf": {
+    title: "CMF (20)",
+    body: "Chaikin Money Flow sums volume-weighted close location over 20 bars. Positive CMF (> +0.05) suggests accumulation — closes tend toward bar highs on volume. Negative CMF (< −0.05) suggests distribution. Near zero = balanced flow. Volume confirmation is critical for forward BTC price calls.",
+  },
+  "indicator-vol-ratio": {
+    title: "Volume / SMA(20)",
+    body: "Current bar volume divided by the 20-bar average. Above 1.0 = above-average participation; above 1.5 = elevated activity often seen on breakouts/breakdowns. Below 0.8 = thin market where moves may lack follow-through. Use to validate whether technical signals are backed by real flow.",
+  },
+  "indicator-force": {
+    title: "Force Index (13)",
+    body: "Alexander Elder's Force Index: price change × volume, smoothed with EMA(13). Positive = buying force dominates; negative = selling force dominates. Captures whether moves have volume conviction. Spikes align with impulsive bars; sustained sign supports directional bias on the active timeframe.",
   },
   "indicators-overview": {
     title: "Technical Indicators",
-    body: "Hourly Binance klines (250 bars). Indicators are grouped into Momentum, Trend, Moving Averages, Volatility, and Volume. Bull/bear badges are heuristic signals for quick scanning — not trade advice.",
+    body: "Binance BTC/USDT klines (250 bars) on the selected timeframe (1h, 4h, or D). Thirty-plus indicators grouped into Momentum, Trend, Moving Averages, Volatility, and Volume. Sports-car dashboard gauges summarize each category; bull/bear badges are heuristics for scanning — not trade signals alone.",
   },
   "indicators-briefing": {
     title: "Technical Overview",
-    body: "Automated commentary below each indicator category, plus a composite read. On Market Overview, the bottom panel combines Spot price action, On-Chain network context, and the full indicator stack.",
+    body: "Forward-looking BTC price commentary tailored to the active timeframe: 1h focuses on the next 6–24 hours, 4h on the next 2–5 days, D on the next 1–4 weeks. Includes composite gauge read, key drivers (RSI, MACD, bands, volume), base-case scenario, and invalidation levels. Heuristic only — not financial advice.",
   },
   "indicators-timeframe": {
     title: "Indicator Timeframe",
-    body: "Select the candle interval used for all technical indicators on this screen: 1h (hourly), 4h (four-hour), or D (daily). Each timeframe has its own panel and commentary.",
+    body: "Candle interval for all indicators and commentary on this screen. 1h = intraday/hourly structure; 4h = short swing (multi-day); D = medium-term weekly positioning. Each timeframe has its own gauges, indicator list, and forward outlook — always match your trade horizon to the selected tab.",
+  },
+  "chart-patterns-overview": {
+    title: "Chart Patterns",
+    body: "Classical pattern recognition on Binance BTC/USDT. Only one pattern is drawn on the chart at a time — pick from the sidebar list. Structure uses a bright recycled palette (cyan support, pink resistance, gold structure, green/red targets). Dashed lines after apex or trigger are measured-move projections. Filter the list by category: Reversal, Flags, Triangles, Wedges, Range.",
+  },
+  "chart-patterns-tf-d": {
+    title: "Daily Patterns",
+    body: "Uses 1d candles (~5 years of history). Best for swing and position traders — patterns resolve over days to weeks. Measured-move targets project from daily breakouts.",
+  },
+  "chart-patterns-tf-w": {
+    title: "Weekly Patterns",
+    body: "Uses 1w candles (~5 years). Filters noise for medium-term structure — ideal for multi-week BTC trend and reversal setups.",
+  },
+  "chart-patterns-tf-m": {
+    title: "Monthly Patterns",
+    body: "Uses 1M candles (~10 years). Long-horizon macro chart structure — major reversals and secular trend channels.",
+  },
+  "chart-patterns-list": {
+    title: "Detected Patterns",
+    body: "Only one pattern on the chart at a time. Filter by category, click a row to display it. Pattern Detail spans the full panel width below the chart — every chart label explained, plus trigger rules (what close confirms or invalidates the setup).",
+  },
+  "prediction-markets-overview": {
+    title: "Prediction Markets",
+    body: "BTC-price-centric prediction markets from Polymarket and Kalshi. Only includes economic, regulatory, and geopolitical events with clear direct impact on Bitcoin (rate decisions, ETF flows, price targets). Generic politics excluded. Auto-refreshes every 60 seconds.",
+  },
+  "prediction-markets-question": {
+    title: "Market Question",
+    body: "The resolution question for the contract. Click any row or card for full details and a direct link to trade on the source platform.",
+  },
+  "prediction-markets-yes": {
+    title: "Yes Odds",
+    body: "Implied probability of Yes resolving, derived from market prices (0–100%). Green when ≥50% — market leans bullish on the stated outcome.",
+  },
+  "prediction-markets-no": {
+    title: "No Odds",
+    body: "Implied probability of No resolving. Complements Yes; useful for hedging or contrarian reads on BTC-linked events.",
+  },
+  "prediction-markets-volume": {
+    title: "24h Volume",
+    body: "Notional traded in the last 24 hours. Higher volume usually means tighter pricing and more reliable implied probabilities.",
+  },
+  "prediction-markets-end": {
+    title: "End Date",
+    body: "When the market is scheduled to resolve. Short-dated contracts (Today / This week) reflect near-term sentiment; long-term brackets capture cycle positioning.",
+  },
+  "prediction-markets-platform": {
+    title: "Platform",
+    body: "Source venue — Polymarket (crypto-native prediction market) or Kalshi (US-regulated event contracts). Data via public APIs with mock fallback for development.",
+  },
+  "prediction-markets-category": {
+    title: "Category",
+    body: "Price Targets = BTC level/timing bets; Regulation = ETF, SEC, policy; Macro = Fed/rates/inflation events with documented BTC transmission.",
+  },
+  "prediction-markets-outlook": {
+    title: "BTC Outlook Summary",
+    body: "Aggregated read across filtered markets — e.g. implied probability BTC exceeds $100k by a stated deadline. Compare with spot technicals on Indicators for confluence. Not financial advice.",
   },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
@@ -207,30 +363,7 @@ const METRIC_HELP = {
     title: "Volume Share",
     body: "Combined spot and perp 24h volume share by venue listing. Shows dominance across the full exchange scaffold feed. When one venue dominates (≥4× the next), its bar uses a scale break; labels show true share.",
   },
-  "indicator-adx": {
-    title: "ADX (14)",
-    body: "Average Directional Index measures trend strength (not direction). Values above 25 suggest a strong trend; +DI vs −DI shows whether bulls or bears dominate.",
-  },
-  "indicator-stoch": {
-    title: "Stochastic (14, 3)",
-    body: "Compares the close to the recent high-low range. %K is the fast line; %D is its 3-period average. Above 80 is overbought; below 20 oversold.",
-  },
-  "indicator-mfi": {
-    title: "MFI (14)",
-    body: "Money Flow Index is a volume-weighted RSI. Incorporates price and volume to gauge buying vs selling pressure on a 0–100 scale.",
-  },
-  "indicator-atr": {
-    title: "ATR (14)",
-    body: "Average True Range measures volatility in price units. Higher ATR means wider recent swings; useful for stop placement and regime context.",
-  },
-  "indicator-cmf": {
-    title: "CMF (20)",
-    body: "Chaikin Money Flow accumulates volume-weighted closing location over 20 periods. Positive values suggest accumulation; negative suggests distribution.",
-  },
-  "indicator-golden-cross": {
-    title: "SMA 50 / 200",
-    body: "Classic long-term crossover. Golden cross (SMA50 above SMA200) is often cited as a bull regime signal; death cross the opposite.",
-  },
+
   "fut-last-price": {
     title: "Futures Last Price",
     body: "Most recent traded price on the BTCUSDT perpetual futures contract. Can diverge slightly from spot due to leverage demand, funding flows, and futures-specific liquidity.",

@@ -38,6 +38,7 @@ from btc_indicators_api import (
     get_valuation_models_meta_payload,
     get_valuation_models_bundle_payload,
 )
+from prediction_markets_api import get_prediction_markets_payload
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
@@ -83,6 +84,8 @@ def _query_refresh(query) -> bool:
 
 
 def dispatch_api(path, query):
+    path = (path or "").split("?")[0].rstrip("/") or "/"
+
     if path == "/api/equity/global":
         refresh = _query_refresh(query)
         symbols = _parse_tradfi_symbol_list(
@@ -227,6 +230,11 @@ def dispatch_api(path, query):
             return get_global_macro_payload(refresh=refresh, year=year)
         refresh = _query_refresh(query)
         return get_macro_payload(section, refresh=refresh)
+
+    if path == "/api/prediction-markets":
+        refresh = _query_refresh(query)
+        mock_only = (query.get("mock") or ["0"])[0] in ("1", "true", "yes")
+        return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
 
     if path.startswith("/api/exchanges/"):
         section = path[len("/api/exchanges/") :].strip("/")

@@ -492,6 +492,12 @@ function renderIndicatorsList(containerId, klines, options = {}) {
   el.innerHTML = result.html;
   window.decorateHelpLabels?.(el);
 
+  if (options.gaugesId && window.renderIndicatorGauges) {
+    window.renderIndicatorGauges(options.gaugesId, result.categories, {
+      timeframeLabel: options.timeframeLabel,
+    });
+  }
+
   const overviewId = options.overviewId;
   if (overviewId) {
     const overviewEl = $(overviewId);
@@ -521,6 +527,7 @@ function marketIndicatorIds(tf) {
     listId: `indicators-list-${tf}`,
     overviewId: `indicators-overview-${tf}`,
     metaId: `indicators-meta-${tf}`,
+    gaugesId: `indicators-gauges-${tf}`,
   };
 }
 
@@ -531,6 +538,7 @@ function renderCachedMarketIndicators(tf) {
   const ids = marketIndicatorIds(tf);
   renderIndicatorsList(ids.listId, cached.klines, {
     overviewId: ids.overviewId,
+    gaugesId: ids.gaugesId,
     mode: "market",
     timeframeLabel: cfg?.label,
   });
