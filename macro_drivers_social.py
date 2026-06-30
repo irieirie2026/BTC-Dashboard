@@ -1,16 +1,18 @@
-"""BTC Social metrics via LunarCrush API v4 (Individual / free tier).
+"""BTC Social metrics — LunarCrush API v4 when Individual plan is active, else Santiment + Fear & Greed.
 
-Endpoints used (2 calls per refresh, Bitcoin only):
-  1. GET https://lunarcrush.com/api4/public/coins/bitcoin/v1
-     — Galaxy Score, AltRank, sentiment, social volume, dominance, 24h deltas
-  2. GET https://lunarcrush.com/api4/public/coins/bitcoin/time-series/v1?interval=1w
-     — 7-day social volume / sentiment for momentum sparkline
+LunarCrush (requires active Individual subscription on the API key):
+  1. GET /api4/public/coins/bitcoin/v1
+  2. GET /api4/public/coins/bitcoin/time-series/v1?interval=1w
+  3. GET /api4/public/topic/bitcoin/creators/v1 (influencers, optional)
 
-Optional fallback for influencers if coin payload lacks creators:
-  GET https://lunarcrush.com/api4/public/topic/bitcoin/creators/v1
+Fallback (free, already used elsewhere in this dashboard):
+  - Santiment social_volume_total (SANTIMENT_API_KEY)
+  - Alternative.me Crypto Fear & Greed Index (no key)
+  - Stored series in data/btc-series/ when live fetch fails
 
 Env:
-  LUNARCRUSH_API_KEY — Bearer token from https://lunarcrush.com/developers/api/authentication
+  LUNARCRUSH_API_KEY — Bearer token (needs active Individual plan at lunarcrush.com/pricing)
+  SANTIMENT_API_KEY — used automatically when LunarCrush is unavailable
 
 Query:
   GET /api/social/btc?refresh=1
@@ -56,13 +58,22 @@ def _fetch_json(path: str, *, params: dict | None = None, timeout: int = 25) -> 
     req = urllib.request.Request(
         url,
         headers={
-            "User-Agent": USER_AGENT,
+            "User-Agent": "Mozilla/5.0 (compatible; BTC-Dashboard/1.0; +social-lunarcrush)",
             "Accept": "application/json",
             "Authorization": f"Bearer {api_key}",
         },
     )
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return json.loads(resp.read().decode("utf-8", errors="replace"))
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read().decode("utf-8", errors="replace"))
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        try:
+            err_obj = json.loads(body)
+            msg = err_obj.get("error") or body[:200]
+        except json.JSONDecodeError:
+            msg = body[:200] or str(exc)
+        raise RuntimeError(f"LunarCrush HTTP {exc.code}: {msg}") from exc
 
 
 def _as_float(v) -> float | None:
@@ -240,6 +251,188 @@ def _momentum_series(series_rows: list[dict]) -> list[float]:
     if len(points) >= 2:
         return [round(p, 4) for p in points]
     return []
+
+
+def _load_santiment_social(*, refresh: bool = True) -> dict:
+    """Live Santiment social_volume_total series."""
+    try:
+        from btc_data.registry import REGISTRY
+        from btc_data.sources import santiment
+
+        spec = REGISTRY.get("san_social_volume_total")
+        if not spec:
+            return {"series": [], "latest": None, "error": "metric not registered"}
+        return santiment.fetch(spec, refresh=refresh)
+    except Exception as exc:
+        return {"series": [], "latest": None, "error": str(exc)}
+
+
+def _load_stored_santiment() -> dict:
+    try:
+        from btc_indicators_api import get_stored_series_payload
+
+        return get_stored_series_payload("san_social_volume_total")
+    except Exception:
+        return {"series": [], "latest": None}
+
+
+def _load_fear_greed() -> dict:
+    try:
+        from server import get_fear_greed_payload
+
+        return get_fear_greed_payload(refresh=True)
+    except Exception as exc:
+        return {"latest": None, "error": str(exc)}
+
+
+def _series_values(series: list) -> list[float]:
+    out: list[float] = []
+    for row in series or []:
+        if not isinstance(row, dict):
+            continue
+        v = _as_float(row.get("value"))
+        if v is not None:
+            out.append(v)
+    return out
+
+
+def _spark_from_daily(series: list, points: int = 10) -> list[float]:
+    vals = _series_values(series)
+    if len(vals) < 2:
+        return vals
+    tail = vals[-points:]
+    return [round(v, 4) for v in tail]
+
+
+def _try_lunarcrush_live() -> dict:
+    """Raises on hard failure; returns live payload when Individual plan is active."""
+    return _build_live_payload()
+
+
+def _build_santiment_fallback(prior_errors: list[str] | None = None) -> dict | None:
+    """Hybrid social panel when LunarCrush Individual plan is not active."""
+    errors = list(prior_errors or [])
+    san = _load_santiment_social(refresh=True)
+    if san.get("error") and not san.get("series"):
+        stored = _load_stored_santiment()
+        if stored.get("series"):
+            san = stored
+            errors.append(f"Santiment live: {san.get('error', 'unavailable')} — using stored series")
+        else:
+            errors.append(f"Santiment: {san.get('error', 'no data')}")
+            return None
+
+    series = san.get("series") or []
+    latest = san.get("latest") or (series[-1] if series else None)
+    social_vol = _as_float(latest.get("value") if isinstance(latest, dict) else None)
+
+    vals = _series_values(series)
+    vol_chg = None
+    if len(vals) >= 2:
+        vol_chg = _pct_change(vals[-1], vals[-2])
+    momentum_chg = _pct_change(vals[-1], vals[-7]) if len(vals) >= 8 else None
+    spark = _spark_from_daily(series, 10)
+
+    fg = _load_fear_greed()
+    fg_latest = fg.get("latest") if isinstance(fg.get("latest"), dict) else {}
+    fg_val = _as_float(fg_latest.get("value"))
+    fg_label = fg_latest.get("classification") or fg_latest.get("zone") or "Neutral"
+
+    bullish = bearish = None
+    arrow = "→"
+    trend_label = "Stable"
+    if fg_val is not None:
+        bullish = max(0.0, min(100.0, fg_val))
+        bearish = max(0.0, 100.0 - bullish)
+        if fg_val >= 55:
+            arrow = "↑"
+            trend_label = "Greedy"
+        elif fg_val <= 45:
+            arrow = "↓"
+            trend_label = "Fearful"
+        else:
+            trend_label = "Neutral"
+
+    galaxy_proxy = None
+    if fg_val is not None:
+        vol_boost = 0.0
+        if momentum_chg is not None:
+            vol_boost = max(-15.0, min(15.0, momentum_chg / 2))
+        galaxy_proxy = max(0.0, min(100.0, fg_val * 0.65 + 35 + vol_boost))
+
+    heroes = [
+        {
+            "name": "Social Health",
+            "value": f"{galaxy_proxy:.0f}" if galaxy_proxy is not None else "—",
+            "sub": "Proxy (F&G + volume)" if galaxy_proxy is not None else "Awaiting data",
+        },
+        {
+            "name": "Social Volume",
+            "value": _fmt_compact(social_vol),
+            "sub": f"{vol_chg:+.1f}% 24h" if vol_chg is not None else "Santiment daily",
+        },
+        {
+            "name": "Fear & Greed",
+            "value": f"{fg_val:.0f}" if fg_val is not None else "—",
+            "sub": str(fg_label) if fg_val is not None else "Sentiment proxy",
+        },
+        {
+            "name": "7d Momentum",
+            "value": f"{momentum_chg:+.1f}%" if momentum_chg is not None else "—",
+            "sub": "Social volume trend",
+        },
+    ]
+
+    commentary = [
+        "Live social volume from Santiment; sentiment proxy from Crypto Fear & Greed Index.",
+    ]
+    if any("402" in e or "Individual" in e for e in errors):
+        commentary.append(
+            "LunarCrush API key is set but Individual subscription is not active — "
+            "activate at lunarcrush.com/pricing for Galaxy Score, AltRank, dominance, and top influencers."
+        )
+    elif any("LunarCrush" in e for e in errors):
+        commentary.append(f"LunarCrush unavailable ({errors[0][:120]}).")
+    if vol_chg is not None:
+        commentary.append(f"BTC social mentions volume moved {vol_chg:+.1f}% day-over-day (Santiment).")
+    if fg_val is not None:
+        commentary.append(f"Market mood reads {fg_label} ({fg_val:.0f}/100) on the Fear & Greed index.")
+
+    return {
+        "updatedAt": _now_iso(),
+        "source": "santiment+fear-greed",
+        "mockOnly": False,
+        "dataMode": "fallback",
+        "errors": errors,
+        "endpoints": ["santiment:social_volume_total", "alternative.me:fear-greed"],
+        "heroes": heroes,
+        "sentiment": {
+            "bullishPct": bullish,
+            "bearishPct": bearish,
+            "trendArrow": arrow,
+            "trendLabel": trend_label,
+        },
+        "metrics": {
+            "galaxyScore": galaxy_proxy,
+            "altRank": None,
+            "socialVolume": social_vol,
+            "socialVolume24hChangePct": vol_chg,
+            "socialDominancePct": None,
+            "mentions24h": social_vol,
+            "activeCreators": None,
+        },
+        "momentum": {
+            "label": "7d social volume (Santiment)",
+            "changePct": momentum_chg,
+            "sparkline": spark,
+        },
+        "influencers": [],
+        "influencersNote": (
+            "Top influencer rankings require an active LunarCrush Individual subscription. "
+            "Galaxy Score, AltRank, and social dominance also come from LunarCrush."
+        ),
+        "commentary": commentary,
+    }
 
 
 def _mock_payload() -> dict:
@@ -517,24 +710,31 @@ def get_social_btc_payload(*, refresh: bool = False, mock_only: bool = False) ->
         _cache_set(cache_key, payload)
         return payload
 
-    try:
-        if not _api_key():
-            payload = _mock_payload()
-            payload["source"] = "mock"
-            payload["errors"] = ["LUNARCRUSH_API_KEY not set — showing mock data"]
+    lc_errors: list[str] = []
+
+    if _api_key():
+        try:
+            payload = _try_lunarcrush_live()
             _cache_set(cache_key, payload)
             return payload
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
+            lc_errors.append(str(exc))
+    else:
+        lc_errors.append("LUNARCRUSH_API_KEY not set")
 
-        payload = _build_live_payload()
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
-        stale = _cache.get(cache_key)
-        if stale and time.time() - stale[0] <= CACHE_TTL * 6:
-            out = dict(stale[1])
-            out["source"] = "cached"
-            out["errors"] = [str(exc)]
-            return out
-        payload = _mock_payload()
-        payload["errors"] = [str(exc)]
+    fallback = _build_santiment_fallback(lc_errors)
+    if fallback:
+        _cache_set(cache_key, fallback)
+        return fallback
 
+    stale = _cache.get(cache_key)
+    if stale and time.time() - stale[0] <= CACHE_TTL * 6:
+        out = dict(stale[1])
+        out["source"] = "cached"
+        out["errors"] = lc_errors
+        return out
+
+    payload = _mock_payload()
+    payload["errors"] = lc_errors + ["Santiment fallback unavailable — showing seeded mock"]
     _cache_set(cache_key, payload)
     return payload

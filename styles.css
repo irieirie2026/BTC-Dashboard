@@ -7939,7 +7939,25 @@ body[data-l1="misc"] .logo-icon::before {
   .pm-detail-grid { grid-template-columns: 1fr; }
 }
 
-/* ── Social (LunarCrush) ── */
+/* ── Social (LunarCrush + Santiment fallback) ── */
+.social-hero-strip {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.social-hero-block {
+  border-left: 3px solid #8b5cf6;
+  min-height: 4.25rem;
+  justify-content: center;
+}
+
+.social-hero-block .deriv-hero-value {
+  font-size: 1.05rem;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
 .social-powered {
   margin: 0;
   padding: 0 1rem 0.65rem;
@@ -7987,8 +8005,8 @@ body[data-l1="misc"] .logo-icon::before {
 
 .social-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
   padding: 0.75rem 1rem 0.5rem;
 }
 
@@ -7997,14 +8015,19 @@ body[data-l1="misc"] .logo-icon::before {
   border-radius: 10px;
   background: rgba(15, 23, 42, 0.55);
   border: 1px solid rgba(42, 49, 66, 0.55);
+  min-height: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.social-card--wide {
-  grid-column: span 2;
+.social-card--wide,
+.social-card--sentiment {
+  grid-column: 1 / -1;
 }
 
 .social-card--sentiment {
-  grid-column: span 2;
+  min-height: auto;
 }
 
 .social-card__title {
@@ -8101,9 +8124,31 @@ body[data-l1="misc"] .logo-icon::before {
   border-bottom: 1px solid rgba(42, 49, 66, 0.35);
 }
 
+.social-influencers-note {
+  margin: 0;
+  padding: 0.55rem 1rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.08);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
 .social-table-wrap {
   overflow-x: auto;
   padding: 0 1rem 1rem;
+}
+
+.social-influencer-empty td {
+  padding: 1rem 0.55rem;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.social-spark-empty {
+  font-size: 0.68rem;
+  color: var(--text-muted);
 }
 
 .social-table {
@@ -8139,9 +8184,18 @@ body[data-l1="misc"] .logo-icon::before {
   background: rgba(139, 92, 246, 0.08);
 }
 
-@media (max-width: 720px) {
-  .social-card--wide,
-  .social-card--sentiment {
-    grid-column: span 1;
+@media (max-width: 900px) {
+  .social-hero-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .social-hero-strip,
+  .social-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,4 +1,4 @@
-/** BTC Social — LunarCrush via /api/social/btc (10 min cache server-side) */
+/** BTC Social — LunarCrush (when subscribed) + Santiment/Fear&Greed fallback via /api/social/btc */
 
 const SOCIAL_POLL_MS = 600_000;
 const SOCIAL_API = "/api/social/btc";
@@ -34,7 +34,7 @@ function socialChangeClass(n) {
 }
 
 function socialSparklineSvg(points, width = 120, height = 32) {
-  if (!points?.length) return "";
+  if (!points?.length) return '<span class="social-spark-empty">No trend data</span>';
   const min = Math.min(...points);
   const max = Math.max(...points);
   const span = max - min || 1;
@@ -47,57 +47,49 @@ function socialSparklineSvg(points, width = 120, height = 32) {
   return `<svg class="social-spark" width="${width}" height="${height}" aria-hidden="true"><polyline fill="none" stroke="${trend}" stroke-width="2" points="${coords.join(" ")}"/></svg>`;
 }
 
-function socialMockPayload() {
+function socialOfflinePayload(errMsg) {
   return {
     updatedAt: new Date().toISOString(),
-    source: "client-mock",
+    source: "offline",
     mockOnly: true,
-    errors: [],
+    dataMode: "offline",
+    errors: [errMsg],
     heroes: [
-      { name: "Galaxy Score", value: "72", sub: "Social health" },
-      { name: "AltRank", value: "#4", sub: "Lower is better" },
-      { name: "Social Volume", value: "1.24M", sub: "+8.4% 24h" },
-      { name: "Dominance", value: "38.2%", sub: "Crypto social share" },
+      { name: "Social Health", value: "—", sub: "API unreachable" },
+      { name: "Social Volume", value: "—", sub: "—" },
+      { name: "Fear & Greed", value: "—", sub: "—" },
+      { name: "7d Momentum", value: "—", sub: "—" },
     ],
-    sentiment: { bullishPct: 64, bearishPct: 36, trendArrow: "↑", trendLabel: "Improving" },
-    metrics: {
-      galaxyScore: 72,
-      altRank: 4,
-      socialVolume: 1240000,
-      socialVolume24hChangePct: 8.4,
-      socialDominancePct: 38.2,
-      mentions24h: 89200,
-      activeCreators: 4210,
-    },
-    momentum: { label: "7d social volume", changePct: 12.6, sparkline: [42, 44.5, 41.2, 46.8, 48.1, 45, 49.3, 51] },
-    influencers: [
-      { rank: 1, name: "PlanB", handle: "100trillionUSD", engagements: 284000, posts: 12, followers: 1900000, platform: "x" },
-      { rank: 2, name: "Michael Saylor", handle: "saylor", engagements: 256000, posts: 8, followers: 4200000, platform: "x" },
-    ],
-    commentary: ["Client mock — deploy API for live LunarCrush feed."],
+    sentiment: { bullishPct: null, bearishPct: null, trendArrow: "→", trendLabel: "—" },
+    metrics: {},
+    momentum: { label: "7d social volume", changePct: null, sparkline: [] },
+    influencers: [],
+    influencersNote: "Could not reach /api/social/btc — check deployment and refresh.",
+    commentary: [`Social API unreachable: ${errMsg}`],
   };
 }
 
 async function socialFetch(refresh = false) {
   const params = new URLSearchParams({ _: String(Date.now()) });
   if (refresh) params.set("refresh", "1");
-  try {
-    const res = await fetch(`${SOCIAL_API}?${params}`);
-    if (res.ok) return res.json();
-    const err = await res.json().catch(() => ({}));
-    const msg = err.error || `Social API ${res.status}`;
-    if (res.status === 404 || /unknown api route/i.test(msg)) return socialMockPayload();
-    throw new Error(msg);
-  } catch (err) {
-    if (err instanceof TypeError || /failed to fetch/i.test(err.message || "")) return socialMockPayload();
-    throw err;
+  const res = await fetch(`${SOCIAL_API}?${params}`);
+  const data = await res.json().catch(() => null);
+  if (data && typeof data === "object" && (res.ok || data.heroes || data.metrics)) {
+    return data;
   }
+  const msg = data?.error || `Social API ${res.status}`;
+  throw new Error(msg);
 }
 
 function socialRenderHeroes() {
   const strip = socialEl("social-heroes");
   if (!strip) return;
-  strip.innerHTML = (socialData?.heroes || [])
+  const heroes = socialData?.heroes || [];
+  if (!heroes.length) {
+    strip.innerHTML = "";
+    return;
+  }
+  strip.innerHTML = heroes
     .map(
       (h) => `
       <article class="deriv-hero-block social-hero-block">
@@ -115,22 +107,24 @@ function socialRenderSentiment() {
   const bear = socialEl("social-sentiment-bear");
   const arrow = socialEl("social-sentiment-trend");
   const label = socialEl("social-sentiment-label");
-  if (bull) bull.textContent = s.bullishPct != null ? `${s.bullishPct.toFixed(1)}%` : "—";
-  if (bear) bear.textContent = s.bearishPct != null ? `${s.bearishPct.toFixed(1)}%` : "—";
+  if (bull) bull.textContent = s.bullishPct != null ? `${Number(s.bullishPct).toFixed(1)}%` : "—";
+  if (bear) bear.textContent = s.bearishPct != null ? `${Number(s.bearishPct).toFixed(1)}%` : "—";
   if (arrow) {
     arrow.textContent = s.trendArrow || "→";
-    arrow.className = "social-sentiment-arrow " + (s.trendArrow === "↑" ? "positive" : s.trendArrow === "↓" ? "negative" : "");
+    arrow.className =
+      "social-sentiment-arrow " + (s.trendArrow === "↑" ? "positive" : s.trendArrow === "↓" ? "negative" : "");
   }
   if (label) label.textContent = s.trendLabel || "—";
 }
 
 function socialRenderMetrics() {
   const m = socialData?.metrics || {};
+  const fallback = socialData?.dataMode === "fallback";
   const set = (id, val) => {
     const el = socialEl(id);
     if (el) el.textContent = val;
   };
-  set("social-metric-galaxy", m.galaxyScore != null ? m.galaxyScore.toFixed(0) : "—");
+  set("social-metric-galaxy", m.galaxyScore != null ? Number(m.galaxyScore).toFixed(0) : "—");
   set("social-metric-altrank", m.altRank != null ? `#${m.altRank}` : "—");
   set("social-metric-volume", socialFmtNum(m.socialVolume));
   const volChg = socialEl("social-metric-volume-chg");
@@ -138,9 +132,18 @@ function socialRenderMetrics() {
     volChg.textContent = socialFmtPct(m.socialVolume24hChangePct);
     volChg.className = "social-metric-delta mono " + socialChangeClass(m.socialVolume24hChangePct);
   }
-  set("social-metric-dominance", m.socialDominancePct != null ? `${m.socialDominancePct.toFixed(1)}%` : "—");
+  set("social-metric-dominance", m.socialDominancePct != null ? `${Number(m.socialDominancePct).toFixed(1)}%` : "—");
   set("social-metric-mentions", socialFmtNum(m.mentions24h));
   set("social-metric-creators", socialFmtNum(m.activeCreators));
+
+  const galaxySub = document.querySelector('[data-l2="social"] .social-card[data-help-key="social-galaxy"] .social-card__sub');
+  if (galaxySub && fallback) {
+    galaxySub.textContent = "Proxy score (Fear & Greed + volume) — LunarCrush for official Galaxy Score";
+  }
+  const domSub = document.querySelector('[data-l2="social"] .social-card[data-help-key="social-dominance"] .social-card__sub');
+  if (domSub && fallback && m.socialDominancePct == null) {
+    domSub.textContent = "Requires LunarCrush Individual plan";
+  }
 }
 
 function socialRenderMomentum() {
@@ -156,10 +159,23 @@ function socialRenderMomentum() {
 
 function socialRenderInfluencers() {
   const tbody = socialEl("social-influencers-body");
+  const note = socialEl("social-influencers-note");
   if (!tbody) return;
   const rows = socialData?.influencers || [];
+  const infNote = socialData?.influencersNote;
+
+  if (note) {
+    if (infNote && !rows.length) {
+      note.hidden = false;
+      note.textContent = infNote;
+    } else {
+      note.hidden = true;
+      note.textContent = "";
+    }
+  }
+
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="5">No influencer data available.</td></tr>`;
+    tbody.innerHTML = `<tr class="social-influencer-empty"><td colspan="5">${infNote || "No influencer data available."}</td></tr>`;
     return;
   }
   tbody.innerHTML = rows
@@ -178,7 +194,7 @@ function socialRenderInfluencers() {
         <td class="mono">#${inf.rank}</td>
         <td>${name}</td>
         <td class="mono">${socialFmtNum(inf.engagements)}</td>
-        <td class="mono">${inf.posts != null ? inf.posts.toFixed(0) : "—"}</td>
+        <td class="mono">${inf.posts != null ? Number(inf.posts).toFixed(0) : "—"}</td>
         <td class="mono">${socialFmtNum(inf.followers)}</td>
       </tr>`;
     })
@@ -200,11 +216,11 @@ function socialRenderMeta() {
     return;
   }
   const src = socialData?.source || "—";
+  const mode = socialData?.dataMode === "fallback" ? " · Santiment fallback" : "";
   const updated = socialData?.updatedAt
     ? new Date(socialData.updatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
     : "—";
-  const err = socialError ? " · fallback" : "";
-  meta.textContent = `BTC Social · ${src} · updated ${updated}${err}`;
+  meta.textContent = `BTC Social · ${src}${mode} · updated ${updated}`;
 }
 
 function socialRenderStatus() {
@@ -212,8 +228,15 @@ function socialRenderStatus() {
   const errBox = socialEl("social-error");
   if (loading) loading.hidden = !socialLoading;
   if (errBox) {
-    errBox.hidden = !socialError;
-    if (socialError) errBox.textContent = socialError;
+    const errs = socialData?.errors || [];
+    const showErr = socialError || (errs.length > 0 && socialData?.dataMode === "fallback");
+    errBox.hidden = !showErr;
+    if (showErr) {
+      const parts = [];
+      if (socialError) parts.push(socialError);
+      if (errs.length) parts.push(...errs.slice(0, 2));
+      errBox.textContent = parts.join(" · ");
+    }
   }
 }
 
@@ -236,12 +259,17 @@ async function socialLoad({ refresh = false, silent = false } = {}) {
   }
   try {
     socialData = await socialFetch(refresh);
-    socialError = socialData.errors?.length ? socialData.errors.join(" · ") : null;
+    socialError =
+      socialData.mockOnly && socialData.source === "mock"
+        ? socialData.errors?.join(" · ") || "Showing seeded mock data"
+        : null;
+    if (socialData.errors?.length && socialData.dataMode === "fallback") {
+      socialError = null;
+    }
   } catch (err) {
     socialError = err.message || String(err);
-    if (!socialData) {
-      socialData = socialMockPayload();
-      socialError = `${socialError} — showing offline mock data`;
+    if (!socialData || socialData.source === "offline") {
+      socialData = socialOfflinePayload(socialError);
     }
   } finally {
     socialLoading = false;

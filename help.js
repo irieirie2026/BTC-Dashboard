@@ -293,7 +293,7 @@ const METRIC_HELP = {
   },
   "social-overview": {
     title: "BTC Social Intelligence",
-    body: "Bitcoin-only social metrics from LunarCrush: sentiment, volume, Galaxy Score, AltRank, dominance, momentum, and top influencers. Cached 10 minutes server-side to stay within free-tier API limits.",
+    body: "Bitcoin social metrics from LunarCrush when your API key has an active Individual plan. Otherwise live Santiment social volume + Crypto Fear & Greed sentiment proxy. Cached 10 minutes server-side.",
   },
   "social-sentiment": {
     title: "Social Sentiment",
