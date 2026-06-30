@@ -38,7 +38,6 @@ from btc_indicators_api import (
     get_valuation_models_meta_payload,
     get_valuation_models_bundle_payload,
 )
-from prediction_markets_api import get_prediction_markets_payload
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
@@ -234,6 +233,8 @@ def dispatch_api(path, query):
     if path == "/api/prediction-markets":
         refresh = _query_refresh(query)
         mock_only = (query.get("mock") or ["0"])[0] in ("1", "true", "yes")
+        from prediction_markets_api import get_prediction_markets_payload
+
         return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
 
     if path.startswith("/api/exchanges/"):
