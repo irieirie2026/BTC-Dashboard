@@ -171,6 +171,17 @@ async function mmFetchJson(url) {
   return res.json();
 }
 
+/** Blockchain.info charts block browser CORS on localhost — proxy via server when available. */
+async function mmFetchBlockchainChart(name, timespan = "1year") {
+  const proxyUrl = `/api/onchain/chart?name=${encodeURIComponent(name)}&timespan=${encodeURIComponent(timespan)}`;
+  const directUrl = `https://api.blockchain.info/charts/${name}?timespan=${timespan}&format=json`;
+  try {
+    return await mmFetchJson(proxyUrl);
+  } catch (_) {
+    return await mmFetchJson(directUrl);
+  }
+}
+
 function mmFngZone(value) {
   const zones = [
     [24, "Extreme Fear", "#ea3943"],
@@ -235,14 +246,8 @@ async function mmBuildClientPayload() {
         ),
       ),
       safe("fear-greed", () => mmFetchJson("https://api.alternative.me/fng/?limit=10")),
-      safe("blockchain tx", () =>
-        mmFetchJson("https://api.blockchain.info/charts/n-transactions?timespan=1year&format=json"),
-      ),
-      safe("blockchain vol", () =>
-        mmFetchJson(
-          "https://api.blockchain.info/charts/estimated-transaction-volume?timespan=1year&format=json",
-        ),
-      ),
+      safe("blockchain tx", () => mmFetchBlockchainChart("n-transactions", "1year")),
+      safe("blockchain vol", () => mmFetchBlockchainChart("estimated-transaction-volume", "1year")),
       safe("mempool", () => mmFetchJson("https://mempool.space/api/mempool")),
       safe("fees", () => mmFetchJson("https://mempool.space/api/v1/fees/recommended")),
       safe("hashrate", () => mmFetchJson("https://mempool.space/api/v1/mining/hashrate/3d")),
