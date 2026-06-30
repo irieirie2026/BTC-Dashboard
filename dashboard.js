@@ -115,12 +115,12 @@ const MENU_TREE = {
             accent: "#f59e0b",
             accentDim: "rgba(245, 158, 11, 0.18)",
             onShow: () => {
-              window.initPredictionMarkets?.("btc-price");
-              window.decorateHelpLabels?.(
-                document.querySelector(
-                  '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="btc-price"]',
-                ),
-              );
+              const panel =
+                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="btc-price"]';
+              const boot = () => window.initPredictionMarkets?.("btc-price");
+              boot();
+              requestAnimationFrame(boot);
+              window.decorateHelpLabels?.(document.querySelector(panel));
             },
           },
           financial: {
@@ -128,12 +128,12 @@ const MENU_TREE = {
             accent: "#38bdf8",
             accentDim: "rgba(56, 189, 248, 0.18)",
             onShow: () => {
-              window.initPredictionMarkets?.("financial");
-              window.decorateHelpLabels?.(
-                document.querySelector(
-                  '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="financial"]',
-                ),
-              );
+              const panel =
+                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="financial"]';
+              const boot = () => window.initPredictionMarkets?.("financial");
+              boot();
+              requestAnimationFrame(boot);
+              window.decorateHelpLabels?.(document.querySelector(panel));
             },
           },
           geopolitical: {
@@ -141,12 +141,12 @@ const MENU_TREE = {
             accent: "#a78bfa",
             accentDim: "rgba(167, 139, 250, 0.18)",
             onShow: () => {
-              window.initPredictionMarkets?.("geopolitical");
-              window.decorateHelpLabels?.(
-                document.querySelector(
-                  '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="geopolitical"]',
-                ),
-              );
+              const panel =
+                '#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="geopolitical"]';
+              const boot = () => window.initPredictionMarkets?.("geopolitical");
+              boot();
+              requestAnimationFrame(boot);
+              window.decorateHelpLabels?.(document.querySelector(panel));
             },
           },
         },

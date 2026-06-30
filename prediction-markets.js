@@ -101,17 +101,21 @@ const PM_TF_LABELS = {
   "long-term": "Long-term",
 };
 
+function pmScreenFor(section = pmActiveSection) {
+  return document.querySelector(
+    `#dashboard-market .menu-screen[data-l1="market"][data-l2="prediction-markets"][data-l3="${section}"]`,
+  );
+}
+
 function pmScreen() {
   return (
-    document.querySelector(
-      `#dashboard-market .menu-screen[data-l2="prediction-markets"][data-l3="${pmActiveSection}"]`,
-    ) ||
+    pmScreenFor(pmActiveSection) ||
     document.querySelector('#dashboard-market .menu-screen[data-l2="prediction-markets"]:not([hidden])')
   );
 }
 
-function pmQ(sel) {
-  return pmScreen()?.querySelector(sel);
+function pmQ(sel, section = pmActiveSection) {
+  return pmScreenFor(section)?.querySelector(sel);
 }
 
 function pmFmtUsd(n) {
@@ -164,13 +168,6 @@ function pmIsBtcRelated(m) {
 function pmTagSection(m) {
   if (m.section && PM_SECTIONS[m.section]) return m.section;
   if (pmIsBtcRelated(m)) return "btc-price";
-  const text = `${m.question || ""} ${m.description || ""}`;
-  if (/\b(fed|fomc|ecb|boe|boj|cpi|inflation|gdp|recession|rate cut|rate hike|opec|central bank)\b/i.test(text)) {
-    return "financial";
-  }
-  if (/\b(election|sanction|tariff|ceasefire|nato|ukraine|taiwan|invasion|parliament|president|prime minister)\b/i.test(text)) {
-    return "geopolitical";
-  }
   if (m.category === "macro") return "financial";
   if (m.category === "regulation") return "geopolitical";
   return "btc-price";
@@ -463,10 +460,7 @@ function pmSectionBundle() {
 }
 
 function pmRenderHeroes(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const strip = pmQ(".pm-heroes");
-  pmActiveSection = prev;
+  const strip = pmQ(".pm-heroes", section);
   if (!strip) return;
   const heroes = pmData?.sectionData?.[section]?.heroes || pmData?.heroes || [];
   strip.innerHTML = heroes
@@ -482,11 +476,8 @@ function pmRenderHeroes(section = pmActiveSection) {
 }
 
 function pmRenderOutlook(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const head = pmQ(".pm-outlook-head");
-  const body = pmQ(".pm-outlook-body");
-  pmActiveSection = prev;
+  const head = pmQ(".pm-outlook-head", section);
+  const body = pmQ(".pm-outlook-body", section);
   const outlook = pmData?.sectionData?.[section]?.outlook || pmData?.outlook;
   if (head) head.textContent = outlook?.headline || "Aggregated outlook";
   if (body) {
@@ -496,10 +487,7 @@ function pmRenderOutlook(section = pmActiveSection) {
 }
 
 function pmRenderMeta(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const meta = pmQ(".pm-meta");
-  pmActiveSection = prev;
+  const meta = pmQ(".pm-meta", section);
   if (!meta) return;
   if (pmLoading) {
     meta.textContent = "Loading markets…";
@@ -519,10 +507,7 @@ function pmRenderMeta(section = pmActiveSection) {
 }
 
 function pmRenderSectionNav(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const nav = pmQ(".pm-section-nav");
-  pmActiveSection = prev;
+  const nav = pmQ(".pm-section-nav", section);
   if (!nav) return;
   nav.innerHTML = Object.entries(PM_SECTIONS)
     .map(
@@ -534,10 +519,7 @@ function pmRenderSectionNav(section = pmActiveSection) {
 }
 
 function pmRenderFilters(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const wrap = pmQ(".pm-filters");
-  pmActiveSection = prev;
+  const wrap = pmQ(".pm-filters", section);
   if (!wrap || !pmData?.filters) return;
 
   pmSanitizeFilters(section);
@@ -576,12 +558,9 @@ function pmPlatformBadge(platform) {
 }
 
 function pmRenderTable(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const tbody = pmQ(".pm-table-body");
-  const cards = pmQ(".pm-cards");
-  const empty = pmQ(".pm-empty");
-  pmActiveSection = prev;
+  const tbody = pmQ(".pm-table-body", section);
+  const cards = pmQ(".pm-cards", section);
+  const empty = pmQ(".pm-empty", section);
   const rows = pmFilteredMarkets(section);
 
   if (empty) empty.hidden = rows.length > 0;
@@ -635,11 +614,8 @@ function pmRenderTable(section = pmActiveSection) {
 }
 
 function pmRenderStatus(section = pmActiveSection) {
-  const prev = pmActiveSection;
-  pmActiveSection = section;
-  const loading = pmQ(".pm-loading");
-  const errBox = pmQ(".pm-error");
-  pmActiveSection = prev;
+  const loading = pmQ(".pm-loading", section);
+  const errBox = pmQ(".pm-error", section);
   if (loading) loading.hidden = !pmLoading;
   if (errBox) {
     errBox.hidden = !pmError;
@@ -823,14 +799,45 @@ function initPredictionMarkets(section = "btc-price") {
   pmActiveSection = PM_SECTIONS[section] ? section : "btc-price";
   pmResetFilters(pmActiveSection);
   pmBindEvents();
-  if (!pmData) {
-    pmResetAllFilters();
-    pmResetFilters(pmActiveSection);
-    pmLoad();
-    pmStartPoll();
-  } else {
+
+  if (pmData) {
     pmRenderAllScreens();
+    return;
   }
+
+  if (pmLoading) {
+    pmRenderActiveScreen();
+    return;
+  }
+
+  pmResetAllFilters();
+  pmResetFilters(pmActiveSection);
+  pmLoad();
+  if (!pmPollTimer) pmStartPoll();
+}
+
+function pmShouldInit() {
+  const l1 = localStorage.getItem("btc-menu-l1") || window.MenuController?.l1;
+  const l2 = localStorage.getItem("btc-menu-l2") || window.MenuController?.l2;
+  return l1 === "market" && l2 === "prediction-markets";
+}
+
+function pmBootstrap() {
+  if (!pmShouldInit()) return;
+  const l3 = localStorage.getItem("btc-menu-l3") || window.MenuController?.l3 || "btc-price";
+  initPredictionMarkets(PM_SECTIONS[l3] ? l3 : "btc-price");
 }
 
 window.initPredictionMarkets = initPredictionMarkets;
+
+function pmScheduleBootstrap() {
+  if (pmData || pmLoading) return;
+  pmBootstrap();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", pmScheduleBootstrap);
+} else {
+  pmScheduleBootstrap();
+}
+window.addEventListener("load", pmScheduleBootstrap);
