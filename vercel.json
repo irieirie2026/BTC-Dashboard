@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Link",
-          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=7>; rel=icon; type=image/png"
+          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=8>; rel=icon; type=image/png"
         }
       ]
     },
@@ -15,7 +15,7 @@
       "headers": [
         {
           "key": "Link",
-          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=7>; rel=icon; type=image/png"
+          "value": "<https://btc-dashboard-bay.vercel.app/favicon-32.png?v=8>; rel=icon; type=image/png"
         }
       ]
     },
