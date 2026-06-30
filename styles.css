@@ -7219,6 +7219,38 @@ body[data-l1="misc"] .logo-icon::before {
   border-bottom: 1px solid rgba(42, 49, 66, 0.35);
 }
 
+.pm-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem 0.65rem;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.35);
+}
+
+.pm-section-tab {
+  border: 1px solid rgba(42, 49, 66, 0.85);
+  background: rgba(15, 20, 30, 0.65);
+  color: #94a3b8;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.pm-section-tab:hover {
+  color: #e2e8f0;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.pm-section-tab.active {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.2);
+}
+
 .pm-toolbar {
   padding: 0.5rem 1rem 0.75rem;
   border-bottom: 1px solid rgba(42, 49, 66, 0.55);

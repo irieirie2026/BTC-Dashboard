@@ -15,7 +15,41 @@ let pmData = null;
 let pmLoading = false;
 let pmError = null;
 let pmActiveSection = "btc-price";
-let pmFilters = { timeframe: "all", category: "all", platform: "all" };
+
+const PM_DEFAULT_FILTERS = { timeframe: "all", category: "all", platform: "all" };
+
+function pmDefaultFiltersBySection() {
+  return {
+    "btc-price": { ...PM_DEFAULT_FILTERS },
+    financial: { ...PM_DEFAULT_FILTERS },
+    geopolitical: { ...PM_DEFAULT_FILTERS },
+  };
+}
+
+let pmFiltersBySection = pmDefaultFiltersBySection();
+
+function pmFiltersFor(section = pmActiveSection) {
+  return pmFiltersBySection[section] || pmFiltersBySection["btc-price"];
+}
+
+function pmCategoryOptions(section = pmActiveSection) {
+  if (!pmData?.filters?.categories) return [];
+  if (section === "financial") {
+    return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "macro");
+  }
+  if (section === "geopolitical") {
+    return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "regulation");
+  }
+  return pmData.filters.categories.filter((c) => c.id === "all" || c.id === "price-targets");
+}
+
+function pmSanitizeFilters(section = pmActiveSection) {
+  const filters = pmFiltersFor(section);
+  const validCats = new Set(pmCategoryOptions(section).map((c) => c.id));
+  if (!validCats.has(filters.category)) {
+    filters.category = "all";
+  }
+}
 let pmSelected = null;
 
 const PM_PLATFORM_LABELS = { polymarket: "Polymarket", kalshi: "Kalshi" };
@@ -85,7 +119,18 @@ function pmSparklineSvg(points, width = 56, height = 20) {
 }
 
 function pmTagSection(m) {
-  return m.section || (m.category === "macro" ? "financial" : m.category === "regulation" ? "geopolitical" : "btc-price");
+  if (m.section && PM_SECTIONS[m.section]) return m.section;
+  const text = `${m.question || ""} ${m.description || ""}`;
+  if (/\b(bitcoin|btc\b).*(price|reach|hit|above|below|\$\d|\d+k\b)/i.test(text)) return "btc-price";
+  if (/\b(fed|fomc|ecb|boe|boj|cpi|inflation|gdp|recession|rate cut|rate hike|opec)\b/i.test(text)) {
+    return "financial";
+  }
+  if (/\b(election|sanction|tariff|ceasefire|nato|ukraine|taiwan|invasion|parliament|president|prime minister)\b/i.test(text)) {
+    return "geopolitical";
+  }
+  if (m.category === "macro") return "financial";
+  if (m.category === "regulation") return "geopolitical";
+  return "btc-price";
 }
 
 function pmMockPayload() {
@@ -340,16 +385,18 @@ async function pmFetch(refresh = false) {
   }
 }
 
-function pmSectionMarkets() {
+function pmSectionMarkets(section = pmActiveSection) {
   const rows = pmData?.markets || [];
-  return rows.filter((m) => pmTagSection(m) === pmActiveSection);
+  return rows.filter((m) => pmTagSection(m) === section);
 }
 
-function pmFilteredMarkets() {
-  return pmSectionMarkets().filter((m) => {
-    if (pmFilters.timeframe !== "all" && m.timeframe !== pmFilters.timeframe) return false;
-    if (pmFilters.category !== "all" && m.category !== pmFilters.category) return false;
-    if (pmFilters.platform !== "all" && m.platform !== pmFilters.platform) return false;
+function pmFilteredMarkets(section = pmActiveSection) {
+  pmSanitizeFilters(section);
+  const filters = pmFiltersFor(section);
+  return pmSectionMarkets(section).filter((m) => {
+    if (filters.timeframe !== "all" && m.timeframe !== filters.timeframe) return false;
+    if (filters.category !== "all" && m.category !== filters.category) return false;
+    if (filters.platform !== "all" && m.platform !== filters.platform) return false;
     return true;
   });
 }
@@ -358,10 +405,13 @@ function pmSectionBundle() {
   return pmData?.sectionData?.[pmActiveSection] || {};
 }
 
-function pmRenderHeroes() {
+function pmRenderHeroes(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const strip = pmQ(".pm-heroes");
+  pmActiveSection = prev;
   if (!strip) return;
-  const heroes = pmSectionBundle().heroes || pmData?.heroes || [];
+  const heroes = pmData?.sectionData?.[section]?.heroes || pmData?.heroes || [];
   strip.innerHTML = heroes
     .map(
       (h) => `
@@ -374,10 +424,13 @@ function pmRenderHeroes() {
     .join("");
 }
 
-function pmRenderOutlook() {
+function pmRenderOutlook(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const head = pmQ(".pm-outlook-head");
   const body = pmQ(".pm-outlook-body");
-  const outlook = pmSectionBundle().outlook || pmData?.outlook;
+  pmActiveSection = prev;
+  const outlook = pmData?.sectionData?.[section]?.outlook || pmData?.outlook;
   if (head) head.textContent = outlook?.headline || "Aggregated outlook";
   if (body) {
     const lines = outlook?.lines || [];
@@ -385,8 +438,11 @@ function pmRenderOutlook() {
   }
 }
 
-function pmRenderMeta() {
+function pmRenderMeta(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const meta = pmQ(".pm-meta");
+  pmActiveSection = prev;
   if (!meta) return;
   if (pmLoading) {
     meta.textContent = "Loading markets…";
@@ -400,21 +456,36 @@ function pmRenderMeta() {
   const updated = pmData?.updatedAt
     ? new Date(pmData.updatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
     : "—";
-  const count = pmFilteredMarkets().length;
-  const sec = PM_SECTIONS[pmActiveSection]?.label || pmActiveSection;
+  const count = pmFilteredMarkets(section).length;
+  const sec = PM_SECTIONS[section]?.label || section;
   meta.textContent = `${sec} · ${count} markets · ${src} · updated ${updated}`;
 }
 
-function pmRenderFilters() {
+function pmRenderSectionNav(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
+  const nav = pmQ(".pm-section-nav");
+  pmActiveSection = prev;
+  if (!nav) return;
+  nav.innerHTML = Object.entries(PM_SECTIONS)
+    .map(
+      ([id, meta]) => `
+      <button type="button" class="pm-section-tab${id === section ? " active" : ""}"
+        data-pm-section="${id}" aria-current="${id === section ? "page" : "false"}">${meta.label}</button>`,
+    )
+    .join("");
+}
+
+function pmRenderFilters(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const wrap = pmQ(".pm-filters");
+  pmActiveSection = prev;
   if (!wrap || !pmData?.filters) return;
 
-  const catItems =
-    pmActiveSection === "financial"
-      ? pmData.filters.categories.filter((c) => c.id === "all" || c.id === "macro")
-      : pmActiveSection === "geopolitical"
-        ? pmData.filters.categories.filter((c) => c.id === "all" || c.id === "regulation")
-        : pmData.filters.categories.filter((c) => c.id === "all" || c.id === "price-targets");
+  pmSanitizeFilters(section);
+  const filters = pmFiltersFor(section);
+  const catItems = pmCategoryOptions(section);
 
   const groups = [
     { key: "timeframe", label: "Timeframe", items: pmData.filters.timeframes },
@@ -431,8 +502,8 @@ function pmRenderFilters() {
           ${(g.items || [])
             .map(
               (item) => `
-            <button type="button" class="pm-chip${pmFilters[g.key] === item.id ? " active" : ""}"
-              data-pm-filter="${g.key}" data-pm-value="${item.id}">${item.label}</button>`,
+            <button type="button" class="pm-chip${filters[g.key] === item.id ? " active" : ""}"
+              data-pm-filter="${g.key}" data-pm-value="${item.id}" data-pm-section="${section}">${item.label}</button>`,
             )
             .join("")}
         </div>
@@ -446,11 +517,14 @@ function pmPlatformBadge(platform) {
   return `<span class="pm-badge pm-badge--${platform}">${label}</span>`;
 }
 
-function pmRenderTable() {
+function pmRenderTable(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const tbody = pmQ(".pm-table-body");
   const cards = pmQ(".pm-cards");
   const empty = pmQ(".pm-empty");
-  const rows = pmFilteredMarkets();
+  pmActiveSection = prev;
+  const rows = pmFilteredMarkets(section);
 
   if (empty) empty.hidden = rows.length > 0;
 
@@ -502,9 +576,12 @@ function pmRenderTable() {
   }
 }
 
-function pmRenderStatus() {
+function pmRenderStatus(section = pmActiveSection) {
+  const prev = pmActiveSection;
+  pmActiveSection = section;
   const loading = pmQ(".pm-loading");
   const errBox = pmQ(".pm-error");
+  pmActiveSection = prev;
   if (loading) loading.hidden = !pmLoading;
   if (errBox) {
     errBox.hidden = !pmError;
@@ -513,26 +590,25 @@ function pmRenderStatus() {
 }
 
 function pmRenderAllScreens() {
-  const prev = pmActiveSection;
   Object.keys(PM_SECTIONS).forEach((sec) => {
-    pmActiveSection = sec;
-    pmRenderHeroes();
-    pmRenderOutlook();
-    pmRenderMeta();
-    pmRenderFilters();
-    pmRenderTable();
-    pmRenderStatus();
+    pmRenderSectionNav(sec);
+    pmRenderHeroes(sec);
+    pmRenderOutlook(sec);
+    pmRenderMeta(sec);
+    pmRenderFilters(sec);
+    pmRenderTable(sec);
+    pmRenderStatus(sec);
   });
-  pmActiveSection = prev;
 }
 
 function pmRenderActiveScreen() {
-  pmRenderHeroes();
-  pmRenderOutlook();
-  pmRenderMeta();
-  pmRenderFilters();
-  pmRenderTable();
-  pmRenderStatus();
+  pmRenderSectionNav(pmActiveSection);
+  pmRenderHeroes(pmActiveSection);
+  pmRenderOutlook(pmActiveSection);
+  pmRenderMeta(pmActiveSection);
+  pmRenderFilters(pmActiveSection);
+  pmRenderTable(pmActiveSection);
+  pmRenderStatus(pmActiveSection);
 }
 
 function pmOpenModal(market) {
@@ -635,12 +711,22 @@ function pmBindEvents() {
 
   const root = document.getElementById("dashboard-market");
   root?.addEventListener("click", (e) => {
+    const sectionBtn = e.target.closest("[data-pm-section]");
+    if (sectionBtn && root.contains(sectionBtn) && !sectionBtn.dataset.pmFilter) {
+      const sec = sectionBtn.dataset.pmSection;
+      if (sec && PM_SECTIONS[sec]) {
+        window.MenuController?.setLevel3?.(sec);
+      }
+      return;
+    }
+
     const filterBtn = e.target.closest("[data-pm-filter]");
     if (filterBtn && root.contains(filterBtn)) {
       const key = filterBtn.dataset.pmFilter;
       const value = filterBtn.dataset.pmValue;
-      if (key && value) {
-        pmFilters[key] = value;
+      const sec = filterBtn.dataset.pmSection || pmActiveSection;
+      if (key && value && PM_SECTIONS[sec]) {
+        pmFiltersFor(sec)[key] = value;
         pmRenderAllScreens();
       }
       return;
@@ -666,7 +752,8 @@ function pmBindEvents() {
 
 function initPredictionMarkets(section = "btc-price") {
   pmActiveSection = PM_SECTIONS[section] ? section : "btc-price";
-  pmFilters = { timeframe: "all", category: "all", platform: "all" };
+  pmFiltersBySection[pmActiveSection] = { ...PM_DEFAULT_FILTERS };
+  pmSanitizeFilters(pmActiveSection);
   pmBindEvents();
   if (!pmData) {
     pmLoad();

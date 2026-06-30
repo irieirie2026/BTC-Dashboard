@@ -182,6 +182,8 @@ def _classify_category(question: str, description: str = "") -> str:
         BTC_MACRO.search(text) and not re.search(r"price|reach|hit|above|below|\$|k\b", text)
     ):
         return "macro"
+    if GEO_POLITICAL.search(text):
+        return "regulation"
     return "price-targets"
 
 
@@ -1120,18 +1122,37 @@ def _cap_by_section(markets: list[dict]) -> list[dict]:
 
 
 def _merge_live_with_mock(live: list[dict], mock: list[dict]) -> list[dict]:
-    if not live:
-        return _cap_by_section(_rank_markets(mock))
-    ranked_live = _rank_markets(live)
-    if len(live) >= 6:
-        return _cap_by_section(ranked_live)
-    seen_q = {m["question"].lower()[:60] for m in live}
-    merged = list(live)
-    for m in mock:
-        key = m["question"].lower()[:60]
-        if key not in seen_q:
-            merged.append(m)
-    return _cap_by_section(_rank_markets(merged))
+    """Fill each section from live first, then backfill thin sections from mock."""
+    buckets: dict[str, list[dict]] = {sid: [] for sid in PM_SECTION_CAPS}
+    seen_ids: set[str] = set()
+    seen_q: set[str] = set()
+
+    def _add(m: dict) -> None:
+        sec = m.get("section") or "btc-price"
+        if sec not in buckets:
+            sec = "btc-price"
+        if len(buckets[sec]) >= PM_SECTION_CAPS[sec]:
+            return
+        mid = m.get("id")
+        qkey = m["question"].lower()[:60]
+        if mid and mid in seen_ids:
+            return
+        if qkey in seen_q:
+            return
+        if mid:
+            seen_ids.add(mid)
+        seen_q.add(qkey)
+        buckets[sec].append(m)
+
+    for m in _rank_markets(live):
+        _add(m)
+    for m in _rank_markets(mock):
+        _add(m)
+
+    out: list[dict] = []
+    for sid in ("btc-price", "financial", "geopolitical"):
+        out.extend(buckets[sid])
+    return out
 
 
 def _cache_get(key: str, refresh: bool) -> dict | None:
