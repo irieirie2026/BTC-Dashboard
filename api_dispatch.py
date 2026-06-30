@@ -237,6 +237,13 @@ def dispatch_api(path, query):
 
         return get_social_btc_payload(refresh=refresh, mock_only=mock_only)
 
+    if path == "/api/prediction-markets":
+        refresh = _query_refresh(query)
+        mock_only = (query.get("mock") or ["0"])[0] in ("1", "true", "yes")
+        from macro_drivers_prediction_markets import get_prediction_markets_payload
+
+        return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
+
     if path.startswith("/api/exchanges/"):
         section = path[len("/api/exchanges/") :].strip("/")
         refresh = _query_refresh(query)

@@ -343,6 +343,42 @@ const METRIC_HELP = {
     title: "Social Outlook",
     body: "Heuristic read on BTC social narrative from aggregated LunarCrush metrics — not financial advice.",
   },
+  "prediction-markets-overview": {
+    title: "Prediction Markets",
+    body: "Live prediction markets from Polymarket (Gamma API) and Kalshi. Filter by Bitcoin, finance, economics, politics, and geopolitics. BTC-related markets are highlighted. Auto-refreshes every 60 seconds with server-side cache.",
+  },
+  "prediction-markets-question": {
+    title: "Market Question",
+    body: "The resolution question for the contract. Click any row or card for details; use Trade link for the source platform.",
+  },
+  "prediction-markets-yes": {
+    title: "Yes Probability",
+    body: "Implied probability of Yes resolving (0–100%). Green when ≥50%.",
+  },
+  "prediction-markets-volume": {
+    title: "24h Volume",
+    body: "Notional traded in the last 24 hours — liquidity and price-discovery signal.",
+  },
+  "prediction-markets-total-volume": {
+    title: "Total Volume",
+    body: "Lifetime notional traded on the contract.",
+  },
+  "prediction-markets-end": {
+    title: "End Date",
+    body: "Scheduled resolution date for the market.",
+  },
+  "prediction-markets-platform": {
+    title: "Platform",
+    body: "Polymarket (crypto-native) or Kalshi (US-regulated). Public APIs with mock fallback.",
+  },
+  "prediction-markets-category": {
+    title: "Category",
+    body: "Multi-select topic tags: Bitcoin, Finance, Economics, Politics, Geopolitics. Empty selection shows all.",
+  },
+  "prediction-markets-outlook": {
+    title: "Market Outlook",
+    body: "Aggregated read across filtered markets — e.g. implied BTC > $100k probability. Not financial advice.",
+  },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",
     body: "Live BTC spot prices from major exchanges via public APIs. Compare last price, 24h change, volume, and distance from the cross-venue median. Scaffold hub — extend with depth, arb, and flows later.",
