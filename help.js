@@ -8,8 +8,20 @@ const METRIC_HELP = {
     body: "How much the last price has moved compared to the opening price 24 hours ago. Shown as both a percentage and an absolute USDT difference. Green means up; red means down.",
   },
   "spot-chart": {
-    title: "1-Minute Candlestick Chart",
-    body: "Each candle represents one minute of trading. The body shows open-to-close range; wicks show the high and low. Green candles closed higher than they opened; red candles closed lower. The last 60 minutes are displayed.",
+    title: "Spot candlestick chart",
+    body: "Interactive canvas candlesticks for Binance BTC/USDT. Use the on-chart 1m–1D tabs to switch interval (up to 1,000 bars each). Scroll to zoom, drag to pan, double-click or Reset to fit. The 1m stream updates live via WebSocket; other intervals refresh every 2 minutes.",
+  },
+  "spot-history-chart": {
+    title: "Full price history",
+    body: "Interactive daily close chart of all available Binance BTC/USDT history. Use the on-chart buttons for range (1Y–All) and scale (Log/Linear). Scroll to zoom, drag to pan, double-click or Reset to fit full range.",
+  },
+  "spot-history-log": {
+    title: "Log scale",
+    body: "Logarithmic y-axis — better for comparing percentage moves across bull and bear cycles over many years.",
+  },
+  "spot-history-linear": {
+    title: "Linear scale",
+    body: "Linear y-axis — dollar distance on the chart matches absolute price change. Useful for recent ranges.",
   },
   "high-24h": {
     title: "24h High",
@@ -429,11 +441,207 @@ const METRIC_HELP = {
   },
   "kg-overview": {
     title: "Knowledge Graph",
-    body: "Unified schema designer (vis.js), multi-format ingestion engine, and topic search + RAG. Graph and documents persist in localStorage. Server routes handle URL/PDF/YouTube/RSS parsing; set OPENAI_API_KEY for LLM answers.",
+    body: "Build RAG charts: knowledge graphs plus ingested documents, queried with retrieval-augmented generation. Start on the Overview tab for the 5-step workflow. Data persists per workspace in localStorage.",
+  },
+  "kg-rag-chart": {
+    title: "What is a RAG chart?",
+    body: "A RAG chart joins three pieces: (1) a knowledge graph of entities and relationships, (2) chunked source documents from ingestion, and (3) retrieval that pulls relevant graph paths and text passages when you ask a question. The graph shapes which relationship paths appear in search results — not just keyword matches.",
+  },
+  "kg-schema-deep": {
+    title: "Schema Designer",
+    body: "Inventory (left) and inspector (right) for curating nodes and edges. Toolbar adds items and saves. Use the Graph tab for the full visual view — Schema Designer is for editing, not visualization.",
+  },
+  "kg-schema-instruction": {
+    title: "Schema Designer",
+    body: "Inventory and inspector side by side. Select items in the list to edit in the inspector. Add nodes/edges via the toolbar. Open the Graph tab for the full interactive visualization.",
+  },
+  "kg-ingest-merge": {
+    title: "Automatic nodes and edges",
+    body: "After Ingest & extract, a hybrid LLM + rule pass proposes nodes and edges with labels, typed categories (asset, org, metric, indicator, policy, regulation, …), and short descriptions. For Bulk discover sources, extraction is tuned to your discovery goal. Review mode (recommended) lets you approve, edit, or reject before items join the live graph.",
+  },
+  "kg-example-flow": {
+    title: "Example workflow",
+    body: "Template workspace → ingest article → approve extractions in the review panel → curate in Schema Designer → RAG search with grounded paths and snippets. Re-extract any document from the Documents table.",
+  },
+  "kg-rag-steps": {
+    title: "6-step workflow",
+    body: "Workspace → Schema → Ingest → Graph → Search → Iterate. Each step builds on the last. Use Go buttons to jump directly to the tab you need.",
+  },
+  "kg-step-graph": {
+    title: "Step 4 — Full graph",
+    body: "Open the Graph tab for a maximized vis.js view of your workspace. Fit the view, toggle physics and edge labels, search nodes, and inspect selections in the side panel.",
+  },
+  "kg-step-workspace": {
+    title: "Step 1 — Workspace",
+    body: "Pick or create an isolated experiment. Each workspace stores its own graph, documents, ingest log, and RAG history so you can compare setups without overwriting prior work.",
+  },
+  "kg-step-schema": {
+    title: "Step 2 — Seed schema (optional)",
+    body: "Manually add anchor nodes/edges or use a workspace template before ingesting. Not required — ingestion can build the graph from documents alone.",
+  },
+  "kg-step-ingest": {
+    title: "Step 3 — Ingest & extract",
+    body: "Describe a discovery goal — Grok plans Google searches, you approve pages/videos/images/news, then ingest. Or add URL/text/file manually. Extraction review adds nodes and edges to the graph.",
+  },
+  "kg-step-rag": {
+    title: "Step 5 — RAG search",
+    body: "Ask a natural-language question. The server scores document chunks and graph nodes, finds relationship paths, and optionally calls xAI Grok with that context only.",
+  },
+  "kg-step-iterate": {
+    title: "Step 6 — Iterate",
+    body: "Duplicate workspaces, adjust schema or sources, re-run the same queries, and compare RAG history entries to see how graph design affects answers.",
+  },
+  "kg-grok-tip": {
+    title: "Grok LLM (optional)",
+    body: "Set XAI_API_KEY in Vercel or .env.local (default model grok-3-mini). Powers bulk discover search planning, node/edge extraction after ingest, and RAG answers. For Google results also set GOOGLE_API_KEY + GOOGLE_CSE_ID (Programmable Search Engine).",
+  },
+  "kg-workspace-select": {
+    title: "Workspace selector",
+    body: "Switch between saved RAG chart experiments. Saving writes schema, documents, and history to localStorage under the active workspace ID.",
+  },
+  "kg-ingest-instruction": {
+    title: "Ingestion",
+    body: "Describe a discovery goal — Grok plans Google search phrases and fetches pages, videos, images, and news (~10 per type per phrase). Approve results, ingest, then review extracted nodes/edges. Or ingest URL/text/file manually. The Documents table lists only approved, extracted sources; items still in review stay in Extraction review until merged.",
+  },
+  "kg-discover": {
+    title: "Bulk discover",
+    body: "Write a goal in plain language. Grok (XAI_API_KEY) expands it into search phrases; the server runs Google searches per phrase for web, video, image, and news. Set GOOGLE_API_KEY + GOOGLE_CSE_ID for Custom Search; HTML/fallback used otherwise.",
+  },
+  "kg-discover-review": {
+    title: "Discovery review",
+    body: "Pre-ingest approval for discovered URLs and assets. Badges show content type and the Grok search phrase. Approve items, then Ingest approved runs ingest + extraction.",
+  },
+  "kg-discover-goal": {
+    title: "Discovery goal",
+    body: "Natural-language brief of what sources you need. Grok turns this into diverse Google search phrases. Example: ETF flows, post-halving miner economics, and SEC regulation articles for a macro BTC graph.",
+  },
+  "kg-search-instruction": {
+    title: "Topic Search + RAG",
+    body: "Query the combined graph + document store. Results show an answer, matching nodes, graph paths, and source snippets. History stores each run for comparison.",
+  },
+  "kg-workspaces-instruction": {
+    title: "Workspace management",
+    body: "Organize multiple RAG charts. Templates seed common BTC/macro graphs. Import JSON creates a new workspace without replacing the active one.",
+  },
+  "kg-inspector": {
+    title: "Inspector",
+    body: "Edit the selected node or edge: label, type, source, target. Changes apply on Save node/edge. Delete removes the item from the graph.",
+  },
+  "kg-ingest-url": {
+    title: "Source URL",
+    body: "HTTP(S) link to ingest directly, or a page with many links (YouTube channel, news index). Use Search & filter beside this field to extract and approve child URLs before ingest. Single YouTube videos need captions or an SRT/VTT upload.",
+  },
+  "kg-ingest-title": {
+    title: "Document title",
+    body: "Optional display name in search snippets and the ingest log. Defaults to filename or URL if omitted.",
+  },
+  "kg-ingest-text": {
+    title: "Plain text / Markdown",
+    body: "Paste content directly when no URL is available. Processed locally if the server is unreachable.",
+  },
+  "kg-ws-name": {
+    title: "Workspace name",
+    body: "Short identifier shown in the dropdown and workspace table.",
+  },
+  "kg-ws-desc": {
+    title: "Workspace description",
+    body: "Optional notes — e.g. which sources you ingested or what hypothesis you are testing.",
+  },
+  "kg-ws-template": {
+    title: "Workspace template",
+    body: "Blank starts empty. BTC basics and Macro links seed starter nodes/edges. Duplicate copies the current workspace including documents.",
+  },
+  "kg-workspaces": {
+    title: "Workspaces",
+    body: "Create named snapshots of schema, documents, and RAG history. Use templates (BTC basics, macro links) or duplicate an existing workspace to iterate quickly. Export/import JSON for backup or sharing.",
+  },
+  "kg-rag-history": {
+    title: "RAG History",
+    body: "Per-workspace log of past queries with chunk/node counts and LLM vs local mode. Click View to restore a previous answer and compare results across different graph setups.",
+  },
+  "kg-elements": {
+    title: "Graph Inventory",
+    body: "Unified inventory with stats, search, type filters, and Nodes/Edges toggle. Check rows to bulk-delete: Select all toggles every visible item in the current filter; Del nodes/edges opens a confirmation dialog before erasing. Graph jumps to the full Graph tab; Edit opens the Schema inspector.",
+  },
+  "kg-graph-view": {
+    title: "Full Graph",
+    body: "Maximized interactive graph for the active workspace. Drag nodes, zoom, fit view, toggle physics and edge labels. Click items to inspect; use Schema Designer to edit. Find nodes quickly with the search box.",
   },
   "kg-ingest-log": {
     title: "Ingestion Log",
-    body: "Recent ingest jobs with chunk and entity counts. Each ingestion auto-extracts entities/relationships and merges them into the graph.",
+    body: "Recent ingest jobs with chunk and extracted-node counts. Mode shows server (API) vs local (browser fallback). Extraction runs after each ingest; graph updates happen after review approval (or immediately if review mode is off).",
+  },
+  "kg-ingest-upload": {
+    title: "Bulk upload",
+    body: "Drop or browse PDF, TXT, MD, SRT/VTT transcripts, or RSS/XML feeds. Audio/video need a transcript file — speech-to-text is not enabled. Each file is chunked and passed to extraction after ingest.",
+  },
+  "kg-ingest-run": {
+    title: "Ingest & extract",
+    body: "Add a new URL, pasted text, or uploaded files here — then run ingest + extraction. For Bulk discover results, use Ingest approved in Discovery review instead. After any ingest, finish in Extraction review (Add approved to graph) when review mode is on.",
+  },
+  "kg-documents": {
+    title: "Documents",
+    body: "Ingested sources in this workspace. Extract shows status: extracted = approved into the graph; review = awaiting Extraction review (click Add approved to graph). Discovery sources pre-approve proposed entities. Re-extract opens a fresh review pass.",
+  },
+  "kg-doc-delete-all": {
+    title: "Delete all documents",
+    body: "Remove every ingested source in this workspace. Opens a centered confirmation dialog. Prunes graph nodes and edges used only by these documents and clears the ingestion log.",
+  },
+  "kg-doc-col-title": {
+    title: "Title",
+    body: "Display name for the document in RAG snippets and the ingest log. Defaults to the page title, filename, or URL if you did not set one.",
+  },
+  "kg-doc-col-type": {
+    title: "Type",
+    body: "How the source was classified: url, youtube, pdf, text, rss, image reference, etc. Affects chunking and metadata stored with each chunk.",
+  },
+  "kg-doc-col-chunks": {
+    title: "Chunks",
+    body: "Number of text segments stored for RAG retrieval. Longer documents are split into overlapping chunks for search and extraction.",
+  },
+  "kg-doc-col-source": {
+    title: "Source",
+    body: "Original URL, filename, or source key. HTTP(S) links open in a new tab. Discover-ingested rows also store the bulk discovery goal used to tune extraction.",
+  },
+  "kg-doc-col-ingest": {
+    title: "Ingest mode",
+    body: "Server — parsed via /api/misc/knowledge-graph/ingest (PDF/URL fetch, chunking, optional Grok). Local — browser fallback when the API is unreachable; simpler parsing, no server-side fetch. Both paths still run extraction afterward.",
+  },
+  "kg-doc-col-extract": {
+    title: "Extraction",
+    body: "Whether LLM-proposed nodes and edges were approved into the graph. Extracted = merged; failed = extraction error (use Extract to retry). Re-extract sends a new proposal to Extraction review.",
+  },
+  "kg-doc-col-ingested": {
+    title: "Ingested",
+    body: "When this document was first parsed and added to the workspace.",
+  },
+  "kg-doc-col-actions": {
+    title: "Actions",
+    body: "View — preview chunks and graph entity counts. Extract — re-run LLM extraction (opens review if enabled). Del — remove the document and prune graph items only referenced by it.",
+  },
+  "kg-doc-action-view": {
+    title: "View document",
+    body: "Shows title, type, chunk count, extraction status, and how many nodes/edges from this document are in the graph, plus a short text preview.",
+  },
+  "kg-doc-action-extract": {
+    title: "Re-extract",
+    body: "Re-run LLM entity extraction on this document. With review mode on, new proposals appear in Extraction review; the document leaves this list until you approve them.",
+  },
+  "kg-doc-action-del": {
+    title: "Delete document",
+    body: "Removes the document and its chunks from the workspace. Graph nodes and edges that are only referenced by this document are pruned; shared entities are kept.",
+  },
+  "kg-ingest-log-col-mode": {
+    title: "Ingest mode",
+    body: "Server — job ran through the API. Local — browser fallback was used because the server was unavailable or the request failed.",
+  },
+  "kg-review-mode": {
+    title: "Review before merge",
+    body: "When enabled (recommended), extracted nodes and edges appear in the review panel for approval before joining the live graph. Disable to auto-merge all extractions immediately.",
+  },
+  "kg-extract-review": {
+    title: "Extraction review",
+    body: "Single-column review (like Graph inventory) with Nodes/Edges toggle, search, and type filters. Each node has label, schema.org/FIBO-style type, and description — edit before approving. Meta shows extract version (v3+). Discovery sources pre-approve items. Click Add approved to graph to commit.",
   },
   "exchanges-overview": {
     title: "Cross-Exchange Overview",

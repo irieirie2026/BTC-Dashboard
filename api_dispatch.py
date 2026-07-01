@@ -278,6 +278,16 @@ def dispatch_api(path, query, body: dict | None = None):
 
         return process_ingest(body or {})
 
+    if path == "/api/misc/knowledge-graph/extract":
+        from macro_data.knowledge_graph import process_extract
+
+        return process_extract(body or {})
+
+    if path == "/api/misc/knowledge-graph/discover":
+        from macro_data.knowledge_graph import process_discover
+
+        return process_discover(body or {})
+
     if path == "/api/misc/knowledge-graph/rag":
         from macro_data.knowledge_graph import process_rag
 

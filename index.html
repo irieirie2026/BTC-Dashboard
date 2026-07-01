@@ -30,43 +30,12 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=87" />
+    <link rel="stylesheet" href="styles.css?v=113" />
     <link rel="stylesheet" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
   </head>
   <body>
     <div class="app app--compact">
-      <header class="header">
-        <div class="header-left">
-          <div class="logo">
-            <span class="logo-icon">₿</span>
-            <div>
-              <h1>BTC / USDT</h1>
-              <p class="subtitle">Binance Spot & Futures · Real-time</p>
-            </div>
-          </div>
-        </div>
-        <div class="header-right">
-          <div id="header-market-meta" class="header-meta">
-            <div class="status" id="connection-status">
-              <span class="status-dot"></span>
-              <span class="status-text">Connecting…</span>
-            </div>
-            <time class="last-update" id="last-update">—</time>
-          </div>
-          <div id="header-derivatives-meta" class="header-meta" hidden>
-            <div class="status" id="futures-status-header">
-              <span class="status-dot"></span>
-              <span class="status-text">Connecting…</span>
-            </div>
-            <span class="panel-meta" id="futures-header-update">—</span>
-          </div>
-          <span id="header-etf-meta" class="panel-meta header-etf-meta" hidden>—</span>
-          <span id="header-treasury-meta" class="panel-meta header-etf-meta" hidden>—</span>
-          <span id="header-dashboard-meta" class="panel-meta header-dashboard-meta" hidden>—</span>
-        </div>
-      </header>
-
-      <div id="menu-tree" class="menu-tree menu-tree--compact">
+      <div id="menu-tree" class="menu-tree menu-tree--compact menu-tree--top">
         <nav class="dashboard-nav menu-l1" aria-label="Main sections">
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="home">Home</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="market">Market</button>
@@ -97,6 +66,37 @@
         </div>
         <div id="menu-l4-slot" class="menu-l4-slot" hidden></div>
       </div>
+
+      <header class="header">
+        <div class="header-left">
+          <div class="logo">
+            <span class="logo-icon">₿</span>
+            <div>
+              <h1>BTC / USDT</h1>
+              <p class="subtitle">Binance Spot & Futures · Real-time</p>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div id="header-market-meta" class="header-meta">
+            <div class="status" id="connection-status">
+              <span class="status-dot"></span>
+              <span class="status-text">Connecting…</span>
+            </div>
+            <time class="last-update" id="last-update">—</time>
+          </div>
+          <div id="header-derivatives-meta" class="header-meta" hidden>
+            <div class="status" id="futures-status-header">
+              <span class="status-dot"></span>
+              <span class="status-text">Connecting…</span>
+            </div>
+            <span class="panel-meta" id="futures-header-update">—</span>
+          </div>
+          <span id="header-etf-meta" class="panel-meta header-etf-meta" hidden>—</span>
+          <span id="header-treasury-meta" class="panel-meta header-etf-meta" hidden>—</span>
+          <span id="header-dashboard-meta" class="panel-meta header-dashboard-meta" hidden>—</span>
+        </div>
+      </header>
 
       <div id="dashboard-home" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="home" data-l2="landing">
@@ -154,58 +154,95 @@
       </div>
       <div id="dashboard-market" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="market" data-l2="spot">
-      <section class="price-hero">
-        <div class="price-main">
-          <span class="price-label" data-help-key="spot-last-price">Last Price</span>
-          <div class="price-row">
-            <span class="price-value" id="price">—</span>
-            <span class="price-currency">USDT</span>
+      <section class="price-hero spot-page-hero">
+        <section class="stats-grid stats-grid--hero" id="stats-grid">
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="high-24h">24h High</span>
+            <span class="stat-value" id="high-24h">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="low-24h">24h Low</span>
+            <span class="stat-value" id="low-24h">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="vol-btc">24h Volume (BTC)</span>
+            <span class="stat-value" id="vol-btc">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="vol-usdt">24h Volume (USDT)</span>
+            <span class="stat-value" id="vol-usdt">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="best-bid">Best Bid</span>
+            <span class="stat-value bid" id="best-bid">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="best-ask">Best Ask</span>
+            <span class="stat-value ask" id="best-ask">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="spread">Spread</span>
+            <span class="stat-value" id="spread">—</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label" data-help-key="weighted-avg">Weighted Avg</span>
+            <span class="stat-value" id="weighted-avg">—</span>
+          </article>
+        </section>
+        <div class="price-hero-body">
+          <div class="price-main">
+            <span class="price-label" data-help-key="spot-last-price">Last Price</span>
+            <div class="price-row">
+              <span class="price-value" id="price">—</span>
+              <span class="price-currency">USDT</span>
+            </div>
+            <div class="price-change" id="price-change">
+              <span class="change-pct">—</span>
+              <span class="change-abs">—</span>
+              <button type="button" class="help-trigger help-trigger--inline" data-help-key="spot-24h-change" aria-label="Explain 24h change">?</button>
+            </div>
           </div>
-          <div class="price-change" id="price-change">
-            <span class="change-pct">—</span>
-            <span class="change-abs">—</span>
-            <button type="button" class="help-trigger help-trigger--inline" data-help-key="spot-24h-change" aria-label="Explain 24h change">?</button>
+          <div class="price-chart-wrap">
+            <div class="deriv-chart-wrap deriv-chart-wrap--interactive spot-main-wrap">
+              <div class="spot-chart-overlay" aria-label="Candle chart controls">
+                <div class="spot-tf-tabs" role="tablist" aria-label="Candle timeframe">
+                  <button type="button" class="spot-chart-btn spot-tf-btn active" data-spot-tf="1m" role="tab" aria-selected="true">1m</button>
+                  <button type="button" class="spot-chart-btn spot-tf-btn" data-spot-tf="5m" role="tab">5m</button>
+                  <button type="button" class="spot-chart-btn spot-tf-btn" data-spot-tf="1h" role="tab">1h</button>
+                  <button type="button" class="spot-chart-btn spot-tf-btn" data-spot-tf="4h" role="tab">4h</button>
+                  <button type="button" class="spot-chart-btn spot-tf-btn" data-spot-tf="1d" role="tab">1D</button>
+                </div>
+                <button type="button" class="spot-chart-btn spot-main-reset-btn" id="spot-main-reset" title="Reset zoom to full range">Reset</button>
+                <span class="spot-chart-meta" id="spot-chart-meta">Loading…</span>
+              </div>
+              <canvas id="spot-chart" height="200" aria-label="BTC/USDT candlestick chart"></canvas>
+            </div>
+            <span class="chart-label" id="spot-chart-label" data-help-key="spot-chart">1m candles · Binance BTC/USDT</span>
           </div>
-        </div>
-        <div class="price-chart-wrap">
-          <canvas id="price-chart" width="600" height="260"></canvas>
-          <span class="chart-label" data-help-key="spot-chart">1m candles · last 60 min</span>
         </div>
       </section>
 
-      <section class="stats-grid" id="stats-grid">
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="high-24h">24h High</span>
-          <span class="stat-value" id="high-24h">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="low-24h">24h Low</span>
-          <span class="stat-value" id="low-24h">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="vol-btc">24h Volume (BTC)</span>
-          <span class="stat-value" id="vol-btc">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="vol-usdt">24h Volume (USDT)</span>
-          <span class="stat-value" id="vol-usdt">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="best-bid">Best Bid</span>
-          <span class="stat-value bid" id="best-bid">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="best-ask">Best Ask</span>
-          <span class="stat-value ask" id="best-ask">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="spread">Spread</span>
-          <span class="stat-value" id="spread">—</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-label" data-help-key="weighted-avg">Weighted Avg</span>
-          <span class="stat-value" id="weighted-avg">—</span>
-        </article>
+      <section class="panel spot-history-panel">
+        <div class="panel-header">
+          <h2 data-help-key="spot-history-chart">BTC price history</h2>
+          <span class="panel-meta" id="spot-history-meta">Log scale · loading…</span>
+        </div>
+        <div class="deriv-chart-wrap deriv-chart-wrap--interactive spot-history-wrap">
+          <div class="spot-history-overlay" aria-label="History chart controls">
+            <div class="spot-history-range-tabs" role="tablist" aria-label="History range">
+              <button type="button" class="spot-history-btn" data-spot-range="1y" role="tab">1Y</button>
+              <button type="button" class="spot-history-btn" data-spot-range="3y" role="tab">3Y</button>
+              <button type="button" class="spot-history-btn" data-spot-range="5y" role="tab">5Y</button>
+              <button type="button" class="spot-history-btn active" data-spot-range="all" role="tab" aria-selected="true">All</button>
+            </div>
+            <div class="spot-history-scale-tabs" role="tablist" aria-label="Price scale">
+              <button type="button" class="spot-history-btn active" data-spot-scale="log" role="tab" aria-selected="true" data-help-key="spot-history-log">Log</button>
+              <button type="button" class="spot-history-btn" data-spot-scale="linear" role="tab" data-help-key="spot-history-linear">Linear</button>
+            </div>
+            <button type="button" class="spot-history-btn spot-history-reset-btn" id="spot-history-reset" title="Reset zoom to full range">Reset</button>
+          </div>
+          <canvas id="spot-history-chart" height="320" aria-label="BTC/USDT full history chart"></canvas>
+        </div>
       </section>
         </div>
 
@@ -3146,47 +3183,298 @@
           </section>
         </div>
         <div class="menu-screen" data-l1="misc" data-l2="knowledge-graph" hidden>
-          <section class="panel kg-panel">
+          <section class="panel kg-panel" id="kg-panel">
             <div class="panel-header">
               <h2 data-help-key="kg-overview">Knowledge Graph</h2>
               <span class="panel-meta" id="kg-meta">Loading…</span>
             </div>
-            <p class="mm-section-note">Unified schema designer, multi-format ingestion, and topic search + RAG. Persisted in <code>localStorage</code>. Server ingest/RAG optional (set <code>OPENAI_API_KEY</code> for LLM answers).</p>
+            <p class="mm-section-note">Build a <strong>RAG chart</strong> — a knowledge graph plus ingested documents — then query it for grounded answers. Open <strong>Overview</strong> for the step-by-step guide. Data persists per workspace in <code>localStorage</code>. Set <code>XAI_API_KEY</code> on the server for Grok LLM synthesis.</p>
+            <div class="kg-workspace-bar">
+              <label class="kg-ws-label"><span data-help-key="kg-workspace-select">Workspace</span>
+                <select id="kg-ws-select" aria-label="Active knowledge graph workspace" title="Switch between saved graph experiments. Each workspace keeps its own schema, documents, and RAG history."></select>
+              </label>
+              <button type="button" class="kg-btn" id="kg-ws-new" title="Create a blank workspace to start a new RAG chart experiment">+ New</button>
+              <button type="button" class="kg-btn kg-btn--secondary" id="kg-ws-save" title="Save the active workspace to localStorage">Save</button>
+            </div>
             <nav class="kg-subnav macro-drivers-subnav" aria-label="Knowledge graph sections">
-              <button type="button" class="macro-drivers-subtab kg-subtab active" data-kg-tab="schema">Schema Designer</button>
-              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="ingest">Ingestion</button>
-              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="search">Topic Search + RAG</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab active" data-kg-tab="overview" title="How to build a RAG chart — start here">Overview</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="schema" title="Design nodes and edges, manage the graph inventory">Schema Designer</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="graph" title="Full-screen interactive knowledge graph">Graph</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="ingest" title="Add PDFs, URLs, text — LLM extracts nodes and edges for review">Ingestion</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="review" title="Review pending extractions before merging to graph">Review <span class="kg-tab-badge" id="kg-review-tab-badge" hidden></span></button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="search" title="Query your graph and documents with RAG">Topic Search + RAG</button>
+              <button type="button" class="macro-drivers-subtab kg-subtab" data-kg-tab="workspaces" title="Create, duplicate, export, and compare workspaces">Workspaces</button>
             </nav>
 
-            <div class="kg-tab-panel" data-kg-tab="schema">
-              <div class="kg-schema-toolbar">
-                <button type="button" class="kg-btn" id="kg-add-node">+ Node</button>
-                <button type="button" class="kg-btn" id="kg-add-edge">+ Edge</button>
-                <button type="button" class="kg-btn" id="kg-save-store">Save</button>
-                <button type="button" class="kg-btn kg-btn--secondary" id="kg-export-json">Export JSON</button>
-                <label class="kg-btn kg-btn--secondary kg-import-label">Import JSON<input type="file" id="kg-import-json" accept="application/json,.json" hidden></label>
+            <div class="kg-tab-panel" data-kg-tab="overview">
+              <div class="kg-guide">
+                <section class="kg-guide-block">
+                  <h3 data-help-key="kg-rag-chart">What is a RAG chart?</h3>
+                  <p class="kg-guide-text">A <strong>RAG chart</strong> is your personal research map for Bitcoin and markets. It joins three layers that work together when you search:</p>
+                  <ul class="kg-guide-list">
+                    <li><strong>Knowledge graph</strong> — nodes (things: Bitcoin, Fed, halving) and edges (how they relate: <em>influences</em>, <em>has_event</em>, <em>tracks</em>).</li>
+                    <li><strong>Document store</strong> — ingested sources split into ~900-character chunks, with timestamps when available (YouTube, SRT/VTT).</li>
+                    <li><strong>Retrieval + answer</strong> — your question matches graph labels and chunk text; graph paths and snippets are returned; Grok (optional) summarizes only that evidence.</li>
+                  </ul>
+                  <p class="kg-guide-text">The graph is not just decoration — RAG search uses it to surface <em>relationship paths</em> (e.g. <code>Fed → rates → Bitcoin</code>) alongside raw quotes from your documents.</p>
+                </section>
+
+                <section class="kg-guide-block">
+                  <h3 data-help-key="kg-schema-deep">Schema Designer — in detail</h3>
+                  <p class="kg-guide-text">Schema Designer is where you <strong>view, edit, and curate</strong> the knowledge graph. It has four parts:</p>
+                  <ul class="kg-guide-list">
+                    <li><strong>Graph inventory</strong> (left) — stats, search, type filters, and card list of nodes or edges. Click a row to select; use checkboxes for bulk delete.</li>
+                    <li><strong>Inspector</strong> (right) — edit the selected node or edge: label, type, source/target, relation. Hit <em>Save node/edge</em> then <em>Save</em> in the toolbar.</li>
+                    <li><strong>Graph tab</strong> — full-screen interactive visualization (fit, zoom, physics). Schema Designer is for editing; Graph is for exploring.</li>
+                    <li><strong>Toolbar</strong> — <em>+ Node</em> / <em>+ Edge</em> for manual modeling; <em>Export/Import JSON</em> for backup.</li>
+                  </ul>
+                  <p class="kg-guide-text"><strong>Node types</strong> color the canvas: assets (magenta), concepts (blue), other entities (green). Good practice: seed anchor nodes (e.g. <em>Bitcoin</em>, <em>Spot ETF</em>) before ingesting so automatic extractions can merge into and connect with existing entities.</p>
+                  <p class="kg-guide-text kg-guide-note"><strong>Important:</strong> Schema Designer does not scan documents by itself. It displays and edits the graph. Document scanning happens on the <strong>Ingestion</strong> tab — see below.</p>
+                </section>
+
+                <section class="kg-guide-block kg-guide-highlight">
+                  <h3 data-help-key="kg-ingest-merge">Automatic nodes and edges from documents</h3>
+                  <p class="kg-guide-text">Nodes and edges are <strong>not</strong> added inside Schema Designer — they are proposed automatically after each ingest on the <strong>Ingestion</strong> tab. Click <strong>Ingest &amp; extract</strong> to run the full pipeline:</p>
+                  <ol class="kg-guide-list kg-guide-list--ordered">
+                    <li><strong>Parse</strong> — URL (article HTML), YouTube transcript, RSS/podcast items, PDF text, pasted markdown, SRT/VTT, etc.</li>
+                    <li><strong>Chunk</strong> — split text into ~900-character passages (with overlap) for RAG search; timestamps are preserved for video and transcripts.</li>
+                    <li><strong>Extract</strong> — hybrid LLM + rule-based pass over the document (smart sampling for long sources):
+                      <ul class="kg-guide-list kg-guide-list--nested">
+                        <li><strong>LLM</strong> (Grok when <code>XAI_API_KEY</code> is set) returns structured JSON: nodes <code>{ label, type, description }</code> and edges <code>{ source, target, label, description }</code> focused on crypto/finance relationships</li>
+                        <li><strong>Rules</strong> supplement with BTC terms, tickers, capitalized entities, proximity edges, and price levels</li>
+                        <li><strong>Dedup</strong> — similar labels merge (e.g. “Bitcoin ETF” → existing “Spot ETF”); duplicate edges are skipped</li>
+                        <li><strong>Attribution</strong> — each proposal is tagged with its source document for provenance and prune-on-delete</li>
+                      </ul>
+                    </li>
+                    <li><strong>Review</strong> (recommended) — the <strong>Extraction review</strong> panel lists proposed nodes and edges. Approve, edit, or reject individually or in bulk. Only approved items are added to the live graph. Uncheck <em>Review extractions before adding to graph</em> to auto-merge everything.</li>
+                    <li><strong>Merge</strong> — approved nodes and edges join your schema without wiping manual edits. Existing nodes with the same ID are updated; new ones are appended.</li>
+                  </ol>
+                  <p class="kg-guide-text">Each document is extracted once (incremental). Use <strong>Extract</strong> in the Documents table to re-run on a specific source. Ingest repeatedly to accumulate more documents — the graph grows as you approve extractions. Create a new workspace or delete nodes in Graph inventory to start fresh.</p>
+                  <div class="kg-guide-actions kg-guide-actions--inline">
+                    <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="ingest">Go to Ingestion →</button>
+                    <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="schema">Curate in Schema →</button>
+                  </div>
+                </section>
+
+                <section class="kg-guide-block">
+                  <h3 data-help-key="kg-rag-steps">End-to-end workflow (6 steps)</h3>
+                  <ol class="kg-guide-steps">
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">1</span>
+                        <strong data-help-key="kg-step-workspace">Pick or create a workspace</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="workspaces">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">Each workspace is an isolated experiment — its own graph, documents, ingest log, and RAG history. Use the dropdown above, or the Workspaces tab to create from a template (BTC basics, macro links) or duplicate an existing chart.</p>
+                    </li>
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">2</span>
+                        <strong data-help-key="kg-step-schema">Optional: seed the schema manually</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="schema">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">Add anchor nodes and edges before ingesting, or skip this and let ingestion build the graph from docs. Templates on the Workspaces tab pre-wire common BTC/macro structures.</p>
+                    </li>
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">3</span>
+                        <strong data-help-key="kg-step-ingest">Ingest &amp; extract (automatic nodes/edges)</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="ingest">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">Provide URL, text, or files → click <strong>Ingest &amp; extract</strong>. LLM + rules propose nodes and edges; approve them in the review panel (or auto-merge if review is off), then fine-tune in Schema Designer.</p>
+                    </li>
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">4</span>
+                        <strong data-help-key="kg-step-graph">Explore the full graph</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="graph">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">Open the <strong>Graph</strong> tab for a maximized interactive view — fit, zoom, physics, and edge labels. Inventory cards also have a <em>Graph</em> button per node/edge.</p>
+                    </li>
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">5</span>
+                        <strong data-help-key="kg-step-rag">Run topic search + RAG</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="search">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">Ask a question. Retrieval scores chunks and graph nodes, walks relationship paths, and returns snippets plus an optional Grok answer grounded in your workspace only.</p>
+                    </li>
+                    <li class="kg-guide-step">
+                      <div class="kg-guide-step-head">
+                        <span class="kg-guide-step-num">6</span>
+                        <strong data-help-key="kg-step-iterate">Iterate and compare</strong>
+                        <button type="button" class="kg-btn kg-btn--secondary kg-guide-goto" data-kg-goto="workspaces">Go →</button>
+                      </div>
+                      <p class="kg-guide-text">RAG history stores every query. Duplicate a workspace, ingest different sources or tweak the schema, re-run the same questions, and compare how graph shape changes answers.</p>
+                    </li>
+                  </ol>
+                </section>
+
+                <section class="kg-guide-block">
+                  <h3 data-help-key="kg-example-flow">Example: macro + BTC article</h3>
+                  <ol class="kg-guide-list kg-guide-list--ordered">
+                    <li>Create workspace <em>“Fed + BTC Q2”</em> using the <em>Macro links</em> template (Fed, CPI, DXY nodes pre-wired).</li>
+                    <li>Ingest a URL or PDF about Fed policy and Bitcoin correlation → approve extracted nodes like <em>FOMC</em>, <em>Rate Cut</em> in the review panel.</li>
+                    <li>Open Schema Designer — approved entities appear in inventory; fix labels, delete noise, add a manual edge <em>FOMC → Fed</em> if the extractor missed it.</li>
+                    <li>Search: <em>“How might rate cuts affect Bitcoin based on my sources?”</em> — paths through your graph plus quoted chunks appear in results.</li>
+                  </ol>
+                </section>
+
+                <section class="kg-guide-block kg-guide-tip">
+                  <h4 data-help-key="kg-grok-tip">Grok LLM (optional — extraction &amp; RAG)</h4>
+                  <p class="kg-guide-text">Set <code>XAI_API_KEY</code> in Vercel or <code>.env.local</code> to enable Grok (<code>grok-3-mini</code>) for <strong>entity extraction</strong> after ingest and for <strong>RAG answers</strong> in search. Without a key, rule-based extraction and local snippet search still work. Grok only sees your workspace content — not the open web.</p>
+                </section>
+                <div class="kg-guide-actions">
+                  <button type="button" class="kg-btn" data-kg-goto="workspaces">Start — create workspace</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="ingest">Ingest documents</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="graph">View graph</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="schema">Review schema</button>
+                </div>
               </div>
+            </div>
+
+            <div class="kg-tab-panel" data-kg-tab="schema" hidden>
+              <p class="kg-tab-instruction"><span data-help-key="kg-schema-instruction">Schema Designer</span> — Curate nodes and edges in the inventory; edit the selected item in the inspector. Open the <strong>Graph</strong> tab for the full visual view.</p>
               <div class="kg-schema-layout">
-                <div id="kg-graph-canvas" class="kg-graph-canvas" aria-label="Knowledge graph editor"></div>
-                <aside class="kg-sidebar">
-                  <h3 class="kg-sidebar-title">Inspector</h3>
+                <div class="panel mm-whales-subpanel kg-inventory-panel kg-inventory-v2">
+                  <div class="panel-header">
+                    <h3 data-help-key="kg-elements">Graph inventory</h3>
+                    <span class="panel-meta" id="kg-inventory-meta">0 nodes · 0 edges</span>
+                  </div>
+                  <div class="kg-inv-stats" id="kg-inv-stats" aria-label="Graph statistics"></div>
+                  <div class="kg-inv-actions-bar">
+                    <button type="button" class="kg-btn" id="kg-add-node" title="Add a new node">+ Node</button>
+                    <button type="button" class="kg-btn" id="kg-add-edge" title="Add an edge">+ Edge</button>
+                    <button type="button" class="kg-btn" id="kg-save-store" title="Save workspace">Save</button>
+                    <button type="button" class="kg-btn kg-btn--secondary" id="kg-export-json" title="Export JSON">Export</button>
+                    <label class="kg-btn kg-btn--secondary kg-import-label" title="Import JSON">Import<input type="file" id="kg-import-json" accept="application/json,.json" hidden></label>
+                    <button type="button" class="kg-btn kg-btn--secondary" id="kg-inv-toggle-all" disabled title="Select all visible items">Select all</button>
+                    <button type="button" class="kg-btn kg-btn--danger" id="kg-del-nodes-sel" disabled title="Delete checked nodes">Del nodes</button>
+                    <button type="button" class="kg-btn kg-btn--danger" id="kg-del-edges-sel" disabled title="Delete checked edges">Del edges</button>
+                    <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="graph" title="Open Graph tab">Graph →</button>
+                    <div class="kg-inv-seg" id="kg-inv-view" role="tablist" aria-label="Inventory view">
+                      <button type="button" class="kg-inv-seg-btn active" data-inv-view="nodes" role="tab">Nodes</button>
+                      <button type="button" class="kg-inv-seg-btn" data-inv-view="edges" role="tab">Edges</button>
+                    </div>
+                  </div>
+                  <div class="kg-inv-toolbar">
+                    <input id="kg-inventory-filter" type="search" placeholder="Search label, id, type, relation…" autocomplete="off" title="Filter inventory items">
+                    <select id="kg-inventory-sort" class="kg-inv-select" title="Sort order">
+                      <option value="label">Sort: label A–Z</option>
+                      <option value="type">Sort: type</option>
+                      <option value="degree">Sort: connections</option>
+                      <option value="recent">Sort: id</option>
+                    </select>
+                  </div>
+                  <div class="kg-inv-type-bar" id="kg-inv-type-filters" aria-label="Filter by node type"></div>
+                  <div id="kg-inv-list" class="kg-inv-list" role="list"></div>
+                  <p class="kg-inv-footnote" id="kg-inv-footnote"></p>
+                </div>
+                <aside class="kg-sidebar kg-schema-inspector">
+                  <h3 class="kg-sidebar-title" data-help-key="kg-inspector">Inspector</h3>
                   <div id="kg-sidebar-body" class="kg-sidebar-body"></div>
                 </aside>
               </div>
             </div>
 
-            <div class="kg-tab-panel" data-kg-tab="ingest" hidden>
-              <div class="kg-ingest-grid">
-                <label class="kg-field">Source URL<input id="kg-ingest-url" type="url" placeholder="https://article…, YouTube, RSS/podcast feed"></label>
-                <label class="kg-field">Title (optional)<input id="kg-ingest-title" type="text" placeholder="Document title"></label>
-                <label class="kg-field">Plain text / Markdown<textarea id="kg-ingest-text" rows="5" placeholder="Paste text or markdown…"></textarea></label>
-                <div class="kg-drop-zone" id="kg-drop-zone" tabindex="0" role="button" aria-label="Upload files">
-                  <p><strong>Bulk upload</strong> — PDF, audio, video, SRT/VTT, TXT, MD, RSS</p>
-                  <p class="kg-drop-hint">Drop files here or click to browse (batch supported)</p>
-                  <input type="file" id="kg-ingest-files" multiple accept=".pdf,.txt,.md,.markdown,.srt,.vtt,.mp3,.wav,.m4a,.mp4,.webm,.mov,.rss,.xml">
+            <div class="kg-tab-panel kg-graph-tab-panel" data-kg-tab="graph" hidden>
+              <p class="kg-tab-instruction kg-graph-tab-instruction"><span data-help-key="kg-graph-view">Graph</span> — Full workspace graph. Drag nodes, zoom, and click to inspect. Use the toolbar to fit the view or jump to Schema Designer to edit.</p>
+              <div class="kg-fullgraph-shell">
+                <div class="kg-fullgraph-toolbar">
+                  <span class="kg-fullgraph-meta" id="kg-fullgraph-meta">0 nodes · 0 edges</span>
+                  <input id="kg-fullgraph-search" type="search" class="kg-fullgraph-search" placeholder="Find node…" autocomplete="off" title="Highlight and focus a node by label or id">
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-fullgraph-fit" title="Fit entire graph in view">Fit view</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-fullgraph-physics" title="Toggle force-directed layout">Physics: on</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-fullgraph-labels" title="Toggle edge relation labels">Edge labels</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" data-kg-goto="schema" title="Edit nodes and edges">Schema Designer</button>
                 </div>
-                <button type="button" class="kg-btn kg-btn--wide" id="kg-run-ingest">Ingest &amp; update graph</button>
-                <p class="kg-ingest-status" id="kg-ingest-status"></p>
+                <div class="kg-fullgraph-main">
+                  <div id="kg-graph-canvas-full" class="kg-graph-canvas-full" aria-label="Full knowledge graph"></div>
+                  <aside class="kg-fullgraph-inspector" id="kg-fullgraph-inspector">
+                    <h3 class="kg-fullgraph-inspector-title">Selection</h3>
+                    <div id="kg-fullgraph-inspector-body" class="kg-fullgraph-inspector-body">
+                      <p class="kg-sidebar-hint">Click a node or edge on the graph to inspect it here.</p>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+
+            <div class="kg-tab-panel" data-kg-tab="ingest" hidden>
+              <p class="kg-tab-instruction"><span data-help-key="kg-ingest-instruction">Ingestion</span> — <strong>Discover</strong>: describe your goal, Grok plans Google searches (pages, videos, images, news), approve results, then ingest. Or add URL/text/file manually. Extraction review follows ingest.</p>
+              <div class="panel mm-whales-subpanel kg-discover-form-panel">
+                <div class="panel-header">
+                  <h3 data-help-key="kg-discover">Bulk discover &amp; ingest</h3>
+                  <span class="panel-meta" data-help-key="kg-discover-review">Goal → Grok → Google → approve · or ingest manually</span>
+                </div>
+                <div class="kg-discover-form">
+                  <div class="kg-sources-grid">
+                    <label class="kg-field kg-field--goal">
+                      <span data-help-key="kg-discover-goal">Discovery goal</span>
+                      <textarea id="kg-discover-goal" rows="4" placeholder="Describe what you want to research, e.g. &#10;I need sources on spot Bitcoin ETF flows after 2024, miner revenue post-halving, and SEC/crypto regulation timelines for my macro graph." title="Grok turns this into search phrases; Google fetches ~10 results per type per phrase"></textarea>
+                    </label>
+                    <label class="kg-field kg-field--url">
+                      <span data-help-key="kg-ingest-url">Source URL</span>
+                      <input id="kg-ingest-url" type="url" placeholder="https://article…, YouTube, RSS/podcast feed" title="Web page, YouTube video, or RSS/podcast feed URL">
+                    </label>
+                    <label class="kg-field kg-field--text">
+                      <span data-help-key="kg-ingest-text">Plain text / Markdown</span>
+                      <textarea id="kg-ingest-text" rows="5" placeholder="Paste text or markdown…" title="Paste raw text when you do not have a URL or file"></textarea>
+                    </label>
+                    <div class="kg-field kg-field--upload">
+                      <span data-help-key="kg-ingest-upload">Bulk upload</span>
+                      <div class="kg-drop-zone" id="kg-drop-zone" tabindex="0" role="button" aria-label="Upload files" title="Drop PDF, TXT, MD, SRT/VTT transcripts, or RSS/XML feeds">
+                        <p class="kg-drop-zone-title">PDF, SRT/VTT, TXT, MD, RSS/XML</p>
+                        <p class="kg-drop-hint">Audio/video need an SRT/VTT transcript (speech-to-text not enabled). Drop files or click to browse.</p>
+                        <input type="file" id="kg-ingest-files" multiple accept=".pdf,.txt,.md,.markdown,.srt,.vtt,.rss,.xml">
+                      </div>
+                    </div>
+                  </div>
+                  <p class="kg-discover-plan" id="kg-discover-plan" hidden></p>
+                  <div class="kg-discover-actions-row">
+                    <button type="button" class="kg-btn" id="kg-run-discover" title="Grok plans searches, then Google fetches web/video/image/news results">Discover sources</button>
+                  </div>
+                  <p class="kg-discover-status" id="kg-discover-status"></p>
+                  <div class="kg-ingest-action-row">
+                    <div class="kg-ingest-run-wrap">
+                      <button type="button" class="kg-btn" id="kg-run-ingest" title="Parse sources, chunk text, and run LLM entity extraction">Ingest &amp; extract</button>
+                      <button type="button" class="help-trigger help-trigger--inline" data-help-key="kg-ingest-run" aria-label="Explain Ingest and extract">?</button>
+                    </div>
+                    <label class="kg-field kg-review-toggle-field">
+                      <input type="checkbox" id="kg-review-mode" checked>
+                      <span data-help-key="kg-review-mode">Review extractions before adding to graph</span>
+                    </label>
+                  </div>
+                  <p class="kg-ingest-status" id="kg-ingest-status"></p>
+                </div>
+              </div>
+              <div class="panel mm-whales-subpanel kg-discover-panel" id="kg-discover-panel" hidden>
+                <div class="panel-header">
+                  <h3 data-help-key="kg-discover-review">Discovery review</h3>
+                  <span class="panel-meta" id="kg-discover-meta"></span>
+                </div>
+                <p class="kg-review-hint">Approve sources to ingest. Badges show type (page, video, image, news) and the search phrase Grok used. Images are stored as references; pages and videos run through normal ingest.</p>
+                <div class="kg-review-toolbar">
+                  <button type="button" class="kg-btn" id="kg-discover-approve-all">Approve all</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-discover-reject-all">Reject all</button>
+                  <button type="button" class="kg-btn" id="kg-discover-ingest">Ingest approved</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-discover-dismiss">Dismiss</button>
+                </div>
+                <div id="kg-discover-list" class="kg-discover-list-wrap"></div>
+              </div>
+
+              <p class="kg-ingest-pending-banner" id="kg-ingest-pending-banner" hidden></p>
+              <p class="kg-extract-progress" id="kg-extract-progress" aria-live="polite"></p>
+              <div class="panel mm-whales-subpanel">
+                <div class="panel-header">
+                  <h3 data-help-key="kg-documents">Documents</h3>
+                  <span class="panel-meta" id="kg-doc-count">0 docs</span>
+                </div>
+                <div id="kg-doc-list" class="deriv-table-wrap kg-doc-list"></div>
+                <p class="kg-doc-footnote" id="kg-doc-footnote"></p>
+                <div class="kg-doc-panel-actions">
+                  <button type="button" class="kg-btn kg-btn--danger kg-btn--secondary" id="kg-doc-delete-all" disabled data-help-key="kg-doc-delete-all">Delete all documents</button>
+                </div>
               </div>
               <div class="panel mm-whales-subpanel">
                 <div class="panel-header"><h3 data-help-key="kg-ingest-log">Ingestion log</h3></div>
@@ -3194,13 +3482,91 @@
               </div>
             </div>
 
+            <div class="kg-tab-panel" data-kg-tab="review" hidden>
+              <p class="kg-tab-instruction"><span data-help-key="kg-extract-review">Review Extractions</span> — Pending nodes and edges from ingested documents. High-confidence items auto-approve; use <em>Needs review</em> to fix types. Add approved items to merge into the live graph.</p>
+              <p class="kg-extract-progress" id="kg-extract-progress-review" aria-live="polite"></p>
+              <div class="panel mm-whales-subpanel kg-review-panel kg-review-v2" id="kg-review-panel">
+                <div class="panel-header">
+                  <h3 data-help-key="kg-extract-review">Extraction review</h3>
+                  <span class="panel-meta" id="kg-review-meta"></span>
+                </div>
+                <p class="kg-review-doc" id="kg-review-doc-title"></p>
+                <div class="kg-inv-stats" id="kg-review-stats" aria-label="Extraction statistics"></div>
+                <div class="kg-inv-actions-bar kg-review-actions-bar">
+                  <button type="button" class="kg-btn" id="kg-review-approve-confident" title="Approve nodes with ≥80% confidence">Approve confident</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-review-reject-low" title="Reject nodes/edges below 50% confidence">Reject low</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-review-approve-all">Approve all</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-review-reject-all">Reject all</button>
+                  <button type="button" class="kg-btn" id="kg-review-apply">Add approved to graph</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-review-next" title="Next queued extraction">Next</button>
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-review-dismiss">Dismiss</button>
+                  <div class="kg-inv-seg" id="kg-review-view" role="tablist" aria-label="Review view">
+                    <button type="button" class="kg-inv-seg-btn active" data-review-view="nodes" role="tab">Nodes</button>
+                    <button type="button" class="kg-inv-seg-btn" data-review-view="edges" role="tab">Edges</button>
+                  </div>
+                </div>
+                <div class="kg-inv-toolbar">
+                  <input id="kg-review-filter" type="search" placeholder="Search label, type, relation…" autocomplete="off" title="Filter proposed nodes or edges">
+                </div>
+                <div class="kg-inv-type-bar" id="kg-review-type-filters" aria-label="Filter by node type"></div>
+                <div id="kg-review-list" class="kg-inv-list kg-review-list-tall" role="list"></div>
+                <p class="kg-inv-footnote" id="kg-review-footnote"></p>
+              </div>
+            </div>
+
             <div class="kg-tab-panel" data-kg-tab="search" hidden>
+              <p class="kg-tab-instruction"><span data-help-key="kg-search-instruction">Topic Search + RAG</span> — Ask a question about your ingested sources and graph. Results include graph paths, document snippets, and a Grok answer when XAI_API_KEY is set. Every query is saved in RAG history.</p>
               <div class="kg-search-bar">
-                <input id="kg-search-input" type="search" placeholder="Ask about Bitcoin, macro, mining, regulation…" autocomplete="off">
-                <button type="button" class="kg-btn" id="kg-run-search">Search</button>
+                <input id="kg-search-input" type="search" placeholder="Ask about Bitcoin, macro, mining, regulation…" autocomplete="off" title="Natural-language question — matched against graph labels and document chunks">
+                <button type="button" class="kg-btn" id="kg-run-search" title="Retrieve context and generate a RAG answer">Search</button>
               </div>
               <div id="kg-search-results" class="kg-search-results"><p class="kg-sidebar-hint">Search returns graph paths, document snippets (with timestamps when available), and an LLM answer when configured.</p></div>
+              <div class="panel mm-whales-subpanel kg-rag-history-panel">
+                <div class="panel-header"><h3 data-help-key="kg-rag-history">RAG history</h3><span class="panel-meta" id="kg-rag-history-meta">0 saved</span></div>
+                <div id="kg-rag-history" class="deriv-table-wrap"></div>
+              </div>
             </div>
+
+            <div class="kg-tab-panel" data-kg-tab="workspaces" hidden>
+              <p class="kg-tab-instruction"><span data-help-key="kg-workspaces-instruction">Workspaces</span> — Create named snapshots to compare RAG experiments. Duplicate a workspace to tweak the graph without losing the original. Export/import JSON for backup.</p>
+              <div class="kg-ws-create">
+                <h3 class="kg-sidebar-title" data-help-key="kg-workspaces">Create workspace</h3>
+                <div class="kg-ws-create-grid">
+                  <label class="kg-field"><span data-help-key="kg-ws-name">Name</span><input id="kg-ws-create-name" type="text" placeholder="e.g. Macro RAG v2" title="Short label shown in the workspace dropdown"></label>
+                  <label class="kg-field"><span data-help-key="kg-ws-desc">Description</span><textarea id="kg-ws-create-desc" rows="2" placeholder="Optional notes about this graph experiment…" title="Notes about what this experiment tests"></textarea></label>
+                  <label class="kg-field"><span data-help-key="kg-ws-template">Template</span>
+                    <select id="kg-ws-create-template" title="Starting graph — blank, BTC/macro presets, or copy of current workspace">
+                      <option value="blank">Blank graph</option>
+                      <option value="btc_basics">BTC basics (halving, mining, ETF)</option>
+                      <option value="macro">Macro links (Fed, CPI, DXY)</option>
+                      <option value="duplicate">Duplicate current workspace</option>
+                    </select>
+                  </label>
+                  <button type="button" class="kg-btn kg-btn--wide" id="kg-ws-create-btn" title="Create and switch to the new workspace">Create workspace</button>
+                </div>
+              </div>
+              <div class="panel mm-whales-subpanel">
+                <div class="panel-header"><h3>All workspaces</h3></div>
+                <div id="kg-ws-list" class="deriv-table-wrap"></div>
+              </div>
+              <div class="kg-ws-import-row">
+                <button type="button" class="kg-btn kg-btn--secondary" id="kg-ws-export-active">Export active JSON</button>
+                <label class="kg-btn kg-btn--secondary kg-import-label">Import as new workspace<input type="file" id="kg-ws-import-file" accept="application/json,.json" hidden></label>
+              </div>
+            </div>
+            <dialog id="kg-confirm-dialog" class="kg-confirm-dialog">
+              <div class="kg-confirm-dialog__inner">
+                <div class="kg-confirm-dialog__head">
+                  <h3 id="kg-confirm-title">Confirm</h3>
+                  <button type="button" class="kg-confirm-dialog__close" id="kg-confirm-cancel-x" aria-label="Cancel">×</button>
+                </div>
+                <div class="kg-confirm-dialog__body" id="kg-confirm-body"></div>
+                <div class="kg-confirm-dialog__actions">
+                  <button type="button" class="kg-btn kg-btn--secondary" id="kg-confirm-cancel">Cancel</button>
+                  <button type="button" class="kg-btn kg-btn--danger" id="kg-confirm-ok">Delete</button>
+                </div>
+              </div>
+            </dialog>
           </section>
         </div>
       </div>
@@ -3722,7 +4088,7 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=74"></script>
+    <script src="help.js?v=95"></script>
     <script src="home.js?v=5"></script>
     <script src="dashboard.js?v=47"></script>
     <script src="etf.js?v=12"></script>
@@ -3740,7 +4106,7 @@
     <script src="misc-metrics.js?v=3"></script>
     <script src="misc-whales.js?v=1"></script>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script src="misc-knowledge-graph.js?v=1"></script>
+    <script src="misc-knowledge-graph.js?v=32"></script>
     <script src="misc-greed-fear.js?v=3"></script>
     <script src="misc-bitcoin-valuation-models.js?v=7"></script>
     <script src="misc-bitcoin.js?v=16"></script>
@@ -3749,6 +4115,7 @@
     <script src="chart-patterns.js?v=15"></script>
 
     <script src="prediction-markets.js?v=2"></script>
-    <script src="app.js?v=20"></script>
+    <script src="spot-charts.js?v=4"></script>
+    <script src="app.js?v=21"></script>
   </body>
 </html>

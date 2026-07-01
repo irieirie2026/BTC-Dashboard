@@ -18,7 +18,6 @@ const MARKET_INDICATOR_TF = {
 let activeIndicatorTf = "1h";
 const marketIndicatorCache = {};
 
-const candles = [];
 let lastBids = [];
 let lastAsks = [];
 
@@ -304,103 +303,7 @@ function renderOrderBookLadder(bids, asks) {
 }
 
 function updateKline(data) {
-  const k = data.k;
-  const candle = {
-    open: parseFloat(k.o),
-    high: parseFloat(k.h),
-    low: parseFloat(k.l),
-    close: parseFloat(k.c),
-    time: k.t,
-  };
-
-  const idx = candles.findIndex((c) => c.time === candle.time);
-  if (idx >= 0) {
-    candles[idx] = candle;
-  } else {
-    candles.push(candle);
-    candles.sort((a, b) => a.time - b.time);
-    if (candles.length > 60) candles.shift();
-  }
-
-  drawChart();
-}
-
-function drawChart() {
-  const canvas = $("price-chart");
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-
-  const w = rect.width;
-  const h = rect.height;
-  const pad = { top: 12, right: 12, bottom: 32, left: 12 };
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-
-  ctx.clearRect(0, 0, w, h);
-
-  if (candles.length < 2) return;
-
-  const highs = candles.map((c) => c.high);
-  const lows = candles.map((c) => c.low);
-  const min = Math.min(...lows);
-  const max = Math.max(...highs);
-  const range = max - min || 1;
-
-  const barW = chartW / candles.length;
-  const bodyW = Math.max(barW * 0.6, 2);
-
-  candles.forEach((c, i) => {
-    const x = pad.left + i * barW + barW / 2;
-    const bullish = c.close >= c.open;
-
-    const yHigh = pad.top + ((max - c.high) / range) * chartH;
-    const yLow = pad.top + ((max - c.low) / range) * chartH;
-    const yOpen = pad.top + ((max - c.open) / range) * chartH;
-    const yClose = pad.top + ((max - c.close) / range) * chartH;
-
-    const color = bullish ? "#0ecb81" : "#f6465d";
-
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(x, yHigh);
-    ctx.lineTo(x, yLow);
-    ctx.stroke();
-
-    const bodyTop = Math.min(yOpen, yClose);
-    const bodyH = Math.max(Math.abs(yClose - yOpen), 1);
-    ctx.fillStyle = color;
-    ctx.fillRect(x - bodyW / 2, bodyTop, bodyW, bodyH);
-  });
-
-  const first = candles[0];
-  const last = candles[candles.length - 1];
-  const trendUp = last.close >= first.open;
-
-  ctx.strokeStyle = trendUp ? "rgba(14,203,129,0.35)" : "rgba(246,70,93,0.35)";
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([4, 4]);
-  ctx.beginPath();
-  const lineY = pad.top + ((max - last.close) / range) * chartH;
-  ctx.moveTo(pad.left, lineY);
-  ctx.lineTo(w - pad.right, lineY);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  drawTimeAxisLabels(
-    ctx,
-    w,
-    h,
-    pad,
-    candles.length,
-    (i) => fmtChartTime(candles[i].time),
-    { ticks: Math.min(candles.length, 5), y: h - 6 },
-  );
+  window.SpotCharts?.onLiveKline?.(data.k);
 }
 
 function handleMessage(event) {
@@ -958,17 +861,7 @@ function applySpotBundle(bundle) {
     w: ticker.weightedAvgPrice,
   });
 
-  candles.length = 0;
-  klines.forEach(([time, o, h, l, c]) => {
-    candles.push({
-      time,
-      open: parseFloat(o),
-      high: parseFloat(h),
-      low: parseFloat(l),
-      close: parseFloat(c),
-    });
-  });
-  drawChart();
+  window.SpotCharts?.applyInitialKlines?.(klines);
   updateDepth(depth);
 }
 
@@ -984,7 +877,7 @@ async function loadInitialData() {
       fetch: async () => {
         const [tickerRes, klinesRes, depthRes] = await Promise.all([
           fetch(`${REST_BASE}/ticker/24hr?symbol=${SYMBOL}`),
-          fetch(`${REST_BASE}/klines?symbol=${SYMBOL}&interval=1m&limit=60`),
+          fetch(`${REST_BASE}/klines?symbol=${SYMBOL}&interval=1m&limit=1000`),
           fetch(`${REST_BASE}/depth?symbol=${SYMBOL}&limit=20`),
         ]);
 
@@ -1016,7 +909,7 @@ window.refreshDepthChart = function () {
 };
 
 window.refreshPriceChart = function () {
-  drawChart();
+  window.SpotCharts?.onShow?.();
 };
 
 window.loadMarketIndicators = loadMarketIndicators;
@@ -1026,7 +919,7 @@ window.setActiveIndicatorTimeframe = (tf) => {
 window.getActiveIndicatorTimeframe = () => activeIndicatorTf;
 
 window.addEventListener("resize", () => {
-  drawChart();
+  window.refreshPriceChart();
   window.refreshDepthChart();
 });
 initMetricHelp();
