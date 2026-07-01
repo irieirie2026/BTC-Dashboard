@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-06-30T22:53:25Z",
+  "fetchedAt": "2026-07-01T10:58:26Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A mysterious whale is going long on $BTC! Over the past 5 days, 4 newly created wallets\u2014possibly controlled by the same person\u2014have opened a 20x long on a total of 800 $BTC($47M). https://hypurrscan.io/address/0x237152b038d88f4156a0cd71090462de7e3f0883#perps https://hypurrscan.io",
+      "link": "https://x.com/lookonchain/status/2072257084587155582#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A mysterious whale is going long on $BTC ! Over the past 5 days, 4 newly created wallets\u2014possibly controlled by the same person\u2014have opened a 20x long on a total of 800 $BTC ($47M). hypurrscan.io/address/0x2371\u2026 hypurrscan.io/address/0xbd1c\u2026 hypurrscan.io/address/0x93ab\u2026 hypurrsc",
+      "publishedAt": "2026-07-01T09:52:44+00:00",
+      "publishedTs": 1782899564.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Another whale is shorting $BTC! Whale 0xaeaa opened a 20x short on 1,100 $BTC($64.95M). Liquidation price: $67,914.56 https://hypurrscan.io/address/0xaeaab54bbf65bfd6efed7d2eb68372298e3c2416#perps",
+      "link": "https://x.com/lookonchain/status/2072149633464479987#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Another whale is shorting $BTC ! Whale 0xaeaa opened a 20x short on 1,100 $BTC ($64.95M). Liquidation price: $67,914.56 hypurrscan.io/address/0xaeaa\u2026 Lookonchain (@lookonchain) Two whales are shorting $BTC with positions totaling more than $100M. 0x069a: 40x short on 900 $BTC ($5",
+      "publishedAt": "2026-07-01T02:45:45+00:00",
+      "publishedTs": 1782873945.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @APompliano: Full episode:",
+      "link": "https://x.com/APompliano/status/2072128931822489986#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Full episode: Anthony Pompliano \ud83c\udf2a (@APompliano) I spoke with @stoolpresidente to discuss: - how ESPN tried to fire him from his own company - buying the company back for $1 - his days as \"Davey Day Trader\" during Covid - the GameStop saga - bitcoin - artificial intelligence - sha",
+      "publishedAt": "2026-07-01T01:23:30+00:00",
+      "publishedTs": 1782869010.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: this france team is probably the best attacking international side I've ever seen. insanely fluid and just outrageous levels of talent throughout. it would take a huge shock for them to lose to anyone, and that includes argentina.",
+      "link": "https://x.com/nic_carter/status/2072105886617665882#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this france team is probably the best attacking international side I've ever seen. insanely fluid and just outrageous levels of talent throughout. it would take a huge shock for them to lose to anyone, and that includes argentina.",
+      "publishedAt": "2026-06-30T23:51:55+00:00",
+      "publishedTs": 1782863515.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @APompliano: Full episode here:",
+      "link": "https://x.com/APompliano/status/2072098351160443383#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Full episode here: Anthony Pompliano \ud83c\udf2a (@APompliano) I spoke with @stoolpresidente to discuss: - how ESPN tried to fire him from his own company - buying the company back for $1 - his days as \"Davey Day Trader\" during Covid - the GameStop saga - bitcoin - artificial intelligence ",
+      "publishedAt": "2026-06-30T23:21:59+00:00",
+      "publishedTs": 1782861719.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "they're selling dollars for 33 cents",
+      "link": "https://x.com/nic_carter/status/2072098245870756084#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-06-30T23:21:34+00:00",
+      "publishedTs": 1782861694.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "As $STRC approaches its first birthday, its market continues to deepen and mature.",
+      "link": "https://x.com/phongle/status/2072093468533686608#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-06-30T23:02:35+00:00",
+      "publishedTs": 1782860555.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "I spoke with @stoolpresidente to discuss: - how ESPN tried to fire him from his own company - buying the company back for $1 - his days as \"Davey Day Trader\" during Covid - the GameStop saga - bitcoin - artificial intelligence - sharing a bank account with ex-wife - running for N",
       "link": "https://x.com/APompliano/status/2072080274029174797#m",
@@ -1004,19 +1095,6 @@
       "isRetweet": true
     },
     {
-      "title": "BlackRock just deposited 7,432 $BTC($446M) to Coinbase Prime. This is #BlackRock's largest single-day net $BTC outflow ever. https://arkm.com/explorer/entity/blackrock",
-      "link": "https://x.com/lookonchain/status/2071549663606603881#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "BlackRock just deposited 7,432 $BTC ($446M) to Coinbase Prime. This is #BlackRock 's largest single-day net $BTC outflow ever. arkm.com/explorer/entity/bla\u2026",
-      "publishedAt": "2026-06-29T11:01:41+00:00",
-      "publishedTs": 1782730901.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "one of my favorite things that happens at each world cup is when a random country goes out in the group stages and it turns into a national scandal. the coach is forced to testify, there's parliamentary inquiries, etc.",
       "link": "https://x.com/nic_carter/status/2071321443363590213#m",
       "source": "@nic_carter",
@@ -1238,32 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: all his critics were weedy nerds who couldn't box really activates the almonds",
-      "link": "https://x.com/nic_carter/status/2070654258983076031#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "all his critics were weedy nerds who couldn't box really activates the almonds",
-      "publishedAt": "2026-06-26T23:43:40+00:00",
-      "publishedTs": 1782517420.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "TIL in 2006 the director Uwe Boll invited film critics who had criticized his work to a boxing match and five accepted. he fought all five in the same night and won all the fights by TKO.",
-      "link": "https://x.com/nic_carter/status/2070612225119727963#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-06-26T20:56:39+00:00",
-      "publishedTs": 1782507399.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 16 years ago, Bitcoin left beta.",
       "link": "https://x.com/DocumentingBTC/status/2070527560300044549#m",
       "source": "@DocumentingBTC",
@@ -1381,19 +1433,6 @@
       "isRetweet": false
     },
     {
-      "title": "@CryptoHayes explains how the color of your passport shapes your views on Bitcoin. Watch the full discussion here: https://thematicmarkets.com/podcast/thematic-edge-podcast/ep-019-macro-crypto-with-arthur-hayes/",
-      "link": "https://x.com/ThematicMarkets/status/2069661799738413145#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "@CryptoHayes explains how the color of your passport shapes your views on Bitcoin. Watch the full discussion here: thematicmarkets.com/podcast/\u2026 Video",
-      "publishedAt": "2026-06-24T06:00:00+00:00",
-      "publishedTs": 1782280800.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The future of multi-asset bitcoin isn't theoretical... we're already running it in production \u2728 @ambosstech payments API is built on Taproot Assets, and v0.8 makes the infra meaningfully better: faster proofs, smarter liquidity, backup & restore.",
       "link": "https://x.com/ambosstech/status/2069607818844422369#m",
       "source": "@lopp",
@@ -1472,19 +1511,6 @@
       "isRetweet": true
     },
     {
-      "title": "Why does he always look like he just got back from hot yoga?",
-      "link": "https://x.com/Jebus/status/2069144337263538375#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "Why does he always look like he just got back from hot yoga? Bankless (@Bankless) INTERVIEW: @CryptoHayes - The AI Crash That Could Send bitcoin:native to $1M Arthur thinks the AI trade is sucking the oxygen out of crypto, and the real opportunity may come after the AI bubble cra",
-      "publishedAt": "2026-06-22T19:43:47+00:00",
-      "publishedTs": 1782157427.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "I bought $1 million of $STRC today. Will hold it until it reaches par, likely longer.",
       "link": "https://x.com/phongle/status/2069080463126470781#m",
       "source": "@saylor",
@@ -1537,19 +1563,6 @@
       "isRetweet": false
     },
     {
-      "title": "INTERVIEW: @CryptoHayes - The AI Crash That Could Send bitcoin:native to $1M Arthur thinks the AI trade is sucking the oxygen out of crypto, and the real opportunity may come after the AI bubble cracks. Inside the episode: - AI CapEx mania - Why ethereum:native looks cheap - Oil ",
-      "link": "https://x.com/Bankless/status/2069027635582103941#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "INTERVIEW: @CryptoHayes - The AI Crash That Could Send bitcoin:native to $1M Arthur thinks the AI trade is sucking the oxygen out of crypto, and the real opportunity may come after the AI bubble cracks. Inside the episode: - AI CapEx mania - Why ethereum:native looks cheap - Oil ",
-      "publishedAt": "2026-06-22T12:00:03+00:00",
-      "publishedTs": 1782129603.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "986a9e241c3fed2017b810693d210c23743762d601b05dccb174d26179de114c",
       "link": "https://x.com/lopp/status/2068729366385729957#m",
       "source": "@lopp",
@@ -1558,19 +1571,6 @@
       "summary": "",
       "publishedAt": "2026-06-21T16:14:50+00:00",
       "publishedTs": 1782058490.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Looks better with more dots.",
-      "link": "https://x.com/saylor/status/2068667168930074957#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-06-21T12:07:41+00:00",
-      "publishedTs": 1782043661.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
