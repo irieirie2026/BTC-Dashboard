@@ -111,6 +111,9 @@ function updateTicker(data) {
   const changePct = (change / open) * 100;
   const isPositive = change >= 0;
 
+  window.btcSpotPrice = price;
+  window.dispatchEvent(new CustomEvent("btc-spot-price", { detail: { price } }));
+
   $("price").textContent = formatPrice(price);
 
   if (prevPrice !== null && price !== prevPrice) {

@@ -10651,3 +10651,172 @@ body[data-l1="misc"] .logo-icon::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* Cross-Market Anomaly Monitor */
+.xm-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: 1rem;
+  align-items: start;
+}
+.xm-main { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+.xm-sidebar { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 0.5rem; }
+.xm-section-note { color: var(--text-muted, #9ca3af); font-size: 0.88rem; margin: 0 0 0.75rem; line-height: 1.45; }
+.xm-section-note strong { color: #d1d5db; font-weight: 600; }
+.xm-subheader { margin-top: 0.25rem; margin-bottom: 0.35rem; }
+.xm-subheader h3 { margin: 0; font-size: 0.92rem; font-weight: 600; color: #e5e7eb; }
+.xm-meta-wrap { display: inline-flex; align-items: center; gap: 0.15rem; }
+.xm-status { font-weight: 600; }
+.xm-status--live { color: #0ecb81; }
+.xm-status--bridge { color: #38bdf8; }
+.xm-status--demo { color: #9ca3af; font-weight: 500; }
+.xm-premium-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.65rem; }
+.xm-prem-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+}
+.xm-prem-card--anomaly { border-color: rgba(245, 158, 11, 0.55); box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2); }
+.xm-prem-card--elevated { border-color: rgba(56, 189, 248, 0.35); }
+.xm-prem-card header { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+.xm-prem-card h3 { margin: 0; font-size: 0.82rem; font-weight: 600; color: #e5e7eb; }
+.xm-prem-pct { font-size: 1.05rem; font-weight: 600; color: #f59e0b; }
+.xm-prem-meta { display: flex; gap: 0.75rem; font-size: 0.72rem; color: #9ca3af; margin: 0.35rem 0; }
+.xm-table-wrap { overflow-x: auto; }
+.xm-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.xm-table th, .xm-table td { padding: 0.45rem 0.55rem; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left; }
+.xm-table th { color: #9ca3af; font-weight: 500; }
+.xm-z--hot { color: #f59e0b; font-weight: 600; }
+.xm-ws-badge { font-size: 0.62rem; background: rgba(14,203,129,0.2); color: #0ecb81; padding: 0.1rem 0.3rem; border-radius: 4px; margin-left: 0.35rem; }
+.xm-stale { font-size: 0.62rem; color: #f6465d; margin-left: 0.35rem; }
+.xm-heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.4rem; }
+.xm-heat-cell { border-radius: 8px; padding: 0.45rem; font-size: 0.72rem; display: flex; flex-direction: column; gap: 0.2rem; border: 1px solid rgba(255,255,255,0.06); }
+.xm-alerts { display: flex; flex-direction: column; gap: 0.45rem; max-height: 160px; overflow-y: auto; }
+.xm-alert { padding: 0.45rem 0.55rem; border-radius: 8px; border-left: 3px solid #64748b; background: rgba(255,255,255,0.03); font-size: 0.78rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.xm-alert.xm-sev--high { border-left-color: #f59e0b; }
+.xm-alert.xm-sev--medium { border-left-color: #38bdf8; }
+.xm-propagation {
+  font-size: 0.78rem;
+  max-height: 110px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25rem;
+}
+.xm-propagation::-webkit-scrollbar { width: 5px; }
+.xm-propagation::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.35); border-radius: 4px; }
+.xm-prop-origin { margin-bottom: 0.5rem; color: #d1d5db; }
+.xm-prop-edge { display: flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0; color: #9ca3af; }
+.xm-prop-arrow { color: #f59e0b; }
+.xm-prop-delay { margin-left: auto; color: #6b7280; }
+.xm-news { display: flex; flex-direction: column; gap: 0.45rem; max-height: 200px; overflow-y: auto; }
+.xm-news-item { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.45rem; border-radius: 8px; background: rgba(255,255,255,0.03); text-decoration: none; color: #e5e7eb; font-size: 0.78rem; }
+.xm-news-item:hover { background: rgba(245,158,11,0.08); }
+.xm-news-conf { color: #f59e0b; font-size: 0.68rem; }
+.xm-news-src { color: #6b7280; font-size: 0.68rem; }
+.xm-muted { color: #6b7280; font-size: 0.78rem; margin: 0; }
+.xm-empty { color: #6b7280; font-size: 0.85rem; }
+.xm-loading, .xm-error { font-size: 0.88rem; padding: 0.5rem 0; }
+.xm-error { color: #f6465d; }
+.xm-error[hidden], .xm-loading[hidden] { display: none !important; }
+.xm-refresh-btn { background: transparent; border: 1px solid rgba(245,158,11,0.35); color: #f59e0b; border-radius: 6px; padding: 0.2rem 0.5rem; cursor: pointer; margin-left: 0.5rem; }
+.xm-toast-stack { position: fixed; top: 4.5rem; right: 1rem; z-index: 9000; display: flex; flex-direction: column; gap: 0.4rem; pointer-events: none; max-width: 320px; }
+.xm-toast { background: rgba(17,24,39,0.95); border: 1px solid rgba(245,158,11,0.4); border-radius: 10px; padding: 0.55rem 0.75rem; font-size: 0.8rem; box-shadow: 0 8px 24px rgba(0,0,0,0.35); animation: xm-toast-in 0.25s ease; }
+.xm-toast--out { opacity: 0; transform: translateX(12px); transition: 0.35s ease; }
+.xm-toast.xm-sev--high { border-color: #f59e0b; }
+@keyframes xm-toast-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.xm-dialog { border: none; border-radius: 12px; padding: 0; background: #111827; color: #e5e7eb; max-width: 420px; }
+.xm-dialog__inner { padding: 1.25rem; }
+.xm-field { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.65rem 0; font-size: 0.85rem; }
+.xm-field input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 0.4rem 0.55rem; color: #e5e7eb; }
+.xm-dialog__actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.xm-hero--warn .deriv-hero-value { color: #f59e0b; }
+.xm-hero--accent .deriv-hero-value { color: #38bdf8; }
+.xm-error--warn { color: #f59e0b; border-left: 3px solid #f59e0b; padding-left: 0.5rem; }
+.xm-filter-bar { display: inline-flex; gap: 0.35rem; margin-left: auto; }
+.xm-filter-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #9ca3af;
+  border-radius: 6px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.xm-filter-btn.xm-filter--active {
+  border-color: rgba(245,158,11,0.45);
+  color: #f59e0b;
+  background: rgba(245,158,11,0.1);
+}
+.xm-chart-panel-header { flex-wrap: wrap; gap: 0.5rem; }
+.xm-chart-window-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.xm-chart-window-label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-right: 0.25rem;
+  font-family: IBM Plex Mono, monospace;
+}
+.xm-chart-window-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #9ca3af;
+  border-radius: 6px;
+  padding: 0.18rem 0.45rem;
+  font-size: 0.7rem;
+  font-family: IBM Plex Mono, monospace;
+  cursor: pointer;
+}
+.xm-chart-window-btn--active {
+  border-color: rgba(245,158,11,0.45);
+  color: #f59e0b;
+  background: rgba(245,158,11,0.1);
+}
+.xm-panel-charts { overflow: visible !important; }
+.xm-charts-stack { display: flex; flex-direction: column; gap: 0.45rem; }
+.xm-chart-block--row { width: 100%; flex-shrink: 0; }
+.xm-chart-block h3 { margin: 0 0 0.2rem; font-size: 0.78rem; font-weight: 600; color: #d1d5db; }
+#xm-chart-premium-wrap.xm-chart-shell--premium {
+  width: 100%;
+  height: 440px !important;
+  min-height: 440px !important;
+  max-height: none !important;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+#xm-chart-zmatrix-wrap.xm-chart-shell--zmatrix {
+  width: 100%;
+  height: 176px !important;
+  min-height: 176px !important;
+  max-height: none !important;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+#xm-chart-premium-wrap canvas,
+#xm-chart-zmatrix-wrap canvas {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  box-sizing: border-box;
+}
+.xm-prop-chart { margin-top: 0.5rem; }
+.xm-prop-svg { max-width: 100%; }
+@media (max-width: 960px) {
+  .xm-layout { grid-template-columns: 1fr; }
+  .xm-sidebar { position: static; }
+}

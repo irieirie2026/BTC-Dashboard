@@ -37,6 +37,10 @@ def macro_hierarchy_store() -> str:
     return _join("macro", "hierarchy", "store", "v1")
 
 
+def cross_market_events() -> str:
+    return _join("cross_market", "events", "v1")
+
+
 def macro_liquidity_payload(year: int | str) -> str:
     return _join("macro", "liquidity", "payload", "v2", str(year))
 

@@ -251,6 +251,72 @@ def dispatch_api(path, query, body: dict | None = None):
 
         return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
 
+    if path == "/api/cross-market/snapshot":
+        refresh = _query_refresh(query)
+        try:
+            from cross_market import get_cross_market_snapshot
+
+            payload = get_cross_market_snapshot(refresh=refresh)
+            if isinstance(payload, dict) and payload.get("venues") and not payload.get("demo"):
+                if not payload.get("fallback"):
+                    return payload
+                ref = payload.get("referenceUsd")
+                if ref is not None and abs(float(ref) - 94250) >= 400:
+                    return payload
+            raise ValueError("cross-market returned demo or empty snapshot")
+        except Exception as exc:
+            try:
+                from cross_market import build_snapshot_from_exchange_payloads
+
+                spot = get_exchanges_payload("spot", refresh=True)
+                perp = get_exchanges_payload("perp", refresh=True)
+                return build_snapshot_from_exchange_payloads(
+                    spot, perp, errors=[str(exc)], partial=True
+                )
+            except Exception:
+                pass
+            try:
+                from cross_market import get_sample_payload
+
+                payload = get_sample_payload()
+                if isinstance(payload, dict):
+                    payload = dict(payload)
+                    payload["errors"] = [str(exc)]
+                    payload["fallback"] = True
+                    payload["demo"] = True
+                    return payload
+            except Exception:
+                pass
+            raise
+
+    if path == "/api/cross-market/news":
+        from cross_market import get_cross_market_news
+
+        return get_cross_market_news(body)
+
+    if path == "/api/cross-market/alert":
+        from cross_market_alerts import dispatch_alert
+
+        return dispatch_alert(body)
+
+    if path == "/api/cross-market/history":
+        from cross_market_history import append_events, get_history
+
+        if body is not None:
+            events = body.get("events") if isinstance(body, dict) else None
+            return append_events(events or [])
+        days_raw = (query.get("days") or ["7"])[0]
+        limit_raw = (query.get("limit") or ["2000"])[0]
+        return get_history(
+            days=int(days_raw) if str(days_raw).isdigit() else 7,
+            limit=int(limit_raw) if str(limit_raw).isdigit() else 2000,
+        )
+
+    if path == "/api/cross-market/sample":
+        from cross_market import get_sample_payload
+
+        return get_sample_payload()
+
     if path.startswith("/api/exchanges/"):
         section = path[len("/api/exchanges/") :].strip("/")
         refresh = _query_refresh(query)

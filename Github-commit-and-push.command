@@ -70,7 +70,7 @@ if [ "$HAS_FILE_CHANGES" -eq 1 ]; then
     read -r commit_message
 
     if [ -z "$commit_message" ]; then
-        commit_message="Update $(date '+%Y-%m-%d %H:%M:%S')"
+        commit_message="Add Cross-Market monitor: menu, charts, APIs, and Vercel config"
     fi
 
     echo ""
@@ -90,6 +90,19 @@ if [ "$HAS_FILE_CHANGES" -eq 1 ]; then
     NEEDS_PUSH=1
 fi
 
+echo "Pulling latest from GitHub (rebase)..."
+if git pull --rebase origin "$BRANCH"; then
+    echo "✅ Rebased onto origin/$BRANCH"
+else
+    echo ""
+    echo "❌ Pull/rebase failed."
+    echo "To undo: git rebase --abort"
+    echo "Then fix conflicts, git add <files>, git rebase --continue, and run this script again."
+    read -p "Press Enter to close..."
+    exit 1
+fi
+echo ""
+
 if [ "$NEEDS_PUSH" -eq 1 ]; then
     echo ""
     echo "Pushing to GitHub..."
@@ -105,6 +118,10 @@ if [ "$NEEDS_PUSH" -eq 1 ]; then
         echo ""
         echo "✅ Successfully pushed to GitHub!"
         git log -1 --oneline
+        echo ""
+        echo "Vercel will auto-deploy from main in ~1–2 min."
+        echo "Check: https://btc-dashboard-bay.vercel.app/misc/cross-market"
+        echo "Asset check: https://btc-dashboard-bay.vercel.app/cross-market-charts.js (should be 200)"
     else
         echo ""
         echo "❌ Push failed. You may need to authenticate or fix credentials."

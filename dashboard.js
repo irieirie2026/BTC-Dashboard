@@ -896,6 +896,24 @@ const MENU_TREE = {
         accentDim: "rgba(167, 139, 250, 0.18)",
         onShow: () => window.initMiscKnowledgeGraph?.(),
       },
+      "cross-market": {
+        label: "Cross-Market",
+        accent: "#f59e0b",
+        accentDim: "rgba(245, 158, 11, 0.18)",
+        onShow: () => {
+          window.initCrossMarket?.();
+          window.decorateHelpLabels?.(
+            document.querySelector('#dashboard-misc .menu-screen[data-l2="cross-market"]'),
+          );
+          requestAnimationFrame(() => {
+            window.XMCharts?.ensureChartShells?.();
+            requestAnimationFrame(() => {
+              window.XMCharts?.renderPremiumTimeline?.();
+              window.XMCharts?.renderZHeatmap?.();
+            });
+          });
+        },
+      },
     },
   },
 };
@@ -1704,6 +1722,11 @@ function bootstrapPathMenu() {
     localStorage.setItem(MENU_L2_KEY, "knowledge-graph");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/misc/cross-market") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "cross-market");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
   }
 }
 
@@ -1716,6 +1739,15 @@ function migrateSocialMenu() {
   }
 }
 
+function migrateCrossMarketMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "cross-market") return;
+  localStorage.setItem(MENU_L1_KEY, "misc");
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  localStorage.setItem(MENU_L2_KEY, l2 === "monitor" || !l2 ? "cross-market" : l2);
+  localStorage.removeItem(MENU_L3_KEY);
+  localStorage.removeItem(MENU_L4_KEY);
+}
+
 function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
@@ -1723,6 +1755,7 @@ function initDashboardSwitcher() {
   migrateStatsValuationMenu();
   migrateMarketMenu();
   migrateSocialMenu();
+  migrateCrossMarketMenu();
 
   migrateMiscMenu();
   bootstrapPathMenu();

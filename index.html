@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=113" />
+    <link rel="stylesheet" href="styles.css?v=118" />
     <link rel="stylesheet" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
   </head>
   <body>
@@ -3569,6 +3569,124 @@
             </dialog>
           </section>
         </div>
+        <div class="menu-screen" data-l1="misc" data-l2="cross-market" hidden>
+          <div id="xm-toast-stack" class="xm-toast-stack" aria-live="polite"></div>
+          <section class="deriv-hero-strip xm-hero-strip" id="xm-heroes"></section>
+          <div class="xm-layout">
+            <div class="xm-main">
+              <section class="panel xm-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="cross-market-overview">Cross-Market Anomaly Monitor</h2>
+                  <span class="panel-meta xm-meta-wrap">
+                    <span id="xm-meta">Loading…</span>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-meta" aria-label="Explain feed status">?</button>
+                  </span>
+                  <button type="button" class="xm-refresh-btn" id="xm-refresh" aria-label="Refresh cross-market data" title="Force refresh">↻</button>
+                  <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-refresh" aria-label="Explain refresh">?</button>
+                  <button type="button" class="kg-btn kg-btn--secondary kg-btn--inline" id="xm-settings-btn">Settings</button>
+                  <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-settings" aria-label="Explain settings">?</button>
+                </div>
+                <p class="xm-section-note" data-help-key="cross-market-how-it-works">Compares BTC prices across 12+ exchanges in USD terms, flags regional premiums (Kimchi, Coinbase, Japan) and z-score shocks, then maps how anomalies propagate venue-to-venue. Hover any <strong>?</strong> for details.</p>
+                <div class="xm-loading" id="xm-loading" hidden>Loading cross-market data…</div>
+                <div class="xm-error" id="xm-error" hidden></div>
+                <div class="panel-header xm-subheader">
+                  <h3 data-help-key="cross-market-premiums-section">Live Premiums</h3>
+                </div>
+                <div class="xm-premium-grid" id="xm-premiums" aria-label="Live premiums"></div>
+              </section>
+              <section class="panel xm-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="cross-market-venues">Venues × Crosses</h2>
+                  <div class="xm-filter-bar" role="group" aria-label="Venue type filters">
+                    <button type="button" class="xm-filter-btn xm-filter--active" data-xm-filter="cex" aria-pressed="true">CEX</button>
+                    <button type="button" class="xm-filter-btn xm-filter--active" data-xm-filter="dex" aria-pressed="true">DEX</button>
+                    <button type="button" class="xm-filter-btn xm-filter--active" data-xm-filter="perp" aria-pressed="true">Perp</button>
+                  </div>
+                </div>
+                <div class="xm-table-wrap">
+                  <table class="xm-table" aria-label="Cross-market venues">
+                    <thead><tr>
+                      <th data-help-key="cross-market-exchange">Exchange</th>
+                      <th data-help-key="cross-market-pair">Pair</th>
+                      <th class="mono" data-help-key="cross-market-price">USD</th>
+                      <th class="mono" data-help-key="cross-market-ref">Ref</th>
+                      <th class="mono" data-help-key="cross-market-premium">Premium</th>
+                      <th class="mono" data-help-key="cross-market-zscore">z₁ₘ</th>
+                      <th class="mono" data-help-key="cross-market-zscore-5m">z₅ₘ</th>
+                      <th data-help-key="cross-market-market-type">Market</th>
+                      <th class="mono" data-help-key="cross-market-basis">Basis</th>
+                      <th class="mono" data-help-key="cross-market-funding">Funding</th>
+                    </tr></thead>
+                    <tbody id="xm-table-body"></tbody>
+                  </table>
+                </div>
+              </section>
+              <section class="panel xm-panel xm-panel-charts" data-xm-charts-ver="8">
+                <div class="panel-header xm-chart-panel-header">
+                  <h2 data-help-key="cross-market-charts">Charts</h2>
+                  <div class="xm-chart-window-bar" role="group" aria-label="Chart time window">
+                    <span class="xm-chart-window-label" id="xm-chart-window-label">Window: 5m</span>
+                    <button type="button" class="xm-chart-window-btn" data-xm-chart-window="5s" aria-pressed="false">5s</button>
+                    <button type="button" class="xm-chart-window-btn" data-xm-chart-window="30s" aria-pressed="false">30s</button>
+                    <button type="button" class="xm-chart-window-btn xm-chart-window-btn--active" data-xm-chart-window="5m" aria-pressed="true">5m</button>
+                    <button type="button" class="xm-chart-window-btn" data-xm-chart-window="1h" aria-pressed="false">1h</button>
+                    <button type="button" class="xm-chart-window-btn" data-xm-chart-window="1d" aria-pressed="false">1d</button>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-chart-window" aria-label="Explain chart window">?</button>
+                  </div>
+                </div>
+                <div class="xm-charts-stack">
+                  <div class="xm-chart-block xm-chart-block--row xm-chart-block--premium">
+                    <h3 data-help-key="cross-market-premium-chart">Premium Timeline</h3>
+                    <div id="xm-chart-premium-wrap" class="xm-chart-shell xm-chart-shell--premium" style="height:440px;min-height:440px;">
+                      <canvas id="xm-chart-premium" class="xm-chart-canvas xm-chart-canvas--premium" width="800" height="440" aria-label="Premium timeline chart"></canvas>
+                    </div>
+                  </div>
+                  <div class="xm-chart-block xm-chart-block--row">
+                    <h3 data-help-key="cross-market-zmatrix-chart">Z-Score Time Matrix</h3>
+                    <div id="xm-chart-zmatrix-wrap" class="xm-chart-shell xm-chart-shell--zmatrix" style="height:176px;min-height:176px;">
+                      <canvas id="xm-chart-zmatrix" class="xm-chart-canvas xm-chart-canvas--zmatrix" width="800" height="176" aria-label="Z-score heatmap over time"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="panel xm-panel">
+                <div class="panel-header">
+                  <h2 data-help-key="cross-market-heatmap">Anomaly Heatmap</h2>
+                </div>
+                <div class="xm-heatmap" id="xm-heatmap" aria-label="Venue z-score heatmap"></div>
+              </section>
+            </div>
+            <aside class="xm-sidebar">
+              <section class="panel xm-panel xm-panel--compact">
+                <div class="panel-header"><h2 data-help-key="cross-market-alerts">Active Alerts</h2></div>
+                <div class="xm-alerts" id="xm-alerts"></div>
+              </section>
+              <section class="panel xm-panel xm-panel--compact">
+                <div class="panel-header"><h2 data-help-key="cross-market-propagation">Propagation</h2></div>
+                <div class="xm-propagation" id="xm-propagation"></div>
+                <div class="xm-prop-chart" id="xm-chart-prop" aria-label="Propagation graph"></div>
+              </section>
+              <section class="panel xm-panel xm-panel--compact">
+                <div class="panel-header"><h2 data-help-key="cross-market-news">News Attribution</h2></div>
+                <div class="xm-news" id="xm-news"></div>
+              </section>
+            </aside>
+          </div>
+          <dialog id="xm-settings-dialog" class="xm-dialog">
+            <div class="xm-dialog__inner">
+              <h3 data-help-key="cross-market-settings">Cross-Market Settings</h3>
+              <label class="xm-field"><span data-help-key="cross-market-zscore">z-score threshold</span> <input id="xm-set-z" type="number" step="0.1" min="1" max="5" value="2"></label>
+              <label class="xm-field"><span data-help-key="cross-market-premiums-section">Premium move % (60s)</span> <input id="xm-set-prem" type="number" step="0.1" min="0.5" max="10" value="1.5"></label>
+              <label class="xm-field"><span data-help-key="cross-market-dev-sigma">Cross deviation σ</span> <input id="xm-set-dev" type="number" step="0.1" min="1" max="5" value="2"></label>
+              <label class="xm-field">Webhook URL (optional) <input id="xm-set-webhook" type="url" placeholder="https://…"></label>
+              <p class="xm-muted" data-help-key="cross-market-alerts">Webhook + Telegram/email via server env. Alerts deduped 5 min.</p>
+              <div class="xm-dialog__actions">
+                <button type="button" class="kg-btn" id="xm-settings-save">Save</button>
+                <button type="button" class="kg-btn kg-btn--secondary" id="xm-settings-cancel">Cancel</button>
+              </div>
+            </div>
+          </dialog>
+        </div>
       </div>
       <div id="dashboard-valuation" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="valuation" data-l2="indicators">
@@ -4088,9 +4206,9 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=95"></script>
+    <script src="help.js?v=99"></script>
     <script src="home.js?v=5"></script>
-    <script src="dashboard.js?v=47"></script>
+    <script src="dashboard.js?v=50"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -4115,7 +4233,11 @@
     <script src="chart-patterns.js?v=15"></script>
 
     <script src="prediction-markets.js?v=2"></script>
+    <script src="cross-market-engine.js?v=6"></script>
+    <script src="cross-market-ws.js?v=1"></script>
+    <script src="cross-market-charts.js?v=8"></script>
+    <script src="cross-market.js?v=13"></script>
     <script src="spot-charts.js?v=4"></script>
-    <script src="app.js?v=21"></script>
+    <script src="app.js?v=22"></script>
   </body>
 </html>

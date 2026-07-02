@@ -1,0 +1,22 @@
+{
+  "updatedAt": "2026-07-02T12:00:00Z",
+  "crosses": ["BTC/USDT", "BTC/USD", "BTC/KRW", "BTC/JPY", "BTC/EUR", "BTC/GBP", "BTC/AUD", "BTC/CAD"],
+  "fx": { "USD": 1, "KRW": 1385.2, "JPY": 157.4, "EUR": 0.92, "GBP": 0.79, "AUD": 1.52, "CAD": 1.37 },
+  "referenceUsd": 94250,
+  "vwapUsd": 94210,
+  "premiums": {
+    "kimchi": { "label": "Kimchi (KRW)", "pct": 2.84, "localUsd": 96930, "refUsd": 94250 },
+    "coinbase": { "label": "Coinbase USD", "pct": 0.42, "localUsd": 94646, "refUsd": 94250 },
+    "jpy": { "label": "Japan (JPY)", "pct": 0.18, "localUsd": 94420, "refUsd": 94250 }
+  },
+  "venues": [
+    { "exchange": "Binance", "pair": "BTC/USDT", "price": 94250, "priceUsd": 94250, "ccy": "USD", "market": "spot", "z1m": 0.4, "z5m": 0.2 },
+    { "exchange": "Coinbase", "pair": "BTC/USD", "price": 94646, "priceUsd": 94646, "ccy": "USD", "market": "spot", "z1m": 1.8, "z5m": 0.6 },
+    { "exchange": "Upbit", "pair": "BTC/KRW", "price": 134200000, "priceUsd": 96930, "ccy": "KRW", "market": "spot", "z1m": 2.6, "z5m": 1.1 },
+    { "exchange": "Bithumb", "pair": "BTC/KRW", "price": 134050000, "priceUsd": 96822, "ccy": "KRW", "market": "spot", "z1m": 2.4, "z5m": 1.0 },
+    { "exchange": "bitFlyer", "pair": "BTC/JPY", "price": 14865000, "priceUsd": 94420, "ccy": "JPY", "market": "spot", "z1m": 0.5, "z5m": 0.1 }
+  ],
+  "errors": [],
+  "fallback": true,
+  "demo": true
+}

@@ -34,12 +34,13 @@
     { "source": "/misc/metrics", "destination": "/index.html" },
     { "source": "/misc/whale-proxies", "destination": "/index.html" },
     { "source": "/misc/knowledge-graph", "destination": "/index.html" },
+    { "source": "/misc/cross-market", "destination": "/index.html" },
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
   "functions": {
     "api/handler.py": {
       "maxDuration": 60,
-      "includeFiles": "{server.py,api_dispatch.py,equity_insights.py,macro_drivers_api.py,btc_indicators_api.py,cache/**,macro_data/**,btc_data/**,global_macro.py,global_macro_*.py,macro_drivers*.py,requirements.txt,data/x-feed-cache.json,data/stats-btc-history-cache.json}",
+      "includeFiles": "{server.py,api_dispatch.py,cross_market.py,cross_market_dex.py,cross_market_alerts.py,cross_market_history.py,equity_insights.py,macro_drivers_api.py,btc_indicators_api.py,cache/**,macro_data/**,btc_data/**,global_macro.py,global_macro_*.py,macro_drivers*.py,requirements.txt,data/x-feed-cache.json,data/stats-btc-history-cache.json,data/cross-market-sample.json}",
       "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command,**/*.js,**/*.html,**/*.css,**/*.md}"
     }
   }

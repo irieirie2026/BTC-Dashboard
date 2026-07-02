@@ -303,6 +303,166 @@ const METRIC_HELP = {
     title: "Detected Patterns",
     body: "Only one pattern on the chart at a time. Filter by category, click a row to display it. Pattern Detail spans the full panel width below the chart — every chart label explained, plus trigger rules (what close confirms or invalidates the setup).",
   },
+  "cross-market-overview": {
+    title: "Cross-Market Anomaly Monitor",
+    body: "Tracks BTC across 12+ centralized exchanges in parallel. Every venue price is converted to USD (using live FX for KRW, JPY, EUR, etc.), compared to a Binance USDT reference, and scanned for statistical anomalies. Binance trades also stream over WebSocket for sub-second updates. REST snapshots refresh every 5 seconds when server.py (or the Vercel API) is available.",
+  },
+  "cross-market-how-it-works": {
+    title: "How this monitor works",
+    body: "Pipeline: (1) fetch venue prices from CEX APIs, (2) normalize to USD, (3) compute regional premiums (Kimchi, Coinbase, Japan…), (4) run a client-side z-score engine on 1m/5m returns, (5) cluster simultaneous anomalies into a propagation graph, (6) optionally match headlines from the app's news feeds. Orange = elevated; red-hot z-scores ≥2σ. Card sparklines show recent premium history.",
+  },
+  "cross-market-meta": {
+    title: "Feed status",
+    body: "● Live = cross-market API with all venues (incl. Korea/Japan when server is up). ● Live (exchanges) = server Exchanges API. ● Live (browser) = direct Binance/Coinbase/Kraken/Bitstamp/Gemini fetch from your browser — works without server.py. ○ Demo only = all sources failed; fixed offline sample. Poll every 5s.",
+  },
+  "cross-market-refresh": {
+    title: "Refresh",
+    body: "Force an immediate snapshot fetch, bypassing the 5-second poll timer. Use after starting server.py or changing API keys.",
+  },
+  "cross-market-settings": {
+    title: "Settings",
+    body: "Tune anomaly sensitivity: z-score threshold (default 2σ) for return shocks, premium move % over 60s for Kimchi/Coinbase spikes, and an optional webhook URL for outbound alerts. Alerts are deduplicated for 5 minutes per venue/event type.",
+  },
+  "cross-market-global-ref": {
+    title: "Global Reference",
+    body: "Anchor price — typically Binance BTC/USDT last trade. All premiums and cross-venue spreads are measured relative to this USD-equivalent benchmark. When Binance WS is connected, this updates in real time.",
+  },
+  "cross-market-kimchi-hero": {
+    title: "Kimchi Premium",
+    body: "Korea-specific BTC premium: average USD-equivalent price on Upbit and Bithumb (KRW pairs) minus the global reference, as a %. Sustained values above ~2% often reflect strong local demand, capital controls, or Korea-only news. Sharp spikes can precede local regulatory headlines.",
+  },
+  "cross-market-coinbase-hero": {
+    title: "Coinbase Premium",
+    body: "Coinbase BTC/USD vs the USDT reference. A positive premium means USD spot on Coinbase trades above Binance USDT — common during US institutional buying or banking-hour flows. Negative = discount.",
+  },
+  "cross-market-venues-live": {
+    title: "Venues Live",
+    body: "Count of exchanges reporting a valid price in the current snapshot. Includes spot and perp rows where available. The error count (if any) lists venues whose API failed on the last fetch.",
+  },
+  "cross-market-premiums-section": {
+    title: "Live Premiums",
+    body: "Regional and venue-specific premiums vs the global reference. Each card shows local USD price, reference price, current % premium, and a sparkline of recent premium history. Cards turn blue at ≥1% and orange at ≥2% absolute premium.",
+  },
+  "cross-market-kimchi-premium": {
+    title: "Kimchi (KRW)",
+    body: "Combined Korea premium from KRW spot venues (Upbit, Bithumb). Converted to USD using the live KRW/USD rate. The Kimchi trade is a well-known arb signal between Korean and offshore BTC markets.",
+  },
+  "cross-market-coinbase-premium-card": {
+    title: "Coinbase USD",
+    body: "Coinbase Pro/Exchange BTC-USD premium vs Binance USDT. Often interpreted as a proxy for US spot demand and ETF-related flows.",
+  },
+  "cross-market-jpy-premium": {
+    title: "Japan (JPY)",
+    body: "bitFlyer (and other JPY venues when live) vs the global reference. Reflects Japan domestic demand and local exchange liquidity.",
+  },
+  "cross-market-kraken-premium": {
+    title: "Kraken USD",
+    body: "Kraken BTC/USD vs reference. Useful for comparing US/EU regulated venue pricing.",
+  },
+  "cross-market-bitstamp-premium": {
+    title: "Bitstamp USD",
+    body: "Bitstamp BTC/USD vs reference — one of the longest-running EU USD pairs.",
+  },
+  "cross-market-gemini-premium": {
+    title: "Gemini USD",
+    body: "Gemini BTC/USD vs reference — US-regulated exchange often used by institutions.",
+  },
+  "cross-market-venues": {
+    title: "Venues × Crosses",
+    body: "Full matrix of tracked exchanges and currency crosses (USDT, USD, KRW, JPY, EUR…). Sorted by |z₁ₘ| so the most anomalous venues float to the top. WS badge = Binance live WebSocket overlay.",
+  },
+  "cross-market-exchange": {
+    title: "Exchange",
+    body: "CEX name (Binance, Coinbase, Upbit, Kraken, OKX, Bybit, etc.). Stale tag means the quote is older than the freshness threshold on the last REST fetch.",
+  },
+  "cross-market-pair": {
+    title: "Pair",
+    body: "Native trading pair on that exchange, e.g. BTC/USDT, BTC/USD, BTC/KRW. FX conversion to USD uses Frankfurter rates for non-USD quotes.",
+  },
+  "cross-market-price": {
+    title: "USD Price",
+    body: "Last price converted to USD for apples-to-apples comparison. For USDT pairs this equals the raw last; for KRW/JPY/EUR pairs it divides by the live FX rate.",
+  },
+  "cross-market-ref": {
+    title: "Reference USD",
+    body: "Global anchor used for premium/discount — Binance BTC/USDT spot (USDT ≈ USD). Premium % = (Venue USD − Ref) / Ref × 100. Same reference for every row in the snapshot.",
+  },
+  "cross-market-premium": {
+    title: "Premium %",
+    body: "(Venue USD − Global Reference) / Reference × 100. Positive = venue trades above the anchor; negative = discount. Useful for spotting regional dislocations and arb windows.",
+  },
+  "cross-market-zscore": {
+    title: "z₁ₘ (1-minute)",
+    body: "Standardized 1-minute return: (r − μ) / σ over the rolling window in the client engine. |z| ≥ 2 (default) flags a short-term price shock at that venue. Highlighted in orange when hot.",
+  },
+  "cross-market-zscore-5m": {
+    title: "z₅ₘ (5-minute)",
+    body: "Same z-score logic on 5-minute returns — smoother, catches sustained moves rather than single-tick noise. Both z₁ₘ and z₅ₘ contribute to alerts.",
+  },
+  "cross-market-market-type": {
+    title: "Market",
+    body: "spot = deliverable spot market; perp = USD-margined perpetual futures. Perp rows may include basis vs spot when the live API provides it.",
+  },
+  "cross-market-heatmap": {
+    title: "Anomaly Heatmap",
+    body: "Grid of venues colored by |z₁ₘ|. Darker orange = stronger short-term anomaly. Hover a cell for the exact z-score. Quick visual scan for which geography or exchange is moving first.",
+  },
+  "cross-market-alerts": {
+    title: "Active Alerts",
+    body: "Extreme alerts only (high severity): |z|≥3 return shocks, large premium Δ60s (≥2.5%), or devσ≥3 cross-divergence. Medium events are logged internally but not shown here. Deduped 5 min; toasts fire for the same extreme set.",
+  },
+  "cross-market-propagation": {
+    title: "Propagation",
+    body: "When ≥2 venues fire anomalies within 10–45 seconds, they form a cluster. The earliest event is the origin; followers show delay in seconds (origin → venue). Panel scrolls when many edges; spreadVelocity is median follower delay. SVG graph below visualizes origin → followers.",
+  },
+  "cross-market-news": {
+    title: "News Attribution",
+    body: "On high-severity live anomalies, queries the dashboard's RSS + X news cache for matching keywords (Korea, ETF, tariff, regulation, liquidation, etc.). Confidence % is a heuristic text match — not a verdict. Click to open the source article.",
+  },
+  "cross-market-ws": {
+    title: "WebSocket (WS)",
+    body: "Multi-venue overlay: Binance, Coinbase, Kraken, and OKX public trade/ticker streams update rows between 5s REST polls. LIVE badge = WebSocket tick; STALE = REST quote older than 30s without a fresh WS tick.",
+  },
+  "cross-market-basis": {
+    title: "Basis %",
+    body: "Perp vs spot basis when the server provides it: (perp USD − spot ref) / ref × 100. Positive = perp trading at a premium (contango); negative = discount (backwardation). DEX perps (Hyperliquid, dYdX) include funding context.",
+  },
+  "cross-market-funding": {
+    title: "Funding Rate",
+    body: "8h-equivalent perpetual funding rate (%). Positive = longs pay shorts; negative = shorts pay longs. Extreme funding alongside premium spikes can signal crowded positioning.",
+  },
+  "cross-market-dev-sigma": {
+    title: "Cross Deviation σ",
+    body: "Threshold for cross-venue divergence alerts: |venue USD − VWAP| / σ_vwap. Default 2σ flags venues trading far from the peer median — useful for arb dislocations independent of return z-scores.",
+  },
+  "cross-market-charts": {
+    title: "Charts",
+    body: "Premium timeline (Kimchi, Coinbase, JPY, Kraken % vs ref over recent snapshots), z-score time matrix (venue × time heatmap), and propagation graph (origin → followers with delay seconds and spreadVelocity).",
+  },
+  "cross-market-premium-chart": {
+    title: "Premium Timeline",
+    body: "Multi-line chart of regional premium % history from the client engine buffer. Builds over ~4 minutes of polling; sharper slopes indicate accelerating dislocations.",
+  },
+  "cross-market-zmatrix-chart": {
+    title: "Z-Score Time Matrix",
+    body: "Heatmap of |z₁ₘ| per venue across recent time buckets. Orange cells = short-term return shocks; scan left-to-right for which exchange moved first.",
+  },
+  "cross-market-chart-window": {
+    title: "Chart Window",
+    body: "Fixed sliding window for both charts: axis always spans the full selection (5s → 1d) with “now” on the right. Early on, lines grow in from the right; as history fills, older points scroll left. 1d with only minutes of data still shows a 24h-wide axis — not zoomed to fit.",
+  },
+  "cross-market-spread-velocity": {
+    title: "Spread Velocity",
+    body: "Median propagation delay (seconds) from the cluster origin to follower venues. Low spreadVelocity (&lt;45s) = fast cross-venue contagion; high = slow regional catch-up.",
+  },
+  "cross-market-stale": {
+    title: "Stale Quote",
+    body: "REST snapshot for this venue is older than 30s and no WebSocket tick has refreshed it. Common for Korea/Japan venues when only browser CEX mode is active.",
+  },
+  "cross-market-dex": {
+    title: "DEX Venues",
+    body: "Decentralized quotes (Jupiter wBTC, DefiLlama pools, Hyperliquid/dYdX perps) fetched server-side. Weighted lower in VWAP but included in cross-divergence scans.",
+  },
   "prediction-markets-overview": {
     title: "Prediction Markets",
     body: "Live prediction markets from Polymarket (Gamma API) and Kalshi. Filter by Bitcoin, finance, economics, politics, and geopolitics. BTC-related markets are highlighted. Auto-refreshes every 60 seconds with server-side cache.",
