@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-07-02T21:53:13Z",
+  "fetchedAt": "2026-07-03T09:45:29Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A newly created wallet just withdrew 733 $BTC($45.18M) from #Binance. https://arkm.com/explorer/address/bc1qnjchjgc2sq24l2cde8xqwewj2a0kqc2vqll65q4gngwc7gccytxqaq3ny9",
+      "link": "https://x.com/lookonchain/status/2072931496453927355#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A newly created wallet just withdrew 733 $BTC ($45.18M) from #Binance . arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-07-03T06:32:36+00:00",
+      "publishedTs": 1783060356.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Clifton Collins deposited another 500 $BTC($30.85M) to Coinbase Prime 12 hours ago. Clifton Collins is an Irish drug dealer known for buying around 6,000 $BTC in 2011\u20132012 at an average price of about $5 per $BTC. He printed the private keys on paper and hid them inside fishing r",
+      "link": "https://x.com/lookonchain/status/2072881223358431655#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Clifton Collins deposited another 500 $BTC ($30.85M) to Coinbase Prime 12 hours ago. Clifton Collins is an Irish drug dealer known for buying around 6,000 $BTC in 2011\u20132012 at an average price of about $5 per $BTC . He printed the private keys on paper and hid them inside fishing",
+      "publishedAt": "2026-07-03T03:12:50+00:00",
+      "publishedTs": 1783048370.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A wallet possibly linked to @TimDraper deposited 1,000 $BTC($61.82M) to Coinbase Prime 7 hours ago. Tim Draper is a well-known venture capitalist who bought ~29,656 $BTC(from seized Silk Road assets) at the U.S. Marshals Service auction in 2014. The purchase price was ~$632 per $",
+      "link": "https://x.com/lookonchain/status/2072851895866306755#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A wallet possibly linked to @TimDraper deposited 1,000 $BTC ($61.82M) to Coinbase Prime 7 hours ago. Tim Draper is a well-known venture capitalist who bought ~29,656 $BTC (from seized Silk Road assets) at the U.S. Marshals Service auction in 2014. The purchase price was ~$632 per",
+      "publishedAt": "2026-07-03T01:16:18+00:00",
+      "publishedTs": 1783041378.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201ccrypto is a BIG deal.\u201d \u201cAnything we do I want to be #1 in. And we\u2019re #1 in crypto.\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2072800739357872596#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201ccrypto is a BIG deal.\u201d \u201cAnything we do I want to be #1 in. And we\u2019re #1 in crypto.\u201d Video",
+      "publishedAt": "2026-07-02T21:53:01+00:00",
+      "publishedTs": 1783029181.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\u201cThe community will decide\u201d regarding critical issues is the biggest lie developers will tell you. If they meant it they\u2019d solicit community input. But they don\u2019t.",
       "link": "https://x.com/nic_carter/status/2072799933422309799#m",
@@ -55,6 +107,19 @@
       "isRetweet": true
     },
     {
+      "title": "THE 2026 BITCON ASIA WHALE PASS EXPERIENCE IS GOING TO BE UNFORGETTABLE! \ud83d\udd25 \ud83d\udc0b \ud83c\udded\ud83c\uddf0",
+      "link": "https://x.com/Bitcoinconfasia/status/2072787442084516237#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "THE 2026 BITCON ASIA WHALE PASS EXPERIENCE IS GOING TO BE UNFORGETTABLE! \ud83d\udd25 \ud83d\udc0b \ud83c\udded\ud83c\uddf0 Video",
+      "publishedAt": "2026-07-02T21:00:11+00:00",
+      "publishedTs": 1783026011.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "JUST IN: $383 million Miller Value Partners tells CNBC that the fundamental case for Bitcoin \"has never been stronger\" \ud83d\udc40 \u201cBitcoin is a hedge against\u201d an inflationary debt spiral \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2072784286483185969#m",
       "source": "@BitcoinMagazine",
@@ -65,7 +130,7 @@
       "publishedTs": 1783025259.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "R to @Polymarket: WATCH: Ryan Long on the Bitcoin Cult & Why He Wants to Forget He Owns BTC | Bitcoin Backstage Youtube: https://youtu.be/qTxESMez72g Rumble: https://rumble.com/v7c2bse-ryan-long-on-the-bitcoin-cult-and-why-he-wants-to-forget-he-owns-btc-bitcoi.html Spotify: https",
@@ -575,19 +640,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Behind every Bitcoin breakthrough is a community of open-source builders \u26a1\ufe0f We're excited to offer complimentary General Admission passes to eligible open-source contributors attending Bitcoin Asia \ud83c\udded\ud83c\uddf0 Join us in Hong Kong and apply now \ud83d\udc47 https://app.notion.",
-      "link": "https://x.com/BitcoinMagazine/status/2072385309765931491#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Behind every Bitcoin breakthrough is a community of open-source builders \u26a1\ufe0f We're excited to offer complimentary General Admission passes to eligible open-source contributors attending Bitcoin Asia \ud83c\udded\ud83c\uddf0 Join us in Hong Kong and apply now \ud83d\udc47 app.notion.com/p/btcinc/8419\u2026",
-      "publishedAt": "2026-07-01T18:22:15+00:00",
-      "publishedTs": 1782930135.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Nothing more \"Kafka-esque\" than decentralized governance. @nic_carter shares the challenges of making changes to Bitcoin \ud83d\ude02",
       "link": "https://x.com/isabelfoxenduke/status/2072381803453710635#m",
       "source": "@nic_carter",
@@ -731,19 +783,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. M2 money supply surpasses $23 trillion for the first time in history \ud83d\udc40 This is why we Bitcoin. Prepare accordingly \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2072316611805982964#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-01T13:49:16+00:00",
-      "publishedTs": 1782913756.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Credit on the Bitcoin Standard.",
       "link": "https://x.com/saylor/status/2072304368695812219#m",
       "source": "@saylor",
@@ -783,19 +822,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddf9\ud83c\uddfc Taiwan's legislature passes law establishing a regulatory framework for the Bitcoin and crypto industry. \"We're officially entering a new era of digital finance.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2072286589997154784#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddf9\ud83c\uddfc Taiwan's legislature passes law establishing a regulatory framework for the Bitcoin and crypto industry. \"We're officially entering a new era of digital finance.\" \ud83d\ude80 Video",
-      "publishedAt": "2026-07-01T11:49:58+00:00",
-      "publishedTs": 1782906598.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A mysterious whale is going long on $BTC! Over the past 5 days, 4 newly created wallets\u2014possibly controlled by the same person\u2014have opened a 20x long on a total of 800 $BTC($47M). https://hypurrscan.io/address/0x237152b038d88f4156a0cd71090462de7e3f0883#perps https://hypurrscan.io",
       "link": "https://x.com/lookonchain/status/2072257084587155582#m",
       "source": "@lookonchain",
@@ -804,19 +830,6 @@
       "summary": "A mysterious whale is going long on $BTC ! Over the past 5 days, 4 newly created wallets\u2014possibly controlled by the same person\u2014have opened a 20x long on a total of 800 $BTC ($47M). hypurrscan.io/address/0x2371\u2026 hypurrscan.io/address/0xbd1c\u2026 hypurrscan.io/address/0x93ab\u2026 hypurrsc",
       "publishedAt": "2026-07-01T09:52:44+00:00",
       "publishedTs": 1782899564.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Another whale is shorting $BTC! Whale 0xaeaa opened a 20x short on 1,100 $BTC($64.95M). Liquidation price: $67,914.56 https://hypurrscan.io/address/0xaeaab54bbf65bfd6efed7d2eb68372298e3c2416#perps",
-      "link": "https://x.com/lookonchain/status/2072149633464479987#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Another whale is shorting $BTC ! Whale 0xaeaa opened a 20x short on 1,100 $BTC ($64.95M). Liquidation price: $67,914.56 hypurrscan.io/address/0xaeaa\u2026 Lookonchain (@lookonchain) Two whales are shorting $BTC with positions totaling more than $100M. 0x069a: 40x short on 900 $BTC ($5",
-      "publishedAt": "2026-07-01T02:45:45+00:00",
-      "publishedTs": 1782873945.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
