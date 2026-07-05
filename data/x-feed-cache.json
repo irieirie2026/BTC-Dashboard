@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-07-05T08:24:44Z",
+  "fetchedAt": "2026-07-05T12:59:17Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Michael Saylor hints at Strategy buying more Bitcoin \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2073740311277211922#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-05T12:06:33+00:00",
+      "publishedTs": 1783253193.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted this about Bitcoin, \u201cSorry to be a wet blanket. Writing a description for this thing for general audiences is bloody hard. There's nothing to relate it to.\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2073739744148664707#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-05T12:04:17+00:00",
+      "publishedTs": 1783253057.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is Digital Energy.",
+      "link": "https://x.com/saylor/status/2073739030659760261#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-05T12:01:27+00:00",
+      "publishedTs": 1783252887.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin Evolves by Not Changing",
+      "link": "https://x.com/saylor/status/2073685745512948011#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Article Bitcoin Evolves by Not Changing Bitcoin\u2019s greatest evolution over the next decade will come from changing less at the protocol layer and mattering more everywhere else. The base layer will harden. The capital markets will deepen.",
+      "publishedAt": "2026-07-05T08:29:43+00:00",
+      "publishedTs": 1783240183.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Hard consensus is Bitcoin\u2019s immune system. Fees price block space. Nodes set policy. Miners build blocks. Holders allocate capital. Protocol changes must earn overwhelming alignment, so bad ideas fail before becoming iatrogenic protocol changes. $BTC",
       "link": "https://x.com/saylor/status/2073668602222252124#m",
@@ -206,6 +258,19 @@
       "summary": "Aus sending up an 18 year old center back after Salah scores a panenka",
       "publishedAt": "2026-07-03T21:01:17+00:00",
       "publishedTs": 1783112477.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: Image",
+      "link": "https://x.com/nic_carter/status/2073149306547163142#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-03T20:58:06+00:00",
+      "publishedTs": 1783112286.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -809,19 +874,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japan's Metaplanet buys 2,823 Bitcoin worth $172.7 million \ud83d\ude80 They now own 43,000 BTC \ud83e\udd2f",
-      "link": "https://x.com/BitcoinMagazine/status/2072646466955252054#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-02T11:40:00+00:00",
-      "publishedTs": 1782992400.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Incentive misalignment detected.",
       "link": "https://x.com/lopp/status/2072642652965642589#m",
       "source": "@lopp",
@@ -991,19 +1043,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: i am experiencing tremendous psychological torment",
-      "link": "https://x.com/nic_carter/status/2072358926268420325#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "i am experiencing tremendous psychological torment",
-      "publishedAt": "2026-07-01T16:37:25+00:00",
-      "publishedTs": 1782923845.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 12 years ago, Newegg became one of the first stores to accept bitcoin.",
       "link": "https://x.com/DocumentingBTC/status/2072357256079822975#m",
       "source": "@DocumentingBTC",
@@ -1012,32 +1051,6 @@
       "summary": "",
       "publishedAt": "2026-07-01T16:30:47+00:00",
       "publishedTs": 1782923447.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "it's coming home (to kinchasa)",
-      "link": "https://x.com/nic_carter/status/2072356089627107717#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-01T16:26:08+00:00",
-      "publishedTs": 1782923168.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "long unfiltered discussion with @isabelfoxenduke on my current views around the quantum debate and where we stand",
-      "link": "https://x.com/nic_carter/status/2072340346059587673#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "long unfiltered discussion with @isabelfoxenduke on my current views around the quantum debate and where we stand Isabel Foxen Duke\u26a1\ufe0f (@isabelfoxenduke) Bitcoin Rails x MARA Foundation presents: THE POLITICS OF POST-QUANTUM BITCOIN | with Nic Carter \ud83d\udd17 YouTube: piped.video/3ByUtLG",
-      "publishedAt": "2026-07-01T15:23:35+00:00",
-      "publishedTs": 1782919415.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1264,19 +1277,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin mining helped this single mother raise her four children in the small Texas town of Corsicana",
-      "link": "https://x.com/DocumentingBTC/status/2071709439728427082#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Bitcoin mining helped this single mother raise her four children in the small Texas town of Corsicana Video",
-      "publishedAt": "2026-06-29T21:36:35+00:00",
-      "publishedTs": 1782768995.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This is a dangerous anti-privacy bill (identity verification) that the House of Representatives might try to pass by voice vote this afternoon before many of us are even in town. Senators Mike Lee, Rand Paul, and Ron Wyden voted against a similar bill in the Senate two years ago.",
       "link": "https://x.com/RepThomasMassie/status/2071658667888238719#m",
       "source": "@lopp",
@@ -1329,14 +1329,14 @@
       "isRetweet": false
     },
     {
-      "title": "R to @saylor: Strategy has established a $BTC Monetization Program under which we may sell BTC to fund our: - USD Reserve ($1.25B cap) - dividends and interest expense - repurchases of our Digital Credit securities and $MSTR under our repurchase programs",
-      "link": "https://x.com/saylor/status/2071565169512108251#m",
+      "title": "Strategy announces a Digital Credit Capital Framework designed to strengthen Digital Credit, enhance liquidity, preserve long-term Bitcoin exposure, and support long-term value creation. $MSTR $STRC https://www.strategy.com/press/strategy-announces-digital-credit-capital-framewor",
+      "link": "https://x.com/saylor/status/2071565162377568377#m",
       "source": "@saylor",
       "authorName": "Michael Saylor",
       "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has established a $BTC Monetization Program under which we may sell BTC to fund our: - USD Reserve ($1.25B cap) - dividends and interest expense - repurchases of our Digital Credit securities and $MSTR under our repurchase programs",
-      "publishedAt": "2026-06-29T12:03:18+00:00",
-      "publishedTs": 1782734598.0,
+      "summary": "Strategy announces a Digital Credit Capital Framework designed to strengthen Digital Credit, enhance liquidity, preserve long-term Bitcoin exposure, and support long-term value creation. $MSTR $STRC strategy.com/press/strategy-\u2026 Link Strategy Announces Digital Credit Capital Fram",
+      "publishedAt": "2026-06-29T12:03:17+00:00",
+      "publishedTs": 1782734597.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
