@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-04T20:15:12Z",
+  "fetchedAt": "2026-07-05T08:24:44Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Hard consensus is Bitcoin\u2019s immune system. Fees price block space. Nodes set policy. Miners build blocks. Holders allocate capital. Protocol changes must earn overwhelming alignment, so bad ideas fail before becoming iatrogenic protocol changes. $BTC",
+      "link": "https://x.com/saylor/status/2073668602222252124#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-05T07:21:36+00:00",
+      "publishedTs": 1783236096.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I like that we\u2019re making France and Paraguay wait while we do a whole America preamble",
+      "link": "https://x.com/nic_carter/status/2073508942567661626#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-04T20:47:10+00:00",
+      "publishedTs": 1783198030.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto published the Bitcoin software for Apple Macintosh computers to start testing.",
+      "link": "https://x.com/DocumentingBTC/status/2073506433442759096#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-04T20:37:12+00:00",
+      "publishedTs": 1783197432.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: Bitcoin pumps to $63,052 \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2073460540597215281#m",
@@ -167,19 +206,6 @@
       "summary": "Aus sending up an 18 year old center back after Salah scores a panenka",
       "publishedAt": "2026-07-03T21:01:17+00:00",
       "publishedTs": 1783112477.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Image",
-      "link": "https://x.com/nic_carter/status/2073149306547163142#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-03T20:58:06+00:00",
-      "publishedTs": 1783112286.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -479,32 +505,6 @@
       "summary": "\u201cThe community will decide\u201d regarding critical issues is the biggest lie developers will tell you. If they meant it they\u2019d solicit community input. But they don\u2019t. Isabel Foxen Duke\u26a1\ufe0f (@isabelfoxenduke) \"One thing devs like to say is: we'll let the community decide,\" says @nic_ca",
       "publishedAt": "2026-07-02T21:49:49+00:00",
       "publishedTs": 1783028989.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: I just looked they\u2019ve launched 96 ETFs in the past 30 days. Never seen anything like it. God bless em",
-      "link": "https://x.com/EricBalchunas/status/2072794988673368122#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "I just looked they\u2019ve launched 96 ETFs in the past 30 days. Never seen anything like it. God bless em",
-      "publishedAt": "2026-07-02T21:30:10+00:00",
-      "publishedTs": 1783027810.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "OFF THE LEASH: Corgi files for like 25 new ETFs every day. Here\u2019s another batch, this time 2x stock. Yesterday they filed for a bunch of vanilla beta funds. There is legit chance they will have more ETFs than BlackRock (curr 487) this time next year.",
-      "link": "https://x.com/EricBalchunas/status/2072794278099652778#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-02T21:27:21+00:00",
-      "publishedTs": 1783027641.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1017,6 +1017,32 @@
       "isRetweet": false
     },
     {
+      "title": "it's coming home (to kinchasa)",
+      "link": "https://x.com/nic_carter/status/2072356089627107717#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-01T16:26:08+00:00",
+      "publishedTs": 1782923168.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "long unfiltered discussion with @isabelfoxenduke on my current views around the quantum debate and where we stand",
+      "link": "https://x.com/nic_carter/status/2072340346059587673#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "long unfiltered discussion with @isabelfoxenduke on my current views around the quantum debate and where we stand Isabel Foxen Duke\u26a1\ufe0f (@isabelfoxenduke) Bitcoin Rails x MARA Foundation presents: THE POLITICS OF POST-QUANTUM BITCOIN | with Nic Carter \ud83d\udd17 YouTube: piped.video/3ByUtLG",
+      "publishedAt": "2026-07-01T15:23:35+00:00",
+      "publishedTs": 1782919415.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "R to @APompliano: Full episode:",
       "link": "https://x.com/APompliano/status/2072325425708077480#m",
       "source": "@APompliano",
@@ -1064,19 +1090,6 @@
       "summary": "\u201cI have the luxury of being at Coinbase, and seeing stuff that doesn\u2019t make the front page news\u2026\u201d \u201c40 countries commit to buying bitcoin in some fashion for their national balance sheets\", says a senior executive at America\u2019s largest bitcoin exchange Video",
       "publishedAt": "2026-07-01T12:31:17+00:00",
       "publishedTs": 1782909077.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @APompliano: Full episode:",
-      "link": "https://x.com/APompliano/status/2072128931822489986#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Full episode: Anthony Pompliano \ud83c\udf2a (@APompliano) I spoke with @stoolpresidente to discuss: - how ESPN tried to fire him from his own company - buying the company back for $1 - his days as \"Davey Day Trader\" during Covid - the GameStop saga - bitcoin - artificial intelligence - sha",
-      "publishedAt": "2026-07-01T01:23:30+00:00",
-      "publishedTs": 1782869010.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1277,19 +1290,6 @@
       "isRetweet": true
     },
     {
-      "title": "A tulip vase made out of a Bitcoin mining machine",
-      "link": "https://x.com/DocumentingBTC/status/2071587279085224047#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-06-29T13:31:10+00:00",
-      "publishedTs": 1782739870.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "NEW: Quantum Computing section now live on my Bitcoin Resources site! What other related links should be added? https://www.lopp.net/bitcoin-information/technical-resources.html#quantum",
       "link": "https://x.com/lopp/status/2071580970667393464#m",
       "source": "@lopp",
@@ -1335,19 +1335,6 @@
       "authorName": "Michael Saylor",
       "authorRole": "MicroStrategy \u00b7 BTC treasury",
       "summary": "Strategy has established a $BTC Monetization Program under which we may sell BTC to fund our: - USD Reserve ($1.25B cap) - dividends and interest expense - repurchases of our Digital Credit securities and $MSTR under our repurchase programs",
-      "publishedAt": "2026-06-29T12:03:18+00:00",
-      "publishedTs": 1782734598.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: Strategy has established repurchase programs for up to $1.0B of our Digital Credit securities and up to $1.0B of $MSTR. This will create flexibility to accretively buyback securities during market dislocations. Repurchases will not be funded from the USD Reserve.",
-      "link": "https://x.com/saylor/status/2071565167335297306#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has established repurchase programs for up to $1.0B of our Digital Credit securities and up to $1.0B of $MSTR . This will create flexibility to accretively buyback securities during market dislocations. Repurchases will not be funded from the USD Reserve.",
       "publishedAt": "2026-06-29T12:03:18+00:00",
       "publishedTs": 1782734598.0,
       "category": "x",
