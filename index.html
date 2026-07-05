@@ -30,8 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=118" />
-    <link rel="stylesheet" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
+    <link rel="stylesheet" href="styles.css?v=119" />
   </head>
   <body>
     <div class="app app--compact">
@@ -3569,9 +3568,8 @@
             </dialog>
           </section>
         </div>
-        <div class="menu-screen" data-l1="misc" data-l2="cross-market" hidden>
+        <div class="menu-screen" data-l1="misc" data-l2="cross-market" data-l3="monitor" hidden>
           <div id="xm-toast-stack" class="xm-toast-stack" aria-live="polite"></div>
-          <section class="deriv-hero-strip xm-hero-strip" id="xm-heroes"></section>
           <div class="xm-layout">
             <div class="xm-main">
               <section class="panel xm-panel">
@@ -3589,10 +3587,6 @@
                 <p class="xm-section-note" data-help-key="cross-market-how-it-works">Compares BTC prices across 12+ exchanges in USD terms, flags regional premiums (Kimchi, Coinbase, Japan) and z-score shocks, then maps how anomalies propagate venue-to-venue. Hover any <strong>?</strong> for details.</p>
                 <div class="xm-loading" id="xm-loading" hidden>Loading cross-market data…</div>
                 <div class="xm-error" id="xm-error" hidden></div>
-                <div class="panel-header xm-subheader">
-                  <h3 data-help-key="cross-market-premiums-section">Live Premiums</h3>
-                </div>
-                <div class="xm-premium-grid" id="xm-premiums" aria-label="Live premiums"></div>
               </section>
               <section class="panel xm-panel">
                 <div class="panel-header">
@@ -3661,14 +3655,37 @@
                 <div class="panel-header"><h2 data-help-key="cross-market-alerts">Active Alerts</h2></div>
                 <div class="xm-alerts" id="xm-alerts"></div>
               </section>
-              <section class="panel xm-panel xm-panel--compact">
-                <div class="panel-header"><h2 data-help-key="cross-market-propagation">Propagation</h2></div>
-                <div class="xm-propagation" id="xm-propagation"></div>
-                <div class="xm-prop-chart" id="xm-chart-prop" aria-label="Propagation graph"></div>
-              </section>
-              <section class="panel xm-panel xm-panel--compact">
-                <div class="panel-header"><h2 data-help-key="cross-market-news">News Attribution</h2></div>
-                <div class="xm-news" id="xm-news"></div>
+              <section class="panel xm-panel xm-panel--compact xm-panel--propagation">
+                <div class="panel-header">
+                  <h2 data-help-key="cross-market-propagation">Propagation</h2>
+                  <span class="panel-meta xm-meta-wrap">
+                    <span id="xm-prop-meta">Cluster window 10–45s · origin → followers</span>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-prop-meta" aria-label="Explain cluster status">?</button>
+                  </span>
+                </div>
+                <div class="xm-prop-top">
+                  <div class="xm-prop-block">
+                    <div class="xm-prop-section-head">
+                      <span>Cluster stats</span>
+                      <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-prop-stats" aria-label="Explain cluster stats">?</button>
+                    </div>
+                    <div class="xm-prop-stats" id="xm-prop-stats" aria-label="Propagation statistics"></div>
+                  </div>
+                  <div class="xm-prop-block">
+                    <div class="xm-prop-section-head">
+                      <span>Arrival order</span>
+                      <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-prop-edges" aria-label="Explain arrival order">?</button>
+                    </div>
+                    <div class="xm-prop-edges" id="xm-prop-edges" aria-label="Propagation edges"></div>
+                  </div>
+                </div>
+                <div class="xm-prop-block xm-prop-block--chart">
+                  <div class="xm-prop-section-head">
+                    <span>Timeline</span>
+                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-prop-chart" aria-label="Explain propagation timeline">?</button>
+                  </div>
+                  <div class="xm-prop-chart" id="xm-chart-prop" aria-label="Propagation timeline"></div>
+                </div>
               </section>
             </aside>
           </div>
@@ -3686,6 +3703,20 @@
               </div>
             </div>
           </dialog>
+        </div>
+        <div class="menu-screen" data-l1="misc" data-l2="cross-market" data-l3="news-attribution" hidden>
+          <section class="panel xm-panel">
+            <div class="panel-header">
+              <h2 data-help-key="cross-market-news">News Attribution</h2>
+              <span class="panel-meta xm-meta-wrap">
+                <span id="xm-news-meta">Loading headlines…</span>
+                <button type="button" class="help-trigger help-trigger--inline" data-help-key="cross-market-news" aria-label="Explain news attribution">?</button>
+              </span>
+              <button type="button" class="xm-refresh-btn" id="xm-news-refresh" aria-label="Refresh news attribution" title="Refresh headlines">↻</button>
+            </div>
+            <p class="xm-section-note">Headlines from dashboard RSS feeds, scored against the active anomaly type (Kimchi premium, Coinbase premium, liquidations, etc.). Refreshes on extreme alerts and on demand.</p>
+            <div class="xm-news xm-news--page" id="xm-news" aria-live="polite"></div>
+          </section>
         </div>
       </div>
       <div id="dashboard-valuation" class="dashboard-view" hidden>
@@ -4202,13 +4233,14 @@
 
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
+    <div id="xm-heat-tooltip" class="xm-heat-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=6"></script>
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=99"></script>
+    <script src="help.js?v=106"></script>
     <script src="home.js?v=5"></script>
-    <script src="dashboard.js?v=50"></script>
+    <script src="dashboard.js?v=51"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
@@ -4223,8 +4255,6 @@
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=3"></script>
     <script src="misc-whales.js?v=1"></script>
-    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script src="misc-knowledge-graph.js?v=32"></script>
     <script src="misc-greed-fear.js?v=3"></script>
     <script src="misc-bitcoin-valuation-models.js?v=7"></script>
     <script src="misc-bitcoin.js?v=16"></script>
@@ -4233,10 +4263,10 @@
     <script src="chart-patterns.js?v=15"></script>
 
     <script src="prediction-markets.js?v=2"></script>
-    <script src="cross-market-engine.js?v=6"></script>
-    <script src="cross-market-ws.js?v=1"></script>
-    <script src="cross-market-charts.js?v=8"></script>
-    <script src="cross-market.js?v=13"></script>
+    <script src="cross-market-engine.js?v=12"></script>
+    <script src="cross-market-ws.js?v=4"></script>
+    <script src="cross-market-charts.js?v=20"></script>
+    <script src="cross-market.js?v=28"></script>
     <script src="spot-charts.js?v=4"></script>
     <script src="app.js?v=22"></script>
   </body>

@@ -890,28 +890,44 @@ const MENU_TREE = {
           );
         },
       },
-      "knowledge-graph": {
-        label: "Knowledge Graph",
-        accent: "#a78bfa",
-        accentDim: "rgba(167, 139, 250, 0.18)",
-        onShow: () => window.initMiscKnowledgeGraph?.(),
-      },
       "cross-market": {
         label: "Cross-Market",
         accent: "#f59e0b",
         accentDim: "rgba(245, 158, 11, 0.18)",
-        onShow: () => {
-          window.initCrossMarket?.();
-          window.decorateHelpLabels?.(
-            document.querySelector('#dashboard-misc .menu-screen[data-l2="cross-market"]'),
-          );
-          requestAnimationFrame(() => {
-            window.XMCharts?.ensureChartShells?.();
-            requestAnimationFrame(() => {
-              window.XMCharts?.renderPremiumTimeline?.();
-              window.XMCharts?.renderZHeatmap?.();
-            });
-          });
+        children: {
+          monitor: {
+            label: "Monitor",
+            accent: "#f59e0b",
+            accentDim: "rgba(245, 158, 11, 0.18)",
+            onShow: () => {
+              window.initCrossMarket?.();
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '#dashboard-misc .menu-screen[data-l2="cross-market"][data-l3="monitor"]',
+                ),
+              );
+              requestAnimationFrame(() => {
+                window.XMCharts?.ensureChartShells?.();
+                requestAnimationFrame(() => {
+                  window.XMCharts?.renderPremiumTimeline?.();
+                  window.XMCharts?.renderZHeatmap?.();
+                });
+              });
+            },
+          },
+          "news-attribution": {
+            label: "News Attribution",
+            accent: "#38bdf8",
+            accentDim: "rgba(56, 189, 248, 0.18)",
+            onShow: () => {
+              window.initCrossMarketNews?.();
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '#dashboard-misc .menu-screen[data-l2="cross-market"][data-l3="news-attribution"]',
+                ),
+              );
+            },
+          },
         },
       },
     },
@@ -1148,10 +1164,14 @@ const LEGACY_L2 = {
     whales: "whale-proxies",
     "whale-proxies": "whale-proxies",
     whaleproxies: "whale-proxies",
-    kg: "knowledge-graph",
-    "knowledge-graph": "knowledge-graph",
-    knowledgegraph: "knowledge-graph",
-    graph: "knowledge-graph",
+    kg: "metrics",
+    "knowledge-graph": "metrics",
+    knowledgegraph: "metrics",
+    graph: "metrics",
+    "cross-market": "cross-market",
+    crossmarket: "cross-market",
+    "venue-crosses": "cross-market",
+    venuecrosses: "cross-market",
   },
 };
 
@@ -1218,6 +1238,14 @@ const LEGACY_L3 = {
   "news/technology": { overview: "overview" },
   "news/onchain": { overview: "overview" },
   "news/x": { overview: "overview" },
+  "misc/cross-market": {
+    monitor: "monitor",
+    "cross-market": "monitor",
+    crossmarket: "monitor",
+    news: "news-attribution",
+    "news-attribution": "news-attribution",
+    newsattribution: "news-attribution",
+  },
 };
 
 const LEGACY_L4 = {};
@@ -1698,7 +1726,7 @@ function migrateMiscMenu() {
   if (l2 === "bitcoin" || l2 === "btc" || l2 === "greed-fear" || l2 === "greed" || l2 === "fear") {
     localStorage.setItem(MENU_L1_KEY, "valuation");
     localStorage.setItem(MENU_L2_KEY, "indicators");
-  } else if (!l2 || l2 === "park" || l2 === "parking") {
+  } else if (!l2 || l2 === "park" || l2 === "parking" || l2 === "knowledge-graph") {
     localStorage.setItem(MENU_L2_KEY, "metrics");
   }
   localStorage.removeItem(MENU_L3_KEY);
@@ -1719,13 +1747,23 @@ function bootstrapPathMenu() {
     localStorage.removeItem(MENU_L4_KEY);
   } else if (path === "/misc/knowledge-graph") {
     localStorage.setItem(MENU_L1_KEY, "misc");
-    localStorage.setItem(MENU_L2_KEY, "knowledge-graph");
+    localStorage.setItem(MENU_L2_KEY, "metrics");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
-  } else if (path === "/misc/cross-market") {
+  } else if (
+    path === "/misc/cross-market"
+    || path === "/misc/cross-market/monitor"
+    || path === "/misc/venue-crosses"
+    || path === "/misc/venue-crosses/monitor"
+  ) {
     localStorage.setItem(MENU_L1_KEY, "misc");
     localStorage.setItem(MENU_L2_KEY, "cross-market");
-    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.setItem(MENU_L3_KEY, "monitor");
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/misc/cross-market/news-attribution") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "cross-market");
+    localStorage.setItem(MENU_L3_KEY, "news-attribution");
     localStorage.removeItem(MENU_L4_KEY);
   }
 }
@@ -1740,12 +1778,21 @@ function migrateSocialMenu() {
 }
 
 function migrateCrossMarketMenu() {
-  if (localStorage.getItem(MENU_L1_KEY) !== "cross-market") return;
-  localStorage.setItem(MENU_L1_KEY, "misc");
+  const l1 = localStorage.getItem(MENU_L1_KEY);
+  if (l1 === "cross-market") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "cross-market");
+    localStorage.setItem(MENU_L3_KEY, "monitor");
+    localStorage.removeItem(MENU_L4_KEY);
+    return;
+  }
+  if (l1 !== "misc") return;
   const l2 = localStorage.getItem(MENU_L2_KEY);
-  localStorage.setItem(MENU_L2_KEY, l2 === "monitor" || !l2 ? "cross-market" : l2);
-  localStorage.removeItem(MENU_L3_KEY);
-  localStorage.removeItem(MENU_L4_KEY);
+  if (l2 === "venue-crosses" || l2 === "cross-market") {
+    localStorage.setItem(MENU_L2_KEY, "cross-market");
+    localStorage.setItem(MENU_L3_KEY, "monitor");
+    localStorage.removeItem(MENU_L4_KEY);
+  }
 }
 
 function initDashboardSwitcher() {
