@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-05T16:43:47Z",
+  "fetchedAt": "2026-07-05T20:39:05Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "i've been listening to a lot of national anthems lately and it's puzzling they all sound like they were composed by wagner. but some countries are new. why not pop or soft rock. like south sudan could have called up coldplay?",
+      "link": "https://x.com/nic_carter/status/2073861137314017452#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-05T20:06:40+00:00",
+      "publishedTs": 1783282000.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Mexico: makes noise outside England\u2019s hotel so they don\u2019t sleep well USA: Trump calls Infantino personally so our top striker\u2019s suspension is waived There\u2019s levels to this game \ud83e\udd85 \ud83c\uddfa\ud83c\uddf8 \ud83e\udd85",
+      "link": "https://x.com/nic_carter/status/2073825153125851162#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-05T17:43:40+00:00",
+      "publishedTs": 1783273420.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "It turns out Apple's \"hide my email\" feature doesn't actually hide your email and they've refused to fix the flaw for a year. https://www.tomshardware.com/tech-industry/cyber-security/apples-hide-my-email-service-reportedly-reveals-users-actual-email-addresses-with-little-effort-",
       "link": "https://x.com/lopp/status/2073797706443554947#m",
@@ -39,7 +65,7 @@
       "publishedTs": 1783257173.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "JUST IN: Michael Saylor hints at Strategy buying more Bitcoin \ud83d\ude80",
@@ -1017,19 +1043,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @nic_carter: i have incurred serious psychic damage watching this game",
-      "link": "https://x.com/nic_carter/status/2072379366378553691#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "i have incurred serious psychic damage watching this game",
-      "publishedAt": "2026-07-01T17:58:38+00:00",
-      "publishedTs": 1782928718.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Casa is first and foremost a security company. Do you have the skills to fight on the front lines with us? We're currently seeking a DevSecOps engineer to continue innovating our security posture in a variety of areas. https://job-boards.greenhouse.io/casa/jobs/5175872007",
       "link": "https://x.com/lopp/status/2072370174649369086#m",
       "source": "@lopp",
@@ -1051,19 +1064,6 @@
       "summary": "As Strategy disclosed Monday: our corporate objective is for $STRC to trade over time at $99\u2013$100. Strategy (@Strategy) $STRC dividend rate has been increased by 50 bps to 12.00%, effective for record dates in July, 2026. We will continue to evaluate the rate monthly. Our corpora",
       "publishedAt": "2026-07-01T17:17:06+00:00",
       "publishedTs": 1782926226.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @isabelfoxenduke: my favorite part was walking into the Bitcoin DMV around 13:00",
-      "link": "https://x.com/nic_carter/status/2072362335461609497#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "my favorite part was walking into the Bitcoin DMV around 13:00",
-      "publishedAt": "2026-07-01T16:50:58+00:00",
-      "publishedTs": 1782924658.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1272,6 +1272,19 @@
       "summary": "",
       "publishedAt": "2026-06-30T01:23:12+00:00",
       "publishedTs": 1782782592.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New Bitcoin mine under construction in Indiana",
+      "link": "https://x.com/DocumentingBTC/status/2071764757112115337#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "New Bitcoin mine under construction in Indiana Video",
+      "publishedAt": "2026-06-30T01:16:24+00:00",
+      "publishedTs": 1782782184.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
