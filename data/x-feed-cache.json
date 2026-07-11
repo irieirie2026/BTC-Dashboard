@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-10T21:38:46Z",
+  "fetchedAt": "2026-07-11T06:26:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A Korean Beauty ETF? Def a \u201cgood luck w that\u201d nominee after the KPOP etf flopped so bad. Ticker should be $KHOT",
+      "link": "https://x.com/EricBalchunas/status/2075717760852660315#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "A Korean Beauty ETF? Def a \u201cgood luck w that\u201d nominee after the KPOP etf flopped so bad. Ticker should be $KHOT ETF Hearsay by Henry Jim (@ETFhearsay) Korean beauty industry ETF Filed \u2022 Guinness Atkinson\u2122 K-Beauty ETF - $KBTY Eff: Sep 23, 2026 Filing: sec.gov/Archives/edgar/data/",
+      "publishedAt": "2026-07-10T23:04:13+00:00",
+      "publishedTs": 1783724653.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\"",
+      "link": "https://x.com/BitcoinMagazine/status/2075695985032851742#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\" Video",
+      "publishedAt": "2026-07-10T21:37:42+00:00",
+      "publishedTs": 1783719462.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @EricBalchunas: Speak of the devil they just filed another 20-ish ETFs. Bunch if int'l incl EM factors. wow. Up to about 350 filed and 180 on market = over 500. Como say Shock and Awe",
       "link": "https://x.com/EricBalchunas/status/2075692867385708721#m",
@@ -154,6 +180,19 @@
       "summary": "",
       "publishedAt": "2026-07-10T18:20:01+00:00",
       "publishedTs": 1783707601.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "I made a website that turns the 1 second bitcoin chart into an actual war (with a live chat) Try it: http://bitcoin-battlefield.pages.dev",
+      "link": "https://x.com/motionbynick/status/2075644963866501582#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I made a website that turns the 1 second bitcoin chart into an actual war (with a live chat) Try it: bitcoin-battlefield.pages.de\u2026 Video",
+      "publishedAt": "2026-07-10T18:14:57+00:00",
+      "publishedTs": 1783707297.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -531,19 +570,6 @@
       "summary": "\ud83c\uddfa\ud83c\uddf8 We're celebrating 250 years of America with $250 Bitcoin 2027 GA Passes \ud83c\udf89 TOMORROW is the LAST DAY to secure tickets at this price \ud83c\udf9f\ufe0f \ud83d\udc47 tickets.b.tc/affiliate/fomo/\u2026",
       "publishedAt": "2026-07-09T18:44:07+00:00",
       "publishedTs": 1783622647.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 For the Clarity Act to advance, \"an ethics agreement is the key to unlocking the rest of the negotiations\", Eleanor Terrett reports \ud83d\udc40 \"If we can get ethics, the rest of the bill will come together,\" according to industry participants \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2075276937119904189#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-09T17:52:33+00:00",
-      "publishedTs": 1783619553.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1483,19 +1509,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Image",
-      "link": "https://x.com/CR1337/status/2071893402363494485#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-06-30T09:47:35+00:00",
-      "publishedTs": 1782812855.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Why Has This Bitcoin Cycle Been So Muted? Arthur Hayes Blames AI",
