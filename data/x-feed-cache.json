@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-11T18:07:49Z",
+  "fetchedAt": "2026-07-11T21:35:27Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "7 years ago today. Oh, how the tables do turn...",
+      "link": "https://x.com/lopp/status/2076052628325212463#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "7 years ago today. Oh, how the tables do turn... Donald J. Trump (@realDonaldTrump) I am not a fan of Bitcoin and other Cryptocurrencies, which are not money, and whose value is highly volatile and based on thin air. Unregulated Crypto Assets can facilitate unlawful behavior, inc",
+      "publishedAt": "2026-07-11T21:14:52+00:00",
+      "publishedTs": 1783804492.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: The act of building new things is orders of magnitude more consequential than the act of virtue signaling that you disagree with what is being built.",
+      "link": "https://x.com/lopp/status/2076012616887967807#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The act of building new things is orders of magnitude more consequential than the act of virtue signaling that you disagree with what is being built.",
+      "publishedAt": "2026-07-11T18:35:52+00:00",
+      "publishedTs": 1783794952.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This user asked their AI to report on the World Cup live, and it purchased access using a bitcoin wallet",
       "link": "https://x.com/DocumentingBTC/status/2075998861877760462#m",
@@ -913,19 +939,6 @@
       "isRetweet": true
     },
     {
-      "title": "Omg.. this guy is wearing a vest marketing the CSOP 2x SK Hynix ETF that says \"At this point the ones I've wronged most are my family. F, please stop selling, I need to feed my family\" (the ETF became HK's largest w $10b, went up 1000% YTD but plummeted 50% in past 2wks)",
-      "link": "https://x.com/EricBalchunas/status/2074953288382832696#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Omg.. this guy is wearing a vest marketing the CSOP 2x SK Hynix ETF that says \"At this point the ones I've wronged most are my family. F, please stop selling, I need to feed my family\" (the ETF became HK's largest w $10b, went up 1000% YTD but plummeted 50% in past 2wks) Charlott",
-      "publishedAt": "2026-07-08T20:26:29+00:00",
-      "publishedTs": 1783542389.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Devin Coleman drove an hour and a half into the city everyday for work. But thanks to a new Bitcoin mine in his small Texas town, Devin was able to find work and be more present in his family\u2019s life.",
       "link": "https://x.com/DocumentingBTC/status/2074946266270777359#m",
       "source": "@DocumentingBTC",
@@ -1303,7 +1316,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: A social engineer made the mistake of calling me. I recorded the call. Here's a breakdown of their tactics and recommendations for how to protect yourself. https://blog.casa.io/a-social-engineering-story/",
+      "title": "A social engineer made the mistake of calling me. I recorded the call. Here's a breakdown of their tactics and recommendations for how to protect yourself. https://blog.casa.io/a-social-engineering-story/",
       "link": "https://x.com/lopp/status/2074483414380478581#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -1467,32 +1480,6 @@
       "summary": "No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you. Jameson Lopp (@lopp) Casa is first and foremost a security company. Do you have the skills to fight on the front lines with us? We're currently seeking a DevSecOps engineer to continue innov",
       "publishedAt": "2026-07-01T22:23:47+00:00",
       "publishedTs": 1782944627.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Casa is first and foremost a security company. Do you have the skills to fight on the front lines with us? We're currently seeking a DevSecOps engineer to continue innovating our security posture in a variety of areas. https://job-boards.greenhouse.io/casa/jobs/5175872007",
-      "link": "https://x.com/lopp/status/2072370174649369086#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Casa is first and foremost a security company. Do you have the skills to fight on the front lines with us? We're currently seeking a DevSecOps engineer to continue innovating our security posture in a variety of areas. job-boards.greenhouse.io/cas\u2026 Link Casa We help people take c",
-      "publishedAt": "2026-07-01T17:22:07+00:00",
-      "publishedTs": 1782926527.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "History doesn't repeat, but it does rhyme. I expect that governance battles will be a recurring growing pain for Bitcoin for the forseeable future. https://blog.lopp.net/reflections-upon-bitcoins-block-size-debate/",
-      "link": "https://x.com/lopp/status/2072303338259948023#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "History doesn't repeat, but it does rhyme. I expect that governance battles will be a recurring growing pain for Bitcoin for the forseeable future. blog.lopp.net/reflections-up\u2026 Link Reflections Upon Bitcoin&apos;s Block Size Debate Analysis of the ideological split and narrative",
-      "publishedAt": "2026-07-01T12:56:32+00:00",
-      "publishedTs": 1782910592.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
