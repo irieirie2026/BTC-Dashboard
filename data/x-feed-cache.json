@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-11T14:37:30Z",
+  "fetchedAt": "2026-07-11T18:07:49Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "This user asked their AI to report on the World Cup live, and it purchased access using a bitcoin wallet",
+      "link": "https://x.com/DocumentingBTC/status/2075998861877760462#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This user asked their AI to report on the World Cup live, and it purchased access using a bitcoin wallet Video",
+      "publishedAt": "2026-07-11T17:41:13+00:00",
+      "publishedTs": 1783791673.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Fidelity's 'Bitcoin's Support & Resistance' data shows BTC in an accumulation zone and \"getting ever closer to its power law support line\" \ud83d\udc40 Buy the dip \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2075998390740025430#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Fidelity's 'Bitcoin's Support &amp; Resistance' data shows BTC in an accumulation zone and \"getting ever closer to its power law support line\" \ud83d\udc40 Buy the dip \ud83d\ude80",
+      "publishedAt": "2026-07-11T17:39:21+00:00",
+      "publishedTs": 1783791561.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "There are 110 things more dangerous to Bitcoin than spam. BIP 110 turns a spam dispute into a consensus change that would invalidate some currently valid, fee-paying transactions. That precedent is the danger. We should save our energy for threats that really matter. $BTC",
+      "link": "https://x.com/saylor/status/2075981482154209664#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "There are 110 things more dangerous to Bitcoin than spam. BIP 110 turns a spam dispute into a consensus change that would invalidate some currently valid, fee-paying transactions. That precedent is the danger. We should save our energy for threats that really matter. $BTC Adam Ba",
+      "publishedAt": "2026-07-11T16:32:09+00:00",
+      "publishedTs": 1783787529.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: $383 million Miller Value Parners tells CNBC that the fundamental case for Bitcoin \"has never been stronger\" \ud83d\udc40 \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2075940250321404041#m",
@@ -11,19 +50,6 @@
       "summary": "NEW: $383 million Miller Value Parners tells CNBC that the fundamental case for Bitcoin \"has never been stronger\" \ud83d\udc40 \ud83d\ude80 Video",
       "publishedAt": "2026-07-11T13:48:19+00:00",
       "publishedTs": 1783777699.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "A user asked their AI to watch the World Cup and reply with the match statistics as they happen live. The AI agent found a website and paid the invoice using their own bitcoin wallet automatically",
-      "link": "https://x.com/DocumentingBTC/status/2075910764326457829#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "A user asked their AI to watch the World Cup and reply with the match statistics as they happen live. The AI agent found a website and paid the invoice using their own bitcoin wallet automatically Video",
-      "publishedAt": "2026-07-11T11:51:09+00:00",
-      "publishedTs": 1783770669.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -79,19 +105,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "CEO OF PANEWS & PANONY SUNNY NG TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 PANOY HAS BACKED 400+ BITCOIN STARTUPS ACROSS ASIA \ud83d\udd25",
-      "link": "https://x.com/Bitcoinconfasia/status/2075688538343928311#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "CEO OF PANEWS &amp; PANONY SUNNY NG TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 PANOY HAS BACKED 400+ BITCOIN STARTUPS ACROSS ASIA \ud83d\udd25",
-      "publishedAt": "2026-07-10T21:08:06+00:00",
-      "publishedTs": 1783717686.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: Unrelated but the SoFi stadium is the most stunning stadium I\u2019ve ever seen?",
@@ -445,6 +458,19 @@
       "isRetweet": false
     },
     {
+      "title": "I made an explainer page on Bitcoin spam and why it's impossible to stop. Bitcoin is money, you can't stop spam. https://stephanlivera.github.io/Bitcoin-Spam/#",
+      "link": "https://x.com/stephanlivera/status/2075435401494589882#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "I made an explainer page on Bitcoin spam and why it's impossible to stop. Bitcoin is money, you can't stop spam. stephanlivera.github.io/Bitc\u2026",
+      "publishedAt": "2026-07-10T04:22:14+00:00",
+      "publishedTs": 1783657334.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Whale 0x2684 bought another 9,882 $ETH($17.27M) today. In the past 10 days, this whale has withdrawn a total of 34,577 $ETH($57.53M) and 250 $WBTC($15.66M) from #Binance. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
       "link": "https://x.com/lookonchain/status/2075385096371363937#m",
       "source": "@lookonchain",
@@ -583,6 +609,19 @@
       "summary": "4 North Koreans humiliated thus far. Y'all are really bad at this! Jameson Lopp (@lopp) No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you. \u2014 https://nitter.net/lopp/status/2072446093430845831#m",
       "publishedAt": "2026-07-09T19:51:31+00:00",
       "publishedTs": 1783626691.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: Public companies have bought 110,000 Bitcoin in Q2 2026 \ud83d\udc40 Public companies now hold over 1.26 million BTC, which is more than 6% of Bitcoin\u2019s total supply \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2075305485377433861#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-09T19:45:59+00:00",
+      "publishedTs": 1783626359.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1337,32 +1376,6 @@
       "summary": "These were the Q2 quarterly dividends on $STRF , $STRE , $STRK , and $STRD , and the full monthly dividend for June on $STRC .",
       "publishedAt": "2026-07-06T12:03:12+00:00",
       "publishedTs": 1783339392.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. https://www.strategy.com/press/strategy-sells-3-588-btc-to-fund-digital-credit-dividends-n",
-      "link": "https://x.com/saylor/status/2074101854875656316#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. strategy.com/press/strategy-\u2026 Link Strategy Sells 3,588 BTC to Fund Digital Credit Dividen",
-      "publishedAt": "2026-07-06T12:03:11+00:00",
-      "publishedTs": 1783339391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin will evolve by changing less at the protocol layer and mattering more everywhere else. The base layer will harden. The capital markets will deepen. Digital Credit will expand. The world will build on Bitcoin. $BTC",
-      "link": "https://x.com/saylor/status/2073996875523338746#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin will evolve by changing less at the protocol layer and mattering more everywhere else. The base layer will harden. The capital markets will deepen. Digital Credit will expand. The world will build on Bitcoin. $BTC Michael Saylor (@saylor) Article Bitcoin Evolves by Not Ch",
-      "publishedAt": "2026-07-06T05:06:02+00:00",
-      "publishedTs": 1783314362.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
