@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-11T21:35:27Z",
+  "fetchedAt": "2026-07-12T07:34:26Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Whale 0x2684 keeps accumulating $ETH! Since June 30, the whale has withdrawn 49,407 $ETH($84.3M) and 250 $WBTC($15.66M) from Binance. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
+      "link": "https://x.com/lookonchain/status/2076127861417943483#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whale 0x2684 keeps accumulating $ETH ! Since June 30, the whale has withdrawn 49,407 $ETH ($84.3M) and 250 $WBTC ($15.66M) from Binance. arkm.com/explorer/address/0x\u2026",
+      "publishedAt": "2026-07-12T02:13:49+00:00",
+      "publishedTs": 1783822429.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The first machine built to mine bitcoin in 2012",
+      "link": "https://x.com/DocumentingBTC/status/2076118795505074262#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "The first machine built to mine bitcoin in 2012 Video",
+      "publishedAt": "2026-07-12T01:37:47+00:00",
+      "publishedTs": 1783820267.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "7 years ago today. Oh, how the tables do turn...",
       "link": "https://x.com/lopp/status/2076052628325212463#m",
@@ -393,6 +419,19 @@
       "isRetweet": false
     },
     {
+      "title": "\ud83d\udea8 CLARITY Act Has NO Bearing On Bitcoin's Price! | Arthur Hayes, Co-Founder of BitMEX and CIO of Maelstrom, shares his thoughts on what drives Bitcoin's price and whether the CLARITY Act will have an impact. Watch the full interview http://youtu.be/Fn-goZ79VRM #bitcoin #clarityac",
+      "link": "https://x.com/thinkingcrypto/status/2075596183662186803#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "\ud83d\udea8 CLARITY Act Has NO Bearing On Bitcoin's Price! | Arthur Hayes, Co-Founder of BitMEX and CIO of Maelstrom, shares his thoughts on what drives Bitcoin's price and whether the CLARITY Act will have an impact. Watch the full interview piped.video/Fn-goZ79VRM #bitcoin #clarityact #c",
+      "publishedAt": "2026-07-10T15:01:07+00:00",
+      "publishedTs": 1783695667.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Congressman French Hill says lawmakers are going to have a field hearing for the Clarity Act in New York next week \ud83d\udc40 \"We\u2019ve got to get this market framework in place to be combined with the GENIUS Act\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2075588649589100710#m",
       "source": "@BitcoinMagazine",
@@ -718,19 +757,6 @@
       "isRetweet": false
     },
     {
-      "title": "Active equity strategies have roughly the same beat rate whether they in ETF or MF wrapper (35-40%) but in past 12mo the ETF side has taken in $350b while active eq MFs have seen about $500b in outflows. This is why I freq compare MFs to CDs and ETFs to Spotify. Same exact music ",
-      "link": "https://x.com/EricBalchunas/status/2075251644292346297#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Active equity strategies have roughly the same beat rate whether they in ETF or MF wrapper (35-40%) but in past 12mo the ETF side has taken in $350b while active eq MFs have seen about $500b in outflows. This is why I freq compare MFs to CDs and ETFs to Spotify. Same exact music ",
-      "publishedAt": "2026-07-09T16:12:02+00:00",
-      "publishedTs": 1783613522.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "July 9 Update: #Bitcoin ETFs: 1D NetFlow: -1,108 $BTC(-$69.43M)\ud83d\udd34 7D NetFlow: +6,301 $BTC(+$394.76M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +39,876 $ETH(+$69.3M)\ud83d\udfe2 7D NetFlow: +70,627 $ETH(+$122.75M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2075215410069442958#m",
       "source": "@lookonchain",
@@ -911,19 +937,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "An S&P 500 Ex-Elon ETF has been registered, Nasdaq version as well.",
-      "link": "https://x.com/EricBalchunas/status/2074973798110028026#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "An S&amp;P 500 Ex-Elon ETF has been registered, Nasdaq version as well. ETF Hearsay by Henry Jim (@ETFhearsay) Elon-free ETFs filed by Subversive Nasdaq-100 Ex-Elon Enterprises ETF - $QQNE S&amp;P 500 Ex-Elon Enterprises ETF- $SPNE Eff date: Sept 21, 2026 Filing: sec.gov/Archives",
-      "publishedAt": "2026-07-08T21:47:59+00:00",
-      "publishedTs": 1783547279.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Bitcoin doesn't rest. Now, http://strategy.com doesn't either. Pre- and post-market price and volume, live across our securities. $MSTR $STRC",
@@ -1342,19 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2074165183631466815#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d Video",
-      "publishedAt": "2026-07-06T16:14:50+00:00",
-      "publishedTs": 1783354490.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Mind your own \u20bfitcoin",
       "link": "https://x.com/lopp/status/2074132721920549177#m",
       "source": "@lopp",
@@ -1389,6 +1389,19 @@
       "summary": "These were the Q2 quarterly dividends on $STRF , $STRE , $STRK , and $STRD , and the full monthly dividend for June on $STRC .",
       "publishedAt": "2026-07-06T12:03:12+00:00",
       "publishedTs": 1783339392.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. https://www.strategy.com/press/strategy-sells-3-588-btc-to-fund-digital-credit-dividends-n",
+      "link": "https://x.com/saylor/status/2074101854875656316#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. strategy.com/press/strategy-\u2026 Link Strategy Sells 3,588 BTC to Fund Digital Credit Dividen",
+      "publishedAt": "2026-07-06T12:03:11+00:00",
+      "publishedTs": 1783339391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
