@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-07-12T11:44:47Z",
+  "fetchedAt": "2026-07-12T15:39:06Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 56% Loading\u2026Please HODL Current Block: 957,717 Halving Block: 1,050,000 Blocks Remaining: 92,283 Days Remaining: ~641",
+      "link": "https://x.com/DocumentingBTC/status/2076321786140958976#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-12T15:04:24+00:00",
+      "publishedTs": 1783868664.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I spoke with @jvisserlabs this week about: - is the AI mid-cycle slowdown over? - AI token price war - why he is turning bullish on bitcoin - tokenization & stablecoins - Siri vs Grok voice mode - Samsung and bottleneck stocks - Fed's July rate decision - gold and silver - region",
+      "link": "https://x.com/APompliano/status/2076314706097123621#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I spoke with @jvisserlabs this week about: - is the AI mid-cycle slowdown over? - AI token price war - why he is turning bullish on bitcoin - tokenization & stablecoins - Siri vs Grok voice mode - Samsung and bottleneck stocks - Fed's July rate decision - gold and silver - region",
+      "publishedAt": "2026-07-12T14:36:16+00:00",
+      "publishedTs": 1783866976.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Excellent post-mortem of Samourai Wallet's lengthy history of controversies and privacy issues by @nopara73. https://github.com/nopara73/ScamouraiWallet/blob/master/POST_MORTEM.md",
+      "link": "https://x.com/lopp/status/2076306081060708442#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Excellent post-mortem of Samourai Wallet's lengthy history of controversies and privacy issues by @nopara73 . github.com/nopara73/Scamoura\u2026 Link ScamouraiWallet/POST_MORTEM.md at master \u00b7 nopara73/ScamouraiWallet Contribute to nopara73/ScamouraiWallet development by creating an a",
+      "publishedAt": "2026-07-12T14:02:00+00:00",
+      "publishedTs": 1783864920.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2076288231008575796#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-12T12:51:04+00:00",
+      "publishedTs": 1783860664.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: On this day 9 years ago, history was made.",
+      "link": "https://x.com/lopp/status/2076283180139827290#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "On this day 9 years ago, history was made.",
+      "publishedAt": "2026-07-12T12:31:00+00:00",
+      "publishedTs": 1783859460.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Orange dots tell only part of the story.",
+      "link": "https://x.com/saylor/status/2076281310646079839#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-12T12:23:34+00:00",
+      "publishedTs": 1783859014.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The first bitcoin mining machine built in 2012",
+      "link": "https://x.com/DocumentingBTC/status/2076277748159443157#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "The first bitcoin mining machine built in 2012 Video",
+      "publishedAt": "2026-07-12T12:09:25+00:00",
+      "publishedTs": 1783858165.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bitcoin is an emergent network of wallets weighted by satoshis, nodes weighted by commerce, and miners weighted by hashrate, with capital, consensus, and security held in dynamic equilibrium. $BTC",
       "link": "https://x.com/saylor/status/2076245728880431141#m",
@@ -42,12 +133,12 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: The act of building new things is orders of magnitude more consequential than the act of virtue signaling that you disagree with what is being built.",
+      "title": "The act of building new things is orders of magnitude more consequential than the act of virtue signaling that you disagree with what is being built.",
       "link": "https://x.com/lopp/status/2076012616887967807#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The act of building new things is orders of magnitude more consequential than the act of virtue signaling that you disagree with what is being built.",
+      "summary": "",
       "publishedAt": "2026-07-11T18:35:52+00:00",
       "publishedTs": 1783794952.0,
       "category": "x",
@@ -653,19 +744,6 @@
       "isRetweet": false
     },
     {
-      "title": "We make moving charts now. While I think 95% of the leveraged ETFs growth is not a big deal (IMO it's just the scapegoat du jour for ppl pissed off the mkt won't go down, note on that coming soon) I LOVE seeing James and Sharoon spearheading stuff like this.",
-      "link": "https://x.com/EricBalchunas/status/2075312395468034279#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "We make moving charts now. While I think 95% of the leveraged ETFs growth is not a big deal (IMO it's just the scapegoat du jour for ppl pissed off the mkt won't go down, note on that coming soon) I LOVE seeing James and Sharoon spearheading stuff like this. James Seyffart (@JSey",
-      "publishedAt": "2026-07-09T20:13:27+00:00",
-      "publishedTs": 1783628007.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "4 North Koreans humiliated thus far. Y'all are really bad at this!",
       "link": "https://x.com/lopp/status/2075306877169123393#m",
       "source": "@lopp",
@@ -674,19 +752,6 @@
       "summary": "4 North Koreans humiliated thus far. Y'all are really bad at this! Jameson Lopp (@lopp) No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you. \u2014 https://nitter.net/lopp/status/2072446093430845831#m",
       "publishedAt": "2026-07-09T19:51:31+00:00",
       "publishedTs": 1783626691.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: Public companies have bought 110,000 Bitcoin in Q2 2026 \ud83d\udc40 Public companies now hold over 1.26 million BTC, which is more than 6% of Bitcoin\u2019s total supply \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2075305485377433861#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-09T19:45:59+00:00",
-      "publishedTs": 1783626359.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -939,19 +1004,6 @@
       "isRetweet": true
     },
     {
-      "title": "NEW: Fidelity Digital Assets reports the average U.S. home cost has risen $100,000 since 2020, but when priced in bitcoin, cost of homes declined 10x \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2074974005916786762#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-08T21:48:48+00:00",
-      "publishedTs": 1783547328.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin doesn't rest. Now, http://strategy.com doesn't either. Pre- and post-market price and volume, live across our securities. $MSTR $STRC",
       "link": "https://x.com/Strategy/status/2074955866734768148#m",
       "source": "@saylor",
@@ -1015,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: $200 billion VanEck expects Bitcoin to be \"materially higher\" in a year \ud83d\udc40 VanEck's Matthew Sigel is \"advising clients to gradually build their Bitcoin positions over the coming months.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2074904378050253276#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-08T17:12:08+00:00",
-      "publishedTs": 1783530728.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "After a decade of blockspace fears and non-monetary-use panics, Bitcoin still has no spam problem. Fees are 1 sat/vB: anyone can move any amount globally with immediate processing for ~$0.30. The free market has always solved Bitcoin\u2019s blockspace challenges. $BTC",
@@ -1342,19 +1381,6 @@
       "isRetweet": true
     },
     {
-      "title": "Thrilled to announce American Bitcoin crossing the 8,000 BTC mark! \ud83c\uddfa\ud83c\uddf8 Even with crypto market volatility, I want to reiterate how we continue to differentiate ourselves, mining at a 52% profit margin in Q1 and continually adding to our treasury, all while maintaining one of the l",
-      "link": "https://x.com/EricTrump/status/2074524734520545573#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Thrilled to announce American Bitcoin crossing the 8,000 BTC mark! \ud83c\uddfa\ud83c\uddf8 Even with crypto market volatility, I want to reiterate how we continue to differentiate ourselves, mining at a 52% profit margin in Q1 and continually adding to our treasury, all while maintaining one of the l",
-      "publishedAt": "2026-07-07T16:03:34+00:00",
-      "publishedTs": 1783440214.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "A social engineer made the mistake of calling me. I recorded the call. Here's a breakdown of their tactics and recommendations for how to protect yourself. https://blog.casa.io/a-social-engineering-story/",
       "link": "https://x.com/lopp/status/2074483414380478581#m",
       "source": "@lopp",
@@ -1363,32 +1389,6 @@
       "summary": "A social engineer made the mistake of calling me. I recorded the call. Here's a breakdown of their tactics and recommendations for how to protect yourself. blog.casa.io/a-social-engine\u2026 Link A Social Engineering Story Analysis of a call from a social engineer posing as Google sup",
       "publishedAt": "2026-07-07T13:19:22+00:00",
       "publishedTs": 1783430362.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Today, a reporter asked at the White House, \u201cAre there plans to put bitcoin in the Trump Accounts\u201d for every new child born in the United States? President Trump replied, \u201cI\u2019m a big crypto guy\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2074223404991779221#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Today, a reporter asked at the White House, \u201cAre there plans to put bitcoin in the Trump Accounts\u201d for every new child born in the United States? President Trump replied, \u201cI\u2019m a big crypto guy\u201d Video",
-      "publishedAt": "2026-07-06T20:06:11+00:00",
-      "publishedTs": 1783368371.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2074165183631466815#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d Video",
-      "publishedAt": "2026-07-06T16:14:50+00:00",
-      "publishedTs": 1783354490.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1480,32 +1480,6 @@
       "summary": "New realtime Bitcoin network visualization site just launched: Proof of Sound! proofofsound.co.za/ Link Proof of Sound Turn the live Bitcoin network into generative music and a living polygonal landscape. proofofsound.co.za",
       "publishedAt": "2026-07-02T16:58:46+00:00",
       "publishedTs": 1783011526.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Incentive misalignment detected.",
-      "link": "https://x.com/lopp/status/2072642652965642589#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Incentive misalignment detected. Nikita Bier (@nikitabier) In a 3% experiment, removing the Top-30 highest paid revenue share accounts from the For You timeline increased both time spent and daily active users on X. \u2014 https://nitter.net/nikitabier/status/2072203879479910490#m",
-      "publishedAt": "2026-07-02T11:24:50+00:00",
-      "publishedTs": 1782991490.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you.",
-      "link": "https://x.com/lopp/status/2072446093430845831#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you. Jameson Lopp (@lopp) Casa is first and foremost a security company. Do you have the skills to fight on the front lines with us? We're currently seeking a DevSecOps engineer to continue innov",
-      "publishedAt": "2026-07-01T22:23:47+00:00",
-      "publishedTs": 1782944627.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
