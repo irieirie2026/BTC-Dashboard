@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-12T07:34:26Z",
+  "fetchedAt": "2026-07-12T11:44:47Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin is an emergent network of wallets weighted by satoshis, nodes weighted by commerce, and miners weighted by hashrate, with capital, consensus, and security held in dynamic equilibrium. $BTC",
+      "link": "https://x.com/saylor/status/2076245728880431141#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-12T10:02:11+00:00",
+      "publishedTs": 1783850531.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whale 0x2684 keeps accumulating $ETH! Since June 30, the whale has withdrawn 49,407 $ETH($84.3M) and 250 $WBTC($15.66M) from Binance. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
       "link": "https://x.com/lookonchain/status/2076127861417943483#m",
@@ -11,19 +24,6 @@
       "summary": "Whale 0x2684 keeps accumulating $ETH ! Since June 30, the whale has withdrawn 49,407 $ETH ($84.3M) and 250 $WBTC ($15.66M) from Binance. arkm.com/explorer/address/0x\u2026",
       "publishedAt": "2026-07-12T02:13:49+00:00",
       "publishedTs": 1783822429.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The first machine built to mine bitcoin in 2012",
-      "link": "https://x.com/DocumentingBTC/status/2076118795505074262#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "The first machine built to mine bitcoin in 2012 Video",
-      "publishedAt": "2026-07-12T01:37:47+00:00",
-      "publishedTs": 1783820267.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -939,6 +939,19 @@
       "isRetweet": true
     },
     {
+      "title": "NEW: Fidelity Digital Assets reports the average U.S. home cost has risen $100,000 since 2020, but when priced in bitcoin, cost of homes declined 10x \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2074974005916786762#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-08T21:48:48+00:00",
+      "publishedTs": 1783547328.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bitcoin doesn't rest. Now, http://strategy.com doesn't either. Pre- and post-market price and volume, live across our securities. $MSTR $STRC",
       "link": "https://x.com/Strategy/status/2074955866734768148#m",
       "source": "@saylor",
@@ -1002,6 +1015,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "JUST IN: $200 billion VanEck expects Bitcoin to be \"materially higher\" in a year \ud83d\udc40 VanEck's Matthew Sigel is \"advising clients to gradually build their Bitcoin positions over the coming months.\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2074904378050253276#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-08T17:12:08+00:00",
+      "publishedTs": 1783530728.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "After a decade of blockspace fears and non-monetary-use panics, Bitcoin still has no spam problem. Fees are 1 sat/vB: anyone can move any amount globally with immediate processing for ~$0.30. The free market has always solved Bitcoin\u2019s blockspace challenges. $BTC",
@@ -1355,6 +1381,19 @@
       "isRetweet": false
     },
     {
+      "title": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2074165183631466815#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "President Trump says, \u201cI don\u2019t think anybody understands really how powerful bitcoin is\u201d Video",
+      "publishedAt": "2026-07-06T16:14:50+00:00",
+      "publishedTs": 1783354490.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Mind your own \u20bfitcoin",
       "link": "https://x.com/lopp/status/2074132721920549177#m",
       "source": "@lopp",
@@ -1376,32 +1415,6 @@
       "summary": "New Bitcoin visualization: Blockspace Observatory displays recent blocks and transactions as celestial bodies! H/T @logansease blockspace-observatory.verce\u2026",
       "publishedAt": "2026-07-06T12:37:19+00:00",
       "publishedTs": 1783341439.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: These were the Q2 quarterly dividends on $STRF, $STRE, $STRK, and $STRD, and the full monthly dividend for June on $STRC.",
-      "link": "https://x.com/saylor/status/2074101857610268746#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "These were the Q2 quarterly dividends on $STRF , $STRE , $STRK , and $STRD , and the full monthly dividend for June on $STRC .",
-      "publishedAt": "2026-07-06T12:03:12+00:00",
-      "publishedTs": 1783339392.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. https://www.strategy.com/press/strategy-sells-3-588-btc-to-fund-digital-credit-dividends-n",
-      "link": "https://x.com/saylor/status/2074101854875656316#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has sold 3,588 $BTC for $216 million to fund dividends on our Digital Credit securities. As of 7/5/2026, we hodl \u20bf843,775 in our BTC Reserves and $2.55 billion in our USD Reserves. strategy.com/press/strategy-\u2026 Link Strategy Sells 3,588 BTC to Fund Digital Credit Dividen",
-      "publishedAt": "2026-07-06T12:03:11+00:00",
-      "publishedTs": 1783339391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
