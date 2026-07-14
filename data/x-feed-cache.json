@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-14T06:37:21Z",
+  "fetchedAt": "2026-07-14T12:00:15Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "New phishing email pretending to be @CasaHODL but all of the links go to web sites that prompt you to download malware.",
+      "link": "https://x.com/lopp/status/2076996789471723961#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-14T11:46:38+00:00",
+      "publishedTs": 1784029598.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is Digital Capital. Strategy transforms it into Digital Credit. $BTC",
+      "link": "https://x.com/saylor/status/2076996691861905775#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-14T11:46:14+00:00",
+      "publishedTs": 1784029574.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "New Bitcoin mine approved in Mississippi may lower energy bills for families, reports local news",
       "link": "https://x.com/DocumentingBTC/status/2076859555674198468#m",
@@ -835,19 +861,6 @@
       "isRetweet": false
     },
     {
-      "title": "A Korean Beauty ETF? Def a \u201cgood luck w that\u201d nominee after the KPOP etf flopped so bad. Ticker should be $KHOT",
-      "link": "https://x.com/EricBalchunas/status/2075717760852660315#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "A Korean Beauty ETF? Def a \u201cgood luck w that\u201d nominee after the KPOP etf flopped so bad. Ticker should be $KHOT ETF Hearsay by Henry Jim (@ETFhearsay) Korean beauty industry ETF Filed \u2022 Guinness Atkinson\u2122 K-Beauty ETF - $KBTY Eff: Sep 23, 2026 Filing: sec.gov/Archives/edgar/data/",
-      "publishedAt": "2026-07-10T23:04:13+00:00",
-      "publishedTs": 1783724653.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\"",
       "link": "https://x.com/BitcoinMagazine/status/2075695985032851742#m",
       "source": "@BitcoinMagazine",
@@ -856,19 +869,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\" Video",
       "publishedAt": "2026-07-10T21:37:42+00:00",
       "publishedTs": 1783719462.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Speak of the devil they just filed another 20-ish ETFs. Bunch if int'l incl EM factors. wow. Up to about 350 filed and 180 on market = over 500. Como say Shock and Awe",
-      "link": "https://x.com/EricBalchunas/status/2075692867385708721#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Speak of the devil they just filed another 20-ish ETFs. Bunch if int'l incl EM factors. wow. Up to about 350 filed and 180 on market = over 500. Como say Shock and Awe",
-      "publishedAt": "2026-07-10T21:25:18+00:00",
-      "publishedTs": 1783718718.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1316,19 +1316,6 @@
       "isRetweet": true
     },
     {
-      "title": "BTC Breakeven ARR tends to break brains, and I think it is important to understand why. There are three broad Bitcoin views: 1. Bullish Bitcoin (Amplified Bitcoin) These investors believe Bitcoin will appreciate significantly. If they can borrow long duration capital at <20% and ",
-      "link": "https://x.com/IIICapital/status/2074913106313068867#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "BTC Breakeven ARR tends to break brains, and I think it is important to understand why. There are three broad Bitcoin views: 1. Bullish Bitcoin (Amplified Bitcoin) These investors believe Bitcoin will appreciate significantly. If they can borrow long duration capital at &lt;20% a",
-      "publishedAt": "2026-07-08T17:46:49+00:00",
-      "publishedTs": 1783532809.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Once you reach a certain level of affluence, opting out of what I call \u201cthe circuit\u201d is the most important decision you can make with your money",
       "link": "https://x.com/nic_carter/status/2074877195944698256#m",
       "source": "@nic_carter",
@@ -1467,19 +1454,6 @@
       "summary": "",
       "publishedAt": "2026-07-03T14:25:03+00:00",
       "publishedTs": 1783088703.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "France is now reporting that after experiencing 45 Bitcoin wrench attacks in 2025, they have already suffered 77 attacks in the first half of 2026. https://www.bfmtv.com/crypto/cryptomonnaies-laurent-nunez-promet-de-renforcer-la-securite-des-acteurs-du-secteur_AD-202606300994.htm",
-      "link": "https://x.com/lopp/status/2073029708673905108#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "France is now reporting that after experiencing 45 Bitcoin wrench attacks in 2025, they have already suffered 77 attacks in the first half of 2026. bfmtv.com/crypto/cryptomonna\u2026 Link Cryptomonnaies: Laurent Nu\u00f1ez promet de renforcer la s\u00e9curit\u00e9 des acteurs du secteur Le ministre ",
-      "publishedAt": "2026-07-03T13:02:52+00:00",
-      "publishedTs": 1783083772.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
