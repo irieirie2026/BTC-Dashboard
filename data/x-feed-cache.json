@@ -1,7 +1,241 @@
 {
-  "fetchedAt": "2026-07-14T12:00:15Z",
+  "fetchedAt": "2026-07-14T16:45:43Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: $5.3 billion Cardone Capital bought 107 BTC, worth $6.7 million this dip! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077066406340771895#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-14T16:23:15+00:00",
+      "publishedTs": 1784046195.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "There is a new place in downtown Turin, Italy on the street of Pietro Micca 21 where anyone can go to learn and shop about Bitcoin technology",
+      "link": "https://x.com/DocumentingBTC/status/2077065352651964579#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "There is a new place in downtown Turin, Italy on the street of Pietro Micca 21 where anyone can go to learn and shop about Bitcoin technology Video",
+      "publishedAt": "2026-07-14T16:19:04+00:00",
+      "publishedTs": 1784045944.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The #USgovernment is dumping again! The U.S. Government wallet just deposited 5,939 $ETH($11.15M) into Coinbase Prime.",
+      "link": "https://x.com/lookonchain/status/2077054791101141026#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The #USgovernment is dumping again! The U.S. Government wallet just deposited 5,939 $ETH ($11.15M) into Coinbase Prime. Lookonchain (@lookonchain) The #USgovernment wallets deposited 3,941 $BTC ($244M) and 30,007 $ETH ($53.09M) into #CoinbasePrime over the past 8 hours. arkm.com/",
+      "publishedAt": "2026-07-14T15:37:06+00:00",
+      "publishedTs": 1784043426.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Last call.",
+      "link": "https://x.com/saylor/status/2077052307460518391#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Last call. Strategy (@Strategy) Today is the last trading day to purchase $STRC and be entitled to the twice-monthly dividend payable July 31. The record date is tomorrow, July 15, and the dividend is $0.50 per share. \u2014 https://nitter.net/Strategy/status/2077021904032920006#m",
+      "publishedAt": "2026-07-14T15:27:14+00:00",
+      "publishedTs": 1784042834.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "AFTER THE GOLD RUSH: $GLD has seen nearly $15b in outflows since March 1st.. that's actually 50% more in outflows than all of the bitcoin ETFs have seen in aggregate since the October peak.",
+      "link": "https://x.com/EricBalchunas/status/2077051811760857394#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-07-14T15:25:16+00:00",
+      "publishedTs": 1784042716.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Circle's President talks Clarity Act on FOX \"There are many financial institutions, traditional financial institutions that really want to get into this space\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2077046807771718141#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Circle's President talks Clarity Act on FOX \"There are many financial institutions, traditional financial institutions that really want to get into this space\" \ud83d\udc40 Video",
+      "publishedAt": "2026-07-14T15:05:23+00:00",
+      "publishedTs": 1784041523.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @SenLummis: \"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 https://go.cobault.net/BTCmag_1",
+      "link": "https://x.com/BitcoinMagazine/status/2077040013427056765#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "\"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 go.cobault.net/BTCmag_1",
+      "publishedAt": "2026-07-14T14:38:23+00:00",
+      "publishedTs": 1784039903.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC(-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC(-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH(-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH(+$48.55M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2077036636924518835#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC (-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC (-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH (-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH (+$48.55M)\ud83d\udfe2 Lookonchain (@lookonchain) July 13 Update: #Bitcoin ETFs: 1D NetFlow: +1,439 $BTC (+$8",
+      "publishedAt": "2026-07-14T14:24:58+00:00",
+      "publishedTs": 1784039098.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "And they're off.. we got an ETF derby today with six 2x SK Hynix ETFs launching. GraniteShares out to big early lead (volume in first few days is imp as they all vying to be 'the liquid one') but not insurmountable. total volume $80m- solid altho nowhere near 2x SPCX",
+      "link": "https://x.com/EricBalchunas/status/2077034306959028577#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-07-14T14:15:42+00:00",
+      "publishedTs": 1784038542.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "More Americans over 55 years old hold crypto than under 25, a new NCA research report finds.",
+      "link": "https://x.com/DocumentingBTC/status/2077032578704462205#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-14T14:08:50+00:00",
+      "publishedTs": 1784038130.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis on Clarity Act: \"We'll introduce bill text in the next few days \u2014 it's time to land this plane\" \ud83d\udc40 Pass it \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077031087872626941#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-14T14:02:55+00:00",
+      "publishedTs": 1784037775.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Senator Cynthia Lummis says the long awaited Clarity Act helping protect bitcoin users will be introduced \u201cin the next few days\u201d to Congress",
+      "link": "https://x.com/DocumentingBTC/status/2077022362667495855#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Senator Cynthia Lummis says the long awaited Clarity Act helping protect bitcoin users will be introduced \u201cin the next few days\u201d to Congress Video",
+      "publishedAt": "2026-07-14T13:28:15+00:00",
+      "publishedTs": 1784035695.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Today is the last trading day to purchase $STRC and be entitled to the twice-monthly dividend payable July 31. The record date is tomorrow, July 15, and the dividend is $0.50 per share.",
+      "link": "https://x.com/Strategy/status/2077021904032920006#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-14T13:26:25+00:00",
+      "publishedTs": 1784035585.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "in a few years we\u2019re going to look back on gambling commercials with the same scorn and puzzlement we now reserve for cigarette ads",
+      "link": "https://x.com/nic_carter/status/2077021198106435886#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-14T13:23:37+00:00",
+      "publishedTs": 1784035417.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "so what actually changed? FYP is full of mostly your mutuals' tweets now? cause I staunchly avoid the FYP. but I'm glad those of you who do will see my tweets.",
+      "link": "https://x.com/nic_carter/status/2077018967806242940#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-14T13:14:45+00:00",
+      "publishedTs": 1784034885.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Bitcoin pumps to $63,871 \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077015811349225636#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-14T13:02:13+00:00",
+      "publishedTs": 1784034133.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 9 years ago, Binance was founded by Changpeng Zhao. Today, it\u2019s the largest bitcoin exchange in the world by volume.",
+      "link": "https://x.com/DocumentingBTC/status/2077012190779838489#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "On this day in history, 9 years ago, Binance was founded by Changpeng Zhao. Today, it\u2019s the largest bitcoin exchange in the world by volume. Video",
+      "publishedAt": "2026-07-14T12:47:49+00:00",
+      "publishedTs": 1784033269.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 CPI inflation falls to 3.5%, far below expectations \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2077007994823278708#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-14T12:31:09+00:00",
+      "publishedTs": 1784032269.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "New phishing email pretending to be @CasaHODL but all of the links go to web sites that prompt you to download malware.",
       "link": "https://x.com/lopp/status/2076996789471723961#m",
@@ -40,6 +274,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "BITCOIN ANALYST & MANTRA ADVISOR PHYREX NI TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0",
+      "link": "https://x.com/Bitcoinconfasia/status/2076827669853823061#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "BITCOIN ANALYST &amp; MANTRA ADVISOR PHYREX NI TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0",
+      "publishedAt": "2026-07-14T00:34:36+00:00",
+      "publishedTs": 1783989276.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "The #USgovernment wallets deposited 3,941 $BTC($244M) and 30,007 $ETH($53.09M) into #CoinbasePrime over the past 8 hours. https://arkm.com/explorer/entity/usg",
@@ -523,19 +770,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Michael Saylor announces Strategy has increased its USD Reserve by $450 million \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2076639276343632199#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-13T12:06:00+00:00",
-      "publishedTs": 1783944360.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Leveraged ETFs have been catching a lot of crap lately as the new boogeyman du jour. I get it but to some degree their impact is overblown. They make up 34% of the launches 13% of launches (and much of media coverage) so they can seem massive but they only acct for 1% of ETF asse",
       "link": "https://x.com/EricBalchunas/status/2076638938387591484#m",
       "source": "@ericbalchunas",
@@ -705,19 +939,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2076288231008575796#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-12T12:51:04+00:00",
-      "publishedTs": 1783860664.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Pinned: On this day 9 years ago, history was made.",
       "link": "https://x.com/lopp/status/2076283180139827290#m",
       "source": "@lopp",
@@ -809,19 +1030,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Fidelity's 'Bitcoin's Support & Resistance' data shows BTC in an accumulation zone and \"getting ever closer to its power law support line\" \ud83d\udc40 Buy the dip \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2075998390740025430#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Fidelity's 'Bitcoin's Support &amp; Resistance' data shows BTC in an accumulation zone and \"getting ever closer to its power law support line\" \ud83d\udc40 Buy the dip \ud83d\ude80",
-      "publishedAt": "2026-07-11T17:39:21+00:00",
-      "publishedTs": 1783791561.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "There are 110 things more dangerous to Bitcoin than spam. BIP 110 turns a spam dispute into a consensus change that would invalidate some currently valid, fee-paying transactions. That precedent is the danger. We should save our energy for threats that really matter. $BTC",
       "link": "https://x.com/saylor/status/2075981482154209664#m",
       "source": "@saylor",
@@ -830,19 +1038,6 @@
       "summary": "There are 110 things more dangerous to Bitcoin than spam. BIP 110 turns a spam dispute into a consensus change that would invalidate some currently valid, fee-paying transactions. That precedent is the danger. We should save our energy for threats that really matter. $BTC Adam Ba",
       "publishedAt": "2026-07-11T16:32:09+00:00",
       "publishedTs": 1783787529.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: $383 million Miller Value Parners tells CNBC that the fundamental case for Bitcoin \"has never been stronger\" \ud83d\udc40 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2075940250321404041#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "NEW: $383 million Miller Value Parners tells CNBC that the fundamental case for Bitcoin \"has never been stronger\" \ud83d\udc40 \ud83d\ude80 Video",
-      "publishedAt": "2026-07-11T13:48:19+00:00",
-      "publishedTs": 1783777699.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -861,19 +1056,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2075695985032851742#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair on the odds of Clarity Act passing: \"We are on the 1 yard line. The momentum is unmistakeable. We are very optimistic about it becoming law.\" Video",
-      "publishedAt": "2026-07-10T21:37:42+00:00",
-      "publishedTs": 1783719462.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: Unrelated but the SoFi stadium is the most stunning stadium I\u2019ve ever seen?",
       "link": "https://x.com/nic_carter/status/2075686835372650579#m",
       "source": "@nic_carter",
@@ -882,32 +1064,6 @@
       "summary": "Unrelated but the SoFi stadium is the most stunning stadium I\u2019ve ever seen?",
       "publishedAt": "2026-07-10T21:01:20+00:00",
       "publishedTs": 1783717280.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinMagazine: MEET THE MINDS BEHIND THE LARGEST BITCOIN TREASURY COMPANY IN ASIA THIS AUGUST 27-28 IN HONG KONG \ud83d\ude80 Get 10% off now before it's too late \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2075684926851027272#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "MEET THE MINDS BEHIND THE LARGEST BITCOIN TREASURY COMPANY IN ASIA THIS AUGUST 27-28 IN HONG KONG \ud83d\ude80 Get 10% off now before it's too late \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026",
-      "publishedAt": "2026-07-10T20:53:45+00:00",
-      "publishedTs": 1783716825.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\udded\ud83c\uddf0 Hong Kong Public company Boyaa Interactive buys 108 BTC for its treasury This brings their total to 4,201 bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2075680612883583391#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-10T20:36:37+00:00",
-      "publishedTs": 1783715797.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -991,19 +1147,6 @@
       "isRetweet": false
     },
     {
-      "title": "Galaxy Digital transferred out 2,500 $BTC($160M) in the past hour, most of which went into exchanges. https://arkm.com/explorer/entity/galaxy-digital",
-      "link": "https://x.com/lookonchain/status/2075618879049728123#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Galaxy Digital transferred out 2,500 $BTC ($160M) in the past hour, most of which went into exchanges. arkm.com/explorer/entity/gal\u2026",
-      "publishedAt": "2026-07-10T16:31:18+00:00",
-      "publishedTs": 1783701078.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Watching the Bitcoin price chart just got far more interesting!",
       "link": "https://x.com/lopp/status/2075617413333155928#m",
       "source": "@lopp",
@@ -1012,19 +1155,6 @@
       "summary": "Watching the Bitcoin price chart just got far more interesting! Galaxy Mind (@GalaxyMind) I turned the entire bitcoin price chart into a one-tap addictive arcade game. Video \u2014 https://nitter.net/GalaxyMind/status/2075428296922198120#m",
       "publishedAt": "2026-07-10T16:25:29+00:00",
       "publishedTs": 1783700729.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "July 10 Update: #Bitcoin ETFs: 1D NetFlow: -1,791 BTC(-$114.58M)\ud83d\udd34 7D NetFlow: +5,098 BTC(+$326.11M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -27,487 ETH(-$49.09M)\ud83d\udd34 7D NetFlow: +37,036 ETH(+$66.15M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2075596652677861660#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 10 Update: #Bitcoin ETFs: 1D NetFlow: -1,791 BTC(-$114.58M)\ud83d\udd34 7D NetFlow: +5,098 BTC(+$326.11M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -27,487 ETH(-$49.09M)\ud83d\udd34 7D NetFlow: +37,036 ETH(+$66.15M)\ud83d\udfe2 Lookonchain (@lookonchain) July 9 Update: #Bitcoin ETFs: 1D NetFlow: -1,108 $BTC (-$69.43M)\ud83d\udd34 ",
-      "publishedAt": "2026-07-10T15:02:59+00:00",
-      "publishedTs": 1783695779.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1095,19 +1225,6 @@
       "isRetweet": true
     },
     {
-      "title": "Frankie says Bitcoin for the first time in 2026",
-      "link": "https://x.com/DocumentingBTC/status/2075382108827107760#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Frankie says Bitcoin for the first time in 2026 Video",
-      "publishedAt": "2026-07-10T00:50:28+00:00",
-      "publishedTs": 1783644628.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "4 North Koreans humiliated thus far. Y'all are really bad at this!",
       "link": "https://x.com/lopp/status/2075306877169123393#m",
       "source": "@lopp",
@@ -1116,32 +1233,6 @@
       "summary": "4 North Koreans humiliated thus far. Y'all are really bad at this! Jameson Lopp (@lopp) No North Koreans, BTW! Feel free to shoot your shot... We'll just end up laughing at you. \u2014 https://nitter.net/lopp/status/2072446093430845831#m",
       "publishedAt": "2026-07-09T19:51:31+00:00",
       "publishedTs": 1783626691.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This new open-source software lets your bitcoin mining machines automatically use the extra energy from your solar panels. It adjusts in seconds, from about 1\u20133 kW per miner, so excess electricity can be converted into bitcoin instead of sold back to the grid cheaply.",
-      "link": "https://x.com/DocumentingBTC/status/2075274327453319257#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This new open-source software lets your bitcoin mining machines automatically use the extra energy from your solar panels. It adjusts in seconds, from about 1\u20133 kW per miner, so excess electricity can be converted into bitcoin instead of sold back to the grid cheaply. Video",
-      "publishedAt": "2026-07-09T17:42:11+00:00",
-      "publishedTs": 1783618931.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "New app lets people send bitcoin with no internet by tapping together the NFC chips in their phones. Based on a project from the 1980\u2019s called Chaumian ecash, the app Cashu is a modern implementation of it designed for bitcoin.",
-      "link": "https://x.com/DocumentingBTC/status/2075267327377945068#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "New app lets people send bitcoin with no internet by tapping together the NFC chips in their phones. Based on a project from the 1980\u2019s called Chaumian ecash, the app Cashu is a modern implementation of it designed for bitcoin. Video",
-      "publishedAt": "2026-07-09T17:14:22+00:00",
-      "publishedTs": 1783617262.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1238,19 +1329,6 @@
       "isRetweet": true
     },
     {
-      "title": "History of most popular bitcoin and crypto apps",
-      "link": "https://x.com/DocumentingBTC/status/2075196497251979291#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "History of most popular bitcoin and crypto apps Video",
-      "publishedAt": "2026-07-09T12:32:54+00:00",
-      "publishedTs": 1783600374.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoiners are so autistic that we will run the numbers to chart your crashout.",
       "link": "https://x.com/lopp/status/2075186608018542815#m",
       "source": "@lopp",
@@ -1290,32 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "MSTR Sells Bitcoin to Fund Dividend | Ep. 73 https://x.com/i/broadcasts/1yGBeeLgRRjKN",
-      "link": "https://x.com/TNorth/status/2074976725126312279#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "MSTR Sells Bitcoin to Fund Dividend | Ep. 73 nitter.net/i/broadcasts/1yGBeeLgR\u2026",
-      "publishedAt": "2026-07-08T21:59:37+00:00",
-      "publishedTs": 1783547977.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Bitcoin doesn't rest. Now, http://strategy.com doesn't either. Pre- and post-market price and volume, live across our securities. $MSTR $STRC",
-      "link": "https://x.com/Strategy/status/2074955866734768148#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin doesn't rest. Now, strategy.com doesn't either. Pre- and post-market price and volume, live across our securities. $MSTR $STRC",
-      "publishedAt": "2026-07-08T20:36:44+00:00",
-      "publishedTs": 1783543004.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Once you reach a certain level of affluence, opting out of what I call \u201cthe circuit\u201d is the most important decision you can make with your money",
       "link": "https://x.com/nic_carter/status/2074877195944698256#m",
       "source": "@nic_carter",
@@ -1337,19 +1389,6 @@
       "summary": "1 month until all BIP-110 nodes get forked off the Bitcoin network; bookmark bip110.com/ to follow along the exciting countdown!",
       "publishedAt": "2026-07-08T11:50:43+00:00",
       "publishedTs": 1783511443.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "imagine having a nazi chest tattoo and being a serial philanderer and having a ghastly reddit history and and being a fake working class nepo baby and knowing that you took advantage of several women and thinking to yourself \"I should run for senate and subject myself to the most",
-      "link": "https://x.com/nic_carter/status/2074610112845742225#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "imagine having a nazi chest tattoo and being a serial philanderer and having a ghastly reddit history and and being a fake working class nepo baby and knowing that you took advantage of several women and thinking to yourself \"I should run for senate and subject myself to the most",
-      "publishedAt": "2026-07-07T21:42:49+00:00",
-      "publishedTs": 1783460569.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1730,19 +1769,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "This guy bought a tungsten cube in 2021. Today amidst a tungsten shortage, he\u2019s now one of the richest men on the planet",
-      "link": "https://x.com/nic_carter/status/1887970064109818234#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "This guy bought a tungsten cube in 2021. Today amidst a tungsten shortage, he\u2019s now one of the richest men on the planet Peter Johnson (@TheChicagoVC) Thankfully, we already have our cubes. bloomberg.com/news/articles/\u2026 @colleenklein @cmsholdings @nic_carter Link Tungsten Miner S",
-      "publishedAt": "2025-02-07T21:01:54+00:00",
-      "publishedTs": 1738962114.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
