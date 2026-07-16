@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-07-15T21:31:57Z",
+  "fetchedAt": "2026-07-16T06:36:39Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A #BitcoinOG transferred 5,908 $BTC($382.67M) to a new wallet after being dormant for 8 years. The OG received 5,908 $BTC 8 years ago when $BTC was trading at $16,865 and had held it ever since. The position is now up $283M (+284%). https://arkm.com/explorer/address/138EMxwMtKuvC",
+      "link": "https://x.com/lookonchain/status/2077588714809962644#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A #BitcoinOG transferred 5,908 $BTC ($382.67M) to a new wallet after being dormant for 8 years. The OG received 5,908 $BTC 8 years ago when $BTC was trading at $16,865 and had held it ever since. The position is now up $283M (+284%). arkm.com/explorer/address/13\u2026",
+      "publishedAt": "2026-07-16T02:58:43+00:00",
+      "publishedTs": 1784170723.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I beat the RIAs, banks, and financial institutions to bitcoin. Now I am beating them to AI too with @cfosilvia. They will eventually realize what they need to do but it will already be too late. Our gang of misfits are two steps ahead and don\u2019t plan on squandering the lead.",
+      "link": "https://x.com/APompliano/status/2077551985079861759#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I beat the RIAs, banks, and financial institutions to bitcoin. Now I am beating them to AI too with @cfosilvia . They will eventually realize what they need to do but it will already be too late. Our gang of misfits are two steps ahead and don\u2019t plan on squandering the lead.",
+      "publishedAt": "2026-07-16T00:32:46+00:00",
+      "publishedTs": 1784161966.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin got boring to the masses, which is exactly why it is interesting to those who really understand it.",
+      "link": "https://x.com/APompliano/status/2077550987531723144#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-07-16T00:28:49+00:00",
+      "publishedTs": 1784161729.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A new Bitcoin mining pool called \u201cParasite\u201d has started gaining network hashrate. When the pool discovers a block, the finder receives a fixed 1 bitcoin bonus, while the remaining 2.125 block reward (plus fees) is distributed to other participants via the Lightning Network.",
+      "link": "https://x.com/DocumentingBTC/status/2077541655691874766#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-15T23:51:44+00:00",
+      "publishedTs": 1784159504.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Engineer testing their new bitcoin mining machine",
+      "link": "https://x.com/DocumentingBTC/status/2077540014766907466#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Engineer testing their new bitcoin mining machine Video",
+      "publishedAt": "2026-07-15T23:45:13+00:00",
+      "publishedTs": 1784159113.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer tells FOX the Clarity Act is \"a dramatic advance in consumer protection and market integrity\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077507846862762068#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer tells FOX the Clarity Act is \"a dramatic advance in consumer protection and market integrity\" \ud83d\ude80 Video",
+      "publishedAt": "2026-07-15T21:37:23+00:00",
+      "publishedTs": 1784151443.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bitcoin Policy Institute's Quarterly Report for Q2 is live. You can read about our latest investigative research on CCP influence, our meetings with Taiwan\u2019s central bank, Bitcoin\u2019s role in two Armed Services committee hearings, the fight for dev protections in CLARITY, and much ",
       "link": "https://x.com/bitcoinpolicy/status/2077495485598712310#m",
@@ -76,19 +154,6 @@
       "summary": "",
       "publishedAt": "2026-07-15T19:07:16+00:00",
       "publishedTs": 1784142436.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jules Rimet still gleaming\u2026 \ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f \ud83e\udd81",
-      "link": "https://x.com/nic_carter/status/2077467117595578535#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-15T18:55:32+00:00",
-      "publishedTs": 1784141732.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -274,6 +339,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "The good news: there are a million other ways to improve Bitcoin as money.",
+      "link": "https://x.com/bitschmidty/status/2077396831655407813#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-15T14:16:15+00:00",
+      "publishedTs": 1784124975.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "This bitcoin wallet company makes their cases transparent so users can visually inspect the circuit board to ensure hackers didn't physically tamper with the devices during shipping",
@@ -718,19 +796,6 @@
       "isRetweet": false
     },
     {
-      "title": "The Bitcoin Softfork That Tried to Police \u201cJunk Data\u201d \u2014 And Why It\u2019s Already Failing https://bitcoinmagazine.com/technical/the-bitcoin-softfork-that-tried-to-police-junk-data-and-why-its-already-failing via @bitcoinmagazine @reardencode",
-      "link": "https://x.com/JuanSGalt/status/2077089444356661711#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "The Bitcoin Softfork That Tried to Police \u201cJunk Data\u201d \u2014 And Why It\u2019s Already Failing bitcoinmagazine.com/technica\u2026 via @bitcoinmagazine @reardencode Link The Bitcoin Softfork That Tried To Police \u201cJunk Data\u201d \u2014 And Why It\u2019s Already Failing Bitcoin\u2019s real power is that anyone willi",
-      "publishedAt": "2026-07-14T17:54:48+00:00",
-      "publishedTs": 1784051688.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "'Mutual funds are passing up an opportunity of 'biblical' proportions, they've given away their birth right' - @Cole_Smead on ETF IQ yest re how MFs were dumb not to utilize/promote their ability to do in-kind (non-taxable) redemptions but says its not too late w/ @kgreifeld",
       "link": "https://x.com/EricBalchunas/status/2077077999933907358#m",
       "source": "@ericbalchunas",
@@ -817,19 +882,6 @@
       "summary": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC (-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC (-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH (-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH (+$48.55M)\ud83d\udfe2 Lookonchain (@lookonchain) July 13 Update: #Bitcoin ETFs: 1D NetFlow: +1,439 $BTC (+$8",
       "publishedAt": "2026-07-14T14:24:58+00:00",
       "publishedTs": 1784039098.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "And they're off.. we got an ETF derby today with six 2x SK Hynix ETFs launching. GraniteShares out to big early lead (volume in first few days is imp as they all vying to be 'the liquid one') but not insurmountable. total volume $80m- solid altho nowhere near 2x SPCX",
-      "link": "https://x.com/EricBalchunas/status/2077034306959028577#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-14T14:15:42+00:00",
-      "publishedTs": 1784038542.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -947,19 +999,6 @@
       "summary": "New Bitcoin mine approved in Mississippi may lower energy bills for families, reports local news Video",
       "publishedAt": "2026-07-14T02:41:18+00:00",
       "publishedTs": 1783996878.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The #USgovernment wallets deposited 3,941 $BTC($244M) and 30,007 $ETH($53.09M) into #CoinbasePrime over the past 8 hours. https://arkm.com/explorer/entity/usg",
-      "link": "https://x.com/lookonchain/status/2076823872981356643#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The #USgovernment wallets deposited 3,941 $BTC ($244M) and 30,007 $ETH ($53.09M) into #CoinbasePrime over the past 8 hours. arkm.com/explorer/entity/usg",
-      "publishedAt": "2026-07-14T00:19:31+00:00",
-      "publishedTs": 1783988371.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1095,19 +1134,6 @@
       "isRetweet": true
     },
     {
-      "title": "32% of the banking industry has adopted Bitcoin",
-      "link": "https://x.com/DocumentingBTC/status/2076721087849595083#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-13T17:31:05+00:00",
-      "publishedTs": 1783963865.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "We have introduced the Bitcoin Banking Adoption Index. Major-bank Bitcoin adoption is accelerating, but still early: 32% overall as measured by the index. $BTC",
       "link": "https://x.com/saylor/status/2076717295074771407#m",
       "source": "@saylor",
@@ -1147,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "A wallet linked to the U.S. Government deposited 140.214 $BTC($8.79M) to Coinbase Prime after 4 years of dormancy. https://arkm.com/explorer/address/bc1qhr9tc6x9qrun3q2twzwm00cevsccu8zej6znw3",
-      "link": "https://x.com/lookonchain/status/2076698062572114134#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "A wallet linked to the U.S. Government deposited 140.214 $BTC ($8.79M) to Coinbase Prime after 4 years of dormancy. arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-07-13T15:59:35+00:00",
-      "publishedTs": 1783958375.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: and this still sucks. if you earn $212k in manhattan you are paying around a 34% average all in tax rate, meaning you take home $141k . that gives you $11.75k net a month, of which you are spending 45% on on rent. this leaves $6.4k for everything else - food, en",
       "link": "https://x.com/nic_carter/status/2076698007756489050#m",
       "source": "@nic_carter",
@@ -1181,32 +1194,6 @@
       "summary": "using the rule of thumb that housing shouldn't be greater than 30% of your pre-tax income, this implies a gross income of $212k in manhattan and $174k in brooklyn. for the median apartment. Polymarket (@Polymarket) JUST IN: Manhattan median rent has surged to a record $5,295 per ",
       "publishedAt": "2026-07-13T15:52:45+00:00",
       "publishedTs": 1783957965.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "July 13 Update: #Bitcoin ETFs: 1D NetFlow: +1,439 $BTC(+$89.69M)\ud83d\udfe2 7D NetFlow: +2,763 $BTC(+$172.17M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +10,325 $ETH(+$18.26M)\ud83d\udfe2 7D NetFlow: +46,862 $ETH(+$66.15M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2076673066428731668#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 13 Update: #Bitcoin ETFs: 1D NetFlow: +1,439 $BTC (+$89.69M)\ud83d\udfe2 7D NetFlow: +2,763 $BTC (+$172.17M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +10,325 $ETH (+$18.26M)\ud83d\udfe2 7D NetFlow: +46,862 $ETH (+$66.15M)\ud83d\udfe2 Lookonchain (@lookonchain) July 10 Update: #Bitcoin ETFs: 1D NetFlow: -1,791 BTC(-$114",
-      "publishedAt": "2026-07-13T14:20:16+00:00",
-      "publishedTs": 1783952416.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "New 187,000-square-foot Bitcoin mining machine factory is under construction in Reno, Nevada. The Singapore based company Bitdeer expects to be building 10,000 Bitcoin mining machines every month and create 70 new high paying local jobs",
-      "link": "https://x.com/DocumentingBTC/status/2076666181184839686#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "New 187,000-square-foot Bitcoin mining machine factory is under construction in Reno, Nevada. The Singapore based company Bitdeer expects to be building 10,000 Bitcoin mining machines every month and create 70 new high paying local jobs Video",
-      "publishedAt": "2026-07-13T13:52:54+00:00",
-      "publishedTs": 1783950774.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1381,6 +1368,19 @@
       "isRetweet": false
     },
     {
+      "title": "So the Spain France semifinal is clearly the real final right",
+      "link": "https://x.com/nic_carter/status/2075664577786720617#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-10T19:32:53+00:00",
+      "publishedTs": 1783711973.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "I made a website that turns the 1 second bitcoin chart into an actual war (with a live chat) Try it: http://bitcoin-battlefield.pages.dev",
       "link": "https://x.com/motionbynick/status/2075644963866501582#m",
       "source": "@lopp",
@@ -1532,19 +1532,6 @@
       "summary": "New Bitcoin visualization: Blockspace Observatory displays recent blocks and transactions as celestial bodies! H/T @logansease blockspace-observatory.verce\u2026",
       "publishedAt": "2026-07-06T12:37:19+00:00",
       "publishedTs": 1783341439.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It turns out Apple's \"hide my email\" feature doesn't actually hide your email and they've refused to fix the flaw for a year. https://www.tomshardware.com/tech-industry/cyber-security/apples-hide-my-email-service-reportedly-reveals-users-actual-email-addresses-with-little-effort-",
-      "link": "https://x.com/lopp/status/2073797706443554947#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "It turns out Apple's \"hide my email\" feature doesn't actually hide your email and they've refused to fix the flaw for a year. tomshardware.com/tech-indust\u2026 Link Apple&apos;s Hide My Email service reportedly reveals users&apos; actual email addresses with little effort \u2014... Millio",
-      "publishedAt": "2026-07-05T15:54:37+00:00",
-      "publishedTs": 1783266877.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
