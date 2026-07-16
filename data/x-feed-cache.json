@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-07-16T06:36:39Z",
+  "fetchedAt": "2026-07-16T12:10:22Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Pinned: Bitcoin Core v32 is going to sync 30% - 40% faster thanks to processing parallelization improvements. \ud83e\udd73",
+      "link": "https://x.com/lopp/status/2077720604065567151#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Bitcoin Core v32 is going to sync 30% - 40% faster thanks to processing parallelization improvements. \ud83e\udd73",
+      "publishedAt": "2026-07-16T11:42:48+00:00",
+      "publishedTs": 1784202168.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Our Q2 2026 earnings call is just two weeks away on July 30. What questions would you like our management team to address?",
+      "link": "https://x.com/Strategy/status/2077714610333921292#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-16T11:18:59+00:00",
+      "publishedTs": 1784200739.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "\u20bfREAKING: BlackRock CEO Larry Fink says bitcoin price has \u201cmore stability\" and he is \"very bullish\"",
+      "link": "https://x.com/DocumentingBTC/status/2077711350592127447#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "\u20bfREAKING: BlackRock CEO Larry Fink says bitcoin price has \u201cmore stability\" and he is \"very bullish\" Video",
+      "publishedAt": "2026-07-16T11:06:02+00:00",
+      "publishedTs": 1784199962.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "People keep giving me advice.",
+      "link": "https://x.com/saylor/status/2077691849393737945#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-16T09:48:33+00:00",
+      "publishedTs": 1784195313.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "A #BitcoinOG transferred 5,908 $BTC($382.67M) to a new wallet after being dormant for 8 years. The OG received 5,908 $BTC 8 years ago when $BTC was trading at $16,865 and had held it ever since. The position is now up $283M (+284%). https://arkm.com/explorer/address/138EMxwMtKuvC",
       "link": "https://x.com/lookonchain/status/2077588714809962644#m",
@@ -848,19 +900,6 @@
       "isRetweet": false
     },
     {
-      "title": "AFTER THE GOLD RUSH: $GLD has seen nearly $15b in outflows since March 1st.. that's actually 50% more in outflows than all of the bitcoin ETFs have seen in aggregate since the October peak.",
-      "link": "https://x.com/EricBalchunas/status/2077051811760857394#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-14T15:25:16+00:00",
-      "publishedTs": 1784042716.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
       "link": "https://x.com/MaelstromFund/status/2077048928378470901#m",
       "source": "@CryptoHayes",
@@ -1082,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "Vibe coded game using the Bitcoin price as a map",
-      "link": "https://x.com/DocumentingBTC/status/2076801999928959479#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Vibe coded game using the Bitcoin price as a map Video",
-      "publishedAt": "2026-07-13T22:52:36+00:00",
-      "publishedTs": 1783983156.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "this was the XI the last time England played Argentina in 2005 (England won 3-2). beyond stacked",
       "link": "https://x.com/nic_carter/status/2076799813396349294#m",
       "source": "@nic_carter",
@@ -1290,40 +1316,14 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: On this day 9 years ago, history was made.",
+      "title": "On this day 9 years ago, history was made.",
       "link": "https://x.com/lopp/status/2076283180139827290#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "On this day 9 years ago, history was made.",
+      "summary": "",
       "publishedAt": "2026-07-12T12:31:00+00:00",
       "publishedTs": 1783859460.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Orange dots tell only part of the story.",
-      "link": "https://x.com/saylor/status/2076281310646079839#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-12T12:23:34+00:00",
-      "publishedTs": 1783859014.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin is an emergent network of wallets weighted by satoshis, nodes weighted by commerce, and miners weighted by hashrate, with capital, consensus, and security held in dynamic equilibrium. $BTC",
-      "link": "https://x.com/saylor/status/2076245728880431141#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-12T10:02:11+00:00",
-      "publishedTs": 1783850531.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1519,19 +1519,6 @@
       "summary": "",
       "publishedAt": "2026-07-06T14:05:51+00:00",
       "publishedTs": 1783346751.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "New Bitcoin visualization: Blockspace Observatory displays recent blocks and transactions as celestial bodies! H/T @logansease https://blockspace-observatory.vercel.app/",
-      "link": "https://x.com/lopp/status/2074110442172006587#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "New Bitcoin visualization: Blockspace Observatory displays recent blocks and transactions as celestial bodies! H/T @logansease blockspace-observatory.verce\u2026",
-      "publishedAt": "2026-07-06T12:37:19+00:00",
-      "publishedTs": 1783341439.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
