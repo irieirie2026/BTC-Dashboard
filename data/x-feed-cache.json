@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-07-16T20:14:18Z",
+  "fetchedAt": "2026-07-17T00:15:45Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "that long thread I posted yesterday that bombed? that wasn't me, it was the world's most boring and least commercially minded hacker . the linkedin bandit",
+      "link": "https://x.com/nic_carter/status/2077901382632288738#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-16T23:41:09+00:00",
+      "publishedTs": 1784245269.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Limiting the amount of bitcoin is the first collective agreement in human history that treats future generations as equals rather than resources.",
+      "link": "https://x.com/DocumentingBTC/status/2077878063828738239#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-16T22:08:30+00:00",
+      "publishedTs": 1784239710.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Bitcoin ETFs recorded $108 million inflow yesterday, leading was BlackRock\u2019s IBIT at $80.82 million \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077873906094944763#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-16T21:51:58+00:00",
+      "publishedTs": 1784238718.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "HEAD OF ECOSYSTEM AT ARK LABS ALEX BERGERON TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"#Bitcoin should be the most celebrated technology of our generation. It is the most vibrant beacon of freedom in the world today.\" \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2077862575392379223#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "HEAD OF ECOSYSTEM AT ARK LABS ALEX BERGERON TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \" #Bitcoin should be the most celebrated technology of our generation. It is the most vibrant beacon of freedom in the world today.\" \ud83d\ude80",
+      "publishedAt": "2026-07-16T21:06:57+00:00",
+      "publishedTs": 1784236017.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Good point from @psarofagis on the sports bet making ETF- it outsources the very thing that likely draws degens to prediction mkt gambling: the adrenaline hit of winning a bet. Why let someone else have the fun? Altho if the returns are outstanding who knows.. via @kgreifeld's ET",
+      "link": "https://x.com/EricBalchunas/status/2077858123281260613#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Good point from @psarofagis on the sports bet making ETF- it outsources the very thing that likely draws degens to prediction mkt gambling: the adrenaline hit of winning a bet. Why let someone else have the fun? Altho if the returns are outstanding who knows.. via @kgreifeld 's E",
+      "publishedAt": "2026-07-16T20:49:15+00:00",
+      "publishedTs": 1784234955.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The odds of the Clarity Act passing into law this year jumps to 45% on Polymarket \ud83d\udc40 Pass it \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2077856719917535732#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-16T20:43:41+00:00",
+      "publishedTs": 1784234621.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 $7 billion NYDIG says the CLARITY ACT is \"the most important forward catalyst for the digital asset industry\" \ud83d\udc40 Let's get it passed \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2077835889737158859#m",
@@ -167,19 +245,6 @@
       "summary": "T Rowe Active Crypto ETF $TKNZ is live today, first multi-token active spot ETF, also notable given T Rowe Price's legacy as stock picker (they've been around since bf WWII). Fee 75bps. Opens with $15m in assets. Here's the holdings to start which show underweight bitcoin and ove",
       "publishedAt": "2026-07-16T15:17:33+00:00",
       "publishedTs": 1784215053.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "People can now buy bitcoin on the TikTok shop",
-      "link": "https://x.com/DocumentingBTC/status/2077770255011631269#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-16T15:00:06+00:00",
-      "publishedTs": 1784214006.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -562,32 +627,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Trump to meet with senators tomorrow to discuss the Clarity Act's \"path to success\" \ud83d\udc40 \u201cI\u2019m hoping that we can come up with some agreement by the end of this week\u201d - Sen. Thom Tillis",
-      "link": "https://x.com/BitcoinMagazine/status/2077437936228876727#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-15T16:59:35+00:00",
-      "publishedTs": 1784134775.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddf0\ud83c\uddf7 South Korea officially classifies Bitcoin as a \"strategic state asset\" \ud83d\ude80 The \"National Asset Basic Act\" will formally bring Bitcoin & crypto under the government's asset management system \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2077433139832492377#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddf0\ud83c\uddf7 South Korea officially classifies Bitcoin as a \"strategic state asset\" \ud83d\ude80 The \"National Asset Basic Act\" will formally bring Bitcoin &amp; crypto under the government's asset management system \ud83d\udc4f",
-      "publishedAt": "2026-07-15T16:40:32+00:00",
-      "publishedTs": 1784133632.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The Income Show | Ep. 10 ft. @TheOtherParker_ Our host @IIICapital chats with Parker White of @apyx_fi on portfolio construction, Bitcoin volatility, market narratives, $MSTR, digital credit, and tokenized assets.",
       "link": "https://x.com/TNorth/status/2077422945115218088#m",
       "source": "@saylor",
@@ -599,19 +638,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer talks CLARITY ACT on FOX \"The policy change has occurred already...CLARITY is an opportunity to bed down those policies into permanent law, and I'm very confident we'll get there\"",
-      "link": "https://x.com/BitcoinMagazine/status/2077417863015498190#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer talks CLARITY ACT on FOX \"The policy change has occurred already...CLARITY is an opportunity to bed down those policies into permanent law, and I'm very confident we'll get there\" Video",
-      "publishedAt": "2026-07-15T15:39:49+00:00",
-      "publishedTs": 1784129989.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "A barbell strategy: - $3.0 billion in USD Reserves for stability - $55 billion in $BTC Reserves for asymmetric upside",
@@ -674,19 +700,6 @@
       "summary": "July 15 Update: #Bitcoin ETFs: 1D NetFlow: +2,648 $BTC (+$172.34M)\ud83d\udfe2 7D NetFlow: -5,716 $BTC (-$372.04M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +31,277 $ETH (+$60.08M)\ud83d\udfe2 7D NetFlow: +45,185 $ETH (+$86.8M)\ud83d\udfe2 Lookonchain (@lookonchain) July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC (-$4",
       "publishedAt": "2026-07-15T14:39:48+00:00",
       "publishedTs": 1784126388.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japan\u2019s parliament passed amendments to the Financial Instruments and Exchange Act, legally classifying cryptocurrencies as financial products \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2077402335832093084#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-15T14:38:07+00:00",
-      "publishedTs": 1784126287.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1030,6 +1043,19 @@
       "isRetweet": true
     },
     {
+      "title": "\"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 https://go.cobault.net/BTCmag_1",
+      "link": "https://x.com/BitcoinMagazine/status/2077040013427056765#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "\"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 go.cobault.net/BTCmag_1",
+      "publishedAt": "2026-07-14T14:38:23+00:00",
+      "publishedTs": 1784039903.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC(-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC(-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH(-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH(+$48.55M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2077036636924518835#m",
       "source": "@lookonchain",
@@ -1285,19 +1311,6 @@
       "summary": "this is why your late 20s or early 30s friend working in IB, big tech SWE or PM, management consulting, 3rd year biglaw living in manhattan can have no savings and be completely miserable",
       "publishedAt": "2026-07-13T16:02:06+00:00",
       "publishedTs": 1783958526.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: and this still sucks. if you earn $212k in manhattan you are paying around a 34% average all in tax rate, meaning you take home $141k . that gives you $11.75k net a month, of which you are spending 45% on on rent. this leaves $6.4k for everything else - food, en",
-      "link": "https://x.com/nic_carter/status/2076698007756489050#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "and this still sucks. if you earn $212k in manhattan you are paying around a 34% average all in tax rate, meaning you take home $141k . that gives you $11.75k net a month, of which you are spending 45% on on rent. this leaves $6.4k for everything else - food, entertainment, trave",
-      "publishedAt": "2026-07-13T15:59:22+00:00",
-      "publishedTs": 1783958362.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
