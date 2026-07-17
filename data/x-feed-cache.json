@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-17T00:15:45Z",
+  "fetchedAt": "2026-07-17T09:18:53Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -11,19 +11,6 @@
       "summary": "",
       "publishedAt": "2026-07-16T23:41:09+00:00",
       "publishedTs": 1784245269.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Limiting the amount of bitcoin is the first collective agreement in human history that treats future generations as equals rather than resources.",
-      "link": "https://x.com/DocumentingBTC/status/2077878063828738239#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-16T22:08:30+00:00",
-      "publishedTs": 1784239710.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1004,19 +991,6 @@
       "isRetweet": false
     },
     {
-      "title": "The #USgovernment is dumping again! The U.S. Government wallet just deposited 5,939 $ETH($11.15M) into Coinbase Prime.",
-      "link": "https://x.com/lookonchain/status/2077054791101141026#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The #USgovernment is dumping again! The U.S. Government wallet just deposited 5,939 $ETH ($11.15M) into Coinbase Prime. Lookonchain (@lookonchain) The #USgovernment wallets deposited 3,941 $BTC ($244M) and 30,007 $ETH ($53.09M) into #CoinbasePrime over the past 8 hours. arkm.com/",
-      "publishedAt": "2026-07-14T15:37:06+00:00",
-      "publishedTs": 1784043426.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Last call.",
       "link": "https://x.com/saylor/status/2077052307460518391#m",
       "source": "@saylor",
@@ -1054,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC(-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC(-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH(-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH(+$48.55M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2077036636924518835#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 14 Update: #Bitcoin ETFs: 1D NetFlow: -6,904 $BTC (-$440.45M)\ud83d\udd34 7D NetFlow: -8,166 $BTC (-$521.02M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -8,807 $ETH (-$16.38M)\ud83d\udd34 7D NetFlow: +26,101 $ETH (+$48.55M)\ud83d\udfe2 Lookonchain (@lookonchain) July 13 Update: #Bitcoin ETFs: 1D NetFlow: +1,439 $BTC (+$8",
-      "publishedAt": "2026-07-14T14:24:58+00:00",
-      "publishedTs": 1784039098.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "More Americans over 55 years old hold crypto than under 25, a new NCA research report finds.",
@@ -1207,6 +1168,19 @@
       "summary": "",
       "publishedAt": "2026-07-13T23:07:21+00:00",
       "publishedTs": 1783984041.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A unique new feature of this Bitcoin wallet shows the block your transaction is published inside of",
+      "link": "https://x.com/DocumentingBTC/status/2076804445669572733#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "A unique new feature of this Bitcoin wallet shows the block your transaction is published inside of Video",
+      "publishedAt": "2026-07-13T23:02:19+00:00",
+      "publishedTs": 1783983739.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1818,110 +1792,6 @@
       "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
       "publishedAt": "2019-12-14T00:35:14+00:00",
       "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 https://youtu.be/BCPJ9vLC_Js",
-      "link": "https://x.com/BitcoinArchives/status/1205640157048844288#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 piped.video/BCPJ9vLC_Js",
-      "publishedAt": "2019-12-14T00:06:27+00:00",
-      "publishedTs": 1576281987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ \" Wan (hiring)\">@DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
-      "link": "https://x.com/BitcoinArchives/status/1145799646494756865#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "The Genesis of Asia's Mining Pools &amp; Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan , @christopherzhu0, @satofishi &amp; Chris Zhu @bitcoin2019conf #bitcoin2019 piped.video/-iXZi0x4S_8",
-      "publishedAt": "2019-07-01T21:01:38+00:00",
-      "publishedTs": 1562014898.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Addressing Privacy w/ Andrew Poelstra, @Isa, @LeoAW & @matt_odell @bitcoin2019conf #bitcoin2019 https://youtu.be/o9Vvj1lMaDM",
-      "link": "https://x.com/BitcoinArchives/status/1145546672329695232#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Addressing Privacy w/ Andrew Poelstra, @Isa , @LeoAW &amp; @matt_odell @bitcoin2019conf #bitcoin2019 piped.video/o9Vvj1lMaDM",
-      "publishedAt": "2019-07-01T04:16:24+00:00",
-      "publishedTs": 1561954584.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling to the Masses w/ @francispouliot_, @eric_lombrozo, @danheld & @AaronvanW @bitcoin2019conf #bitcoin2019 https://youtu.be/biBY6QEhK0A",
-      "link": "https://x.com/BitcoinArchives/status/1145090025845116929#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling to the Masses w/ @francispouliot_ , @eric_lombrozo , @danheld &amp; @AaronvanW @bitcoin2019conf #bitcoin2019 piped.video/biBY6QEhK0A",
-      "publishedAt": "2019-06-29T22:01:51+00:00",
-      "publishedTs": 1561845711.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: In Review: Protocol Improvement Outlooks w/ @TheBlueMatt, @JeremyRubin, @roasbeef & @moneyball @bitcoin2019conf #bitcoin2019 https://youtu.be/JhokT9Fg4FA",
-      "link": "https://x.com/BitcoinArchives/status/1145012258549960706#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "In Review: Protocol Improvement Outlooks w/ @TheBlueMatt , @JeremyRubin , @roasbeef &amp; @moneyball @bitcoin2019conf #bitcoin2019 piped.video/JhokT9Fg4FA",
-      "publishedAt": "2019-06-29T16:52:50+00:00",
-      "publishedTs": 1561827170.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Is Bitcoin Unstoppable? w/ @maxkeiser, @APompliano & @billbarhydt @bitcoin2019conf #bitcoin2019 https://youtu.be/7cB5891b60g",
-      "link": "https://x.com/BitcoinArchives/status/1145011696693653505#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Is Bitcoin Unstoppable? w/ @maxkeiser , @APompliano &amp; @billbarhydt @bitcoin2019conf #bitcoin2019 piped.video/7cB5891b60g",
-      "publishedAt": "2019-06-29T16:50:36+00:00",
-      "publishedTs": 1561827036.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Market Perspectives & Predictions w/ @TimDraper & @APompliano @bitcoin2019conf #bitcoin2019 https://youtu.be/o2RMlPeggmI",
-      "link": "https://x.com/BitcoinArchives/status/1145011107393953793#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Market Perspectives &amp; Predictions w/ @TimDraper &amp; @APompliano @bitcoin2019conf #bitcoin2019 piped.video/o2RMlPeggmI",
-      "publishedAt": "2019-06-29T16:48:15+00:00",
-      "publishedTs": 1561826895.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Welcome & Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 https://youtu.be/qIBEQ7mE9W8",
-      "link": "https://x.com/BitcoinArchives/status/1145010766317268993#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Welcome &amp; Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 piped.video/qIBEQ7mE9W8",
-      "publishedAt": "2019-06-29T16:46:54+00:00",
-      "publishedTs": 1561826814.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
