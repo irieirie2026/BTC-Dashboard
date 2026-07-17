@@ -700,25 +700,143 @@ function globalPerfChartHeight(el) {
   return Math.round(Math.max(440, Math.min(560, window.innerHeight - top - 80)));
 }
 
+/**
+ * Build Plotly traces from trading-day performance.
+ *
+ * Prefer raw session ``closes`` and rebase on the client:
+ *   rebased[i] = close[i] / close[0] * 100
+ * so the path cannot include closed-market days and cannot use a foreign-market base.
+ * Falls back to server ``values`` / legacy shared-date arrays.
+ */
+function normalizeRebasedPerformance(performance) {
+  if (!performance?.series) return null;
+  const sharedDates = performance.dates || [];
+  const series = {};
+  for (const [name, raw] of Object.entries(performance.series)) {
+    let points = []; // {d, c} date + raw close (or already-rebased if no closes)
+
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      const dates = Array.isArray(raw.dates) ? raw.dates : raw.x;
+      // Prefer raw closes — always re-base client-side from first trading print
+      const closes = Array.isArray(raw.closes) ? raw.closes : null;
+      const values = Array.isArray(raw.values) ? raw.values : raw.y;
+      if (Array.isArray(dates) && closes?.length) {
+        const n = Math.min(dates.length, closes.length);
+        for (let i = 0; i < n; i++) {
+          const c = Number(closes[i]);
+          if (!Number.isFinite(c) || c <= 0) continue;
+          points.push({ d: dates[i], c });
+        }
+      } else if (Array.isArray(dates) && values?.length) {
+        const n = Math.min(dates.length, values.length);
+        for (let i = 0; i < n; i++) {
+          const c = Number(values[i]);
+          if (!Number.isFinite(c) || c === 0) continue;
+          points.push({ d: dates[i], c });
+        }
+      }
+    } else if (Array.isArray(raw) && sharedDates.length) {
+      const n = Math.min(sharedDates.length, raw.length);
+      for (let i = 0; i < n; i++) {
+        const c = Number(raw[i]);
+        if (!Number.isFinite(c) || c === 0) continue;
+        points.push({ d: sharedDates[i], c });
+      }
+    }
+
+    if (points.length < 2) continue;
+
+    // Sort ascending by date so the left edge is period start (= 100)
+    points.sort((a, b) => String(a.d).localeCompare(String(b.d)));
+    const base = points[0].c;
+    if (!Number.isFinite(base) || base === 0) continue;
+
+    const x = [];
+    const y = [];
+    for (const p of points) {
+      x.push(p.d);
+      y.push((p.c / base) * 100);
+    }
+    series[name] = { x, y, lastClose: points[points.length - 1].c, firstClose: base };
+  }
+  if (!Object.keys(series).length) return null;
+  return {
+    period: performance.period,
+    series,
+  };
+}
+
+function lastRebasedValue(seriesEntry) {
+  if (!seriesEntry) return null;
+  if (Array.isArray(seriesEntry)) {
+    for (let i = seriesEntry.length - 1; i >= 0; i--) {
+      const n = Number(seriesEntry[i]);
+      if (Number.isFinite(n)) return n;
+    }
+    return null;
+  }
+  if (typeof seriesEntry === "object") {
+    if (seriesEntry.meta?.lastRebased != null) {
+      const m = Number(seriesEntry.meta.lastRebased);
+      if (Number.isFinite(m)) return m;
+    }
+    // Rebase from raw closes when present
+    if (Array.isArray(seriesEntry.closes) && seriesEntry.closes.length) {
+      const closes = seriesEntry.closes.map(Number).filter((n) => Number.isFinite(n) && n > 0);
+      if (closes.length >= 2) return (closes[closes.length - 1] / closes[0]) * 100;
+    }
+    const vals = seriesEntry.values || seriesEntry.y;
+    if (!Array.isArray(vals)) return null;
+    for (let i = vals.length - 1; i >= 0; i--) {
+      const n = Number(vals[i]);
+      if (Number.isFinite(n)) return n;
+    }
+  }
+  return null;
+}
+
 function renderGlobalPerformanceChart(el, performance) {
-  if (!window.Plotly || !performance?.dates?.length || !el) return;
-  const data = performance;
-  const series = Object.entries(data.series || {});
-  if (!series.length || !data.dates.length) return;
+  if (!window.Plotly || !el) return;
+  const normalized = normalizeRebasedPerformance(performance);
+  if (!normalized) return;
+  const series = Object.entries(normalized.series);
+  if (!series.length) return;
   syncGlobalPerfPeriodSelect();
 
   const height = globalPerfChartHeight(el);
   el.style.height = `${height}px`;
 
-  const traces = series.map(([name, vals], i) => ({
-    x: data.dates,
-    y: vals,
+  const traces = series.map(([name, pts], i) => ({
+    x: pts.x,
+    y: pts.y,
     name,
     type: "scatter",
     mode: "lines",
     line: { width: 2.5, color: GLOBAL_PERF_COLORS[i % GLOBAL_PERF_COLORS.length] },
-    connectgaps: true,
+    connectgaps: false,
+    hovertemplate:
+      `%{fullData.name}<br>%{x}<br>Rebased: %{y:.2f}` +
+      (pts.lastClose != null ? `<br>Close: ${Number(pts.lastClose).toFixed(2)}` : "") +
+      `<extra></extra>`,
   }));
+
+  // Debug aid: log SPX path stats when the series ends well below its own max
+  // (true ATH at the end of the window would put the last point at the max).
+  const spx = series.find(([n]) => /s&p|gspc|spx/i.test(n));
+  if (spx) {
+    const y = spx[1].y;
+    const maxY = Math.max(...y);
+    const lastY = y[y.length - 1];
+    if (maxY > 0 && lastY < maxY * 0.98) {
+      console.info(
+        "[equity-perf]",
+        spx[0],
+        `start=${y[0].toFixed(2)} end=${lastY.toFixed(2)} max=${maxY.toFixed(2)}`,
+        `firstClose=${spx[1].firstClose} lastClose=${spx[1].lastClose}`,
+        `n=${y.length} ${spx[1].x[0]} → ${spx[1].x[spx[1].x.length - 1]}`,
+      );
+    }
+  }
 
   Plotly.newPlot(
     el,
@@ -745,6 +863,7 @@ function renderGlobalPerformanceChart(el, performance) {
         tracegroupgap: 10,
       },
       xaxis: {
+        type: "date",
         showgrid: true,
         gridcolor: "rgba(148, 163, 184, 0.16)",
         gridwidth: 1,
@@ -1444,7 +1563,7 @@ function buildTabCommentaryFallback(data) {
   }
   const perf = data.peerPerformance?.series || {};
   const endVals = Object.entries(perf)
-    .map(([sym, vals]) => [sym, safeNum(vals?.[vals.length - 1])])
+    .map(([sym, vals]) => [sym, safeNum(lastRebasedValue(vals))])
     .filter(([, val]) => val != null);
   if (endVals.length >= 2) {
     endVals.sort((x, y) => y[1] - x[1]);
@@ -1602,18 +1721,21 @@ function bindCompanyPeerChips() {
 }
 
 function renderCompanyPeerChart(el, data) {
-  if (!window.Plotly || !data?.dates?.length || !el) return;
-  const series = Object.entries(data.series || {});
+  if (!window.Plotly || !el) return;
+  const normalized = normalizeRebasedPerformance(data);
+  if (!normalized) return;
+  const series = Object.entries(normalized.series);
   if (!series.length) return;
   const height = 340;
   el.style.height = `${height}px`;
-  const traces = series.map(([name, vals], i) => ({
-    x: data.dates,
-    y: vals,
+  const traces = series.map(([name, pts], i) => ({
+    x: pts.x,
+    y: pts.y,
     name,
     type: "scatter",
     mode: "lines",
     line: { width: 2.5, color: GLOBAL_PERF_COLORS[i % GLOBAL_PERF_COLORS.length] },
+    connectgaps: false,
   }));
   Plotly.newPlot(
     el,
@@ -1989,7 +2111,10 @@ function renderGlobalOverviewCharts(data) {
   return charts.length > 0;
 }
 
-function repaintGlobalOverviewCharts(data) {
+function repaintGlobalOverviewCharts(data, opts = {}) {
+  // Skip painting from SWR stale payloads — avoids correct→flash→wrong when
+  // localStorage holds an older (bad) performance series before revalidate.
+  if (opts.stale && opts.refreshing) return;
   if (data?.performance) {
     renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
   }
@@ -2007,7 +2132,7 @@ function repaintGlobalOverviewCharts(data) {
   });
 }
 
-function renderGlobalOverview(data) {
+function renderGlobalOverview(data, opts = {}) {
   renderGlobalHeroes(data);
   const body = eqEl("equity-global-overview-body");
   if (!body) return;
@@ -2018,6 +2143,7 @@ function renderGlobalOverview(data) {
   const indicesMap = data.indices || equityCache.global?.indices || {};
   const loading = !data?.fetchedAt;
   const canRemove = globalWatchlist.table.length > 1;
+  const skipPerfChart = !!(opts.stale && opts.refreshing);
 
   if (loading) {
     body.innerHTML = `<tr><td colspan="11">Loading market data…</td></tr>`;
@@ -2067,10 +2193,12 @@ function renderGlobalOverview(data) {
 
   restoreEqTickerFocus(focus);
 
-  renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
+  if (!skipPerfChart) {
+    renderGlobalPerformanceChart(eqEl("equity-global-perf-chart"), data.performance);
+  }
 
   if (!renderGlobalOverviewCharts(data)) {
-    repaintGlobalOverviewCharts(data);
+    repaintGlobalOverviewCharts(data, opts);
   }
 
   renderGlobalNews(data);
@@ -2080,9 +2208,13 @@ function companyDataKey() {
   return `company:${companyPeriodFetchKey()}`;
 }
 
-function renderGlobalScreen(data) {
-  equityCache.global = data;
-  renderGlobalOverview(data);
+function renderGlobalScreen(data, opts = {}) {
+  // Keep last good payload while SWR revalidates so a bad/stale cache paint
+  // cannot replace a correct chart, then get "fixed" by a second wrong draw.
+  if (!(opts.stale && opts.refreshing) || !equityCache.global) {
+    equityCache.global = data;
+  }
+  renderGlobalOverview(data, opts);
 
   const meta = eqEl("equity-global-update");
   const swr = window.DashboardSWR;
@@ -2154,6 +2286,8 @@ async function fetchEquityGlobal() {
   const params = new URLSearchParams({
     period: GLOBAL_PERF_FETCH_PERIOD,
     perfPeriod: getGlobalPerfPeriod(),
+    // bust HTTP/SWR intermediates after performance pipeline fixes
+    v: "5",
   });
   if (heroes.length) params.set("heroes", heroes.join(","));
   if (symbols.length) params.set("symbols", symbols.join(","));
@@ -2209,7 +2343,8 @@ async function loadEquityGlobal() {
   try {
     const fetchKey = `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}`;
     await swr.runSWR({
-      key: `equity:global:v2:${fetchKey}`,
+      // v5: per-symbol history + client rebase from raw trading-day closes
+      key: `equity:global:v5:${fetchKey}`,
       l1: "tradfi",
       source: "Yahoo Finance",
       validate: () => `${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}` === fetchKey,
@@ -2217,7 +2352,7 @@ async function loadEquityGlobal() {
       render: (data, opts = {}) => {
         if (opts.loading) return;
         if (`${globalWatchlistCacheKey()}:${getGlobalPerfPeriod()}` !== fetchKey) return;
-        renderGlobalScreen(data);
+        renderGlobalScreen(data, opts);
         syncGlobalPerfPeriodSelect();
         bindEquityControls();
         window.decorateHelpLabels?.(eqEl("equity-global-screen"));

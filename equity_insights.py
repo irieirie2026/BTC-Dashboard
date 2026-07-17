@@ -116,32 +116,152 @@ def perf_period_start_ts(as_of: pd.Timestamp, preset: str) -> pd.Timestamp:
     return as_of - pd.Timedelta(days=365)
 
 
-def slice_closes_for_perf_period(closes: pd.DataFrame, preset: str) -> pd.DataFrame:
+def _to_naive_day_index(index) -> pd.DatetimeIndex:
+    """Calendar-day index (UTC, no tz) so multi-market series align cleanly."""
+    idx = pd.DatetimeIndex(pd.to_datetime(index))
+    if getattr(idx, "tz", None) is not None:
+        idx = idx.tz_convert("UTC").tz_localize(None)
+    return idx.normalize()
+
+
+def normalize_close_series(close: pd.Series) -> pd.Series:
+    """Drop NaNs, force calendar-day index, keep last bar per day, sort ascending."""
+    if close is None or getattr(close, "empty", True):
+        return pd.Series(dtype=float)
+    s = close.dropna().astype(float)
+    if s.empty:
+        return pd.Series(dtype=float)
+    s = pd.Series(s.to_numpy(dtype=float), index=_to_naive_day_index(s.index))
+    s = s[~s.index.duplicated(keep="last")].sort_index()
+    return s
+
+
+def closes_frame_from_history(history: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Build a price frame with consistent daily indexes across symbols."""
+    cols: dict[str, pd.Series] = {}
+    for sym, df in (history or {}).items():
+        if df is None or getattr(df, "empty", True) or "Close" not in df.columns:
+            continue
+        series = normalize_close_series(df["Close"])
+        if not series.empty:
+            cols[sym] = series
+    if not cols:
+        return pd.DataFrame()
+    closes = pd.DataFrame(cols).sort_index()
+    return closes.dropna(how="all")
+
+
+def rebase_to_100(closes: pd.DataFrame) -> pd.DataFrame:
+    """Rebase each column to 100 at its own first valid close (wide frame)."""
     if closes is None or closes.empty:
-        return closes
-    as_of = closes.index[-1]
-    start = perf_period_start_ts(as_of, preset)
-    mask = closes.index >= start
-    if not mask.any():
-        return closes.tail(max(5, min(len(closes), 10)))
-    first_idx = closes.index[mask][0]
-    pos = closes.index.get_loc(first_idx)
-    if isinstance(pos, slice):
-        pos = pos.start if pos.start is not None else 0
-    return closes.iloc[int(pos):]
+        return pd.DataFrame()
+    out: dict[str, pd.Series] = {}
+    for col in closes.columns:
+        series = closes[col].dropna()
+        if series.empty:
+            continue
+        base = float(series.iloc[0])
+        if not np.isfinite(base) or base == 0:
+            continue
+        out[col] = series / base * 100.0
+    if not out:
+        return pd.DataFrame()
+    return pd.DataFrame(out).sort_index().dropna(how="all")
 
 
-def build_performance_series(closes: pd.DataFrame, labels: dict[str, str], preset: str) -> dict:
-    performance = {"dates": [], "series": {}, "period": normalize_perf_period(preset)}
-    perf_closes = slice_closes_for_perf_period(closes, preset)
-    if perf_closes is None or perf_closes.empty:
-        return performance
-    rebased = (perf_closes.divide(perf_closes.iloc[0].replace(0, np.nan)) * 100).dropna(how="all")
-    performance["dates"] = [_fmt_date(d) for d in rebased.index]
-    for col in rebased.columns:
-        performance["series"][labels.get(col, col)] = [
-            _safe_float(v) for v in rebased[col].tolist()
-        ]
+def trading_day_closes(close: pd.Series) -> pd.Series:
+    """Keep only real session closes: drop NaNs, weekends, and zero/invalid prints."""
+    s = normalize_close_series(close)
+    if s.empty:
+        return s
+    # Yahoo rarely returns Sat/Sun; drop them so a shared calendar cannot invent
+    # "closes" on market holidays/weekends via alignment.
+    s = s[s.index.dayofweek < 5]
+    vals = pd.to_numeric(s, errors="coerce").dropna()
+    vals = vals[vals > 0]
+    return vals.sort_index()
+
+
+def window_trading_closes(close: pd.Series, preset: str | None = "1Y") -> pd.Series | None:
+    """Trading-day closes for one symbol in the performance window (not rebased)."""
+    s = trading_day_closes(close)
+    if len(s) < 2:
+        return None
+    if preset:
+        as_of = pd.Timestamp(s.index[-1]).normalize()
+        start = pd.Timestamp(perf_period_start_ts(as_of, preset)).normalize()
+        # First trading session ON OR AFTER the calendar start — never a closed day.
+        window = s[s.index >= start]
+        if window.empty:
+            window = s.tail(min(10, len(s)))
+    else:
+        window = s
+    if len(window) < 2:
+        return None
+    return window.sort_index()
+
+
+def rebase_trading_series(close: pd.Series, preset: str | None = "1Y") -> pd.Series | None:
+    """Rebase one index on its own trading calendar only (no foreign-market days)."""
+    window = window_trading_closes(close, preset)
+    if window is None or window.empty:
+        return None
+    base = float(window.iloc[0])
+    if not np.isfinite(base) or base == 0:
+        return None
+    return (window / base) * 100.0
+
+
+def build_performance_series(
+    history: dict[str, pd.DataFrame],
+    labels: dict[str, str],
+    preset: str | None = "1Y",
+) -> dict:
+    """Per-ticker trading-day performance (not a shared multi-market calendar).
+
+    Each series is::
+
+        {
+          "dates":  [... trading sessions only ...],
+          "closes": [... raw session closes ...],
+          "values": [... rebased to 100 at first trading close ...],
+        }
+
+    Never pads weekends or another market's holidays. Clients should prefer
+    re-basing from ``closes`` so display cannot drift if a cached payload is stale.
+    """
+    performance: dict[str, Any] = {
+        "dates": [],
+        "series": {},
+        "period": normalize_perf_period(preset) if preset else "full",
+        "format": "trading-days-v2",
+    }
+    for sym, df in (history or {}).items():
+        if df is None or getattr(df, "empty", True) or "Close" not in getattr(df, "columns", []):
+            continue
+        window = window_trading_closes(df["Close"], preset)
+        if window is None or window.empty:
+            continue
+        base = float(window.iloc[0])
+        if not np.isfinite(base) or base == 0:
+            continue
+        rebased = (window / base) * 100.0
+        name = labels.get(sym, sym)
+        closes = [_safe_float(v) for v in window.tolist()]
+        values = [_safe_float(v) for v in rebased.tolist()]
+        performance["series"][name] = {
+            "ticker": sym,
+            "dates": [_fmt_date(d) for d in window.index],
+            "closes": closes,
+            "values": values,
+            "meta": {
+                "firstClose": closes[0],
+                "lastClose": closes[-1],
+                "maxClose": max(c for c in closes if c is not None),
+                "lastRebased": values[-1],
+                "maxRebased": max(v for v in values if v is not None),
+            },
+        }
     return performance
 
 
@@ -325,26 +445,82 @@ def _sanitize_ohlcv_df(df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
     if "Close" in df.columns:
         df = df.dropna(subset=["Close"])
-    return df.dropna(how="all")
+    df = df.dropna(how="all")
+    if df.empty:
+        return pd.DataFrame()
+    # Align multi-market bars on UTC calendar days (avoids tz/session misalignment
+    # that corrupts rebased performance charts).
+    df = df.copy()
+    df.index = _to_naive_day_index(df.index)
+    df = df[~df.index.duplicated(keep="last")].sort_index()
+    return df
 
 
 def _extract_ohlcv(data: pd.DataFrame, ticker: str) -> pd.DataFrame:
     if data is None or data.empty:
         return pd.DataFrame()
     if isinstance(data.columns, pd.MultiIndex):
-        if ticker in data.columns.get_level_values(0):
+        level0 = set(data.columns.get_level_values(0))
+        level1 = set(data.columns.get_level_values(1))
+        # Prefer ticker-first layout (group_by="ticker"); fall back to price-first.
+        if ticker in level0 and "Close" in level1:
             df = data[ticker].copy()
-        elif ticker in data.columns.get_level_values(1):
+        elif ticker in level1 and "Close" in level0:
+            df = data.xs(ticker, axis=1, level=1).copy()
+        elif ticker in level0:
+            df = data[ticker].copy()
+        elif ticker in level1:
             df = data.xs(ticker, axis=1, level=1).copy()
         else:
             return pd.DataFrame()
     else:
         df = data.copy()
     df = df.rename(columns=str.title)
+    # auto_adjust=True usually exposes Close; keep Adj Close as fallback.
+    if "Close" not in df.columns and "Adj Close" in df.columns:
+        df = df.rename(columns={"Adj Close": "Close"})
     cols = [c for c in ["Open", "High", "Low", "Close", "Volume"] if c in df.columns]
-    if not cols:
+    if not cols or "Close" not in cols:
         return pd.DataFrame()
     return _sanitize_ohlcv_df(df[cols])
+
+
+def _history_one_symbol(sym: str, start: str, end_dl: str) -> pd.DataFrame:
+    """Download one symbol. Prefer Ticker.history — multi-ticker yf.download
+    often mis-assigns columns across indices and corrupts performance charts.
+    """
+    # auto_adjust=False: index levels (^GSPC etc.) should stay as reported closes,
+    # not dividend-adjusted synthetic paths.
+    try:
+        raw = yf.Ticker(sym).history(
+            start=start[:10],
+            end=end_dl[:10],
+            auto_adjust=False,
+            actions=False,
+        )
+        if raw is not None and not raw.empty:
+            df = raw.rename(columns=str.title)
+            if "Close" not in df.columns and "Adj Close" in df.columns:
+                df = df.rename(columns={"Adj Close": "Close"})
+            cols = [c for c in ["Open", "High", "Low", "Close", "Volume"] if c in df.columns]
+            if "Close" in cols:
+                out = _sanitize_ohlcv_df(df[cols])
+                if not out.empty:
+                    return out
+    except Exception:
+        pass
+    try:
+        raw = yf.download(
+            sym,
+            start=start[:10],
+            end=end_dl[:10],
+            auto_adjust=False,
+            progress=False,
+            threads=False,
+        )
+        return _extract_ohlcv(raw, sym)
+    except Exception:
+        return pd.DataFrame()
 
 
 def download_history(symbols: list[str], start: str, end: str) -> dict[str, pd.DataFrame]:
@@ -353,41 +529,17 @@ def download_history(symbols: list[str], start: str, end: str) -> dict[str, pd.D
         return {}
     end_dl = (datetime.strptime(end[:10], "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d")
     out: dict[str, pd.DataFrame] = {}
-    chunk_size = 6
-    for i in range(0, len(unique), chunk_size):
-        chunk = unique[i : i + chunk_size]
-        try:
-            raw = yf.download(
-                chunk,
-                start=start[:10],
-                end=end_dl,
-                group_by="ticker",
-                auto_adjust=True,
-                progress=False,
-                threads=False,
-            )
-            multi = len(chunk) > 1
-            for sym in chunk:
-                if sym in out:
-                    continue
-                if multi:
-                    df = _extract_ohlcv(raw, sym)
-                else:
-                    df = _extract_ohlcv(raw, chunk[0])
-                if not df.empty:
-                    out[sym] = df
-        except Exception:
-            continue
-    for sym in unique:
-        if sym in out:
-            continue
-        try:
-            raw = yf.download(sym, start=start[:10], end=end_dl, auto_adjust=True, progress=False)
-            df = _extract_ohlcv(raw, sym)
-            if not df.empty:
+    # Sequential per-symbol downloads: slower but correct closes per ticker.
+    with ThreadPoolExecutor(max_workers=min(6, len(unique))) as pool:
+        futures = {pool.submit(_history_one_symbol, sym, start, end_dl): sym for sym in unique}
+        for fut in as_completed(futures):
+            sym = futures[fut]
+            try:
+                df = fut.result()
+            except Exception:
+                continue
+            if df is not None and not df.empty and "Close" in df.columns:
                 out[sym] = df
-        except Exception:
-            continue
     return out
 
 
@@ -1103,12 +1255,11 @@ def build_global_payload(
 
     overview = [_overview_row(sym, history, labels) for sym in all_syms]
 
-    closes = pd.DataFrame({
-        s: h["Close"].dropna() for s, h in history.items() if "Close" in h.columns
-    })
-    closes = closes.dropna(how="all")
+    closes = closes_frame_from_history(history)
 
-    performance = build_performance_series(closes, labels, perf_period)
+    # Performance uses each market's own trading days — not the wide frame
+    # (union calendar would include foreign holidays as rows with NaN/pad).
+    performance = build_performance_series(history, labels, perf_period)
 
     correlation = {"labels": [], "matrix": []}
     volatility = {"dates": [], "series": {}}
@@ -1256,15 +1407,10 @@ def build_company_payload(symbol: str, peers: list[str], start: str, end: str) -
             price_return = _safe_float((closes.iloc[-1] / closes.iloc[0] - 1) * 100)
 
     peer_rows = []
-    peer_perf = {"dates": [], "series": {}}
-    peer_closes = pd.DataFrame({
-        s: history[s]["Close"] for s in all_syms if s in history and "Close" in history[s].columns
-    })
-    if not peer_closes.empty:
-        rebased = (peer_closes.divide(peer_closes.iloc[0].replace(0, np.nan)) * 100).dropna(how="all")
-        peer_perf["dates"] = [_fmt_date(d) for d in rebased.index]
-        for col in rebased.columns:
-            peer_perf["series"][col] = [_safe_float(v) for v in rebased[col].tolist()]
+    peer_hist = {s: history[s] for s in all_syms if s in history}
+    peer_labels = {s: s for s in peer_hist}
+    # Full download window, trading days only (matches company history range)
+    peer_perf = build_performance_series(peer_hist, peer_labels, None)
 
     for sym in all_syms:
         inf = info if sym == symbol else {}
@@ -1356,8 +1502,9 @@ def get_equity_global_payload(
     sym_list = symbols or list(INDICES.values())
     hero_list = list(hero_symbols or [])
     perf_key = normalize_perf_period(perf_period)
+    # v5: per-symbol Ticker.history + raw closes for client rebase
     key = (
-        f"equity:global:{','.join(hero_list)}:{','.join(sym_list)}"
+        f"equity:global:v5:{','.join(hero_list)}:{','.join(sym_list)}"
         f":{start}:{end}:{movers_period}:{perf_key}"
     )
     cached = _equity_cget(key, refresh=refresh)
