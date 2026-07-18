@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-18T10:49:49Z",
+  "fetchedAt": "2026-07-18T14:37:18Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: Bitcoin ETFs are likely to mirror Gold's 22-year ETF history, according to Bloomberg Intelligence \ud83d\udc40 We are so early still \u270a",
+      "link": "https://x.com/BitcoinMagazine/status/2078453361427288401#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-18T12:14:31+00:00",
+      "publishedTs": 1784376871.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Did you know the Internet reserved error code 402, \u201cPayment Required,\u201d in 1997 and left it empty for a quarter century because the internet had no native money? It does now with Bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2078451541787189442#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-18T12:07:17+00:00",
+      "publishedTs": 1784376437.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Companies enable people to organize under law around a shared mission with greater efficiency, transparency, creditworthiness, scale, resilience, and continuity. For Bitcoin to succeed as a global monetary network, corporate adoption is necessary, inevitable, and welcome.",
       "link": "https://x.com/saylor/status/2078406582514184463#m",
@@ -14,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "CIO OF @NAKAMOTO & @UTXOMGMT TYLER EVANS TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \u201cWe\u2019re seeing digital credit products becoming a buffer on #Bitcoin volatility\u201d \ud83d\udd25",
+      "link": "https://x.com/Bitcoinconfasia/status/2078305054075859218#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "CIO OF @NAKAMOTO &amp; @UTXOMGMT TYLER EVANS TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \u201cWe\u2019re seeing digital credit products becoming a buffer on #Bitcoin volatility\u201d \ud83d\udd25",
+      "publishedAt": "2026-07-18T02:25:12+00:00",
+      "publishedTs": 1784341512.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "WHAT MAKES BITCOIN ASIA DIFFERENT? \ud83c\udded\ud83c\uddf0 \u2705 Unlimited networking \u2705 Exclusive side events & parties \u2705 On site card expo \u2705 High profile speakers from all around the globe LET'S MAKE UNFORGETTABLE MEMORIES BITCOINERS \ud83d\udd25",
@@ -497,19 +536,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: 38.0% of the total Bitcoin supply remains unmoved for 4+ years \ud83d\udc40 Conviction grows. HODL \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2077817316926976261#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-16T18:07:06+00:00",
-      "publishedTs": 1784225226.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Stretch your income. $STRC",
       "link": "https://x.com/saylor/status/2077804455366402439#m",
       "source": "@saylor",
@@ -521,19 +547,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Cloudflare x402 Integration Opens Door for Bitcoin in AI Agent Micropayments https://bitcoinmagazine.com/business/cloudflare-x402-integration-opens-door-for-bitcoin-in-ai-agent-micropayments via @bitcoinmagazine",
-      "link": "https://x.com/JuanSGalt/status/2077800671068258448#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Cloudflare x402 Integration Opens Door for Bitcoin in AI Agent Micropayments bitcoinmagazine.com/business\u2026 via @bitcoinmagazine Link No More API Keys Or Subscriptions: X402 And Bitcoin Fix How AI Pays For The Internet The web&apos;s biggest infrastructure player just enabled AI a",
-      "publishedAt": "2026-07-16T17:00:58+00:00",
-      "publishedTs": 1784221258.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "\"where does water come from?\" \"from the tap\" \"where does tuna come from?\" \"from the can\" \"where do X, IG, and TikTok come from?\" \"from the phone\"",
@@ -755,32 +768,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "The Canton ETF (only one in the US, with the ticker $TCAN) had no bump in what is very dismal volume despite a 5% jump in price on the DTCC news today. A bit surprising. I think once you get out into these outer planet cryptos it takes a lot more shiny object-ness to get attn.",
-      "link": "https://x.com/EricBalchunas/status/2077486311003361664#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "The Canton ETF (only one in the US, with the ticker $TCAN ) had no bump in what is very dismal volume despite a 5% jump in price on the DTCC news today. A bit surprising. I think once you get out into these outer planet cryptos it takes a lot more shiny object-ness to get attn.",
-      "publishedAt": "2026-07-15T20:11:49+00:00",
-      "publishedTs": 1784146309.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We have our first termination of a 2x stock ETF in the US this year (there's been a few in Europe where leverage is much higher). $LCLD went down 92% in short order yest, well beyond the 50% threshold for termination. It had no assets but still good reminder of the vol of some of",
-      "link": "https://x.com/EricBalchunas/status/2077482649417863424#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "We have our first termination of a 2x stock ETF in the US this year (there's been a few in Europe where leverage is much higher). $LCLD went down 92% in short order yest, well beyond the 50% threshold for termination. It had no assets but still good reminder of the vol of some of",
-      "publishedAt": "2026-07-15T19:57:16+00:00",
-      "publishedTs": 1784145436.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: I\u2019m sure this time is different and their moratorium is thoughtful and grounded in a robust analysis of tradeoffs and second order effects",
@@ -1303,19 +1290,6 @@
       "isRetweet": false
     },
     {
-      "title": "On this day in history, 12 years ago, Dell began accepting bitcoin payments for their computers",
-      "link": "https://x.com/DocumentingBTC/status/2076816539416756232#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-13T23:50:23+00:00",
-      "publishedTs": 1783986623.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "We joined the fun and turned the live Bitcoin price into a 3d battlefield. Every 1s tick moves the front line. Order book depths deploys units. Large trades shift pressure. Liquidations trigger battlefield events. Powered by Newhedge data https://newhedge.io/bitcoin/battlefield",
       "link": "https://x.com/newhedge_io/status/2076649110405283930#m",
       "source": "@lopp",
@@ -1810,7 +1784,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ \" Wan (hiring)\">@DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
+      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
       "link": "https://x.com/BitcoinArchives/status/1145799646494756865#m",
       "source": "@BitcoinArchives",
       "authorName": "Bitcoin Archives",
