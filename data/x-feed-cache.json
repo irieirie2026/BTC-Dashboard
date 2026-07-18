@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-18T18:08:42Z",
+  "fetchedAt": "2026-07-18T21:36:10Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "the third place world cup game is the funniest event in sports. the always exciting and high-scoring game of frustration and despair",
+      "link": "https://x.com/nic_carter/status/2078589599933165927#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-18T21:15:53+00:00",
+      "publishedTs": 1784409353.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "third place game watch party setup",
+      "link": "https://x.com/nic_carter/status/2078587751092404252#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-18T21:08:32+00:00",
+      "publishedTs": 1784408912.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 The GENIUS ACT was passed one year ago today, establishing the first major federal regulatory framework for digital assets in the U.S. \ud83d\udc4f The CLARITY ACT is the next step, pass it! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2078538232384647401#m",
@@ -1108,19 +1134,6 @@
       "isRetweet": false
     },
     {
-      "title": "Lemme tell you what\u2019s gonna happen Red states will keep adding power and building data centers Blue states will succumb to idiocy and turn off data centers (they mostly weren\u2019t building them in the first place bc their grids don\u2019t work bc of failed green transitions) Red states w",
-      "link": "https://x.com/nic_carter/status/2077157516048289927#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Lemme tell you what\u2019s gonna happen Red states will keep adding power and building data centers Blue states will succumb to idiocy and turn off data centers (they mostly weren\u2019t building them in the first place bc their grids don\u2019t work bc of failed green transitions) Red states w",
-      "publishedAt": "2026-07-14T22:25:18+00:00",
-      "publishedTs": 1784067918.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Our goal is clear: return $STRC to par.",
       "link": "https://x.com/saylor/status/2077131252742648275#m",
       "source": "@saylor",
@@ -1132,19 +1145,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "A full time grant from @MaelstromFund to @tdryja to help make Bitcoin more resilient to the threat of quantum computers! Along with another grant from @bitcoinbrink to @conduition_io, a team is developing!",
-      "link": "https://x.com/FarsideUK/status/2077130063842295945#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "A full time grant from @MaelstromFund to @tdryja to help make Bitcoin more resilient to the threat of quantum computers! Along with another grant from @bitcoinbrink to @conduition_io , a team is developing! Maelstrom (@MaelstromFund) Maelstrom is pleased to announce that Tadge Dr",
-      "publishedAt": "2026-07-14T20:36:13+00:00",
-      "publishedTs": 1784061373.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "You can do everything right - cold storage, multisig, a seed phrase nobody could ever guess - but none of it protects you from a wrench attack. 2026 is on pace to be the worst year on record for physical attacks on Bitcoiners, and France has become the case study nobody wanted. S",
@@ -1321,7 +1321,7 @@
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Excellent post-mortem of Samourai Wallet's lengthy history of controversies and privacy issues by @nopara73 . github.com/nopara73/Scamoura\u2026 Link ScamouraiWallet/POST_MORTEM.md at master \u00b7 nopara73/ScamouraiWallet Contribute to nopara73/ScamouraiWallet development by creating an a",
+      "summary": "Excellent post-mortem of Samourai Wallet's lengthy history of controversies and privacy issues by @nopara73 . github.com/nopara73/Scamoura\u2026 Link ScamouraiWallet/POST_MORTEM.md at master \u00b7 nopara73/ScamouraiWallet Primary-source archive and post-mortem on Samourai Wallet, ZeroLink",
       "publishedAt": "2026-07-12T14:02:00+00:00",
       "publishedTs": 1783864920.0,
       "category": "x",
