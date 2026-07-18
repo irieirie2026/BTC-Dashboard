@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-18T06:29:27Z",
+  "fetchedAt": "2026-07-18T10:49:49Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Companies enable people to organize under law around a shared mission with greater efficiency, transparency, creditworthiness, scale, resilience, and continuity. For Bitcoin to succeed as a global monetary network, corporate adoption is necessary, inevitable, and welcome.",
+      "link": "https://x.com/saylor/status/2078406582514184463#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-18T09:08:38+00:00",
+      "publishedTs": 1784365718.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "WHAT MAKES BITCOIN ASIA DIFFERENT? \ud83c\udded\ud83c\uddf0 \u2705 Unlimited networking \u2705 Exclusive side events & parties \u2705 On site card expo \u2705 High profile speakers from all around the globe LET'S MAKE UNFORGETTABLE MEMORIES BITCOINERS \ud83d\udd25",
       "link": "https://x.com/Bitcoinconfasia/status/2078259703570915597#m",
@@ -1301,19 +1314,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "A dedicated USD Reserve. A stronger foundation for Digital Credit. $STRC",
-      "link": "https://x.com/Strategy/status/2076780089212047679#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-13T21:25:32+00:00",
-      "publishedTs": 1783977932.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "We joined the fun and turned the live Bitcoin price into a 3d battlefield. Every 1s tick moves the front line. Order book depths deploys units. Large trades shift pressure. Liquidations trigger battlefield events. Powered by Newhedge data https://newhedge.io/bitcoin/battlefield",
