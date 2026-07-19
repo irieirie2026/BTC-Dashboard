@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-07-19T11:40:38Z",
+  "fetchedAt": "2026-07-19T15:32:51Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40 What's next?",
+      "link": "https://x.com/BitcoinMagazine/status/2078851083703660611#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-19T14:34:56+00:00",
+      "publishedTs": 1784471696.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The first sign of general artificial intelligence was never going to be the words a machine writes. But, pay attention to the amount of bitcoin it holds.",
+      "link": "https://x.com/DocumentingBTC/status/2078840411615907879#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-19T13:52:31+00:00",
+      "publishedTs": 1784469151.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I spoke with @jvisserlabs to break down the AI stock slowdown, why China's new Kimi K3 model is upending the AI trade, and the hidden cultural bias baked into these systems. We also discuss the cooler inflation report, Fed Chair Kevin Warsh's early moves, Bitcoin's reaction, and ",
+      "link": "https://x.com/APompliano/status/2078837259621810607#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I spoke with @jvisserlabs to break down the AI stock slowdown, why China's new Kimi K3 model is upending the AI trade, and the hidden cultural bias baked into these systems. We also discuss the cooler inflation report, Fed Chair Kevin Warsh's early moves, Bitcoin's reaction, and ",
+      "publishedAt": "2026-07-19T13:40:00+00:00",
+      "publishedTs": 1784468400.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Describing Bitcoin's \"governance\" is bloody hard. There's nothing to relate it to. It's anarchy; the closest models are open source projects or religions. But I'd argue Bitcoin has more complex dynamics across more diverse actors. August will be a learning lesson for many.",
+      "link": "https://x.com/lopp/status/2078836055361356200#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-19T13:35:13+00:00",
+      "publishedTs": 1784468113.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Around 2,000 institutional investors reported Bitcoin holdings in their Q1 2026 filings. Institutional demand for Bitcoin is growing! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2078821686615437499#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-19T12:38:07+00:00",
+      "publishedTs": 1784464687.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "What's next?",
+      "link": "https://x.com/saylor/status/2078821350114824461#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-19T12:36:47+00:00",
+      "publishedTs": 1784464607.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "You don\u2019t hold bitcoin the way you hold objects. You hold it the same way you hold knowledge.",
+      "link": "https://x.com/DocumentingBTC/status/2078809586119630977#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-19T11:50:02+00:00",
+      "publishedTs": 1784461802.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Many Bitcoiners I respect support BIP 110. I understand and share their desire to protect Bitcoin, but believe the proposed cure is more dangerous than the condition. Here are 110 reasons why Bitcoin needs guardians of neutrality.",
       "link": "https://x.com/saylor/status/2078754106030649740#m",
@@ -666,19 +757,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The odds of the Clarity Act passing into law this year jumps to 45% on Polymarket \ud83d\udc40 Pass it \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2077856719917535732#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-16T20:43:41+00:00",
-      "publishedTs": 1784234621.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Reminder: We currently expect distributions on Digital Credit to receive tax-deferred Return of Capital (ROC) treatment for U.S. federal income tax purposes. Review your broker\u2019s tax reporting and consult your tax advisor. $STRC https://www.strategy.com/investor-relations/dividen",
       "link": "https://x.com/Strategy/status/2077832265216803271#m",
       "source": "@saylor",
@@ -1186,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Last call.",
-      "link": "https://x.com/saylor/status/2077052307460518391#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Last call. Strategy (@Strategy) Today is the last trading day to purchase $STRC and be entitled to the twice-monthly dividend payable July 31. The record date is tomorrow, July 15, and the dividend is $0.50 per share. \u2014 https://nitter.net/Strategy/status/2077021904032920006#m",
-      "publishedAt": "2026-07-14T15:27:14+00:00",
-      "publishedTs": 1784042834.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
       "link": "https://x.com/MaelstromFund/status/2077048928378470901#m",
       "source": "@CryptoHayes",
@@ -1212,19 +1277,6 @@
       "isRetweet": true
     },
     {
-      "title": "\"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 https://go.cobault.net/BTCmag_1",
-      "link": "https://x.com/BitcoinMagazine/status/2077040013427056765#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "\"Not your keys, not your coins\" is the first rule of Bitcoin. \u270a So Cobault made yield that lets you keep both. Join the waitlist \ud83d\udc49 go.cobault.net/BTCmag_1",
-      "publishedAt": "2026-07-14T14:38:23+00:00",
-      "publishedTs": 1784039903.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "More Americans over 55 years old hold crypto than under 25, a new NCA research report finds.",
       "link": "https://x.com/DocumentingBTC/status/2077032578704462205#m",
       "source": "@DocumentingBTC",
@@ -1233,32 +1285,6 @@
       "summary": "",
       "publishedAt": "2026-07-14T14:08:50+00:00",
       "publishedTs": 1784038130.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Senator Cynthia Lummis says the long awaited Clarity Act helping protect bitcoin users will be introduced \u201cin the next few days\u201d to Congress",
-      "link": "https://x.com/DocumentingBTC/status/2077022362667495855#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Senator Cynthia Lummis says the long awaited Clarity Act helping protect bitcoin users will be introduced \u201cin the next few days\u201d to Congress Video",
-      "publishedAt": "2026-07-14T13:28:15+00:00",
-      "publishedTs": 1784035695.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 9 years ago, Binance was founded by Changpeng Zhao. Today, it\u2019s the largest bitcoin exchange in the world by volume.",
-      "link": "https://x.com/DocumentingBTC/status/2077012190779838489#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "On this day in history, 9 years ago, Binance was founded by Changpeng Zhao. Today, it\u2019s the largest bitcoin exchange in the world by volume. Video",
-      "publishedAt": "2026-07-14T12:47:49+00:00",
-      "publishedTs": 1784033269.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1415,19 +1441,6 @@
       "summary": "Bitcoiners are so autistic that we will run the numbers to chart your crashout. LayerTwo Labs (@LayerTwoLabs) Thread: @Lukedashjr Liarposting By The Numbers Account-wide since July 2012: - 159,875 total posts - 0.95% (1526) of all posts contain \u201cliar\u201d - first \u201cliar\u201d tweet: Februa",
       "publishedAt": "2026-07-09T11:53:37+00:00",
       "publishedTs": 1783598017.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "1 month until all BIP-110 nodes get forked off the Bitcoin network; bookmark https://bip110.com/ to follow along the exciting countdown!",
-      "link": "https://x.com/lopp/status/2074823493380636977#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "1 month until all BIP-110 nodes get forked off the Bitcoin network; bookmark bip110.com/ to follow along the exciting countdown!",
-      "publishedAt": "2026-07-08T11:50:43+00:00",
-      "publishedTs": 1783511443.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
