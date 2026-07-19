@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-19T07:17:24Z",
+  "fetchedAt": "2026-07-19T11:40:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Many Bitcoiners I respect support BIP 110. I understand and share their desire to protect Bitcoin, but believe the proposed cure is more dangerous than the condition. Here are 110 reasons why Bitcoin needs guardians of neutrality.",
+      "link": "https://x.com/saylor/status/2078754106030649740#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Many Bitcoiners I respect support BIP 110. I understand and share their desire to protect Bitcoin, but believe the proposed cure is more dangerous than the condition. Here are 110 reasons why Bitcoin needs guardians of neutrality. Michael Saylor (@saylor) Article 110 Reasons BIP ",
+      "publishedAt": "2026-07-19T08:09:34+00:00",
+      "publishedTs": 1784448574.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whale 0x66f8 continues to go long on $BTC, with the position now reaching 1,660 $BTC $107.36M). Liquidation price: $63,123 https://hypurrscan.io/address/0x66f889094739dbb7d20aa60f645acd88feba75a9#perps",
       "link": "https://x.com/lookonchain/status/2078693972994854997#m",
@@ -1236,19 +1249,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Today is the last trading day to purchase $STRC and be entitled to the twice-monthly dividend payable July 31. The record date is tomorrow, July 15, and the dividend is $0.50 per share.",
-      "link": "https://x.com/Strategy/status/2077021904032920006#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-14T13:26:25+00:00",
-      "publishedTs": 1784035585.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "On this day in history, 9 years ago, Binance was founded by Changpeng Zhao. Today, it\u2019s the largest bitcoin exchange in the world by volume.",
