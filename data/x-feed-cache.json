@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-19T22:36:59Z",
+  "fetchedAt": "2026-07-20T10:24:33Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Tonight, while you sleep, the world will agree approximately 36 more times about the Bitcoin blockchain. Nobody will mention the incredible achievement on the news in the morning.",
+      "link": "https://x.com/DocumentingBTC/status/2079024439123960122#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-20T02:03:47+00:00",
+      "publishedTs": 1784513027.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The volatility is Bitcoin\u2019s marketing ad campaign.",
+      "link": "https://x.com/DocumentingBTC/status/2079013933038411866#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-20T01:22:02+00:00",
+      "publishedTs": 1784510522.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "There's really nothing like the World Cup. Sad it's over. One of the best ever.",
+      "link": "https://x.com/nic_carter/status/2078989787675996646#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-19T23:46:05+00:00",
+      "publishedTs": 1784504765.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Nobody can say what Satoshi Nakamoto\u2019s million bitcoin fortune is doing. Not \u201csaved\u201d, because no one is saving them. Not \u201cspent\u201d, they have never moved. Not \u201clost\u201d, the key may exist. A thing we can observe perfectly and cannot name? \u201cDonated\u201d is as close as we can describe it.",
       "link": "https://x.com/DocumentingBTC/status/2078957100479213798#m",
@@ -848,19 +887,6 @@
       "isRetweet": false
     },
     {
-      "title": "July 16 Update: #Bitcoin ETFs: 1D NetFlow: +1,632 $BTC(+$105.1M)\ud83d\udfe2 7D NetFlow: -2,975 $BTC(-$191.59M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +23,567 $ETH(+$44.19M)\ud83d\udfe2 7D NetFlow: +28,875 $ETH(+$54.14M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2077776320055148746#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 16 Update: #Bitcoin ETFs: 1D NetFlow: +1,632 $BTC (+$105.1M)\ud83d\udfe2 7D NetFlow: -2,975 $BTC (-$191.59M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +23,567 $ETH (+$44.19M)\ud83d\udfe2 7D NetFlow: +28,875 $ETH (+$54.14M)\ud83d\udfe2 Lookonchain (@lookonchain) July 15 Update: #Bitcoin ETFs: 1D NetFlow: +2,648 $BTC (+$1",
-      "publishedAt": "2026-07-16T15:24:12+00:00",
-      "publishedTs": 1784215452.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: If you vote to ban self driving cars, you are voting for death, statistically. It\u2019s not really any more complicated than that. Nevertheless many politicians will embrace stochastic murder",
       "link": "https://x.com/nic_carter/status/2077765020360786176#m",
       "source": "@nic_carter",
@@ -1002,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: I\u2019m sure this time is different and their moratorium is thoughtful and grounded in a robust analysis of tradeoffs and second order effects",
-      "link": "https://x.com/nic_carter/status/2077440611758543093#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I\u2019m sure this time is different and their moratorium is thoughtful and grounded in a robust analysis of tradeoffs and second order effects",
-      "publishedAt": "2026-07-15T17:10:13+00:00",
-      "publishedTs": 1784135413.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "The Income Show | Ep. 10 ft. @TheOtherParker_ Our host @IIICapital chats with Parker White of @apyx_fi on portfolio construction, Bitcoin volatility, market narratives, $MSTR, digital credit, and tokenized assets.",
@@ -1160,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "This puts Michael Saylor\u2019s bitcoin sells in context",
-      "link": "https://x.com/DocumentingBTC/status/2077344338342711483#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-15T10:47:40+00:00",
-      "publishedTs": 1784112460.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "BIP 110: Bitcoin Iatrogenic Proposal.",
       "link": "https://x.com/saylor/status/2077297913382748160#m",
       "source": "@saylor",
@@ -1197,19 +1197,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto explained the most confusing, but beautifully simple mathematical idea that secures the entire Bitcoin mining system, \u201cThere\u2019s no such thing as being 1% towards solving a block. You don\u2019t make progress towards solving it.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2077197557726408723#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-15T01:04:24+00:00",
-      "publishedTs": 1784077464.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Our goal is clear: return $STRC to par.",
@@ -1714,110 +1701,6 @@
       "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
       "publishedAt": "2019-12-14T00:35:14+00:00",
       "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 https://youtu.be/BCPJ9vLC_Js",
-      "link": "https://x.com/BitcoinArchives/status/1205640157048844288#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 piped.video/BCPJ9vLC_Js",
-      "publishedAt": "2019-12-14T00:06:27+00:00",
-      "publishedTs": 1576281987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
-      "link": "https://x.com/BitcoinArchives/status/1145799646494756865#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "The Genesis of Asia's Mining Pools &amp; Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan , @christopherzhu0, @satofishi &amp; Chris Zhu @bitcoin2019conf #bitcoin2019 piped.video/-iXZi0x4S_8",
-      "publishedAt": "2019-07-01T21:01:38+00:00",
-      "publishedTs": 1562014898.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Addressing Privacy w/ Andrew Poelstra, @Isa, @LeoAW & @matt_odell @bitcoin2019conf #bitcoin2019 https://youtu.be/o9Vvj1lMaDM",
-      "link": "https://x.com/BitcoinArchives/status/1145546672329695232#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Addressing Privacy w/ Andrew Poelstra, @Isa , @LeoAW &amp; @matt_odell @bitcoin2019conf #bitcoin2019 piped.video/o9Vvj1lMaDM",
-      "publishedAt": "2019-07-01T04:16:24+00:00",
-      "publishedTs": 1561954584.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling to the Masses w/ @francispouliot_, @eric_lombrozo, @danheld & @AaronvanW @bitcoin2019conf #bitcoin2019 https://youtu.be/biBY6QEhK0A",
-      "link": "https://x.com/BitcoinArchives/status/1145090025845116929#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling to the Masses w/ @francispouliot_ , @eric_lombrozo , @danheld &amp; @AaronvanW @bitcoin2019conf #bitcoin2019 piped.video/biBY6QEhK0A",
-      "publishedAt": "2019-06-29T22:01:51+00:00",
-      "publishedTs": 1561845711.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: In Review: Protocol Improvement Outlooks w/ @TheBlueMatt, @JeremyRubin, @roasbeef & @moneyball @bitcoin2019conf #bitcoin2019 https://youtu.be/JhokT9Fg4FA",
-      "link": "https://x.com/BitcoinArchives/status/1145012258549960706#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "In Review: Protocol Improvement Outlooks w/ @TheBlueMatt , @JeremyRubin , @roasbeef &amp; @moneyball @bitcoin2019conf #bitcoin2019 piped.video/JhokT9Fg4FA",
-      "publishedAt": "2019-06-29T16:52:50+00:00",
-      "publishedTs": 1561827170.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Is Bitcoin Unstoppable? w/ @maxkeiser, @APompliano & @billbarhydt @bitcoin2019conf #bitcoin2019 https://youtu.be/7cB5891b60g",
-      "link": "https://x.com/BitcoinArchives/status/1145011696693653505#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Is Bitcoin Unstoppable? w/ @maxkeiser , @APompliano &amp; @billbarhydt @bitcoin2019conf #bitcoin2019 piped.video/7cB5891b60g",
-      "publishedAt": "2019-06-29T16:50:36+00:00",
-      "publishedTs": 1561827036.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Market Perspectives & Predictions w/ @TimDraper & @APompliano @bitcoin2019conf #bitcoin2019 https://youtu.be/o2RMlPeggmI",
-      "link": "https://x.com/BitcoinArchives/status/1145011107393953793#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Market Perspectives &amp; Predictions w/ @TimDraper &amp; @APompliano @bitcoin2019conf #bitcoin2019 piped.video/o2RMlPeggmI",
-      "publishedAt": "2019-06-29T16:48:15+00:00",
-      "publishedTs": 1561826895.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Welcome & Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 https://youtu.be/qIBEQ7mE9W8",
-      "link": "https://x.com/BitcoinArchives/status/1145010766317268993#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Welcome &amp; Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 piped.video/qIBEQ7mE9W8",
-      "publishedAt": "2019-06-29T16:46:54+00:00",
-      "publishedTs": 1561826814.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
