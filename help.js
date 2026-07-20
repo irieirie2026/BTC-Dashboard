@@ -313,7 +313,7 @@ const METRIC_HELP = {
   },
   "cross-market-meta": {
     title: "Feed status",
-    body: "● Live = cross-market API with all venues (incl. Korea/Japan when server is up). ● Live (exchanges) = server Exchanges API. ● Live (browser) = direct Binance/Coinbase/Kraken/Bitstamp/Gemini fetch from your browser — works without server.py. ○ Demo only = all sources failed; fixed offline sample. Poll every 5s.",
+    body: "● Live (browser) = direct fetch from your browser (Binance, Coinbase, Kraken, Bitstamp, Gemini, OKX, Bybit, Upbit, Bithumb, bitFlyer, perps, DEX) merged every poll — no server required. ● Live = cross-market API. ● Live (exchanges) = server bridge. WebSockets overlay Binance, Coinbase, Kraken, OKX, Bitstamp, Gemini, Bybit. Poll every 5s.",
   },
   "cross-market-refresh": {
     title: "Refresh",
@@ -381,7 +381,7 @@ const METRIC_HELP = {
   },
   "cross-market-price": {
     title: "USD Price",
-    body: "Last price converted to USD for apples-to-apples comparison. For USDT pairs this equals the raw last; for KRW/JPY/EUR pairs it divides by the live FX rate.",
+    body: "Last venue price in USD (2 decimal places). WebSocket venues (Binance, Coinbase, Kraken, OKX, etc.) update on every tick; others refresh every 3–5s. Z-scores and premiums can move when the Binance reference shifts even if this venue’s price is unchanged — check Premium % and Ref columns too.",
   },
   "cross-market-ref": {
     title: "Reference USD",
@@ -405,7 +405,7 @@ const METRIC_HELP = {
   },
   "cross-market-heatmap": {
     title: "Anomaly Heatmap",
-    body: "Grid of venues colored by |z₁ₘ|. Darker orange = stronger short-term anomaly. Hover a cell for the exact z-score. Quick visual scan for which geography or exchange is moving first.",
+    body: "Combined anomaly score per venue = max(z, premium spike, cross σ). z = max(|z₁ₘ|, |z₅ₘ|). premium spike = |Δpremium₆₀| ÷ threshold (default 1.5%). cross σ = |venue USD − VWAP| ÷ peer σ. Color: calm → warm → hot → extreme. Subtitle shows all three components. Sorted hottest first.",
   },
   "cross-market-alerts": {
     title: "Active Alerts",
@@ -413,7 +413,23 @@ const METRIC_HELP = {
   },
   "cross-market-propagation": {
     title: "Propagation",
-    body: "When ≥2 venues fire anomalies within 10–45 seconds, they form a cluster. The earliest event is the origin; followers show delay in seconds (origin → venue). Panel scrolls when many edges; spreadVelocity is median follower delay. SVG graph below visualizes origin → followers.",
+    body: "Tracks how anomalies spread across venues. When ≥2 exchanges fire shocks within 10–45 seconds, they form a cluster. The earliest event is the origin (t₀); every follower delay is measured from that moment. Use the section tooltips below for how each number is calculated.",
+  },
+  "cross-market-prop-meta": {
+    title: "Cluster status",
+    body: "Status line above the stats grid:<ul><li><strong>● Active cluster</strong> — A live cluster with propagation edges on the current tick.</li><li><strong>Last cluster · N ago</strong> — The last observed cluster is kept on screen until a new one appears; N = time since it was last live.</li><li><strong>Timeline · delays measured from origin</strong> — Shown when no cluster has been seen yet; all delays use t₀ as the reference.</li></ul>",
+  },
+  "cross-market-prop-stats": {
+    title: "Cluster stats",
+    body: "Summary metrics for the active (or last observed) cluster:<ul><li><strong>Origin</strong> — Venue or premium label of the earliest anomaly (defines t₀).</li><li><strong>Events</strong> — All anomaly events in the last 45s window: z-score shocks, premium spikes, and cross-divergence. Includes the origin; can exceed Followers if one venue fires multiple types.</li><li><strong>Followers</strong> — Venues that reacted ≥10s after origin. Equals the number of edges in the list and chart.</li><li><strong>Avg delay</strong> — Mean seconds from t₀ to each follower, rounded.</li><li><strong>Spread velocity</strong> — Median origin→follower delay (seconds). Lower = faster cross-venue catch-up.</li><li><strong>Delay range</strong> — Shortest and longest origin→follower delay (min–max seconds).</li></ul>",
+  },
+  "cross-market-prop-edges": {
+    title: "Arrival order",
+    body: "Followers sorted by when they reacted after the origin:<ul><li><strong>#rank</strong> — Arrival order; #1 = fastest follower after t₀.</li><li><strong>+Ns</strong> — Seconds after origin when that venue fired (cumulative from t₀, not hop time).</li><li><strong>(+Δs)</strong> — Catch-up step since the previous follower in this sorted list: delay[i] − delay[i−1].</li></ul>",
+  },
+  "cross-market-prop-chart": {
+    title: "Propagation timeline",
+    body: "Schematic vertical cascade (not geographic). ORIGIN · t₀ is first; followers are ordered by arrival time.<ul><li><strong>Gap +Ns</strong> — First segment only: seconds after origin (same as the first follower’s +Ns).</li><li><strong>Gap +Δs</strong> — Later segments: catch-up seconds since the prior follower in the timeline.</li><li><strong>Footer median / avg</strong> — Same values as Spread velocity and Avg delay in the stats grid.</li><li><strong>Connector color</strong> — Green ≤20s, orange ≤45s, blue slower. Hover a box or gap for full timing.</li></ul>",
   },
   "cross-market-news": {
     title: "News Attribution",
@@ -2146,7 +2162,7 @@ function bindHelpListeners() {
     if (!help) return;
 
     activeKey = key;
-    tooltip.innerHTML = `<p class="tooltip-title">${help.title}</p><p class="tooltip-body">${help.body}</p>`;
+    tooltip.innerHTML = `<p class="tooltip-title">${help.title}</p><div class="tooltip-body">${help.body}</div>`;
     positionTooltip(trigger);
     tooltip.hidden = false;
   }

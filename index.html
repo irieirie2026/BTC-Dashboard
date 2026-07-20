@@ -30,7 +30,8 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=119" />
+    <link rel="stylesheet" href="styles.css?v=122" />
+    <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
   </head>
   <body>
     <div class="app app--compact">
@@ -1065,6 +1066,22 @@
           </section>
         </div>
       </div>
+
+
+        <div class="menu-screen menu-screen--embed" data-l1="derivatives" data-l2="options" data-l3="strategy" hidden>
+          <section class="panel options-strategy-panel">
+            <div class="panel-header options-strategy-panel-header">
+              <h2>Strategy Builder</h2>
+              <span class="panel-meta">Deribit BTC · multi-leg P&amp;L · European options</span>
+            </div>
+            <div id="options-strategy-root" class="options-strategy-root"></div>
+            <p id="options-strategy-fallback" class="options-strategy-fallback" hidden>
+              Strategy builder failed to load. From the dashboard root run
+              <code>npm run install:strategy && npm run build:strategy</code>
+              then refresh.
+            </p>
+          </section>
+        </div>
 
       <div id="dashboard-etf" class="dashboard-view" hidden>
         <div class="menu-screen" data-l1="etf" data-l2="holdings" data-l3="summary">
@@ -4240,10 +4257,12 @@
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
     <script src="help.js?v=106"></script>
     <script src="home.js?v=5"></script>
-    <script src="dashboard.js?v=51"></script>
+    <script src="dashboard.js?v=53"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
+    <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
+    <script src="options-strategy.js?v=2"></script>
     <script src="stats.js?v=21"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>

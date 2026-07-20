@@ -13,30 +13,47 @@ const XMCharts = (() => {
     "1d": 86_400_000,
   };
 
-  const PREM_COLORS = {
-    kimchi: "#f59e0b",
+  const PREM_PALETTE = [
+    "#f59e0b", "#38bdf8", "#a78bfa", "#0ecb81", "#94a3b8", "#f472b6",
+    "#fb923c", "#c084fc", "#34d399", "#f87171", "#60a5fa", "#e879f9",
+    "#fbbf24", "#2dd4bf", "#818cf8", "#fb7185", "#4ade80", "#fcd34d",
+  ];
+
+  const PREM_COLOR_OVERRIDES = {
+    upbit: "#f59e0b",
+    bithumb: "#fb923c",
     coinbase: "#38bdf8",
-    jpy: "#a78bfa",
+    bitflyer: "#a78bfa",
     kraken: "#0ecb81",
     bitstamp: "#94a3b8",
     gemini: "#f472b6",
     okx: "#fb923c",
     bybit: "#c084fc",
+    htx: "#34d399",
+    crypto_com: "#60a5fa",
   };
 
-  const PREM_LABELS = {
-    kimchi: "Kimchi",
-    coinbase: "Coinbase",
-    jpy: "Japan",
-    kraken: "Kraken",
-    bitstamp: "Bitstamp",
-    gemini: "Gemini",
-    okx: "OKX",
-    bybit: "Bybit",
-  };
+  const Z_HEAT_COLS = 48;
+  const Z_ENGINE_MS = 2_000;
 
   let windowKey = "5m";
   let controlsBound = false;
+  let premiumsMeta = {};
+  let premYAxis = null;
+  let zHeatRaf = null;
+  let zHeatDirty = false;
+  let zScrollTimer = null;
+
+  function ensureZScrollClock() {
+    if (zScrollTimer) return;
+    zScrollTimer = setInterval(() => {
+      const screen = document.querySelector(
+        '#dashboard-misc .menu-screen[data-l2="cross-market"][data-l3="monitor"]',
+      );
+      if (!screen || screen.hidden) return;
+      renderZHeatmap();
+    }, 500);
+  }
 
   function loadWindowKey() {
     try {
@@ -134,14 +151,56 @@ const XMCharts = (() => {
     requestAnimationFrame(run);
   }
 
-  function downsamplePts(pts, maxPts = 280) {
-    if (!pts?.length || pts.length <= maxPts) return pts || [];
-    const out = [];
-    const step = (pts.length - 1) / (maxPts - 1);
-    for (let i = 0; i < maxPts; i++) {
-      out.push(pts[Math.min(pts.length - 1, Math.round(i * step))]);
+  function premiumColor(id) {
+    if (PREM_COLOR_OVERRIDES[id]) return PREM_COLOR_OVERRIDES[id];
+    let h = 0;
+    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return PREM_PALETTE[h % PREM_PALETTE.length];
+  }
+
+  function premiumLabel(id) {
+    return premiumsMeta[id]?.label || premiumsMeta[id]?.exchange || id.replace(/_/g, " ");
+  }
+
+  /** Time-bucket downsampling: past buckets stay stable as new ticks arrive on the right. */
+  function downsampleTimeBuckets(pts, axis, maxBuckets = 120) {
+    if (!pts?.length) return [];
+    const sorted = [...pts].sort((a, b) => a.t - b.t);
+    if (sorted.length <= maxBuckets) return sorted;
+    const bucketMs = axis.windowMs / maxBuckets;
+    const buckets = new Map();
+    for (const p of sorted) {
+      const bi = Math.floor((p.t - axis.tStart) / bucketMs);
+      if (bi < 0 || bi >= maxBuckets) continue;
+      const prev = buckets.get(bi);
+      if (!prev || p.t >= prev.t) buckets.set(bi, p);
     }
-    return out;
+    return [...buckets.entries()].sort((a, b) => a[0] - b[0]).map(([, p]) => p);
+  }
+
+  function resolvePremYBounds(vals) {
+    const rawMin = Math.min(0, ...vals);
+    const rawMax = Math.max(0, ...vals);
+    let span = rawMax - rawMin || 0.5;
+    let minV = rawMin - span * 0.12;
+    let maxV = rawMax + span * 0.12;
+
+    if (!premYAxis) {
+      premYAxis = { minV, maxV, lockedAt: Date.now() };
+      return premYAxis;
+    }
+
+    const needsExpand = minV < premYAxis.minV || maxV > premYAxis.maxV;
+    if (needsExpand) {
+      premYAxis.minV = Math.min(premYAxis.minV, minV);
+      premYAxis.maxV = Math.max(premYAxis.maxV, maxV);
+      premYAxis.lockedAt = Date.now();
+    } else if (Date.now() - premYAxis.lockedAt > 20_000) {
+      premYAxis.minV = premYAxis.minV * 0.65 + minV * 0.35;
+      premYAxis.maxV = premYAxis.maxV * 0.65 + maxV * 0.35;
+      premYAxis.lockedAt = Date.now();
+    }
+    return premYAxis;
   }
 
   function syncWindowButtons() {
@@ -158,6 +217,7 @@ const XMCharts = (() => {
   function setWindow(key) {
     if (!WINDOWS[key]) return;
     windowKey = key;
+    premYAxis = null;
     try { localStorage.setItem("xm-chart-window", key); } catch { /* ignore */ }
     syncWindowButtons();
     renderPremiumTimeline();
@@ -167,6 +227,7 @@ const XMCharts = (() => {
   function bindWindowControls() {
     loadWindowKey();
     ensureChartShells();
+    ensureZScrollClock();
     syncWindowButtons();
     if (controlsBound) return;
     const bar = document.querySelector(".xm-chart-window-bar");
@@ -209,8 +270,22 @@ const XMCharts = (() => {
 
       const pad = { top: 10, right: 8, bottom: 18, left: 36 };
       const chartW = w - pad.left - pad.right;
+      if (chartW < 8) return;
+
+      ctx.font = "8px IBM Plex Sans, sans-serif";
+      const legendRows = (() => {
+        let lx = 0;
+        let rows = 1;
+        activeIds.forEach((id) => {
+          const itemW = 15 + ctx.measureText(premiumLabel(id)).width + 10;
+          if (lx + itemW > chartW) { rows += 1; lx = 0; }
+          lx += itemW;
+        });
+        return Math.max(1, rows);
+      })();
+      pad.top = 6 + legendRows * 12;
       const chartH = h - pad.top - pad.bottom;
-      if (chartW < 8 || chartH < 8) return;
+      if (chartH < 8) return;
 
       drawWindowGrid(ctx, axis, pad, chartW, chartH);
 
@@ -226,11 +301,7 @@ const XMCharts = (() => {
         series[id].filter((p) => p.t >= axis.tStart && p.t <= axis.tEnd),
       );
       const vals = inWindow.map((p) => p.v);
-      let minV = Math.min(...vals);
-      let maxV = Math.max(...vals);
-      const span = maxV - minV || 0.5;
-      minV -= span * 0.12;
-      maxV += span * 0.12;
+      const { minV, maxV } = resolvePremYBounds(vals);
       const ySpan = maxV - minV || 1;
 
       ctx.strokeStyle = "rgba(255,255,255,0.06)";
@@ -239,12 +310,26 @@ const XMCharts = (() => {
       ctx.lineTo(pad.left + chartW, pad.top + chartH / 2);
       ctx.stroke();
 
+      let lx = pad.left;
+      let ly = 4;
       activeIds.forEach((id) => {
-        const pts = downsamplePts(
+        const label = premiumLabel(id);
+        const itemW = 15 + ctx.measureText(label).width + 10;
+        if (lx + itemW > pad.left + chartW) { lx = pad.left; ly += 11; }
+        ctx.fillStyle = premiumColor(id);
+        ctx.fillRect(lx, ly, 6, 6);
+        ctx.fillStyle = "#9ca3af";
+        ctx.fillText(label, lx + 9, ly + 6);
+        lx += itemW;
+      });
+
+      activeIds.forEach((id) => {
+        const pts = downsampleTimeBuckets(
           series[id].filter((p) => p.t >= axis.tStart && p.t <= axis.tEnd),
+          axis,
         );
         if (!pts.length) return;
-        const color = PREM_COLORS[id] || "#e5e7eb";
+        const color = premiumColor(id);
         ctx.strokeStyle = color;
         ctx.lineWidth = 1.25;
         ctx.beginPath();
@@ -264,19 +349,45 @@ const XMCharts = (() => {
       ctx.fillText(`${minV.toFixed(2)}%`, pad.left - 3, pad.top + chartH);
 
       drawAxisLabels(ctx, axis, pad, chartW, h);
-
-      ctx.textAlign = "left";
-      let lx = pad.left;
-      ctx.font = "8px IBM Plex Sans, sans-serif";
-      activeIds.forEach((id) => {
-        const label = PREM_LABELS[id] || id;
-        ctx.fillStyle = PREM_COLORS[id] || "#e5e7eb";
-        ctx.fillRect(lx, pad.top + 2, 6, 6);
-        ctx.fillStyle = "#9ca3af";
-        ctx.fillText(label, lx + 9, pad.top + 8);
-        lx += ctx.measureText(label).width + 14;
-      });
     });
+  }
+
+  /**
+   * Wall-clock slots: columns map to fixed absolute time buckets on the epoch
+   * grid. Slot boundaries only advance when the window crosses a slot boundary,
+   * so past columns stay frozen (no creeping colEnd drift on 5m / 1h / 1d).
+   */
+  function sampleZHeatRow(series, axis, cols = Z_HEAT_COLS) {
+    const values = new Array(cols).fill(null);
+    const sorted = [...(series || [])].sort((a, b) => a.t - b.t);
+    if (!sorted.length) return values;
+
+    const slotMs = axis.windowMs / cols;
+    const endSlot = Math.floor(axis.tEnd / slotMs);
+    const firstSlot = endSlot - cols + 1;
+
+    for (let ci = 0; ci < cols; ci++) {
+      const slotStart = (firstSlot + ci) * slotMs;
+      const slotEnd = slotStart + slotMs;
+      if (slotEnd <= axis.tStart || slotStart >= axis.tEnd) continue;
+
+      let v = null;
+      for (const p of sorted) {
+        if (p.t < axis.tStart) continue;
+        if (p.t < slotEnd) v = p.v;
+        else break;
+      }
+      values[ci] = v;
+    }
+    return values;
+  }
+
+  function zHeatColor(z) {
+    const heat = Math.min(1, Math.abs(z) / 4);
+    const r = Math.round(245 * heat + 30 * (1 - heat));
+    const g = Math.round(158 * heat + 40 * (1 - heat));
+    const b = Math.round(11 * heat + 60 * (1 - heat));
+    return { fill: `rgba(${r},${g},${b},${0.2 + heat * 0.55})`, heat };
   }
 
   function drawAxisLabels(ctx, axis, pad, chartW, h) {
@@ -288,17 +399,17 @@ const XMCharts = (() => {
     ctx.fillText("now", pad.left + chartW, h - 4);
   }
 
-  function renderZHeatmap() {
+  function renderZHeatmapNow() {
     const canvas = document.getElementById("xm-chart-zmatrix");
     if (!canvas || !window.XMEngine?.zTimeMatrixTimed) return;
 
     const windowMs = getWindowMs();
-    const axis = fixedAxis(windowMs);
-    const matrix = XMEngine.zTimeMatrixTimed(windowMs);
-    const venues = Object.keys(matrix).sort();
-    const COLS = 48;
 
     xmScheduleDraw(canvas, (layoutW, layoutH) => {
+      const now = Date.now();
+      const axis = { tStart: now - windowMs, tEnd: now, windowMs };
+      const matrix = XMEngine.zTimeMatrixTimed(windowMs, now);
+      const venues = Object.keys(matrix).sort();
       const { w, h, dpr } = applyCanvasSize(canvas, layoutW, layoutH);
       const ctx = canvas.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -317,36 +428,23 @@ const XMCharts = (() => {
       }
 
       const rows = venues.length;
-      const cellW = chartW / COLS;
+      const cellW = chartW / Z_HEAT_COLS;
       const cellH = chartH / rows;
 
-      const slotTimes = Array.from({ length: COLS }, (_, ci) =>
-        axis.tStart + (ci / Math.max(COLS - 1, 1)) * axis.windowMs,
-      );
-
       venues.forEach((venue, ri) => {
-        const sorted = [...matrix[venue]].sort((a, b) => a.t - b.t);
-        const dataStart = sorted[0]?.t ?? axis.tEnd;
+        const buckets = sampleZHeatRow(matrix[venue], axis);
 
         ctx.fillStyle = "#9ca3af";
         ctx.font = "8px IBM Plex Mono, monospace";
         ctx.textAlign = "right";
         ctx.fillText(venue.slice(0, 9), pad.left - 4, pad.top + ri * cellH + cellH * 0.7);
 
-        slotTimes.forEach((t, ci) => {
-          const x = timeToX(t, axis, pad.left, chartW) - cellW * 0.5;
-          if (t < dataStart) return;
-
-          let z = valueAtTime(sorted, t);
+        buckets.forEach((z, ci) => {
           if (z == null) return;
-
-          const heat = Math.min(1, Math.abs(z) / 4);
-          const r = Math.round(245 * heat + 30 * (1 - heat));
-          const g = Math.round(158 * heat + 40 * (1 - heat));
-          const b = Math.round(11 * heat + 60 * (1 - heat));
-          ctx.fillStyle = `rgba(${r},${g},${b},${0.2 + heat * 0.55})`;
+          const { fill } = zHeatColor(z);
+          ctx.fillStyle = fill;
           ctx.fillRect(
-            x,
+            pad.left + ci * cellW + 0.5,
             pad.top + ri * cellH + 0.5,
             Math.max(2, cellW - 0.5),
             Math.max(2, cellH - 1),
@@ -358,52 +456,132 @@ const XMCharts = (() => {
     });
   }
 
+  function renderZHeatmap() {
+    zHeatDirty = true;
+    if (zHeatRaf) return;
+    const tick = () => {
+      zHeatRaf = null;
+      if (!zHeatDirty) return;
+      zHeatDirty = false;
+      renderZHeatmapNow();
+      if (zHeatDirty) zHeatRaf = requestAnimationFrame(tick);
+    };
+    zHeatRaf = requestAnimationFrame(tick);
+  }
+
+  const PROP_ORIGIN_H = 48;
+  const PROP_NODE_H = 32;
+  const PROP_GAP_H = 56;
+  const PROP_FOOTER_H = 52;
+
+  function propTruncateLabel(name, max = 15) {
+    const s = String(name || "");
+    return s.length > max ? `${s.slice(0, max - 1)}…` : s;
+  }
+
+  function propBuildTimeline(p) {
+    const sorted = [...p.edges].sort((a, b) => a.delaySec - b.delaySec || String(a.to).localeCompare(b.to));
+    const followers = [];
+    const seen = new Set();
+    sorted.forEach((e) => {
+      if (seen.has(e.to)) return;
+      seen.add(e.to);
+      const prev = followers[followers.length - 1];
+      const delayFromOrigin = e.delaySec;
+      const hopSec = prev == null ? delayFromOrigin : Math.max(0, delayFromOrigin - prev.delayFromOrigin);
+      followers.push({ name: e.to, delayFromOrigin, hopSec });
+    });
+    return { origin: p.origin, followers };
+  }
+
   function renderPropGraph(propagation) {
     const el = document.getElementById("xm-chart-prop");
     if (!el) return;
 
     const p = propagation;
-    if (!p?.edges?.length) {
-      el.innerHTML = "<p class=\"xm-muted\">Propagation graph appears when ≥2 venues cluster within 10–45s.</p>";
-      return;
+    if (!p?.edges?.length) return;
+
+    const { origin, followers } = propBuildTimeline(p);
+    const svgW = 300;
+    const cx = svgW / 2;
+    const boxW = 132;
+    const boxX = cx - boxW / 2;
+    const originY = 20;
+    const nodes = [{ name: origin, y: originY, h: PROP_ORIGIN_H, isOrigin: true, rank: 0 }];
+    let y = originY + PROP_ORIGIN_H;
+    followers.forEach((f, i) => {
+      y += PROP_GAP_H;
+      nodes.push({
+        name: f.name,
+        y,
+        h: PROP_NODE_H,
+        isOrigin: false,
+        rank: i + 1,
+        delayFromOrigin: f.delayFromOrigin,
+        hopSec: f.hopSec,
+      });
+      y += PROP_NODE_H;
+    });
+    const svgH = Math.max(360, y + PROP_FOOTER_H);
+
+    const segmentsSvg = [];
+    for (let i = 0; i < nodes.length - 1; i++) {
+      const upper = nodes[i];
+      const lower = nodes[i + 1];
+      const y1 = upper.y + upper.h;
+      const y2 = lower.y;
+      const midY = (y1 + y2) / 2;
+      const isFirstHop = i === 0;
+      const hopSec = lower.hopSec ?? lower.delayFromOrigin;
+      const label = isFirstHop ? `+${hopSec}s` : `+${hopSec}s Δ`;
+      const tip = isFirstHop
+        ? `${hopSec}s after origin (t₀ → ${lower.name})`
+        : `${lower.delayFromOrigin}s after origin · +${hopSec}s catch-up step`;
+      const stroke = hopSec <= 20 ? "#0ecb81" : hopSec <= 45 ? "#f59e0b" : "#38bdf8";
+      const pillW = isFirstHop ? 40 : 46;
+      segmentsSvg.push(`<g class="xm-prop-seg">
+        <title>${tip}</title>
+        <line x1="${cx}" y1="${y1}" x2="${cx}" y2="${y2}" stroke="${stroke}" stroke-width="2" stroke-dasharray="5 4" opacity="0.75"/>
+        <circle cx="${cx}" cy="${y1}" r="2.5" fill="${stroke}"/>
+        <circle cx="${cx}" cy="${y2}" r="2.5" fill="${stroke}"/>
+        <rect x="${cx - pillW / 2}" y="${midY - 10}" width="${pillW}" height="18" rx="5" fill="rgba(17,24,39,0.97)" stroke="rgba(255,255,255,0.12)"/>
+        <text x="${cx}" y="${midY + 4}" text-anchor="middle" fill="#f3f4f6" font-size="10" font-family="IBM Plex Mono, monospace">${label}</text>
+      </g>`);
     }
 
-    const nodes = new Set([p.origin]);
-    p.edges.forEach((e) => { nodes.add(e.from); nodes.add(e.to); });
-    const nodeList = [p.origin, ...[...nodes].filter((n) => n !== p.origin)];
-    const svgW = 280;
-    const svgH = Math.max(120, nodeList.length * 36 + 24);
-    const cx = svgW / 2;
-    const originY = 28;
-    const followerY = (i) => 56 + i * 32;
-
-    const edgesSvg = p.edges.map((e) => {
-      const toIdx = nodeList.indexOf(e.to);
-      const y2 = toIdx <= 0 ? originY + 20 : followerY(toIdx - 1);
-      const delay = e.delaySec;
-      const stroke = delay <= 45 ? "#0ecb81" : delay <= 90 ? "#f59e0b" : "#38bdf8";
-      return `<line x1="${cx}" y1="${originY + 10}" x2="${cx}" y2="${y2 - 6}" stroke="${stroke}" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.7"/>
-        <text x="${cx + 8}" y="${(originY + y2) / 2}" fill="#6b7280" font-size="9" font-family="IBM Plex Mono, monospace">${delay}s</text>`;
+    const nodesSvg = nodes.map((n) => {
+      const fill = n.isOrigin ? "rgba(245,158,11,0.22)" : "rgba(56,189,248,0.14)";
+      const stroke = n.isOrigin ? "#f59e0b" : "#38bdf8";
+      const label = propTruncateLabel(n.name);
+      const tip = n.isOrigin
+        ? `Origin · first anomaly in cluster (t₀)`
+        : `#${n.rank} follower · +${n.delayFromOrigin}s after origin`;
+      if (n.isOrigin) {
+        return `<g class="xm-prop-node xm-prop-node--origin">
+          <title>${tip}</title>
+          <rect x="${boxX}" y="${n.y}" width="${boxW}" height="${n.h}" rx="8" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
+          <text x="${cx}" y="${n.y + 16}" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="IBM Plex Sans, sans-serif" letter-spacing="0.08em">ORIGIN · t₀</text>
+          <text x="${cx}" y="${n.y + 34}" text-anchor="middle" fill="#f9fafb" font-size="11" font-family="IBM Plex Sans, sans-serif">${label}</text>
+        </g>`;
+      }
+      return `<g class="xm-prop-node">
+        <title>${tip}</title>
+        <rect x="${boxX}" y="${n.y}" width="${boxW}" height="${n.h}" rx="7" fill="${fill}" stroke="${stroke}" stroke-width="1.25"/>
+        <text x="${cx}" y="${n.y + 20}" text-anchor="middle" fill="#e5e7eb" font-size="10" font-family="IBM Plex Sans, sans-serif">#${n.rank} · ${label}</text>
+      </g>`;
     }).join("");
 
-    const nodesSvg = nodeList.map((n, i) => {
-      const y = i === 0 ? originY : followerY(i - 1);
-      const isOrigin = i === 0;
-      const fill = isOrigin ? "rgba(245,158,11,0.25)" : "rgba(56,189,248,0.15)";
-      const stroke = isOrigin ? "#f59e0b" : "#38bdf8";
-      return `<rect x="${cx - 52}" y="${y - 12}" width="104" height="22" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="1"/>
-        <text x="${cx}" y="${y + 3}" text-anchor="middle" fill="#e5e7eb" font-size="10" font-family="IBM Plex Sans, sans-serif">${n}</text>`;
-    }).join("");
+    const legendY = svgH - 34;
+    const legend = `<text x="${cx}" y="${legendY}" text-anchor="middle" fill="#9ca3af" font-size="8.5" font-family="IBM Plex Sans, sans-serif">Timeline ↓ · delays shown only between boxes · first gap = after origin · Δ = since prior venue</text>
+      <text x="${cx}" y="${legendY + 14}" text-anchor="middle" fill="#6b7280" font-size="8" font-family="IBM Plex Mono, monospace">median ${p.spreadVelocity ?? "—"}s · avg ${p.avgDelaySec ?? "—"}s · hover for details</text>`;
 
-    const vel = p.spreadVelocity != null
-      ? `<text x="${cx}" y="${svgH - 6}" text-anchor="middle" fill="#9ca3af" font-size="9" font-family="IBM Plex Mono, monospace">spreadVelocity median ${p.spreadVelocity}s · avg ${p.avgDelaySec}s</text>`
-      : "";
-
-    el.innerHTML = `<svg class="xm-prop-svg" viewBox="0 0 ${svgW} ${svgH}" width="100%" height="${svgH}" aria-label="Propagation graph">${edgesSvg}${nodesSvg}${vel}</svg>`;
+    el.innerHTML = `<svg class="xm-prop-svg" viewBox="0 0 ${svgW} ${svgH}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-label="Propagation timeline (origin at top, followers by arrival time)">${segmentsSvg.join("")}${nodesSvg}${legend}</svg>`;
   }
 
   function renderAll(data, propagation) {
+    premiumsMeta = data?.premiums || {};
     ensureChartShells();
+    ensureZScrollClock();
     renderPremiumTimeline();
     renderZHeatmap();
     renderPropGraph(propagation);
@@ -411,7 +589,9 @@ const XMCharts = (() => {
 
   function bindResize() {
     window.addEventListener("resize", () => {
-      const screen = document.querySelector('#dashboard-misc .menu-screen[data-l2="cross-market"]');
+      const screen = document.querySelector(
+        '#dashboard-misc .menu-screen[data-l2="cross-market"][data-l3="monitor"]',
+      );
       if (!screen || screen.hidden) return;
       renderPremiumTimeline();
       renderZHeatmap();

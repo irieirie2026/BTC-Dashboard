@@ -48,6 +48,7 @@ from server import (
     get_news_payload,
     get_onchain_chart_payload,
     get_options_payload,
+    get_options_chain_payload,
     get_stats_btc_history_payload,
     get_tradfi_payload,
     get_treasury_payload,
@@ -445,6 +446,9 @@ def dispatch_api(path, query, body: dict | None = None):
 
     if path == "/api/options":
         return get_options_payload(refresh=_query_refresh(query))
+
+    if path == "/api/options/chain":
+        return get_options_chain_payload(refresh=_query_refresh(query))
 
     raise ValueError(f"Unknown API route: {path}")
 

@@ -1,0 +1,10 @@
+{
+  "name": "btc-dashboard",
+  "private": true,
+  "description": "BTC Dashboard — single app (static UI + Strategy Builder embed)",
+  "scripts": {
+    "install:strategy": "npm --prefix strategy-builder install",
+    "build:strategy": "npm --prefix strategy-builder run build",
+    "dev:strategy": "npm --prefix strategy-builder run dev"
+  }
+}

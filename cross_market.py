@@ -233,24 +233,13 @@ def _compute_premiums(venues: list[dict], fx: dict[str, float]) -> dict:
         pct = (local - ref_px) / ref_px * 100
         return {"label": label, "pct": round(pct, 3), "localUsd": round(local, 2), "refUsd": round(ref_px, 2)}
 
-    upbit = usd_prices.get("Upbit")
-    bithumb = usd_prices.get("Bithumb")
-    kr_local = upbit or bithumb
-    if kr_local and ref:
-        premiums["kimchi"] = prem("Kimchi (KRW)", kr_local, ref)
-
-    cb = usd_prices.get("Coinbase")
-    if cb and ref:
-        premiums["coinbase"] = prem("Coinbase USD", cb, ref)
-
-    jpy_v = usd_prices.get("bitFlyer")
-    if jpy_v and ref:
-        premiums["jpy"] = prem("Japan (JPY)", jpy_v, ref)
-
-    for ex in ("Kraken", "Bitstamp", "Gemini"):
-        px = usd_prices.get(ex)
-        if px and ref:
-            premiums[ex.lower()] = prem(f"{ex} USD", px, ref)
+    for ex, px in sorted(usd_prices.items()):
+        if ex == "Binance" or not ref:
+            continue
+        slug = re.sub(r"[^a-z0-9]+", "_", ex.lower()).strip("_")
+        entry = prem(ex, px, ref)
+        if entry:
+            premiums[slug] = {**entry, "exchange": ex}
 
     return {"referenceUsd": ref, "premiums": premiums}
 

@@ -317,6 +317,12 @@ const MENU_TREE = {
             accentDim: "rgba(250, 204, 21, 0.18)",
             onShow: () => window.refreshOptionsOiCharts?.(),
           },
+          strategy: {
+            label: "Strategy Builder",
+            accent: "#f59e0b",
+            accentDim: "rgba(245, 158, 11, 0.18)",
+            onShow: () => window.initOptionsStrategyBuilder?.(),
+          },
         },
       },
     },
@@ -1181,7 +1187,7 @@ const LEGACY_L3 = {
 
   "derivatives/perp": { st1: "price", price: "price", sentiment: "sentiment", indicators: "indicators" },
   "derivatives/futures": { contracts: "contracts" },
-  "derivatives/options": { st1: "volatility", volatility: "volatility", oi: "oi" },
+  "derivatives/options": { st1: "volatility", volatility: "volatility", oi: "oi", strategy: "strategy", builder: "strategy", strat: "strategy" },
   "etf/holdings": { st1: "summary", summary: "summary", chart: "chart", table: "table" },
   "etf/flows": { table: "table" },
   "treasury/summary": { st1: "stats", stats: "stats", dominance: "dominance" },

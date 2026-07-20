@@ -26,6 +26,7 @@ const XMEngine = (() => {
     historyMax: 20_000,
     historyMaxAgeMs: 86_400_000,
     zTimeBuckets: 24,
+    zBucketMs: 2_000,
   };
 
   const state = {
@@ -102,18 +103,49 @@ const XMEngine = (() => {
     return out;
   }
 
-  function recordZBucket(exchange, z1, ts) {
-    if (!exchange) return;
-    if (!state.zTimeMatrix.has(exchange)) state.zTimeMatrix.set(exchange, []);
-    const row = state.zTimeMatrix.get(exchange);
-    row.push({ t: ts, v: Math.abs(z1 || 0) });
-    pruneByAge(row, state.settings.historyMaxAgeMs);
+  function pruneZRow(row, maxAgeMs, now = Date.now()) {
+    const cutoff = now - maxAgeMs;
+    for (const t of row.keys()) {
+      if (t < cutoff) row.delete(t);
+    }
   }
 
-  function detectVenueAnomalies(venue, priceUsd, ts) {
+  function recordZBucket(exchange, z1, ts) {
+    if (!exchange) return;
+    if (!state.zTimeMatrix.has(exchange)) state.zTimeMatrix.set(exchange, new Map());
+    const row = state.zTimeMatrix.get(exchange);
+    const bucketMs = state.settings.zBucketMs || 2_000;
+    const bucketT = Math.floor(ts / bucketMs) * bucketMs;
+    const val = Math.abs(z1 || 0);
+
+    let maxT = 0;
+    for (const t of row.keys()) {
+      if (t > maxT) maxT = t;
+    }
+    if (bucketT < maxT) return;
+
+    row.set(bucketT, { t: bucketT, v: val });
+    pruneZRow(row, state.settings.historyMaxAgeMs, ts);
+  }
+
+  function detectVenueAnomalies(venue, priceUsd, ts, changedVenue) {
     const key = venue.exchange || venue;
-    pushHistory(state.venueHistory, key, { t: ts, v: priceUsd });
     const buf = state.venueHistory.get(key) || [];
+    const last = buf[buf.length - 1];
+    const eps = Math.max(0.05, priceUsd * 1e-7);
+    const venueChanged = !changedVenue || changedVenue === key;
+    const priceChanged = !last || Math.abs(last.v - priceUsd) > eps;
+
+    if (!venueChanged || !priceChanged) {
+      return {
+        key,
+        z1: venue.z1m ?? 0,
+        z5: venue.z5m ?? 0,
+        anomalies: [],
+      };
+    }
+
+    pushHistory(state.venueHistory, key, { t: ts, v: priceUsd });
     const r1 = returns(buf, 1);
     const r5 = returns(buf, 5);
     const z1 = r1.length ? zScore(r1[r1.length - 1], r1.slice(-30)) : 0;
@@ -163,7 +195,11 @@ const XMEngine = (() => {
 
       if (hitMove || hitP95) {
         out.push({
-          type: id === "kimchi" ? "kimchi_premium" : id === "coinbase" ? "coinbase_premium" : "premium_spike",
+          type: id === "upbit" || id === "bithumb"
+            ? "kimchi_premium"
+            : id === "coinbase"
+              ? "coinbase_premium"
+              : "premium_spike",
           premiumId: id,
           label: p.label,
           pct: p.pct,
@@ -173,6 +209,47 @@ const XMEngine = (() => {
       }
     });
     return out;
+  }
+
+  function venuePremiumId(exchange) {
+    return String(exchange || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_|_$/g, "");
+  }
+
+  function premiumDelta60(premiumId, ts) {
+    const buf = state.premiumHistory.get(premiumId) || [];
+    if (buf.length < 2) return 0;
+    const past = valueAtOrBefore(buf, ts - 60_000);
+    const now = buf[buf.length - 1].v;
+    return past != null ? now - past : 0;
+  }
+
+  function attachAnomalyScores(venues, snap, ts) {
+    const vwap = snap.vwapUsd || snap.referenceUsd;
+    const usd = venues.map((v) => v.priceUsd).filter((x) => x > 0);
+    const σ = stddev(usd);
+    const { premMoveThreshold } = state.settings;
+
+    venues.forEach((v) => {
+      if (!v?.priceUsd) {
+        v.devSigma = 0;
+        v.premDelta60 = 0;
+        v.anomalyScore = 0;
+        return;
+      }
+      const zCombined = Math.max(Math.abs(v.z1m || 0), Math.abs(v.z5m || 0));
+      const devSigma = σ > 0 ? (v.priceUsd - vwap) / σ : 0;
+      v.devSigma = Math.round(devSigma * 100) / 100;
+
+      const premId = venuePremiumId(v.exchange);
+      const delta60 = premiumDelta60(premId, ts);
+      v.premDelta60 = Math.round(delta60 * 100) / 100;
+      const premSpike = Math.abs(delta60) / (premMoveThreshold || 1.5);
+
+      v.anomalyScore = Math.round(Math.max(zCombined, premSpike, Math.abs(devSigma)) * 100) / 100;
+    });
   }
 
   function detectCrossDeviation(venues, vwapUsd) {
@@ -201,11 +278,10 @@ const XMEngine = (() => {
     while (state.events.length > 500) state.events.shift();
   }
 
-  function clusterPropagation(newEvents) {
-    if (!newEvents.length) return null;
+  function clusterPropagation() {
     const now = Date.now();
     const windowMs = state.settings.clusterMaxSec * 1000;
-    const recent = state.events.filter((e) => now - e.ts <= windowMs).concat(newEvents);
+    const recent = state.events.filter((e) => now - e.ts <= windowMs);
     if (recent.length < 2) return null;
     recent.sort((a, b) => a.ts - b.ts);
     const origin = recent[0];
@@ -220,6 +296,7 @@ const XMEngine = (() => {
         });
       }
     });
+    if (!edges.length) return null;
     const delays = edges.map((e) => e.delaySec).filter((d) => d > 0);
     const avgDelay = delays.length ? delays.reduce((a, b) => a + b, 0) / delays.length : 0;
     const spreadVelocity = delays.length ? Math.round(median(delays)) : 0;
@@ -244,17 +321,18 @@ const XMEngine = (() => {
     while (state.alerts.length > 80) state.alerts.pop();
   }
 
-  function ingestSnapshot(snap) {
+  function ingestSnapshot(snap, opts = {}) {
     const ts = Date.now();
     const venues = snap.venues || [];
     const ref = snap.referenceUsd;
     const vwap = snap.vwapUsd || ref;
+    const changedVenue = opts.changedVenue || null;
     const newEvents = [];
     const newAlerts = [];
 
     venues.forEach((v) => {
       if (!v.priceUsd) return;
-      const { key, z1, z5, anomalies } = detectVenueAnomalies(v, v.priceUsd, ts);
+      const { key, z1, z5, anomalies } = detectVenueAnomalies(v, v.priceUsd, ts, changedVenue);
       v.z1m = Math.round(z1 * 100) / 100;
       v.z5m = Math.round(z5 * 100) / 100;
       anomalies.forEach((a) => {
@@ -307,7 +385,9 @@ const XMEngine = (() => {
       }
     });
 
-    const propagation = clusterPropagation(newEvents);
+    attachAnomalyScores(venues, snap, ts);
+
+    const propagation = clusterPropagation();
     return {
       venues,
       propagation,
@@ -323,7 +403,9 @@ const XMEngine = (() => {
     return buf.slice(-n).map((p) => p.v);
   }
 
-  const PREMIUM_SERIES = ["kimchi", "coinbase", "jpy", "kraken", "bitstamp", "gemini", "okx", "bybit"];
+  function premiumSeriesIds() {
+    return [...state.premiumHistory.keys()].sort();
+  }
 
   function filterWindow(buf, windowMs) {
     if (!windowMs || windowMs <= 0) return buf;
@@ -338,34 +420,39 @@ const XMEngine = (() => {
   }
 
   function premiumTimeline(ids, windowMs) {
-    const want = ids || PREMIUM_SERIES;
+    const want = ids || premiumSeriesIds();
     const out = {};
     want.forEach((id) => {
       const buf = filterWindow(state.premiumHistory.get(id) || [], windowMs);
-      out[id] = buf.map((p) => ({ t: p.t, v: p.v }));
+      if (buf.length) out[id] = buf.map((p) => ({ t: p.t, v: p.v }));
     });
     return out;
   }
 
-  function zTimeMatrix(windowMs) {
+  function zRowInWindow(row, windowMs, now = Date.now()) {
+    const cutoff = now - windowMs;
+    const out = [];
+    for (const p of row.values()) {
+      if (p.t >= cutoff) out.push(p);
+    }
+    out.sort((a, b) => a.t - b.t);
+    return out;
+  }
+
+  function zTimeMatrix(windowMs, now = Date.now()) {
     const out = {};
     state.zTimeMatrix.forEach((row, ex) => {
-      const filtered = filterWindow(row, windowMs);
+      const filtered = zRowInWindow(row, windowMs, now);
       if (filtered.length) out[ex] = zRowValues(filtered);
     });
     return out;
   }
 
-  function zTimeMatrixTimed(windowMs) {
+  function zTimeMatrixTimed(windowMs, now = Date.now()) {
     const out = {};
     state.zTimeMatrix.forEach((row, ex) => {
-      const filtered = filterWindow(row, windowMs);
-      if (filtered.length) {
-        out[ex] = filtered.map((p) => ({
-          t: typeof p === "object" ? p.t : 0,
-          v: typeof p === "object" ? p.v : p,
-        }));
-      }
+      const filtered = zRowInWindow(row, windowMs, now);
+      if (filtered.length) out[ex] = filtered.map((p) => ({ t: p.t, v: p.v }));
     });
     return out;
   }
@@ -382,6 +469,7 @@ const XMEngine = (() => {
     ingestSnapshot,
     premiumSparkline,
     premiumTimeline,
+    premiumSeriesIds,
     zTimeMatrix,
     zTimeMatrixTimed,
     setSettings,

@@ -689,6 +689,7 @@ def _fetch_options_payload(_html=""):
     }
 
 
+
 def get_options_payload(*, refresh=False):
     cached = _cget("options", CACHE_TTL, refresh=refresh)
     if cached is not None:
@@ -696,6 +697,144 @@ def get_options_payload(*, refresh=False):
     data = _fetch_options_payload()
     _cset("options", data, CACHE_TTL)
     return data
+
+
+_MONTHS = {
+    "JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
+    "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12,
+}
+
+
+def _parse_deribit_option_name(name: str):
+    """BTC-27JUN25-100000-C → (expiry_ms, strike, call|put) or None."""
+    parts = (name or "").split("-")
+    if len(parts) < 4:
+        return None
+    type_char = parts[-1].upper()
+    if type_char not in ("C", "P"):
+        return None
+    try:
+        strike = float(parts[-2])
+    except ValueError:
+        return None
+    date_token = parts[1].upper()  # 27JUN25
+    if len(date_token) < 7:
+        return None
+    try:
+        day = int(date_token[:2])
+        mon = _MONTHS.get(date_token[2:5])
+        year = int(date_token[5:])
+        if mon is None:
+            return None
+        if year < 100:
+            year += 2000
+        dt = datetime(year, mon, day, 8, 0, 0, tzinfo=timezone.utc)
+        return int(dt.timestamp() * 1000), strike, ("call" if type_char == "C" else "put")
+    except Exception:
+        return None
+
+
+def _quote_from_summary(row: dict) -> dict:
+    iv = row.get("mark_iv") or 0
+    try:
+        iv = float(iv)
+    except (TypeError, ValueError):
+        iv = 0.0
+    # Deribit mark_iv is percent
+    iv_dec = iv / 100.0 if iv > 3 else iv
+    return {
+        "instrumentName": row.get("instrument_name") or "",
+        "bid": row.get("bid_price"),
+        "ask": row.get("ask_price"),
+        "mark": float(row.get("mark_price") or 0),
+        "iv": iv_dec,
+        "openInterest": float(row.get("open_interest") or 0),
+        "volume": float(row.get("volume") or 0),
+    }
+
+
+def get_options_chain_payload(*, refresh=False):
+    """
+    Options chain shaped for the BTC OptionStrat React island:
+    { indexPrice, fetchedAt, expirations[], quotesByInstrument }
+    """
+    cache_key = "options-chain-v1"
+    ttl = 25  # seconds — live-ish for strategy UI
+    cached = _cget(cache_key, ttl, refresh=refresh)
+    if cached is not None:
+        return cached
+
+    summary = _fetch_json_url(
+        f"{DERIBIT_API}/get_book_summary_by_currency?currency=BTC&kind=option"
+    )
+    index = _fetch_json_url(
+        f"{DERIBIT_API}/get_index_price?index_name=btc_usd"
+    )
+    rows = summary.get("result") or []
+    index_price = float((index.get("result") or {}).get("index_price") or 0)
+    if not index_price:
+        for r in rows:
+            up = r.get("underlying_price")
+            if up:
+                index_price = float(up)
+                break
+
+    now_ms = int(time.time() * 1000)
+    by_expiry = {}
+    quotes_by_instrument = {}
+
+    for row in rows:
+        name = row.get("instrument_name") or ""
+        parsed = _parse_deribit_option_name(name)
+        if not parsed:
+            continue
+        exp_ms, strike, opt_type = parsed
+        if exp_ms < now_ms - 60_000:
+            continue
+        quote = _quote_from_summary(row)
+        if not by_expiry.get(exp_ms):
+            by_expiry[exp_ms] = {}
+        if strike not in by_expiry[exp_ms]:
+            by_expiry[exp_ms][strike] = {"call": None, "put": None}
+        by_expiry[exp_ms][strike][opt_type] = quote
+        quotes_by_instrument[name] = {
+            **quote,
+            "type": opt_type,
+            "strike": strike,
+            "expirationTimestamp": exp_ms,
+        }
+
+    expirations = []
+    for exp_ms in sorted(by_expiry.keys()):
+        strikes_map = by_expiry[exp_ms]
+        strikes = []
+        for strike in sorted(strikes_map.keys()):
+            sides = strikes_map[strike]
+            strikes.append({
+                "strike": strike,
+                "call": sides.get("call"),
+                "put": sides.get("put"),
+            })
+        if len(strikes) < 3:
+            continue
+        dte = max(0, (exp_ms - now_ms) / 86_400_000)
+        day = datetime.fromtimestamp(exp_ms / 1000, tz=timezone.utc)
+        expirations.append({
+            "expirationDate": day.strftime("%Y-%m-%d"),
+            "expirationTimestamp": exp_ms,
+            "daysToExpiration": dte,
+            "strikes": strikes,
+        })
+
+    data = {
+        "indexPrice": index_price,
+        "fetchedAt": now_ms,
+        "expirations": expirations,
+        "quotesByInstrument": quotes_by_instrument,
+    }
+    _cset(cache_key, data, ttl)
+    return data
+
 
 
 ONCHAIN_CHART_NAMES = frozenset({
