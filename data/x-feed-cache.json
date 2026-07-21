@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-07-20T20:55:28Z",
+  "fetchedAt": "2026-07-21T00:15:21Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Somewhere a family will hold a Bitcoin wallet for a thousand years, passed down generations, and the story of not losing it will become their religion.",
+      "link": "https://x.com/DocumentingBTC/status/2079340598159376453#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-20T23:00:05+00:00",
+      "publishedTs": 1784588405.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A settlement on the Moon or Mars could not pay every transaction by requesting instantaneous permission from a bank on Earth. Commerce in space will require locally held keys, verifiable rules, and systems capable of continuing through long periods of delay\u2026like Bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2079339814617219372#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-20T22:56:58+00:00",
+      "publishedTs": 1784588218.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Circle CEO talks GENIUS ACT and CLARITY ACT on CNBC \"Once the GENIUS ACT goes into effect in January, every major institution, every major bank, every capital markets firm, payments companies, enterprises, can all now build on this infrastructure\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2079321978419183707#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Circle CEO talks GENIUS ACT and CLARITY ACT on CNBC \"Once the GENIUS ACT goes into effect in January, every major institution, every major bank, every capital markets firm, payments companies, enterprises, can all now build on this infrastructure\" \ud83d\ude80 Video",
+      "publishedAt": "2026-07-20T21:46:06+00:00",
+      "publishedTs": 1784583966.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Jordi Visser has his eyes on Bitcoin and Ethereum\u2026",
+      "link": "https://x.com/APompliano/status/2079316511907610953#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Jordi Visser has his eyes on Bitcoin and Ethereum\u2026 Video",
+      "publishedAt": "2026-07-20T21:24:22+00:00",
+      "publishedTs": 1784582662.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bloomberg's Joel Weber puts Scarlet Fu, Katie Greifeld, and Eric Balchunas to the test on \"Bloomberg ETF IQ\" in this week's edition of \"IQ Test\" https://bloom.bg/4yybdwf",
+      "link": "https://x.com/BloombergTV/status/2079307217682026739#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Bloomberg's Joel Weber puts Scarlet Fu, Katie Greifeld, and Eric Balchunas to the test on \"Bloomberg ETF IQ\" in this week's edition of \"IQ Test\" bloom.bg/4yybdwf Video",
+      "publishedAt": "2026-07-20T20:47:27+00:00",
+      "publishedTs": 1784580447.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Credit risk of $STRC and our other Digital Credit instruments is transparent and quantifiable, given our homogeneous asset base. Investors can evaluate the risk using their own assumptions for $BTC returns and volatility.",
+      "link": "https://x.com/Strategy/status/2079306900965855731#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-20T20:46:11+00:00",
+      "publishedTs": 1784580371.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "why did angelist deprecate the ability to fund deals with crypto?",
       "link": "https://x.com/nic_carter/status/2079304257233199514#m",
@@ -27,6 +105,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "NEW: @Grayscale files for a Worldcoin ETF ethereum:0x163f8c2467924be0ae7b5347228cabf260318753. LOOK INTO THE ORB",
+      "link": "https://x.com/JSeyff/status/2079301549231161430#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-07-20T20:24:55+00:00",
+      "publishedTs": 1784579095.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 ICE NYSE & OKX Joint Venture Co-Chair Andrew Cuomo talks CLARITY ACT on FOX \ud83d\udc40 \"The U.S. should pass the Clarity Act. The rest of the world is ahead of us.\"",
@@ -102,19 +193,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Vice Chair talks CLARITY ACT on CNBC \"The Democrats have obtained meaningful concessions to make what was already a strong consumer protection bill, THAT much stronger\" \ud83d\udc4f Video",
       "publishedAt": "2026-07-20T16:46:08+00:00",
       "publishedTs": 1784565968.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Artificial intelligence is being built by copying the work of millions of writers, artists, researchers, and creators who are never paid. Bitcoin could change that. Every answer could send a small bit of payment back to the people whose work contributed to the results.",
-      "link": "https://x.com/DocumentingBTC/status/2079242638457241922#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-20T16:30:50+00:00",
-      "publishedTs": 1784565050.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -232,19 +310,6 @@
       "summary": "JUST IN: \ud83c\uddf7\ud83c\uddfa Russia's State Duma to consider bill to regulate Bitcoin &amp; crypto tomorrow, TASS reports \ud83d\udc40 \"Tomorrow we'll be passing the law in its second and third readings. It's aimed at creating the legal conditions for cryptocurrencies to function in our country.\" \ud83d\ude80",
       "publishedAt": "2026-07-20T13:13:09+00:00",
       "publishedTs": 1784553189.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A lunar or Martian settlement could not pay every transaction by requesting instantaneous permission from a bank on Earth. Commerce in space will require locally held keys, verifiable rules, and systems capable of continuing through long periods of delay, such as Bitcoin.",
-      "link": "https://x.com/DocumentingBTC/status/2079185184600039869#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-20T12:42:32+00:00",
-      "publishedTs": 1784551352.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -562,6 +627,19 @@
       "isRetweet": false
     },
     {
+      "title": "40 DAYS UNTIL THE BIGGEST NAMES IN BITCOIN SPEAK IN ASIA \ud83d\ude80 This year we will make #Bitcoin history in Hong Kong \ud83c\udded\ud83c\uddf0",
+      "link": "https://x.com/Bitcoinconfasia/status/2078646056393359784#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-19T01:00:13+00:00",
+      "publishedTs": 1784422813.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "R to @nic_carter: I have revised this position back to the prior opinion in the last 30 minutes",
       "link": "https://x.com/nic_carter/status/2078610293098172490#m",
       "source": "@nic_carter",
@@ -809,19 +887,6 @@
       "isRetweet": false
     },
     {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Blockchain Association Board Chair tells FOX \"there have been a lot of negotiations with democrats\" and \"there has been a lot of bipartisan support\" \ud83d\udc40 \"Once we get this passed, we are going to see an unleashing of economic activity around the crypto space\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2078213527030952322#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "NEW: \ud83c\uddfa\ud83c\uddf8 Blockchain Association Board Chair tells FOX \"there have been a lot of negotiations with democrats\" and \"there has been a lot of bipartisan support\" \ud83d\udc40 \"Once we get this passed, we are going to see an unleashing of economic activity around the crypto space\" \ud83d\ude80 Video",
-      "publishedAt": "2026-07-17T20:21:30+00:00",
-      "publishedTs": 1784319690.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Do not, I repeat, do not give dolphins the ability to speak",
       "link": "https://x.com/nic_carter/status/2078204048277110803#m",
       "source": "@nic_carter",
@@ -830,19 +895,6 @@
       "summary": "Do not, I repeat, do not give dolphins the ability to speak Jay Anderson (@TheProjectUnity) What happens when we can understand the animals? Because I think that's coming... Video \u2014 https://nitter.net/TheProjectUnity/status/2077854423242440724#m",
       "publishedAt": "2026-07-17T19:43:50+00:00",
       "publishedTs": 1784317430.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: The Bitcoin Fear & Greed Index has moved up to \"Fear\", finally exiting \"Extreme Fear\" \ud83d\udc40 BULLISH \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2078197230624788717#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: The Bitcoin Fear &amp; Greed Index has moved up to \"Fear\", finally exiting \"Extreme Fear\" \ud83d\udc40 BULLISH \ud83d\ude80",
-      "publishedAt": "2026-07-17T19:16:45+00:00",
-      "publishedTs": 1784315805.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -869,19 +921,6 @@
       "summary": "",
       "publishedAt": "2026-07-17T15:55:49+00:00",
       "publishedTs": 1784303749.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "July 17 Update: #Bitcoin ETFs: 1D NetFlow: +1,321 $BTC(+$83.22M)\ud83d\udfe2 7D NetFlow: +137 $BTC(+$8.61M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -2,353 $ETH(-$4.27M)\ud83d\udd34 7D NetFlow: +54,009 $ETH(+$98.14M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2078136307625476149#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 17 Update: #Bitcoin ETFs: 1D NetFlow: +1,321 $BTC (+$83.22M)\ud83d\udfe2 7D NetFlow: +137 $BTC (+$8.61M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -2,353 $ETH (-$4.27M)\ud83d\udd34 7D NetFlow: +54,009 $ETH (+$98.14M)\ud83d\udfe2 Lookonchain (@lookonchain) July 16 Update: #Bitcoin ETFs: 1D NetFlow: +1,632 $BTC (+$105.1M)",
-      "publishedAt": "2026-07-17T15:14:40+00:00",
-      "publishedTs": 1784301280.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -921,19 +960,6 @@
       "summary": "Stop accusing me of coping. I don\u2019t own OAI or Ant nor do I care if they get zeroed out. It would actually be great if they did - I don\u2019t think it\u2019ll happen. I think open weight AI is great - I\u2019m not a safetyist either. I\u2019m just analyzing the situation.",
       "publishedAt": "2026-07-17T14:26:49+00:00",
       "publishedTs": 1784298409.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: I feel like there's a spiritual parallel bt GLD and IBIT.. GLD got so popular so quickly that for ONE DAY in 2011 it was bigger than SPY, the biggest ETF in world. Then it went out of favor for years. IBIT, similarly reached $100b in assets for ONE DAY (a few",
-      "link": "https://x.com/EricBalchunas/status/2078108958414291169#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "I feel like there's a spiritual parallel bt GLD and IBIT.. GLD got so popular so quickly that for ONE DAY in 2011 it was bigger than SPY, the biggest ETF in world. Then it went out of favor for years. IBIT, similarly reached $100b in assets for ONE DAY (a few hrs actually) and th",
-      "publishedAt": "2026-07-17T13:25:59+00:00",
-      "publishedTs": 1784294759.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1041,6 +1067,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Earning yield on your Bitcoin shouldn't cost you your Bitcoin. \ud83d\udfe0 Segregated vaults. You hold the keys. You keep custody. Join the waitlist \ud83d\udc49 https://go.cobault.net/BTCmag_2",
+      "link": "https://x.com/BitcoinMagazine/status/2077790043129741591#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Earning yield on your Bitcoin shouldn't cost you your Bitcoin. \ud83d\udfe0 Segregated vaults. You hold the keys. You keep custody. Join the waitlist \ud83d\udc49 go.cobault.net/BTCmag_2",
+      "publishedAt": "2026-07-16T16:18:44+00:00",
+      "publishedTs": 1784218724.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "\"where does water come from?\" \"from the tap\" \"where does tuna come from?\" \"from the can\" \"where do X, IG, and TikTok come from?\" \"from the phone\"",
@@ -1262,19 +1301,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "BIP 110: Bitcoin Iatrogenic Proposal.",
-      "link": "https://x.com/saylor/status/2077297913382748160#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-15T07:43:11+00:00",
-      "publishedTs": 1784101391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "You can do everything right - cold storage, multisig, a seed phrase nobody could ever guess - but none of it protects you from a wrench attack. 2026 is on pace to be the worst year on record for physical attacks on Bitcoiners, and France has become the case study nobody wanted. S",
@@ -1727,110 +1753,6 @@
       "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
       "publishedAt": "2019-12-14T00:35:14+00:00",
       "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 https://youtu.be/BCPJ9vLC_Js",
-      "link": "https://x.com/BitcoinArchives/status/1205640157048844288#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling Decentralized Identifiers on Bitcoin w/ @csuwildcat @Bitcoin2019conf #bitcoin2019 piped.video/BCPJ9vLC_Js",
-      "publishedAt": "2019-12-14T00:06:27+00:00",
-      "publishedTs": 1576281987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: The Genesis of Asia's Mining Pools & Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan, @christopherzhu0, @satofishi & Chris Zhu @bitcoin2019conf #bitcoin2019 https://youtu.be/-iXZi0x4S_8",
-      "link": "https://x.com/BitcoinArchives/status/1145799646494756865#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "The Genesis of Asia's Mining Pools &amp; Their Vital Role in the Bitcoin Ecosystem w/ @DoveyWan , @christopherzhu0, @satofishi &amp; Chris Zhu @bitcoin2019conf #bitcoin2019 piped.video/-iXZi0x4S_8",
-      "publishedAt": "2019-07-01T21:01:38+00:00",
-      "publishedTs": 1562014898.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Addressing Privacy w/ Andrew Poelstra, @Isa, @LeoAW & @matt_odell @bitcoin2019conf #bitcoin2019 https://youtu.be/o9Vvj1lMaDM",
-      "link": "https://x.com/BitcoinArchives/status/1145546672329695232#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Addressing Privacy w/ Andrew Poelstra, @Isa , @LeoAW &amp; @matt_odell @bitcoin2019conf #bitcoin2019 piped.video/o9Vvj1lMaDM",
-      "publishedAt": "2019-07-01T04:16:24+00:00",
-      "publishedTs": 1561954584.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Scaling to the Masses w/ @francispouliot_, @eric_lombrozo, @danheld & @AaronvanW @bitcoin2019conf #bitcoin2019 https://youtu.be/biBY6QEhK0A",
-      "link": "https://x.com/BitcoinArchives/status/1145090025845116929#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Scaling to the Masses w/ @francispouliot_ , @eric_lombrozo , @danheld &amp; @AaronvanW @bitcoin2019conf #bitcoin2019 piped.video/biBY6QEhK0A",
-      "publishedAt": "2019-06-29T22:01:51+00:00",
-      "publishedTs": 1561845711.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: In Review: Protocol Improvement Outlooks w/ @TheBlueMatt, @JeremyRubin, @roasbeef & @moneyball @bitcoin2019conf #bitcoin2019 https://youtu.be/JhokT9Fg4FA",
-      "link": "https://x.com/BitcoinArchives/status/1145012258549960706#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "In Review: Protocol Improvement Outlooks w/ @TheBlueMatt , @JeremyRubin , @roasbeef &amp; @moneyball @bitcoin2019conf #bitcoin2019 piped.video/JhokT9Fg4FA",
-      "publishedAt": "2019-06-29T16:52:50+00:00",
-      "publishedTs": 1561827170.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Is Bitcoin Unstoppable? w/ @maxkeiser, @APompliano & @billbarhydt @bitcoin2019conf #bitcoin2019 https://youtu.be/7cB5891b60g",
-      "link": "https://x.com/BitcoinArchives/status/1145011696693653505#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Is Bitcoin Unstoppable? w/ @maxkeiser , @APompliano &amp; @billbarhydt @bitcoin2019conf #bitcoin2019 piped.video/7cB5891b60g",
-      "publishedAt": "2019-06-29T16:50:36+00:00",
-      "publishedTs": 1561827036.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Market Perspectives & Predictions w/ @TimDraper & @APompliano @bitcoin2019conf #bitcoin2019 https://youtu.be/o2RMlPeggmI",
-      "link": "https://x.com/BitcoinArchives/status/1145011107393953793#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Market Perspectives &amp; Predictions w/ @TimDraper &amp; @APompliano @bitcoin2019conf #bitcoin2019 piped.video/o2RMlPeggmI",
-      "publishedAt": "2019-06-29T16:48:15+00:00",
-      "publishedTs": 1561826895.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Welcome & Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 https://youtu.be/qIBEQ7mE9W8",
-      "link": "https://x.com/BitcoinArchives/status/1145010766317268993#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Welcome &amp; Opening Remarks w/ @DavidFBailey @bitcoin2019conf #bitcoin2019 piped.video/qIBEQ7mE9W8",
-      "publishedAt": "2019-06-29T16:46:54+00:00",
-      "publishedTs": 1561826814.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
