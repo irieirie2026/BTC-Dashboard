@@ -1,7 +1,228 @@
 {
-  "fetchedAt": "2026-07-22T16:08:26Z",
+  "fetchedAt": "2026-07-22T20:45:18Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "People ask what bitcoin is backed by. But that question makes no sense. Bitcoin is the record. Backing is for things without one.",
+      "link": "https://x.com/DocumentingBTC/status/2080027753609335193#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-22T20:30:36+00:00",
+      "publishedTs": 1784752236.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Every bitcoin wallet is a mathematical theorem. Spending your bitcoin is publishing the proof.",
+      "link": "https://x.com/DocumentingBTC/status/2080026351675781355#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-22T20:25:01+00:00",
+      "publishedTs": 1784751901.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis publically shares The CLARITY ACT's Ethics Requirement, which \"bans ALL federal officials from issuing or sponsoring a digital asset for profit\" \ud83d\udc40 President Trump has agreed to the terms \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2080021351843397860#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-22T20:05:09+00:00",
+      "publishedTs": 1784750709.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase CEO says \"The Clarity Act is ready for a full Senate floor vote.\" \"The bill represents a true bipartisan compromise with thousands of hours of work on both sides, and it couldn't come at a better time.\" Pass it \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2080005729344278992#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase CEO says \"The Clarity Act is ready for a full Senate floor vote.\" \"The bill represents a true bipartisan compromise with thousands of hours of work on both sides, and it couldn't come at a better time.\" Pass it \ud83d\ude80 Video",
+      "publishedAt": "2026-07-22T19:03:05+00:00",
+      "publishedTs": 1784746985.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @nic_carter: There is no such thing as alignment in the abstract sense. There are simply queries that an organization does not want you to make, and outputs it unnaturally injects",
+      "link": "https://x.com/nic_carter/status/2080004630642065450#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "There is no such thing as alignment in the abstract sense. There are simply queries that an organization does not want you to make, and outputs it unnaturally injects",
+      "publishedAt": "2026-07-22T18:58:43+00:00",
+      "publishedTs": 1784746723.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\u201cAI alignment\u201d is incoherent on its own. There is no such thing as generic alignment. Aligned with whom? Whose interests? And why should globalized models be aligned to the normative views of one organization or committee?",
+      "link": "https://x.com/nic_carter/status/2080003977479934344#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T18:56:07+00:00",
+      "publishedTs": 1784746567.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
+      "link": "https://x.com/nic_carter/status/2079994042473935090#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
+      "publishedAt": "2026-07-22T18:16:38+00:00",
+      "publishedTs": 1784744198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
+      "link": "https://x.com/nic_carter/status/2079993626419962220#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
+      "publishedAt": "2026-07-22T18:14:59+00:00",
+      "publishedTs": 1784744099.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive announces it will be supporting open source Bitcoin development and developers \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2079990139535712442#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-22T18:01:08+00:00",
+      "publishedTs": 1784743268.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: Join @isaiahdaustin & @realseanhagan for an upcoming X spaces with @Duelbits Topic: CLARITY Act bull run incoming? \ud83d\ude80 RSVP & TUNE IN: https://x.com/i/spaces/1vJpPPAdyaDJE?s=20",
+      "link": "https://x.com/BitcoinMagazine/status/2079988536959213729#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Join @isaiahdaustin &amp; @realseanhagan for an upcoming X spaces with @Duelbits Topic: CLARITY Act bull run incoming? \ud83d\ude80 RSVP &amp; TUNE IN: nitter.net/i/spaces/1vJpPPAdyaDJE\u2026 Link Twitter Space Click to view Space https://nitter.net/i/spaces/1vJpPPAdyaDJE",
+      "publishedAt": "2026-07-22T17:54:46+00:00",
+      "publishedTs": 1784742886.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Will bitcoin hit a new all-time high this year?",
+      "link": "https://x.com/APompliano/status/2079974546749182308#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Will bitcoin hit a new all-time high this year? Video",
+      "publishedAt": "2026-07-22T16:59:10+00:00",
+      "publishedTs": 1784739550.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: It\u2019s your Bitcoin activated without any compromise! Your Bitcoin, ALWAYS\u2026 anytime, anywhere, on any device, all under your control. It\u2019s the way it was ALWAYS meant to be, the way it should be! Get started at http://VerifiedX.io",
+      "link": "https://x.com/BitcoinMagazine/status/2079973579945320668#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "It\u2019s your Bitcoin activated without any compromise! Your Bitcoin, ALWAYS\u2026 anytime, anywhere, on any device, all under your control. It\u2019s the way it was ALWAYS meant to be, the way it should be! Get started at VerifiedX.io",
+      "publishedAt": "2026-07-22T16:55:20+00:00",
+      "publishedTs": 1784739320.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I'm getting lonely because I haven't received a social engineering call in over 2 weeks. Come on fellas, I want to talk shop! I know you're reading my posts; you have my number. Call meeeeeeeeeeeee \ud83e\udd72",
+      "link": "https://x.com/lopp/status/2079972320660054477#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:50:19+00:00",
+      "publishedTs": 1784739019.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "AI models got so good that METR ran out of long time horizon tasks to feed them for evals",
+      "link": "https://x.com/nic_carter/status/2079970292475089259#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:42:16+00:00",
+      "publishedTs": 1784738536.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: courtesy of @davidzmorris https://davidzmorris.substack.com/p/did-fake-satoshi-con-ben-affleck",
+      "link": "https://x.com/nic_carter/status/2079968684928364821#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "courtesy of @davidzmorris davidzmorris.substack.com/p/\u2026",
+      "publishedAt": "2026-07-22T16:35:53+00:00",
+      "publishedTs": 1784738153.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "it's still completely crazy to me that casey affleck, pete davidson, gal gadot, and isla fisher are starring in a completely AI generated film about CSW paid for by calvin ayre. like that's completely bananas",
+      "link": "https://x.com/nic_carter/status/2079968485556277654#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:35:05+00:00",
+      "publishedTs": 1784738105.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Republicans release updated Clarity Act text that bans the President and covered officials from issuing digital assets and requires them to sell their crypto holdings or put them in a blind trust.",
+      "link": "https://x.com/BitcoinMagazine/status/2079966330208317489#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:26:31+00:00",
+      "publishedTs": 1784737591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @BitcoinMagazine: BITCOIN ASIA IS RIGHT AROUND THE CORNER \ud83d\udc40 DON\u2019T MISS THIE BIGGEST BITCOIN NETWORKING EVENT IN ASIA \u203c\ufe0f GET DISCOUNTED PASSES HERE \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
       "link": "https://x.com/BitcoinMagazine/status/2079958023649349683#m",
@@ -144,19 +365,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "#BITCOIN ASIA WHALE NIGHT 2025 WAS LEGENDARY \ud83d\ude80 This year, we're taking it even bigger \ud83d\udc40 \ud83d\uddd3\ufe0f August 27 \ud83d\udccd Cloud 9, Hong Kong \ud83c\udf9f\ufe0f Whale Pass required",
-      "link": "https://x.com/Bitcoinconfasia/status/2079818737926934863#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "#BITCOIN ASIA WHALE NIGHT 2025 WAS LEGENDARY \ud83d\ude80 This year, we're taking it even bigger \ud83d\udc40 \ud83d\uddd3\ufe0f August 27 \ud83d\udccd Cloud 9, Hong Kong \ud83c\udf9f\ufe0f Whale Pass required Video",
-      "publishedAt": "2026-07-22T06:40:02+00:00",
-      "publishedTs": 1784702402.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Whale 0x2684 continues accumulating $ETH and $WBTC. Since June 30, the whale has bought 54,449 $ETH($94M) at an average price of $1,726 and 600 $WBTC($38.37M) at an average price of $63,950. The whale is now sitting on over $12.5M in unrealized profit. https://arkm.com/explorer/a",
@@ -315,19 +523,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Treasury Secretary Scott Bessent says the Clarity Act is at the \"1-yard line\", Bloomberg reports \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2079601155206754703#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-21T16:15:27+00:00",
-      "publishedTs": 1784650527.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Starting in 45 minutes",
       "link": "https://x.com/CasaHODL/status/2079600866009694604#m",
       "source": "@lopp",
@@ -352,32 +547,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Kevin Cramer talks CLARITY ACT on FOX \"The biggest issue is waiting for Democrats to read the new amendments relevant to the ethics piece..we have to get this done before August recess\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2079585867182579933#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Kevin Cramer talks CLARITY ACT on FOX \"The biggest issue is waiting for Democrats to read the new amendments relevant to the ethics piece..we have to get this done before August recess\" \ud83d\udc4f Video",
-      "publishedAt": "2026-07-21T15:14:42+00:00",
-      "publishedTs": 1784646882.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @hyperscaledata: Institutional-grade Bitcoin yield, without the custody risk. \ud83d\udfe0 Built by veterans of one of the world's largest structured-products platforms. Non-custodial. On-chain. Up to 10% APY. \ud83d\udc49 https://go.cobault.net/BTCmag_3",
-      "link": "https://x.com/BitcoinMagazine/status/2079584095785345185#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Institutional-grade Bitcoin yield, without the custody risk. \ud83d\udfe0 Built by veterans of one of the world's largest structured-products platforms. Non-custodial. On-chain. Up to 10% APY. \ud83d\udc49 go.cobault.net/BTCmag_3",
-      "publishedAt": "2026-07-21T15:07:39+00:00",
-      "publishedTs": 1784646459.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "$MSTR engineers volatility.",
@@ -445,19 +614,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Hyperscale Data adds 51.5 BTC to their treasury, now totaling 1,087 BTC \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2079570450070253787#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-21T14:13:26+00:00",
-      "publishedTs": 1784643206.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Every ten minutes, a number is found that has never existed before on the Internet and will never be needed again. Finding it costs more energy than some countries and nations use. Then it is kept forever on the Bitcoin blockchain. It\u2019s crazy when you think about it.",
       "link": "https://x.com/DocumentingBTC/status/2079566243279855964#m",
       "source": "@DocumentingBTC",
@@ -510,19 +666,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddf7\ud83c\uddfa Russia passes law that \"regulates the circulation of digital currencies and digital rights in Russia for the first time,\" TASS reports \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2079541627886916023#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-21T12:18:54+00:00",
-      "publishedTs": 1784636334.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com",
       "link": "https://x.com/intangiblecoins/status/2079541359996719512#m",
       "source": "@lopp",
@@ -534,19 +677,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "NEW: $66,378 Bitcoin! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2079517029229363360#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-21T10:41:09+00:00",
-      "publishedTs": 1784630469.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "INSIGHT: \"The impulse to change Bitcoin's rules merely to prevent others from using $BTC in ways you disapprove of is statist and alien to a community rooted in liberty,\" says Michael @Saylor, opposing BIP 110.",
@@ -1069,32 +1199,6 @@
       "isRetweet": false
     },
     {
-      "title": "My jaw dropped reading this Who is most opposed to self driving cars? Ambulance chasing lawyers who sue over car accidents They are explicitly on the side of preventable death.",
-      "link": "https://x.com/nic_carter/status/2078511329854296472#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "My jaw dropped reading this Who is most opposed to self driving cars? Ambulance chasing lawyers who sue over car accidents They are explicitly on the side of preventable death. S\u00e9b Krier (@sebkrier) This is the kind of 'institutional misalignment' I'm most irritated by. marginalr",
-      "publishedAt": "2026-07-18T16:04:52+00:00",
-      "publishedTs": 1784390692.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Looks like the AI safetyist decel pause AI crowd are the biggest losers in this whole Kimi thing. And that swells my heart with joy",
-      "link": "https://x.com/nic_carter/status/2078510504088125918#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-18T16:01:35+00:00",
-      "publishedTs": 1784390495.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Pinned: It used to be that every village had their idiot. This was not a problem; it was totally manageable. Now, thanks to the power of the internet, the idiots can find each other and form a digital village full of idiots.",
       "link": "https://x.com/lopp/status/2078502805195677903#m",
       "source": "@lopp",
@@ -1160,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Do not, I repeat, do not give dolphins the ability to speak",
-      "link": "https://x.com/nic_carter/status/2078204048277110803#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Do not, I repeat, do not give dolphins the ability to speak Jay Anderson (@TheProjectUnity) What happens when we can understand the animals? Because I think that's coming... Video \u2014 https://nitter.net/TheProjectUnity/status/2077854423242440724#m",
-      "publishedAt": "2026-07-17T19:43:50+00:00",
-      "publishedTs": 1784317430.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The trading liquidity of $MSTR and $STRC is more comparable to major macro assets than to typical large-cap equities.",
       "link": "https://x.com/Strategy/status/2078175210620985458#m",
       "source": "@saylor",
@@ -1199,19 +1290,6 @@
       "isRetweet": false
     },
     {
-      "title": "A fully loaded AI datacenter with the latest GPUs costs around $300 million per acre. There are 900 million acres of US farmland. Converting just 0.01% of that into DCs would cost $26 trillion dollars Imagine thinking this could possibly deprive us of farmland. How utterly incuri",
-      "link": "https://x.com/nic_carter/status/2078135016496787831#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "A fully loaded AI datacenter with the latest GPUs costs around $300 million per acre. There are 900 million acres of US farmland. Converting just 0.01% of that into DCs would cost $26 trillion dollars Imagine thinking this could possibly deprive us of farmland. How utterly incuri",
-      "publishedAt": "2026-07-17T15:09:32+00:00",
-      "publishedTs": 1784300972.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The CDC and FDA have linked shredded iceberg lettuce supplied to Taco Bell restaurants as the source of contamination in the cyclosporiasis outbreak that causes explosive diarrhea. Which begs the question: how did Taco Bell customers notice any difference?",
       "link": "https://x.com/lopp/status/2078124769694662963#m",
       "source": "@lopp",
@@ -1220,32 +1298,6 @@
       "summary": "",
       "publishedAt": "2026-07-17T14:28:49+00:00",
       "publishedTs": 1784298529.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Stop accusing me of coping. I don\u2019t own OAI or Ant nor do I care if they get zeroed out. It would actually be great if they did - I don\u2019t think it\u2019ll happen. I think open weight AI is great - I\u2019m not a safetyist either. I\u2019m just analyzing the situation.",
-      "link": "https://x.com/nic_carter/status/2078124268206891101#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Stop accusing me of coping. I don\u2019t own OAI or Ant nor do I care if they get zeroed out. It would actually be great if they did - I don\u2019t think it\u2019ll happen. I think open weight AI is great - I\u2019m not a safetyist either. I\u2019m just analyzing the situation.",
-      "publishedAt": "2026-07-17T14:26:49+00:00",
-      "publishedTs": 1784298409.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: I think the answer here is that China is happy to \u201cliberate\u201d American frontier capabilities via open weight distilled models for a soft power win globally. By bringing everyone up to the frontier China destroys an asymmetry that benefited the US alone. China doe",
-      "link": "https://x.com/nic_carter/status/2078091617974497586#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I think the answer here is that China is happy to \u201cliberate\u201d American frontier capabilities via open weight distilled models for a soft power win globally. By bringing everyone up to the frontier China destroys an asymmetry that benefited the US alone. China doesn\u2019t uniquely bene",
-      "publishedAt": "2026-07-17T12:17:05+00:00",
-      "publishedTs": 1784290625.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1262,19 +1314,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "From an ecological perspective, western frontier models are a common pool resource that Chinese open weight models exploit. They are finite, because if you exploit them too hard, they lose the incentive and resources to train new models, and everyone loses. (Chinese models aren\u2019t",
-      "link": "https://x.com/nic_carter/status/2078090093768650802#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "From an ecological perspective, western frontier models are a common pool resource that Chinese open weight models exploit. They are finite, because if you exploit them too hard, they lose the incentive and resources to train new models, and everyone loses. (Chinese models aren\u2019t",
-      "publishedAt": "2026-07-17T12:11:02+00:00",
-      "publishedTs": 1784290262.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Fiat currency is the problem. Companies, institutions, securities, and technologies that strengthen Bitcoin are part of the solution. We can debate ideas without mistaking allies for enemies.",
@@ -1329,32 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "Earning yield on your Bitcoin shouldn't cost you your Bitcoin. \ud83d\udfe0 Segregated vaults. You hold the keys. You keep custody. Join the waitlist \ud83d\udc49 https://go.cobault.net/BTCmag_2",
-      "link": "https://x.com/BitcoinMagazine/status/2077790043129741591#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Earning yield on your Bitcoin shouldn't cost you your Bitcoin. \ud83d\udfe0 Segregated vaults. You hold the keys. You keep custody. Join the waitlist \ud83d\udc49 go.cobault.net/BTCmag_2",
-      "publishedAt": "2026-07-16T16:18:44+00:00",
-      "publishedTs": 1784218724.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto explained why quantum computing will never break Bitcoin because, \u201cwe can transition to a new hash function after a certain block number. Everyone would have to upgrade their software by that block number.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2077731322806636787#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-16T12:25:24+00:00",
-      "publishedTs": 1784204724.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin Core v32 is going to sync 30% - 40% faster thanks to processing parallelization improvements. \ud83e\udd73",
       "link": "https://x.com/lopp/status/2077720604065567151#m",
       "source": "@lopp",
@@ -1379,19 +1392,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "\u20bfREAKING: BlackRock CEO Larry Fink says bitcoin price has \u201cmore stability\" and he is \"very bullish\"",
-      "link": "https://x.com/DocumentingBTC/status/2077711350592127447#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "\u20bfREAKING: BlackRock CEO Larry Fink says bitcoin price has \u201cmore stability\" and he is \"very bullish\" Video",
-      "publishedAt": "2026-07-16T11:06:02+00:00",
-      "publishedTs": 1784199962.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "People keep giving me advice.",
@@ -1496,19 +1496,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "We joined the fun and turned the live Bitcoin price into a 3d battlefield. Every 1s tick moves the front line. Order book depths deploys units. Large trades shift pressure. Liquidations trigger battlefield events. Powered by Newhedge data https://newhedge.io/bitcoin/battlefield",
-      "link": "https://x.com/newhedge_io/status/2076649110405283930#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "We joined the fun and turned the live Bitcoin price into a 3d battlefield. Every 1s tick moves the front line. Order book depths deploys units. Large trades shift pressure. Liquidations trigger battlefield events. Powered by Newhedge data newhedge.io/bitcoin/battlefi\u2026 Video",
-      "publishedAt": "2026-07-13T12:45:04+00:00",
-      "publishedTs": 1783946704.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "\ud83d\udea8 CLARITY Act Has NO Bearing On Bitcoin's Price! | Arthur Hayes, Co-Founder of BitMEX and CIO of Maelstrom, shares his thoughts on what drives Bitcoin's price and whether the CLARITY Act will have an impact. Watch the full interview http://youtu.be/Fn-goZ79VRM #bitcoin #clarityac",
