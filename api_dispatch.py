@@ -59,8 +59,12 @@ def resolve_path_and_query(handler):
     parsed = urlparse(handler.path)
     query = parse_qs(parsed.query)
 
+    # Vercel rewrite: /api/(.*) → /api/handler?path=$1
+    # path may be "ai/super-summary/paywall" (no leading api/)
     if "path" in query and query["path"][0]:
-        path = "/api/" + query["path"][0].lstrip("/")
+        raw = query["path"][0].lstrip("/")
+        path = raw if raw.startswith("api/") else f"api/{raw}"
+        path = "/" + path.lstrip("/")
         return path, query
 
     for header in (
@@ -377,24 +381,25 @@ def dispatch_api(path, query, body: dict | None = None):
             return get_distribution_payload(refresh=refresh)
         if sub == "series":
             indicator = (query.get("indicator") or [""])[0]
-            timespan = (query.get("timespan") or ["1year"])[0]
+            # Full history by default; client zooms interactively. Disk cache keyed by timespan.
+            timespan = (query.get("timespan") or ["all"])[0]
             if not indicator:
                 raise ValueError("Missing indicator parameter")
             return get_btc_series_payload(indicator, timespan=timespan, refresh=refresh)
         if sub == "valuation":
-            timespan = (query.get("timespan") or ["1year"])[0]
+            timespan = (query.get("timespan") or ["all"])[0]
             return get_btc_valuation_payload(timespan=timespan, refresh=refresh)
         if sub == "flows":
-            timespan = (query.get("timespan") or ["1year"])[0]
+            timespan = (query.get("timespan") or ["all"])[0]
             return get_btc_flows_payload(timespan=timespan, refresh=refresh)
         if sub == "network":
-            timespan = (query.get("timespan") or ["1year"])[0]
+            timespan = (query.get("timespan") or ["all"])[0]
             return get_btc_network_payload(timespan=timespan, refresh=refresh)
         if sub == "intelligence":
-            timespan = (query.get("timespan") or ["1year"])[0]
+            timespan = (query.get("timespan") or ["all"])[0]
             return get_btc_intelligence_payload(timespan=timespan, refresh=refresh)
         if sub == "miner":
-            timespan = (query.get("timespan") or ["1year"])[0]
+            timespan = (query.get("timespan") or ["all"])[0]
             return get_btc_miner_payload(timespan=timespan, refresh=refresh)
         if sub == "valuation-models/meta":
             return get_valuation_models_meta_payload(refresh=refresh)
@@ -444,11 +449,88 @@ def dispatch_api(path, query, body: dict | None = None):
     if path == "/api/stats/btc-history":
         return get_stats_btc_history_payload(refresh=_query_refresh(query))
 
+    if path == "/api/stats/volatility" or path.startswith("/api/stats/volatility/"):
+        from volatility_models import get_volatility_model_payload, get_volatility_suite_payload
+
+        refresh = _query_refresh(query)
+        days_raw = (query.get("days") or ["1095"])[0]
+        try:
+            days = int(days_raw)
+        except (TypeError, ValueError):
+            days = 1095
+        days = max(90, min(days, 5000))
+        dist = ((query.get("dist") or ["t"])[0] or "t").strip().lower()
+        sub = path[len("/api/stats/volatility") :].strip("/")
+        if sub and sub not in ("suite", "all"):
+            return get_volatility_model_payload(
+                sub, days=days, dist=dist, refresh=refresh
+            )
+        models_raw = (query.get("models") or [""])[0]
+        models = [m.strip() for m in models_raw.split(",") if m.strip()] or None
+        return get_volatility_suite_payload(
+            days=days, dist=dist, models=models, refresh=refresh
+        )
+
     if path == "/api/options":
         return get_options_payload(refresh=_query_refresh(query))
 
     if path == "/api/options/chain":
         return get_options_chain_payload(refresh=_query_refresh(query))
+
+    # Super Summary family — normalize so /api/ai/... and bare ai/... both work
+    # (local server uses full path; Vercel rewrite may pass path=ai/super-summary/...)
+    ss_path = path if path.startswith("/") else f"/{path}"
+    if not ss_path.startswith("/api/") and (
+        ss_path.startswith("/ai/") or ss_path.startswith("ai/")
+    ):
+        ss_path = "/api" + (ss_path if ss_path.startswith("/") else f"/{ss_path}")
+    ss_path = ss_path.rstrip("/") or "/"
+
+    if ss_path == "/api/ai/super-summary/paywall" or ss_path.endswith(
+        "/super-summary/paywall"
+    ):
+        from super_summary_paywall import get_paywall_public_config
+
+        return get_paywall_public_config()
+
+    if ss_path == "/api/ai/super-summary/unlock" or ss_path.endswith(
+        "/super-summary/unlock"
+    ):
+        from super_summary_paywall import try_unlock
+
+        unlock_body = body if isinstance(body, dict) else {}
+        return try_unlock(
+            option_id=str(unlock_body.get("optionId") or unlock_body.get("option") or ""),
+            tx_hash=str(unlock_body.get("txHash") or unlock_body.get("tx") or ""),
+            dev_code=unlock_body.get("devCode") or unlock_body.get("dev_code"),
+        )
+
+    if ss_path == "/api/ai/super-summary" or ss_path.endswith("/super-summary"):
+        from super_summary import get_super_summary_payload
+        from super_summary_paywall import paywall_enabled, require_super_summary_access
+
+        force = False
+        unlock_token = None
+        if body and isinstance(body, dict):
+            force = bool(body.get("force") or body.get("refresh"))
+            unlock_token = body.get("unlockToken") or body.get("accessToken")
+        force = force or _query_refresh(query)
+        if not unlock_token:
+            unlock_token = (query.get("unlockToken") or query.get("token") or [None])[0]
+
+        if paywall_enabled():
+            access = require_super_summary_access(unlock_token)
+            if not access.get("ok"):
+                from super_summary_paywall import get_paywall_public_config
+
+                return {
+                    "error": "payment_required",
+                    "message": "Unlock the Final Report with 1 USDT or 1 USDC.",
+                    "paywall": get_paywall_public_config(),
+                    "accessError": access.get("error"),
+                }
+
+        return get_super_summary_payload(refresh=force, force=force)
 
     raise ValueError(f"Unknown API route: {path}")
 

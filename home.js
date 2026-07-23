@@ -159,6 +159,7 @@ function bindHomeCards() {
 function initHomePage() {
   renderHomeCards();
   bindHomeCards();
+  window.initSuperSummaryHome?.();
   window.decorateHelpLabels?.(document.getElementById("dashboard-home"));
 }
 

@@ -18,20 +18,33 @@ let mbIntelligenceBundle = null;
 let mbMinerBundle = null;
 let mbMainChartRequest = 0;
 let mbOverviewSummaryRequest = 0;
+let mbAutoRefreshTimer = null;
+let mbAutoRefreshInFlight = false;
+let mbLastAutoRefreshAt = null;
 const mbTabCyclePhases = {};
 
+/** Always load maximum available history; charts are zoom/pan interactive. */
+const MB_FULL_TIMESPAN = "all";
+/** Soft auto-refresh interval (store/cache first — no upstream refresh=1). */
+const MB_AUTO_REFRESH_MS = 10 * 60 * 1000;
+
 const mbState = {
-  timespan: "1year",
+  timespan: MB_FULL_TIMESPAN,
   indicator: "fear_greed",
 };
 window.mbState = mbState;
+window.MB_FULL_TIMESPAN = MB_FULL_TIMESPAN;
 
 const MB_PLOTLY_CONFIG = {
   responsive: true,
   displayModeBar: true,
+  displaylogo: false,
   modeBarButtonsToRemove: ["lasso2d", "select2d"],
 };
 const MB_CHART_HEIGHT = 420;
+/** Shared height for Valuation → On-Chain Activity charts (main + frameworks). */
+const MB_ONCHAIN_CHART_HEIGHT = 320;
+window.MB_ONCHAIN_CHART_HEIGHT = MB_ONCHAIN_CHART_HEIGHT;
 
 const MB_SOURCE_CLASS = {
   BitInfoCharts: "db",
@@ -97,7 +110,7 @@ function mbPlotLayoutCategory(title, height = 340, opts = {}) {
   return layout;
 }
 
-function mbPlotLayoutPie(title, height = 380) {
+function mbPlotLayoutPie(title, height = 380, opts = {}) {
   return {
     template: "plotly_dark",
     title: title
@@ -105,7 +118,7 @@ function mbPlotLayoutPie(title, height = 380) {
       : undefined,
     paper_bgcolor: "rgba(0,0,0,0)",
     plot_bgcolor: "rgba(255,255,255,0.02)",
-    margin: { l: 20, r: 20, t: title ? 40 : 16, b: 20 },
+    margin: opts.margin || { l: 20, r: 20, t: title ? 40 : 16, b: 20 },
     height,
     font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 11, color: "#94a3b8" },
     hoverlabel: {
@@ -113,21 +126,37 @@ function mbPlotLayoutPie(title, height = 380) {
       bordercolor: "rgba(148, 163, 184, 0.35)",
       font: { family: "IBM Plex Sans, sans-serif", size: 11, color: "#e2e8f0" },
     },
-    showlegend: false,
+    showlegend: !!opts.showlegend,
+    legend: opts.legend || {
+      orientation: "v",
+      x: 1.02,
+      y: 0.5,
+      yanchor: "middle",
+      font: { size: 11, color: "#cbd5e1" },
+      bgcolor: "rgba(0,0,0,0)",
+      borderwidth: 0,
+      itemclick: false,
+      itemdoubleclick: false,
+    },
+    autosize: true,
   };
 }
 
 function mbPlotLayout(title, height = MB_CHART_HEIGHT, opts = {}) {
+  const compact = !!opts.compact;
+  const slider = !!opts.rangeSlider;
+  const topPad = title ? (compact ? 32 : 40) : (compact ? 8 : 16);
+  const botPad = slider ? (compact ? 44 : 72) : (compact ? 28 : 44);
   return {
     template: "plotly_dark",
     title: title
-      ? { text: title, font: { size: 13, color: "#cbd5e1" }, x: 0.02, xanchor: "left" }
+      ? { text: title, font: { size: compact ? 12 : 13, color: "#cbd5e1" }, x: 0.02, xanchor: "left" }
       : undefined,
     paper_bgcolor: "rgba(0,0,0,0)",
     plot_bgcolor: "rgba(255,255,255,0.02)",
-    margin: { l: 52, r: 20, t: title ? 40 : 16, b: opts.rangeSlider ? 72 : 44 },
+    margin: { l: compact ? 48 : 52, r: compact ? 12 : 20, t: topPad, b: botPad },
     height,
-    font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 11, color: "#94a3b8" },
+    font: { family: "IBM Plex Sans, system-ui, sans-serif", size: compact ? 10 : 11, color: "#94a3b8" },
     hoverlabel: {
       bgcolor: "#1e2433",
       bordercolor: "rgba(148, 163, 184, 0.35)",
@@ -138,40 +167,61 @@ function mbPlotLayout(title, height = MB_CHART_HEIGHT, opts = {}) {
       gridcolor: "rgba(148, 163, 184, 0.08)",
       linecolor: "rgba(148, 163, 184, 0.15)",
       tickfont: { size: 10, color: "#64748b" },
-      rangeslider: opts.rangeSlider ? { visible: true, thickness: 0.05 } : { visible: false },
+      rangeslider: slider
+        ? {
+            visible: true,
+            thickness: compact ? 0.03 : 0.05,
+            bgcolor: "rgba(15, 23, 42, 0.55)",
+            bordercolor: "rgba(148, 163, 184, 0.15)",
+            borderwidth: 1,
+          }
+        : { visible: false },
     },
     yaxis: {
       gridcolor: "rgba(148, 163, 184, 0.08)",
       linecolor: "rgba(148, 163, 184, 0.15)",
       tickfont: { size: 10, color: "#64748b" },
-      title: opts.yTitle || "",
+      title: opts.yTitle
+        ? { text: opts.yTitle, font: { size: 10, color: "#64748b" }, standoff: 6 }
+        : undefined,
       zeroline: opts.zeroLine || false,
       zerolinecolor: "rgba(148, 163, 184, 0.35)",
+      fixedrange: false,
     },
     showlegend: opts.showLegend || false,
-    legend: opts.showLegend ? { orientation: "h", y: 1.1, font: { size: 10 } } : undefined,
+    legend: opts.showLegend
+      ? { orientation: "h", y: 1.08, yanchor: "bottom", font: { size: 10 }, bgcolor: "rgba(0,0,0,0)" }
+      : undefined,
     hovermode: "x unified",
     shapes: opts.shapes || [],
   };
 }
 
-function mbChartUsesRangeSlider(el) {
-  return el?.classList?.contains("mb-plotly--tall")
-    && (mbState.timespan === "2years" || mbState.timespan === "4years");
+function mbChartUsesRangeSlider() {
+  // Full history is always loaded — rangeslider + Plotly zoom for navigation.
+  return true;
 }
 
 function mbLoadSettings() {
   try {
     const raw = localStorage.getItem(MB_SETTINGS_KEY);
-    if (raw) return { ...mbState, ...JSON.parse(raw) };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Range selector removed — always full history (ignore legacy timespan prefs).
+      const { timespan: _legacySpan, ...rest } = parsed;
+      return { ...mbState, ...rest, timespan: MB_FULL_TIMESPAN };
+    }
   } catch {
     /* ignore */
   }
-  return { ...mbState };
+  return { ...mbState, timespan: MB_FULL_TIMESPAN };
 }
 
 function mbSaveSettings() {
-  localStorage.setItem(MB_SETTINGS_KEY, JSON.stringify(mbState));
+  localStorage.setItem(
+    MB_SETTINGS_KEY,
+    JSON.stringify({ ...mbState, timespan: MB_FULL_TIMESPAN }),
+  );
 }
 
 function mbMergedIndicators() {
@@ -1104,7 +1154,8 @@ function mbSeriesPointMs(point) {
   return null;
 }
 
-function mbFilterSeriesByTimespan(series, timespan) {
+function mbFilterSeriesByTimespan(series, timespan = MB_FULL_TIMESPAN) {
+  // Full history is the default; only trim if an explicit short window is passed.
   const daysBySpan = {
     "30days": 30,
     "90days": 90,
@@ -1113,7 +1164,8 @@ function mbFilterSeriesByTimespan(series, timespan) {
     "4years": 1460,
     all: null,
   };
-  const days = daysBySpan[timespan];
+  const span = timespan || MB_FULL_TIMESPAN;
+  const days = daysBySpan[span];
   if (!days || !series?.length) return series || [];
   const cutoffMs = Date.now() - days * 86400000;
   return series.filter((p) => {
@@ -1125,15 +1177,364 @@ function mbFilterSeriesByTimespan(series, timespan) {
 function mbFormatSeriesError(raw) {
   const msg = String(raw || "");
   if (/rate limit|429/i.test(msg)) {
-    return "BGeometrics rate limit (8 req/hr on free tier) — cached data is used when available. Try again shortly or use the dedicated tab.";
+    return "Provider rate limit hit — cached data is used when available. The next automatic update should restore the series.";
   }
   if (/timed out|timeout/i.test(msg)) {
-    return "Provider timed out — try Refresh or pick this metric on its dedicated tab.";
+    return "Provider timed out — the series should repopulate on the next automatic update or scheduled prefetch.";
   }
-  return msg || "try Refresh or check API limits";
+  return msg || "Series unavailable — waiting for the next automatic update.";
+}
+
+/**
+ * Tabs that use unified chart chrome (shared height, compact layout, tight copy).
+ * Matches Valuation sub-tabs with multi-chart layouts.
+ */
+const MB_UNIFIED_CHART_TABS = new Set([
+  "onchain",
+  "intelligence",
+  "miner",
+  "valuation",
+  "sentiment",
+]);
+
+/** Single unified blurb under charts (no separate desc / commentary / education dropdowns). */
+const MB_CONSOLIDATED_COPY_KEYS = new Set([
+  // On-Chain Activity
+  "active_addresses",
+  "hash_rate",
+  "puell_multiple",
+  "exchange_netflow",
+  "exchange_balance",
+  "tx_count",
+  "mempool_fees",
+  "nvt_ratio",
+  "metcalfe",
+  "coin_days_destroyed",
+  // On-Chain Intelligence
+  "sth_lth_mvrv",
+  "sth_lth_nupl",
+  "asopr",
+  "vdd_multiple",
+  "nrpl_usd",
+  "utxos_in_profit_pct",
+  "san_exchange_inflow",
+  "san_exchange_outflow",
+  "san_daily_active_addresses",
+  // Miner & Network
+  "puell_multiple_miner",
+  "hashprice",
+  "hashrate_bg",
+  "hashribbons",
+  "difficulty",
+  "thermo_price",
+  "miners_revenue",
+  "difficulty_ribbon",
+  // Valuation & Cycles
+  "mvrv",
+  "mvrv_z_score",
+  "realized_price",
+  "hodl_waves_1y_plus",
+  "nupl",
+  "sopr",
+  "supply_in_profit",
+  "stock_to_flow",
+  "stock_to_flow_cross",
+  "power_law",
+  "delta_balanced_price",
+  "pi_cycle_top",
+  "rainbow_chart",
+  // Sentiment & Market
+  "fear_greed",
+  "fear_greed_history",
+  "btc_dominance",
+  "etf_flow_btc",
+  "market_structure",
+  "funding_rate",
+  "open_interest",
+]);
+
+function mbIsUnifiedChartPanel(el) {
+  const panel = el?.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+  return !!(panel && MB_UNIFIED_CHART_TABS.has(panel.dataset.mbSub));
+}
+
+function mbRenderEntryCommentary(entry) {
+  if (!entry?.elId) return;
+  const key = entry.forwardOpts?.key || entry.key || entry.displayKey;
+  if (key && MB_CONSOLIDATED_COPY_KEYS.has(key)) {
+    mbRenderConsolidatedCommentaryEl(entry.elId, key, entry.lines, entry.forwardOpts);
+  } else {
+    mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
+  }
+}
+
+/**
+ * Expanded primers for professional analysts who are newer to Bitcoin on-chain metrics.
+ * Shown first in consolidated chart copy (before live reading).
+ */
+const MB_ANALYST_PRIMERS = {
+  mvrv: [
+    "MVRV (Market Value to Realized Value) is the main cycle valuation ratio for Bitcoin. Market value is today’s price × circulating supply. Realized value is the same supply valued at each coin’s last on-chain move price — a network-wide cost basis.",
+    "When MVRV is high, the average holder sits on large paper gains and historically sells into strength. When MVRV is near or below 1, the average coin is underwater and forced selling has often already played out — a context many long-horizon analysts treat as accumulation-friendly.",
+  ],
+  mvrv_z_score: [
+    "MVRV Z-Score measures how many standard deviations today’s MVRV sits from its long-run mean. It answers: “Is this valuation extreme relative to Bitcoin’s own history?” rather than only looking at the raw ratio.",
+    "High positive Z-scores have clustered near prior cycle tops; negative readings have often aligned with late-bear accumulation windows. Use it with raw MVRV — the Z-score is best for comparing across eras.",
+  ],
+  realized_price: [
+    "Realized price is the USD price implied by realized capitalization: the volume-weighted average cost of every circulating bitcoin at its last on-chain transfer. It is not the exchange spot print — it is an on-chain cost-basis anchor.",
+    "In past bear markets, spot often tested or traded below realized price for months. Many analysts treat that band as long-term support psychology: average holders are underwater, so panic selling can exhaust.",
+  ],
+  hodl_waves_1y_plus: [
+    "HODL waves group supply by how long since each coin last moved on-chain. The 1y+ share is a simple “patient capital” gauge: coins that have not sold for at least a year.",
+    "A rising 1y+ share usually means more supply is locked in long-term hands (less free float). A sharp drop means old coins are waking up — often profit-taking or redistribution after a long hold.",
+  ],
+  nupl: [
+    "NUPL (Net Unrealized Profit/Loss) estimates the network’s aggregate paper profit as a share of market cap. It maps market psychology more than day-to-day trading flow.",
+    "Very high NUPL means most holders could sell at a large gain (euphoria risk). Near zero or negative means the network is underwater on average (capitulation context). Use it with SOPR and supply-in-profit for confirmation.",
+  ],
+  sopr: [
+    "SOPR (Spent Output Profit Ratio) looks only at coins that actually moved: sale price ÷ original cost basis of those outputs. Above 1 means coins moved at a profit; below 1 means they moved at a loss.",
+    "It is a realized-behavior gauge, not paper profit. Sustained SOPR well above 1 often means active profit-taking; dips below 1 often mark loss-driven selling that has historically clustered near local washouts.",
+  ],
+  supply_in_profit: [
+    "Supply in profit is the share of circulating BTC whose last-move cost is below today’s spot. It answers how much of the float could theoretically sell at a gain right now.",
+    "Extremely high readings (near 95%+) mean almost every holder has gains to harvest — distribution risk rises. Low readings mean broad underwater supply — stress typical of deep bears.",
+  ],
+  active_addresses: [
+    "Active addresses count unique addresses that sent or received BTC in the period. It is a coarse network-usage proxy, not a unique-user count (one person can control many addresses; exchanges re-use wallets).",
+    "Rising activity can support adoption narratives; quiet periods are not automatically bearish — Lightning and other Layer-2 activity never appear on base-layer address counts.",
+  ],
+  hash_rate: [
+    "Hash rate is the estimated computing power securing Bitcoin (often shown in EH/s). Higher hash rate generally means more miner capital and stronger network security.",
+    "Sharp drops can follow price stress (miners unplug unprofitable machines), energy shocks, or geography shifts. Pair with difficulty and Puell Multiple for the full miner cycle picture.",
+  ],
+  puell_multiple: [
+    "The Puell Multiple divides daily miner revenue (block subsidy + fees in USD) by its 365-day average. It asks whether miners are earning unusually well or poorly versus the past year.",
+    "Historically, readings above ~4 clustered near cycle tops (miners flush with income); readings below ~0.5 clustered near bottoms when miner stress and capitulation were common.",
+  ],
+  puell_multiple_miner: [
+    "The Puell Multiple divides daily miner revenue (block subsidy + fees in USD) by its 365-day average. It asks whether miners are earning unusually well or poorly versus the past year.",
+    "Historically, readings above ~4 clustered near cycle tops (miners flush with income); readings below ~0.5 clustered near bottoms when miner stress and capitulation were common.",
+  ],
+  exchange_netflow: [
+    "Exchange netflow is deposits minus withdrawals of BTC to/from tracked exchange wallets. Positive netflow means more coins arriving on venues (potential sell-side inventory); negative means coins leaving (often self-custody / accumulation).",
+    "Treat large daily spikes as event risk, not a single-day trading signal. Confirm with exchange balance trend and, if available, a second provider (e.g. Santiment inflows).",
+  ],
+  exchange_balance: [
+    "Exchange balance is the stock of BTC sitting on tracked exchange wallets — liquid inventory that can hit the order book more easily than cold-storage coins.",
+    "A multi-month decline in exchange balances has often been constructive for supply tightness. Rising balances can mean more coins are staged for potential sale — interpret with price and netflow together.",
+  ],
+  tx_count: [
+    "Transaction count is how many base-layer Bitcoin transfers confirm per day. It is a throughput and usage gauge, not a perfect “economic activity” measure (spam, consolidation, and batching all affect counts).",
+    "Higher counts often mean busier settlement; quieter counts mean less base-layer traffic. Layer-2 systems (Lightning, rollups) settle many payments off-chain, so quiet L1 is not always weak demand.",
+  ],
+  mempool_fees: [
+    "Mempool fee rates (sat/vB) are what users bid to get into the next blocks. High fees mean congestion and urgent demand for block space; low fees mean spare capacity.",
+    "Fee spikes often coincide with busy on-chain episodes (inscriptions, high volatility, or backlog). They are a short-term network-stress gauge, not a valuation metric.",
+  ],
+  sth_lth_mvrv: [
+    "This chart splits MVRV into short-term holders (STH, coins last moved <~155 days) and long-term holders (LTH, 155d+). STH behaves like “hot money”; LTH like patient capital.",
+    "STH MVRV usually stretches first in a rally and can warn of near-term profit-taking. LTH MVRV extremes often lag macro cycle turns. A wide STH–LTH gap is a useful risk context for positioning.",
+  ],
+  sth_lth_nupl: [
+    "Cohort NUPL splits paper profit between recent buyers (STH) and seasoned holders (LTH). It shows who is sitting on gains and who is underwater by holding period.",
+    "High STH NUPL means recent buyers are highly profitable (near-term sell pressure risk). Extreme LTH NUPL maps longer-cycle psychology. Use both with ASOPR and VDD when old coins start to move.",
+  ],
+  asopr: [
+    "ASOPR (Adjusted SOPR) is SOPR with same-block noise removed — a cleaner view of whether coins that truly change hands are sold at profit or loss.",
+    "Sustained ASOPR above ~1.03 often means clean profit-taking; sustained readings below ~0.98 often mean loss-driven selling. It is preferred over raw SOPR for cycle “spent behavior” reads.",
+  ],
+  vdd_multiple: [
+    "VDD Multiple (Value Days Destroyed vs its yearly average) flags when old, high-value coins move relative to normal. Destroying many “coin-days” means seasoned supply is waking up.",
+    "Historically (David Puell framework), high VDD clustered near distribution and cycle tops. Quiet VDD means HODLing dominates. Pair with LTH MVRV/NUPL when VDD spikes.",
+  ],
+  nrpl_usd: [
+    "Net Realized P/L (USD) is daily realized profit minus realized loss when coins move on-chain, expressed in dollars. It measures how much economic gain or pain is actually crystallizing.",
+    "Large positive spikes mean heavy profit-taking through the ledger; deep negatives mean capitulation selling in USD terms. Sustained extremes matter more than a single noisy day.",
+  ],
+  utxos_in_profit_pct: [
+    "UTXOs in profit % counts unspent outputs (not supply-weighted coins) that are profitable at today’s price. It is a breadth measure of individual “lots,” similar to stocks advancing vs declining.",
+    "Very high breadth means almost every lot can sell green (overhead supply risk). Low breadth means many lots are underwater (stress). It often moves faster than supply-in-profit.",
+  ],
+  san_exchange_inflow: [
+    "Santiment exchange inflow estimates USD value of coins deposited to exchanges. Rising inflows can mean more inventory staging for sale — a potential near-term headwind for spot.",
+    "This series needs SANTIMENT_API_KEY when live; otherwise the store may be empty. Always cross-check Coin Metrics exchange netflow on On-Chain Activity when available.",
+  ],
+  san_exchange_outflow: [
+    "Santiment exchange outflow estimates USD value leaving exchanges toward self-custody. Strong outflows support accumulation narratives and tighter exchange supply.",
+    "Sustained outflow greater than inflow is typically constructive for medium-term supply tightness. Use with exchange balance and free Coin Metrics netflow for confirmation.",
+  ],
+  san_daily_active_addresses: [
+    "Santiment’s active-address series is another view of daily network participation. Methodology differs slightly from Blockchain.info — treat levels as directional, not identical.",
+    "Use it as a second adoption/usage lens alongside base-layer address counts on On-Chain Activity.",
+  ],
+  hashprice: [
+    "Hashprice is miner revenue per unit of hash power — the P&L lens for the mining industry. Weak hashprice means thinner margins; strong hashprice means miners earn well per EH.",
+    "Prolonged weak hashprice often precedes hash-rate drawdowns and miner capitulation. Recovery in hashprice supports reinvestment in network security.",
+  ],
+  hashrate_bg: [
+    "This BGeometrics hash-rate series tracks the same security concept as Blockchain.info’s hash rate, from a second provider. Use it for history and for ribbon/capitulation signals on this tab.",
+    "Rising hash rate = miners committing capital; rolling over hash rate often follows price or energy stress. Confirm with difficulty and Puell.",
+  ],
+  hashribbons: [
+    "Hash ribbons use moving averages of hash rate to flag miner capitulation (stress) and recovery crosses. They are slower, higher-conviction network-cycle signals — not day-trading triggers.",
+    "Capitulation phases have often clustered near local price lows; recovery crosses have often marked improving miner health and better medium-term risk/reward for network-aware holders.",
+  ],
+  difficulty: [
+    "Mining difficulty retargets about every two weeks so blocks stay near 10 minutes. Rising difficulty means more competition for block rewards; falling difficulty eases the bar after miner drop-off.",
+    "Difficulty lags spot but confirms whether miners are adding or leaving capacity. Pair with hash rate and hashprice for the full security-budget story.",
+  ],
+  thermo_price: [
+    "Thermo price is a long-run production-cost proxy: cumulative miner revenue allocated per bitcoin. It is not an exact breakeven for every miner, but a network-level cost floor estimate.",
+    "When spot trades well below thermo price, miners as a group are stressed on this proxy. Spot well above thermo usually means comfortable mining margins.",
+  ],
+  miners_revenue: [
+    "Miner revenue is daily USD income from the block subsidy plus transaction fees. Halvings cut the subsidy step-function every ~4 years, so the baseline level shifts by era.",
+    "Elevated revenue with high Puell can mean late-cycle miner prosperity; depressed revenue with low Puell often marks stress. Fees matter more when the mempool is congested.",
+  ],
+  btc_dominance: [
+    "BTC dominance is Bitcoin’s share of total crypto market capitalization. It is a relative risk-appetite gauge: rising dominance often means flight to Bitcoin quality; falling dominance often means capital rotating into altcoins.",
+    "Use it with ETF flows and funding: high dominance + strong BTC ETF inflows is a BTC-led regime; falling dominance with greedy sentiment often marks alt-season risk-on.",
+  ],
+  etf_flow_btc: [
+    "US spot Bitcoin ETF net flow aggregates daily creations minus redemptions across major products (in BTC terms). Since 2024 this is a primary institutional demand channel.",
+    "Large positive flows are structured buying; large negative flows are redemptions. Multi-day streaks matter more than a single print. Pair with dominance and funding for full market-structure context.",
+  ],
+  fear_greed: [
+    "The Crypto Fear & Greed Index (0–100) blends volatility, momentum, social media, surveys, dominance, and trends into one sentiment score from Alternative.me.",
+    "Extreme fear has historically aligned with better multi-month entry contexts; extreme greed with crowded optimism. Sustained extremes (weeks) matter more than one-day spikes.",
+  ],
+  fear_greed_history: [
+    "This chart is the daily history of the same Fear & Greed Index. Use it to see whether today’s reading is a blip or a multi-week regime of fear or greed.",
+    "Analysts care about persistence: two weeks above 75 or below 25 is more informative than a single extreme print.",
+  ],
+  market_structure: [
+    "Perpetual funding and open interest describe leveraged positioning. Funding is the periodic payment between longs and shorts; open interest is the size of open futures contracts.",
+    "Crowded positive funding + rising OI often means fragile long leverage. Negative funding can fuel short squeezes. These are positioning gauges — pair with spot and ETF flows, not use alone.",
+  ],
+  funding_rate: [
+    "Median perpetual funding is the cross-venue cost of holding long positions. Positive funding means longs pay shorts (bullish crowding); negative means shorts pay longs.",
+    "Elevated positive funding raises flush risk on reversals. Deeply negative funding can precede violent short covering if price rises.",
+  ],
+  open_interest: [
+    "Open interest (here Binance BTCUSDT perps, in BTC) is the outstanding size of leveraged futures. Rising OI with rising price can mean a leveraged trend; falling OI often means deleveraging.",
+    "Very high OI increases the odds of cascade liquidations on sharp moves. Treat it as a risk-sizing context, not a direction signal by itself.",
+  ],
+  nvt_ratio: [
+    "NVT (Network Value to Transactions) compares market cap to on-chain transfer volume — loosely “price vs usage.” High NVT can mean price is rich relative to settlement activity; low NVT can mean usage is strong vs valuation.",
+    "NVT is noisy day-to-day. Prefer multi-week trends and combine with active addresses and MVRV rather than single-day levels.",
+  ],
+  metcalfe: [
+    "Metcalfe-style models relate network value to the square of active users/addresses — the idea that connectivity value grows faster than user count. Charts often compare model-implied value to spot.",
+    "Treat Metcalfe as a long-horizon framing tool, not a precise fair-value printer. Address counts are imperfect user proxies.",
+  ],
+  coin_days_destroyed: [
+    "Coin Days Destroyed (CDD) multiplies coins moved by how long they sat idle. Large CDD means old, seasoned coins are transferring — often distribution or major portfolio rebalancing.",
+    "Quiet CDD means HODLing. Spikes near price highs have historically been cautionary; quiet CDD in bear markets often aligns with accumulation.",
+  ],
+  stock_to_flow: [
+    "Stock-to-Flow (S2F) compares existing supply (stock) to annual new issuance (flow). Higher S2F means scarcer new supply relative to what already exists — gold is the classic high-S2F analogy.",
+    "Bitcoin’s flow halves about every four years, stepping S2F higher. S2F models fit price to scarcity; they ignore demand, rates, and liquidity. Use as a scarcity frame, not a trading system.",
+  ],
+  stock_to_flow_cross: [
+    "Stock-to-Flow cross charts compare spot price to S2F-implied model price. Spot above the model means trading at a premium to scarcity-implied value; below means a discount.",
+    "Crosses and large gaps are historical context only — demand shocks can keep price far from the curve for long periods.",
+  ],
+  power_law: [
+    "Power-law models treat Bitcoin’s long-run price as a function of time since genesis (a straight line on log-log axes). The ratio chart shows spot versus that fitted fair value.",
+    "Extended time above upper bands has marked bubble phases; dips toward support bands have aligned with deep value. This assumes continued long-run adoption — not guaranteed.",
+  ],
+  delta_balanced_price: [
+    "Delta / balanced price frameworks combine realized and delta-cap style cost bases to sketch equilibrium zones between “cheap” and “expensive” relative to on-chain capital.",
+    "Use as a map of where spot sits versus structural cost anchors — not as a precise target. Confirm with MVRV and NUPL.",
+  ],
+  pi_cycle_top: [
+    "Pi Cycle Top compares the 111-day moving average of price with 2× the 350-day MA. When the 111-DMA crosses above 2×350-DMA, prior cycles often printed major tops within weeks.",
+    "It has false signals and early prints (e.g. dual 2021 tops). Treat as a late-cycle heat flag — always pair with distribution metrics and drawdown phase.",
+  ],
+  rainbow_chart: [
+    "The rainbow chart fits a long-term log regression to price and paints bands from “fire sale” to “maximum bubble.” It is a visual cycle map, not a scientific forecast.",
+    "Bands help communicate where we are in historical valuation space for education and regime context. Do not treat band edges as exact buy/sell levels.",
+  ],
+  difficulty_ribbon: [
+    "The difficulty ribbon plots mining difficulty with several moving averages. Compression and expansion of the ribbon describe miner stress and recovery visually.",
+    "When short MAs dive below long MAs, miner capitulation risk rises; recovery of the ribbon often follows improving mining economics. Use with hash ribbons and Puell.",
+  ],
+};
+
+function mbSeriesUnavailableMessage(chartData, label = "This series") {
+  const err = chartData?.error;
+  if (err) {
+    return `${label} is temporarily unavailable (${String(err).slice(0, 120)}). `
+      + "The chart updates automatically from the local store and free APIs — usually within the next background refresh cycle.";
+  }
+  return `${label} has not loaded yet. Data is filled from the series store and free APIs; it should appear after the next automatic update `
+    + "(about every 10 minutes while this page is open) or after the scheduled prefetch job runs.";
+}
+
+function mbStaticChartCopyParts(key) {
+  const info = mbChartInfo(key) || {};
+  const edu = mbChartEducationContent(key) || {};
+  const parts = [];
+  const push = (text) => {
+    const t = String(text || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (!t) return;
+    const norm = t.toLowerCase();
+    if (parts.some((p) => {
+      const q = p.toLowerCase();
+      return q === norm || (norm.length > 40 && (q.includes(norm) || norm.includes(q)));
+    })) {
+      return;
+    }
+    parts.push(t);
+  };
+  (MB_ANALYST_PRIMERS[key] || []).forEach(push);
+  // Prefer primers; only add short catalog blurb if it adds something new.
+  if (!(MB_ANALYST_PRIMERS[key] || []).length) {
+    push(info.description);
+    push(info.readings);
+  } else if (info.readings) {
+    push(`How to read levels: ${info.readings}`);
+  }
+  (edu.explanation || []).forEach(push);
+  if (edu.howItWorks && !(MB_ANALYST_PRIMERS[key] || []).length) push(edu.howItWorks);
+  if (edu.formula) push(`Formula: ${edu.formula}`);
+  return parts;
+}
+
+function mbRenderConsolidatedCommentaryEl(id, key, lines, forwardOpts = null) {
+  const el = mbEl(id);
+  if (!el) return;
+  const paras = [];
+  const push = (text) => {
+    const t = String(text || "").trim();
+    if (!t) return;
+    const plain = t.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+    if (!plain) return;
+    if (paras.some((p) => {
+      const q = p.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+      return q === plain || q.includes(plain) || plain.includes(q);
+    })) return;
+    paras.push(t);
+  };
+  mbStaticChartCopyParts(key).forEach(push);
+  (lines || []).forEach(push);
+  const fwd = mbChartForwardLine(forwardOpts);
+  if (fwd) push(fwd);
+  el.innerHTML = paras.length
+    ? paras.map((p) => `<p>${p}</p>`).join("")
+    : `<p class="macro-muted">${mbSeriesUnavailableMessage(null, "This chart")}</p>`;
+  const block = el.closest(".mb-chart-block");
+  block?.querySelectorAll(".mb-chart-copy--above, .mb-chart-education").forEach((node) => {
+    node.hidden = true;
+    node.innerHTML = "";
+  });
 }
 
 function mbRenderChartDescription(indicator, containerId) {
+  // Consolidated on-chain charts fold static copy into the commentary block.
+  if (MB_CONSOLIDATED_COPY_KEYS.has(indicator)) return;
   const descEl = mbEl(`mb-desc-${indicator}`)
     || mbEl(`mb-vm-desc-${indicator}`)
     || mbEl(containerId?.replace("mb-chart-", "mb-desc-"));
@@ -1260,6 +1661,14 @@ function mbEducationDetailsHtml(content) {
 }
 
 function mbRenderChartEducation(key) {
+  if (MB_CONSOLIDATED_COPY_KEYS.has(key)) {
+    const el = mbEl(`mb-edu-${key}`);
+    if (el) {
+      el.innerHTML = "";
+      el.hidden = true;
+    }
+    return;
+  }
   const el = mbEnsureChartEducationSlot(key) || mbEl(`mb-edu-${key}`);
   if (!el) return;
   const html = mbEducationDetailsHtml(mbChartEducationContent(key));
@@ -1277,16 +1686,18 @@ function mbBuildFrameworkChartCommentary(key, chartData) {
   const ctx = mbIntelSeriesContext(key, chartData);
   const label = mbIndicatorMeta(key).label;
   if (!ctx) {
-    return [chartData?.error
-      ? `${label}: data unavailable (${String(chartData.error).slice(0, 120)}).`
-      : `${label}: waiting for series — try Refresh.`];
+    return [mbSeriesUnavailableMessage(chartData, label)];
   }
   const { latest, fmt, reading, trend } = ctx;
   const info = mbChartInfo(key);
-  const lines = [`${label} is ${mbFmtValue(latest, fmt)}${trend}.${reading ? ` ${reading}.` : ""}`];
+  const lines = [
+    `Latest reading: ${label} is ${mbFmtValue(latest, fmt)}${trend}.`
+    + (reading ? ` Zone context: ${reading}.` : ""),
+    "For analysts newer to Bitcoin: framework charts are long-horizon maps. Prefer multi-month trends over single prints, and always cross-check with spot cycle phase, ETF flows, and on-chain distribution metrics.",
+  ];
   if (info.readings) {
     const first = info.readings.split(";")[0].trim();
-    if (first) lines.push(first.endsWith(".") ? first : `${first}.`);
+    if (first) lines.push(`Level guide: ${first.endsWith(".") ? first : `${first}.`}`);
   }
   if (key === "stock_to_flow" || key === "stock_to_flow_cross") {
     const modelPrice = chartData?.latest?.model_price;
@@ -1367,18 +1778,8 @@ function mbRefreshTabOutlookAfterFrameworks(tab, vmBundle, models) {
 }
 window.mbRefreshTabOutlookAfterFrameworks = mbRefreshTabOutlookAfterFrameworks;
 
-const MB_EDU_KEYS = [
-  "mvrv", "mvrv_z_score", "realized_price", "hodl_waves_1y_plus", "nupl", "sopr", "supply_in_profit",
-  "stock_to_flow", "stock_to_flow_cross", "power_law", "delta_balanced_price", "pi_cycle_top", "rainbow_chart",
-  "active_addresses", "hash_rate", "puell_multiple", "exchange_netflow", "exchange_balance", "tx_count", "mempool_fees",
-  "nvt_ratio", "metcalfe", "coin_days_destroyed",
-  "sth_lth_mvrv", "sth_lth_nupl", "asopr", "vdd_multiple", "nrpl_usd", "utxos_in_profit_pct",
-  "san_exchange_inflow", "san_exchange_outflow", "san_daily_active_addresses",
-  "puell_multiple_miner", "hashprice", "hashrate_bg", "hashribbons", "difficulty", "thermo_price", "miners_revenue",
-  "difficulty_ribbon",
-  "fear_greed", "fear_greed_history", "btc_dominance", "etf_flow_btc", "market_structure",
-  "wealth_concentration", "wallet_cohorts",
-];
+// Education dropdowns removed on multi-chart Valuation tabs (consolidated copy instead).
+const MB_EDU_KEYS = [];
 
 function mbInitChartEducationSlots() {
   MB_EDU_KEYS.forEach((key) => mbEnsureChartEducationSlot(key));
@@ -1580,34 +1981,74 @@ function mbSectionPriceForward(tab, phase, score) {
   const label = phase?.label || "Markup";
   const byTab = {
     valuation: {
-      Accumulation: "<strong>BTC price outlook (valuation):</strong> Models point to asymmetric upside — spot near/below holder cost basis; multi-month recovery historically follows once capitulation exhausts.",
-      Markup: "<strong>BTC price outlook (valuation):</strong> Constructive but not euphoric — trend can continue if liquidity holds; tighten risk if MVRV and NUPL push into overheated bands.",
-      Distribution: "<strong>BTC price outlook (valuation):</strong> Rich vs cost basis with broad profits — upside likely needs exceptional demand; drawdown risk rises as holders harvest gains.",
-      Capitulation: "<strong>BTC price outlook (valuation):</strong> Network underwater on average — historically one of the better risk/reward zones for long-horizon BTC exposure.",
+      Accumulation:
+        "<strong>BTC price outlook (valuation):</strong> Valuation models say the network is near or below average holder cost. "
+        + "That has often been a better multi-month entry regime historically — wait for confirmation from flows and sentiment, and size for volatility.",
+      Markup:
+        "<strong>BTC price outlook (valuation):</strong> Valuation is constructive but not euphoric. "
+        + "Trend can continue if liquidity and demand hold; tighten risk if MVRV and NUPL both push into clearly overheated bands.",
+      Distribution:
+        "<strong>BTC price outlook (valuation):</strong> Spot is rich vs cost basis and many holders are profitable. "
+        + "Rallies need strong demand to absorb supply; expect higher odds of a meaningful pullback than in early markup.",
+      Capitulation:
+        "<strong>BTC price outlook (valuation):</strong> The average holder is underwater on paper. "
+        + "Historically one of the better long-horizon risk/reward zones — short-term price can still fall before it stabilizes.",
     },
     onchain: {
-      Accumulation: "<strong>BTC price outlook (on-chain):</strong> Coins leaving exchanges and inventory draining — medium-term tailwind for spot as float tightens.",
-      Markup: "<strong>BTC price outlook (on-chain):</strong> Healthy network activity without flow extremes — supports continued price discovery in the trend direction.",
-      Distribution: "<strong>BTC price outlook (on-chain):</strong> Exchange deposits and rising inventory — overhead liquid supply can cap rallies until absorbed.",
-      Capitulation: "<strong>BTC price outlook (on-chain):</strong> Stress flows and depressed miner income — seller exhaustion often builds here before the next markup leg.",
+      Accumulation:
+        "<strong>BTC price outlook (on-chain):</strong> Coins leaving exchanges and inventory draining often tighten free float. "
+        + "That is a medium-term tailwind for spot if it persists for weeks, not just one day.",
+      Markup:
+        "<strong>BTC price outlook (on-chain):</strong> Network activity looks healthy without extreme exchange inflows. "
+        + "Supports continued price discovery in the trend direction while usage stays constructive.",
+      Distribution:
+        "<strong>BTC price outlook (on-chain):</strong> More coins on exchanges mean more liquid supply that can meet demand. "
+        + "Rallies may stall until that inventory is absorbed or withdrawn again.",
+      Capitulation:
+        "<strong>BTC price outlook (on-chain):</strong> Stress flows and weak miner income often appear near seller exhaustion. "
+        + "Historically this backdrop has preceded the next multi-month repair phase after forced selling fades.",
     },
     intelligence: {
-      Accumulation: "<strong>BTC price outlook (intelligence):</strong> Cohorts and flows favor absorption — smart-money patterns historically precede 3–12 month spot recoveries.",
-      Markup: "<strong>BTC price outlook (intelligence):</strong> Constructive cohort metrics — trend extension likely unless distribution signals intensify.",
-      Distribution: "<strong>BTC price outlook (intelligence):</strong> Seasoned supply and profit-taking active — expect choppy or capped upside until flows flip.",
-      Capitulation: "<strong>BTC price outlook (intelligence):</strong> Loss-driven spending and stressed breadth — historically where medium-term bottoms form.",
+      Accumulation:
+        "<strong>BTC price outlook (intelligence):</strong> Holder cohorts and flows favor absorption (coins moving to stronger hands). "
+        + "Similar patterns have often preceded 3–12 month recoveries — confirm with valuation and ETF demand.",
+      Markup:
+        "<strong>BTC price outlook (intelligence):</strong> Cohort metrics look constructive. "
+        + "Trend extension is plausible unless profit-taking (ASOPR/NRPL) and old-coin movement (VDD) intensify together.",
+      Distribution:
+        "<strong>BTC price outlook (intelligence):</strong> Seasoned holders are profitable and/or old coins are moving. "
+        + "Expect choppier upside until realized selling cools and exchange outflows return.",
+      Capitulation:
+        "<strong>BTC price outlook (intelligence):</strong> Loss-driven spending and weak profit breadth are stress signals. "
+        + "Historically this is where medium-term bottoms form — still use risk controls for short-term swings.",
     },
     miner: {
-      Capitulation: "<strong>BTC price outlook (miners):</strong> Miner capitulation phases often mark local spot lows — hash recovery historically leads price repair.",
-      Recovery: "<strong>BTC price outlook (miners):</strong> Miner healing underway — medium-term supportive backdrop for spot as security budget stabilizes.",
-      Healthy: "<strong>BTC price outlook (miners):</strong> Sustainable miner economics — neither a floor nor a ceiling for price; follow valuation and flows.",
-      Euphoria: "<strong>BTC price outlook (miners):</strong> Extreme miner income — historically clustered near cycle tops; upside time horizon may shorten.",
+      Capitulation:
+        "<strong>BTC price outlook (miners):</strong> Miner capitulation (weak revenue, falling hash) has often marked local spot lows. "
+        + "Hash recovery afterward is a constructive confirmation, not an instant all-clear.",
+      Recovery:
+        "<strong>BTC price outlook (miners):</strong> Miner economics are healing. "
+        + "A stabilizing security budget is usually a medium-term supportive backdrop for spot.",
+      Healthy:
+        "<strong>BTC price outlook (miners):</strong> Miner economics look sustainable — neither extreme stress nor euphoria. "
+        + "Let valuation and capital flows lead the price call; miners are not a hard ceiling or floor here.",
+      Euphoria:
+        "<strong>BTC price outlook (miners):</strong> Miner income is extremely high versus history. "
+        + "That has clustered near late-cycle tops — treat remaining upside as more fragile and watch valuation heat.",
     },
     sentiment: {
-      Accumulation: "<strong>BTC price outlook (sentiment):</strong> Fear with improving flows — classic contrarian setup; spot often repairs over quarters when greed is absent.",
-      Markup: "<strong>BTC price outlook (sentiment):</strong> Balanced-to-positive tone without euphoria — risk-on but room for trend continuation.",
-      Distribution: "<strong>BTC price outlook (sentiment):</strong> Greed and crowded positioning — sentiment stretch raises correction risk on spot.",
-      Capitulation: "<strong>BTC price outlook (sentiment):</strong> Extreme fear — panic historically marks better forward returns for patient BTC holders.",
+      Accumulation:
+        "<strong>BTC price outlook (sentiment):</strong> Fear with improving or stable flows is a classic contrarian setup. "
+        + "Spot has often repaired over quarters when greed is absent — not a guarantee of a next-week bounce.",
+      Markup:
+        "<strong>BTC price outlook (sentiment):</strong> Tone is balanced-to-positive without full euphoria. "
+        + "Risk-on can continue; leave room for a correction if funding and greed both stretch.",
+      Distribution:
+        "<strong>BTC price outlook (sentiment):</strong> Greed and crowded leverage raise correction risk. "
+        + "Price can still grind higher, but the market is more fragile to negative shocks.",
+      Capitulation:
+        "<strong>BTC price outlook (sentiment):</strong> Extreme fear often marks better multi-quarter forward returns for patient holders. "
+        + "Use it as a regime flag, and size for continued volatility.",
     },
   };
   const tabMap = byTab[tab] || byTab.valuation;
@@ -1621,6 +2062,12 @@ window.mbBtcPriceForward = mbBtcPriceForward;
 window.mbBuildFrameworkChartCommentary = mbBuildFrameworkChartCommentary;
 window.mbRenderChartEducation = mbRenderChartEducation;
 window.mbRenderAllChartEducation = mbRenderAllChartEducation;
+window.mbRenderConsolidatedCommentaryEl = mbRenderConsolidatedCommentaryEl;
+window.mbStaticChartCopyParts = mbStaticChartCopyParts;
+window.MB_CONSOLIDATED_COPY_KEYS = MB_CONSOLIDATED_COPY_KEYS;
+window.MB_UNIFIED_CHART_TABS = MB_UNIFIED_CHART_TABS;
+window.mbPlotLayout = mbPlotLayout;
+window.mbRenderEntryCommentary = mbRenderEntryCommentary;
 
 function mbParseApiError(text, status) {
   const raw = String(text || "").trim();
@@ -1656,7 +2103,7 @@ async function mbLoadMeta(force = false) {
     l1: "misc",
     source: "BTC indicator catalog",
     persist: true,
-    revalidate: force,
+    revalidate: true,
     updateHeader: false,
     fetch: () => mbFetchJson("meta", force),
     render: () => {},
@@ -1672,7 +2119,7 @@ async function mbLoadSnapshot(force = false) {
     l1: "misc",
     source: mbSnapshot?.sourceChain || "Multi-source BTC feed",
     persist: true,
-    revalidate: force,
+    revalidate: true,
     updateHeader: false,
     fetch: () => mbFetchJson("snapshot", force),
     render: () => {},
@@ -1705,7 +2152,7 @@ async function mbPrefetchTableSeries() {
   await Promise.all([
     ...[...keys].map(async (key) => {
       try {
-        await mbLoadSeries(key, "1year", false);
+        await mbLoadSeries(key, MB_FULL_TIMESPAN, false);
       } catch {
         /* ignore */
       }
@@ -1728,7 +2175,7 @@ async function mbLoadDistribution(force = false) {
     l1: "misc",
     source: "BitInfoCharts",
     persist: true,
-    revalidate: force,
+    revalidate: true,
     updateHeader: false,
     fetch: () => mbFetchJson("distribution", force),
     render: () => mbRenderDistribution(),
@@ -1871,11 +2318,12 @@ function mbRenderKpis() {
 
   el.querySelectorAll("[data-mb-kpi]").forEach((card) => {
     const go = () => {
-      mbState.indicator = card.dataset.mbKpi;
-      mbSelectedIndicator = mbState.indicator;
-      mbEl("mb-indicator") && (mbEl("mb-indicator").value = mbState.indicator);
+      const key = card.dataset.mbKpi;
+      mbState.indicator = key;
+      mbSelectedIndicator = key;
       mbSaveSettings();
-      if (mbActiveTab === "overview") mbRenderMainChart(true);
+      const ind = mbMergedIndicators().find((i) => i.key === key);
+      if (ind?.tab && ind.tab !== "overview") mbSetTab(ind.tab);
     };
     card.addEventListener("click", go);
     card.addEventListener("keydown", (e) => {
@@ -1933,19 +2381,79 @@ function mbFormatElapsed(fetchedAt) {
   return `${Math.floor(sec / 604800)}w ago`;
 }
 
-function mbFormatUpdatedHtml(fetchedAt) {
-  if (!fetchedAt) return "—";
-  const d = new Date(fetchedAt);
-  if (Number.isNaN(d.getTime())) return "—";
-  const abs = d.toLocaleString("en-US", {
+/** Stale when API flags it, or fetch/data age exceeds ~48h. */
+function mbCellIsStale(cell) {
+  if (!cell || typeof cell !== "object") return false;
+  if (cell.stale) return true;
+  const fetched = cell.fetchedAt ? new Date(cell.fetchedAt).getTime() : NaN;
+  if (Number.isFinite(fetched) && Date.now() - fetched > 48 * 3600 * 1000) return true;
+  if (cell.dataAsOf) {
+    const asOf = new Date(`${String(cell.dataAsOf).slice(0, 10)}T00:00:00Z`).getTime();
+    if (Number.isFinite(asOf) && Date.now() - asOf > 3 * 86400 * 1000) return true;
+  }
+  return false;
+}
+
+function mbFormatDataAsOf(dataAsOf) {
+  if (!dataAsOf) return "";
+  const d = new Date(`${String(dataAsOf).slice(0, 10)}T12:00:00Z`);
+  if (Number.isNaN(d.getTime())) return String(dataAsOf).slice(0, 10);
+  return d.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
+    year: "numeric",
+    timeZone: "UTC",
   });
-  const rel = mbFormatElapsed(fetchedAt);
-  return `<span class="mb-updated-abs">${abs}</span><span class="mb-updated-elapsed">${rel}</span>`;
+}
+
+/**
+ * Updated column: data observation date + fetch time (stale badge is a separate Status column).
+ * Accepts a full cell object or a legacy fetchedAt string.
+ */
+function mbFormatUpdatedHtml(cellOrFetched) {
+  const cell =
+    cellOrFetched && typeof cellOrFetched === "object"
+      ? cellOrFetched
+      : { fetchedAt: cellOrFetched };
+  const fetchedAt = cell.fetchedAt;
+  const dataAsOf = cell.dataAsOf;
+  if (!fetchedAt && !dataAsOf) return "—";
+
+  const lines = [];
+  if (dataAsOf) {
+    lines.push(
+      `<span class="mb-updated-line">` +
+        `<span class="mb-updated-data" title="Latest observation date in the series">Data ${mbFormatDataAsOf(dataAsOf)}</span>` +
+        `</span>`,
+    );
+  }
+  if (fetchedAt) {
+    const d = new Date(fetchedAt);
+    if (!Number.isNaN(d.getTime())) {
+      const abs = d.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+      const rel = mbFormatElapsed(fetchedAt);
+      lines.push(
+        `<span class="mb-updated-line">` +
+          `<span class="mb-updated-abs" title="When this metric was last pulled into the store">Fetched ${abs}</span>` +
+          (rel ? `<span class="mb-updated-elapsed">${rel}</span>` : "") +
+          `</span>`,
+      );
+    }
+  }
+  return lines.join("") || "—";
+}
+
+function mbFormatStaleHtml(cell) {
+  if (!mbCellIsStale(cell)) {
+    return `<span class="mb-status-ok" title="Within refresh window">OK</span>`;
+  }
+  return `<span class="mb-stale-badge" title="Older than free-tier refresh window — run prefetch or wait for scheduled update">Stale</span>`;
 }
 
 function mbCombinedValueHtml(spec, cells) {
@@ -1995,7 +2503,7 @@ function mbTableRowHtml(row, cells) {
     const phase = row.sectionKey ? mbTabCyclePhases[row.sectionKey] : null;
     const badge = phase ? mbTableSectionPhaseHtml(phase) : "";
     return `<tr class="mb-table-section" data-mb-section="${row.sectionKey || ""}">
-      <td colspan="5">
+      <td colspan="6">
         <div class="mb-table-section-inner">
           <span class="mb-table-section-label">${row.label}</span>
           ${badge}
@@ -2008,16 +2516,29 @@ function mbTableRowHtml(row, cells) {
     const vals = spec.keys.map((k) => mbCellLatestValue(k, cells[k] || {}));
     const badges = mbCombinedSignalBadges(spec, cells);
     const badgeTitle = badges.map((b) => b.title).join(" · ");
-    const times = spec.keys.map((k) => cells[k]?.fetchedAt).filter(Boolean);
-    const latestFetched = times.length ? times.sort().reverse()[0] : null;
+    const subCells = spec.keys.map((k) => cells[k] || {});
+    const mergedCell = {
+      fetchedAt: subCells
+        .map((c) => c.fetchedAt)
+        .filter(Boolean)
+        .sort()
+        .reverse()[0],
+      dataAsOf: subCells
+        .map((c) => c.dataAsOf)
+        .filter(Boolean)
+        .sort()
+        .reverse()[0],
+      stale: subCells.some((c) => mbCellIsStale(c)),
+    };
     const hint = mbCombinedRowTooltip(spec, vals);
     const helpKey = spec.key === "sth_lth_mvrv" ? "mb-sth-mvrv" : spec.key === "sth_lth_nupl" ? "mb-sth-nupl" : "";
-    return `<tr data-mb-row="${spec.key}" data-mb-nav-tab="${spec.navigateTab}" class="mb-table-row mb-table-row--combined" tabindex="0" title="${mbEscapeAttr(hint)}">
+    return `<tr data-mb-row="${spec.key}" data-mb-nav-tab="${spec.navigateTab}" class="mb-table-row mb-table-row--combined${mergedCell.stale ? " mb-table-row--stale" : ""}" tabindex="0" title="${mbEscapeAttr(hint)}">
       <td class="mb-col-indicator"${helpKey ? ` data-help-key="${helpKey}"` : ""}>${spec.label}${helpKey ? '<button type="button" class="help-trigger help-trigger--inline" data-help-key="' + helpKey + '" aria-label="Explain">?</button>' : ""}</td>
       <td class="mono mb-col-value mb-col-value--combined">${mbCombinedValueHtml(spec, cells)}</td>
       <td class="mb-signal-col mb-col-signal" title="${mbEscapeAttr(badgeTitle)}">${mbSignalBadgesHtml(badges)}</td>
       <td class="mb-col-source">${mbSourceBadge(spec.source)}</td>
-      <td class="macro-muted mb-col-updated">${mbFormatUpdatedHtml(latestFetched)}</td>
+      <td class="macro-muted mb-col-updated">${mbFormatUpdatedHtml(mergedCell)}</td>
+      <td class="mb-col-status">${mbFormatStaleHtml(mergedCell)}</td>
     </tr>`;
   }
 
@@ -2033,18 +2554,20 @@ function mbTableRowHtml(row, cells) {
     || MB_FRAMEWORK_SNAPSHOT_KEYS.includes(ind.key)
     || MB_DISTRIBUTION_SNAPSHOT_KEYS[ind.key]
   );
-  const updated = mbFormatUpdatedHtml(cell.fetchedAt);
+  const updated = mbFormatUpdatedHtml(cell);
+  const stale = mbCellIsStale(cell);
   const hint = mbRowTooltip(ind.key, latest);
   const badges = mbSignalBadges(ind.key, latest, cell, cells);
   const badgeTitle = badges.map((b) => b.title).join(" · ");
   const helpAttr = ind.help ? ` data-help-key="${ind.help}"` : "";
   const valueTitle = fromCache ? "Latest from chart series cache" : hint;
-  return `<tr data-mb-row="${ind.key}" class="mb-table-row" tabindex="0" title="${mbEscapeAttr(hint)}">
+  return `<tr data-mb-row="${ind.key}" class="mb-table-row${stale ? " mb-table-row--stale" : ""}" tabindex="0" title="${mbEscapeAttr(hint)}">
     <td class="mb-col-indicator"${helpAttr} title="${mbEscapeAttr(hint)}">${ind.label}${ind.help ? '<button type="button" class="help-trigger help-trigger--inline" data-help-key="' + ind.help + '" aria-label="Explain">?</button>' : ""}</td>
     <td class="mono mb-col-value${fromCache ? " mb-table-value--cached" : ""}" title="${mbEscapeAttr(valueTitle)}">${mbFmtValue(latest, ind.format)}</td>
     <td class="mb-signal-col mb-col-signal" title="${mbEscapeAttr(badgeTitle)}">${mbSignalBadgesHtml(badges)}</td>
     <td class="mb-col-source">${mbSourceBadge(cell.source || ind.source, cell)}</td>
     <td class="macro-muted mb-col-updated">${updated}</td>
+    <td class="mb-col-status">${mbFormatStaleHtml(cell)}</td>
   </tr>`;
 }
 
@@ -2075,7 +2598,7 @@ function mbRenderTable() {
   const indicators = mbMergedIndicators();
   const cells = mbSnapshot?.cells || {};
   if (!indicators.length) {
-    body.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
+    body.innerHTML = '<tr><td colspan="6">Loading…</td></tr>';
     return;
   }
   const rows = mbSnapshotTableRows(indicators);
@@ -2089,20 +2612,15 @@ function mbRenderTable() {
         mbSetTab(navTab);
         return;
       }
-      const chartable = mbMergedIndicators().find((i) => i.key === key);
-      if (chartable && chartable.chartable === false) {
-        const tabBtn = document.querySelector(`.mb-subtab[data-mb-sub="${chartable.tab}"]`);
-        if (tabBtn) {
-          mbSetTab(chartable.tab);
-          return;
-        }
+      // Overview no longer hosts a detail chart — open the indicator's dedicated tab.
+      const ind = mbMergedIndicators().find((i) => i.key === key);
+      const tab = ind?.tab;
+      if (tab && tab !== "overview") {
+        mbState.indicator = key;
+        mbSelectedIndicator = key;
+        mbSaveSettings();
+        mbSetTab(tab);
       }
-      mbState.indicator = key;
-      mbSelectedIndicator = mbState.indicator;
-      const sel = mbEl("mb-indicator");
-      if (sel) sel.value = mbState.indicator;
-      mbSaveSettings();
-      if (mbActiveTab === "overview") mbRenderMainChart(true);
     };
     row.addEventListener("click", go);
     row.addEventListener("keydown", (e) => {
@@ -2129,9 +2647,12 @@ function mbRenderSnapshot() {
     const errCount = (mbSnapshot.errors || []).length;
     const indCount = mbMergedIndicators().length;
     const filled = Object.values(mbSnapshot.cells || {}).filter((c) => c?.value != null).length;
+    const autoNote = mbLastAutoRefreshAt
+      ? ` · auto-updated ${mbFormatAutoRefreshAge(mbLastAutoRefreshAt)}`
+      : " · auto-updates every 10 min";
     stats.textContent = errCount
-      ? `${filled}/${indCount} indicators live · free APIs only · ${errCount} warning(s)`
-      : `${indCount} indicators · free APIs · BGeometrics cached 24h`;
+      ? `${filled}/${indCount} indicators live · free APIs only · ${errCount} warning(s)${autoNote}`
+      : `${indCount} indicators · free APIs · store-first cache${autoNote}`;
     stats.classList.toggle("md-stats--warn", errCount > 0);
   }
   mbRenderKpis();
@@ -2250,7 +2771,8 @@ function mbOverviewSectionBullet(section) {
   const phase = section.cyclePhase;
   const forward = mbSectionPriceForward(section.tab, phase, section.outlook?.score || 0);
   const forwardText = mbStripHtml(forward).replace(/^BTC price outlook \([^)]+\):\s*/i, "");
-  return `<strong>${section.name} — ${phase.label}</strong> (${phase.confidence} confidence): ${forwardText}`;
+  const posture = section.outlook?.posture ? ` Posture: ${section.outlook.posture}.` : "";
+  return `<strong>${section.name} — ${phase?.label || "n/a"}</strong> (${phase?.confidence || "low"} confidence): ${forwardText}${posture}`;
 }
 
 async function mbLoadOverviewContext(force = false) {
@@ -2318,6 +2840,290 @@ async function mbLoadOverviewContext(force = false) {
   return { valuation, intelligence, miner, onchainCharts, mempool, sentimentCtx };
 }
 
+/**
+ * Hybrid Overview brief: rule-based cycle/score model + narrative synthesis.
+ * Pulls live readings when available so the prose is evidence-backed, not a slogan list.
+ */
+function mbOverviewFactPack(ctx) {
+  const cells = mbSnapshot?.cells || {};
+  const vCharts = ctx.valuation?.charts || {};
+  const oCharts = ctx.onchainCharts || {};
+  const iCharts = ctx.intelligence?.charts || {};
+  const mCharts = ctx.miner?.charts || {};
+  const sCtx = ctx.sentimentCtx || {};
+
+  const num = (key, chartData, cellKey) => {
+    const fromSeries = mbIntelSeriesContext(key, chartData)?.latest;
+    if (fromSeries != null && Number.isFinite(Number(fromSeries))) return Number(fromSeries);
+    const cell = cells[cellKey || key];
+    const v = mbCellLatestValue(key, cell || {});
+    return v != null && Number.isFinite(Number(v)) ? Number(v) : null;
+  };
+
+  return {
+    mvrv: num("mvrv", vCharts.mvrv),
+    mvrvZ: num("mvrv_z_score", vCharts.mvrv_z_score),
+    nupl: num("nupl", vCharts.nupl),
+    sopr: num("sopr", vCharts.sopr),
+    supplyProfit: num("supply_in_profit", vCharts.supply_in_profit),
+    netflow: num("exchange_netflow", oCharts.exchange_netflow),
+    exBal: num("exchange_balance", oCharts.exchange_balance),
+    active: num("active_addresses", oCharts.active_addresses),
+    puell: num("puell_multiple", oCharts.puell_multiple || mCharts.puell_multiple),
+    asopr: num("asopr", iCharts.asopr),
+    vdd: num("vdd_multiple", iCharts.vdd_multiple),
+    sthMvrv: num("sth_mvrv", iCharts.sth_mvrv),
+    lthMvrv: num("lth_mvrv", iCharts.lth_mvrv),
+    hashprice: num("hashprice", mCharts.hashprice),
+    hashrate: num("hashrate_bg", mCharts.hashrate_bg) ?? num("hash_rate", oCharts.hash_rate),
+    fng: sCtx.fngVal != null ? Number(sCtx.fngVal) : num("fear_greed", null),
+    dominance: num("btc_dominance", sCtx.charts?.btc_dominance),
+    etf: num("etf_flow_btc", sCtx.charts?.etf_flow_btc),
+    funding: sCtx.funding != null ? Number(sCtx.funding) : num("funding_rate", null),
+  };
+}
+
+function mbOverviewValuationNarrative(facts) {
+  const parts = [];
+  if (facts.mvrv != null) {
+    if (facts.mvrv >= 3.5) {
+      parts.push(
+        `MVRV is elevated at ${mbFmtValue(facts.mvrv, "ratio")}, placing market value well above the aggregate on-chain cost basis. `
+        + "In prior cycles, sustained readings in this neighborhood often coincided with late-stage distribution risk rather than early accumulation.",
+      );
+    } else if (facts.mvrv < 1) {
+      parts.push(
+        `MVRV sits at ${mbFmtValue(facts.mvrv, "ratio")}, below 1.0, so the average coin is underwater relative to its last on-chain move price. `
+        + "That condition has historically clustered with multi-month accumulation windows once forced selling exhausts, though the path can remain volatile.",
+      );
+    } else if (facts.mvrv >= 2) {
+      parts.push(
+        `MVRV is ${mbFmtValue(facts.mvrv, "ratio")} — rich versus realized capital, but not yet in the most extreme historical blow-off bands. `
+        + "Profit-taking pressure can build here without automatically ending the trend.",
+      );
+    } else {
+      parts.push(
+        `MVRV is ${mbFmtValue(facts.mvrv, "ratio")}, a mid-range reading versus holder cost basis. `
+        + "Valuation alone neither argues for aggressive risk-on nor for deep-value accumulation; other lenses decide the tilt.",
+      );
+    }
+  }
+  if (facts.nupl != null) {
+    if (facts.nupl >= 0.75) {
+      parts.push(
+        `NUPL at ${mbFmtValue(facts.nupl, "ratio")} implies widespread paper profits across the network (euphoria territory in classic cycle maps).`,
+      );
+    } else if (facts.nupl <= 0) {
+      parts.push(
+        `NUPL at ${mbFmtValue(facts.nupl, "ratio")} shows the network underwater on aggregate unrealized P/L — a stress reading that has often marked better multi-quarter risk/reward after capitulation completes.`,
+      );
+    } else if (facts.nupl >= 0.5) {
+      parts.push(
+        `NUPL at ${mbFmtValue(facts.nupl, "ratio")} is consistent with broad optimism: most holders sit on gains, so incremental selling can appear on strength.`,
+      );
+    }
+  }
+  if (facts.sopr != null) {
+    if (facts.sopr >= 1.05) {
+      parts.push(
+        `SOPR at ${mbFmtValue(facts.sopr, "ratio")} indicates coins that are moving are doing so at a profit — realized profit-taking is active, not merely paper gains.`,
+      );
+    } else if (facts.sopr < 1) {
+      parts.push(
+        `SOPR at ${mbFmtValue(facts.sopr, "ratio")} shows loss-driven spends on the coins that are moving, a pattern that has historically clustered near local washouts when sustained.`,
+      );
+    }
+  }
+  if (!parts.length) {
+    return "Valuation series are incomplete in the current store, so this lens is under-weighted until MVRV/NUPL/SOPR repopulate.";
+  }
+  return parts.join(" ");
+}
+
+function mbOverviewFlowNarrative(facts) {
+  const parts = [];
+  if (facts.netflow != null) {
+    if (facts.netflow >= 5000) {
+      parts.push(
+        `Exchange netflow is strongly positive (${mbFmtValue(facts.netflow, "btc")} BTC), meaning deposits are outpacing withdrawals and liquid sell-side inventory may be building on venues.`,
+      );
+    } else if (facts.netflow <= -5000) {
+      parts.push(
+        `Exchange netflow is strongly negative (${mbFmtValue(facts.netflow, "btc")} BTC), consistent with coins leaving exchanges toward self-custody — a medium-term float-tightening signal when it persists for weeks.`,
+      );
+    } else if (facts.netflow > 0) {
+      parts.push(`Exchange netflow is mildly positive (${mbFmtValue(facts.netflow, "btc")} BTC): a slight deposit bias without a blow-off inventory event.`);
+    } else if (facts.netflow < 0) {
+      parts.push(`Exchange netflow is mildly negative (${mbFmtValue(facts.netflow, "btc")} BTC): a modest withdrawal bias that supports accumulation narratives if it continues.`);
+    } else {
+      parts.push("Exchange netflow is roughly balanced today — neither a clear deposit wave nor a clear withdrawal wave.");
+    }
+  }
+  if (facts.etf != null) {
+    if (facts.etf >= 1000) {
+      parts.push(
+        `US spot ETF net flow is strongly positive (${mbFmtValue(facts.etf, "btc")} BTC), a post-2024 institutional demand channel that can absorb supply even when on-chain distribution appears.`,
+      );
+    } else if (facts.etf <= -1000) {
+      parts.push(
+        `US spot ETF net flow is strongly negative (${mbFmtValue(facts.etf, "btc")} BTC), implying redemptions and structured selling pressure through wrappers.`,
+      );
+    } else if (facts.etf > 0) {
+      parts.push(`ETF net flow is modestly positive (${mbFmtValue(facts.etf, "btc")} BTC), adding incremental institutional bid without a surge.`);
+    } else if (facts.etf < 0) {
+      parts.push(`ETF net flow is modestly negative (${mbFmtValue(facts.etf, "btc")} BTC), a mild headwind from the institutional channel.`);
+    }
+  }
+  if (facts.asopr != null && facts.asopr >= 1.03) {
+    parts.push(
+      `ASOPR at ${mbFmtValue(facts.asopr, "ratio")} reinforces that adjusted spent outputs are realizing profit after noise filters — cleaner evidence of sell-side crystallization than raw SOPR alone.`,
+    );
+  } else if (facts.asopr != null && facts.asopr < 0.98) {
+    parts.push(
+      `ASOPR at ${mbFmtValue(facts.asopr, "ratio")} points to loss realization on cleaner spent-output data, often associated with capitulation-style selling when it persists.`,
+    );
+  }
+  if (facts.vdd != null && facts.vdd >= 2.5) {
+    parts.push(
+      `VDD Multiple at ${mbFmtValue(facts.vdd, "ratio")} is elevated, flagging above-normal movement of old, seasoned coins — a distribution-sensitive reading when it coincides with rich LTH profits.`,
+    );
+  }
+  if (!parts.length) {
+    return "Flow and cohort series are sparse right now; treat inventory and spending conclusions as provisional until netflow, ETF, and ASOPR data refresh.";
+  }
+  return parts.join(" ");
+}
+
+function mbOverviewMinerSentimentNarrative(facts, minerPhase, sentimentPhase) {
+  const parts = [];
+  if (facts.puell != null) {
+    if (facts.puell >= 4) {
+      parts.push(
+        `The Puell Multiple at ${mbFmtValue(facts.puell, "ratio")} shows miner revenue far above its one-year average — historically a late-cycle heat reading for the security budget.`,
+      );
+    } else if (facts.puell <= 0.5) {
+      parts.push(
+        `The Puell Multiple at ${mbFmtValue(facts.puell, "ratio")} is depressed, consistent with miner income stress that has often preceded or accompanied local market bottoms when hash rate also softens.`,
+      );
+    } else {
+      parts.push(
+        `The Puell Multiple at ${mbFmtValue(facts.puell, "ratio")} sits in a mid-range band: miners are neither in extreme distress nor in euphoric income territory.`,
+      );
+    }
+  }
+  if (minerPhase?.label) {
+    parts.push(
+      `Miner regime classification is <strong>${minerPhase.label}</strong> (${minerPhase.confidence} confidence): ${minerPhase.blurb}`,
+    );
+  }
+  if (facts.fng != null) {
+    const band =
+      facts.fng >= 75 ? "extreme greed"
+        : facts.fng >= 56 ? "greed"
+          : facts.fng <= 24 ? "extreme fear"
+            : facts.fng <= 44 ? "fear"
+              : "neutral";
+    parts.push(
+      `Crypto Fear & Greed is ${mbFmtValue(facts.fng, "score")} (${band}). `
+      + "Sustained extremes matter more than a single print: multi-week fear has often improved multi-quarter entry context, while multi-week greed raises the cost of being late-cycle long.",
+    );
+  }
+  if (facts.funding != null) {
+    if (facts.funding >= 0.05) {
+      parts.push(
+        `Median perpetual funding at ${mbFmtValue(facts.funding, "funding")} is elevated and positive, so crowded longs are paying for leverage — a fragile positioning setup on sharp reversals.`,
+      );
+    } else if (facts.funding <= -0.01) {
+      parts.push(
+        `Median funding at ${mbFmtValue(facts.funding, "funding")} is negative, meaning shorts pay longs — a configuration that can fuel short-covering rallies if spot lifts.`,
+      );
+    }
+  }
+  if (facts.dominance != null) {
+    parts.push(
+      `BTC dominance is ${mbFmtValue(facts.dominance, "pct")}`
+      + (facts.dominance >= 55
+        ? ", consistent with Bitcoin-led leadership versus alts."
+        : facts.dominance <= 45
+          ? ", consistent with capital rotating toward higher-beta alternatives."
+          : ", without a decisive leadership regime between BTC and alts."),
+    );
+  }
+  if (sentimentPhase?.label) {
+    parts.push(
+      `Sentiment regime is classified as <strong>${sentimentPhase.label}</strong>: ${sentimentPhase.blurb}`,
+    );
+  }
+  if (!parts.length) {
+    return "Miner and sentiment inputs are incomplete; network-security and positioning conclusions should wait for the next data refresh.";
+  }
+  return parts.join(" ");
+}
+
+function mbOverviewAgreementNarrative(sections, constructiveTabs, cautiousTabs, aggregatePhase) {
+  const total = sections.length;
+  const labels = sections.map((s) => `${s.name} → ${s.cyclePhase?.label || "n/a"}`).join("; ");
+  const phases = sections.map((s) => s.canonicalPhase || s.cyclePhase?.phase).filter(Boolean);
+  const unique = [...new Set(phases)];
+  let agreement;
+  if (unique.length === 1) {
+    agreement =
+      `All five analytical domains currently map to the same cycle family (<strong>${unique[0]}</strong>). `
+      + "That kind of cross-lens alignment is uncommon and usually warrants higher confidence in the regime call, even when absolute levels differ.";
+  } else if (unique.length === 2) {
+    agreement =
+      `Domains split mainly between <strong>${unique[0]}</strong> and <strong>${unique[1]}</strong>. `
+      + "Partial agreement is normal mid-transition; weight valuation and capital-flow evidence more heavily when choosing risk posture.";
+  } else {
+    agreement =
+      "Domains are fragmented across multiple cycle labels. "
+      + "Fragmentation usually means the market is mid-transition or that different parts of the stack (miners vs holders vs leverage) are desynchronized — a reason to keep conviction moderate.";
+  }
+  return (
+    `Cross-tab score tilt: ${constructiveTabs} of ${total} domains lean constructive (score ≥ +2) and ${cautiousTabs} lean cautious (score ≤ −2). `
+    + `Domain phase map: ${labels}. ${agreement} `
+    + `The hybrid aggregator’s headline regime is <strong>${aggregatePhase.label}</strong> with ${aggregatePhase.confidence} confidence.`
+  );
+}
+
+function mbOverviewHybridPriceOutlook(aggregatePhase, sections, facts) {
+  const base = mbStripHtml(mbOverviewPriceForward(aggregatePhase, sections))
+    .replace(/^BTC price outlook \([^)]+\):\s*/i, "");
+  const caveats = [];
+  if (facts.mvrv != null && facts.mvrv >= 3 && facts.fng != null && facts.fng >= 70) {
+    caveats.push(
+      "Valuation richness and elevated greed are aligned, which historically raises the cost of chasing strength without a clear demand catalyst (ETF inflows or sustained exchange outflows).",
+    );
+  }
+  if (facts.mvrv != null && facts.mvrv < 1.2 && facts.fng != null && facts.fng <= 30) {
+    caveats.push(
+      "Cheap-to-fair valuation alongside fear is a classic multi-horizon constructive setup, but it still requires patience for volatility and confirmation from flows.",
+    );
+  }
+  if (facts.etf != null && facts.etf <= -1000 && facts.netflow != null && facts.netflow >= 3000) {
+    caveats.push(
+      "Simultaneous ETF outflows and exchange deposits form a double headwind for near-term spot absorption.",
+    );
+  }
+  if (facts.etf != null && facts.etf >= 1000 && facts.netflow != null && facts.netflow <= -3000) {
+    caveats.push(
+      "ETF demand plus exchange withdrawals is a constructive absorption stack when both persist beyond a few sessions.",
+    );
+  }
+  if (facts.puell != null && facts.puell <= 0.5) {
+    caveats.push(
+      "Miner income stress can lead spot by weeks; watch for hash-rate stabilization before treating any bounce as durable.",
+    );
+  }
+  const caveatText = caveats.length
+    ? ` Conditional overlays from the rule set: ${caveats.join(" ")}`
+    : " No extreme multi-factor conflict was flagged beyond the headline regime; still prefer multi-week confirmation over single-day prints.";
+  return (
+    `${base} ${caveatText} `
+    + "This is an educational hybrid of cycle classification, domain scores, and threshold rules — not a trading signal or price target."
+  );
+}
+
 function mbBuildOverviewExecutiveSummary(ctx) {
   const valuationPhase = mbDetectValuationPhase(ctx.valuation?.charts || {});
   const onchainPhase = mbDetectOnchainPhase(ctx.onchainCharts, ctx.mempool);
@@ -2373,16 +3179,34 @@ function mbBuildOverviewExecutiveSummary(ctx) {
   const aggregatePhase = mbAggregateOverviewCyclePhase(sections);
   const constructiveTabs = sections.filter((s) => (s.outlook?.score || 0) >= 2).length;
   const cautiousTabs = sections.filter((s) => (s.outlook?.score || 0) <= -2).length;
+  const facts = mbOverviewFactPack(ctx);
 
   const lines = [
-    "This executive summary aggregates the cycle-phase estimates and forward conclusions from all five analytical tabs below. "
-    + "It is designed as a single read on where BTC sits in the accumulation → markup → distribution → capitulation cycle.",
-    `<strong>Where we are in the cycle:</strong> ${aggregatePhase.blurb}`,
-    "Section consensus — each row mirrors that tab's bottom-panel conclusion:",
+    "This Overview brief is a hybrid synthesis: a rules-based cycle classifier across five domains, "
+    + "threshold checks on key series (valuation, flows, miner income, sentiment, leverage), "
+    + "and a narrative layer that ties those readings into one coherent market regime. "
+    + "It is meant as a desk memo for risk discussion, not a trade ticket.",
+
+    `<strong>Regime call — ${aggregatePhase.label}</strong> (${aggregatePhase.confidence} confidence). `
+    + `${aggregatePhase.blurb} `
+    + mbCyclePhaseExplain(aggregatePhase),
+
+    `<strong>Valuation evidence.</strong> ${mbOverviewValuationNarrative(facts)}`,
+
+    `<strong>Flows, inventory, and spent behavior.</strong> ${mbOverviewFlowNarrative(facts)}`,
+
+    `<strong>Miners, security budget, and market psychology.</strong> ${mbOverviewMinerSentimentNarrative(facts, minerPhaseRaw, sentimentPhase)}`,
+
+    `<strong>Cross-domain agreement.</strong> ${mbOverviewAgreementNarrative(sections, constructiveTabs, cautiousTabs, aggregatePhase)}`,
+
+    `<strong>Domain detail</strong> (each line is that tab’s independent phase and posture):`,
     ...sections.map((s) => mbOverviewSectionBullet(s)),
-    `Tab score tilt: ${constructiveTabs} of ${sections.length} tabs lean constructive (score ≥ +2), ${cautiousTabs} cautious (score ≤ −2).`,
-    mbOverviewPriceForward(aggregatePhase, sections),
-    `Automated synthesis from BGeometrics, Blockchain.info, Coin Metrics, Santiment, and Alternative.me — educational only. Timespan: ${mbState.timespan}.`,
+
+    `<strong>Forward view for BTC price.</strong> ${mbOverviewHybridPriceOutlook(aggregatePhase, sections, facts)}`,
+
+    "Method note: domain phases come from heuristic score models on free public series (BGeometrics, Blockchain.info, Coin Metrics, Santiment when configured, Alternative.me, exchange APIs). "
+    + "Scores are directional and educational; they do not replace primary research, liquidity analysis, or position sizing. "
+    + "Data auto-updates from the local series store — prefer multi-week evidence over single-day noise.",
   ];
 
   return { lines, cyclePhase: aggregatePhase, sections };
@@ -2411,61 +3235,14 @@ async function mbRenderOverviewExecutiveSummary(force = false) {
     if (requestId !== mbOverviewSummaryRequest) return;
     if (headEl) headEl.innerHTML = "";
     mbRenderCommentaryEl("mb-overview-commentary", [
-      `Executive summary unavailable — ${err.message || "error"}. Press Refresh or open each tab to load data.`,
+      `Executive summary unavailable — ${err.message || "error"}. `
+      + "Open each Valuation sub-tab once so data can load, or wait for the next automatic update.",
     ]);
   }
 }
 
-async function mbRenderMainChart(force = false) {
-  if (mbActiveTab !== "overview") return;
-
-  const el = mbEl("mb-main-chart");
-  const titleEl = mbEl("mb-chart-title");
-  const metaEl = mbEl("mb-chart-meta");
-  if (!el || !window.Plotly) return;
-
-  const indicator = mbState.indicator;
-  const ind = mbIndicatorMeta(indicator);
-  const requestId = ++mbMainChartRequest;
-
-  if (titleEl) titleEl.textContent = ind.label;
-  mbSetChartMessage(el, "Loading chart…");
-
-  try {
-    const data = await mbLoadSeries(indicator, mbState.timespan, force);
-    if (requestId !== mbMainChartRequest) return;
-
-    if (metaEl) {
-      metaEl.textContent = `${data.source || ind.source}${data.note ? ` · ${data.note}` : ""}${data.stale ? " · cached" : ""}`;
-    }
-    const series = mbFilterSeriesByTimespan(data.series || [], mbState.timespan);
-    const valid = series.filter((p) => p.value != null && Number.isFinite(Number(p.value)));
-    if (!valid.length) {
-      mbSetChartMessage(el, `No series data — ${mbFormatSeriesError(data.error)}`);
-      return;
-    }
-    if (valid.length < 2) {
-      const note = data.note || "This metric is a live snapshot only.";
-      const val = mbFmtValue(valid[0].value, ind.format);
-      mbSetChartMessage(el, `${ind.label}: ${val} — ${note} Open the ${ind.tab ? ind.tab.replace("_", " ") : "dedicated"} tab for full context.`);
-      return;
-    }
-    const trace = mbSeriesToPlotly(series, "#e879f9", indicator, {
-      source: data.source || ind.source,
-      stale: data.stale,
-    });
-    if (!trace) {
-      mbSetChartMessage(el, `Chart data has invalid dates — ${mbFormatSeriesError(data.error)}`);
-      return;
-    }
-    const staleNote = data.stale ? " · cached" : "";
-    const layout = mbPlotLayout(`${ind.label}${staleNote}`, 360, { yTitle: ind.unit });
-    mbPrepareChartEl(el);
-    await Plotly.react(el, [trace], layout, MB_PLOTLY_CONFIG);
-  } catch (err) {
-    if (requestId !== mbMainChartRequest) return;
-    mbSetChartMessage(el, `Chart failed — ${err.message || "error"}`);
-  }
+async function mbRenderMainChart(_force = false) {
+  // Overview detail chart removed — full series live on each dedicated Valuation sub-tab.
 }
 
 function mbRenderDistribution() {
@@ -2487,7 +3264,10 @@ function mbRenderDistribution() {
   if (cohortDesc && !cohortDesc.textContent) {
     cohortDesc.textContent = [cohortInfo.description, cohortInfo.readings].filter(Boolean).join(" ");
   }
-  if (meta) meta.textContent = `${mbDistribution.source || "BitInfoCharts"} · ${mbDistribution.note || ""}`.slice(0, 120);
+  if (meta) {
+    const note = (mbDistribution.note || "address-level snapshot").trim();
+    meta.textContent = `${mbDistribution.source || "BitInfoCharts"} · ${note}`.slice(0, 140);
+  }
 
   if (wealthEl) {
     const labels = ["Top 10", "Top 100", "Top 1,000", "Top 10,000"];
@@ -2533,6 +3313,7 @@ function mbRenderDistribution() {
       c.btc != null ? `${c.btc.toLocaleString()} BTC` : "—",
       cohortInfo.source || "BitInfoCharts",
     ]);
+    cohortEl.classList.add("mb-plotly--tall", "mb-cohort-chart");
     Plotly.react(
       cohortEl,
       [{
@@ -2540,10 +3321,17 @@ function mbRenderDistribution() {
         values: supply,
         customdata,
         type: "pie",
-        hole: 0.45,
-        textinfo: "label+percent",
-        textposition: "outside",
-        marker: { colors: supply.map((_, i) => `hsl(${(i * 37) % 360}, 65%, 55%)`) },
+        hole: 0.42,
+        sort: false,
+        direction: "clockwise",
+        textinfo: "percent",
+        textposition: "inside",
+        insidetextorientation: "horizontal",
+        textfont: { size: 11, color: "#0f172a" },
+        marker: {
+          colors: supply.map((_, i) => `hsl(${(i * 37) % 360}, 62%, 52%)`),
+          line: { color: "rgba(15, 23, 42, 0.55)", width: 1 },
+        },
         hovertemplate:
           "<b>%{label}</b><br>" +
           "Supply: %{percent}<br>" +
@@ -2552,7 +3340,23 @@ function mbRenderDistribution() {
           "<span style='font-size:10px;color:#94a3b8'>Source: %{customdata[3]}</span>" +
           "<extra></extra>",
       }],
-      mbPlotLayoutPie("Wallet cohorts · % of supply", 380),
+      mbPlotLayoutPie("Wallet cohorts · % of supply", 560, {
+        showlegend: true,
+        margin: { l: 24, r: 200, t: 48, b: 28 },
+        legend: {
+          orientation: "v",
+          x: 1.01,
+          y: 0.5,
+          yanchor: "middle",
+          xanchor: "left",
+          font: { size: 11, color: "#cbd5e1" },
+          bgcolor: "rgba(0,0,0,0)",
+          borderwidth: 0,
+          traceorder: "normal",
+          itemclick: false,
+          itemdoubleclick: false,
+        },
+      }),
       MB_PLOTLY_CONFIG,
     );
   } else if (cohortEl) {
@@ -2560,17 +3364,19 @@ function mbRenderDistribution() {
   }
 
   if (table) {
-    table.innerHTML = cohorts
-      .map(
-        (c) => `<tr>
-        <td class="mono">${c.range}</td>
+    table.innerHTML = cohorts.length
+      ? cohorts
+          .map(
+            (c) => `<tr class="mb-cohort-row">
+        <td class="mb-cohort-col-range">${c.range || "—"}</td>
         <td class="mono">${(c.addresses || 0).toLocaleString()}</td>
-        <td class="mono">${c.addresses_pct?.toFixed(2) ?? "—"}%</td>
-        <td class="mono">${c.btc?.toLocaleString(undefined, { maximumFractionDigits: 0 }) ?? "—"}</td>
-        <td class="mono">${c.supply_pct?.toFixed(2) ?? "—"}%</td>
+        <td class="mono">${c.addresses_pct != null ? `${c.addresses_pct.toFixed(2)}%` : "—"}</td>
+        <td class="mono">${c.btc != null ? c.btc.toLocaleString(undefined, { maximumFractionDigits: 0 }) : "—"}</td>
+        <td class="mono">${c.supply_pct != null ? `${c.supply_pct.toFixed(2)}%` : "—"}</td>
       </tr>`,
-      )
-      .join("");
+          )
+          .join("")
+      : '<tr><td colspan="5" class="mb-cohort-empty">Cohort breakdown unavailable</td></tr>';
   }
 
   const top10 = Number(wealth.top10_pct);
@@ -2598,7 +3404,6 @@ function mbRenderDistribution() {
     ],
     { key: "wallet_cohorts", latest: topCohort?.supply_pct },
   );
-  mbRenderAllChartEducation(["wealth_concentration", "wallet_cohorts"]);
 }
 
 function mbRenderDualChart(elId, keyA, keyB, dataA, dataB, colors, displayKey) {
@@ -2639,20 +3444,23 @@ function mbRenderDualChart(elId, keyA, keyB, dataA, dataB, colors, displayKey) {
     mbSetChartMessage(el, mbFormatSeriesError(dataA?.error || dataB?.error || "No data"));
     return;
   }
-  const staleNote = (dataA?.stale || dataB?.stale) ? " · cached" : "";
-  const tall = el.classList.contains("mb-plotly--tall");
+  const unified = mbIsUnifiedChartPanel(el) || MB_CONSOLIDATED_COPY_KEYS.has(showKey);
   mbPrepareChartEl(el);
+  el.classList.toggle("mb-plotly--onchain", !!unified);
   Plotly.react(
     el,
     traces,
-    mbPlotLayout(staleNote ? `Dual cohort view${staleNote}` : "", tall ? MB_CHART_HEIGHT : 300, {
+    mbPlotLayout("", unified ? MB_ONCHAIN_CHART_HEIGHT : (el.classList.contains("mb-plotly--tall") ? MB_CHART_HEIGHT : 300), {
       yTitle: metaA.unit || metaB.unit || "",
       showLegend: true,
       rangeSlider: mbChartUsesRangeSlider(el),
+      compact: !!unified,
     }),
     MB_PLOTLY_CONFIG,
   );
-  mbRenderChartEducation(showKey);
+  if (!MB_CONSOLIDATED_COPY_KEYS.has(showKey)) {
+    mbRenderChartEducation(showKey);
+  }
 }
 
 function mbRenderSingleChart(elId, indicator, color, data, displayKey) {
@@ -2679,26 +3487,32 @@ function mbRenderSingleChart(elId, indicator, color, data, displayKey) {
   const staleNote = data.stale ? " · cached" : "";
   const rateNote = data.note && /rate limit|429/i.test(String(data.note)) ? " · rate-limited" : "";
   const tall = el.classList.contains("mb-plotly--tall");
+  const unified = mbIsUnifiedChartPanel(el) || MB_CONSOLIDATED_COPY_KEYS.has(showKey);
+  // Panel headers already name the series — skip redundant Plotly titles on unified tabs.
+  const layoutTitle = unified ? "" : `${meta.label}${staleNote}${rateNote}`;
+  const height = unified ? MB_ONCHAIN_CHART_HEIGHT : tall ? MB_CHART_HEIGHT : 300;
   mbPrepareChartEl(el);
+  el.classList.toggle("mb-plotly--onchain", !!unified);
   Plotly.react(
     el,
     [trace],
-    mbPlotLayout(`${meta.label}${staleNote}${rateNote}`, tall ? MB_CHART_HEIGHT : 300, {
-      yTitle: meta.unit,
+    mbPlotLayout(layoutTitle, height, {
+      yTitle: meta.unit || "",
       rangeSlider: mbChartUsesRangeSlider(el),
+      compact: !!unified,
     }),
     MB_PLOTLY_CONFIG,
   );
-  mbRenderChartEducation(showKey);
+  if (!MB_CONSOLIDATED_COPY_KEYS.has(showKey)) {
+    mbRenderChartEducation(showKey);
+  }
 }
 
 function mbBuildValuationChartCommentary(key, chartData, charts = {}) {
   const seriesKey = key === "hodl_waves_1y_plus" ? "hodl_waves" : key;
   const ctx = mbIntelSeriesContext(key === "hodl_waves_1y_plus" ? "hodl_waves_1y_plus" : key, chartData);
   if (!ctx) {
-    return [chartData?.error
-      ? `Data unavailable (${String(chartData.error).slice(0, 100)}).`
-      : "Waiting for series data — run Refresh or check BGeometrics limits."];
+    return [mbSeriesUnavailableMessage(chartData, mbIndicatorMeta(key).label)];
   }
   const { latest, fmt, reading, trend, series } = ctx;
   const pct90 = mbIntelPctVs90(series);
@@ -2706,33 +3520,37 @@ function mbBuildValuationChartCommentary(key, chartData, charts = {}) {
   const cells = mbSnapshot?.cells || {};
   const mvrvCtx = mbIntelSeriesContext("mvrv", charts.mvrv);
   const mvrv = mvrvCtx?.latest ?? Number(cells.mvrv?.value);
+  const liveLead = `Live reading: ${mbFmtValue(latest, fmt)}${trend}${trendPhrase ? ` — ${trendPhrase}` : ""}.`;
 
   switch (key) {
     case "mvrv":
       return [
-        `MVRV is ${mbFmtValue(latest, fmt)}${trend}. `
+        liveLead
+        + " "
         + (latest >= 3.5
           ? "Price is far above aggregate holder cost — this band historically marked prior cycle tops and heavy distribution risk."
           : latest >= 2
             ? "Network is richly valued vs realized cap — profit-taking pressure tends to build in this zone."
             : latest < 1
-              ? "Spot trades below average on-chain cost basis — historically a deep-value / accumulation zone."
+              ? "Spot trades below average on-chain cost basis — historically a deep-value / accumulation zone for multi-quarter horizons."
               : latest < 1.5
                 ? "Fair-value band — price modestly above holder cost without extreme overheating."
                 : "Mid-cycle valuation — elevated but not yet in blow-off territory."),
-        reading || "Market cap ÷ realized cap — the core BTC cycle valuation ratio.",
+        "Practical use: treat MVRV as regime context (cheap / fair / rich), not a day-trade trigger. Confirm with NUPL, SOPR, and ETF flows before changing risk.",
+        reading || "",
       ];
     case "mvrv_z_score":
       return [
-        `MVRV Z-Score: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        liveLead
+        + " "
         + (latest >= 7
           ? "Statistically extreme versus history — prior cycle tops often printed in this zone."
           : latest >= 3
             ? "Overheated vs long-run mean — valuation is stretched on a sigma basis."
             : latest <= -0.5
-              ? "Below historical mean — statistically cheap; accumulation-friendly context."
+              ? "Below historical mean — statistically cheap; accumulation-friendly context for patient capital."
               : "Within normal historical deviation — no sigma extreme."),
-        "Normalizes MVRV across eras — useful when raw MVRV alone is ambiguous.",
+        "Practical use: when raw MVRV looks ambiguous across eras, the Z-score tells you how unusual the reading is. Extreme Z without confirming distribution (SOPR, VDD, ETF outflows) is a warning, not a trade by itself.",
       ];
     case "realized_price": {
       const spot = Number.isFinite(mvrv) && latest != null ? latest * mvrv : null;
@@ -2744,51 +3562,56 @@ function mbBuildValuationChartCommentary(key, chartData, charts = {}) {
             : ` Implied spot ~${mbFmtValue(spot, "usd")} is above realized price — network in aggregate profit.`)
         : "";
       return [
-        `Realized price: ${mbFmtValue(latest, fmt)}${trend}.${spotNote}`,
-        "Volume-weighted average cost basis of circulating BTC — a long-term support/resistance anchor in bear markets.",
+        `Live reading: realized price ${mbFmtValue(latest, fmt)}${trend}.${spotNote}`,
+        "Practical use: watch how spot behaves around this level in bear markets — repeated defenses can mark structural support. In bulls, distance above realized price is a rough “how far from cost basis” thermometer (same family as MVRV).",
       ];
     }
     case "hodl_waves_1y_plus":
       return [
-        `Supply aged 1y+: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        liveLead
+        + " "
         + (latest >= 65
           ? "High long-term holder share — less short-term supply likely to hit market; HODL conviction strong."
           : latest <= 55
             ? "Younger supply is active — more coins moved recently; distribution or rotation risk rises."
             : "Balanced holder-age mix — neither extreme HODL nor heavy young-supply activation."),
-        "Sharp drops can signal old coins waking up; rises often align with accumulation phases.",
+        "Practical use: a sudden drop in 1y+ supply means old coins are spending — check VDD Multiple and LTH NUPL for distribution confirmation. A steady rise often accompanies quiet accumulation phases.",
       ];
     case "nupl":
       return [
-        `NUPL: ${mbFmtValue(latest, fmt)}${trend}. `
+        liveLead
+        + " "
         + (latest >= 0.75
           ? "Euphoria zone — extreme unrealized profit; psychology and sell pressure risk are elevated."
           : latest >= 0.5
             ? "Optimism / belief zone — holders broadly profitable; profit-taking becomes more likely."
             : latest <= 0
-              ? "Capitulation zone — network underwater on average; contrarian bottoming context."
+              ? "Capitulation zone — network underwater on average; contrarian bottoming context for long horizons."
               : "Hope / recovery — paper profits rebuilding but not yet euphoric."),
-        reading || "Net unrealized P/L as a share of market cap — maps market psychology across cycles.",
+        "Practical use: NUPL is a psychology map. Combine with SOPR (are people actually selling at profit?) before treating a high NUPL as active distribution.",
+        reading || "",
       ];
     case "sopr":
       return [
-        `SOPR: ${mbFmtValue(latest, fmt)}${trend}. `
+        liveLead
+        + " "
         + (latest >= 1.05
           ? "Coins are moving at a profit — profit-taking dominates on-chain spends."
           : latest < 1
             ? "Loss-driven moves — capitulation selling; historically clusters near local lows."
             : "Near breakeven (1.0) — neither aggressive profit-taking nor loss selling."),
-        "Spent Output Profit Ratio — whether moved coins sold above or below their cost basis.",
+        "Practical use: SOPR only reflects coins that moved. A high NUPL with SOPR near 1 can mean holders are profitable but not yet spending — different risk than high SOPR profit-taking.",
       ];
     case "supply_in_profit":
       return [
-        `Supply in profit: ${mbFmtValue(latest, fmt)}${trend}. `
+        liveLead
+        + " "
         + (latest >= 95
           ? "Nearly all supply is profitable — distribution risk rises as every holder can take gains."
           : latest <= 50
             ? "Majority underwater — stress breadth consistent with bear-market floors."
             : "Mixed profit/loss supply — no extreme breadth signal."),
-        "Complements MVRV/NUPL — measures how much supply can theoretically sell at a gain today.",
+        "Practical use: this is a breadth gauge of who can sell green. Extreme highs increase overhead supply risk; extreme lows often coincide with better multi-month asymmetry for long-term exposure.",
       ];
     default:
       return [`${mbIndicatorMeta(key).label}: ${mbFmtValue(latest, fmt)}${trend}. ${reading || mbShortReading(seriesKey)}`];
@@ -2909,28 +3732,22 @@ function mbBuildValuationOutlook(bundle, extraEntries = []) {
   return mbSynthesizeSectionOutlook({
     tab: "valuation",
     intro:
-      "Valuation & Cycles tracks how far spot sits above aggregate holder cost (MVRV, realized price), "
-      + "how profitable the network is on paper (NUPL, supply in profit), and whether coins move at a profit or loss (SOPR). "
-      + "The synthesis below reflects each chart's live conclusion.",
+      "This is the Valuation & Cycles desk brief. It answers: is Bitcoin cheap, fair, or rich versus what holders paid on average, "
+      + "and are people actually selling at a profit or a loss? "
+      + "Core tools: MVRV and realized price (cost basis), NUPL and supply-in-profit (paper gains), SOPR (realized spends), and HODL waves (patient vs hot money). "
+      + "If you are newer to Bitcoin, start with the cycle phase, then MVRV, then SOPR.",
     chartEntries,
     cyclePhase,
     score,
     posture,
-    footer: `Automated commentary from BGeometrics — educational only. Timespan: ${mbState.timespan}. Pair with On-Chain Intelligence for cohort-level confirmation.`,
+    footer: "Source family: BGeometrics. Pair with On-Chain Intelligence (cohorts) when you need short-term vs long-term holder detail.",
   });
 }
 
 function mbRenderValuationCommentary(bundle, extraEntries = []) {
   mbTabOutlookState.valuation = bundle;
   const entries = mbValuationChartEntries(bundle, extraEntries);
-  for (const entry of entries) {
-    if (entry.elId) {
-      mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
-    }
-  }
-  mbRenderAllChartEducation([
-    "mvrv", "mvrv_z_score", "realized_price", "hodl_waves_1y_plus", "nupl", "sopr", "supply_in_profit",
-  ]);
+  for (const entry of entries) mbRenderEntryCommentary(entry);
   mbRenderTabOutlook("mb-valuation-outlook-head", "mb-valuation-commentary", mbBuildValuationOutlook(bundle, extraEntries));
 }
 
@@ -2996,48 +3813,53 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
 
   const ctx = mbIntelSeriesContext(key, chartData);
   if (!ctx) {
-    return [chartData?.error
-      ? `Data unavailable (${String(chartData.error).slice(0, 100)}).`
-      : "Waiting for series data — run Refresh or check API limits."];
+    return [mbSeriesUnavailableMessage(chartData, mbIndicatorMeta(key).label)];
   }
   const { latest, fmt, reading, trend, series } = ctx;
   const pct90 = mbIntelPctVs90(series);
   const trendPhrase = mbIntelTrendPhrase(pct90);
+  const live = `Live reading: ${mbFmtValue(latest, fmt)}${trend}${trendPhrase ? ` — ${trendPhrase}` : ""}.`;
 
   switch (key) {
     case "active_addresses":
       return [
-        `Active addresses: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 5
-          ? "Broader on-chain participation — supportive for network adoption narratives (note: L2 activity is off-chain)."
+          ? "Broader base-layer participation than recent norms — supportive for adoption narratives (remember: Layer-2 activity is off-chain)."
           : pct90 != null && pct90 <= -5
             ? "Participation is cooling versus recent norms — quieter base-layer usage."
             : "Address activity is near its 90-day average."),
-        reading || "Unique addresses active in 24h — a coarse usage proxy, not unique users.",
+        "Practical use: treat this as a usage regime gauge, not unique users. A quiet L1 with busy fees elsewhere can still mean demand shifted to Lightning or other layers.",
+        reading || "",
       ];
     case "hash_rate":
       return [
-        `Hash rate: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 3
           ? "Miners are investing in more compute — network security and confidence are expanding."
           : pct90 != null && pct90 <= -3
             ? "Hashing power is softening — can follow price stress, energy costs, or geographic shifts."
             : "Hash rate is stable versus recent history."),
-        "Compare with Miner & Network tab for BGeometrics hash-rate history and ribbon signals.",
+        "Practical use: pair with the Miner & Network tab (Puell, hash ribbons, difficulty) before calling miner capitulation. One hash-rate dip alone is rarely enough.",
       ];
     case "puell_multiple":
       return [
-        `Puell Multiple: ${mbFmtValue(latest, fmt)}${trend}. `
+        live
+        + " "
         + (latest >= 4
           ? "Miner revenue is extreme versus its 1y average — historically clustered near cycle tops."
           : latest <= 0.5
             ? "Depressed miner income — often seen near bear-market floors and miner capitulation zones."
             : "Miner revenue is in a normal band relative to the past year."),
-        reading || "Daily miner revenue ÷ 365d average — ties network health to cycle extremes.",
+        "Practical use: Puell is a miner-income cycle lens. Extreme highs = security budget flush; extreme lows = stress. Confirm with hashprice and hash ribbons on Miner & Network.",
+        reading || "",
       ];
     case "exchange_netflow":
       return [
-        `Exchange netflow: ${mbFmtValue(latest, fmt)}${trend}. `
+        live
+        + " "
         + (latest >= 5000
           ? "Large net inflow — more BTC deposited than withdrawn; near-term sell-pressure risk rises."
           : latest <= -5000
@@ -3047,27 +3869,30 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
               : latest < 0
                 ? "Mild net outflow — slight bias toward withdrawals."
                 : "Flows are roughly balanced today."),
-        "Coin Metrics Community proxy — pair with exchange balance trend for inventory context.",
+        "Practical use: one noisy day is not a thesis. Look for multi-day streaks and confirm with exchange balance trend (stock of inventory, not just flow).",
       ];
     case "exchange_balance":
       return [
-        `Exchange balance: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 5
           ? "More BTC sitting on exchanges than usual — liquid sell-side supply may be building."
           : pct90 != null && pct90 <= -5
             ? "Exchange inventory is draining — historically constructive for medium-term supply tightness."
             : "Exchange supply is near its 90-day average."),
-        reading || "Total BTC on tracked exchange wallets — rising inventory can foreshadow distribution.",
+        "Practical use: falling balances over months often support “coins leaving the float” narratives; rising balances raise the odds of staged selling. Always pair with price and netflow.",
+        reading || "",
       ];
     case "tx_count":
       return [
-        `Transaction count: ${mbFmtValue(latest, fmt)}/day${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 5
           ? "Higher on-chain throughput — more economic activity settling on base layer."
           : pct90 != null && pct90 <= -5
             ? "Quieter transaction activity — softer network usage on this lens."
             : "Tx count is near recent averages."),
-        "Not all economic activity appears on-chain (Lightning and L2s are excluded).",
+        "Practical use: not all economic activity appears on L1. Use with fees and active addresses; ignore single-day spam spikes when forming a view.",
       ];
     default:
       return [`${mbIndicatorMeta(key).label}: ${mbFmtValue(latest, fmt)}${trend}. ${reading || mbShortReading(key)}`];
@@ -3172,28 +3997,21 @@ function mbBuildOnchainOutlook(charts, mempool, extraEntries = []) {
   return mbSynthesizeSectionOutlook({
     tab: "onchain",
     intro:
-      "On-Chain Activity combines usage (addresses, transactions), security (hash rate, Puell), and exchange-flow proxies. "
-      + "The synthesis below reflects each chart's live conclusion.",
+      "This is the On-Chain Activity desk brief. It answers: is the network busy, is mining healthy, and are coins moving onto or off exchanges? "
+      + "Usage = addresses and transactions; security/income = hash rate and Puell; inventory = exchange netflow and balances; short-term stress = mempool fees. "
+      + "Remember Layer-2 payments often stay off the base layer, so quiet L1 is not always weak demand.",
     chartEntries,
     cyclePhase,
     score,
     posture,
-    footer: `Automated commentary from Blockchain.info, Coin Metrics Community, and Mempool.space — educational only. Timespan: ${mbState.timespan}.`,
+    footer: "Sources: Blockchain.info, Coin Metrics Community, Mempool.space.",
   });
 }
 
 function mbRenderOnchainCommentary(charts, mempool, extraEntries = []) {
   mbTabOutlookState.onchain = { charts, mempool };
   const entries = mbOnchainChartEntries(charts, mempool, extraEntries);
-  for (const entry of entries) {
-    if (entry.elId) {
-      mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
-    }
-  }
-  mbRenderAllChartEducation([
-    "active_addresses", "hash_rate", "puell_multiple", "exchange_netflow", "exchange_balance", "tx_count", "mempool_fees",
-    "nvt_ratio", "metcalfe", "coin_days_destroyed",
-  ]);
+  for (const entry of entries) mbRenderEntryCommentary(entry);
   mbRenderTabOutlook("mb-onchain-outlook-head", "mb-onchain-commentary", mbBuildOnchainOutlook(charts, mempool, extraEntries));
 }
 
@@ -3201,9 +4019,7 @@ function mbBuildMinerChartCommentary(key, chartData, ctx = {}) {
   const seriesKey = key === "puell_multiple_miner" ? "puell_multiple" : key;
   const chartCtx = mbIntelSeriesContext(seriesKey, chartData);
   if (!chartCtx && key !== "mempool_fees") {
-    return [chartData?.error
-      ? `Data unavailable (${String(chartData.error).slice(0, 100)}).`
-      : "Waiting for series data — run Refresh or check BGeometrics limits."];
+    return [mbSeriesUnavailableMessage(chartData, mbIndicatorMeta(key).label)];
   }
 
   const { latest, fmt, reading, trend, series } = chartCtx || {};
@@ -3213,7 +4029,7 @@ function mbBuildMinerChartCommentary(key, chartData, ctx = {}) {
   switch (key) {
     case "puell_multiple_miner":
       return [
-        `Puell Multiple: ${mbFmtValue(latest, fmt)}${trend}. `
+        `Live reading: Puell Multiple ${mbFmtValue(latest, fmt)}${trend}. `
         + (latest >= 4
           ? "Miner revenue is in an extreme top band — historically coincided with cycle highs; watch for hash-rate stress if price stalls."
           : latest <= 0.5
@@ -3221,47 +4037,48 @@ function mbBuildMinerChartCommentary(key, chartData, ctx = {}) {
             : latest >= 1.2
               ? "Above-average miner income — healthy margins supporting network security."
               : "Puell in a normal mid-cycle band."),
-        "Feeds hashprice, thermo price, and ribbon signals — miner stress often leads spot reversals by weeks to months.",
+        "Practical use: miner stress often leads spot by weeks to months. Stack Puell with hashprice and hash ribbons before calling a cycle floor or top.",
       ];
     case "hashprice":
       return [
-        `Hashprice: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        `Live reading: hashprice ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
         + (pct90 != null && pct90 <= -8
           ? "Revenue per hash is weak — margin compression raises capitulation and hash-rate drawdown risk."
           : pct90 != null && pct90 >= 8
             ? "Hashprice is strong — miners are earning well per unit of compute."
             : "Hashprice is near recent norms."),
-        reading || "USD earned per unit of hash power — the miner P&L lens for network security investment.",
+        "Practical use: think of hashprice as the mining industry’s unit margin. Weeks of weakness matter more than one soft day.",
+        reading || "",
       ];
     case "hashrate_bg":
       return [
-        `Hash rate (BGeometrics): ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        `Live reading: hash rate ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
         + (pct90 != null && pct90 >= 3
           ? "Compute is climbing — miners committing capital to secure the chain."
           : pct90 != null && pct90 <= -3
             ? "Hash rate is rolling over — often follows price drops or unprofitable mining conditions."
             : "Hash rate is stable versus the 90-day average."),
-        "Cross-check Blockchain.info hash rate on On-Chain Activity for a second source.",
+        "Practical use: cross-check Blockchain.info on On-Chain Activity. Both sources rolling over together is a stronger stress signal than one alone.",
       ];
     case "hashribbons":
       return [
-        `Hash ribbons signal: ${mbFmtValue(latest, fmt)}. `
+        `Live reading: hash ribbons signal ${mbFmtValue(latest, fmt)}. `
         + (latest >= 1
-          ? "Recovery cross active — miner capitulation phase may be ending; historically a medium-term bullish network signal."
+          ? "Recovery cross active — miner capitulation phase may be ending; historically a medium-term constructive network signal."
           : latest <= -1
             ? "Capitulation signal active — hash-rate stress and miner shutdowns often cluster near local price lows."
             : "No active ribbon cross — miners neither in clear capitulation nor recovery."),
-        "Derived from hash-rate moving averages — a slower, higher-conviction miner cycle indicator.",
+        "Practical use: ribbons are slow regime indicators, not day-trade triggers. Confirm with Puell and difficulty.",
       ];
     case "difficulty":
       return [
-        `Difficulty: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        `Live reading: difficulty ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
         + (pct90 != null && pct90 >= 4
           ? "Difficulty rising — more competition for blocks; miners investing despite higher bar."
           : pct90 != null && pct90 <= -4
             ? "Difficulty falling — miner capitulation or margin stress; retarget easing mining economics."
             : "Difficulty near recent equilibrium after last adjustment."),
-        "Retargets ~every two weeks — lags spot but confirms miner participation.",
+        "Practical use: difficulty retargets about every two weeks and lags spot. Falling difficulty after a crash is how the protocol rebalances miner participation.",
       ];
     case "thermo_price": {
       const spot = ctx.spotUsd ?? mbSnapshot?.cells?.san_price_usd?.value ?? mbSnapshot?.cells?.mvrv?.value != null
@@ -3275,19 +4092,19 @@ function mbBuildMinerChartCommentary(key, chartData, ctx = {}) {
             : ` Spot (~${mbFmtValue(spot, "usd")}) is near thermo — balanced miner economics.`)
         : "";
       return [
-        `Thermo price: ${mbFmtValue(latest, fmt)}${trend}.${spotNote}`,
-        "Cumulative miner revenue per BTC — a long-run production cost floor proxy, not a precise breakeven.",
+        `Live reading: thermo price ${mbFmtValue(latest, fmt)}${trend}.${spotNote}`,
+        "Practical use: thermo price is a network-level cost floor proxy, not every miner’s exact breakeven. Spot far below it for long periods has historically coincided with miner stress phases.",
       ];
     }
     case "miners_revenue":
       return [
-        `Miner revenue: ${mbFmtValue(latest, fmt)}/day${trend} — ${trendPhrase}. `
+        `Live reading: miner revenue ${mbFmtValue(latest, fmt)}/day${trend} — ${trendPhrase}. `
         + (pct90 != null && pct90 >= 20
           ? "Daily income is elevated — subsidy + fees outpacing recent norms; check Puell for cycle context."
           : pct90 != null && pct90 <= -15
             ? "Revenue is depressed — fee + subsidy income under pressure."
             : "Revenue in a typical band for this halving era."),
-        "Subsidy + fees in USD — halvings step-change the baseline every ~4 years.",
+        "Practical use: after each halving the subsidy baseline drops ~50%. Compare within the current era, and use Puell (vs 365d average) to normalize that shift.",
       ];
     default:
       return [`${mbIndicatorMeta(key).label}: ${mbFmtValue(latest, fmt)}${trend}. ${reading || mbShortReading(seriesKey)}`];
@@ -3420,28 +4237,22 @@ function mbBuildMinerOutlook(bundle, extraEntries = []) {
   return mbSynthesizeSectionOutlook({
     tab: "miner",
     intro:
-      "Miner & Network health links hash rate, difficulty, revenue, and production-cost proxies to BTC's security budget. "
-      + "The synthesis below reflects each chart's live conclusion.",
+      "This is the Miner & Network desk brief. It answers: are miners stressed or flush, and is the security budget healthy? "
+      + "Puell and hashprice show income vs history; hash rate and difficulty show whether machines are joining or leaving; "
+      + "hash ribbons flag capitulation/recovery regimes; thermo price is a long-run cost-floor proxy. "
+      + "Miner stress has often led spot by weeks to months — useful context, not a precise timer.",
     chartEntries,
     cyclePhase,
     score,
     posture,
-    footer: `Automated commentary from BGeometrics and Blockchain.info — educational only. Timespan: ${mbState.timespan}.`,
+    footer: "Sources: BGeometrics, Blockchain.info, Blockchair snapshot.",
   });
 }
 
 function mbRenderMinerCommentary(bundle, extraEntries = []) {
   mbTabOutlookState.miner = bundle;
   const entries = mbMinerChartEntries(bundle, extraEntries);
-  for (const entry of entries) {
-    if (entry.elId) {
-      mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
-    }
-  }
-  mbRenderAllChartEducation([
-    "puell_multiple_miner", "hashprice", "hashrate_bg", "hashribbons", "difficulty", "thermo_price", "miners_revenue",
-    "difficulty_ribbon",
-  ]);
+  for (const entry of entries) mbRenderEntryCommentary(entry);
   mbRenderTabOutlook("mb-miner-outlook-head", "mb-miner-commentary", mbBuildMinerOutlook(bundle, extraEntries));
 }
 
@@ -3614,15 +4425,50 @@ function mbChartForwardLine(forwardOpts) {
 }
 
 function mbSynthesizeChartBullet(label, lines, forwardOpts) {
-  const body = (lines || []).filter(Boolean);
-  const primary = body[0] || "";
+  const body = (lines || [])
+    .filter(Boolean)
+    .map((l) => mbStripHtml(l)
+      .replace(/^Live reading:\s*/i, "")
+      .replace(/^Practical use:\s*/i, "How to use it: ")
+      .replace(/^How to use this:\s*/i, "How to use it: "));
+  if (!body.length) return "";
+  // Prefer live reading + practical implication so the bullet is explanatory, not telegraphic.
+  const primary = body[0];
+  const practical = body.find((l, i) => i > 0 && /^How to use it:/i.test(l)) || body[1] || "";
   const forward = mbChartForwardLine(forwardOpts);
   const forwardText = forward
     ? mbStripHtml(forward).replace(/^BTC price ahead:\s*/i, "")
     : "";
   let bullet = `<strong>${label}:</strong> ${primary}`;
-  if (forwardText) bullet += ` <em>Forward:</em> ${forwardText}`;
+  if (practical && practical !== primary) bullet += ` ${practical}`;
+  if (forwardText) bullet += ` <em>Price implication:</em> ${forwardText}`;
   return bullet;
+}
+
+/** Cycle-phase context for bottom panels (neutral desk language). */
+function mbCyclePhaseExplain(phaseInfo) {
+  const phase = phaseInfo?.phase || "markup";
+  const map = {
+    accumulation:
+      "Accumulation regimes typically feature weak or bottoming price action while longer-horizon capital absorbs coins. "
+      + "Historically this has improved multi-month risk/reward after forced selling exhausts — not an automatic short-term bounce signal.",
+    markup:
+      "Markup regimes describe rising or price-discovery phases with reasonably healthy participation. "
+      + "Trends can extend, but risk rises when valuation, realized profit-taking, and greed stretch together.",
+    distribution:
+      "Distribution regimes describe late-cycle conditions in which many holders are profitable and liquid supply can meet demand on rallies. "
+      + "Upside often needs exceptional absorption; pullback risk is higher than in early markup.",
+    capitulation:
+      "Capitulation regimes are stress phases: average holders may be underwater or crystallizing losses. "
+      + "Historically this is where multi-quarter bottoms form, even when short-term price remains volatile.",
+    recovery:
+      "Recovery (often miner-specific) means network stress is easing after a hard period — security budget and miner economics healing, usually a constructive medium-term backdrop.",
+    healthy:
+      "Healthy miner/network economics mean neither extreme stress nor euphoria — a neutral security-budget backdrop for the price debate.",
+    euphoria:
+      "Euphoria (often miner-income heat) has clustered near late-cycle tops historically; remaining upside tends to be more fragile.",
+  };
+  return map[phase] || map.markup;
 }
 
 function mbClassifyForwardTone(forwardOpts) {
@@ -3650,6 +4496,14 @@ function mbSynthesizeSectionOutlook({
   const lines = [];
   if (intro) lines.push(intro);
 
+  if (cyclePhase?.label) {
+    lines.push(
+      `<strong>Cycle phase — ${cyclePhase.label}</strong> `
+      + `(${cyclePhase.confidence || "low"} confidence). ${cyclePhase.blurb || ""} `
+      + mbCyclePhaseExplain(cyclePhase),
+    );
+  }
+
   const bullets = [];
   let constructive = 0;
   let cautious = 0;
@@ -3663,27 +4517,40 @@ function mbSynthesizeSectionOutlook({
   }
 
   if (bullets.length) {
-    lines.push("Synthesis from the charts above — each line mirrors the live commentary under that chart:");
+    lines.push(
+      "<strong>Evidence from the charts on this page</strong> "
+      + "(each line compresses the live reading and practical implication under that chart):",
+    );
     bullets.forEach((b) => lines.push(b));
   }
 
   const total = chartEntries?.length || 0;
-  if (total > 0 && (constructive > 0 || cautious > 0)) {
-    lines.push(
-      `Forward tilt across ${total} charts: ${constructive} constructive, ${cautious} cautious`
-      + (constructive > cautious
-        ? " — net constructive bias."
+  if (total > 0) {
+    let tilt =
+      constructive > cautious
+        ? "more charts lean constructive than cautious"
         : cautious > constructive
-          ? " — net cautious bias."
-          : " — balanced."),
+          ? "more charts lean cautious than constructive"
+          : "constructive and cautious signals are roughly balanced";
+    lines.push(
+      `<strong>Combined posture:</strong> ${posture}. `
+      + `Across ${total} chart lenses: ${constructive} constructive, ${cautious} cautious — ${tilt}. `
+      + "A single series should not override a clear multi-chart consensus; when scores disagree, cross-check valuation with flows and sentiment before changing risk.",
     );
+  } else {
+    lines.push(`<strong>Combined posture:</strong> ${posture}.`);
   }
 
+  const priceLine = mbSectionPriceForward(tab, cyclePhase, score);
   lines.push(
-    `Composite read: ${posture}. Cycle phase: <strong>${cyclePhase.label}</strong> (${cyclePhase.confidence} confidence) — ${cyclePhase.blurb}`,
+    "<strong>Implications for BTC price</strong> (educational context for risk discussions, not a trade ticket): "
+    + mbStripHtml(priceLine).replace(/^BTC price outlook \([^)]+\):\s*/i, ""),
   );
-  lines.push(mbSectionPriceForward(tab, cyclePhase, score));
-  if (footer) lines.push(footer);
+
+  const baseFooter =
+    "Educational synthesis from free public APIs and the local series store — not financial advice. "
+    + "Prefer multi-week evidence over single-day noise. Charts load full history; zoom to focus. Data auto-updates in the background.";
+  lines.push(footer ? `${footer} ${baseFooter}` : baseFooter);
   return { lines, cyclePhase, score };
 }
 
@@ -3734,9 +4601,7 @@ function mbBuildDualCohortCommentary(keyA, keyB, dataA, dataB, cohortLabel) {
   const ctxA = mbIntelSeriesContext(keyA, dataA);
   const ctxB = mbIntelSeriesContext(keyB, dataB);
   if (!ctxA && !ctxB) {
-    return [
-      `${cohortLabel} data is unavailable — BGeometrics free tier may be rate-limited; cached series will appear when ready.`,
-    ];
+    return [mbSeriesUnavailableMessage(dataA || dataB, cohortLabel)];
   }
   const lines = [];
   if (ctxA && ctxB) {
@@ -3744,71 +4609,82 @@ function mbBuildDualCohortCommentary(keyA, keyB, dataA, dataB, cohortLabel) {
     const lth = ctxB.latest;
     const spread = sth - lth;
     lines.push(
-      `STH reads ${mbFmtValue(sth, ctxA.fmt)}${ctxA.trend}; LTH reads ${mbFmtValue(lth, ctxB.fmt)}${ctxB.trend}. `
+      `Live reading: short-term holders (STH) at ${mbFmtValue(sth, ctxA.fmt)}${ctxA.trend}; `
+      + `long-term holders (LTH) at ${mbFmtValue(lth, ctxB.fmt)}${ctxB.trend}. `
       + (spread > 0.15
-        ? "Short-term holders are stretched further above cost basis than seasoned holders — near-term profit-taking risk tends to rise first in this configuration."
+        ? "STH are stretched further above cost basis than LTH — near-term profit-taking risk usually shows up first in the STH cohort."
         : spread < -0.15
-          ? "Long-term holders carry more paper profit than recent buyers — macro distribution psychology can dominate even if spot looks calm."
+          ? "LTH carry more paper profit than recent buyers — longer-cycle distribution psychology can dominate even if spot looks calm."
           : "Cohorts are aligned — no extreme divergence between recent buyers and seasoned holders on this lens."),
+    );
+    lines.push(
+      "How to use this: STH ≈ coins last moved in the past ~5 months (hotter money); LTH ≈ longer-held coins (patient capital). "
+      + "Watch the gap between the two lines, not only each level in isolation.",
     );
     if (ctxA.reading || ctxB.reading) {
       lines.push(
-        `STH: ${ctxA.reading || "equilibrium band"}. LTH: ${ctxB.reading || "equilibrium band"}. `
+        `Zone labels — STH: ${ctxA.reading || "equilibrium band"}. LTH: ${ctxB.reading || "equilibrium band"}. `
         + "STH reacts quickly to rallies and pullbacks; LTH extremes often lag macro cycle turns.",
       );
     }
   } else {
     const ctx = ctxA || ctxB;
-    lines.push(`${ctx.reading || mbShortReading(keyA)} Latest: ${mbFmtValue(ctx.latest, ctx.fmt)}${ctx.trend}.`);
+    lines.push(
+      `Live reading (partial cohort data): ${mbFmtValue(ctx.latest, ctx.fmt)}${ctx.trend}. `
+      + `${ctx.reading || mbShortReading(keyA)}. The other cohort series is still loading.`,
+    );
   }
   return lines;
 }
 
 function mbBuildIntelChartCommentary(key, chartData, charts = {}) {
+  // Dual-cohort charts must not require a combined series key on chartData.
+  if (key === "sth_lth_mvrv") {
+    return mbBuildDualCohortCommentary("sth_mvrv", "lth_mvrv", charts.sth_mvrv, charts.lth_mvrv, "Cohort MVRV");
+  }
+  if (key === "sth_lth_nupl") {
+    return mbBuildDualCohortCommentary("sth_nupl", "lth_nupl", charts.sth_nupl, charts.lth_nupl, "Cohort NUPL");
+  }
+
   const ctx = mbIntelSeriesContext(key, chartData);
   if (!ctx) {
-    const err = chartData?.error;
-    return [
-      err
-        ? `Data unavailable (${String(err).slice(0, 100)}). Commentary will populate when the series loads.`
-        : "Waiting for series data — run Refresh or check BGeometrics / Santiment API limits.",
-    ];
+    return [mbSeriesUnavailableMessage(chartData, mbIndicatorMeta(key).label)];
   }
 
   const { latest, fmt, reading, trend, series } = ctx;
   const pct90 = mbIntelPctVs90(series);
   const trendPhrase = mbIntelTrendPhrase(pct90);
+  const live = `Live reading: ${mbFmtValue(latest, fmt)}${trend}${trendPhrase ? ` — ${trendPhrase}` : ""}.`;
 
   switch (key) {
-    case "sth_lth_mvrv":
-      return mbBuildDualCohortCommentary("sth_mvrv", "lth_mvrv", charts.sth_mvrv, charts.lth_mvrv, "Cohort MVRV");
-    case "sth_lth_nupl":
-      return mbBuildDualCohortCommentary("sth_nupl", "lth_nupl", charts.sth_nupl, charts.lth_nupl, "Cohort NUPL");
     case "asopr":
       return [
-        `ASOPR is ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (latest >= 1.03
-          ? "Adjusted profit-taking dominates: coins are moving at a profit after stripping same-block noise, a cleaner sell-pressure signal than raw SOPR."
+          ? "Adjusted profit-taking dominates: coins are moving at a profit after stripping same-block noise — cleaner sell-pressure signal than raw SOPR."
           : latest < 0.98
             ? "Capitulation selling shows up in ASOPR — holders are crystallizing losses, which historically clusters near local washouts."
             : "Moves are near breakeven — neither aggressive profit-taking nor loss-driven capitulation on this cleaner lens."),
-        reading ? `${reading} Watch for sustained breaks above 1.03 or below 0.98 as confirmation.` : "",
+        "Practical use: prefer multi-day ASOPR regimes over single prints. Sustained breaks above ~1.03 or below ~0.98 are more meaningful than a one-day blip.",
+        reading || "",
       ];
     case "vdd_multiple":
       return [
-        `VDD Multiple is ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (latest >= 2.5
           ? "Old, seasoned coins are moving in size relative to the yearly norm — historically associated with distribution phases and cycle tops."
           : latest <= 0.5
             ? "Coin-days destroyed are quiet — HODLing dominates and long-term supply is not waking up to sell."
             : "Old-coin movement is in a normal band — no extreme destruction signal from seasoned supply."),
-        "Pair with cohort MVRV/NUPL: VDD spikes often coincide with LTH taking profits into strength.",
+        "Practical use: when VDD spikes, check LTH MVRV/NUPL — old-coin movement with rich LTH profit is classic distribution context.",
       ];
     case "nrpl_usd": {
       const abs = Math.abs(latest);
       const billions = abs >= 1e9 ? `${(abs / 1e9).toFixed(2)}B` : mbFmtValue(abs, "usd");
       return [
-        `Net realized P/L is ${latest >= 0 ? "+" : "−"}$${billions}${trend}. `
+        `Live reading: net realized P/L is ${latest >= 0 ? "+" : "−"}$${billions}${trend}. `
         + (latest >= 5e9
           ? "Heavy realized profit is hitting the ledger — distribution and profit-taking are actively flowing through on-chain settlement."
           : latest <= -5e9
@@ -3818,48 +4694,52 @@ function mbBuildIntelChartCommentary(key, chartData, charts = {}) {
               : latest < 0
                 ? "Net realized loss is modest — some underwater coins are moving, but not at capitulation scale."
                 : "Realized P/L is near flat — moved coins are roughly breaking even in aggregate."),
-        "NRPL leads spot: sustained positive spikes can precede stalls; deep negative prints often mark seller exhaustion.",
+        "Practical use: sustained positive NRPL spikes can precede stalls (profit crystallizing); deep negative prints often mark seller exhaustion. Prefer multi-day clusters over one print.",
       ];
     }
     case "utxos_in_profit_pct":
       return [
-        `${mbFmtValue(latest, fmt)} of UTXOs are in profit${trend} — ${trendPhrase}. `
+        live
+        + ` ${mbFmtValue(latest, fmt)} of UTXOs are in profit. `
         + (latest >= 90
           ? "Breadth is very high — most individual outputs are profitable, which raises the odds of incremental selling as holders have gains to harvest."
           : latest <= 40
             ? "A large share of UTXOs are underwater — stress is broad at the output level, often seen in bear-market accumulation zones."
             : "Profit breadth is mixed — neither euphoric nor capitulatory by UTXO count."),
-        "UTXO profit % moves faster than supply-in-profit and is useful for spotting short-term holder stress.",
+        "Practical use: UTXO profit % is a breadth gauge (lots of small “lots”). It often moves faster than supply-in-profit and is useful for short-term stress, not long-cycle valuation alone.",
       ];
     case "san_exchange_inflow":
       return [
-        `Santiment exchange inflow is ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 8
           ? "USD deposits to exchanges are elevated — historically a headwind for spot as liquid supply on venues builds."
           : pct90 != null && pct90 <= -8
             ? "Inflows are subdued versus recent norms — less immediate sell pressure from fresh exchange deposits."
             : "Inflows are not at an extreme — monitor alongside outflow for net positioning."),
-        "Cross-check Coin Metrics exchange netflow on the On-chain Activity tab for a second free-source read.",
+        "Practical use: Santiment series may be empty without API access. Cross-check Coin Metrics exchange netflow on On-Chain Activity for a free second read.",
       ];
     case "san_exchange_outflow":
       return [
-        `Santiment exchange outflow is ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 8
           ? "Withdrawals are strong — coins leaving exchanges support accumulation and self-custody narratives."
           : pct90 != null && pct90 <= -8
             ? "Outflows have softened — less evidence of coins moving to cold storage right now."
             : "Outflows are in a typical range — no strong accumulation or distribution signal from this lens alone."),
-        "Sustained outflow > inflow is constructive for medium-term supply tightness on exchanges.",
+        "Practical use: sustained outflow greater than inflow is the constructive pattern for exchange supply tightness. Single-day spikes need confirmation.",
       ];
     case "san_daily_active_addresses":
       return [
-        `Santiment active addresses: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+        live
+        + " "
         + (pct90 != null && pct90 >= 5
           ? "Network participation is expanding — more unique addresses transacted, supportive of adoption and usage narratives."
           : pct90 != null && pct90 <= -5
             ? "On-chain participation is cooling — quieter address activity; not always bearish (L2 volume is off-chain)."
             : "Address activity is near recent averages."),
-        "Compare with Blockchain.info active addresses on the On-chain Activity tab for confirmation.",
+        "Practical use: Santiment and Blockchain.info counts will not match exactly — use both for direction. Quiet L1 is not automatically weak demand if activity moved off-chain.",
       ];
     default:
       return [
@@ -4034,27 +4914,21 @@ function mbBuildIntelligenceOutlook(bundle) {
   return mbSynthesizeSectionOutlook({
     tab: "intelligence",
     intro:
-      "On-Chain Intelligence splits holder behavior into cohorts (STH vs LTH), realized versus unrealized profit, old-coin movement, and exchange-flow proxies. "
-      + "The synthesis below reflects each chart's live conclusion.",
+      "This is the On-Chain Intelligence desk brief. It answers: who is profitable (recent buyers vs seasoned holders), are old coins moving, and is realized selling aggressive? "
+      + "STH = short-term holders (~last 5 months of coin age); LTH = longer-term holders. "
+      + "ASOPR/NRPL track realized profit and loss; VDD flags old-coin movement; UTXO profit % is breadth of individual lots. "
+      + "Santiment flow series only appear when that API is configured — otherwise rely on free exchange netflow on On-Chain Activity.",
     chartEntries,
     cyclePhase,
     score,
     posture,
-    footer:
-      "Automated commentary from free APIs (BGeometrics, Santiment) — educational context only, not financial advice. "
-      + `Timespan: ${mbState.timespan}. Refresh updates cohort charts and this synthesis.`,
+    footer: "Sources: BGeometrics (core); Santiment optional. Auto-updates from the series store.",
   });
 }
 
 function mbRenderIntelligenceCommentary(bundle) {
   const entries = mbIntelligenceChartEntries(bundle);
-  for (const entry of entries) {
-    mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
-  }
-  mbRenderAllChartEducation([
-    "sth_lth_mvrv", "sth_lth_nupl", "asopr", "vdd_multiple", "nrpl_usd", "utxos_in_profit_pct",
-    "san_exchange_inflow", "san_exchange_outflow", "san_daily_active_addresses",
-  ]);
+  for (const entry of entries) mbRenderEntryCommentary(entry);
   mbRenderTabOutlook("mb-intelligence-outlook-head", "mb-intelligence-commentary", mbBuildIntelligenceOutlook(bundle));
 }
 
@@ -4161,10 +5035,11 @@ async function mbRenderPrefetchStatus(force = false) {
       metaEl.textContent = `${reg.stored || 0}/${reg.enabled || 0} metrics stored · data/btc-series/`;
     }
     const envFlags = [
-      ["Santiment", env.santiment],
-      ["Dune", env.dune],
+      ["Core APIs", true],
+      ["Santiment key", env.santiment],
+      ["Dune key (optional)", env.dune],
+      ["Dune queries", env.duneQueries ? `${env.duneQueries} configured` : "not configured"],
       ["BGeometrics key", env.bgeometrics],
-      ["Dune queries", env.duneQueries ? `${env.duneQueries} configured` : "0 configured"],
     ];
     const invRows = inv
       .slice(0, 40)
@@ -4200,7 +5075,7 @@ async function mbRenderPrefetchStatus(force = false) {
       </div>
       <h3 class="macro-drivers-h3">Stale prefetch queue</h3>
       ${staleList}
-      <p class="mb-prefetch-hint macro-muted">Server warms prefetch on startup. CLI: <code>python scripts/btc_prefetch.py --status</code></p>`;
+      <p class="mb-prefetch-hint macro-muted">Core metrics use free public APIs (no Dune required). Optional Santiment/Dune only if keys are set. CLI: <code>python3 scripts/btc_prefetch.py --status</code> · <code>--once --max 3</code></p>`;
   } catch (err) {
     el.innerHTML = `<p class="misc-fng-empty">Prefetch status failed — ${err.message || "error"}</p>`;
   }
@@ -4260,28 +5135,30 @@ function mbBuildFearGreedCommentary(fngData, history = false) {
 function mbBuildSentimentChartCommentary(key, chartData) {
   const ctx = mbIntelSeriesContext(key, chartData);
   if (!ctx) {
-    return [chartData?.error
-      ? `Data unavailable (${String(chartData.error).slice(0, 100)}).`
-      : "Waiting for series data."];
+    return [mbSeriesUnavailableMessage(chartData, mbIndicatorMeta(key).label)];
   }
   const { latest, fmt, reading, trend, series } = ctx;
   const pct90 = mbIntelPctVs90(series);
   const trendPhrase = mbIntelTrendPhrase(pct90);
+  const live = `Live reading: ${mbFmtValue(latest, fmt)}${trend}${trendPhrase ? ` — ${trendPhrase}` : ""}.`;
 
   if (key === "btc_dominance") {
     return [
-      `BTC dominance: ${mbFmtValue(latest, fmt)}${trend} — ${trendPhrase}. `
+      live
+      + " "
       + (latest >= 55
-        ? "Bitcoin is leading crypto — flight-to-quality into BTC; alts often underperform."
+        ? "Bitcoin is leading crypto market share — flight-to-quality into BTC; alts often underperform in relative terms."
         : latest <= 45
-          ? "Alts gaining share — risk-on rotation; BTC may lag in relative terms."
-          : "Dominance balanced — neither strong BTC leadership nor alt-season momentum."),
-      reading || "BTC share of total crypto market cap — macro risk-appetite gauge.",
+          ? "Alts gaining share — risk-on rotation; BTC may lag as capital seeks higher beta."
+          : "Dominance balanced — neither strong BTC leadership nor clear alt-season momentum."),
+      "Practical use: combine with ETF flows and funding. Rising dominance + strong BTC ETF inflows is a BTC-led regime; falling dominance with extreme greed often marks alt-season risk-on.",
+      reading || "",
     ];
   }
   if (key === "etf_flow_btc") {
     return [
-      `ETF net flow: ${mbFmtValue(latest, fmt)}${trend}. `
+      live
+      + " "
       + (latest >= 1000
         ? "Heavy institutional inflow via US spot ETFs — strong structured demand tailwind."
         : latest <= -1000
@@ -4291,7 +5168,7 @@ function mbBuildSentimentChartCommentary(key, chartData) {
             : latest < 0
               ? "Net negative ETF flow — redemptions outpacing creations."
               : "Flat ETF flow — no strong institutional impulse today."),
-      "Aggregated US spot Bitcoin ETF daily net flow — a key post-2024 demand channel.",
+      "Practical use: multi-day flow streaks matter more than one print. Treat ETFs as a major post-2024 demand channel alongside exchange netflow and funding.",
     ];
   }
   return [`${mbIndicatorMeta(key).label}: ${mbFmtValue(latest, fmt)}${trend}. ${reading || ""}`];
@@ -4306,12 +5183,15 @@ function mbBuildMarketStructureCommentary() {
   const lines = [];
 
   if (fVal == null && oiVal == null) {
-    return ["Funding and open interest snapshots unavailable — refresh overview or check exchange APIs."];
+    return [
+      "Funding and open interest snapshots are unavailable right now. "
+      + "These come from exchange APIs into the indicator snapshot and should repopulate on the next automatic update.",
+    ];
   }
 
   if (fVal != null) {
     lines.push(
-      `Median funding: ${mbFmtValue(fVal, "funding")}. `
+      `Live reading: median perpetual funding ${mbFmtValue(fVal, "funding")}. `
       + (fVal >= 0.05
         ? "Elevated positive funding — longs are crowded and paying shorts; leverage flush risk on reversals."
         : fVal <= -0.01
@@ -4320,14 +5200,20 @@ function mbBuildMarketStructureCommentary() {
             ? "Mild long bias — positive but not extreme carry."
             : "Funding near zero — balanced perpetual positioning."),
     );
+    lines.push(
+      "Practical use: funding is a positioning thermometer. Crowded positive funding does not mean price must fall — it means long leverage is expensive and fragile on a sharp drop.",
+    );
   }
 
   if (oiVal != null) {
     const oiTrend = mbTrendBadges("open_interest", oiVal);
     const oiHint = oiTrend[0]?.title?.split(".")[0] || "Perp leverage gauge";
     lines.push(
-      `Open interest: ${mbFmtValue(oiVal, "btc")} (Binance BTCUSDT). ${oiHint}. `
-      + "Rising OI with price can mean leveraged trend; falling OI often signals deleveraging.",
+      `Live reading: open interest ${mbFmtValue(oiVal, "btc")} (Binance BTCUSDT perps). ${oiHint}. `
+      + "Rising OI with rising price can mean a leveraged trend; falling OI often signals deleveraging.",
+    );
+    lines.push(
+      "Practical use: high open interest increases cascade-liquidation risk on sharp moves. Use it for risk sizing, not as a standalone direction signal.",
     );
   }
 
@@ -4472,13 +5358,14 @@ function mbBuildSentimentOutlook(ctx) {
   return mbSynthesizeSectionOutlook({
     tab: "sentiment",
     intro:
-      "Sentiment & Market combines crowd psychology (Fear & Greed), BTC vs alt leadership (dominance), "
-      + "institutional ETF flows, and perpetual leverage (funding, OI). The synthesis below reflects each chart's live conclusion.",
+      "This is the Sentiment & Market desk brief. It answers: is the crowd fearful or greedy, is Bitcoin leading alts, are institutions buying via ETFs, and is leverage crowded? "
+      + "Fear & Greed = psychology; dominance = BTC vs alt share; ETF flows = post-2024 institutional demand; funding/OI = futures positioning. "
+      + "Crowded greed plus rich valuation is a different risk setup than fear plus cheap valuation.",
     chartEntries,
     cyclePhase,
     score,
     posture,
-    footer: `Automated commentary from Alternative.me, BGeometrics, and exchange APIs — educational only. Timespan: ${mbState.timespan}.`,
+    footer: "Sources: Alternative.me, BGeometrics, exchange futures APIs.",
   });
 }
 
@@ -4505,10 +5392,7 @@ window.mbRefreshSentimentFngCommentary = mbRefreshSentimentFngCommentary;
 
 function mbRenderSentimentCommentary(ctx) {
   const entries = mbSentimentChartEntries(ctx);
-  for (const entry of entries) {
-    mbRenderCommentaryEl(entry.elId, entry.lines, entry.forwardOpts);
-  }
-  mbRenderAllChartEducation(["fear_greed", "fear_greed_history", "btc_dominance", "etf_flow_btc", "market_structure"]);
+  for (const entry of entries) mbRenderEntryCommentary(entry);
   mbRenderTabOutlook("mb-sentiment-outlook-head", "mb-sentiment-commentary", mbBuildSentimentOutlook(ctx));
 }
 
@@ -4579,36 +5463,113 @@ async function mbRenderTabCharts(tab, force = false) {
   }
 }
 
-function mbPopulateIndicatorSelect() {
-  const sel = mbEl("mb-indicator");
-  if (!sel) return;
-  const indicators = mbTabIndicators(mbActiveTab === "methodology" ? "overview" : mbActiveTab);
-  const list = indicators.length ? indicators : mbMeta?.indicators || [];
-  sel.innerHTML = list
-    .map((i) => `<option value="${i.key}">${i.label}</option>`)
-    .join("");
-  if (!list.find((i) => i.key === mbState.indicator) && list[0]) {
-    mbState.indicator = list[0].key;
+/** Ensure mbState.indicator points at a valid chartable series (no UI selector). */
+function mbEnsureIndicatorSelection() {
+  const indicators = mbTabIndicators(mbActiveTab === "methodology" || mbActiveTab === "overview" ? "overview" : mbActiveTab);
+  const list = (indicators.length ? indicators : mbMeta?.indicators || []).filter((i) => i.chartable !== false);
+  const pool = list.length ? list : mbMeta?.indicators || [];
+  if (!pool.find((i) => i.key === mbState.indicator) && pool[0]) {
+    mbState.indicator = pool[0].key;
+    mbSelectedIndicator = mbState.indicator;
   }
-  sel.value = mbState.indicator;
+}
+
+function mbPopulateIndicatorSelect() {
+  // Legacy name — indicator dropdown removed; keep default selection for Overview chart.
+  mbEnsureIndicatorSelection();
 }
 
 function mbSyncFilterVisibility() {
+  // Action toolbar removed — Sources is a sub-tab; data auto-refreshes.
   const panel = mbEl("mb-filters-panel");
-  if (!panel) return;
-  if (mbActiveTab === "methodology") {
-    panel.setAttribute("hidden", "");
-    return;
+  if (panel) panel.setAttribute("hidden", "");
+}
+
+function mbFormatAutoRefreshAge(isoOrMs) {
+  const ms = typeof isoOrMs === "number" ? isoOrMs : Date.parse(isoOrMs);
+  if (!Number.isFinite(ms)) return "just now";
+  const mins = Math.max(0, Math.round((Date.now() - ms) / 60000));
+  if (mins < 1) return "just now";
+  if (mins === 1) return "1 min ago";
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.round(mins / 60);
+  return hrs === 1 ? "1 hr ago" : `${hrs} hr ago`;
+}
+
+function mbClearClientSeriesCaches() {
+  mbSeriesCache = {};
+  mbValuationBundle = null;
+  mbFlowsBundle = null;
+  mbNetworkBundle = null;
+  mbIntelligenceBundle = null;
+  mbMinerBundle = null;
+}
+
+/** Soft refresh: re-read store/cache (no refresh=1). Re-render active tab. */
+async function mbSoftRefreshActiveView() {
+  const tab = mbActiveTab;
+  try {
+    if (tab === "distribution") {
+      await mbLoadDistribution(false);
+      return;
+    }
+    if (tab === "overview") {
+      mbRenderMainChart(false);
+      mbRenderOverviewExecutiveSummary(false);
+      return;
+    }
+    if (tab === "sentiment") {
+      await mbRenderSentimentCharts(false);
+      return;
+    }
+    if (["onchain", "valuation", "intelligence", "miner"].includes(tab)) {
+      await mbRenderTabCharts(tab, false);
+      if (["valuation", "onchain", "miner"].includes(tab)) {
+        window.mbVmRefreshTab?.(tab, false);
+      }
+      return;
+    }
+    if (tab === "methodology") {
+      mbRenderMethodologyInline();
+      mbRenderPrefetchStatus(false);
+    }
+  } catch {
+    /* keep last good UI */
   }
-  panel.removeAttribute("hidden");
-  panel.querySelectorAll("[data-mb-control-group]").forEach((group) => {
-    const tabs = (group.dataset.mbControlGroup || "").split(",");
-    group.hidden = !tabs.includes(mbActiveTab);
+}
+
+/**
+ * Automatic background update: soft revalidate snapshot/meta/distribution,
+ * clear in-memory series so charts re-pull from server cache/store.
+ * Does not force upstream APIs (avoids BGeometrics rate limits).
+ */
+async function mbAutoRefresh(reason = "interval") {
+  if (mbAutoRefreshInFlight) return;
+  if (document.hidden && reason !== "visible") return;
+  mbAutoRefreshInFlight = true;
+  try {
+    mbClearClientSeriesCaches();
+    await Promise.all([
+      mbLoadMeta(false).catch(() => null),
+      mbLoadSnapshot(false).catch(() => null),
+      mbLoadDistribution(false).catch(() => null),
+    ]);
+    mbLastAutoRefreshAt = Date.now();
+    mbRenderSnapshot();
+    await mbSoftRefreshActiveView();
+  } finally {
+    mbAutoRefreshInFlight = false;
+  }
+}
+
+function mbStartAutoRefresh() {
+  if (mbAutoRefreshTimer) return;
+  mbAutoRefreshTimer = setInterval(() => {
+    mbAutoRefresh("interval");
+  }, MB_AUTO_REFRESH_MS);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) mbAutoRefresh("visible");
   });
-  const indField = mbEl("mb-indicator")?.closest(".md-field");
-  if (indField) {
-    indField.hidden = mbActiveTab === "intelligence" || mbActiveTab === "miner";
-  }
 }
 
 function mbSetTab(tab) {
@@ -4633,6 +5594,9 @@ function mbSetTab(tab) {
   if (tab === "onchain" || tab === "valuation" || tab === "intelligence" || tab === "miner") {
     mbRenderTabCharts(tab);
   }
+  if (tab === "4y-cycle") {
+    window.initValuationCycle?.();
+  }
   if (tab === "methodology") {
     mbRenderMethodologyInline();
     mbRenderPrefetchStatus();
@@ -4643,39 +5607,75 @@ function mbSetTab(tab) {
   }
 
   const kpiSection = mbEl("mb-kpi-section");
-  if (kpiSection) kpiSection.hidden = tab === "methodology";
+  if (kpiSection) kpiSection.hidden = tab === "methodology" || tab === "4y-cycle";
+}
+
+function mbMethodologyBadge(badge) {
+  const b = String(badge || "core").toLowerCase();
+  const labels = {
+    core: "Core",
+    optional: "Optional",
+    computed: "Computed",
+    not_used: "Not used",
+  };
+  const label = labels[b] || b;
+  return `<span class="mb-method-badge mb-method-badge--${b}">${label}</span>`;
+}
+
+function mbMethodologyArticlesHtml(list) {
+  return (list || [])
+    .map(
+      (m) => `<article class="mb-methodology-card">
+      <header class="mb-methodology-card-head">
+        <h3 class="mb-methodology-card-title">${m.title || "Source"}</h3>
+        ${mbMethodologyBadge(m.badge)}
+      </header>
+      <p class="mb-methodology-card-body">${m.body || ""}</p>
+    </article>`,
+    )
+    .join("");
 }
 
 function mbRenderMethodologyInline() {
   const el = mbEl("mb-methodology-inline");
-  if (!el || !mbMeta?.methodology) return;
-  el.innerHTML = mbMeta.methodology
-    .map(
-      (m) => `<article class="mb-methodology-block">
-      <h3 class="macro-drivers-h3">${m.title}</h3>
-      <p>${m.body}</p>
-    </article>`,
-    )
-    .join("");
+  if (!el) return;
+  const list = mbMeta?.methodology || [];
+  if (!list.length) {
+    el.innerHTML = `<p class="mb-methodology-empty">Methodology not loaded yet — open this tab again in a moment (auto-updates in background).</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <div class="mb-methodology-intro">
+      <p>Active providers for <strong>Valuation → Indicators</strong>. Badges mark what is always on, optional keys, locally computed models, or deliberately unused paid APIs.</p>
+    </div>
+    <div class="mb-methodology-grid">
+      ${mbMethodologyArticlesHtml(list)}
+    </div>`;
 }
 
 function mbOpenMethodology() {
   const dlg = mbEl("mb-methodology-dialog");
   const body = mbEl("mb-methodology-body");
   if (!dlg || !body) return;
-  body.innerHTML = (mbMeta?.methodology || [])
-    .map(
-      (m) => `<section><h3>${m.title}</h3><p>${m.body}</p></section>`,
-    )
-    .join("");
+  body.innerHTML = `
+    <div class="mb-methodology-grid mb-methodology-grid--dialog">
+      ${mbMethodologyArticlesHtml(mbMeta?.methodology || [])}
+    </div>`;
   const indList = (mbMeta?.indicators || [])
     .map(
       (i) =>
-        `<tr><td>${i.label}</td><td>${i.source}</td><td>${i.update}</td><td>${i.unit}</td></tr>`,
+        `<tr><td>${i.label}</td><td>${i.source}</td><td>${i.update}</td><td>${i.unit || "—"}</td></tr>`,
     )
     .join("");
-  body.innerHTML += `<h3>Indicator catalog</h3><table class="deriv-table md-table"><thead><tr><th>Metric</th><th>Source</th><th>Update</th><th>Unit</th></tr></thead><tbody>${indList}</tbody></table>`;
-  body.innerHTML += `<p class="md-methodology-updated">Last built: ${mbMeta?.fetchedAt || mbSnapshot?.fetchedAt || "—"}</p>`;
+  body.innerHTML += `
+    <h3 class="mb-methodology-catalog-title">Indicator catalog</h3>
+    <div class="mb-methodology-catalog-wrap">
+      <table class="deriv-table md-table mb-methodology-catalog">
+        <thead><tr><th>Metric</th><th>Source</th><th>Update</th><th>Unit</th></tr></thead>
+        <tbody>${indList || '<tr><td colspan="4">No indicators loaded</td></tr>'}</tbody>
+      </table>
+    </div>
+    <p class="md-methodology-updated">Last built: ${mbMeta?.fetchedAt || mbSnapshot?.fetchedAt || "—"}</p>`;
   dlg.showModal();
 }
 
@@ -4704,58 +5704,18 @@ function mbBindUi() {
     btn.addEventListener("click", () => mbSetTab(btn.dataset.mbSub));
   });
 
-  mbEl("mb-refresh")?.addEventListener("click", async () => {
-    mbSeriesCache = {};
-    mbValuationBundle = null;
-    mbFlowsBundle = null;
-    mbNetworkBundle = null;
-    mbIntelligenceBundle = null;
-    mbMinerBundle = null;
-    await Promise.all([mbLoadMeta(true), mbLoadSnapshot(true), mbLoadDistribution(true)]);
-    mbRenderTabCharts(mbActiveTab, true);
-    if (mbActiveTab === "overview") {
-      mbRenderMainChart(true);
-      mbRenderOverviewExecutiveSummary(true);
-    }
-    if (mbActiveTab === "sentiment") mbRenderSentimentCharts(true);
-    if (["valuation", "onchain", "miner"].includes(mbActiveTab)) {
-      window.mbVmRefreshTab?.(mbActiveTab, true);
-    }
-    if (mbActiveTab === "methodology") mbRenderPrefetchStatus(true);
-  });
-
-  mbEl("mb-export")?.addEventListener("click", mbExportCsv);
-  mbEl("mb-methodology-btn")?.addEventListener("click", mbOpenMethodology);
   mbEl("mb-methodology-close")?.addEventListener("click", () => mbEl("mb-methodology-dialog")?.close());
-
-  mbEl("mb-indicator")?.addEventListener("change", (e) => {
-    mbState.indicator = e.target.value;
-    mbSelectedIndicator = mbState.indicator;
-    mbSaveSettings();
-    if (mbActiveTab === "overview") mbRenderMainChart();
-  });
-
-  mbEl("mb-timespan")?.addEventListener("change", (e) => {
-    mbState.timespan = e.target.value;
-    mbSaveSettings();
-    mbRenderMainChart(true);
-    if (mbActiveTab === "overview") mbRenderOverviewExecutiveSummary(true);
-    if (["onchain", "valuation", "sentiment", "intelligence", "miner"].includes(mbActiveTab)) {
-      mbRenderTabCharts(mbActiveTab, true);
-    }
-    if (["valuation", "onchain", "miner"].includes(mbActiveTab)) {
-      window.mbVmOnTimespanChange?.(mbActiveTab);
-    }
-  });
+  mbStartAutoRefresh();
 }
 
 async function loadMiscBitcoin(force = false) {
   Object.assign(mbState, mbLoadSettings());
+  mbState.timespan = MB_FULL_TIMESPAN;
   mbBindUi();
   mbSyncFilterVisibility();
 
   const body = mbEl("mb-table-body");
-  if (body && !mbSnapshot) body.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
+  if (body && !mbSnapshot) body.innerHTML = '<tr><td colspan="6">Loading…</td></tr>';
 
   let loadError = null;
   try {
@@ -4772,17 +5732,18 @@ async function loadMiscBitcoin(force = false) {
   } catch (err) {
     loadError = err;
     if (body && !mbSnapshot?.cells) {
-      body.innerHTML = `<tr><td colspan="5">Snapshot unavailable — ${err.message || "error"}</td></tr>`;
+      body.innerHTML = `<tr><td colspan="6">Snapshot unavailable — ${err.message || "error"}</td></tr>`;
     }
   }
 
   if (mbMeta || mbSnapshot) {
+    mbLastAutoRefreshAt = Date.now();
     mbInitChartEducationSlots();
     mbRenderAllChartEducation(MB_EDU_KEYS);
     [
       "mvrv", "mvrv_z_score", "realized_price", "hodl_waves_1y_plus", "nupl", "sopr", "supply_in_profit",
       "active_addresses", "hash_rate", "puell_multiple", "exchange_netflow", "exchange_balance", "tx_count", "mempool_fees",
-      "btc_dominance", "etf_flow_btc", "wealth_concentration", "wallet_cohorts", "funding_rate", "open_interest", "fear_greed",
+      "btc_dominance", "etf_flow_btc", "funding_rate", "open_interest", "fear_greed",
       "sth_lth_mvrv", "sth_lth_nupl", "asopr", "vdd_multiple", "nrpl_usd", "utxos_in_profit_pct",
       "san_exchange_inflow", "san_exchange_outflow", "san_daily_active_addresses", "san_transaction_volume", "san_mvrv_usd",
       "puell_multiple_miner", "hashprice", "hashrate_bg", "hashribbons", "difficulty", "thermo_price", "miners_revenue",
@@ -4791,15 +5752,21 @@ async function loadMiscBitcoin(force = false) {
       "fear_greed_history", "wealth_concentration", "wallet_cohorts",
     ].forEach((k) => mbRenderChartDescription(k));
     mbPopulateIndicatorSelect();
-    mbSetTab(mbActiveTab);
+    if (sessionStorage.getItem("vc-open-cycle") === "1") {
+      sessionStorage.removeItem("vc-open-cycle");
+      mbSetTab("4y-cycle");
+    } else {
+      mbSetTab(mbActiveTab);
+    }
     const mbScreen = document.querySelector('#dashboard-valuation .menu-screen[data-l2="indicators"]');
     window.decorateHelpLabels?.(mbScreen);
     mbScreen?.querySelectorAll(".md-kpi-card .help-trigger, .mb-table-row .help-trigger").forEach((btn) => {
       btn.addEventListener("click", (e) => e.stopPropagation());
     });
   } else if (body) {
-    body.innerHTML = `<tr><td colspan="5">Load failed — ${loadError?.message || "error"}</td></tr>`;
+    body.innerHTML = `<tr><td colspan="6">Load failed — ${loadError?.message || "error"}</td></tr>`;
   }
 }
 
 window.loadMiscBitcoin = loadMiscBitcoin;
+window.mbSetTab = mbSetTab;

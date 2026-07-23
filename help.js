@@ -1808,13 +1808,21 @@ const METRIC_HELP = {
     title: "Signal badges",
     body: "Up to three color-coded tags per row summarizing model context. Green = bullish / undervalued; amber = caution; red = bearish / overheated; gray = neutral. Left accent: purple = valuation, gold = sentiment, teal = flow, blue = network/structural. Hover a badge for the full reading. Not investment advice — heuristic labels from published cycle bands.",
   },
-  "mb-timespan": {
-    title: "Chart range",
-    body: "Historical window for Blockchain.info and BGeometrics series. Snapshot-only metrics (dominance, OI) ignore this control.",
-  },
   "mb-refresh": {
-    title: "Refresh data",
-    body: "Bypasses disk and memory caches and re-fetches all BTC indicator endpoints. BGeometrics free tier allows 8 requests/hour and 15/day — use sparingly.",
+    title: "Automatic data updates",
+    body: "Bitcoin Indicators auto-refresh about every 10 minutes while the page is open, and again when you return to the tab. Updates are store-first (disk cache / prefetch store) so free-tier APIs are not hammered. Charts load full history — zoom/pan to focus. Stale series still need the scheduled prefetch job: <code>python3 scripts/btc_prefetch.py --once</code> or the GitHub Actions workflow. Sources &amp; methodology live under the Sources sub-tab.",
+  },
+  "mb-updated-col": {
+    title: "Updated column",
+    body: "<strong>Data</strong> = calendar date of the latest observation in the series.<br><strong>Fetched</strong> = when that series was last pulled into the store.<br><br>Freshness (OK / Stale) is in the separate <strong>Status</strong> column.",
+  },
+  "mb-status-col": {
+    title: "Status column",
+    body: "<strong>OK</strong> = within the free-tier refresh window.<br><strong>Stale</strong> = fetch or data age is older than expected (prefetch not run recently, or source lag).<br><br>Not a paywall — run <code>python3 scripts/btc_prefetch.py --once</code> or wait for the scheduled prefetch workflow.",
+  },
+  "mb-sources-page": {
+    title: "Sources",
+    body: "Documents real data providers for Valuation Indicators. Core = always used free APIs. Optional = Santiment or Dune only if keys are set (Dune is not required). Computed = local models from free series. Not used = paid Glassnode/CryptoQuant deliberately excluded.",
   },
   "mb-wealth-dist": {
     title: "Wealth concentration",
@@ -2039,6 +2047,364 @@ const METRIC_HELP = {
   "mb-vm-cdd": {
     title: "Coin Days Destroyed",
     body: "Sum of (BTC moved × days held). Spikes indicate old, seasoned coins changing hands — often distribution.",
+  },
+
+  /* ── Valuation · 4y Cycle ── */
+  "vc-title": {
+    title: "Bitcoin 4-Year Cycle",
+    body: "Halving-cycle dashboard: where BTC sits in the current ~4-year era versus prior cycles. Covers days from halvings and cycle peak, drawdown, overlay multiples, spiral/radar structure, ROI by entry rule, bottom-timing window, valuation zones, S2F / Pi Cycle, phases, and full cycle stats.<br><br>A cycle here is one halvings era: bear low → markup → top → markdown → next low. Halvings cut block subsidy ~50% every ~210,000 blocks (~4 years). Peaks and bottoms are max/min closes between cycle anchors.",
+  },
+  "vc-intro": {
+    title: "How to use this page",
+    body: "Top to bottom: (1) status clocks, (2) cycle overlays, (3) spiral &amp; radar, (4) drawdown &amp; ROI, (5) bottom timing &amp; valuation zones, (6) full stats &amp; caveats. Toggle C1–C4 on charts. Hover series for day and multiple. Weight several sections together rather than a single chart.",
+  },
+  "vc-status": {
+    title: "Cycle status",
+    body: "Headline clocks for Cycle 4 (post–Apr 2024 halvings): days since last halvings, days since cycle ATH (max close since H4), drawdown from that ATH, days to next estimated halvings, and progress through the average C1–C3 peak-to-bottom duration.",
+  },
+  "vc-stat-days-halving": {
+    title: "Days since last halvings",
+    body: "Calendar days from the most recent halvings to the series as-of date. Prior cycles often peaked hundreds of days after the cut (~1–1.5 years, wide variance). Early post-halving is usually still bull construction; mid/late is when prior cycles more often saw euphoria. Pair day count with drawdown, liquidity, and on-chain valuation.",
+  },
+  "vc-stat-days-peak": {
+    title: "Days since cycle peak",
+    body: "Days since this cycle’s ATH (max close in the post-halving window). Primary markdown-phase clock. Completed cycles (C1–C3) typically took ~363–410 days from peak to final bottom (average ~383). Being deep into that window does not guarantee an imminent low.",
+  },
+  "vc-stat-drawdown": {
+    title: "Drawdown from cycle ATH",
+    body: "(ATH − spot) / ATH. Full-cycle max drawdowns historically often ~70–85% peak to bottom. Shallower prints can reverse or deepen; depth and time both matter.",
+  },
+  "vc-stat-next-halving": {
+    title: "Days to next halvings (est.)",
+    body: "Estimated days until the next ~50% block-subsidy cut (block-height dependent, not a fixed calendar date). Long-horizon scarcity marker; near-term price is usually driven more by liquidity, ETF flows, and risk appetite.",
+  },
+  "vc-stat-avg-p2b": {
+    title: "Average peak → bottom (C1–C3)",
+    body: "Mean peak-to-bottom duration across the three completed post-2012 cycles. Progress % = days since this cycle’s peak ÷ that average. Small sample (n=3); use as a calendar map, not a target. Implied window is in the projection section.",
+  },
+  "vc-overlay": {
+    title: "Cycle overlay — days from halvings",
+    body: "Each cycle’s daily close rebased to <strong>1× on its halvings day</strong>. X = days since that halvings; Y = multiple of the halvings close (log). Log scale keeps early-cycle multiples comparable. Vertical line = as-of day for the current cycle. Compare C4 shape to C1–C3 at the same day count.",
+  },
+  "vc-cycle-toggles": {
+    title: "Cycle series toggles",
+    body: "Show or hide cycles on the chart.<br><br><strong>C1 (2012):</strong> first post-halving era in this set — extreme multiples, small market.<br><strong>C2 (2016):</strong> through Dec 2017 top.<br><strong>C3 (2020):</strong> through 2021 tops.<br><strong>C4 (2024):</strong> current cycle (dashed) until a new cycle low is confirmed.",
+  },
+  "vc-bottom-overlay": {
+    title: "Cycle-low multiple (from prior bear bottom)",
+    body: "Daily close rebased to <strong>1× at the prior cycle’s bear bottom</strong> (min close between prior peak and next halvings). X = days since that bottom; Y = multiple of that low (log). Compares recovery amplitude after capitulation, independent of where halvings sat in the bull.",
+  },
+  "vc-spiral": {
+    title: "Log-price spiral clock",
+    body: "Long-horizon polar view of price.<br><br><strong>Angle:</strong> calendar time; one 360° turn ≈ 4 years (1461 days).<br><strong>Radius:</strong> log₁₀(price) — rings at $10, $100, $1k, $10k, $100k.<br><br><strong>Markers:</strong> green = halvings, gold = cycle tops, red = bottoms, blue = as-of. Long-structure view, not a short-term oscillator.",
+  },
+  "vc-radar": {
+    title: "Spider (radar) cycle comparison",
+    body: "Six axes, each normalized 0–1 to the max among completed cycles C1–C3:<br>1) Days H→Peak · 2) Peak × from H · 3) Max DD % · 4) Days Peak→Bottom · 5) Recovery × (bottom → next peak) · 6) Days Bottom→next H.<br><br>C4 is dashed/partial where bottom and recovery are still open — unfinished metrics, not “weak cycle.”",
+  },
+  "vc-drawdown-chart": {
+    title: "Drawdown from cycle ATH",
+    body: "Daily close drawdown from each cycle’s ATH (max close in window). X = days after that ATH; Y = % below ATH. Vertical line = as-of for the current cycle.",
+  },
+  "vc-roi": {
+    title: "ROI from standardised entry points",
+    body: "Returns for simple entry rules to the subsequent cycle peak (C4 also shows “to now”).<br><br>• Prior cycle bottom → peak<br>• Halving day close → peak<br>• +200d / +400d after halvings → peak<br>• Prior cycle peak → next peak<br><br>Historical multiples need not repeat.",
+  },
+  "vc-roi-prior-bottom": {
+    title: "Entry: prior cycle bottom",
+    body: "Buy the prior bear low (min close in that window), hold to this cycle’s peak. Typically the highest full-cycle ROIs and the hardest entries psychologically. C4 “to now” is return from that low to the as-of close.",
+  },
+  "vc-roi-halving": {
+    title: "Entry: halvings day",
+    body: "Buy the halvings-day close, hold to cycle peak. Objective calendar entry; historically strong but usually inferior to buying the prior bottom. C4 also shows return from H4 to as-of.",
+  },
+  "vc-roi-200d": {
+    title: "Entry: +200 days after halvings",
+    body: "Enter at the close ~200 days after halvings; exit at cycle peak. Classic post-halving window — often still early, not guaranteed. If the peak fell before +200d, ROI can be weak or negative.",
+  },
+  "vc-roi-400d": {
+    title: "Entry: +400 days after halvings",
+    body: "Enter at the close ~400 days after halvings; exit at cycle peak. Later entry: sometimes still pre-top, sometimes near or after local peaks depending on cycle.",
+  },
+  "vc-roi-prev-top": {
+    title: "Entry: buy previous top",
+    body: "Buy prior cycle ATH close, hold to next cycle ATH. Multi-cycle “buy strength” test. C1 has no prior top (—). Inter-cycle drawdowns between peaks were large even when successive ATHs were higher in USD.",
+  },
+  "vc-projection": {
+    title: "Projected bottom timing &amp; phase progress",
+    body: "Maps a calendar window for a cycle low from the current ATH using C1–C3 peak→bottom durations (avg and min–max). Progress bar = days since peak ÷ average duration. Also lists avg H→Peak and avg Bottom→next H. Sample n=3; liquidity and macro can shorten or lengthen bears.",
+  },
+  "vc-progress": {
+    title: "Peak → bottom progress",
+    body: "Share of the average historical peak-to-bottom window already elapsed by calendar days — not the share of eventual price drawdown completed. Time and price paths often diverge.",
+  },
+  "vc-valuation-zones": {
+    title: "Valuation zone extremes",
+    body: "On-chain valuation at the Cycle 4 peak vs as-of, from the same metric store as Valuation → Indicators (MVRV Z, NUPL, MVRV, spot/realized, Puell).<br><br><strong>Historical extremes</strong> = classic cycle bands for context.<br><strong>At cycle peak / Now</strong> = nearest series print to the cycle top date and the as-of date, with a short zone label.<br><br>Series are typically ~4 years deep — values before the window show as —.",
+  },
+  "vc-mvrv-z": {
+    title: "MVRV Z-Score",
+    body: "Market cap vs realized cap, standardized as a z-score. Very high readings historically clustered near euphoric tops; deep lows near major bottoms. Post-top, z-scores usually cool for months before deep-value prints.",
+  },
+  "vc-nupl-zone": {
+    title: "NUPL (Net Unrealized Profit/Loss)",
+    body: "(Market cap − realized cap) / market cap. High positive = large network paper profits (greed risk). Near zero/negative = widespread unrealized losses (capitulation zones). Post-top, NUPL often falls from euphoria long before true capitulation.",
+  },
+  "vc-realized": {
+    title: "Price vs realized price",
+    body: "Spot vs aggregate on-chain cost basis. Large premiums = expensive vs holder basis; near or below realized often marks late-bear value. Premiums can compress in bears while spot stays above realized for long stretches.",
+  },
+  "vc-puell-zone": {
+    title: "Puell Multiple",
+    body: "Daily miner revenue ÷ 365-day average. High = miners far above trend (historically near tops); low = miner stress (historically near bottoms). Moderates after price peaks as USD revenue falls.",
+  },
+  "vc-reserve-risk": {
+    title: "Reserve Risk",
+    body: "Price incentive to sell vs opportunity cost of holding. High near tops; lower readings improve the opportunity side in bears. Long-term holder conviction gauge, not a day-trade signal.",
+  },
+  "vc-rhodl": {
+    title: "RHODL Ratio",
+    body: "Value of recently moved coins vs older bands (realized-cap weighted age). High = young-coin / late-cycle speculation; lower = cooler, more seasoned ownership. Tops often show distribution signatures; mid-bears cool from those extremes.",
+  },
+  "vc-rainbow": {
+    title: "Log growth / power-law corridor",
+    body: "Daily close on a log scale with the Santostasi power-law fair-value line used in Stats → Power Law: Price = A × (days since Genesis)^n (A = 10^−16.493, n = 5.68).<br><br>Support/resistance = empirical p10/p90 of historical close÷fair. <strong>▲ green</strong> = cycle tops · <strong>▼ red</strong> = cycle bottoms · <strong>blue</strong> = as-of close.<br><br>Model stats (spot/fair, R²) sit in the note under the chart.",
+  },
+  "vc-s2f-pi": {
+    title: "Stock-to-Flow &amp; Pi Cycle Top",
+    body: "<strong>S2F:</strong> scarcity from stock ÷ annual issuance; each halvings roughly doubles S2F. Framing tool; demand and liquidity often dominate issuance math.<br><br><strong>Pi Cycle Top:</strong> 111-DMA crossing above 2× 350-DMA has marked several prior tops (with misses, e.g. 2021 dual tops). Heat/regime flag — pair with drawdown phase and distribution metrics.",
+  },
+  "vc-s2f": {
+    title: "Stock-to-Flow (S2F)",
+    body: "Circulating supply ÷ annual new issuance. Higher S2F = scarcer new supply vs stock. Halvings raise S2F by protocol. Strong scarcity narrative; weak as a sole price or timing model when demand shocks dominate.",
+  },
+  "vc-pi-cycle": {
+    title: "Pi Cycle Top indicator",
+    body: "111-day MA vs 2× 350-day MA. Cross of 111 above 2×350 has historically appeared near several cycle tops. Known early/false prints; use with phase, distribution, and liquidity — not alone. Full series under Valuation → Indicators.",
+  },
+  "vc-phases": {
+    title: "The four phases",
+    body: "1) <strong>Accumulation</strong> — post-capitulation, LT holders absorb.<br>2) <strong>Markup</strong> — trend up through halvings into broader participation.<br>3) <strong>Distribution / Euphoria</strong> — late-cycle heat; tops form.<br>4) <strong>Markdown</strong> — post-ATH bear.<br><br>Current phase is Markdown when price is well off the cycle ATH with peak→bottom time running.",
+  },
+  "vc-phase-acc": {
+    title: "Phase 1 · Accumulation",
+    body: "After the deepest prior markdown. Basing or slow rise; low media attention; value metrics often cheap. Hardest phase to buy emotionally.",
+  },
+  "vc-phase-markup": {
+    title: "Phase 2 · Markup",
+    body: "Sustained advance from the cycle low through halvings into price discovery. Participation broadens; higher highs dominate. Halvings often sit inside markup, not at day zero.",
+  },
+  "vc-phase-dist": {
+    title: "Phase 3 · Distribution / Euphoria",
+    body: "Late-cycle: valuation extremes, retail chase, young-coin activity, blow-off or multi-top. Ends at the cycle ATH. Can last weeks to months.",
+  },
+  "vc-phase-mark": {
+    title: "Phase 4 · Markdown",
+    body: "Post-ATH decline. Historical full-cycle drawdowns often ~70–85% and ~1 year average duration (wide variance). Includes sharp bear-market rallies. New accumulation is clear only after a durable low and recovery structure.",
+  },
+  "vc-full-stats": {
+    title: "Full cycle statistics",
+    body: "Dates, prices, day counts, multiples, and drawdowns for Cycles 1–4 plus averages of C1–C3.<br><br>Columns: halvings date/price, peak date/price, bottom date/price (or open / now for C4), H→Peak days, peak ×H, max DD, Peak→Bot days, Bot→next H.",
+  },
+  "vc-stat-h-to-peak": {
+    title: "Days halvings → peak",
+    body: "Days from that cycle’s halvings to its ATH. Length of the post-cut bull; prior cycles clustered in the mid-hundreds of days with large variance.",
+  },
+  "vc-stat-peak-mult": {
+    title: "Peak multiple from halvings",
+    body: "Cycle ATH ÷ halvings-day close. Early cycles printed huge multiples; later cycles compressed as market cap grew. Prefer log overlays when comparing eras.",
+  },
+  "vc-stat-max-dd": {
+    title: "Max drawdown",
+    body: "Peak-to-bottom % for completed cycles; peak-to-as-of for open Cycle 4. Full historical bears were often deeper than mid-bear prints.",
+  },
+  "vc-stat-p2b": {
+    title: "Days peak → bottom",
+    body: "Markdown length from ATH to cycle low. C1–C3 average ~383 days (range ~363–410). C4 shows days so far until a new low is confirmed.",
+  },
+  "vc-stat-b2nh": {
+    title: "Days bottom → next halvings",
+    body: "From cycle low to the following halvings. Early accumulation / early markup window before the next supply cut. Secondary phase reference.",
+  },
+  "vc-caveats": {
+    title: "Important context / caveats",
+    body: "• Only three completed post-2012 cycles — averages of duration and multiples are fragile.<br>• ETF / institutional flows and stablecoin liquidity change amplitude and may change duration.<br>• Global liquidity and real rates can dominate pure halvings calendars.<br>• Past performance is not a guarantee of future results.",
+  },
+  "vc-exec-summary": {
+    title: "Executive summary",
+    body: "Hybrid desk brief for the 4y Cycle tab (same shape as other Valuation bottom panels): cycle phase, price-path evidence vs C1–C3, valuation prints, combined posture, and forward BTC price framing with confidence drivers. Educational only — not a trade ticket.",
+  },
+  "vol-section": {
+    title: "Volatility",
+    body: "ARCH/GARCH family estimation on BTC log returns (√365 annualization). Compare models by AIC/BIC, inspect conditional vol, forecasts, news-impact curves, and desk risk metrics. Prefer <code>pip install arch</code> for full model coverage; otherwise a NumPy GARCH(1,1) fallback is used.",
+  },
+  "vol-cond": {
+    title: "Conditional volatility",
+    body: "Model-implied expected volatility given information up to yesterday — not a trailing historical window. Annualized with √365 for crypto.",
+  },
+  "vol-fcast": {
+    title: "Volatility forecast",
+    body: "Multi-step-ahead annualized conditional volatility from the selected/best model (1d / 7d / 30d).",
+  },
+  "vol-best": {
+    title: "Best model (AIC)",
+    body: "Lowest Akaike Information Criterion among successfully estimated models. BIC is also highlighted in the table when it disagrees.",
+  },
+  "vol-persist": {
+    title: "Persistence & half-life",
+    body: "Persistence (e.g. α+β) near 1 means shocks die slowly. Half-life is approximate days until a variance shock decays to half.",
+  },
+  "vol-unc": {
+    title: "Long-run volatility",
+    body: "Unconditional / long-run average volatility implied by the model (or sample mean of conditional vol).",
+  },
+  "vol-regime-garch": {
+    title: "Vol regime",
+    body: "Heuristic label comparing current conditional vol to the model’s long-run level: Low / Normal / Elevated / Extreme.",
+  },
+  "vol-compare": {
+    title: "Model comparison",
+    body: "Sortable desk table of estimated models. Click a row for parameters, charts, and trader insights. Status fallback means arch was missing and a simpler estimator was substituted.",
+  },
+  "vol-insights": {
+    title: "Trading / risk insights",
+    body: "Desk-oriented read of the selected model: regime, size multiplier vs a 55% vol target, 1-day VaR/ES under conditional σ, and crypto caveats (jumps, 24/7, breaks).",
+  },
+  "vol-guide": {
+    title: "Model selection guide",
+    body: "When to prefer asymmetric (EGARCH/GJR), long-memory (FIGARCH), HAR-RV benchmarks, or plain GARCH(1,1) for communication.",
+  },
+  "vol-col-model": {
+    title: "Model",
+    body: "Specification name. AIC / BIC badges mark the information-criteria leaders for this run.",
+  },
+  "vol-col-family": {
+    title: "Family",
+    body: "Model class: core (ARCH/GARCH), asymmetric (EGARCH/GJR/APARCH), long_memory (FIGARCH), or benchmark (HAR-RV).",
+  },
+  "vol-col-ll": {
+    title: "Log-likelihood (LL)",
+    body: "Maximized log-likelihood of the fitted model. Higher is better, but more parameters can inflate LL — compare with AIC/BIC.",
+  },
+  "vol-col-aic": {
+    title: "AIC",
+    body: "Akaike Information Criterion (lower is better) on the model likelihood. <strong>GARCH family:</strong> return likelihood — comparable across those rows. <strong>HAR-RV (†):</strong> Gaussian IC on the RV regression residual — valid for HAR itself but <em>not</em> comparable to GARCH AIC; suite AIC badges exclude HAR. Prefer QLIKE to rank HAR vs GARCH for forecasts.",
+  },
+  "vol-col-bic": {
+    title: "BIC",
+    body: "Bayesian Information Criterion (lower is better). Same scope rule as AIC: GARCH-family BIC is comparable across return models; HAR-RV BIC (†) is on the RV residual and is excluded from BIC ranking badges.",
+  },
+  "vol-col-params": {
+    title: "Params",
+    body: "Number of estimated coefficients (including mean and distribution shape where applicable).",
+  },
+  "vol-col-persist": {
+    title: "Persistence",
+    body: "How slowly variance mean-reverts (e.g. α+β for GARCH). Near 1 ⇒ shocks are long-lived. Missing for models without a simple scalar persistence.",
+  },
+  "vol-col-halflife": {
+    title: "Half-life (days)",
+    body: "Approximate days until a variance shock decays to half its impact, derived from persistence. Only defined when 0 &lt; persistence &lt; 1.",
+  },
+  "vol-col-condvol": {
+    title: "Cond. vol (ann.)",
+    body: "Latest conditional volatility annualized with √365. Model-implied expected vol given information up to the last sample day.",
+  },
+  "vol-col-status": {
+    title: "Status",
+    body: "<strong>ok</strong> = full estimate · <strong>fallback</strong> = simpler estimator substituted · <strong>failed</strong> = optimization or library error.",
+  },
+  "vol-col-rank": {
+    title: "Rank",
+    body: "Leaders for this run only: <strong>AIC</strong>/<strong>BIC</strong> = best among return-likelihood (GARCH-family) fits only — HAR is excluded; <strong>QLIKE</strong> = best out-of-sample forecast loss across all models including HAR. Badges sit in this column so they never overlap long model names.",
+  },
+  "vol-col-deribit": {
+    title: "Usable for Deribit RV marks",
+    body: "Desk rule from fit quality + OOS QLIKE (same logic as the detail verdict). Label: <strong>Yes</strong> / <strong>Cross-check only</strong> / <strong>No</strong>, plus a <strong>confidence %</strong> (0–100 rule score). Hover for full tier. Not a trade recommendation or implied probability of P&amp;L.",
+  },
+  "vol-run-commentary": {
+    title: "Run commentary",
+    body: "Automated desk read of the estimation pass (sample, IC scope, QLIKE mark, regime) plus a structured <strong>Deribit position &amp; trade plan</strong>: stance, structure, IV−RV entry gate, invalidation, sizing, and hedges. Rule-based from this suite only — educational, not a live order ticket. Live DVOL/IV must be checked at the desk.",
+  },
+  "vol-param-name": {
+    title: "Parameter",
+    body: "Coefficient name in the fitted specification (e.g. omega, alpha, beta for GARCH; RV_d / RV_w / RV_m for HAR).",
+  },
+  "vol-param-est": {
+    title: "Estimate",
+    body: "Point estimate from MLE/QMLE (GARCH family) or OLS (HAR-RV). Stars: * p&lt;0.1, ** p&lt;0.05, *** p&lt;0.01.",
+  },
+  "vol-param-se": {
+    title: "Std. err.",
+    body: "Standard error of the estimate (robust where the engine provides it; classical OLS SE for HAR-RV).",
+  },
+  "vol-param-t": {
+    title: "t / z statistic",
+    body: "Estimate divided by its standard error. Large absolute values indicate a coefficient distinguishable from zero.",
+  },
+  "vol-param-p": {
+    title: "p-value",
+    body: "Two-sided significance of the coefficient under a normal approximation to the t/z statistic.",
+  },
+  "vol-param-meaning": {
+    title: "Meaning",
+    body: "Plain-language role of this coefficient in the model equation shown above. Read with the specification so estimates are actionable, not just numbers.",
+  },
+  "vol-col-qlike": {
+    title: "OOS QLIKE (mean)",
+    body: "Average QLIKE loss across expanding-window forecast origins and horizons. Lower is better for volatility forecast accuracy — the metric option desks care about most.",
+  },
+  "vol-col-qlike7": {
+    title: "QLIKE 7d",
+    body: "Out-of-sample QLIKE for 7-day variance forecasts. Maps roughly to Deribit weekly expiries.",
+  },
+  "vol-col-qlike30": {
+    title: "QLIKE 30d",
+    body: "Out-of-sample QLIKE for 30-day variance forecasts. Maps roughly to Deribit monthly expiries.",
+  },
+  "vol-backtest": {
+    title: "Forecast backtest",
+    body: "Expanding-window OOS evaluation: re-estimate, forecast multi-day variance, score vs sum of squared returns. Horizons 1/7/14/30d. Primary loss = QLIKE (lower better). Built for Deribit RV vs IV workflow.",
+  },
+  "vol-bt-n": {
+    title: "Origins",
+    body: "Number of forecast origins in the expanding-window backtest for that horizon.",
+  },
+  "vol-bt-qlike": {
+    title: "QLIKE",
+    body: "Quasi-likelihood loss for volatility: log(f) + RV/f. Lower is better; preferred over MSE for vol forecast ranking.",
+  },
+  "vol-bt-rmse": {
+    title: "RMSE (ann.)",
+    body: "Root mean squared error of multi-day variance forecasts, expressed as annualized volatility units for readability.",
+  },
+  "vol-bt-mae": {
+    title: "MAE (var)",
+    body: "Mean absolute error on the variance scale (sum of squared returns over the horizon).",
+  },
+  "vol-bt-bias": {
+    title: "Bias (var)",
+    body: "Average (forecast variance − realized variance). Positive ⇒ model overstates multi-day variance on average.",
+  },
+  "vol-verdict": {
+    title: "Desk verdict",
+    body: "Rule-based fitness score (0–100) from OOS QLIKE, engine quality, and persistence. States whether the model is usable as a Deribit RV mark, a cross-check only, or unfit for option P&amp;L decisions. Not a trade recommendation.",
+  },
+  "ss-title": {
+    title: "Final Report · Super Summary",
+    body: "Paid client-style multi-domain report on Home (1 USDT or 1 USDC). After unlock, press Generate to build a fact pack + narrative with charts/tables under each section. Download PDF exports the on-screen report. Wallet addresses via env (SS_PAY_USDT_* / SS_PAY_USDC_*). Not under Valuation.",
+  },
+  "ss-brief": {
+    title: "Client report narrative",
+    body: "Institutional IC-memo style prose (xAI when available): executive brief, cycle, valuation, flows, macro/news, outlook, risks, watchlist. Each section is paired with exhibits (charts/tables) from the same fact pack. Use Download PDF for a portable copy.",
+  },
+  "vc-last-updated": {
+    title: "As of / coverage",
+    body: "Series end date and day count for the BTC/USD history behind this dashboard. Chart “today” markers use this as-of bar.",
+  },
+  "vc-subtab": {
+    title: "4y Cycle",
+    body: "Halving-cycle analysis: status clocks, overlays, spiral &amp; radar, drawdown, ROI, bottom timing, valuation zones, S2F/Pi, phases, and full statistics. Under Valuation → Indicators, next to Sentiment &amp; Market.",
   },
 };
 

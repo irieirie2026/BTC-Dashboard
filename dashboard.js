@@ -450,6 +450,19 @@ const MENU_TREE = {
           },
         },
       },
+      volatility: {
+        label: "Volatility",
+        accent: "#2dd4bf",
+        accentDim: "rgba(45, 212, 191, 0.18)",
+        children: {
+          panel: {
+            label: "Volatility",
+            accent: "#2dd4bf",
+            accentDim: "rgba(45, 212, 191, 0.18)",
+            onShow: () => window.refreshVolatilityCharts?.(),
+          },
+        },
+      },
       valuation: {
         label: "Valuation Models",
         accent: "#8b5cf6",
@@ -978,7 +991,7 @@ const DASHBOARD_META = {
   },
   stats: {
     title: "BTC Stats",
-    subtitle: "Statistics · Risk · VaR · Markov",
+    subtitle: "Statistics · Risk · VaR · Volatility · Markov",
     pageTitle: "BTC Stats — Live Dashboard",
   },
   tradfi: {
@@ -1003,7 +1016,7 @@ const DASHBOARD_META = {
   },
   valuation: {
     title: "BTC Valuation",
-    subtitle: "On-chain indicators · cycles · sentiment · distribution",
+    subtitle: "On-chain indicators · cycles · distribution",
     pageTitle: "BTC Valuation — Live Dashboard",
   },
   misc: {
@@ -1076,11 +1089,13 @@ const LEGACY_L2 = {
     st1: "statistics",
     st2: "risk",
     st3: "var",
-    st4: "valuation",
-    st5: "markov",
+    st4: "volatility",
+    st5: "valuation",
+    st6: "markov",
     statistics: "statistics",
     risk: "risk",
     var: "var",
+    volatility: "volatility",
     valuation: "valuation",
     markov: "valuation",
     powerlaw: "valuation",
@@ -1161,6 +1176,16 @@ const LEGACY_L2 = {
     "greed-fear": "indicators",
     greed: "indicators",
     fear: "indicators",
+    "4y-cycle": "indicators",
+    "4ycycle": "indicators",
+    cycle: "indicators",
+    cycles: "indicators",
+    "four-year": "indicators",
+    "4y": "indicators",
+    "super-summary": "landing",
+    supersummary: "landing",
+    summary: "landing",
+    brief: "landing",
   },
   misc: {
     metrics: "metrics",
@@ -1195,6 +1220,7 @@ const LEGACY_L3 = {
   "stats/statistics": { panel: "panel" },
   "stats/risk": { panel: "panel" },
   "stats/var": { panel: "panel" },
+  "stats/volatility": { panel: "panel" },
   "stats/valuation": { markov: "markov", powerlaw: "powerlaw", panel: "markov" },
   "stats/markov": { panel: "markov" },
   "stats/powerlaw": { panel: "powerlaw" },
@@ -1471,6 +1497,7 @@ function refreshActiveDashboardCharts() {
       window.refreshStatsCharts?.();
       window.refreshRiskCharts?.();
       window.refreshVarCharts?.();
+      window.refreshVolatilityCharts?.();
       window.refreshMarkovCharts?.();
       window.refreshPowerLawCharts?.();
     },
@@ -1771,6 +1798,36 @@ function bootstrapPathMenu() {
     localStorage.setItem(MENU_L2_KEY, "cross-market");
     localStorage.setItem(MENU_L3_KEY, "news-attribution");
     localStorage.removeItem(MENU_L4_KEY);
+  } else if (
+    path === "/valuation"
+    || path === "/valuation/indicators"
+  ) {
+    localStorage.setItem(MENU_L1_KEY, "valuation");
+    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (
+    path === "/valuation/4y-cycle"
+    || path === "/valuation/4ycycle"
+    || path === "/valuation/cycle"
+  ) {
+    localStorage.setItem(MENU_L1_KEY, "valuation");
+    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+    sessionStorage.setItem("vc-open-cycle", "1");
+  } else if (
+    path === "/valuation/super-summary"
+    || path === "/valuation/summary"
+    || path === "/home/super-summary"
+    || path === "/super-summary"
+  ) {
+    // Super Summary lives on Home only (final multi-domain report).
+    localStorage.setItem(MENU_L1_KEY, "home");
+    localStorage.setItem(MENU_L2_KEY, "landing");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+    sessionStorage.setItem("ss-open-report", "1");
   }
 }
 

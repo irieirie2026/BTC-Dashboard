@@ -2,126 +2,6 @@
   "metricId": "hodl_waves",
   "series": [
     {
-      "timestamp": 1656460800,
-      "date": "2022-06-29",
-      "value": 64.9
-    },
-    {
-      "timestamp": 1656547200,
-      "date": "2022-06-30",
-      "value": 64.96
-    },
-    {
-      "timestamp": 1656633600,
-      "date": "2022-07-01",
-      "value": 64.96
-    },
-    {
-      "timestamp": 1656720000,
-      "date": "2022-07-02",
-      "value": 64.9
-    },
-    {
-      "timestamp": 1656806400,
-      "date": "2022-07-03",
-      "value": 64.86
-    },
-    {
-      "timestamp": 1656892800,
-      "date": "2022-07-04",
-      "value": 64.83
-    },
-    {
-      "timestamp": 1656979200,
-      "date": "2022-07-05",
-      "value": 64.86
-    },
-    {
-      "timestamp": 1657065600,
-      "date": "2022-07-06",
-      "value": 64.8
-    },
-    {
-      "timestamp": 1657152000,
-      "date": "2022-07-07",
-      "value": 64.86
-    },
-    {
-      "timestamp": 1657238400,
-      "date": "2022-07-08",
-      "value": 64.8
-    },
-    {
-      "timestamp": 1657324800,
-      "date": "2022-07-09",
-      "value": 64.93
-    },
-    {
-      "timestamp": 1657411200,
-      "date": "2022-07-10",
-      "value": 64.86
-    },
-    {
-      "timestamp": 1657497600,
-      "date": "2022-07-11",
-      "value": 64.9
-    },
-    {
-      "timestamp": 1657584000,
-      "date": "2022-07-12",
-      "value": 64.87
-    },
-    {
-      "timestamp": 1657670400,
-      "date": "2022-07-13",
-      "value": 64.87
-    },
-    {
-      "timestamp": 1657756800,
-      "date": "2022-07-14",
-      "value": 64.87
-    },
-    {
-      "timestamp": 1657843200,
-      "date": "2022-07-15",
-      "value": 64.94
-    },
-    {
-      "timestamp": 1657929600,
-      "date": "2022-07-16",
-      "value": 64.94
-    },
-    {
-      "timestamp": 1658016000,
-      "date": "2022-07-17",
-      "value": 64.81
-    },
-    {
-      "timestamp": 1658102400,
-      "date": "2022-07-18",
-      "value": 64.9
-    },
-    {
-      "timestamp": 1658188800,
-      "date": "2022-07-19",
-      "value": 64.64
-    },
-    {
-      "timestamp": 1658275200,
-      "date": "2022-07-20",
-      "value": 64.7
-    },
-    {
-      "timestamp": 1658361600,
-      "date": "2022-07-21",
-      "value": 64.56
-    },
-    {
-      "timestamp": 1658448000,
-      "date": "2022-07-22",
-      "value": 64.54
-    },
-    {
       "timestamp": 1658534400,
       "date": "2022-07-23",
       "value": 64.5
@@ -7275,19 +7155,139 @@
       "timestamp": 1782604800,
       "date": "2026-06-28",
       "value": 61.94
+    },
+    {
+      "timestamp": 1782691200,
+      "date": "2026-06-29",
+      "value": 61.9
+    },
+    {
+      "timestamp": 1782777600,
+      "date": "2026-06-30",
+      "value": 61.71
+    },
+    {
+      "timestamp": 1782864000,
+      "date": "2026-07-01",
+      "value": 61.94
+    },
+    {
+      "timestamp": 1782950400,
+      "date": "2026-07-02",
+      "value": 62.02
+    },
+    {
+      "timestamp": 1783036800,
+      "date": "2026-07-03",
+      "value": 61.96
+    },
+    {
+      "timestamp": 1783123200,
+      "date": "2026-07-04",
+      "value": 61.98
+    },
+    {
+      "timestamp": 1783209600,
+      "date": "2026-07-05",
+      "value": 62.06
+    },
+    {
+      "timestamp": 1783296000,
+      "date": "2026-07-06",
+      "value": 62.0
+    },
+    {
+      "timestamp": 1783382400,
+      "date": "2026-07-07",
+      "value": 62.06
+    },
+    {
+      "timestamp": 1783468800,
+      "date": "2026-07-08",
+      "value": 62.06
+    },
+    {
+      "timestamp": 1783555200,
+      "date": "2026-07-09",
+      "value": 62.1
+    },
+    {
+      "timestamp": 1783641600,
+      "date": "2026-07-10",
+      "value": 62.16
+    },
+    {
+      "timestamp": 1783728000,
+      "date": "2026-07-11",
+      "value": 62.26
+    },
+    {
+      "timestamp": 1783814400,
+      "date": "2026-07-12",
+      "value": 62.24
+    },
+    {
+      "timestamp": 1783900800,
+      "date": "2026-07-13",
+      "value": 62.3
+    },
+    {
+      "timestamp": 1783987200,
+      "date": "2026-07-14",
+      "value": 62.3
+    },
+    {
+      "timestamp": 1784073600,
+      "date": "2026-07-15",
+      "value": 62.24
+    },
+    {
+      "timestamp": 1784160000,
+      "date": "2026-07-16",
+      "value": 62.28
+    },
+    {
+      "timestamp": 1784246400,
+      "date": "2026-07-17",
+      "value": 62.4
+    },
+    {
+      "timestamp": 1784332800,
+      "date": "2026-07-18",
+      "value": 62.44
+    },
+    {
+      "timestamp": 1784419200,
+      "date": "2026-07-19",
+      "value": 62.64
+    },
+    {
+      "timestamp": 1784505600,
+      "date": "2026-07-20",
+      "value": 62.57
+    },
+    {
+      "timestamp": 1784592000,
+      "date": "2026-07-21",
+      "value": 62.57
+    },
+    {
+      "timestamp": 1784678400,
+      "date": "2026-07-22",
+      "value": 62.57
     }
   ],
   "latest": {
-    "timestamp": 1782604800,
-    "date": "2026-06-28",
-    "value": 61.94
+    "timestamp": 1784678400,
+    "date": "2026-07-22",
+    "value": 62.57
   },
   "source": "BGeometrics \u00b7 bitcoin-data.com",
   "unit": "%",
-  "note": null,
+  "note": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
   "error": null,
-  "stale": false,
-  "fetchedAt": "2026-06-29T15:14:17Z",
-  "storedAt": "2026-06-29T15:14:17Z",
+  "stale": true,
+  "fetchedAt": "2026-07-23T14:21:25Z",
+  "storedAt": "2026-07-23T14:21:34Z",
   "pointCount": 1455
 }

@@ -225,6 +225,66 @@ def _latest_from_series_data(data: dict[str, Any]) -> Any:
     return data.get("value")
 
 
+def _data_as_of_from_series_data(data: dict[str, Any]) -> str | None:
+    """Calendar date of the latest observation (not fetch wall-clock)."""
+    latest = data.get("latest")
+    if isinstance(latest, dict):
+        if latest.get("date"):
+            return str(latest["date"])[:10]
+        ts = latest.get("timestamp")
+        if ts is not None:
+            try:
+                t = float(ts)
+                if t > 1e12:
+                    t /= 1000.0
+                return time.strftime("%Y-%m-%d", time.gmtime(t))
+            except (TypeError, ValueError, OSError):
+                pass
+    series = data.get("series") or []
+    if series:
+        last = series[-1] or {}
+        if last.get("date"):
+            return str(last["date"])[:10]
+        ts = last.get("timestamp")
+        if ts is not None:
+            try:
+                t = float(ts)
+                if t > 1e12:
+                    t /= 1000.0
+                return time.strftime("%Y-%m-%d", time.gmtime(t))
+            except (TypeError, ValueError, OSError):
+                pass
+    return None
+
+
+def _parse_iso_ts(iso: str | None) -> float | None:
+    if not iso or not isinstance(iso, str):
+        return None
+    try:
+        s = iso.strip().replace("Z", "+00:00")
+        from datetime import datetime
+
+        return datetime.fromisoformat(s).timestamp()
+    except (TypeError, ValueError):
+        return None
+
+
+def _apply_cell_freshness(cell: dict[str, Any], *, ttl: int = 86_400) -> dict[str, Any]:
+    """Mark cell stale when fetch is older than 1.5× TTL (or source already flagged)."""
+    if not cell:
+        return cell
+    if cell.get("stale"):
+        return cell
+    fetched = _parse_iso_ts(cell.get("fetchedAt"))
+    if fetched is None:
+        return cell
+    age = time.time() - fetched
+    if age > max(ttl * 1.5, 36 * 3600):
+        cell["stale"] = True
+        cell["staleReason"] = "fetch_age"
+    return cell
+
+
 def _snapshot_value_usable(key: str, val: Any) -> bool:
     """True when a snapshot cell value should count as present (not a placeholder)."""
     if val is None:
@@ -263,7 +323,12 @@ def _cell_from_series_data(data: dict[str, Any], default_source: str) -> dict:
     ):
         if data.get(field) is not None:
             extra[field] = data[field]
-    return _cell(val, data.get("source") or default_source, extra or None)
+    as_of = _data_as_of_from_series_data(data)
+    if as_of:
+        extra["dataAsOf"] = as_of
+    return _apply_cell_freshness(
+        _cell(val, data.get("source") or default_source, extra or None)
+    )
 
 
 def _store_series_body(metric_id: str, *, ttl: int) -> dict[str, Any] | None:
@@ -685,34 +750,62 @@ def _assemble_snapshot_cells(
                 "mempoolCount": mempool.get("mempool_count"),
             },
         ),
-        "puell_multiple": _cell(
-            (puell.get("latest") or {}).get("value"),
-            puell.get("source") or "Computed · Blockchain.info",
+        "puell_multiple": _cell_from_series_data(
             {
+                "latest": puell.get("latest"),
+                "series": puell.get("series"),
                 "fetchedAt": puell.get("fetchedAt"),
-                "isEstimate": puell.get("source", "").startswith("Computed"),
                 "error": puell.get("error"),
+                "isEstimate": (puell.get("source") or "").startswith("Computed"),
+                "source": puell.get("source") or "Computed · Blockchain.info",
             },
+            puell.get("source") or "Computed · Blockchain.info",
         ),
-        "mvrv": _cell(
-            (mvrv.get("latest") or {}).get("value"),
+        "mvrv": _cell_from_series_data(
+            {
+                "latest": mvrv.get("latest"),
+                "series": mvrv.get("series"),
+                "fetchedAt": mvrv.get("fetchedAt"),
+                "error": mvrv.get("error"),
+                "stale": mvrv.get("stale"),
+                "source": mvrv.get("source") or "BGeometrics",
+            },
             "BGeometrics",
-            {"fetchedAt": mvrv.get("fetchedAt"), "error": mvrv.get("error"), "stale": mvrv.get("stale")},
         ),
-        "mvrv_z_score": _cell(
-            (mvrv_z.get("latest") or {}).get("value"),
+        "mvrv_z_score": _cell_from_series_data(
+            {
+                "latest": mvrv_z.get("latest"),
+                "series": mvrv_z.get("series"),
+                "fetchedAt": mvrv_z.get("fetchedAt"),
+                "error": mvrv_z.get("error"),
+                "stale": mvrv_z.get("stale"),
+                "source": mvrv_z.get("source") or "BGeometrics",
+            },
             "BGeometrics",
-            {"fetchedAt": mvrv_z.get("fetchedAt"), "error": mvrv_z.get("error"), "stale": mvrv_z.get("stale")},
         ),
-        "realized_price": _cell(
-            (realized.get("latest") or {}).get("value"),
+        "realized_price": _cell_from_series_data(
+            {
+                "latest": realized.get("latest"),
+                "series": realized.get("series"),
+                "fetchedAt": realized.get("fetchedAt"),
+                "error": realized.get("error"),
+                "stale": realized.get("stale"),
+                "source": realized.get("source") or "BGeometrics",
+            },
             "BGeometrics",
-            {"fetchedAt": realized.get("fetchedAt"), "error": realized.get("error"), "stale": realized.get("stale")},
         ),
-        "hodl_waves_1y_plus": _cell(
-            hodl_1y,
+        "hodl_waves_1y_plus": _cell_from_series_data(
+            {
+                "latest": {"value": hodl_1y, "date": (hodl.get("latest") or {}).get("date")}
+                if hodl_1y is not None
+                else None,
+                "series": hodl.get("series"),
+                "fetchedAt": hodl.get("fetchedAt"),
+                "error": hodl.get("error"),
+                "mayProxy": True,
+                "source": hodl.get("source") or "BGeometrics",
+            },
             "BGeometrics",
-            {"fetchedAt": hodl.get("fetchedAt"), "error": hodl.get("error"), "mayProxy": True},
         ),
         "fear_greed": _cell(
             (fng.get("latest") or {}).get("value"),
@@ -814,7 +907,17 @@ def _finalize_snapshot_payload(
     _enrich_snapshot_cells(cells, refresh=refresh)
     _repair_snapshot_cells(cells)
     errors: list[str] = []
+    stale_count = 0
     for key, cell in cells.items():
+        if not isinstance(cell, dict):
+            continue
+        # Prefer registry TTL when available
+        registry_key = _REGISTRY_SNAPSHOT_ALIASES.get(key, key)
+        spec = REGISTRY.get(registry_key)
+        ttl = int(getattr(spec, "ttl", 86_400) or 86_400)
+        _apply_cell_freshness(cell, ttl=ttl)
+        if cell.get("stale"):
+            stale_count += 1
         if cell.get("error"):
             errors.append(f"{key}: {cell['error']}")
     return {
@@ -823,6 +926,7 @@ def _finalize_snapshot_payload(
         "fetchedAt": _now_iso(),
         "errors": sorted(set(errors)),
         "partial": bool(errors),
+        "staleCount": stale_count,
         "sourceChain": source_chain,
         "fastPath": fast_path,
         "fromCache": from_cache,
@@ -1016,7 +1120,7 @@ def _chart_from_payload(key: str, data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def get_flows_payload(*, timespan: str = "1year", refresh: bool = False) -> dict[str, Any]:
+def get_flows_payload(*, timespan: str = "all", refresh: bool = False) -> dict[str, Any]:
     cache_key = f"btc:bundle:flows:v1:{timespan}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
@@ -1055,7 +1159,7 @@ def get_flows_payload(*, timespan: str = "1year", refresh: bool = False) -> dict
     return payload
 
 
-def get_network_payload(*, timespan: str = "1year", refresh: bool = False) -> dict[str, Any]:
+def get_network_payload(*, timespan: str = "all", refresh: bool = False) -> dict[str, Any]:
     cache_key = f"btc:bundle:network:v1:{timespan}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
@@ -1126,7 +1230,7 @@ def get_distribution_payload(*, refresh: bool = False) -> dict[str, Any]:
 
 def get_intelligence_payload(
     *,
-    timespan: str = "1year",
+    timespan: str = "all",
     refresh: bool = False,
 ) -> dict[str, Any]:
     cache_key = f"btc:bundle:intelligence:v2:{timespan}"
@@ -1161,7 +1265,7 @@ def get_intelligence_payload(
 
 def get_miner_payload(
     *,
-    timespan: str = "1year",
+    timespan: str = "all",
     refresh: bool = False,
 ) -> dict[str, Any]:
     cache_key = f"btc:bundle:miner:v1:{timespan}"
@@ -1204,7 +1308,7 @@ def get_miner_payload(
 
 def get_valuation_payload(
     *,
-    timespan: str = "1year",
+    timespan: str = "all",
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Fetch valuation charts sequentially to respect BGeometrics rate limits."""
@@ -1244,7 +1348,7 @@ def get_valuation_payload(
 def get_series_payload(
     indicator: str,
     *,
-    timespan: str = "1year",
+    timespan: str = "all",
     refresh: bool = False,
 ) -> dict[str, Any]:
     try:

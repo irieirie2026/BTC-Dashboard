@@ -2,124 +2,9 @@
   "metricId": "san_social_volume_total",
   "series": [
     {
-      "timestamp": 1751241600,
-      "date": "2025-06-30",
-      "value": 4224.0
-    },
-    {
-      "timestamp": 1751328000,
-      "date": "2025-07-01",
-      "value": 4879.0
-    },
-    {
-      "timestamp": 1751414400,
-      "date": "2025-07-02",
-      "value": 5341.0
-    },
-    {
-      "timestamp": 1751500800,
-      "date": "2025-07-03",
-      "value": 5215.0
-    },
-    {
-      "timestamp": 1751587200,
-      "date": "2025-07-04",
-      "value": 5430.0
-    },
-    {
-      "timestamp": 1751673600,
-      "date": "2025-07-05",
-      "value": 4376.0
-    },
-    {
-      "timestamp": 1751760000,
-      "date": "2025-07-06",
-      "value": 3971.0
-    },
-    {
-      "timestamp": 1751846400,
-      "date": "2025-07-07",
-      "value": 5138.0
-    },
-    {
-      "timestamp": 1751932800,
-      "date": "2025-07-08",
-      "value": 5129.0
-    },
-    {
-      "timestamp": 1752019200,
-      "date": "2025-07-09",
-      "value": 5695.0
-    },
-    {
-      "timestamp": 1752105600,
-      "date": "2025-07-10",
-      "value": 7779.0
-    },
-    {
-      "timestamp": 1752192000,
-      "date": "2025-07-11",
-      "value": 7858.0
-    },
-    {
-      "timestamp": 1752278400,
-      "date": "2025-07-12",
-      "value": 4838.0
-    },
-    {
-      "timestamp": 1752364800,
-      "date": "2025-07-13",
-      "value": 5472.0
-    },
-    {
-      "timestamp": 1752451200,
-      "date": "2025-07-14",
-      "value": 9313.0
-    },
-    {
-      "timestamp": 1752537600,
-      "date": "2025-07-15",
-      "value": 6653.0
-    },
-    {
-      "timestamp": 1752624000,
-      "date": "2025-07-16",
-      "value": 6482.0
-    },
-    {
-      "timestamp": 1752710400,
-      "date": "2025-07-17",
-      "value": 6212.0
-    },
-    {
-      "timestamp": 1752796800,
-      "date": "2025-07-18",
-      "value": 5945.0
-    },
-    {
-      "timestamp": 1752883200,
-      "date": "2025-07-19",
-      "value": 4517.0
-    },
-    {
-      "timestamp": 1752969600,
-      "date": "2025-07-20",
-      "value": 4597.0
-    },
-    {
-      "timestamp": 1753056000,
-      "date": "2025-07-21",
-      "value": 5841.0
-    },
-    {
-      "timestamp": 1753142400,
-      "date": "2025-07-22",
-      "value": 5891.0
-    },
-    {
       "timestamp": 1753228800,
       "date": "2025-07-23",
-      "value": 5152.0
+      "value": 2316.0
     },
     {
       "timestamp": 1753315200,
@@ -1679,20 +1564,135 @@
     {
       "timestamp": 1780185600,
       "date": "2026-05-31",
-      "value": 331.0
+      "value": 2343.0
+    },
+    {
+      "timestamp": 1780272000,
+      "date": "2026-06-01",
+      "value": 4587.0
+    },
+    {
+      "timestamp": 1780358400,
+      "date": "2026-06-02",
+      "value": 5304.0
+    },
+    {
+      "timestamp": 1780444800,
+      "date": "2026-06-03",
+      "value": 4411.0
+    },
+    {
+      "timestamp": 1780531200,
+      "date": "2026-06-04",
+      "value": 4855.0
+    },
+    {
+      "timestamp": 1780617600,
+      "date": "2026-06-05",
+      "value": 5041.0
+    },
+    {
+      "timestamp": 1780704000,
+      "date": "2026-06-06",
+      "value": 3654.0
+    },
+    {
+      "timestamp": 1780790400,
+      "date": "2026-06-07",
+      "value": 3393.0
+    },
+    {
+      "timestamp": 1780876800,
+      "date": "2026-06-08",
+      "value": 3278.0
+    },
+    {
+      "timestamp": 1780963200,
+      "date": "2026-06-09",
+      "value": 3130.0
+    },
+    {
+      "timestamp": 1781049600,
+      "date": "2026-06-10",
+      "value": 2862.0
+    },
+    {
+      "timestamp": 1781136000,
+      "date": "2026-06-11",
+      "value": 2933.0
+    },
+    {
+      "timestamp": 1781222400,
+      "date": "2026-06-12",
+      "value": 2701.0
+    },
+    {
+      "timestamp": 1781308800,
+      "date": "2026-06-13",
+      "value": 2195.0
+    },
+    {
+      "timestamp": 1781395200,
+      "date": "2026-06-14",
+      "value": 2318.0
+    },
+    {
+      "timestamp": 1781481600,
+      "date": "2026-06-15",
+      "value": 2778.0
+    },
+    {
+      "timestamp": 1781568000,
+      "date": "2026-06-16",
+      "value": 2382.0
+    },
+    {
+      "timestamp": 1781654400,
+      "date": "2026-06-17",
+      "value": 2526.0
+    },
+    {
+      "timestamp": 1781740800,
+      "date": "2026-06-18",
+      "value": 2706.0
+    },
+    {
+      "timestamp": 1781827200,
+      "date": "2026-06-19",
+      "value": 2665.0
+    },
+    {
+      "timestamp": 1781913600,
+      "date": "2026-06-20",
+      "value": 2198.0
+    },
+    {
+      "timestamp": 1782000000,
+      "date": "2026-06-21",
+      "value": 2373.0
+    },
+    {
+      "timestamp": 1782086400,
+      "date": "2026-06-22",
+      "value": 2471.0
+    },
+    {
+      "timestamp": 1782172800,
+      "date": "2026-06-23",
+      "value": 1431.0
     }
   ],
   "latest": {
-    "timestamp": 1780185600,
-    "date": "2026-05-31",
-    "value": 331.0
+    "timestamp": 1782172800,
+    "date": "2026-06-23",
+    "value": 1431.0
   },
   "source": "Santiment",
   "unit": "posts",
   "note": "Free plan \u2014 restricted metrics may have 30d lag or 1y cap",
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-06-30T05:43:31Z",
-  "storedAt": "2026-06-30T05:43:31Z",
+  "fetchedAt": "2026-07-23T14:52:57Z",
+  "storedAt": "2026-07-23T14:52:57Z",
   "pointCount": 336
 }

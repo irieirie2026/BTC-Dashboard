@@ -39,12 +39,18 @@
     { "source": "/misc/cross-market/news-attribution", "destination": "/index.html" },
     { "source": "/misc/venue-crosses", "destination": "/index.html" },
     { "source": "/misc/venue-crosses/monitor", "destination": "/index.html" },
+    { "source": "/valuation", "destination": "/index.html" },
+    { "source": "/valuation/indicators", "destination": "/index.html" },
+    { "source": "/valuation/4y-cycle", "destination": "/index.html" },
+    { "source": "/valuation/4ycycle", "destination": "/index.html" },
+    { "source": "/valuation/cycle", "destination": "/index.html" },
+    { "source": "/valuation/super-summary", "destination": "/index.html" },
     { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
   ],
   "functions": {
     "api/handler.py": {
       "maxDuration": 60,
-      "includeFiles": "{server.py,api_dispatch.py,requirements.txt,cache/**,btc_data/**,macro_data/**,data/**,cross_market*.py,macro_drivers*.py,global_macro*.py,equity_insights.py,btc_indicators_api.py}",
+      "includeFiles": "{server.py,api_dispatch.py,super_summary.py,super_summary_paywall.py,requirements.txt,cache/**,btc_data/**,macro_data/**,data/**,cross_market*.py,macro_drivers*.py,global_macro*.py,equity_insights.py,btc_indicators_api.py}",
       "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command,**/*.js,**/*.html,**/*.css,**/*.md}"
     }
   }

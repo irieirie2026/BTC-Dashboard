@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=122" />
+    <link rel="stylesheet" href="styles.css?v=155" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
   </head>
   <body>
@@ -142,7 +142,28 @@
                 </ul>
               </div>
             </header>
-            <section class="home-grid-section">
+            <section class="home-ss-report-section" id="ss-report-section" aria-label="Final multi-domain report">
+              <div class="ss-report-toolbar panel">
+                <div class="panel-header md-toolbar-header">
+                  <h2 data-help-key="ss-title">Final Report · Super Summary</h2>
+                  <span class="panel-meta" id="ss-page-meta">Cross-app synthesis · 1 USDT / 1 USDC</span>
+                  <div class="ss-home-actions">
+                    <button type="button" class="md-btn ss-btn" id="ss-page-gen" hidden>Generate / Regenerate</button>
+                    <button type="button" class="md-btn md-btn--secondary ss-btn" id="ss-page-pdf" hidden>Download PDF</button>
+                  </div>
+                </div>
+                <p class="md-stats vc-intro">
+                  Paid final desk report for the whole dashboard (Valuation, 4y cycle, ETF, treasury, sentiment, macro, spot, news).
+                  Unlock with <strong>1 USDT</strong> or <strong>1 USDC</strong>, then generate the hybrid brief.
+                </p>
+              </div>
+              <div id="ss-paywall" class="ss-paywall panel" hidden></div>
+              <div id="ss-report-unlocked" class="ss-report-unlocked" hidden>
+                <div class="mb-tab-outlook-head" id="ss-page-head"></div>
+                <div id="ss-page-body" class="ss-page-body ss-report-body"></div>
+              </div>
+            </section>
+            <section class="home-grid-section" id="home-grid-section">
               <h3 class="home-grid-title">Choose your course</h3>
               <div id="home-section-grid" class="home-section-grid" role="list"></div>
             </section>
@@ -1643,6 +1664,286 @@
             </div>
             <div class="stats-commentary" id="var-commentary">
               <p>Loading VaR analysis…</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="volatility" data-l3="panel" hidden>
+          <div class="panel md-toolbar vol-toolbar">
+            <div class="panel-header md-toolbar-header">
+              <h2 data-help-key="vol-section">Volatility</h2>
+              <span class="panel-meta" id="vol-suite-meta">ARCH / GARCH suite · BTC log returns</span>
+              <div class="vol-toolbar-actions">
+                <label class="vol-ctrl">
+                  <span>Range</span>
+                  <select id="vol-range" class="md-select vol-select" aria-label="Date range">
+                    <option value="365">1Y</option>
+                    <option value="730">2Y</option>
+                    <option value="1095" selected>3Y</option>
+                    <option value="1825">5Y</option>
+                    <option value="5000">All</option>
+                  </select>
+                </label>
+                <label class="vol-ctrl">
+                  <span>Distribution</span>
+                  <select id="vol-dist" class="md-select vol-select" aria-label="Error distribution">
+                    <option value="t" selected>Student-t</option>
+                    <option value="normal">Normal</option>
+                    <option value="ged">GED</option>
+                    <option value="skewt">Skewed-t</option>
+                  </select>
+                </label>
+                <button type="button" class="md-btn" id="vol-run-all">Run all models</button>
+                <button type="button" class="md-btn md-btn--secondary" id="vol-export-csv">Export CSV</button>
+              </div>
+            </div>
+            <p class="md-stats vc-intro">
+              Conditional volatility models for BTC (ARCH/GARCH family + HAR-RV). Estimation uses the
+              <code>arch</code> library when installed; otherwise a pure-NumPy GARCH(1,1) fallback.
+              Annualization √365. Educational — not a trading signal.
+            </p>
+          </div>
+
+          <section class="deriv-hero-strip" id="vol-kpi-strip" aria-label="Volatility KPIs">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-cond">Cond. vol (ann.)</span>
+              <span class="deriv-hero-value" id="vol-kpi-cond">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-cond-sub">Best model · latest</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-fcast">Forecast 1d / 7d / 30d</span>
+              <span class="deriv-hero-value" id="vol-kpi-fcast">—</span>
+              <span class="deriv-hero-sub">Annualized path</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-best">Best model (AIC)</span>
+              <span class="deriv-hero-value" id="vol-kpi-best">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-best-sub">—</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-persist">Persistence · half-life</span>
+              <span class="deriv-hero-value" id="vol-kpi-persist">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-persist-sub">Shock decay</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-unc">Long-run vol</span>
+              <span class="deriv-hero-value" id="vol-kpi-unc">—</span>
+              <span class="deriv-hero-sub">Unconditional (ann.)</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-regime-garch">Regime</span>
+              <span class="deriv-hero-value" id="vol-kpi-regime">—</span>
+              <span class="deriv-hero-sub">vs long-run</span>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="vol-compare">Model comparison</h2>
+              <span class="panel-meta" id="vol-compare-meta">Click a row for detail</span>
+            </div>
+            <div class="deriv-table-wrap vol-table-wrap">
+              <table class="deriv-table stats-l1-table vol-compare-table" id="vol-compare-table">
+                <thead>
+                  <tr>
+                    <th class="vol-th-text" data-help-key="vol-col-model">Model</th>
+                    <th class="vol-th-text" data-help-key="vol-col-family">Family</th>
+                    <th class="vol-th-num" data-help-key="vol-col-ll">LL</th>
+                    <th class="vol-th-num" data-help-key="vol-col-aic">AIC</th>
+                    <th class="vol-th-num" data-help-key="vol-col-bic">BIC</th>
+                    <th class="vol-th-num" data-help-key="vol-col-qlike">OOS QLIKE</th>
+                    <th class="vol-th-num" data-help-key="vol-col-qlike7">QLIKE 7d</th>
+                    <th class="vol-th-num" data-help-key="vol-col-qlike30">QLIKE 30d</th>
+                    <th class="vol-th-num" data-help-key="vol-col-params">Params</th>
+                    <th class="vol-th-num" data-help-key="vol-col-persist">Persist.</th>
+                    <th class="vol-th-num" data-help-key="vol-col-halflife">Half-life</th>
+                    <th class="vol-th-num" data-help-key="vol-col-condvol">Cond. vol</th>
+                    <th class="vol-th-text" data-help-key="vol-col-status">Status</th>
+                    <th class="vol-th-text vol-th-deribit" data-help-key="vol-col-deribit">Usable for Deribit RV marks</th>
+                    <th class="vol-th-rank" data-help-key="vol-col-rank">Rank</th>
+                  </tr>
+                </thead>
+                <tbody id="vol-compare-body">
+                  <tr><td colspan="15">Run models to populate…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="vol-engine-note" id="vol-engine-note" hidden></p>
+          </section>
+
+          <div class="stats-charts-row vol-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Conditional volatility</h2>
+                <span class="panel-meta" id="vol-chart-meta">Selected / best model</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="vol-cond-chart" height="170"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Multi-step forecast</h2>
+                <span class="panel-meta">1–30 day annualized</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="vol-forecast-chart" height="170"></canvas>
+              </div>
+            </section>
+          </div>
+
+          <div class="stats-charts-row vol-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>News impact curve</h2>
+                <span class="panel-meta">Asymmetry of ± shocks</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="vol-nic-chart" height="160"></canvas>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Std. residuals</h2>
+                <span class="panel-meta">Histogram · selected model</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="vol-resid-chart" height="160"></canvas>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel" id="vol-detail-panel">
+            <div class="panel-header">
+              <h2 id="vol-detail-title">Model detail</h2>
+              <span class="panel-meta" id="vol-detail-sub">Select a row</span>
+            </div>
+            <p class="vol-detail-blurb" id="vol-detail-blurb"></p>
+            <p class="vol-detail-why" id="vol-detail-why"></p>
+            <div class="vol-equation-box" id="vol-equation-box" hidden>
+              <div class="vol-equation-label">Specification</div>
+              <div class="vol-equation" id="vol-equation"></div>
+              <p class="vol-equation-note" id="vol-equation-note"></p>
+            </div>
+            <div class="deriv-table-wrap vol-params-wrap">
+              <table class="deriv-table stats-l1-table vol-params-table" id="vol-params-table">
+                <colgroup>
+                  <col class="vol-col-param" />
+                  <col class="vol-col-est" />
+                  <col class="vol-col-se" />
+                  <col class="vol-col-t" />
+                  <col class="vol-col-p" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th class="vol-th-text" data-help-key="vol-param-name">Parameter &amp; role</th>
+                    <th class="vol-th-num" data-help-key="vol-param-est">Estimate</th>
+                    <th class="vol-th-num" data-help-key="vol-param-se">Std. err.</th>
+                    <th class="vol-th-num" data-help-key="vol-param-t">t / z</th>
+                    <th class="vol-th-num" data-help-key="vol-param-p">p-value</th>
+                  </tr>
+                </thead>
+                <tbody id="vol-params-body">
+                  <tr><td colspan="5">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div class="vol-verdict-grid">
+            <section class="panel" id="vol-verdict-panel">
+              <div class="panel-header">
+                <h2 data-help-key="vol-verdict">Desk verdict</h2>
+                <span class="panel-meta" id="vol-verdict-meta">Fitness · Deribit use</span>
+              </div>
+              <div id="vol-verdict" class="vol-verdict">
+                <p class="macro-muted">Select a model after running the suite…</p>
+              </div>
+            </section>
+            <section class="panel stats-commentary-panel">
+              <div class="panel-header">
+                <h2 data-help-key="vol-insights">Deribit desk insights</h2>
+                <span class="panel-meta">Options · RV vs IV</span>
+              </div>
+              <div class="stats-commentary" id="vol-insights">
+                <p>Run models to generate insights…</p>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="vol-backtest">Forecast backtest (OOS)</h2>
+              <span class="panel-meta" id="vol-backtest-meta">Horizons 1d · 7d · 14d · 30d · QLIKE primary</span>
+            </div>
+            <p class="vol-backtest-intro" id="vol-backtest-intro">
+              Expanding-window out-of-sample: re-estimate, forecast multi-day variance, score vs realized
+              sum of squared log returns. Lower QLIKE = better for vol forecasting (option desks).
+            </p>
+            <div class="vol-backtest-charts">
+              <div class="vol-backtest-chart-panel">
+                <h3 class="vol-backtest-chart-title">QLIKE by horizon (↓ better)</h3>
+                <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                  <canvas id="vol-bt-qlike-chart" height="150"></canvas>
+                </div>
+              </div>
+              <div class="vol-backtest-chart-panel">
+                <h3 class="vol-backtest-chart-title">RMSE ann. by horizon</h3>
+                <div class="deriv-chart-wrap deriv-chart-wrap--compact">
+                  <canvas id="vol-bt-rmse-chart" height="150"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table stats-l1-table vol-backtest-table" id="vol-backtest-table">
+                <thead>
+                  <tr>
+                    <th class="vol-th-text">Horizon</th>
+                    <th class="vol-th-num" data-help-key="vol-bt-n">Origins</th>
+                    <th class="vol-th-num" data-help-key="vol-bt-qlike">QLIKE ↓</th>
+                    <th class="vol-th-num" data-help-key="vol-bt-rmse">RMSE (ann.)</th>
+                    <th class="vol-th-num" data-help-key="vol-bt-mae">MAE (var)</th>
+                    <th class="vol-th-num" data-help-key="vol-bt-bias">Bias (var)</th>
+                  </tr>
+                </thead>
+                <tbody id="vol-backtest-body">
+                  <tr><td colspan="6">Select a model after running the suite…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="vol-backtest-note" id="vol-backtest-note"></p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="vol-guide">Model selection guide</h2>
+              <span class="panel-meta">When to prefer which family</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table stats-l1-table" id="vol-guide-table">
+                <thead>
+                  <tr><th>Prefer</th><th>When</th></tr>
+                </thead>
+                <tbody id="vol-guide-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2>Glossary</h2>
+              <span class="panel-meta">Core terms</span>
+            </div>
+            <div class="stats-commentary" id="vol-glossary"></div>
+          </section>
+
+          <section class="panel stats-commentary-panel vol-run-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="vol-run-commentary">Run commentary</h2>
+              <span class="panel-meta" id="vol-run-commentary-meta">After estimation</span>
+            </div>
+            <div class="stats-commentary" id="vol-run-commentary">
+              <p>Run all models to generate a desk read of this estimation pass.</p>
             </div>
           </section>
         </div>
@@ -3753,42 +4054,9 @@
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="miner">Miner &amp; Network</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="valuation">Valuation &amp; Cycles</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="sentiment">Sentiment &amp; Market</button>
+            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="4y-cycle" title="Bitcoin 4-year cycle">4y Cycle</button>
             <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="methodology">Sources</button>
           </nav>
-          <section class="panel md-filters mb-filters" id="mb-filters-panel">
-            <div class="md-controls">
-              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,intelligence,miner,valuation,sentiment">
-                <span class="md-control-group-label">Chart</span>
-                <div class="md-control-group-fields">
-                  <label class="md-field">
-                    <span class="md-field-label">Indicator<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-indicator" aria-label="Explain indicator">?</button></span>
-                    <select id="mb-indicator" class="md-select"></select>
-                  </label>
-                  <label class="md-field">
-                    <span class="md-field-label">Range<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-timespan" aria-label="Explain range">?</button></span>
-                    <select id="mb-timespan" class="md-select">
-                      <option value="30days">30 days</option>
-                      <option value="90days">90 days</option>
-                      <option value="1year" selected>1 year</option>
-                      <option value="2years">2 years</option>
-                      <option value="4years">4 years</option>
-                    </select>
-                  </label>
-                </div>
-              </div>
-              <div class="md-control-group" data-mb-control-group="overview,distribution,onchain,intelligence,miner,valuation,sentiment">
-                <span class="md-control-group-label">Actions</span>
-                <div class="md-control-group-fields md-control-group-fields--actions">
-                  <span class="md-btn-group">
-                    <button type="button" id="mb-refresh" class="md-btn">Refresh data</button>
-                    <button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-refresh" aria-label="Explain refresh">?</button>
-                  </span>
-                  <button type="button" id="mb-export" class="md-btn md-btn--secondary">Export CSV</button>
-                  <button type="button" id="mb-methodology-btn" class="md-btn md-btn--secondary">Sources &amp; Methodology</button>
-                </div>
-              </div>
-            </div>
-          </section>
           <div class="md-kpi-section" id="mb-kpi-section">
             <div id="mb-kpis" class="md-kpi-grid"></div>
           </div>
@@ -3797,9 +4065,9 @@
             <section class="panel">
               <div class="panel-header">
                 <h2>Indicator snapshot</h2>
-                <span class="panel-meta">Signal badges: valuation · sentiment · flow · signal · click row to chart</span>
+                <span class="panel-meta">Signal badges: valuation · sentiment · flow · signal · click a row to open its detailed tab</span>
               </div>
-              <div class="deriv-table-wrap md-table-wrap">
+              <div class="deriv-table-wrap md-table-wrap mb-snapshot-table-wrap">
                 <table class="deriv-table md-table mb-snapshot-table">
                   <colgroup>
                     <col class="mb-col-indicator" />
@@ -3807,6 +4075,7 @@
                     <col class="mb-col-signal" />
                     <col class="mb-col-source" />
                     <col class="mb-col-updated" />
+                    <col class="mb-col-status" />
                   </colgroup>
                   <thead>
                     <tr>
@@ -3814,24 +4083,18 @@
                       <th class="mono mb-col-value">Value</th>
                       <th class="mb-col-signal">Signal<button type="button" class="help-trigger help-trigger--inline" data-help-key="mb-signal-badges" aria-label="Explain signal badges">?</button></th>
                       <th class="mb-col-source">Source</th>
-                      <th class="mb-col-updated">Updated</th>
+                      <th class="mb-col-updated" data-help-key="mb-updated-col">Updated</th>
+                      <th class="mb-col-status" data-help-key="mb-status-col">Status</th>
                     </tr>
                   </thead>
-                  <tbody id="mb-table-body"><tr><td colspan="5">Loading…</td></tr></tbody>
+                  <tbody id="mb-table-body"><tr><td colspan="6">Loading…</td></tr></tbody>
                 </table>
               </div>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <h2 id="mb-chart-title">Selected indicator</h2>
-                <span class="panel-meta" id="mb-chart-meta"></span>
-              </div>
-              <div id="mb-main-chart" class="md-plotly mb-plotly" aria-label="Bitcoin indicator chart"></div>
             </section>
             <section class="panel stats-commentary-panel mb-tab-outlook-panel mb-overview-exec-panel">
               <div class="panel-header">
                 <h2>BTC cycle executive summary</h2>
-                <span class="panel-meta">Cross-tab synthesis · cycle phase &amp; forward outlook · not financial advice</span>
+                <span class="panel-meta">Hybrid multi-lens synthesis · cycle phase &amp; forward outlook · not financial advice</span>
               </div>
               <div class="mb-tab-outlook-head" id="mb-overview-outlook-head"></div>
               <div class="stats-commentary" id="mb-overview-commentary"><p>Loading executive summary…</p></div>
@@ -3841,33 +4104,33 @@
             <section class="panel mb-charts-row">
               <div class="panel-header">
                 <h2 data-help-key="mb-wealth-dist">Wealth concentration</h2>
-                <span class="panel-meta" id="mb-wealth-meta">BitInfoCharts · address-level</span>
+                <span class="panel-meta" id="mb-wealth-meta">BitInfoCharts · address-level snapshot</span>
               </div>
               <div class="mb-chart-block">
                 <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-wealth_concentration"></p></div>
                 <div id="mb-wealth-chart" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wealth_concentration"></div></div><div class="mb-chart-education" id="mb-edu-wealth_concentration"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wealth_concentration"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header">
                 <h2 data-help-key="mb-wallet-cohorts">Wallet size distribution</h2>
-                <span class="panel-meta">Supply % by balance cohort</span>
+                <span class="panel-meta">BitInfoCharts · balance-cohort snapshot</span>
               </div>
               <div class="mb-chart-block">
                 <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-wallet_cohorts"></p></div>
-                <div id="mb-cohort-chart" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wallet_cohorts"></div></div><div class="mb-chart-education" id="mb-edu-wallet_cohorts"></div>
+                <div id="mb-cohort-chart" class="md-plotly mb-plotly mb-plotly--tall mb-chart-plot mb-cohort-chart"></div>
+                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-wallet_cohorts"></div></div>
               </div>
-              <div class="deriv-table-wrap md-table-wrap">
-                <table class="deriv-table md-table">
+              <div class="deriv-table-wrap md-table-wrap mb-cohort-table-wrap">
+                <table class="deriv-table md-table mb-cohort-table">
                   <thead>
                     <tr>
-                      <th>Balance range (BTC)</th>
-                      <th>Addresses</th>
-                      <th>% addresses</th>
-                      <th>BTC held</th>
-                      <th>% supply</th>
+                      <th class="mb-cohort-col-range">Balance range (BTC)</th>
+                      <th class="mono">Addresses</th>
+                      <th class="mono">% addresses</th>
+                      <th class="mono">BTC held</th>
+                      <th class="mono">% supply</th>
                     </tr>
                   </thead>
                   <tbody id="mb-cohort-table"></tbody>
@@ -3879,57 +4142,50 @@
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-active-addresses">Active addresses</h2><span class="panel-meta">Blockchain.info</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-active_addresses"></p></div>
                 <div id="mb-chart-active" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-active_addresses"></div></div><div class="mb-chart-education" id="mb-edu-active_addresses"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-active_addresses"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-hash-rate">Hash rate</h2><span class="panel-meta">Blockchain.info · also On Chain → Mining</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-hash_rate"></p></div>
                 <div id="mb-chart-hash" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-hash_rate"></div></div><div class="mb-chart-education" id="mb-edu-hash_rate"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-hash_rate"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-puell">Puell Multiple</h2><span class="panel-meta">Computed · miner revenue / 365d MA</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-puell_multiple"></p></div>
                 <div id="mb-chart-puell" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-puell_multiple"></div></div><div class="mb-chart-education" id="mb-edu-puell_multiple"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-puell_multiple"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-exchange-netflow">Exchange netflow</h2><span class="panel-meta">Coin Metrics Community</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-exchange_netflow"></p></div>
                 <div id="mb-chart-netflow" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-exchange_netflow"></div></div><div class="mb-chart-education" id="mb-edu-exchange_netflow"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-exchange_netflow"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-exchange-balance">Exchange balance</h2><span class="panel-meta">Coin Metrics Community</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-exchange_balance"></p></div>
                 <div id="mb-chart-ex-balance" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-exchange_balance"></div></div><div class="mb-chart-education" id="mb-edu-exchange_balance"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-exchange_balance"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-tx-count">Transaction count</h2><span class="panel-meta">Coin Metrics Community</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-tx_count"></p></div>
                 <div id="mb-chart-tx" class="md-plotly mb-plotly mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-tx_count"></div></div><div class="mb-chart-education" id="mb-edu-tx_count"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-tx_count"></div></div>
               </div>
             </section>
             <section class="panel mb-charts-row">
               <div class="panel-header"><h2 data-help-key="mb-mempool-fees">Mempool fees</h2><span class="panel-meta">Mempool.space · live</span></div>
               <div class="mb-chart-block">
-                <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-desc-mempool_fees"></p></div>
                 <div id="mb-mempool-panel" class="mb-mempool-panel mb-chart-plot"></div>
-                <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-commentary-mempool_fees"></div></div><div class="mb-chart-education" id="mb-edu-mempool_fees"></div>
+                <div class="mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"><div class="mb-chart-commentary" id="mb-commentary-mempool_fees"></div></div>
               </div>
             </section>
             <section class="panel mb-frameworks-section">
@@ -4224,7 +4480,197 @@
             </section>
             <p class="md-hint mb-crosslink">Venue-level perp detail: <strong>Derivatives → Perp</strong>.</p>
           </div>
-          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="methodology" hidden>
+          <div class="mb-bitcoin-panel macro-drivers-panel" data-mb-sub="4y-cycle" hidden>
+            <section class="panel md-toolbar mb-toolbar vc-toolbar">
+              <div class="panel-header md-toolbar-header">
+                <h2 data-help-key="vc-title">Bitcoin 4-Year Cycle</h2>
+                <span class="panel-meta" id="vc-page-meta">Loading…</span>
+              </div>
+              <p class="md-stats vc-intro">
+                <span data-help-key="vc-intro">How to use this page</span>
+                — cycle status, overlays, drawdowns, phase progress, and valuation context for the ~4-year halvings era.
+                <span class="vc-last-updated" id="vc-last-updated" data-help-key="vc-last-updated"></span>
+              </p>
+            </section>
+
+            <section class="panel vc-status-panel" aria-label="Cycle status">
+              <div class="panel-header">
+                <h2 data-help-key="vc-status">Cycle status</h2>
+                <span class="panel-meta">As of</span>
+              </div>
+              <p class="vc-section-lead">Headline clocks for Cycle 4: days since last halvings, days since cycle ATH, drawdown, days to next estimated halvings, and progress through the average C1–C3 peak→bottom window.</p>
+              <div id="vc-status-cards" class="vc-status-cards"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-overlay">Cycle overlay — days from halvings</h2>
+                <div class="vc-header-controls">
+                  <span class="vc-toggles-label" data-help-key="vc-cycle-toggles">Cycles</span>
+                  <div id="vc-cycle-toggles" class="vc-cycle-toggles" role="group" aria-label="Toggle cycles">
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c1" aria-pressed="true">C1 2012</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c2" aria-pressed="true">C2 2016</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c3" aria-pressed="true">C3 2020</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c4" aria-pressed="true">C4 2024</button>
+                  </div>
+                </div>
+              </div>
+              <div id="vc-chart-overlay" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note" id="vc-overlay-note">Each series rebased to <strong>1× on that cycle’s halvings day</strong>. X = days since that halvings; Y = multiple (log). Vertical line = as-of.</p>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-bottom-overlay">Cycle-low multiple (from prior bear bottom)</h2>
+                <div class="vc-header-controls">
+                  <span class="vc-toggles-label" data-help-key="vc-cycle-toggles">Cycles</span>
+                  <div id="vc-cycle-toggles-bottom" class="vc-cycle-toggles" role="group" aria-label="Toggle cycles for bottom rebase">
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c1" aria-pressed="true">C1 2012</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c2" aria-pressed="true">C2 2016</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c3" aria-pressed="true">C3 2020</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c4" aria-pressed="true">C4 2024</button>
+                  </div>
+                </div>
+              </div>
+              <div id="vc-chart-bottom" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note">Each series rebased to <strong>1× at the prior cycle’s bear bottom</strong>. Compares recovery amplitude after capitulation. Vertical line = days since that bottom for the current cycle.</p>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-spiral">Log-price spiral clock</h2>
+                <span class="panel-meta">1 turn ≈ 4 years (1461 days) · radius = log₁₀(price)</span>
+              </div>
+              <div id="vc-chart-spiral" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note">Angle = calendar time (one turn ≈ one halvings era); radius = log₁₀(price). <span class="vc-legend-dot vc-legend-dot--h"></span> Halvings · <span class="vc-legend-dot vc-legend-dot--t"></span> Tops · <span class="vc-legend-dot vc-legend-dot--b"></span> Bottoms · <span class="vc-legend-dot vc-legend-dot--n"></span> As-of.</p>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-radar">Spider (radar) cycle comparison</h2>
+                <div class="vc-header-controls">
+                  <span class="vc-toggles-label" data-help-key="vc-cycle-toggles">Cycles</span>
+                  <div id="vc-cycle-toggles-radar" class="vc-cycle-toggles" role="group" aria-label="Toggle cycles on radar">
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c1" aria-pressed="true">C1</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c2" aria-pressed="true">C2</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c3" aria-pressed="true">C3</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c4" aria-pressed="true">C4</button>
+                  </div>
+                </div>
+              </div>
+              <div id="vc-chart-radar" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note">Six axes (H→Peak days, peak × from H, max DD %, Peak→Bottom days, recovery ×, Bottom→next H), normalized to C1–C3 max. <strong>C4 dashed/partial</strong> where bottom and recovery are still open.</p>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-drawdown-chart">Drawdown from cycle ATH</h2>
+                <div class="vc-header-controls">
+                  <span class="vc-toggles-label" data-help-key="vc-cycle-toggles">Cycles</span>
+                  <div id="vc-cycle-toggles-dd" class="vc-cycle-toggles" role="group" aria-label="Toggle cycles on drawdown chart">
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c1" aria-pressed="true">C1</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c2" aria-pressed="true">C2</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c3" aria-pressed="true">C3</button>
+                    <button type="button" class="vc-toggle active" data-vc-cycle="c4" aria-pressed="true">C4</button>
+                  </div>
+                </div>
+              </div>
+              <div id="vc-chart-drawdown" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note">X = days after each cycle’s ATH; Y = % drawdown from that ATH. Vertical marker = as-of.</p>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-roi">ROI from standardised entry points</h2>
+                <span class="panel-meta">Return to cycle peak</span>
+              </div>
+              <p class="vc-section-lead">Entry rules: prior bottom, halvings day, +200d / +400d after halvings, prior top. Main columns = return to cycle peak; C4 also shows “to now”.</p>
+              <div class="deriv-table-wrap md-table-wrap" id="vc-roi-table"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-projection">Projected bottom timing &amp; phase progress</h2>
+                <span class="panel-meta">Peak→bottom duration (C1–C3)</span>
+              </div>
+              <p class="vc-section-lead">Calendar window from measured C1–C3 peak→bottom lengths. Progress is time elapsed, not share of eventual price drawdown. Sample n=3.</p>
+              <div id="vc-projection"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-valuation-zones">Valuation zone extremes (MVRV / NUPL style)</h2>
+                <span class="panel-meta">Peak vs now · on-chain series</span>
+              </div>
+              <p class="vc-section-lead">Numbers at the Cycle 4 peak and as-of from the Indicators on-chain series, plus classic historical extreme bands for context.</p>
+              <div class="deriv-table-wrap md-table-wrap" id="vc-valuation-zones"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-rainbow">Log growth / power-law corridor</h2>
+                <span class="panel-meta">Santostasi PLT · Stats → Power Law</span>
+              </div>
+              <div id="vc-chart-rainbow" class="md-plotly mb-plotly mb-plotly--tall vc-plotly"></div>
+              <p class="vc-note">Gold = close · grey = fair · corridor = p10/p90 close÷fair · <span style="color:#0ecb81">▲ tops</span> · <span style="color:#f6465d">▼ bottoms</span> · blue = as-of.</p>
+            </section>
+
+            <section class="panel vc-s2f-panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-s2f-pi">Stock-to-Flow &amp; Pi Cycle Top</h2>
+                <span class="panel-meta">Scarcity · heat regime</span>
+              </div>
+              <p class="vc-section-lead">S2F frames issuance scarcity; Pi Cycle flags late-cycle heat via MAs. Use with drawdown phase, liquidity, and on-chain distribution.</p>
+              <div id="vc-s2f-pi"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-phases">The four phases</h2>
+                <span class="panel-meta">Cycle map</span>
+              </div>
+              <p class="vc-section-lead">Accumulation → Markup → Distribution/Euphoria → Markdown. Current phase is highlighted when post-ATH markdown is active.</p>
+              <div id="vc-phases" class="vc-phases"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-full-stats">Full cycle statistics</h2>
+                <span class="panel-meta">Cycles 1–4 + averages of completed cycles</span>
+              </div>
+              <p class="vc-section-lead">Halvings, peaks, bottoms, day counts, multiples, and drawdowns. Use this table to cross-check chart claims.</p>
+              <div class="deriv-table-wrap md-table-wrap" id="vc-full-stats"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-caveats">Important context / caveats</h2>
+                <span class="panel-meta">Read before acting on any cycle map</span>
+              </div>
+              <div id="vc-caveats"></div>
+            </section>
+
+            <section class="panel stats-commentary-panel mb-tab-outlook-panel vc-exec-panel">
+              <div class="panel-header">
+                <h2 data-help-key="vc-exec-summary">What this means for BTC</h2>
+                <span class="panel-meta" id="vc-exec-meta">4y cycle hybrid synthesis · phase &amp; forward outlook · not financial advice</span>
+              </div>
+              <div class="mb-tab-outlook-head" id="vc-exec-head"></div>
+              <div class="stats-commentary" id="vc-exec-summary"><p class="macro-muted">Building summary…</p></div>
+            </section>
+          </div>
+          <div class="mb-bitcoin-panel macro-drivers-panel mb-methodology-panel" data-mb-sub="methodology" hidden>
+            <section class="panel mb-methodology-hero">
+              <div class="panel-header">
+                <h2 data-help-key="mb-sources-page">Sources</h2>
+                <span class="panel-meta">Free public APIs · local series store</span>
+              </div>
+              <p class="mb-methodology-lede">
+                This page documents where Valuation Indicators get their numbers. Core data is free-tier only.
+                <strong>Dune is optional</strong> and unused unless you configure API keys and query IDs.
+                Glassnode / CryptoQuant paid products are not integrated.
+              </p>
+            </section>
             <section class="panel">
               <div class="panel-header">
                 <h2>Prefetch &amp; data store</h2>
@@ -4232,12 +4678,15 @@
               </div>
               <div id="mb-prefetch-status" class="mb-prefetch-status"><p class="misc-fng-empty">Loading prefetch status…</p></div>
             </section>
-            <section class="panel">
-              <div class="panel-header"><h2>Sources &amp; methodology</h2></div>
+            <section class="panel mb-methodology-sources-panel">
+              <div class="panel-header">
+                <h2>Sources &amp; methodology</h2>
+                <span class="panel-meta">By provider · what is on by default</span>
+              </div>
               <div id="mb-methodology-inline" class="mb-methodology-inline"></div>
             </section>
           </div>
-          <dialog id="mb-methodology-dialog" class="md-methodology-dialog">
+          <dialog id="mb-methodology-dialog" class="md-methodology-dialog mb-methodology-dialog--wide">
             <div class="md-methodology-header">
               <h2>Bitcoin indicators — sources</h2>
               <button type="button" id="mb-methodology-close" class="md-btn md-btn--secondary">Close</button>
@@ -4245,6 +4694,7 @@
             <div id="mb-methodology-body" class="md-methodology-body"></div>
           </dialog>
         </div>
+
       </div>
     </div>
 
@@ -4255,15 +4705,16 @@
     <script src="swr-cache.js?v=5"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=106"></script>
-    <script src="home.js?v=5"></script>
-    <script src="dashboard.js?v=53"></script>
+    <script src="help.js?v=135"></script>
+    <script src="home.js?v=6"></script>
+    <script src="dashboard.js?v=58"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=2"></script>
-    <script src="stats.js?v=21"></script>
+    <script src="stats.js?v=23"></script>
+    <script src="stats-volatility.js?v=11"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
     <script src="defi.js?v=3"></script>
@@ -4275,8 +4726,10 @@
     <script src="misc-metrics.js?v=3"></script>
     <script src="misc-whales.js?v=1"></script>
     <script src="misc-greed-fear.js?v=3"></script>
-    <script src="misc-bitcoin-valuation-models.js?v=7"></script>
-    <script src="misc-bitcoin.js?v=16"></script>
+    <script src="misc-bitcoin-valuation-models.js?v=11"></script>
+    <script src="misc-bitcoin.js?v=33"></script>
+    <script src="valuation-cycle.js?v=10"></script>
+    <script src="super-summary.js?v=19"></script>
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
     <script src="chart-patterns.js?v=15"></script>

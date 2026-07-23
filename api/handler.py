@@ -1,5 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 
+# Load project .env.local via server before any route handlers (single-app env).
+import server  # noqa: F401,E402
 from api_dispatch import handle_api
 
 

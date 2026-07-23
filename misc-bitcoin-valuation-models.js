@@ -71,6 +71,7 @@ function mbVmModelsForTab(tab) {
 const MB_VM_PLOTLY = {
   responsive: true,
   displayModeBar: true,
+  displaylogo: false,
   modeBarButtonsToRemove: ["lasso2d", "select2d"],
 };
 const MB_VM_CHART_HEIGHT = 340;
@@ -117,12 +118,30 @@ function mbVmSourceBadge(source) {
 }
 
 function mbVmPlotLayout(title, height = MB_VM_CHART_HEIGHT, opts = {}) {
+  // Prefer shared layout so framework charts match main On-Chain series charts.
+  if (typeof window.mbPlotLayout === "function") {
+    return window.mbPlotLayout(title, height, {
+      yTitle: opts.yTitle,
+      rangeSlider: opts.rangeSlider,
+      showLegend: opts.showLegend,
+      zeroLine: opts.zeroLine,
+      shapes: opts.shapes,
+      compact: opts.compact,
+    });
+  }
+  const compact = !!opts.compact;
+  const slider = !!opts.rangeSlider;
   return {
     template: "plotly_dark",
     title: title ? { text: title, font: { size: 12, color: "#cbd5e1" }, x: 0.02 } : undefined,
     paper_bgcolor: "rgba(0,0,0,0)",
     plot_bgcolor: "rgba(255,255,255,0.02)",
-    margin: { l: 48, r: 16, t: title ? 36 : 12, b: opts.rangeSlider ? 68 : 40 },
+    margin: {
+      l: 48,
+      r: 12,
+      t: title ? 32 : 8,
+      b: slider ? (compact ? 44 : 68) : 28,
+    },
     height,
     font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 10, color: "#94a3b8" },
     hoverlabel: {
@@ -133,32 +152,64 @@ function mbVmPlotLayout(title, height = MB_VM_CHART_HEIGHT, opts = {}) {
     xaxis: {
       type: "date",
       gridcolor: "rgba(148, 163, 184, 0.08)",
-      tickfont: { size: 9, color: "#64748b" },
-      rangeslider: opts.rangeSlider ? { visible: true, thickness: 0.05 } : { visible: false },
+      linecolor: "rgba(148, 163, 184, 0.15)",
+      tickfont: { size: 10, color: "#64748b" },
+      rangeslider: slider
+        ? {
+            visible: true,
+            thickness: compact ? 0.03 : 0.05,
+            bgcolor: "rgba(15, 23, 42, 0.55)",
+            bordercolor: "rgba(148, 163, 184, 0.15)",
+            borderwidth: 1,
+          }
+        : { visible: false },
     },
     yaxis: {
       gridcolor: "rgba(148, 163, 184, 0.08)",
-      tickfont: { size: 9, color: "#64748b" },
-      title: opts.yTitle || "",
+      linecolor: "rgba(148, 163, 184, 0.15)",
+      tickfont: { size: 10, color: "#64748b" },
+      title: opts.yTitle
+        ? { text: opts.yTitle, font: { size: 10, color: "#64748b" }, standoff: 6 }
+        : undefined,
       zeroline: opts.zeroLine || false,
     },
     showlegend: opts.showLegend || false,
-    legend: { orientation: "h", y: 1.12, font: { size: 9 } },
+    legend: opts.showLegend
+      ? { orientation: "h", y: 1.08, yanchor: "bottom", font: { size: 10 }, bgcolor: "rgba(0,0,0,0)" }
+      : undefined,
     hovermode: "x unified",
     shapes: opts.shapes || [],
   };
 }
 
+function mbVmOnchainChartOpts(extra = {}) {
+  const h = window.MB_ONCHAIN_CHART_HEIGHT || MB_VM_CHART_HEIGHT;
+  return {
+    height: h,
+    rangeSlider: mbVmUsesRangeSlider(),
+    compact: true,
+    ...extra,
+  };
+}
+
 function mbVmFilterSeries(series, timespan) {
-  const days = { "30days": 30, "90days": 90, "1year": 365, "2years": 730, "4years": 1460 }[timespan];
+  // Full history by default ("all"); only trim for explicit short windows.
+  const days = {
+    "30days": 30,
+    "90days": 90,
+    "1year": 365,
+    "2years": 730,
+    "4years": 1460,
+    all: null,
+  }[timespan || window.MB_FULL_TIMESPAN || "all"];
   if (!days || !series?.length) return series || [];
   const cutoff = Date.now() / 1000 - days * 86400;
   return series.filter((p) => !p.timestamp || p.timestamp >= cutoff);
 }
 
 function mbVmUsesRangeSlider() {
-  const span = window.mbState?.timespan || "1year";
-  return span === "2years" || span === "4years";
+  // Full history always loaded — use rangeslider + Plotly zoom.
+  return true;
 }
 
 async function mbVmFetch(path, force = false) {
@@ -212,8 +263,8 @@ function mbVmDetailsSection(title, bodyHtml, open = false) {
   </details>`;
 }
 
-function mbVmModelCard(model, chartData) {
-  const content = model.content || {};
+function mbVmModelCard(model, chartData, opts = {}) {
+  const consolidate = !!opts.consolidate;
   const latest = chartData?.latest?.label ?? chartData?.latest?.value;
   const fmt = chartData?.latest?.label ? "text" : (model.format || "ratio");
   const updated = chartData?.fetchedAt || "—";
@@ -221,6 +272,15 @@ function mbVmModelCard(model, chartData) {
 
   const helpKey = model.helpKey || `mb-vm-${model.id}`;
   const chartId = `mb-vm-chart-${model.id}`;
+  const above = consolidate
+    ? ""
+    : `<div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-vm-desc-${model.id}"></p></div>`;
+  const edu = consolidate
+    ? ""
+    : `<div class="mb-chart-education" id="mb-edu-${model.id}"></div>`;
+  const copyClass = consolidate
+    ? "mb-chart-copy mb-chart-copy--below mb-chart-copy--unified"
+    : "mb-chart-copy mb-chart-copy--below";
 
   return `<article class="panel mb-vm-model-card" data-mb-vm-model="${model.id}">
     <div class="panel-header mb-vm-card-header">
@@ -241,24 +301,17 @@ function mbVmModelCard(model, chartData) {
       </div>
     </div>
     <div class="mb-chart-block mb-vm-chart-block">
-      <div class="mb-chart-copy mb-chart-copy--above"><p class="mb-chart-desc" id="mb-vm-desc-${model.id}"></p></div>
+      ${above}
       <div id="${chartId}" class="md-plotly mb-plotly mb-vm-chart" aria-label="${model.title} chart"></div>
-      <div class="mb-chart-copy mb-chart-copy--below"><div class="mb-chart-commentary" id="mb-vm-commentary-${model.id}"></div></div>
-      <div class="mb-chart-education" id="mb-edu-${model.id}"></div>
+      <div class="${copyClass}"><div class="mb-chart-commentary" id="mb-vm-commentary-${model.id}"></div></div>
+      ${edu}
     </div>
   </article>`;
 }
 
-function mbVmRenderModelCopy(model, chartData) {
-  const descEl = mbVmEl(`mb-vm-desc-${model.id}`);
-  if (descEl && window.mbChartInfo) {
-    const info = window.mbChartInfo(model.id);
-    const parts = [info.description, info.readings].filter(Boolean);
-    if (parts.length) {
-      descEl.textContent = parts.join(" ");
-      descEl.title = info.readings || info.description || "";
-    }
-  }
+function mbVmRenderModelCopy(model, chartData, opts = {}) {
+  const consolidate = !!opts.consolidate
+    || window.MB_CONSOLIDATED_COPY_KEYS?.has?.(model.id);
   const latest = chartData?.latest?.value ?? chartData?.latest?.label ?? chartData?.latest;
   const forwardExtra = {
     spot: chartData?.latest?.price,
@@ -270,11 +323,47 @@ function mbVmRenderModelCopy(model, chartData) {
   };
   const commentary = window.mbBuildFrameworkChartCommentary?.(model.id, chartData) || [];
   const fwd = window.mbBtcPriceForward?.(model.id, latest, forwardExtra);
-  const all = fwd ? [...commentary, fwd] : commentary;
+  const live = fwd ? [...commentary, fwd] : commentary;
   const commEl = mbVmEl(`mb-vm-commentary-${model.id}`);
+
+  if (consolidate && commEl && window.mbRenderConsolidatedCommentaryEl) {
+    window.mbRenderConsolidatedCommentaryEl(
+      `mb-vm-commentary-${model.id}`,
+      model.id,
+      live,
+      null,
+    );
+    // Fold model content (what it measures / how it works) into the same block without dropdowns.
+    const content = model.content || {};
+    const extra = [];
+    (content.explanation || []).forEach((p) => extra.push(p));
+    if (content.howItWorks) extra.push(content.howItWorks);
+    if (content.formula) extra.push(`Formula: ${content.formula}`);
+    if (extra.length) {
+      const existing = Array.from(commEl.querySelectorAll("p")).map((p) => p.innerHTML);
+      const seen = new Set(existing.map((t) => t.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().toLowerCase()));
+      extra.forEach((t) => {
+        const plain = String(t).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+        if (!plain || seen.has(plain)) return;
+        seen.add(plain);
+        commEl.insertAdjacentHTML("beforeend", `<p>${t}</p>`);
+      });
+    }
+    return;
+  }
+
+  const descEl = mbVmEl(`mb-vm-desc-${model.id}`);
+  if (descEl && window.mbChartInfo) {
+    const info = window.mbChartInfo(model.id);
+    const parts = [info.description, info.readings].filter(Boolean);
+    if (parts.length) {
+      descEl.textContent = parts.join(" ");
+      descEl.title = info.readings || info.description || "";
+    }
+  }
   if (commEl) {
-    commEl.innerHTML = all.length
-      ? all.map((p) => `<p>${p}</p>`).join("")
+    commEl.innerHTML = live.length
+      ? live.map((p) => `<p>${p}</p>`).join("")
       : '<p class="macro-muted">Commentary unavailable — waiting for chart data.</p>';
   }
   const eduEl = mbVmEl(`mb-edu-${model.id}`);
@@ -284,7 +373,7 @@ function mbVmRenderModelCopy(model, chartData) {
 }
 
 function mbVmDrawLineChart(el, series, model, chartData) {
-  const pts = mbVmFilterSeries(series, window.mbState?.timespan || "1year").filter(
+  const pts = mbVmFilterSeries(series, window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all").filter(
     (p) => p.value != null && Number.isFinite(Number(p.value)),
   );
   if (!pts.length) {
@@ -303,12 +392,19 @@ function mbVmDrawLineChart(el, series, model, chartData) {
     name: model.title,
     hovertemplate: "<b>%{x|%b %d, %Y}</b><br>Value: %{y:.4f}<extra></extra>",
   };
-  Plotly.react(el, [trace], mbVmPlotLayout("", MB_VM_CHART_HEIGHT, { yTitle: model.unit, rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+  const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+  const opts = unified
+    ? mbVmOnchainChartOpts({ yTitle: model.unit || "" })
+    : { yTitle: model.unit || "", rangeSlider: mbVmUsesRangeSlider() };
+  const height = opts.height || MB_VM_CHART_HEIGHT;
+  el.classList.toggle("mb-plotly--onchain", !!unified);
+  Plotly.react(el, [trace], mbVmPlotLayout("", height, opts), MB_VM_PLOTLY);
 }
 
 function mbVmDrawOverlayChart(el, chartData, model) {
   const overlay = chartData.overlay || [];
-  const series = mbVmFilterSeries(overlay, window.mbState?.timespan || "1year");
+  const series = mbVmFilterSeries(overlay, window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all");
   if (!series.length) {
     mbVmDrawLineChart(el, chartData.series || [], model, chartData);
     return;
@@ -339,14 +435,28 @@ function mbVmDrawOverlayChart(el, chartData, model) {
       line: { color: "#e879f9", width: 1.5, dash: "dot" },
     },
   ];
-  Plotly.react(el, traces, mbVmPlotLayout("Pi Cycle — price & moving averages", MB_VM_CHART_HEIGHT, { showLegend: true, rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  {
+    const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+    const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+    const opts = unified
+      ? mbVmOnchainChartOpts({ showLegend: true })
+      : { showLegend: true, rangeSlider: mbVmUsesRangeSlider() };
+    el.classList.toggle("mb-plotly--onchain", !!unified);
+    Plotly.react(
+      el,
+      traces,
+      mbVmPlotLayout(unified ? "" : "Pi Cycle — price & moving averages", opts.height || MB_VM_CHART_HEIGHT, opts),
+      MB_VM_PLOTLY,
+    );
+  }
 }
 
 function mbVmDrawMultiChart(el, chartData, model) {
   const overlay = chartData.overlay || {};
-  const price = mbVmFilterSeries(overlay.price || [], window.mbState?.timespan || "1year");
-  const realized = mbVmFilterSeries(overlay.realized || [], window.mbState?.timespan || "1year");
-  const balanced = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || "1year");
+  const span = window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all";
+  const price = mbVmFilterSeries(overlay.price || [], span);
+  const realized = mbVmFilterSeries(overlay.realized || [], span);
+  const balanced = mbVmFilterSeries(chartData.series || [], span);
   const traces = [];
   if (price.length) {
     traces.push({
@@ -382,11 +492,24 @@ function mbVmDrawMultiChart(el, chartData, model) {
     mbVmDrawLineChart(el, chartData.series || [], model, chartData);
     return;
   }
-  Plotly.react(el, traces, mbVmPlotLayout("Delta / Balanced framework", MB_VM_CHART_HEIGHT, { showLegend: true, yTitle: "USD", rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  {
+    const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+    const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+    const opts = unified
+      ? mbVmOnchainChartOpts({ showLegend: true, yTitle: "USD" })
+      : { showLegend: true, yTitle: "USD", rangeSlider: mbVmUsesRangeSlider() };
+    el.classList.toggle("mb-plotly--onchain", !!unified);
+    Plotly.react(
+      el,
+      traces,
+      mbVmPlotLayout(unified ? "" : "Delta / Balanced framework", opts.height || MB_VM_CHART_HEIGHT, opts),
+      MB_VM_PLOTLY,
+    );
+  }
 }
 
 function mbVmDrawBandChart(el, chartData, model) {
-  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || "1year");
+  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all");
   if (!series.length) {
     el.innerHTML = `<p class="misc-fng-empty">${chartData?.error || "No data"}</p>`;
     return;
@@ -405,11 +528,24 @@ function mbVmDrawBandChart(el, chartData, model) {
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: 0.4, y1: 0.4, line: { color: "#22c55e55", width: 1, dash: "dot" } },
     { type: "line", xref: "paper", yref: "y", x0: 0, x1: 1, y0: 1.5, y1: 1.5, line: { color: "#ef444455", width: 1, dash: "dot" } },
   ];
-  Plotly.react(el, traces, mbVmPlotLayout("Power law ratio", MB_VM_CHART_HEIGHT, { yTitle: "×", shapes, rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  {
+    const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+    const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+    const opts = unified
+      ? mbVmOnchainChartOpts({ yTitle: "×", shapes })
+      : { yTitle: "×", shapes, rangeSlider: mbVmUsesRangeSlider() };
+    el.classList.toggle("mb-plotly--onchain", !!unified);
+    Plotly.react(
+      el,
+      traces,
+      mbVmPlotLayout(unified ? "" : "Power law ratio", opts.height || MB_VM_CHART_HEIGHT, opts),
+      MB_VM_PLOTLY,
+    );
+  }
 }
 
 function mbVmDrawRibbonChart(el, chartData, model) {
-  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || "1year");
+  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all");
   const smas = chartData.smas || {};
   if (!series.length) {
     el.innerHTML = `<p class="misc-fng-empty">${chartData?.error || "No data"}</p>`;
@@ -425,7 +561,7 @@ function mbVmDrawRibbonChart(el, chartData, model) {
   }];
   const colors = ["#64748b44", "#94a3b844", "#cbd5e144"];
   Object.entries(smas).slice(0, 3).forEach(([w, pts], i) => {
-    const filtered = mbVmFilterSeries(pts, window.mbState?.timespan || "1year");
+    const filtered = mbVmFilterSeries(pts, window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all");
     if (!filtered.length) return;
     traces.push({
       x: filtered.map((p) => new Date((p.timestamp || 0) * 1000)),
@@ -436,11 +572,24 @@ function mbVmDrawRibbonChart(el, chartData, model) {
       line: { color: colors[i] || "#64748b", width: 1 },
     });
   });
-  Plotly.react(el, traces, mbVmPlotLayout("Difficulty ribbon", MB_VM_CHART_HEIGHT, { showLegend: true, rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  {
+    const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+    const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+    const opts = unified
+      ? mbVmOnchainChartOpts({ showLegend: true })
+      : { showLegend: true, rangeSlider: mbVmUsesRangeSlider() };
+    el.classList.toggle("mb-plotly--onchain", !!unified);
+    Plotly.react(
+      el,
+      traces,
+      mbVmPlotLayout(unified ? "" : "Difficulty ribbon", opts.height || MB_VM_CHART_HEIGHT, opts),
+      MB_VM_PLOTLY,
+    );
+  }
 }
 
 function mbVmDrawRainbowChart(el, chartData, model) {
-  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || "2years");
+  const series = mbVmFilterSeries(chartData.series || [], window.mbState?.timespan || window.MB_FULL_TIMESPAN || "all");
   if (!series.length) {
     el.innerHTML = `<p class="misc-fng-empty">${chartData?.error || "No data"}</p>`;
     return;
@@ -461,7 +610,20 @@ function mbVmDrawRainbowChart(el, chartData, model) {
     },
     name: "Price",
   };
-  Plotly.react(el, [trace], mbVmPlotLayout("Rainbow chart (log regression)", MB_VM_CHART_HEIGHT, { yTitle: "USD", rangeSlider: mbVmUsesRangeSlider() }), MB_VM_PLOTLY);
+  {
+    const panel = el.closest?.(".mb-bitcoin-panel[data-mb-sub]");
+    const unified = panel && ["onchain", "valuation", "miner"].includes(panel.dataset.mbSub);
+    const opts = unified
+      ? mbVmOnchainChartOpts({ yTitle: "USD" })
+      : { yTitle: "USD", rangeSlider: mbVmUsesRangeSlider() };
+    el.classList.toggle("mb-plotly--onchain", !!unified);
+    Plotly.react(
+      el,
+      [trace],
+      mbVmPlotLayout(unified ? "" : "Rainbow chart (log regression)", opts.height || MB_VM_CHART_HEIGHT, opts),
+      MB_VM_PLOTLY,
+    );
+  }
 }
 
 function mbVmDrawChart(model, chartData) {
@@ -499,11 +661,12 @@ async function mbVmRenderTab(tab, rootId, force = false) {
     }
     const bundle = await mbVmLoadTab(tab, force);
 
-    root.innerHTML = models.map((m) => mbVmModelCard(m, bundle.charts?.[m.id] || {})).join("");
+    const consolidate = tab === "onchain" || tab === "valuation" || tab === "miner";
+    root.innerHTML = models.map((m) => mbVmModelCard(m, bundle.charts?.[m.id] || {}, { consolidate })).join("");
     models.forEach((m) => {
       const chartData = bundle.charts?.[m.id] || {};
       mbVmDrawChart(m, chartData);
-      mbVmRenderModelCopy(m, chartData);
+      mbVmRenderModelCopy(m, chartData, { consolidate });
     });
     window.mbRefreshTabOutlookAfterFrameworks?.(tab, bundle, models);
 

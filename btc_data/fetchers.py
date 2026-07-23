@@ -476,10 +476,14 @@ def _normalize_bgeometrics(raw: Any, spec: dict[str, Any]) -> list[dict]:
     return []
 
 
-def fetch_blockchain_chart(name: str, timespan: str = "1year", *, refresh: bool = False) -> dict[str, Any]:
+def fetch_blockchain_chart(name: str, timespan: str = "all", *, refresh: bool = False) -> dict[str, Any]:
     if name not in BLOCKCHAIN_CHARTS:
         raise ValueError(f"Unknown blockchain chart: {name}")
-    cache_key = f"btc:bc:{name}:{timespan}:v1"
+    # Prefer full history; blockchain.info accepts timespan=all.
+    span = timespan or "all"
+    if span in ("max", "full", "everything"):
+        span = "all"
+    cache_key = f"btc:bc:{name}:{span}:v1"
     if not refresh:
         cached = cache_get(cache_key, ttl=3600)
         if cached is not None:
@@ -487,7 +491,7 @@ def fetch_blockchain_chart(name: str, timespan: str = "1year", *, refresh: bool 
 
     url = (
         f"https://api.blockchain.info/charts/{name}"
-        f"?timespan={timespan}&format=json"
+        f"?timespan={span}&format=json"
     )
     raw = fetch_json(url, timeout=60)
     series = []
@@ -510,6 +514,7 @@ def fetch_blockchain_chart(name: str, timespan: str = "1year", *, refresh: bool 
         "latest": latest,
         "source": "Blockchain.info",
         "unit": "EH/s" if name == "hash-rate" else None,
+        "timespan": span,
         "fetchedAt": _now_iso(),
         "fromCache": False,
     }

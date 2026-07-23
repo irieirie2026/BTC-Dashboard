@@ -166,6 +166,11 @@ function chartTipRow(label, value) {
   return `<div class="chart-tooltip-row"><span>${label}</span><span class="mono">${value}</span></div>`;
 }
 
+// Expose for Stats → Volatility (and other modules that share chart helpers)
+window.mountStatsChart = mountStatsChart;
+window.chartTipTitle = chartTipTitle;
+window.chartTipRow = chartTipRow;
+
 function drawdownSeries(days) {
   let peak = days[0].close;
   return days.slice(1).map((d) => {
@@ -877,6 +882,10 @@ function applyStatsBundle(bundle) {
   renderStatsScreen();
   renderRiskScreen();
   renderVarScreen();
+  // GARCH suite lives in stats-volatility.js
+  if (typeof window.refreshVolatilityCharts === "function") {
+    /* suite auto-loads on show; avoid double fetch on every stats poll */
+  }
   renderMarkovScreen();
   renderPowerLawScreen();
 }
@@ -1197,6 +1206,235 @@ function renderVarScreen() {
 
   drawVarHistogramChart(s);
   drawVarRollingChart(v);
+}
+
+function buildVolCommentary(s) {
+  const r = s.risk;
+  if (!r) return ["Volatility metrics unavailable."];
+  const v30 = r.vol30;
+  const v90 = r.vol90;
+  const regime =
+    v30 > v90 * 1.15
+      ? "elevated relative to the 90-day baseline (short-horizon stress)"
+      : v30 < v90 * 0.85
+        ? "compressed relative to the 90-day baseline (quiet tape)"
+        : "broadly aligned with the 90-day baseline";
+  const pct =
+    r.rollVol30?.length > 20
+      ? (() => {
+          const series = r.rollVol30.map((x) => x.vol30);
+          const last = series[series.length - 1];
+          const below = series.filter((v) => v <= last).length;
+          return Math.round((100 * below) / series.length);
+        })()
+      : null;
+  return [
+    `Realized volatility (annualized from daily returns): 30-day ${fmtPct(v30, 1)}, 90-day ${fmtPct(v90, 1)}, full sample ${fmtPct(s.annStd, 1)}.`,
+    `Short-horizon regime is ${regime}.`,
+    pct != null
+      ? `Current 30-day vol sits at about the ${pct}th percentile of its own history in this sample — ${
+          pct >= 80 ? "a high-vol cluster" : pct <= 20 ? "a low-vol cluster" : "a mid-range print"
+        }.`
+      : "Percentile context needs a longer rolling series.",
+    "Use realized vol as path risk context, not a forecast of the next session. Pair with VaR for tail loss and with Risk for drawdown structure.",
+  ];
+}
+
+function renderVolatilityScreen() {
+  const r = statsData?.risk;
+  if (!r) return;
+  const s = statsData;
+
+  const set = (id, text, cls) => {
+    const node = stEl(id);
+    if (!node) return;
+    node.textContent = text;
+    if (cls) node.className = cls;
+  };
+
+  set("vol-realized", fmtPct(r.vol30, 1));
+  set("vol-realized-90", fmtPct(r.vol90, 1));
+
+  let pctLabel = "—";
+  let regime = "—";
+  if (r.rollVol30?.length > 20) {
+    const series = r.rollVol30.map((x) => x.vol30);
+    const last = series[series.length - 1];
+    const below = series.filter((v) => v <= last).length;
+    const pct = Math.round((100 * below) / series.length);
+    pctLabel = `${pct}th`;
+    regime =
+      r.vol30 > r.vol90 * 1.15
+        ? "Elevated"
+        : r.vol30 < r.vol90 * 0.85
+          ? "Compressed"
+          : "Balanced";
+  }
+  set("vol-percentile", pctLabel);
+  set(
+    "vol-regime",
+    regime,
+    regime === "Elevated"
+      ? "deriv-hero-value negative"
+      : regime === "Compressed"
+        ? "deriv-hero-value positive"
+        : "deriv-hero-value",
+  );
+
+  const updateEl = stEl("vol-update");
+  if (updateEl) {
+    updateEl.textContent =
+      `30d / 90d realized · ${s.count} days · Updated ` +
+      new Date().toLocaleTimeString("en-US", { hour12: false });
+  }
+
+  const commentary = stEl("vol-commentary");
+  if (commentary) {
+    commentary.innerHTML = buildVolCommentary(s)
+      .map((p) => `<p>${p}</p>`)
+      .join("");
+  }
+
+  drawVolRollingChart(r);
+  drawVolAbsReturnChart(s);
+
+  const screen = document.querySelector(
+    '.menu-screen[data-l1="stats"][data-l2="volatility"]',
+  );
+  window.decorateHelpLabels?.(screen);
+}
+
+function drawVolRollingChart(r) {
+  if (!r?.rollVol30?.length) return;
+  const n = Math.min(r.rollVol30.length, r.rollVol90?.length || r.rollVol30.length);
+  const vol30 = r.rollVol30.slice(-n);
+  const vol90 = (r.rollVol90 || []).slice(-n);
+  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  mountStatsChart("vol-rolling-chart", {
+    pad,
+    getLength: () => n,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const slice30 = indices.map((i) => vol30[i]);
+      const slice90 = vol90.length
+        ? indices.map((i) => vol90[i])
+        : null;
+      const allV = [
+        ...slice30.map((x) => x.vol30),
+        ...(slice90 ? slice90.map((x) => x.vol90) : []),
+      ];
+      const minV = Math.min(...allV) * 0.9;
+      const maxV = Math.max(...allV) * 1.1;
+      const range = maxV - minV || 0.01;
+      const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
+
+      const drawLine = (data, key, color) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        data.forEach((pt, i) => {
+          const x = api.xAt(i, drawCount);
+          const y = yAt(pt[key]);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      };
+
+      drawLine(slice30, "vol30", "#2dd4bf");
+      if (slice90) drawLine(slice90, "vol90", "#38bdf8");
+
+      if (api.hoverGlobal != null) {
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(
+          api.xAtGlobal(api.hoverGlobal),
+          yAt(vol30[api.hoverGlobal].vol30),
+          "#2dd4bf",
+        );
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#2dd4bf";
+      ctx.fillText("30d", api.pad.left, api.pad.top + 10);
+      if (slice90) {
+        ctx.fillStyle = "#38bdf8";
+        ctx.fillText("90d", api.pad.left + 32, api.pad.top + 10);
+      }
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(vol30[indices[i]]?.date, drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      const v30 = vol30[globalIdx];
+      const v90 = vol90[globalIdx];
+      return (
+        chartTipTitle(v30.date) +
+        chartTipRow("30d vol", fmtPct(v30.vol30, 1)) +
+        (v90 ? chartTipRow("90d vol", fmtPct(v90.vol90, 1)) : "")
+      );
+    },
+  });
+}
+
+function drawVolAbsReturnChart(s) {
+  if (!s?.returns?.length) return;
+  const n = Math.min(s.returns.length, 365);
+  const rets = s.returns.slice(-n);
+  const dates = s.days.slice(1).slice(-n).map((d) => d.date);
+  const abs = rets.map((r) => Math.abs(r));
+  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  mountStatsChart("vol-abs-return-chart", {
+    pad,
+    getLength: () => n,
+    onDraw(ctx, w, h, api) {
+      ctx.clearRect(0, 0, w, h);
+      const indices = api.indices;
+      const drawCount = indices.length;
+      const maxV = Math.max(...indices.map((i) => abs[i]), 0.001) * 1.1;
+      const yAt = (v) => api.pad.top + api.chartH - (v / maxV) * api.chartH;
+
+      ctx.strokeStyle = "rgba(45, 212, 191, 0.85)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      indices.forEach((gi, i) => {
+        const x = api.xAt(i, drawCount);
+        const y = yAt(abs[gi]);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      if (api.hoverGlobal != null) {
+        api.drawCrosshair(api.xAtGlobal(api.hoverGlobal));
+        api.drawDot(
+          api.xAtGlobal(api.hoverGlobal),
+          yAt(abs[api.hoverGlobal]),
+          "#2dd4bf",
+        );
+      }
+
+      ctx.fillStyle = "#7d8799";
+      ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.textAlign = "right";
+      ctx.fillText(fmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
+      drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
+        fmtChartDate(dates[indices[i]], drawCount > 180),
+      );
+    },
+    formatTooltip(globalIdx) {
+      return (
+        chartTipTitle(dates[globalIdx]) +
+        chartTipRow("|return|", fmtPct(abs[globalIdx], 2)) +
+        chartTipRow("signed", fmtPct(rets[globalIdx], 2))
+      );
+    },
+  });
 }
 
 function buildMarkovCommentary(s) {
@@ -2328,6 +2566,8 @@ window.refreshVarCharts = function () {
     fetchBtcStats();
   }
 };
+
+// refreshVolatilityCharts is defined in stats-volatility.js (GARCH suite)
 
 window.refreshMarkovCharts = function () {
   if (statsData?.markov) {

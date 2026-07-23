@@ -512,68 +512,129 @@ INDICATORS: dict[str, dict[str, Any]] = {
     },
 }
 
+# Sources & methodology for Valuation → Indicators → Sources.
+# badge: core | optional | computed | not_used
 METHODOLOGY: list[dict[str, str]] = [
     {
-        "title": "Source hierarchy",
+        "title": "What powers this dashboard",
+        "badge": "core",
         "body": (
-            "Only free public APIs are used. BGeometrics (8 req/hr, 4yr history), Coin Metrics "
-            "Community (exchange flows, tx count), Mempool.space (fees), BitInfoCharts, "
-            "Blockchain.info, Alternative.me, and exchange APIs. BGeometrics calls are sequential "
-            "with 24h disk cache."
+            "Valuation Indicators are built from free public APIs and a local series store "
+            "(data/btc-series/). Core providers are BGeometrics (bitcoin-data.com), Blockchain.info, "
+            "Coin Metrics Community, BitInfoCharts, Mempool.space / Blockchair, Alternative.me, "
+            "CoinGecko, and public exchange REST APIs (funding, open interest). "
+            "Glassnode and CryptoQuant paid APIs are not used."
         ),
     },
     {
-        "title": "Distribution & whales",
+        "title": "BGeometrics (bitcoin-data.com)",
+        "badge": "core",
         "body": (
-            "Rich-list and wealth-band percentages are scraped from BitInfoCharts summary tables. "
-            "Wallet cohort breakdown uses the address-balance distribution table on the same site. "
-            "These are address-level (not entity-adjusted) and may overstate exchange cold wallets."
+            "Primary source for valuation and cycle metrics: MVRV, MVRV Z-Score, NUPL, SOPR, "
+            "realized price, supply in profit, HODL waves, BTC dominance, ETF net flows, "
+            "and several miner / model series. Free tier is rate-limited (~8 requests/hour); "
+            "series are cached ~24h and refreshed via prefetch. Typical history window ~4 years."
         ),
     },
     {
-        "title": "On-chain activity",
+        "title": "Blockchain.info",
+        "badge": "core",
         "body": (
-            "Active addresses and hash rate use Blockchain.info. Exchange netflow, balance, and "
-            "transaction count come from Coin Metrics Community. Mempool fees from Mempool.space. "
-            "Puell Multiple is computed locally from miner revenue."
+            "Daily charts for active addresses, network hash rate, market price, and miners’ revenue. "
+            "Used for on-chain activity and as inputs to local computations (e.g. Puell Multiple)."
         ),
     },
     {
-        "title": "Valuation & cycles",
+        "title": "Coin Metrics Community",
+        "badge": "core",
         "body": (
-            "MVRV, NUPL, SOPR, realized price, supply-in-profit, and HODL waves from BGeometrics "
-            "free tier (bitcoin-data.com/v1, last 4 years). Loaded via tab bundle to save API quota."
+            "Exchange inflow, outflow, exchange balance, and transaction count. "
+            "Community tier is a free flow proxy — not full entity-adjusted institutional data."
         ),
     },
     {
-        "title": "Valuation models",
+        "title": "BitInfoCharts",
+        "badge": "core",
         "body": (
-            "Educational hub for 19 valuation frameworks across scarcity, on-chain, miner, network, "
-            "and composite models. Category bundles fetch sequentially; computed models use price/difficulty "
-            "math. Reuses Valuation & Cycles cache when available. See Stats → Power Law for full PLT."
+            "Address-level rich list and wealth bands (top 10 / 100 / 1,000), plus wallet-size cohorts. "
+            "Not entity-adjusted: exchange cold wallets can inflate “whale” concentration. "
+            "Also used as a fallback snapshot for active addresses / hash rate when needed."
         ),
     },
     {
-        "title": "Sentiment & market structure",
+        "title": "Mempool.space & Blockchair",
+        "badge": "core",
         "body": (
-            "Fear & Greed from Alternative.me. BTC dominance and ETF net flows from BGeometrics. "
-            "Funding rate is cross-venue median perp funding; open interest from Binance Futures."
+            "Mempool.space supplies recommended fee rates and mempool pressure. "
+            "Blockchair supplies a network snapshot (price, hashrate, difficulty, mempool counts) "
+            "for the Miner tab when available."
         ),
     },
     {
-        "title": "Proxies & limitations",
+        "title": "Alternative.me · CoinGecko · exchanges",
+        "badge": "core",
         "body": (
-            "Glassnode and CryptoQuant paid tiers are not used. Coin Metrics Community provides "
-            "free exchange-flow proxies. Overlap with On Chain and Derivatives tabs is intentional."
+            "Crypto Fear & Greed Index from Alternative.me. BTC market-cap dominance snapshot from CoinGecko. "
+            "Perp funding (cross-venue median) and Binance Futures open interest from public exchange APIs."
         ),
     },
     {
-        "title": "Prefetch & series store",
+        "title": "Locally computed models",
+        "badge": "computed",
         "body": (
-            "Background prefetch (scripts/btc_prefetch.py) writes normalized series to data/btc-series/. "
-            "BGeometrics limited to ~8 req/hr; scheduler spreads fetches across the day. Santiment requires "
-            "SANTIMENT_API_KEY (free plan, 1k calls/mo). Dune requires DUNE_API_KEY + BTC_DUNE_QUERY_IDS. "
-            "Status: GET /api/misc/btc/prefetch/status"
+            "Puell Multiple, stock-to-flow style paths, power-law / Pi Cycle / rainbow corridors, "
+            "Metcalfe-style and difficulty-ribbon views are derived on our servers from price, "
+            "miner revenue, difficulty, or address series. Stats → Power Law uses the same Santostasi "
+            "power-law constants as the 4y Cycle corridor chart."
+        ),
+    },
+    {
+        "title": "Santiment (optional)",
+        "badge": "optional",
+        "body": (
+            "If SANTIMENT_API_KEY is set in .env.local, Intelligence/Sentiment can load free-plan "
+            "Santiment series (active addresses, exchange flows, social volume, MVRV USD, etc.). "
+            "Without a key those series stay empty — core snapshot still works."
+        ),
+    },
+    {
+        "title": "Dune Analytics (optional — not required)",
+        "badge": "optional",
+        "body": (
+            "Dune is not part of the default Indicator snapshot. The registry only enables Dune metrics "
+            "when both DUNE_API_KEY and BTC_DUNE_QUERY_IDS (or BTC_DUNE_QUERIES) are configured. "
+            "Otherwise a disabled placeholder remains in the catalog and no Dune credits are used. "
+            "You do not need a Dune plan for Valuation Indicators to function."
+        ),
+    },
+    {
+        "title": "Not used (paid entity data)",
+        "badge": "not_used",
+        "body": (
+            "Glassnode and CryptoQuant paid tiers are intentionally out of scope. "
+            "Where we show exchange flows or holder metrics, they are free-tier proxies "
+            "(Coin Metrics Community, BitInfoCharts address-level, BGeometrics free endpoints)."
+        ),
+    },
+    {
+        "title": "Prefetch & freshness",
+        "badge": "core",
+        "body": (
+            "Prefetch writes normalized series into data/btc-series/. "
+            "Local: python3 scripts/btc_prefetch.py --once --max 3 (repeat; respect BGeometrics limits). "
+            "Status: Sources tab above, or GET /api/misc/btc/prefetch/status. "
+            "CI: .github/workflows/prefetch-btc-series.yml. "
+            "Snapshot Status column: OK vs Stale based on fetch/data age — not a paywall signal."
+        ),
+    },
+    {
+        "title": "4y Cycle & Super Summary",
+        "badge": "computed",
+        "body": (
+            "4y Cycle overlays use the same BTC/USD daily history as Stats (Bitstamp + Blockchain.info stitch). "
+            "On-chain zone numbers reuse the Indicators series store. "
+            "Super Summary builds a multi-domain fact pack server-side; optional xAI prose requires XAI_API_KEY "
+            "and only narrates that pack (hybrid). Without a key, a rule-based brief is returned."
         ),
     },
 ]

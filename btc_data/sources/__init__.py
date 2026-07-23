@@ -16,7 +16,7 @@ from btc_data.sources import (
 )
 
 
-def fetch_metric(spec: MetricSpec, *, refresh: bool = False, timespan: str = "2years") -> dict[str, Any]:
+def fetch_metric(spec: MetricSpec, *, refresh: bool = False, timespan: str = "all") -> dict[str, Any]:
     source = spec.source
     if source == "bgeometrics":
         return bgeometrics.fetch(spec, refresh=refresh)

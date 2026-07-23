@@ -1,0 +1,56 @@
+name: Prefetch BTC series store
+
+# Keeps data/btc-series/ fresh for Valuation → Indicators (free-tier sources).
+# Small batches respect BGeometrics rate limits (~8 req/hour).
+
+on:
+  schedule:
+    # Every 2 hours; each run refreshes a few stale metrics
+    - cron: "20 */2 * * *"
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "Max metrics to fetch this run"
+        required: false
+        default: "5"
+
+permissions:
+  contents: write
+
+jobs:
+  prefetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python deps
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Prefetch batch
+        env:
+          SANTIMENT_API_KEY: ${{ secrets.SANTIMENT_API_KEY }}
+          DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
+          BTC_DUNE_QUERY_IDS: ${{ secrets.BTC_DUNE_QUERY_IDS }}
+        run: |
+          MAX="${{ github.event.inputs.max }}"
+          MAX="${MAX:-5}"
+          python3 scripts/btc_prefetch.py --once --max "$MAX"
+
+      - name: Commit series store
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/btc-series/
+          if git diff --staged --quiet; then
+            echo "No series store changes."
+            exit 0
+          fi
+          git commit -m "Prefetch BTC series store [automated]"
+          git push
