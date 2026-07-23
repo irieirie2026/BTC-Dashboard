@@ -1,6 +1,15 @@
 {
   "runs": [
     {
+      "metricId": "market_price",
+      "source": "blockchain",
+      "ok": true,
+      "points": 1603,
+      "error": null,
+      "fetchedAt": "2026-07-23T23:43:04Z",
+      "at": "2026-07-23T23:43:04Z"
+    },
+    {
       "metricId": "san_transaction_volume",
       "source": "santiment",
       "ok": true,
@@ -76,7 +85,7 @@
   "lastSourceFetch": {
     "coinmetrics": "2026-06-29T16:45:37Z",
     "bgeometrics": "2026-06-29T13:39:28Z",
-    "blockchain": "2026-06-29T13:39:30Z",
+    "blockchain": "2026-07-23T23:43:04Z",
     "mempool": "2026-06-29T14:06:43Z",
     "blockchair": "2026-06-29T14:06:45Z",
     "santiment": "2026-06-29T16:48:41Z"
@@ -88,10 +97,10 @@
   "lastSourceFetchMono": {
     "coinmetrics": 252.381501708,
     "bgeometrics": 5.913402375,
-    "blockchain": 7.680553208,
+    "blockchain": 50.72923416,
     "mempool": 284.777582375,
     "blockchair": 286.65622925,
     "santiment": 436.538587666
   },
-  "updatedAt": "2026-06-29T16:48:41Z"
+  "updatedAt": "2026-07-23T23:43:04Z"
 }
