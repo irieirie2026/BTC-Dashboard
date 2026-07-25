@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-25T17:57:33Z",
+  "fetchedAt": "2026-07-25T19:14:41Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Was an honor to join @michaelbatnick on one of his podcasts for the first time. We went into the weeds on the ETF spaghetti cannon leveraged ETFs and more. I had a blast.",
+      "link": "https://x.com/JSeyff/status/2081086132041765073#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Was an honor to join @michaelbatnick on one of his podcasts for the first time. We went into the weeds on the ETF spaghetti cannon leveraged ETFs and more. I had a blast. The Compound (@TheCompoundNews) The ETF Industry Has Lost Its Mind\ud83e\udd2f On this episode of Talking Wealth, @micha",
+      "publishedAt": "2026-07-25T18:36:13+00:00",
+      "publishedTs": 1785004573.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "People often ask me what they should read. I assembled 38 works on history, war, uncertainty, liberty, capital, energy, technology, and Bitcoin for leaders making consequential decisions. Read to remember. Read to reason. Read to build. Upgrade the world.",
+      "link": "https://x.com/saylor/status/2081077707614359779#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "People often ask me what they should read. I assembled 38 works on history, war, uncertainty, liberty, capital, energy, technology, and Bitcoin for leaders making consequential decisions. Read to remember. Read to reason. Read to build. Upgrade the world. Michael Saylor (@saylor)",
+      "publishedAt": "2026-07-25T18:02:44+00:00",
+      "publishedTs": 1785002564.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "At today\u2019s capital structure, $BTC could fall 11.4% annually for 5.8 years, and Strategy could still fully fund interest and preferred dividends while maintaining a 1.0x BTC Rating. $MSTR",
+      "link": "https://x.com/Strategy/status/2081071018592911648#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-25T17:36:09+00:00",
+      "publishedTs": 1785000969.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Bill Hagerty on CLARITY ACT \"Investors need certainty. Law enforcement needs rules it can enforce consistently. Markets work best when everyone knows the rules of the road. It\u2019s time to pass digital asset market structure legislation.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2081050628420227179#m",
@@ -341,19 +380,6 @@
       "isRetweet": false
     },
     {
-      "title": "July 24 Update: #Bitcoin ETFs: 1D NetFlow: -3,507 $BTC(-$225.56M)\ud83d\udd34 7D NetFlow: +6,063 $BTC(+$389.93M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +12,522 $ETH(+$23.32M)\ud83d\udfe2 7D NetFlow: +99,239 $ETH(+$184.78M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2080653428502757663#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 24 Update: #Bitcoin ETFs: 1D NetFlow: -3,507 $BTC (-$225.56M)\ud83d\udd34 7D NetFlow: +6,063 $BTC (+$389.93M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +12,522 $ETH (+$23.32M)\ud83d\udfe2 7D NetFlow: +99,239 $ETH (+$184.78M)\ud83d\udfe2 Lookonchain (@lookonchain) July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC (+",
-      "publishedAt": "2026-07-24T13:56:48+00:00",
-      "publishedTs": 1784901408.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The Digital Chamber, CCI, and Blockchain Association send letter to Senate Leaders urging them to pass the Clarity Act: \"For the United States to maintain its position as the global leader of financial innovation, there is no substitute for the long-term certainty of ",
       "link": "https://x.com/BitcoinMagazine/status/2080645445592678445#m",
       "source": "@BitcoinMagazine",
@@ -638,32 +664,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Abraxas Capital deposited 2,211 $BTC ($143.88M) into #Kraken and 30,825 $ETH ($59.19M) into #Binance over the past 8 hours. https://arkm.com/explorer/entity/abraxas-capital-heka-funds",
-      "link": "https://x.com/lookonchain/status/2080291412936130994#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Abraxas Capital deposited 2,211 $BTC ($143.88M) into #Kraken and 30,825 $ETH ($59.19M) into #Binance over the past 8 hours. arkm.com/explorer/entity/abr\u2026",
-      "publishedAt": "2026-07-23T13:58:17+00:00",
-      "publishedTs": 1784815097.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC(+$69.28M)\ud83d\udfe2 7D NetFlow: +10,891 $BTC(+$709.47M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +37,753 $ETH(+$71.88M)\ud83d\udfe2 7D NetFlow: +84,364 $ETH(+$160.63M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2080287669029130488#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC (+$69.28M)\ud83d\udfe2 7D NetFlow: +10,891 $BTC (+$709.47M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +37,753 $ETH (+$71.88M)\ud83d\udfe2 7D NetFlow: +84,364 $ETH (+$160.63M)\ud83d\udfe2 Lookonchain (@lookonchain) July 22 Update: #Bitcoin ETFs: 1D NetFlow: +3,078 $BTC (+",
-      "publishedAt": "2026-07-23T13:43:24+00:00",
-      "publishedTs": 1784814204.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. https://blog.lopp.net/bitcoin",
@@ -1069,19 +1069,6 @@
       "isRetweet": true
     },
     {
-      "title": "$MSTR engineers volatility.",
-      "link": "https://x.com/Strategy/status/2079582585332588720#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-21T15:01:39+00:00",
-      "publishedTs": 1784646099.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: question is: is the Kimi moment the Deepseek moment v2 or are frontier economics changing for good now?",
       "link": "https://x.com/nic_carter/status/2079581778440831294#m",
       "source": "@nic_carter",
@@ -1173,19 +1160,6 @@
       "isRetweet": true
     },
     {
-      "title": "INSIGHT: \"The impulse to change Bitcoin's rules merely to prevent others from using $BTC in ways you disapprove of is statist and alien to a community rooted in liberty,\" says Michael @Saylor, opposing BIP 110.",
-      "link": "https://x.com/CoinDesk/status/2079502274293010469#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "INSIGHT: \"The impulse to change Bitcoin's rules merely to prevent others from using $BTC in ways you disapprove of is statist and alien to a community rooted in liberty,\" says Michael @Saylor , opposing BIP 110.",
-      "publishedAt": "2026-07-21T09:42:32+00:00",
-      "publishedTs": 1784626952.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Everything on your phone is engineered to harvest your attention. Your bitcoin wallet is the only technology that rewards you forgetting about it and living your life the way it was meant to be.",
       "link": "https://x.com/DocumentingBTC/status/2079395003256676818#m",
       "source": "@DocumentingBTC",
@@ -1220,19 +1194,6 @@
       "summary": "",
       "publishedAt": "2026-07-20T20:35:41+00:00",
       "publishedTs": 1784579741.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: @Grayscale files for a Worldcoin ETF ethereum:0x163f8c2467924be0ae7b5347228cabf260318753. LOOK INTO THE ORB",
-      "link": "https://x.com/JSeyff/status/2079301549231161430#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-07-20T20:24:55+00:00",
-      "publishedTs": 1784579095.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1831,45 +1792,6 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
