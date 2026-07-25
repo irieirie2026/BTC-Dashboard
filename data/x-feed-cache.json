@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-25T04:08:46Z",
+  "fetchedAt": "2026-07-25T07:13:52Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -908,19 +908,6 @@
       "summary": "",
       "publishedAt": "2026-07-22T15:15:28+00:00",
       "publishedTs": 1784733328.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "July 22 Update: #Bitcoin ETFs: 1D NetFlow: +3,078 $BTC(+$202.63M)\ud83d\udfe2 7D NetFlow: +11,460 $BTC(+$754.46M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +19,682 $ETH(+$38.12M)\ud83d\udfe2 7D NetFlow: +70,177 $ETH(+$135.93M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2079947834905010594#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 22 Update: #Bitcoin ETFs: 1D NetFlow: +3,078 $BTC (+$202.63M)\ud83d\udfe2 7D NetFlow: +11,460 $BTC (+$754.46M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +19,682 $ETH (+$38.12M)\ud83d\udfe2 7D NetFlow: +70,177 $ETH (+$135.93M)\ud83d\udfe2 Lookonchain (@lookonchain) July 21 Update: #Bitcoin ETFs: 1D NetFlow: +3,443 $BTC (",
-      "publishedAt": "2026-07-22T15:13:02+00:00",
-      "publishedTs": 1784733182.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1857,45 +1844,6 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
