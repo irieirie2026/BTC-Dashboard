@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-25T19:14:41Z",
+  "fetchedAt": "2026-07-25T20:50:55Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accuses-ameri",
+      "link": "https://x.com/lopp/status/2081117594493374479#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. techcrunch.com/2026/07/24/us\u2026 Link US accuses Amer",
+      "publishedAt": "2026-07-25T20:41:14+00:00",
+      "publishedTs": 1785012074.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Was an honor to join @michaelbatnick on one of his podcasts for the first time. We went into the weeds on the ETF spaghetti cannon leveraged ETFs and more. I had a blast.",
       "link": "https://x.com/JSeyff/status/2081086132041765073#m",
@@ -380,6 +393,19 @@
       "isRetweet": false
     },
     {
+      "title": "July 24 Update: #Bitcoin ETFs: 1D NetFlow: -3,507 $BTC(-$225.56M)\ud83d\udd34 7D NetFlow: +6,063 $BTC(+$389.93M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +12,522 $ETH(+$23.32M)\ud83d\udfe2 7D NetFlow: +99,239 $ETH(+$184.78M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2080653428502757663#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "July 24 Update: #Bitcoin ETFs: 1D NetFlow: -3,507 $BTC (-$225.56M)\ud83d\udd34 7D NetFlow: +6,063 $BTC (+$389.93M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +12,522 $ETH (+$23.32M)\ud83d\udfe2 7D NetFlow: +99,239 $ETH (+$184.78M)\ud83d\udfe2 Lookonchain (@lookonchain) July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC (+",
+      "publishedAt": "2026-07-24T13:56:48+00:00",
+      "publishedTs": 1784901408.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The Digital Chamber, CCI, and Blockchain Association send letter to Senate Leaders urging them to pass the Clarity Act: \"For the United States to maintain its position as the global leader of financial innovation, there is no substitute for the long-term certainty of ",
       "link": "https://x.com/BitcoinMagazine/status/2080645445592678445#m",
       "source": "@BitcoinMagazine",
@@ -664,6 +690,32 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "Abraxas Capital deposited 2,211 $BTC ($143.88M) into #Kraken and 30,825 $ETH ($59.19M) into #Binance over the past 8 hours. https://arkm.com/explorer/entity/abraxas-capital-heka-funds",
+      "link": "https://x.com/lookonchain/status/2080291412936130994#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Abraxas Capital deposited 2,211 $BTC ($143.88M) into #Kraken and 30,825 $ETH ($59.19M) into #Binance over the past 8 hours. arkm.com/explorer/entity/abr\u2026",
+      "publishedAt": "2026-07-23T13:58:17+00:00",
+      "publishedTs": 1784815097.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC(+$69.28M)\ud83d\udfe2 7D NetFlow: +10,891 $BTC(+$709.47M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +37,753 $ETH(+$71.88M)\ud83d\udfe2 7D NetFlow: +84,364 $ETH(+$160.63M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2080287669029130488#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "July 23 Update: #Bitcoin ETFs: 1D NetFlow: +1,064 $BTC (+$69.28M)\ud83d\udfe2 7D NetFlow: +10,891 $BTC (+$709.47M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +37,753 $ETH (+$71.88M)\ud83d\udfe2 7D NetFlow: +84,364 $ETH (+$160.63M)\ud83d\udfe2 Lookonchain (@lookonchain) July 22 Update: #Bitcoin ETFs: 1D NetFlow: +3,078 $BTC (+",
+      "publishedAt": "2026-07-23T13:43:24+00:00",
+      "publishedTs": 1784814204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. https://blog.lopp.net/bitcoin",
@@ -1472,19 +1524,6 @@
       "isRetweet": false
     },
     {
-      "title": "The good news: there are a million other ways to improve Bitcoin as money.",
-      "link": "https://x.com/bitschmidty/status/2077396831655407813#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-15T14:16:15+00:00",
-      "publishedTs": 1784124975.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
       "link": "https://x.com/MaelstromFund/status/2077048928378470901#m",
       "source": "@CryptoHayes",
@@ -1792,6 +1831,45 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
+      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
+      "publishedAt": "2019-12-14T01:56:31+00:00",
+      "publishedTs": 1576288591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
+      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
+      "publishedAt": "2019-12-14T00:35:14+00:00",
+      "publishedTs": 1576283714.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
+      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "",
+      "publishedAt": "2019-06-29T16:44:44+00:00",
+      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
