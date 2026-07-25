@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-25T00:12:10Z",
+  "fetchedAt": "2026-07-25T04:08:46Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Stock market is closed. Bitcoin is open.",
+      "link": "https://x.com/APompliano/status/2080816805061238813#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-07-25T00:46:00+00:00",
+      "publishedTs": 1784940360.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "RT @Excellion: I spoke with @Cointelegraph about how BIP110 harms Bitcoin's neutrality and permissionlessness. Bitcoin can be sound money,\u2026",
       "link": "https://x.com/saylor/status/2080793798758592692#m",
