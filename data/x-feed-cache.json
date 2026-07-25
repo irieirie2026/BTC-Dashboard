@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-24T22:59:54Z",
+  "fetchedAt": "2026-07-25T00:12:10Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "RT @Excellion: I spoke with @Cointelegraph about how BIP110 harms Bitcoin's neutrality and permissionlessness. Bitcoin can be sound money,\u2026",
+      "link": "https://x.com/saylor/status/2080793798758592692#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @Excellion : I spoke with @Cointelegraph about how BIP110 harms Bitcoin's neutrality and permissionlessness. Bitcoin can be sound money,\u2026",
+      "publishedAt": "2026-07-24T23:14:35+00:00",
+      "publishedTs": 1784934875.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "There's now less than 2 weeks until the Senate August recess \ud83d\udc40 Re-post if you want to see the Clarity Act pass into law before then \ud83c\uddfa\ud83c\uddf8",
       "link": "https://x.com/BitcoinMagazine/status/2080778078595207252#m",
@@ -1428,19 +1441,6 @@
       "summary": "",
       "publishedAt": "2026-07-19T13:35:13+00:00",
       "publishedTs": 1784468113.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "What's next?",
-      "link": "https://x.com/saylor/status/2078821350114824461#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-19T12:36:47+00:00",
-      "publishedTs": 1784464607.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
