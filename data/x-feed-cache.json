@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-26T15:03:46Z",
+  "fetchedAt": "2026-07-26T16:58:30Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -915,15 +915,15 @@
     {
       "title": "Weird.. $BITO is 6th most traded ETF today. And in July it's traded $40b vs $20b for the Mighty IBIT. Very unusual given IBIT dwarfed it at one point bc ETF invs much prefer spot to futures when given choice. Basis trade can't explain it, could be some other arb tho?",
       "link": "https://x.com/EricBalchunas/status/2080053348904980978#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "",
       "publishedAt": "2026-07-22T22:12:18+00:00",
       "publishedTs": 1784758338.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "People ask what bitcoin is backed by. But that question makes no sense. Bitcoin is the record. Backing is for things without one.",
