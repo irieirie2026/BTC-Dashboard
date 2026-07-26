@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-26T13:17:44Z",
+  "fetchedAt": "2026-07-26T15:03:46Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "MICHAEL SAYLOR: \"Human prosperity is not produced by good intentions alone. It emerges when scientific understanding, engineering, energy, capital, markets, property rights, and effective institutions work together.\"",
+      "link": "https://x.com/BitcoinNewsCom/status/2081385802391781889#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-26T14:27:00+00:00",
+      "publishedTs": 1785076020.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2081361097018204514#m",
@@ -92,6 +105,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "when ppl get scammed over the phone & give away their keys, one of the tactics scammers use is trying to make things urgent & an emergency bip110 ppl are using the same tactic & fail to see the parallel sorry I'm not buying what you're selling but that doesn't make me unethical",
+      "link": "https://x.com/justh0dl/status/2081204051153183045#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "when ppl get scammed over the phone &amp; give away their keys, one of the tactics scammers use is trying to make things urgent &amp; an emergency bip110 ppl are using the same tactic &amp; fail to see the parallel sorry I'm not buying what you're selling but that doesn't make me",
+      "publishedAt": "2026-07-26T02:24:47+00:00",
+      "publishedTs": 1785032687.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Pinned: In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accus",
@@ -822,19 +848,6 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin\u2019s security is a shared responsibility. Today we are launching the Bitcoin Security Consortium, backed by $15 million in commitments to support the developers and researchers strengthening Bitcoin for the decades ahead. https://www.strategy.com/press/leading-financial-inst",
-      "link": "https://x.com/saylor/status/2080262772533682566#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin\u2019s security is a shared responsibility. Today we are launching the Bitcoin Security Consortium, backed by $15 million in commitments to support the developers and researchers strengthening Bitcoin for the decades ahead. strategy.com/press/leading-f\u2026 Link Leading Financial ",
-      "publishedAt": "2026-07-23T12:04:29+00:00",
-      "publishedTs": 1784808269.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Today we're announcing the Bitcoin Security Consortium @BTCconsortium: a group of leading financial institutions and Bitcoin companies supporting the long-term security of the Bitcoin network. Members have pledged $15 million toward this work over the next three years.",
       "link": "https://x.com/Strategy/status/2080262323491455290#m",
       "source": "@saylor",
@@ -911,19 +924,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Architecture of Value | Ep. 74 https://x.com/i/broadcasts/1AxRnnkbyRVxl",
-      "link": "https://x.com/TNorth/status/2080050435310940376#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Architecture of Value | Ep. 74 nitter.net/i/broadcasts/1AxRnnkby\u2026 Link True North Architecture of Value | Ep. 74 https://nitter.net/i/broadcasts/1AxRnnkbyRVxl",
-      "publishedAt": "2026-07-22T22:00:43+00:00",
-      "publishedTs": 1784757643.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "People ask what bitcoin is backed by. But that question makes no sense. Bitcoin is the record. Backing is for things without one.",
@@ -1069,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "SIGNS OF LIFE: Bitcoin up 8% and running circles around everything since America's 250th Birthday. ETF flows are coming back too +$750m in past week. Hard to trust it tho but also hard to imagine it doesn't rebound at some point either. I guess we'll see",
-      "link": "https://x.com/EricBalchunas/status/2079948450594947197#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-22T15:15:28+00:00",
-      "publishedTs": 1784733328.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A trap I see a lot of non native speakers fall into is using AI to translate their posts and gradually relying on it more and more to write their posts. Do not do this!! We can tell. Instead write your posts in your own native language. They still get distribution thanks to the a",
       "link": "https://x.com/nic_carter/status/2079943021718606133#m",
       "source": "@nic_carter",
@@ -1103,19 +1090,6 @@
       "summary": "Don't break the second rule. \ud83e\udd26 \"Before the incident, the alleged victim showed the suspects his cryptocurrency portfolio and discussed crypto trading with them, allowing them to know he held digital assets of considerable value.\" crimeasia.com/british-touris\u2026 Jameson Lopp (@lopp)",
       "publishedAt": "2026-07-22T13:20:15+00:00",
       "publishedTs": 1784726415.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "ETFs on pace to achieve back-to-back Triple Crowns for the first time in modern era, breaking records in Flows, Volume and Launches. Last year they smashed all three records and I thought it prob wont happen again and this year they on pace to break each record by 30%+ UNREAL",
-      "link": "https://x.com/EricBalchunas/status/2079919366947152277#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-22T13:19:54+00:00",
-      "publishedTs": 1784726394.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1249,19 +1223,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "There's a DRAM-inspired tsunami of AI/semi/memory/etc ETFs about to flood the market, which will send the number of tech-related ETFs well over 500. That said, tech/theme ETFs have taken in $100b YTD, that's a TON for niche category and explains the supply rush. via @Todd_Sohn",
-      "link": "https://x.com/EricBalchunas/status/2079550066809811161#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-07-21T12:52:26+00:00",
-      "publishedTs": 1784638346.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com",
