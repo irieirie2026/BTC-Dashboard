@@ -8015,19 +8015,24 @@
       "timestamp": 1784592000,
       "date": "2026-07-21",
       "value": 65209.88
+    },
+    {
+      "timestamp": 1784937600,
+      "date": "2026-07-25",
+      "value": 64095.49
     }
   ],
   "latest": {
-    "timestamp": 1784592000,
-    "date": "2026-07-21",
-    "value": 65209.88
+    "timestamp": 1784937600,
+    "date": "2026-07-25",
+    "value": 64095.49
   },
   "source": "Blockchain.info",
   "unit": "USD",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-24T09:28:48Z",
-  "storedAt": "2026-07-24T09:28:48Z",
-  "pointCount": 1603
+  "fetchedAt": "2026-07-27T17:59:14Z",
+  "storedAt": "2026-07-27T17:59:14Z",
+  "pointCount": 1604
 }
