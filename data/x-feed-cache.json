@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-07-28T15:19:36Z",
+  "fetchedAt": "2026-07-28T17:25:10Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Neat set of 3D Bitcoin visualizations! https://anatomyofbitcoin.com/explorer/",
+      "link": "https://x.com/lopp/status/2082146525019324458#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Neat set of 3D Bitcoin visualizations! anatomyofbitcoin.com/explore\u2026",
+      "publishedAt": "2026-07-28T16:49:50+00:00",
+      "publishedTs": 1785257390.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Once one faction captures consensus, every faction learns it can seize through politics what it could not earn in the market. Protocol warfare becomes permanent. Capital flees, innovation dies, security erodes, and Bitcoin is doomed to 1% of its potential.",
+      "link": "https://x.com/saylor/status/2082141017977856159#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Once one faction captures consensus, every faction learns it can seize through politics what it could not earn in the market. Protocol warfare becomes permanent. Capital flees, innovation dies, security erodes, and Bitcoin is doomed to 1% of its potential.",
+      "publishedAt": "2026-07-28T16:27:57+00:00",
+      "publishedTs": 1785256077.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Keep Bitcoin\u2019s base layer simple, neutral, scarce, and secure. Keep innovation at the edges, where adoption is voluntary and failure is local. Protocol changes must be rare, conservative, and driven by necessity, not ambition. Defend Bitcoin\u2019s constitution. Defend t",
+      "link": "https://x.com/saylor/status/2082141019303202998#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Keep Bitcoin\u2019s base layer simple, neutral, scarce, and secure. Keep innovation at the edges, where adoption is voluntary and failure is local. Protocol changes must be rare, conservative, and driven by necessity, not ambition. Defend Bitcoin\u2019s constitution. Defend the future.",
+      "publishedAt": "2026-07-28T16:27:57+00:00",
+      "publishedTs": 1785256077.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin has won. Now it must survive victory. Its gravest threat is not an enemy at the gates, but corruption from within: factions that invent pretexts, rewrite the rules, and seize economic rights until freedom becomes permission and law becomes loot.",
+      "link": "https://x.com/saylor/status/2082141006443491489#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-28T16:27:54+00:00",
+      "publishedTs": 1785256074.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Mike Haridopolos talks CLARITY ACT on FOX \"The Clarity Act helps grow the American economy...CLARITY will allow us to make sure that we are the center of the action on digital assets, blockchain, and the internet in general.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2082138804610007358#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Mike Haridopolos talks CLARITY ACT on FOX \"The Clarity Act helps grow the American economy...CLARITY will allow us to make sure that we are the center of the action on digital assets, blockchain, and the internet in general.\" \ud83d\udc4f Video",
+      "publishedAt": "2026-07-28T16:19:09+00:00",
+      "publishedTs": 1785255549.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Unpopular opinions: 1. I like self-custody Bitcoin. 2. I like Bitcoin's current consensus rules. 3. Bitcoin's consensus rules should be difficult to change. 4. I like Amplified Bitcoin because I think Bitcoin's CAGR will be > 20% over the next decade. 5. If you're trying to outpe",
+      "link": "https://x.com/IIICapital/status/2082125293368517007#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Unpopular opinions: 1. I like self-custody Bitcoin. 2. I like Bitcoin's current consensus rules. 3. Bitcoin's consensus rules should be difficult to change. 4. I like Amplified Bitcoin because I think Bitcoin's CAGR will be &gt; 20% over the next decade. 5. If you're trying to ou",
+      "publishedAt": "2026-07-28T15:25:28+00:00",
+      "publishedTs": 1785252328.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The odds of the Fed not changing rates at Wednesday's FOMC meeting is at 76% on Polymarket \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2082123200381522012#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T15:17:09+00:00",
+      "publishedTs": 1785251829.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\"What is a routine transaction vs what is aggressive tax planning. We're really going to find out who's swimming naked here\" - @TaxAlphaInsider intv on ETF IQ yest re Treasury's look into 351 ETF exchanges which are booming, now 87 funds w $18b w/ @scarletfu & @zachmider",
       "link": "https://x.com/EricBalchunas/status/2082115886211633231#m",
@@ -118,6 +209,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is a long-term winner with the AI supercycle set to accelerate over the next decade. I sat down with @APompliano to discuss what's happening inside frontier AI labs, the US-China AI race, how bitcoin fits into the AI investment outlook, building CFOSilvia, and the latest ",
+      "link": "https://x.com/philrosenn/status/2082088936382292219#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Bitcoin is a long-term winner with the AI supercycle set to accelerate over the next decade. I sat down with @APompliano to discuss what's happening inside frontier AI labs, the US-China AI race, how bitcoin fits into the AI investment outlook, building CFOSilvia, and the latest ",
+      "publishedAt": "2026-07-28T13:01:00+00:00",
+      "publishedTs": 1785243660.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Pre-market trading list absolutely dominated by semi ETFs, I count 10 of the top 15 most traded as semi related incl SOXL at #1. Yesterday the top 10 list had 5 semi ETFs. ETF volume is correlated with fear but also tends to signal local bottoms as well. We'll see tho..",
@@ -653,45 +757,6 @@
       "isRetweet": false
     },
     {
-      "title": "In August 2020, a $1 billion software company put $250 million of bitcoin on its balance sheet. It was the first public company in the world to do it, and most people thought it was a stunt. Six months later, after the stock had risen tenfold, the same people called it visionary.",
-      "link": "https://x.com/gerovich/status/2081499819542020203#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "In August 2020, a $1 billion software company put $250 million of bitcoin on its balance sheet. It was the first public company in the world to do it, and most people thought it was a stunt. Six months later, after the stock had risen tenfold, the same people called it visionary.",
-      "publishedAt": "2026-07-26T22:00:04+00:00",
-      "publishedTs": 1785103204.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "To reject Bitcoin\u2019s integration with banks and corporations, custodians and exchanges, equity and credit markets, governments and currencies is to deny its benefits to 99% of the world and doom it to 1% of its potential.",
-      "link": "https://x.com/saylor/status/2081473219664507321#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-26T20:14:22+00:00",
-      "publishedTs": 1785096862.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "MICHAEL SAYLOR: \"Human prosperity is not produced by good intentions alone. It emerges when scientific understanding, engineering, energy, capital, markets, property rights, and effective institutions work together.\"",
-      "link": "https://x.com/BitcoinNewsCom/status/2081385802391781889#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-26T14:27:00+00:00",
-      "publishedTs": 1785076020.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2081361097018204514#m",
       "source": "@BitcoinMagazine",
@@ -700,19 +765,6 @@
       "summary": "",
       "publishedAt": "2026-07-26T12:48:50+00:00",
       "publishedTs": 1785070130.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We\u2019re gonna need another color.",
-      "link": "https://x.com/saylor/status/2081360471370715507#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-26T12:46:20+00:00",
-      "publishedTs": 1785069980.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -796,32 +848,6 @@
       "isRetweet": false
     },
     {
-      "title": "Thank you, Michael @saylor. A lot of thought and effort went into making this list that you generously share with us. The world would be a much better place if leaders took the time to be prepared by studying these books.",
-      "link": "https://x.com/RicardoBSalinas/status/2081304715522871386#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Thank you, Michael @saylor . A lot of thought and effort went into making this list that you generously share with us. The world would be a much better place if leaders took the time to be prepared by studying these books. Michael Saylor (@saylor) Article Upgrade the World A Civi",
-      "publishedAt": "2026-07-26T09:04:47+00:00",
-      "publishedTs": 1785056687.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "when ppl get scammed over the phone & give away their keys, one of the tactics scammers use is trying to make things urgent & an emergency bip110 ppl are using the same tactic & fail to see the parallel sorry I'm not buying what you're selling but that doesn't make me unethical",
-      "link": "https://x.com/justh0dl/status/2081204051153183045#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "when ppl get scammed over the phone &amp; give away their keys, one of the tactics scammers use is trying to make things urgent &amp; an emergency bip110 ppl are using the same tactic &amp; fail to see the parallel sorry I'm not buying what you're selling but that doesn't make me",
-      "publishedAt": "2026-07-26T02:24:47+00:00",
-      "publishedTs": 1785032687.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Pinned: In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accus",
       "link": "https://x.com/lopp/status/2081117594493374479#m",
       "source": "@lopp",
@@ -848,32 +874,6 @@
       "isRetweet": false
     },
     {
-      "title": "People often ask me what they should read. I assembled 38 works on history, war, uncertainty, liberty, capital, energy, technology, and Bitcoin for leaders making consequential decisions. Read to remember. Read to reason. Read to build. Upgrade the world.",
-      "link": "https://x.com/saylor/status/2081077707614359779#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "People often ask me what they should read. I assembled 38 works on history, war, uncertainty, liberty, capital, energy, technology, and Bitcoin for leaders making consequential decisions. Read to remember. Read to reason. Read to build. Upgrade the world. Michael Saylor (@saylor)",
-      "publishedAt": "2026-07-25T18:02:44+00:00",
-      "publishedTs": 1785002564.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "At today\u2019s capital structure, $BTC could fall 11.4% annually for 5.8 years, and Strategy could still fully fund interest and preferred dividends while maintaining a 1.0x BTC Rating. $MSTR",
-      "link": "https://x.com/Strategy/status/2081071018592911648#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-25T17:36:09+00:00",
-      "publishedTs": 1785000969.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Bill Hagerty on CLARITY ACT \"Investors need certainty. Law enforcement needs rules it can enforce consistently. Markets work best when everyone knows the rules of the road. It\u2019s time to pass digital asset market structure legislation.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2081050628420227179#m",
       "source": "@BitcoinMagazine",
@@ -882,45 +882,6 @@
       "summary": "",
       "publishedAt": "2026-07-25T16:15:08+00:00",
       "publishedTs": 1784996108.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "To be clear (if it wasn't already clear from me retweeting Adam on this topic): I am against the bip 110 filter fork. IMO filter fork proponents do not really understand: - bitcoin as a decentralized bearer asset - bitcoiners dislike spam more then they do - why BCH fork failed",
-      "link": "https://x.com/100trillionUSD/status/2081010010331513110#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-25T13:33:44+00:00",
-      "publishedTs": 1784986424.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "If you can take away someone's economic rights, you can take away all their rights. Bitcoin fixes this.",
-      "link": "https://x.com/coinbase/status/2080992512802504882#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "If you can take away someone's economic rights, you can take away all their rights. Bitcoin fixes this. Video",
-      "publishedAt": "2026-07-25T12:24:12+00:00",
-      "publishedTs": 1784982252.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "There's now less than 2 weeks until the Senate August recess \ud83d\udc40 Re-post if you want to see the Clarity Act pass into law before then \ud83c\uddfa\ud83c\uddf8",
-      "link": "https://x.com/BitcoinMagazine/status/2080778078595207252#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-24T22:12:07+00:00",
-      "publishedTs": 1784931127.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -950,19 +911,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "The Open Source Hub returns to Bitcoin Asia with hands-on demos, technical workshops, live presentations, VR experiences, and the builders behind the software that powers #Bitcoin. \ud83d\udc40 Test wallets. Run nodes. Explore Lightning, Nostr, ARK, AI, and more. \u26a1\ufe0f Come build with us \ud83e\udef5",
-      "link": "https://x.com/Bitcoinconfasia/status/2080764520411136236#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "The Open Source Hub returns to Bitcoin Asia with hands-on demos, technical workshops, live presentations, VR experiences, and the builders behind the software that powers #Bitcoin . \ud83d\udc40 Test wallets. Run nodes. Explore Lightning, Nostr, ARK, AI, and more. \u26a1\ufe0f Come build with us \ud83e\udef5",
-      "publishedAt": "2026-07-24T21:18:15+00:00",
-      "publishedTs": 1784927895.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "June featured a good chunk of ETF closures @JSeyff Bloomberg But \"people just don't care\" when they shutter",
@@ -1589,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "It used to be that every village had their idiot. This was not a problem; it was totally manageable. Now, thanks to the power of the internet, the idiots can find each other and form a digital village full of idiots.",
-      "link": "https://x.com/lopp/status/2078502805195677903#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-18T15:31:00+00:00",
-      "publishedTs": 1784388660.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
       "link": "https://x.com/MaelstromFund/status/2077048928378470901#m",
       "source": "@CryptoHayes",
@@ -1769,19 +1704,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "BIP 110 is Operation Warp Speed for Bitcoin",
-      "link": "https://x.com/punspotter/status/2026450568596635983#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Article BIP 110 is Operation Warp Speed for Bitcoin This may not help the cause but I feel it needs to be said. BIP110 is and the C19 jab was a real litmus test of critical thinking under social pressure. There are negative consequences if you comply",
-      "publishedAt": "2026-02-25T00:13:59+00:00",
-      "publishedTs": 1771978439.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @tier10k: Not great https://www.wsj.com/politics/policy/spy-sheikh-secret-stake-trump-crypto-tahnoon-ea4d97e8",
