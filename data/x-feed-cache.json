@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-28T22:56:17Z",
+  "fetchedAt": "2026-07-28T23:58:18Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -92,6 +92,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "The only way to make your assets wrench attack proof: \"Take yourself out of the equation as a single point of failure\" - @lopp Find the full session here: https://meanwhile.bm/webinars/bitcoin-wrench-attacks/",
+      "link": "https://x.com/meanwhile/status/2082175735662616762#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The only way to make your assets wrench attack proof: \"Take yourself out of the equation as a single point of failure\" - @lopp Find the full session here: meanwhile.bm/webinars/bitcoi\u2026 Video",
+      "publishedAt": "2026-07-28T18:45:54+00:00",
+      "publishedTs": 1785264354.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "My latest: The Degens are Winning in Oil ETFs. After chatting with @EricBalchunas about this, I decided to run an investor-return analysis on \"The Energy Trade\" since the war. The degens are doubling USOs return with market timing.",
@@ -1548,19 +1561,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Real talk: if any company (in any industry) wants tips for how to expose North Korean sponsored actors early in your hiring process, ping me. We had fun making half a dozen of them squirm just last week!",
-      "link": "https://x.com/lopp/status/2078893217127284916#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Real talk: if any company (in any industry) wants tips for how to expose North Korean sponsored actors early in your hiring process, ping me. We had fun making half a dozen of them squirm just last week! Nick Bax (@bax1337) Here's a partial list of companies this guy worked at pr",
-      "publishedAt": "2026-07-19T17:22:21+00:00",
-      "publishedTs": 1784481741.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
