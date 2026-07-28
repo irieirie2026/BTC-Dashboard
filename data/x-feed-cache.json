@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-28T21:05:32Z",
+  "fetchedAt": "2026-07-28T22:56:17Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Consumer Technology Association supports the passage of the CLARITY ACT \"America should be competitive in blockchain and digital asset technologies. We respectfully urge you to prioritize Senate floor consideration of the CLARITY Act.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2082226751510298787#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T22:08:38+00:00",
+      "publishedTs": 1785276518.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chair Paul Atkins says he will support Congress in passing the Clarity Act: \u201cI am committed to supporting Congress in advancing the CLARITY Act, including providing technical assistance.\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2082210352842883177#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T21:03:28+00:00",
+      "publishedTs": 1785272608.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "HOST OF BONNIE BLOCKCHAIN BONNIE CHANG TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 SHE RUNS THE LARGEST CHINESE BITCOIN YOUTUBE CHANNEL IN THE WORLD \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2082209804521537785#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T21:01:17+00:00",
+      "publishedTs": 1785272477.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "R to @BitcoinMagazine: The 1 of 21 Limited Edition VIP Gift Set goes to the next 21 people to secure a Whale Pass for Bitcoin Asia \ud83d\udc0b Once the 21 are claimed, they're gone for good \ud83d\udc40 The pass is how you claim yours, and it opens every room waiting for you \ud83d\udc47 https://asia.b.tc/whale",
       "link": "https://x.com/BitcoinMagazine/status/2082204822942495178#m",
@@ -14,6 +53,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Yep, this is why we don't want to rush to add novel crypto to bitcoin on the basis of an invented threat",
+      "link": "https://x.com/jamesob/status/2082202791271858294#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Yep, this is why we don't want to rush to add novel crypto to bitcoin on the basis of an invented threat Peter Van Valkenburgh (@valkenburgh) Funniest timeline: Bitcoin upgrades to a post-quantum lattice signature scheme... ...and then frontier LLMs break the lattice math before ",
+      "publishedAt": "2026-07-28T20:33:25+00:00",
+      "publishedTs": 1785270805.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Gallego and Sen. Tills are \"finalizing language\" for a CLARITY ACT counteroffer from the Democrats and plan to send it to the White House in the \"next couple days\", according to POLITICO. \ud83d\udc40",
@@ -575,19 +627,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 CCI releases \"The Clarity Act: Myth vs. Fact\", explaining the benefits of passing the bill \ud83d\udc40 \u201cPassage of Clarity is essential to ensuring the U.S. is the global leader in this fast growing and significant industry.\u201d \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2081796194775265628#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-27T17:37:45+00:00",
-      "publishedTs": 1785173865.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin\u2019s core design is set in stone. Protocol changes should be rare, conservative, and driven by necessity, not ambition. Don\u2019t fix what isn\u2019t broken.",
       "link": "https://x.com/saylor/status/2081794273326825908#m",
       "source": "@saylor",
@@ -609,19 +648,6 @@
       "summary": "BIP-110 is the latest outbreak of the \u201cI just heard about Bitcoin, and I\u2019m here to fix it\u201d syndrome.",
       "publishedAt": "2026-07-27T17:30:07+00:00",
       "publishedTs": 1785173407.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Dave McCormic on CLARITY ACT \"The time for delay is over.\" \"Bring the CLARITY Act to the Senate Floor for a vote and let every senator go on the record.\" \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2081776690569584819#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-27T16:20:15+00:00",
-      "publishedTs": 1785169215.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -752,19 +778,6 @@
       "summary": "",
       "publishedAt": "2026-07-27T12:11:18+00:00",
       "publishedTs": 1785154278.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy has increased its USD Reserve by $525 million, achieving 2.1 years of dividend coverage. As of 7/26/2026, we hodl \u20bf843,775 in our BTC Reserve and $3.75 billion in our USD Reserve. $MSTR $STRC https://www.strategy.com/press/strategy-increases-usd-reserve-by-525-million-no",
-      "link": "https://x.com/saylor/status/2081711984936915201#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has increased its USD Reserve by $525 million, achieving 2.1 years of dividend coverage. As of 7/26/2026, we hodl \u20bf843,775 in our BTC Reserve and $3.75 billion in our USD Reserve. $MSTR $STRC strategy.com/press/strategy-\u2026 Link Strategy Increases USD Reserve by $525 Milli",
-      "publishedAt": "2026-07-27T12:03:08+00:00",
-      "publishedTs": 1785153788.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
