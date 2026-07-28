@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-28T10:32:59Z",
+  "fetchedAt": "2026-07-28T12:52:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 SEC Chair Paul Atkins tells CNBC: \"I'm optimistic that Congress will pass the Clarity Act.\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2082079240346886372#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "NEW: \ud83c\uddfa\ud83c\uddf8 SEC Chair Paul Atkins tells CNBC: \"I'm optimistic that Congress will pass the Clarity Act.\" \ud83d\udc40 Video",
+      "publishedAt": "2026-07-28T12:22:28+00:00",
+      "publishedTs": 1785241348.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Pre-market trading list absolutely dominated by semi ETFs, I count 10 of the top 15 most traded as semi related incl SOXL at #1. Yesterday the top 10 list had 5 semi ETFs. ETF volume is correlated with fear but also tends to signal local bottoms as well. We'll see tho..",
+      "link": "https://x.com/EricBalchunas/status/2082068387371299054#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-07-28T11:39:21+00:00",
+      "publishedTs": 1785238761.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "If you hang out at a high end resort anywhere in Europe they are full of wealthy Brits. There\u2019s just no shortage of British founders. They just don\u2019t live or work in the UK",
       "link": "https://x.com/nic_carter/status/2082048455975866589#m",
@@ -848,19 +874,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @BitcoinMagazine: BITCOIN ASIA IS BACK BIGGER AND BETTER THAN EVER BEFORE \ud83d\udc40 Get your passes now \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2080754529092374747#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BITCOIN ASIA IS BACK BIGGER AND BETTER THAN EVER BEFORE \ud83d\udc40 Get your passes now \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
-      "publishedAt": "2026-07-24T20:38:32+00:00",
-      "publishedTs": 1784925512.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "June featured a good chunk of ETF closures @JSeyff Bloomberg But \"people just don't care\" when they shutter",
       "link": "https://x.com/MikeZaccardi/status/2080705068752359795#m",
       "source": "@JSeyff",
@@ -887,30 +900,17 @@
       "isRetweet": true
     },
     {
-      "title": "R to @EricBalchunas: Catch the whole episode here or on spotify, itunes etc https://www.bloomberg.com/news/articles/2026-07-23/how-leveraged-exchange-traded-funds-are-suddenly-everywhere",
-      "link": "https://x.com/EricBalchunas/status/2080672119998828990#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Catch the whole episode here or on spotify, itunes etc bloomberg.com/news/articles/\u2026 Link How Leveraged ETFs Became Wall Street\u2019s New Obsession On this episode of Trillions, we discuss what\u2019s fueling the boom and how these exchange-traded funds work in today\u2019s market. bloomberg.c",
-      "publishedAt": "2026-07-24T15:11:05+00:00",
-      "publishedTs": 1784905865.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "DEBATE: Leverage ETFs make up of 13% ETF trading but 1% of aum so a) not that big and b) being used as directed. On flip, their volume up 10x in 5yrs and 2x stock long/short ratio is 19x mostly chip/tech so could exacerbate selloff.. me, @Todd_Sohn, @JSeyff debate on Trillions",
       "link": "https://x.com/EricBalchunas/status/2080671947340263602#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "DEBATE: Leverage ETFs make up of 13% ETF trading but 1% of aum so a) not that big and b) being used as directed. On flip, their volume up 10x in 5yrs and 2x stock long/short ratio is 19x mostly chip/tech so could exacerbate selloff.. me, @Todd_Sohn , @JSeyff debate on Trillions V",
       "publishedAt": "2026-07-24T15:10:23+00:00",
       "publishedTs": 1784905823.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "For my first post, I\u2019m sharing a letter @NVIDIA signed on why open models matter. AI will transform every industry, power every company, and be built by every country. Open models strengthen safety and cybersecurity, accelerate innovation and diffusion, and enable sovereignty. Th",
@@ -989,19 +989,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Tesla didn't sell any of its 11,509 BTC treasury in Q2 2026, remaining one of the largest publicly traded companies holding bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2080379390031020134#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-23T19:47:52+00:00",
-      "publishedTs": 1784836072.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. https://blog.lopp.net/bitcoin",
@@ -1298,19 +1285,6 @@
       "summary": "Starting in 45 minutes Casa (@CasaHODL) Moving your bitcoin off your exchange is only step one when taking self-custody. What comes next: removing single points of failure, planning for inheritance, and knowing how to defend against the current threats targeting your setup. On Ju",
       "publishedAt": "2026-07-21T16:14:18+00:00",
       "publishedTs": 1784650458.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Institutional-grade Bitcoin yield, without the custody risk. \ud83d\udfe0 Built by veterans of one of the world's largest structured-products platforms. Non-custodial. On-chain. Up to 10% APY. \ud83d\udc49 https://go.cobault.net/BTCmag_3",
-      "link": "https://x.com/BitcoinMagazine/status/2079584095785345185#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Institutional-grade Bitcoin yield, without the custody risk. \ud83d\udfe0 Built by veterans of one of the world's largest structured-products platforms. Non-custodial. On-chain. Up to 10% APY. \ud83d\udc49 go.cobault.net/BTCmag_3",
-      "publishedAt": "2026-07-21T15:07:39+00:00",
-      "publishedTs": 1784646459.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
