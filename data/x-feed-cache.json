@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-07-28T17:25:10Z",
+  "fetchedAt": "2026-07-28T19:20:24Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Senate Majority Leader John Thune on CLARITY ACT \"We'll probably have a vote on the CLARITY ACT which is the digital assets bill/legislation, we'll see if the Democrats give us the votes to get on that\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2082180886770995585#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T19:06:23+00:00",
+      "publishedTs": 1785265583.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The reason bitcoin doesn\u2019t change is not that change is forbidden. It\u2019s that the change requires convincing millions of strangers to change Bitcoin who bought it because it doesn\u2019t change.",
+      "link": "https://x.com/DocumentingBTC/status/2082166044290949259#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-28T18:07:24+00:00",
+      "publishedTs": 1785262044.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I Scanned the Entire Bitcoin Blockchain for Images. What I Found Will Shock You https://bitcoinmagazine.com/guides/i-scanned-the-entire-bitcoin-blockchain-for-images-what-i-found-will-shock-you via @bitcoinmagazine",
+      "link": "https://x.com/JuanSGalt/status/2082165753764098086#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "I Scanned the Entire Bitcoin Blockchain for Images. What I Found Will Shock You bitcoinmagazine.com/guides/i\u2026 via @bitcoinmagazine Link I Scanned The Entire Bitcoin Blockchain For Images. What I Found Will Shock You Fresh hard drive. Full node. Eleven hours of PhotoRec. The outco",
+      "publishedAt": "2026-07-28T18:06:15+00:00",
+      "publishedTs": 1785261975.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The Bitcoin developers write the rules but can\u2019t impose them on anyone. The Bitcoin miners follow the rules but can\u2019t change them. The Bitcoin nodes enforce the rules, but only on themselves. The Bitcoin holders own all the money, but the money makes none of the rules.",
+      "link": "https://x.com/DocumentingBTC/status/2082163257666621868#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-28T17:56:20+00:00",
+      "publishedTs": 1785261380.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis lists 5 major financial institutions now supporting the CLARITY ACT: \u2705BlackRock \u2705Goldman Sachs \u2705Fidelity \u2705Franklin Templeton \u2705SoFi Wall Street says pass it \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2082161720835874890#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-28T17:50:13+00:00",
+      "publishedTs": 1785261013.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: If you run a responsible disclosure program for reporting security vulnerabilities and pay out bug bounties for valid reports, it only seems fair to send an invoice to folks who submit invalid AI hallucinated reports that cost you engineering time to investigate and debun",
+      "link": "https://x.com/lopp/status/2082158393175711882#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "If you run a responsible disclosure program for reporting security vulnerabilities and pay out bug bounties for valid reports, it only seems fair to send an invoice to folks who submit invalid AI hallucinated reports that cost you engineering time to investigate and debunk.",
+      "publishedAt": "2026-07-28T17:37:00+00:00",
+      "publishedTs": 1785260220.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto wrote, \u201cIf you don\u2019t believe me or don\u2019t get it, I don\u2019t have time to convince you, sorry.\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2082152145005031515#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-28T17:12:10+00:00",
+      "publishedTs": 1785258730.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Neat set of 3D Bitcoin visualizations! https://anatomyofbitcoin.com/explorer/",
       "link": "https://x.com/lopp/status/2082146525019324458#m",
@@ -157,6 +248,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "BIP110 ADVENT continues. Today: PDFs. The Bitcoin Whitepaper embedded contiguously in a BIP110 valid (and Knots standard!) transaction. - Wouldn't fit in a Core-standard OP_RETURN - Fits in BIP110 blocks for ~4x cheaper",
+      "link": "https://x.com/steverabinow/status/2082107018970554826#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "",
+      "publishedAt": "2026-07-28T14:12:51+00:00",
+      "publishedTs": 1785247971.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "R to @EricBalchunas: According to their press release they will put 100% of the staking rewards back into ETF.",
@@ -757,19 +861,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2081361097018204514#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-26T12:48:50+00:00",
-      "publishedTs": 1785070130.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "2 weeks until BIP-110 nodes fork off! https://bip110.com has been overhauled for maximum enjoyment. \ud83e\udd13",
       "link": "https://x.com/lopp/status/2081355291182952501#m",
       "source": "@lopp",
@@ -848,7 +939,7 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accus",
+      "title": "In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accuses-ameri",
       "link": "https://x.com/lopp/status/2081117594493374479#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -869,19 +960,6 @@
       "summary": "Was an honor to join @michaelbatnick on one of his podcasts for the first time. We went into the weeds on the ETF spaghetti cannon leveraged ETFs and more. I had a blast. The Compound (@TheCompoundNews) The ETF Industry Has Lost Its Mind\ud83e\udd2f On this episode of Talking Wealth, @micha",
       "publishedAt": "2026-07-25T18:36:13+00:00",
       "publishedTs": 1785004573.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Bill Hagerty on CLARITY ACT \"Investors need certainty. Law enforcement needs rules it can enforce consistently. Markets work best when everyone knows the rules of the road. It\u2019s time to pass digital asset market structure legislation.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2081050628420227179#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-25T16:15:08+00:00",
-      "publishedTs": 1784996108.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1090,19 +1168,6 @@
       "summary": "this is a god-shaped hole in yudkowskianism. yud wanted to but could not say \u201caligned with god\u201d so he had to invent a god substitute, namely \u201cthe coherent extrapolated volition of humanity\u201d: not any particular person or group of people\u2019s interests, preferences, or ethics now, whi",
       "publishedAt": "2026-07-23T01:06:48+00:00",
       "publishedTs": 1784768808.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Weird.. $BITO is 6th most traded ETF today. And in July it's traded $40b vs $20b for the Mighty IBIT. Very unusual given IBIT dwarfed it at one point bc ETF invs much prefer spot to futures when given choice. Basis trade can't explain it, could be some other arb tho?",
-      "link": "https://x.com/EricBalchunas/status/2080053348904980978#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-07-22T22:12:18+00:00",
-      "publishedTs": 1784758338.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1433,19 +1498,6 @@
       "isRetweet": false
     },
     {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto was afraid of Wikipedia deleting the page of information about Bitcoin because the editors decided it lacked enough \"significant third-party coverage to confer notability\u201d.",
-      "link": "https://x.com/DocumentingBTC/status/2079264664655913025#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-20T17:58:21+00:00",
-      "publishedTs": 1784570301.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The nice thing about Bitcoin consensus battles is you need not participate. You can sit on the sideline & end up with coins on both forks, ensuring you'll still hold real BTC. But if you're going to fight, you'd best be willing to put your BTC on the line. Bluffing won't work.",
       "link": "https://x.com/lopp/status/2079230670463762807#m",
       "source": "@lopp",
@@ -1472,32 +1524,6 @@
       "isRetweet": true
     },
     {
-      "title": "Nobody knows how many bitcoin nodes exist. The listening ones can be counted, but the silent ones can\u2019t, by design. There could be millions and millions of computers running the Bitcoin software with a fully audited copy of the blockchain protecting it and we have no idea.",
-      "link": "https://x.com/DocumentingBTC/status/2079174470497915172#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-20T11:59:57+00:00",
-      "publishedTs": 1784548797.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Tonight, while you sleep, the world will agree approximately 36 more times about the Bitcoin blockchain. Nobody will mention the incredible achievement on the news in the morning.",
-      "link": "https://x.com/DocumentingBTC/status/2079024439123960122#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-20T02:03:47+00:00",
-      "publishedTs": 1784513027.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Real talk: if any company (in any industry) wants tips for how to expose North Korean sponsored actors early in your hiring process, ping me. We had fun making half a dozen of them squirm just last week!",
       "link": "https://x.com/lopp/status/2078893217127284916#m",
       "source": "@lopp",
@@ -1506,32 +1532,6 @@
       "summary": "Real talk: if any company (in any industry) wants tips for how to expose North Korean sponsored actors early in your hiring process, ping me. We had fun making half a dozen of them squirm just last week! Nick Bax (@bax1337) Here's a partial list of companies this guy worked at pr",
       "publishedAt": "2026-07-19T17:22:21+00:00",
       "publishedTs": 1784481741.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Describing Bitcoin's \"governance\" is bloody hard. There's nothing to relate it to. It's anarchy; the closest models are open source projects or religions. But I'd argue Bitcoin has more complex dynamics across more diverse actors. August will be a learning lesson for many.",
-      "link": "https://x.com/lopp/status/2078836055361356200#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-19T13:35:13+00:00",
-      "publishedTs": 1784468113.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Oh dear, yet another consensus bug found in the BIP-110 implementation. \ud83c\udf7f",
-      "link": "https://x.com/lopp/status/2078517502208782760#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Oh dear, yet another consensus bug found in the BIP-110 implementation. \ud83c\udf7f Dathon Pwn (@DathonPwn) Article BlockSlop: BIP 110 Consensus Bug Public Disclosure. BIP 110 Can Leave Nodes on Different Chains Full technical details found at the blockslop website blockslop.dev. Below is ",
-      "publishedAt": "2026-07-18T16:29:24+00:00",
-      "publishedTs": 1784392164.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
