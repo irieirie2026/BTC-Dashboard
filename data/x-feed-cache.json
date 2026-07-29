@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-29T09:36:06Z",
+  "fetchedAt": "2026-07-29T11:59:25Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to e",
+      "link": "https://x.com/nic_carter/status/2082413486999585160#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to end reliance on any",
+      "publishedAt": "2026-07-29T10:30:39+00:00",
+      "publishedTs": 1785321039.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
+      "link": "https://x.com/nic_carter/status/2082413132777935279#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
+      "publishedAt": "2026-07-29T10:29:14+00:00",
+      "publishedTs": 1785320954.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Consumer Technology Association supports the passage of the CLARITY ACT \"America should be competitive in blockchain and digital asset technologies. We respectfully urge you to prioritize Senate floor consideration of the CLARITY Act.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2082226751510298787#m",
@@ -1342,19 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "A trap I see a lot of non native speakers fall into is using AI to translate their posts and gradually relying on it more and more to write their posts. Do not do this!! We can tell. Instead write your posts in your own native language. They still get distribution thanks to the a",
-      "link": "https://x.com/nic_carter/status/2079943021718606133#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "A trap I see a lot of non native speakers fall into is using AI to translate their posts and gradually relying on it more and more to write their posts. Do not do this!! We can tell. Instead write your posts in your own native language. They still get distribution thanks to the a",
-      "publishedAt": "2026-07-22T14:53:54+00:00",
-      "publishedTs": 1784732034.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Don't break the second rule. \ud83e\udd26 \"Before the incident, the alleged victim showed the suspects his cryptocurrency portfolio and discussed crypto trading with them, allowing them to know he held digital assets of considerable value.\" https://crimeasia.com/british-tourist-held-hostage",
       "link": "https://x.com/lopp/status/2079919455404998794#m",
       "source": "@lopp",
@@ -1418,32 +1431,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: question is: is the Kimi moment the Deepseek moment v2 or are frontier economics changing for good now?",
-      "link": "https://x.com/nic_carter/status/2079581778440831294#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "question is: is the Kimi moment the Deepseek moment v2 or are frontier economics changing for good now? nic carter (@nic_carter) Deepseek has completely upended the conventional wisdom around AI - China will only do closed source / proprietary - Silicon Valley is the global nexus",
-      "publishedAt": "2026-07-21T14:58:27+00:00",
-      "publishedTs": 1784645907.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "you could have just asked crypto people what fate would befall the fat model hypothesis",
-      "link": "https://x.com/nic_carter/status/2079581215410069567#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-21T14:56:13+00:00",
-      "publishedTs": 1784645773.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Every ten minutes, a number is found that has never existed before on the Internet and will never be needed again. Finding it costs more energy than some countries and nations use. Then it is kept forever on the Bitcoin blockchain. It\u2019s crazy when you think about it.",
