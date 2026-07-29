@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-07-29T14:26:46Z",
+  "fetchedAt": "2026-07-29T16:20:34Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: https://youtu.be/",
+      "link": "https://x.com/APompliano/status/2082497548804030966#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: piped.video/fibXI",
+      "publishedAt": "2026-07-29T16:04:41+00:00",
+      "publishedTs": 1785341081.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Major venture capital firm DCG sends letter to the Senate supporting the Clarity Act: \"We respectfully urge you to schedule a floor vote on the Digital Asset Market Clarity Act before the August recess.\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2082486576186061305#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-29T15:21:05+00:00",
+      "publishedTs": 1785338465.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&A tomorrow at 5 PM ET: Lyn Alden (@LynAldenContact), Matt Hougan (@Matt_Hougan), Samson Mow (@Excellion), and James Van Straten (@btcjvs).",
+      "link": "https://x.com/Strategy/status/2082485563727225041#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&amp;A tomorrow at 5 PM ET: Lyn Alden ( @LynAldenContact ), Matt Hougan ( @Matt_Hougan ), Samson Mow ( @Excellion ), and James Van Straten ( @btcjvs ).",
+      "publishedAt": "2026-07-29T15:17:03+00:00",
+      "publishedTs": 1785338223.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "RT @DavidFBailey: Nashville HQ is cooking @BitcoinMagazine @watchbmtv",
+      "link": "https://x.com/BitcoinMagazine/status/2082479380404543938#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "RT @DavidFBailey : Nashville HQ is cooking @BitcoinMagazine @watchbmtv",
+      "publishedAt": "2026-07-29T14:52:29+00:00",
+      "publishedTs": 1785336749.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Cypherpunk performance art.",
+      "link": "https://x.com/lopp/status/2082475166290842075#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Cypherpunk performance art. Steve (@steverabinow) BIP110 ADVENT. Big one today. Introducing BIPflix: Contiguous MP4s! -Too big for OP_RETURN -4x cheaper -BIP110 valid -High quality bitcoin-cli getrawtransaction 06214483dcbf9f2025f9709aa5a7dce85277a8ce15076d2d0029f3d64f4bc7b6 | xx",
+      "publishedAt": "2026-07-29T14:35:44+00:00",
+      "publishedTs": 1785335744.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Every fork of bitcoin was a referendum, and the results are final, the market will pay for unchangeability and almost nothing else. The code is free. The features are free. The one thing that commands a trillion dollars is the promise that no one, ever, gets to touch it.",
+      "link": "https://x.com/DocumentingBTC/status/2082474929316896968#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-29T14:34:48+00:00",
+      "publishedTs": 1785335688.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Machines will hold bitcoin within the next few years, and artificial intelligence programs do not panic sell, take profits, or need retirement. The most patient holders in history are about to enter the market, and they will never leave it.",
+      "link": "https://x.com/DocumentingBTC/status/2082473806023549306#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-29T14:30:20+00:00",
+      "publishedTs": 1785335420.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC(-$62.73M)\ud83d\udd34 7D NetFlow: -7,225 $BTC(-$464.05M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +2,000 $ETH(+$3.8M)\ud83d\udfe2 7D NetFlow: +20,277 $ETH(+$38.49M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2082471854611308758#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC (-$62.73M)\ud83d\udd34 7D NetFlow: -7,225 $BTC (-$464.05M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +2,000 $ETH (+$3.8M)\ud83d\udfe2 7D NetFlow: +20,277 $ETH (+$38.49M)\ud83d\udfe2 Lookonchain (@lookonchain) July 28 Update: #Bitcoin ETFs: 1D NetFlow: +20 $BTC (+$1.23M)\ud83d\udfe2 7",
+      "publishedAt": "2026-07-29T14:22:35+00:00",
+      "publishedTs": 1785334955.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Catherine Cortez Masto backs the new CLARITY ACT proposal sent to the White House saying: \"We feel good about the chance to resolve this issue once and for all\" - POLITICO \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2082471027297149054#m",
@@ -118,6 +222,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "#Bitcoin is becoming a strategic asset for institutions around the world \ud83d\udfe0 Join the decision-makers, allocators, executives, and investors discussing what's next for Bitcoin in Asia at Institutions and Capital Markets Day: \u2714\ufe0f Curated networking \u2714\ufe0f Private meetings \u2714\ufe0f Institutiona",
+      "link": "https://x.com/Bitcoinconfasia/status/2082363048795230367#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "#Bitcoin is becoming a strategic asset for institutions around the world \ud83d\udfe0 Join the decision-makers, allocators, executives, and investors discussing what's next for Bitcoin in Asia at Institutions and Capital Markets Day: \u2714\ufe0f Curated networking \u2714\ufe0f Private meetings \u2714\ufe0f Institutiona",
+      "publishedAt": "2026-07-29T07:10:13+00:00",
+      "publishedTs": 1785309013.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Consumer Technology Association supports the passage of the CLARITY ACT \"America should be competitive in blockchain and digital asset technologies. We respectfully urge you to prioritize Senate floor consideration of the CLARITY Act.\" \ud83d\udc4f",
@@ -484,6 +601,19 @@
       "isRetweet": true
     },
     {
+      "title": "BREAKING: $MSTR from @Strategy is live on Solana via @sunrise, issued by @Backpack Securities",
+      "link": "https://x.com/solana/status/2082100191768031600#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "BREAKING: $MSTR from @Strategy is live on Solana via @sunrise , issued by @Backpack Securities Video",
+      "publishedAt": "2026-07-28T13:45:43+00:00",
+      "publishedTs": 1785246343.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "R to @EricBalchunas: According to their press release they will put 100% of the staking rewards back into ETF.",
       "link": "https://x.com/EricBalchunas/status/2082096807253860811#m",
       "source": "@ericbalchunas",
@@ -640,45 +770,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Jon Husted on CLARITY ACT \"If the U.S. is going to lead in digital assets, we need a framework that is clear, practical, and supports innovation and job creation here at home. That\u2019s why I support the CLARITY Act and will work to get it passed as soon as possible",
-      "link": "https://x.com/BitcoinMagazine/status/2081855916035670036#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Jon Husted on CLARITY ACT \"If the U.S. is going to lead in digital assets, we need a framework that is clear, practical, and supports innovation and job creation here at home. That\u2019s why I support the CLARITY Act and will work to get it passed as soon as possible",
-      "publishedAt": "2026-07-27T21:35:04+00:00",
-      "publishedTs": 1785188104.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THE 2026 BITCON ASIA WHALE PASS EXPERIENCE IS GOING TO BE UNFORGETTABLE \ud83d\udc0b Get access to: \u2705 The Deep VIP lounge \u2705 Whale night & exclusive parties \u2705 High profile networking \u2705 Whale only content sessions ... and so much more \ud83d\udc40",
-      "link": "https://x.com/Bitcoinconfasia/status/2081847138842022177#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "THE 2026 BITCON ASIA WHALE PASS EXPERIENCE IS GOING TO BE UNFORGETTABLE \ud83d\udc0b Get access to: \u2705 The Deep VIP lounge \u2705 Whale night &amp; exclusive parties \u2705 High profile networking \u2705 Whale only content sessions ... and so much more \ud83d\udc40 Video",
-      "publishedAt": "2026-07-27T21:00:11+00:00",
-      "publishedTs": 1785186011.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 $1.7 trillion Franklin Templeton announces their support of the CLARITY Act \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2081839956654235874#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-27T20:31:39+00:00",
-      "publishedTs": 1785184299.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "RT @Excellion: \u201cThe nature of Bitcoin is such that once version 0.1 was released, the core design was set in stone for the rest of its life\u2026",
       "link": "https://x.com/saylor/status/2081817159831888056#m",
       "source": "@saylor",
@@ -757,32 +848,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @saylor: Repurchases will be funded outside the USD Reserve, including through MSTR and BTC sales, based on market conditions. Our objective is for STRC to trade near $100 with high liquidity, low volatility, and healthy, sustainable independent demand. We will not issue bel",
-      "link": "https://x.com/saylor/status/2081730940544360835#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Repurchases will be funded outside the USD Reserve, including through MSTR and BTC sales, based on market conditions. Our objective is for STRC to trade near $100 with high liquidity, low volatility, and healthy, sustainable independent demand. We will not issue below $100.",
-      "publishedAt": "2026-07-27T13:18:27+00:00",
-      "publishedTs": 1785158307.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We repurchased 288,930 shares of $STRC for $25M at an average price of $86.52 per share. We intend to remain a regular, disciplined buyer of STRC below $100. More at deeper discounts, less as STRC nears $100. Another $975M remains available for our prefs. https://www.strategy.com",
-      "link": "https://x.com/saylor/status/2081730842024452360#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We repurchased 288,930 shares of $STRC for $25M at an average price of $86.52 per share. We intend to remain a regular, disciplined buyer of STRC below $100. More at deeper discounts, less as STRC nears $100. Another $975M remains available for our prefs. strategy.com/press/strat",
-      "publishedAt": "2026-07-27T13:18:04+00:00",
-      "publishedTs": 1785158284.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive purchases 79 Bitcoin for $5.2 million! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2081714041857208530#m",
       "source": "@BitcoinMagazine",
@@ -830,19 +895,6 @@
       "summary": "",
       "publishedAt": "2026-07-27T11:47:17+00:00",
       "publishedTs": 1785152837.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: $XIV believe it or not showed same thing. It saw outflows as it went up (which is opposite of most long only ETFs where flows and return correlated). That said when music stops it can be really painful but the profit taking shows these ppl aren\u2019t nec the idio",
-      "link": "https://x.com/EricBalchunas/status/2081704743273955585#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "$XIV believe it or not showed same thing. It saw outflows as it went up (which is opposite of most long only ETFs where flows and return correlated). That said when music stops it can be really painful but the profit taking shows these ppl aren\u2019t nec the idiots they painted to be",
-      "publishedAt": "2026-07-27T11:34:21+00:00",
-      "publishedTs": 1785152061.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1212,32 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Thinking you can make a copy of Bitcoin is like photocopying a constitution and expecting a country to appear. The code is easy to copy, the accumulated history, users, security, liquidity, infrastructure, energy, habits, and shared belief about which history matters are not.",
-      "link": "https://x.com/DocumentingBTC/status/2079565572195426470#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-21T13:54:03+00:00",
-      "publishedTs": 1784642043.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "About ten years ago, these photos captured the first day in Binance\u2019s Tokyo office. From this empty office, the company has grown into the world\u2019s largest bitcoin exchange.",
-      "link": "https://x.com/DocumentingBTC/status/2079561153508704630#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-21T13:36:30+00:00",
-      "publishedTs": 1784640990.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com",
       "link": "https://x.com/intangiblecoins/status/2079541359996719512#m",
       "source": "@lopp",
@@ -1249,19 +1275,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Everybody say hello to the first North Korean state actor of the week who thought he could pull a fast one on us!",
-      "link": "https://x.com/lopp/status/2079272554104004983#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-20T18:29:42+00:00",
-      "publishedTs": 1784572182.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Taking \"Don't Trust. Verify.\" Seriously",
