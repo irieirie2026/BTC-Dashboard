@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-07-29T20:11:51Z",
+  "fetchedAt": "2026-07-29T21:59:51Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Tommy Tuberville voices his support for the CLARITY ACT Pass it \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2082584105280008631#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-29T21:48:37+00:00",
+      "publishedTs": 1785361717.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "hearing completely uncorroborated rumors that boy wonder got margin called",
+      "link": "https://x.com/nic_carter/status/2082575499205706122#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-29T21:14:26+00:00",
+      "publishedTs": 1785359666.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 American financial technology Block officially endorses passing the Clarity Act: \"I'm writing to express our strong support for the Digital Asset Market (Clarity) Act, and to respectfully urge Senate floor consideration of this bill.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2082568687312134616#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-29T20:47:21+00:00",
+      "publishedTs": 1785358041.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\ud83d\udc40",
+      "link": "https://x.com/watchbmtv/status/2082559844880466089#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "\ud83d\udc40 David Bailey\ud83c\uddf5\ud83c\uddf7 $2.0mm/btc is the floor (@DavidFBailey) Nashville HQ is cooking @BitcoinMagazine @watchbmtv \u2014 https://nitter.net/DavidFBailey/status/2082472374138548252#m",
+      "publishedAt": "2026-07-29T20:12:13+00:00",
+      "publishedTs": 1785355933.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "6 of the top 10 most traded ETFs today are semiconductor related.. about $40b in combined volume",
       "link": "https://x.com/EricBalchunas/status/2082553553940328824#m",
@@ -27,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "THE CREATOR OF ORDINALS SAYS BIP-110 IS DOOMED Casey @Rodarmor and @realizingerin dive into the history and drama behind BIP-110, Bitcoin's controversial anti-spam filter proposal. This episode covers the origins of Bitcoin's spam debate, @LukeDashjr's decade-long anti-spam crusa",
+      "link": "https://x.com/hellmoneypod/status/2082545518165811709#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "THE CREATOR OF ORDINALS SAYS BIP-110 IS DOOMED Casey @Rodarmor and @realizingerin dive into the history and drama behind BIP-110, Bitcoin's controversial anti-spam filter proposal. This episode covers the origins of Bitcoin's spam debate, @LukeDashjr 's decade-long anti-spam crus",
+      "publishedAt": "2026-07-29T19:15:18+00:00",
+      "publishedTs": 1785352518.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "RT @ColeMacro: BIP-110 made me even more bullish on Bitcoin. Why? Because of how decisively and publicly it is failing. Every large, suc\u2026",
@@ -614,19 +679,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Mike Haridopolos talks CLARITY ACT on FOX \"The Clarity Act helps grow the American economy...CLARITY will allow us to make sure that we are the center of the action on digital assets, blockchain, and the internet in general.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2082138804610007358#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Mike Haridopolos talks CLARITY ACT on FOX \"The Clarity Act helps grow the American economy...CLARITY will allow us to make sure that we are the center of the action on digital assets, blockchain, and the internet in general.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-07-28T16:19:09+00:00",
-      "publishedTs": 1785255549.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Unpopular opinions: 1. I like self-custody Bitcoin. 2. I like Bitcoin's current consensus rules. 3. Bitcoin's consensus rules should be difficult to change. 4. I like Amplified Bitcoin because I think Bitcoin's CAGR will be > 20% over the next decade. 5. If you're trying to outpe",
       "link": "https://x.com/IIICapital/status/2082125293368517007#m",
       "source": "@saylor",
@@ -638,19 +690,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The odds of the Fed not changing rates at Wednesday's FOMC meeting is at 76% on Polymarket \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2082123200381522012#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-28T15:17:09+00:00",
-      "publishedTs": 1785251829.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "\"What is a routine transaction vs what is aggressive tax planning. We're really going to find out who's swimming naked here\" - @TaxAlphaInsider intv on ETF IQ yest re Treasury's look into 351 ETF exchanges which are booming, now 87 funds w $18b w/ @scarletfu & @zachmider",
@@ -700,19 +739,6 @@
       "summary": "This brewery in Australia makes beer by recycling the hot water from Bitcoin mining computers Video",
       "publishedAt": "2026-07-28T14:14:43+00:00",
       "publishedTs": 1785248083.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: \ud83c\uddf7\ud83c\uddfa Bank of Russia says it has drafted \"first regulations to launch cryptocurrency market in Russia.\" \ud83d\udc40 \"The Bank of Russia has created conditions for organised trading in digital currencies and digital rights.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2082107138621534284#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-28T14:13:20+00:00",
-      "publishedTs": 1785248000.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1535,19 +1561,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com",
-      "link": "https://x.com/intangiblecoins/status/2079541359996719512#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com G",
-      "publishedAt": "2026-07-21T12:17:50+00:00",
-      "publishedTs": 1784636270.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
