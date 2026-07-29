@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-07-29T16:20:34Z",
+  "fetchedAt": "2026-07-29T18:05:44Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Russia has issued an arrest warrant for @telegram founder Pavel @durov with the charge of \"facilitating terrorism.\"",
+      "link": "https://x.com/lopp/status/2082522091543203907#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Russia has issued an arrest warrant for @telegram founder Pavel @durov with the charge of \"facilitating terrorism.\" Telegram Messenger (@telegram) \u2014 https://nitter.net/telegram/status/2082364471339786357#m",
+      "publishedAt": "2026-07-29T17:42:12+00:00",
+      "publishedTs": 1785346932.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "$59.8 billion SoFi Bank CEO says \"SoFi actively supports passing the CLARITY Act to set clear rules of the road.\" \"The time is now for everyone to get together to support this.\" \"Congress should pass it immediately. Let\u2019s Go! \ud83c\uddfa\ud83c\uddf8\"",
+      "link": "https://x.com/BitcoinMagazine/status/2082503214432211116#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-29T16:27:12+00:00",
+      "publishedTs": 1785342432.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: https://youtu.be/",
       "link": "https://x.com/APompliano/status/2082497548804030966#m",
@@ -37,6 +63,19 @@
       "summary": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&amp;A tomorrow at 5 PM ET: Lyn Alden ( @LynAldenContact ), Matt Hougan ( @Matt_Hougan ), Samson Mow ( @Excellion ), and James Van Straten ( @btcjvs ).",
       "publishedAt": "2026-07-29T15:17:03+00:00",
       "publishedTs": 1785338223.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "\"They're just lighting money on fire, it's a VC playbook, they're spraying and praying\" James Seyffart on Corgi's insane ETF filing spree \"Corgi just filed for every single country ETF imaginable. These guys launched their first ETF in late fall 2025, they now have like 180 to 20",
+      "link": "https://x.com/scottmelker/status/2082481433227256011#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "\"They're just lighting money on fire, it's a VC playbook, they're spraying and praying\" James Seyffart on Corgi's insane ETF filing spree \"Corgi just filed for every single country ETF imaginable. These guys launched their first ETF in late fall 2025, they now have like 180 to 20",
+      "publishedAt": "2026-07-29T15:00:38+00:00",
+      "publishedTs": 1785337238.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -118,6 +157,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Crypto money is leaking into other markets from both directions \"If you're a crypto guy and you left the crypto world and went into the ETF world, you've got one toe already into flipping into other markets. Now your money is in your Schwab account, and all of a sudden you see NV",
+      "link": "https://x.com/scottmelker/status/2082470145902186783#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Crypto money is leaking into other markets from both directions \"If you're a crypto guy and you left the crypto world and went into the ETF world, you've got one toe already into flipping into other markets. Now your money is in your Schwab account, and all of a sudden you see NV",
+      "publishedAt": "2026-07-29T14:15:47+00:00",
+      "publishedTs": 1785334547.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "I'M NOT LEAVING: Since $SMH began its 20% decline a month ago (with every single stock now trading below its 50d avg), semi and AI ETFs have taken in $25 billion in net inflows, with positive flows on 55% of trading days. Good note on this from @psarofagis today",
@@ -219,6 +271,32 @@
       "summary": "\u201cThe country has turned into a casino,\u201d People Power Party lawmaker Lee Jongwook told Koo during the hearing. \u201cThese are products that should never have been allowed onto the market. I consider this a policy failure.\u201d - South Korea politicians are using the 2x ETF to hammer admin",
       "publishedAt": "2026-07-29T12:09:54+00:00",
       "publishedTs": 1785326994.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to e",
+      "link": "https://x.com/nic_carter/status/2082413486999585160#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to end reliance on any",
+      "publishedAt": "2026-07-29T10:30:39+00:00",
+      "publishedTs": 1785321039.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
+      "link": "https://x.com/nic_carter/status/2082413132777935279#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
+      "publishedAt": "2026-07-29T10:29:14+00:00",
+      "publishedTs": 1785320954.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -692,6 +770,32 @@
       "isRetweet": false
     },
     {
+      "title": "If you hang out at a high end resort anywhere in Europe they are full of wealthy Brits. There\u2019s just no shortage of British founders. They just don\u2019t live or work in the UK",
+      "link": "https://x.com/nic_carter/status/2082048455975866589#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "If you hang out at a high end resort anywhere in Europe they are full of wealthy Brits. There\u2019s just no shortage of British founders. They just don\u2019t live or work in the UK Politics UK (@PolitlcsUK) \ud83d\udea8 NEW: The total number of millionaires in the UK has fallen to the lowest level ",
+      "publishedAt": "2026-07-28T10:20:09+00:00",
+      "publishedTs": 1785234009.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Haven\u2019t heard about openclaw in months",
+      "link": "https://x.com/nic_carter/status/2082034584330367211#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-28T09:25:01+00:00",
+      "publishedTs": 1785230701.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "No, this half-baked temporary softfork does not defend the soul of Bitcoin, it attacks the reliability and stability of Bitcoin as a monetary system. Any serious proposal has to be permanent.",
       "link": "https://x.com/BitcoinPierre/status/2081921611431559328#m",
       "source": "@saylor",
@@ -835,6 +939,19 @@
       "isRetweet": false
     },
     {
+      "title": "Our Investment in Standard Bots",
+      "link": "https://x.com/RoboStrategy/status/2081739713430409519#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Article Our Investment in Standard Bots We led Standard Bots\u2019 $200 million Series C because we believe it\u2019s the company built to reinvent the robot arm for physical AI and to bring the industry back to America. In this public thesis we will",
+      "publishedAt": "2026-07-27T13:53:19+00:00",
+      "publishedTs": 1785160399.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Strategy\u2019s long-term objective is for $STRC to trade consistently near $100 per share with high liquidity, low volatility, and healthy, sustainable independent demand.",
       "link": "https://x.com/phongle/status/2081735898375360633#m",
       "source": "@saylor",
@@ -846,6 +963,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "R to @nic_carter: remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black b",
+      "link": "https://x.com/nic_carter/status/2081726607257907598#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black bloc antifa types i",
+      "publishedAt": "2026-07-27T13:01:14+00:00",
+      "publishedTs": 1785157274.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive purchases 79 Bitcoin for $5.2 million! \ud83d\ude80",
@@ -900,6 +1030,19 @@
       "isRetweet": false
     },
     {
+      "title": "So this is a list of wealthy people and their addresses. As we\u2019ve seen in France and Sweden this leads to crypto kidnappings torturings and murders. Yes real estate records are semi public but this is an easily searchable database and target list. That makes a difference - again ",
+      "link": "https://x.com/nic_carter/status/2081698106429579283#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "So this is a list of wealthy people and their addresses. As we\u2019ve seen in France and Sweden this leads to crypto kidnappings torturings and murders. Yes real estate records are semi public but this is an easily searchable database and target list. That makes a difference - again ",
+      "publishedAt": "2026-07-27T11:07:59+00:00",
+      "publishedTs": 1785150479.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "People who don't understand information theory and allow themselves to be upset by information that gets sent over a censorship resistant network gonna have a bad time.",
       "link": "https://x.com/lopp/status/2081535763821301806#m",
       "source": "@lopp",
@@ -937,6 +1080,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "All political questions in America reduce to this reality. Social security, Medicare, government spending, everything - it\u2019s this debate a thousand times over. And the highly mobilized older population keeps winning. The young will be sacrificed for the old. Over and over.",
+      "link": "https://x.com/nic_carter/status/2081336832600481835#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "All political questions in America reduce to this reality. Social security, Medicare, government spending, everything - it\u2019s this debate a thousand times over. And the highly mobilized older population keeps winning. The young will be sacrificed for the old. Over and over. Laura ",
+      "publishedAt": "2026-07-26T11:12:24+00:00",
+      "publishedTs": 1785064344.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Jack Dorsey\u2019s company released an open source version of the team chat app Slack called \u201cBuzz\u201d Within a day, users have enabled agentic economic collaboration. Artificial intelligence agents are paying each other back and forth independently using bitcoin",
@@ -1017,40 +1173,27 @@
       "isRetweet": false
     },
     {
-      "title": "Corgi just filed for another 43 ETFs. FORTY THREE. They filed for 42 last Friday. These numbers are insane.",
-      "link": "https://x.com/JSeyff/status/2080765269866148135#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Corgi just filed for another 43 ETFs. FORTY THREE. They filed for 42 last Friday. These numbers are insane. ETF Hearsay by Henry Jim (@ETFhearsay) Corgi filed 43 international ETFs Filed, mostly single countries \u2022 Corgi Latin America ETF \u2022 Corgi Denmark ETF \u2022 Corgi Finland ETF \u2022 ",
-      "publishedAt": "2026-07-24T21:21:13+00:00",
-      "publishedTs": 1784928073.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "June featured a good chunk of ETF closures @JSeyff Bloomberg But \"people just don't care\" when they shutter",
-      "link": "https://x.com/MikeZaccardi/status/2080705068752359795#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-07-24T17:22:00+00:00",
-      "publishedTs": 1784913720.0,
+      "title": "Nic Carter on where AI, quantum, and Bitcoin collide. This week's Galaxy Brains: @intangiblecoins talks with @nic_carter of Castle Island Ventures on AGI, cybersecurity, and the quantum threat to Bitcoin. Plus Beimnet Abebe (Galaxy Trading) on the latest in markets.",
+      "link": "https://x.com/glxyresearch/status/2080687040190992764#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Nic Carter on where AI, quantum, and Bitcoin collide. This week's Galaxy Brains: @intangiblecoins talks with @nic_carter of Castle Island Ventures on AGI, cybersecurity, and the quantum threat to Bitcoin. Plus Beimnet Abebe (Galaxy Trading) on the latest in markets. Video",
+      "publishedAt": "2026-07-24T16:10:22+00:00",
+      "publishedTs": 1784909422.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
     },
     {
-      "title": "DEBATE: Leverage ETFs make up of 13% ETF trading but 1% of aum so a) not that big and b) being used as directed. On flip, their volume up 10x in 5yrs and 2x stock long/short ratio is 19x mostly chip/tech so could exacerbate selloff.. me, @Todd_Sohn, @JSeyff debate on Trillions",
-      "link": "https://x.com/EricBalchunas/status/2080671947340263602#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "DEBATE: Leverage ETFs make up of 13% ETF trading but 1% of aum so a) not that big and b) being used as directed. On flip, their volume up 10x in 5yrs and 2x stock long/short ratio is 19x mostly chip/tech so could exacerbate selloff.. me, @Todd_Sohn , @JSeyff debate on Trillions V",
-      "publishedAt": "2026-07-24T15:10:23+00:00",
-      "publishedTs": 1784905823.0,
+      "title": "For my first post, I\u2019m sharing a letter @NVIDIA signed on why open models matter. AI will transform every industry, power every company, and be built by every country. Open models strengthen safety and cybersecurity, accelerate innovation and diffusion, and enable sovereignty. Th",
+      "link": "https://x.com/JensenHuang/status/2080643682408321103#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "For my first post, I\u2019m sharing a letter @NVIDIA signed on why open models matter. AI will transform every industry, power every company, and be built by every country. Open models strengthen safety and cybersecurity, accelerate innovation and diffusion, and enable sovereignty. Th",
+      "publishedAt": "2026-07-24T13:18:05+00:00",
+      "publishedTs": 1784899085.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1095,6 +1238,19 @@
       "isRetweet": false
     },
     {
+      "title": "R to @nic_carter: proud of you guys for being so literate. some of yall are smart cookies",
+      "link": "https://x.com/nic_carter/status/2080569991770894796#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "proud of you guys for being so literate. some of yall are smart cookies",
+      "publishedAt": "2026-07-24T08:25:15+00:00",
+      "publishedTs": 1784881515.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. https://blog.lopp.net/bitcoin",
       "link": "https://x.com/lopp/status/2080269196995481633#m",
       "source": "@lopp",
@@ -1103,6 +1259,19 @@
       "summary": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. blog.lopp.net/bitcoin-the-tr\u2026",
       "publishedAt": "2026-07-23T12:30:00+00:00",
       "publishedTs": 1784809800.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I was today years old when I finally read Hyperion and realized what Farcaster was a reference to \u2026",
+      "link": "https://x.com/nic_carter/status/2080226090136605038#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-23T09:38:43+00:00",
+      "publishedTs": 1784799523.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1134,6 +1303,19 @@
       "isRetweet": false
     },
     {
+      "title": "this is a god-shaped hole in yudkowskianism. yud wanted to but could not say \u201caligned with god\u201d so he had to invent a god substitute, namely \u201cthe coherent extrapolated volition of humanity\u201d: not any particular person or group of people\u2019s interests, preferences, or ethics now, whi",
+      "link": "https://x.com/QiaochuYuan/status/2080097262840242365#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this is a god-shaped hole in yudkowskianism. yud wanted to but could not say \u201caligned with god\u201d so he had to invent a god substitute, namely \u201cthe coherent extrapolated volition of humanity\u201d: not any particular person or group of people\u2019s interests, preferences, or ethics now, whi",
+      "publishedAt": "2026-07-23T01:06:48+00:00",
+      "publishedTs": 1784768808.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "People ask what bitcoin is backed by. But that question makes no sense. Bitcoin is the record. Backing is for things without one.",
       "link": "https://x.com/DocumentingBTC/status/2080027753609335193#m",
       "source": "@DocumentingBTC",
@@ -1160,6 +1342,58 @@
       "isRetweet": false
     },
     {
+      "title": "R to @nic_carter: There is no such thing as alignment in the abstract sense. There are simply queries that an organization does not want you to make, and outputs it unnaturally injects",
+      "link": "https://x.com/nic_carter/status/2080004630642065450#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "There is no such thing as alignment in the abstract sense. There are simply queries that an organization does not want you to make, and outputs it unnaturally injects",
+      "publishedAt": "2026-07-22T18:58:43+00:00",
+      "publishedTs": 1784746723.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\u201cAI alignment\u201d is incoherent on its own. There is no such thing as generic alignment. Aligned with whom? Whose interests? And why should globalized models be aligned to the normative views of one organization or committee?",
+      "link": "https://x.com/nic_carter/status/2080003977479934344#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T18:56:07+00:00",
+      "publishedTs": 1784746567.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
+      "link": "https://x.com/nic_carter/status/2079994042473935090#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
+      "publishedAt": "2026-07-22T18:16:38+00:00",
+      "publishedTs": 1784744198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
+      "link": "https://x.com/nic_carter/status/2079993626419962220#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
+      "publishedAt": "2026-07-22T18:14:59+00:00",
+      "publishedTs": 1784744099.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "I'm getting lonely because I haven't received a social engineering call in over 2 weeks. Come on fellas, I want to talk shop! I know you're reading my posts; you have my number. Call meeeeeeeeeeeee \ud83e\udd72",
       "link": "https://x.com/lopp/status/2079972320660054477#m",
       "source": "@lopp",
@@ -1168,6 +1402,45 @@
       "summary": "",
       "publishedAt": "2026-07-22T16:50:19+00:00",
       "publishedTs": 1784739019.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "AI models got so good that METR ran out of long time horizon tasks to feed them for evals",
+      "link": "https://x.com/nic_carter/status/2079970292475089259#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:42:16+00:00",
+      "publishedTs": 1784738536.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: courtesy of @davidzmorris https://davidzmorris.substack.com/p/did-fake-satoshi-con-ben-affleck",
+      "link": "https://x.com/nic_carter/status/2079968684928364821#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "courtesy of @davidzmorris davidzmorris.substack.com/p/\u2026",
+      "publishedAt": "2026-07-22T16:35:53+00:00",
+      "publishedTs": 1784738153.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "it's still completely crazy to me that casey affleck, pete davidson, gal gadot, and isla fisher are starring in a completely AI generated film about CSW paid for by calvin ayre. like that's completely bananas",
+      "link": "https://x.com/nic_carter/status/2079968485556277654#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-07-22T16:35:05+00:00",
+      "publishedTs": 1784738105.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1272,19 +1545,6 @@
       "summary": "we are pledging up to $5m in grants to open source developers building post-quantum cryptography for bitcoin, post-quantum signature schema for bitcoin, reviewing code, doing security audits, and more if you are working on this and need funding, email: quantum at galaxy dot com G",
       "publishedAt": "2026-07-21T12:17:50+00:00",
       "publishedTs": 1784636270.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Taking \"Don't Trust. Verify.\" Seriously",
-      "link": "https://x.com/ProofOfKeags/status/2079227659138011495#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Article Taking &quot;Don&apos;t Trust. Verify.&quot; Seriously A couple months ago I argued in Formal Vibefication that the advent of LLM code agents fundamentally changed the cost structure of formally verifying software. The main argument I laid out was that,",
-      "publishedAt": "2026-07-20T15:31:18+00:00",
-      "publishedTs": 1784561478.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
