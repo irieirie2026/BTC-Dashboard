@@ -1,6 +1,51 @@
 {
   "runs": [
     {
+      "metricId": "active_addresses",
+      "source": "blockchain",
+      "ok": true,
+      "points": 1597,
+      "error": null,
+      "fetchedAt": "2026-07-29T23:27:04Z",
+      "at": "2026-07-29T23:27:04Z"
+    },
+    {
+      "metricId": "exchange_inflow",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-07-29T23:27:04Z",
+      "at": "2026-07-29T23:27:04Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-29T23:27:03Z",
+      "at": "2026-07-29T23:27:03Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-29T23:27:03Z",
+      "at": "2026-07-29T23:27:03Z"
+    },
+    {
+      "metricId": "market_price",
+      "source": "blockchain",
+      "ok": true,
+      "points": 1605,
+      "error": null,
+      "fetchedAt": "2026-07-29T23:27:02Z",
+      "at": "2026-07-29T23:27:02Z"
+    },
+    {
       "metricId": "market_price",
       "source": "blockchain",
       "ok": true,
@@ -101,11 +146,11 @@
     }
   ],
   "lastSourceFetch": {
-    "coinmetrics": "2026-06-29T16:45:37Z",
+    "coinmetrics": "2026-07-29T23:27:04Z",
     "bgeometrics": "2026-06-29T13:39:28Z",
-    "blockchain": "2026-07-27T17:59:14Z",
-    "mempool": "2026-06-29T14:06:43Z",
-    "blockchair": "2026-06-29T14:06:45Z",
+    "blockchain": "2026-07-29T23:27:04Z",
+    "mempool": "2026-07-29T23:27:03Z",
+    "blockchair": "2026-07-29T23:27:03Z",
     "santiment": "2026-06-29T16:48:41Z"
   },
   "errors": {
@@ -113,12 +158,12 @@
     "san_price_usd": "error code: 1010\n"
   },
   "lastSourceFetchMono": {
-    "coinmetrics": 252.381501708,
+    "coinmetrics": 362.882120758,
     "bgeometrics": 5.913402375,
-    "blockchain": 181.443549817,
-    "mempool": 284.777582375,
-    "blockchair": 286.65622925,
+    "blockchain": 363.506503983,
+    "mempool": 362.474078055,
+    "blockchair": 362.78766938,
     "santiment": 436.538587666
   },
-  "updatedAt": "2026-07-27T17:59:14Z"
+  "updatedAt": "2026-07-29T23:27:04Z"
 }

@@ -7980,19 +7980,24 @@
       "timestamp": 1784678400,
       "date": "2026-07-22",
       "value": 467778.0
+    },
+    {
+      "timestamp": 1785024000,
+      "date": "2026-07-26",
+      "value": 439204.0
     }
   ],
   "latest": {
-    "timestamp": 1784678400,
-    "date": "2026-07-22",
-    "value": 467778.0
+    "timestamp": 1785024000,
+    "date": "2026-07-26",
+    "value": 439204.0
   },
   "source": "Blockchain.info",
   "unit": "addresses",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:25:26Z",
-  "storedAt": "2026-07-23T14:25:26Z",
-  "pointCount": 1596
+  "fetchedAt": "2026-07-29T23:27:04Z",
+  "storedAt": "2026-07-29T23:27:04Z",
+  "pointCount": 1597
 }
