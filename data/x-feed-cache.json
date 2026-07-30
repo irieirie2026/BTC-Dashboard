@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-30T05:39:29Z",
+  "fetchedAt": "2026-07-30T08:23:52Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Whale bc1qyr deposited 625 $BTC ($39.96M) into #FalconX after over a year of inactivity, likely to sell. Holding $BTC for over a year, he has lost over $20M. https://arkm.com/explorer/address/bc1qyrv9hkzv8e0djftyjgrscgv0q5vukqdr4h5ncu",
+      "link": "https://x.com/lookonchain/status/2082723037439525327#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whale bc1qyr deposited 625 $BTC ($39.96M) into #FalconX after over a year of inactivity, likely to sell. Holding $BTC for over a year, he has lost over $20M. arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-07-30T07:00:41+00:00",
+      "publishedTs": 1785394841.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. https://arkm.com/explorer/entity/lazarus-group",
       "link": "https://x.com/lookonchain/status/2082660141313540511#m",
