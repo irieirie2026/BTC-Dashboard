@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-07-30T02:11:47Z",
+  "fetchedAt": "2026-07-30T05:39:29Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. https://arkm.com/explorer/entity/lazarus-group",
+      "link": "https://x.com/lookonchain/status/2082660141313540511#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. arkm.com/explorer/entity/laz\u2026",
+      "publishedAt": "2026-07-30T02:50:46+00:00",
+      "publishedTs": 1785379846.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "First look at new Braiins Forge Axe bitcoin miner",
+      "link": "https://x.com/DocumentingBTC/status/2082651447745823210#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "First look at new Braiins Forge Axe bitcoin miner Video",
+      "publishedAt": "2026-07-30T02:16:13+00:00",
+      "publishedTs": 1785377773.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Running a Bitcoin computer node to verify every transaction on the blockchain costs on average $6.80 a month, according to new research.",
+      "link": "https://x.com/DocumentingBTC/status/2082650649687159125#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-30T02:13:03+00:00",
+      "publishedTs": 1785377583.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Tommy Tuberville voices his support for the CLARITY ACT Pass it \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2082584105280008631#m",
@@ -219,32 +258,6 @@
       "summary": "Cypherpunk performance art. Steve (@steverabinow) BIP110 ADVENT. Big one today. Introducing BIPflix: Contiguous MP4s! -Too big for OP_RETURN -4x cheaper -BIP110 valid -High quality bitcoin-cli getrawtransaction 06214483dcbf9f2025f9709aa5a7dce85277a8ce15076d2d0029f3d64f4bc7b6 | xx",
       "publishedAt": "2026-07-29T14:35:44+00:00",
       "publishedTs": 1785335744.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Every fork of bitcoin was a referendum, and the results are final, the market will pay for unchangeability and almost nothing else. The code is free. The features are free. The one thing that commands a trillion dollars is the promise that no one, ever, gets to touch it.",
-      "link": "https://x.com/DocumentingBTC/status/2082474929316896968#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-29T14:34:48+00:00",
-      "publishedTs": 1785335688.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Machines will hold bitcoin within the next few years, and artificial intelligence programs do not panic sell, take profits, or need retirement. The most patient holders in history are about to enter the market, and they will never leave it.",
-      "link": "https://x.com/DocumentingBTC/status/2082473806023549306#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-29T14:30:20+00:00",
-      "publishedTs": 1785335420.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
