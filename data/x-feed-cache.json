@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-07-30T11:06:30Z",
+  "fetchedAt": "2026-07-30T13:56:30Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin is inside the gates of Wall Street.",
+      "link": "https://x.com/saylor/status/2082818586263830820#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-07-30T13:20:22+00:00",
+      "publishedTs": 1785417622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Read the full piece here: https://www.bloomberg.com/news/articles/2026-07-30/ai-fueled-corgi-chases-blackrock-s-etf-crown-with-500-fund-push?utm_medium=email&utm_source=author_alert&utm_term=260730&utm_campaign=author_21953717",
+      "link": "https://x.com/EricBalchunas/status/2082817069888770057#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Read the full piece here: bloomberg.com/news/articles/\u2026 Link AI-Fueled Corgi Chases BlackRock\u2019s ETF Crown With 500-Fund Push Corgi Funds does not look much like a traditional asset manager. Its parent company runs 24-hour cafes in San Francisco and Atlanta, operates a bus to the ",
+      "publishedAt": "2026-07-30T13:14:20+00:00",
+      "publishedTs": 1785417260.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
+      "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
+      "publishedAt": "2026-07-30T13:13:41+00:00",
+      "publishedTs": 1785417221.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddea\ud83c\uddf8 Spain's largest bank, Banco Santander, reports owning $4.3 million in spot Bitcoin ETFs \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2082802092746461300#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-30T12:14:50+00:00",
+      "publishedTs": 1785413690.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A newly created wallet (bc1qwz) just withdrew 1,250 $BTC($80.94M) from #Binance. https://arkm.com/explorer/address/bc1qwzcyf09xc7prjhfn9jvl8g7wukx8yf5kur22gv",
+      "link": "https://x.com/lookonchain/status/2082800392807801233#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A newly created wallet (bc1qwz) just withdrew 1,250 $BTC ($80.94M) from #Binance . arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-07-30T12:08:04+00:00",
+      "publishedTs": 1785413284.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whale bc1qyr deposited 625 $BTC ($39.96M) into #FalconX after over a year of inactivity, likely to sell. Holding $BTC for over a year, he has lost over $20M. https://arkm.com/explorer/address/bc1qyrv9hkzv8e0djftyjgrscgv0q5vukqdr4h5ncu",
       "link": "https://x.com/lookonchain/status/2082723037439525327#m",
@@ -14,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "WE ARE SO EXCITED ABOUT THE 2026 SPEAKER LINEUP \ud83d\udd25 But we're not finished. Can you guess who we're announcing next?",
+      "link": "https://x.com/Bitcoinconfasia/status/2082693981171826793#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-30T05:05:14+00:00",
+      "publishedTs": 1785387914.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. https://arkm.com/explorer/entity/lazarus-group",
@@ -588,19 +666,6 @@
       "isRetweet": false
     },
     {
-      "title": "I Scanned the Entire Bitcoin Blockchain for Images. What I Found Will Shock You https://bitcoinmagazine.com/guides/i-scanned-the-entire-bitcoin-blockchain-for-images-what-i-found-will-shock-you via @bitcoinmagazine",
-      "link": "https://x.com/JuanSGalt/status/2082165753764098086#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "I Scanned the Entire Bitcoin Blockchain for Images. What I Found Will Shock You bitcoinmagazine.com/guides/i\u2026 via @bitcoinmagazine Link I Scanned The Entire Bitcoin Blockchain For Images. What I Found Will Shock You Fresh hard drive. Full node. Eleven hours of PhotoRec. The outco",
-      "publishedAt": "2026-07-28T18:06:15+00:00",
-      "publishedTs": 1785261975.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The Bitcoin developers write the rules but can\u2019t impose them on anyone. The Bitcoin miners follow the rules but can\u2019t change them. The Bitcoin nodes enforce the rules, but only on themselves. The Bitcoin holders own all the money, but the money makes none of the rules.",
       "link": "https://x.com/DocumentingBTC/status/2082163257666621868#m",
       "source": "@DocumentingBTC",
@@ -609,19 +674,6 @@
       "summary": "",
       "publishedAt": "2026-07-28T17:56:20+00:00",
       "publishedTs": 1785261380.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis lists 5 major financial institutions now supporting the CLARITY ACT: \u2705BlackRock \u2705Goldman Sachs \u2705Fidelity \u2705Franklin Templeton \u2705SoFi Wall Street says pass it \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2082161720835874890#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-28T17:50:13+00:00",
-      "publishedTs": 1785261013.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -861,19 +913,6 @@
       "isRetweet": true
     },
     {
-      "title": "Pre-market trading list absolutely dominated by semi ETFs, I count 10 of the top 15 most traded as semi related incl SOXL at #1. Yesterday the top 10 list had 5 semi ETFs. ETF volume is correlated with fear but also tends to signal local bottoms as well. We'll see tho..",
-      "link": "https://x.com/EricBalchunas/status/2082068387371299054#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-28T11:39:21+00:00",
-      "publishedTs": 1785238761.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "If you hang out at a high end resort anywhere in Europe they are full of wealthy Brits. There\u2019s just no shortage of British founders. They just don\u2019t live or work in the UK",
       "link": "https://x.com/nic_carter/status/2082048455975866589#m",
       "source": "@nic_carter",
@@ -921,32 +960,6 @@
       "summary": "Soon you will even be able to get peptides in an ETF wrapper ! Eric Balchunas (@EricBalchunas) Rex w a filing for a Peptides ETF \u2014 https://nitter.net/EricBalchunas/status/2081885356035645674#m",
       "publishedAt": "2026-07-28T00:13:02+00:00",
       "publishedTs": 1785197582.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Rex w a filing for a Peptides ETF",
-      "link": "https://x.com/EricBalchunas/status/2081885356035645674#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-27T23:32:03+00:00",
-      "publishedTs": 1785195123.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Leveraged ETFs are like Adam Sandler or Micheal Bay movies: routinely slammed by critics yet widely popular at the box office. Here\u2019s exhibit A:",
-      "link": "https://x.com/EricBalchunas/status/2081871347089604870#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Leveraged ETFs are like Adam Sandler or Micheal Bay movies: routinely slammed by critics yet widely popular at the box office. Here\u2019s exhibit A: Bloomberg TV (@BloombergTV) The supposedly dumb-money trading leveraged ETFs may know exactly what it's doing. TQQQ\u2014a 3x Nasdaq-100 ETF",
-      "publishedAt": "2026-07-27T22:36:23+00:00",
-      "publishedTs": 1785191783.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1004,19 +1017,6 @@
       "isRetweet": true
     },
     {
-      "title": "Strategy\u2019s long-term objective is for $STRC to trade consistently near $100 per share with high liquidity, low volatility, and healthy, sustainable independent demand.",
-      "link": "https://x.com/phongle/status/2081735898375360633#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy\u2019s long-term objective is for $STRC to trade consistently near $100 per share with high liquidity, low volatility, and healthy, sustainable independent demand. Michael Saylor (@saylor) We repurchased 288,930 shares of $STRC for $25M at an average price of $86.52 per share",
-      "publishedAt": "2026-07-27T13:38:09+00:00",
-      "publishedTs": 1785159489.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black b",
       "link": "https://x.com/nic_carter/status/2081726607257907598#m",
       "source": "@nic_carter",
@@ -1025,32 +1025,6 @@
       "summary": "remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black bloc antifa types i",
       "publishedAt": "2026-07-27T13:01:14+00:00",
       "publishedTs": 1785157274.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: We will be discussing this on ETF IQ w the Tax Man himself @TaxAlphaInsider at noon EST Should be good.",
-      "link": "https://x.com/EricBalchunas/status/2081710457379778965#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "We will be discussing this on ETF IQ w the Tax Man himself @TaxAlphaInsider at noon EST Should be good.",
-      "publishedAt": "2026-07-27T11:57:04+00:00",
-      "publishedTs": 1785153424.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Here\u2019s an excerpt from a good counter post to the Treasury looking into deferring tax via ETFs, a totally legal activity that is not avoiding taxes like some are insinuating and it\u2019s something private banks have been doing forever but is now finally available to the little guy.",
-      "link": "https://x.com/EricBalchunas/status/2081710014499020824#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Here\u2019s an excerpt from a good counter post to the Treasury looking into deferring tax via ETFs, a totally legal activity that is not avoiding taxes like some are insinuating and it\u2019s something private banks have been doing forever but is now finally available to the little guy. J",
-      "publishedAt": "2026-07-27T11:55:18+00:00",
-      "publishedTs": 1785153318.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
