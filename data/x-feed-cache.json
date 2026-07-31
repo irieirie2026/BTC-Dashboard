@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-07-31T09:43:11Z",
+  "fetchedAt": "2026-07-31T11:58:26Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
+      "link": "https://x.com/nic_carter/status/2083158132604211615#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
+      "publishedAt": "2026-07-31T11:49:36+00:00",
+      "publishedTs": 1785498576.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Nick is right. Elaborate self custody setups that involve hundreds of dice rolls are nonstarters for 99% of people. Better: multi vendor multisig with Casa. Or worst case, Coinbase with the appropriate 2FA settings. Or an ETF. Excessive paranoia ends up causing users to rely on b",
+      "link": "https://x.com/nic_carter/status/2083157386190061735#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Nick is right. Elaborate self custody setups that involve hundreds of dice rolls are nonstarters for 99% of people. Better: multi vendor multisig with Casa. Or worst case, Coinbase with the appropriate 2FA settings. Or an ETF. Excessive paranoia ends up causing users to rely on b",
+      "publishedAt": "2026-07-31T11:46:38+00:00",
+      "publishedTs": 1785498398.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\"I'm scared there's no safe place for my bitcoin.\" Security is not a binary attribute. You are always making trade-offs between convenience of your own access & inconvenience of unauthorized access. The only perfectly secure BTC is that which you send to an unspendable script.",
+      "link": "https://x.com/lopp/status/2083155994905866530#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "\"I'm scared there's no safe place for my bitcoin.\" Security is not a binary attribute. You are always making trade-offs between convenience of your own access &amp; inconvenience of unauthorized access. The only perfectly secure BTC is that which you send to an unspendable script",
+      "publishedAt": "2026-07-31T11:41:07+00:00",
+      "publishedTs": 1785498067.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\ud83d\udea8 NEW: Over 594 BTC worth $38 million was stolen from Bitcoin hardware wallet Coldcard users. The attacker then moved around the BTC and consolidated 562 BTC into this address below. Users are urged to review the company's official security guidance as soon as possible. \u203c",
+      "link": "https://x.com/BitcoinMagazine/status/2083155812608798827#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-31T11:40:23+00:00",
+      "publishedTs": 1785498023.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Should you lose faith in self custody due to recent events? I think not. Third party custodians are also susceptible to weak RNGs. Interestingly enough, COLDCARD is one of the few devices that support dice rolls (along with seedsigner and krux.) https://blog.lopp.net/how-to-secur",
+      "link": "https://x.com/lopp/status/2083151303853641881#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Should you lose faith in self custody due to recent events? I think not. Third party custodians are also susceptible to weak RNGs. Interestingly enough, COLDCARD is one of the few devices that support dice rolls (along with seedsigner and krux.) blog.lopp.net/how-to-securel\u2026 Link",
+      "publishedAt": "2026-07-31T11:22:28+00:00",
+      "publishedTs": 1785496948.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "An unfortunate aspect of being in the security business is that your \"paranoid\" warnings tend to fall on deaf ears until catastrophe strikes. Over a long enough time frame, bad things tend to happen. If your life savings are on the line, it's best to mitigate every edge case.",
+      "link": "https://x.com/lopp/status/2083138740868796449#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-31T10:32:33+00:00",
+      "publishedTs": 1785493953.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. https://arkm.com/explorer/address/bc1qnk4zh9qcnap2mycp56qjrgza3cc8ylrh8fecp0 https://blog.coinkite.c",
       "link": "https://x.com/lookonchain/status/2083074854190985535#m",
@@ -42,7 +120,7 @@
       "isRetweet": false
     },
     {
-      "title": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
+      "title": "Pinned: This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be",
       "link": "https://x.com/lopp/status/2082969492284444816#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -81,7 +159,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: Coldcard users should take notice: your private keys may be compromised if you generated them under these conditions. We should be getting a full report of the vulnerability soon.",
+      "title": "Coldcard users should take notice: your private keys may be compromised if you generated them under these conditions. We should be getting a full report of the vulnerability soon.",
       "link": "https://x.com/lopp/status/2082960180849819745#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -674,19 +752,6 @@
       "summary": "RT @ColeMacro : BIP-110 made me even more bullish on Bitcoin. Why? Because of how decisively and publicly it is failing. Every large, suc\u2026",
       "publishedAt": "2026-07-29T18:11:52+00:00",
       "publishedTs": 1785348712.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 Federal Reserve officially leaves interest rates unchanged at 3.5-3.75%.",
-      "link": "https://x.com/BitcoinMagazine/status/2082526807836721650#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-29T18:00:57+00:00",
-      "publishedTs": 1785348057.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1290,19 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. https://techcrunch.com/2026/07/24/us-accuses-ameri",
-      "link": "https://x.com/lopp/status/2081117594493374479#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "In the first case of its kind, the U.S. Department of Justice is prosecuting an American for allegedly providing U.S. border authorities with a duress passcode that wiped the contents of his @GrapheneOS phone when they seized it. techcrunch.com/2026/07/24/us\u2026 Link US accuses Amer",
-      "publishedAt": "2026-07-25T20:41:14+00:00",
-      "publishedTs": 1785012074.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Nic Carter on where AI, quantum, and Bitcoin collide. This week's Galaxy Brains: @intangiblecoins talks with @nic_carter of Castle Island Ventures on AGI, cybersecurity, and the quantum threat to Bitcoin. Plus Beimnet Abebe (Galaxy Trading) on the latest in markets.",
       "link": "https://x.com/glxyresearch/status/2080687040190992764#m",
       "source": "@nic_carter",
@@ -1355,19 +1407,6 @@
       "isRetweet": false
     },
     {
-      "title": "Hard to believe we've come this far in such a short time.",
-      "link": "https://x.com/lopp/status/2080613614478578043#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-24T11:18:36+00:00",
-      "publishedTs": 1784891916.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: proud of you guys for being so literate. some of yall are smart cookies",
       "link": "https://x.com/nic_carter/status/2080569991770894796#m",
       "source": "@nic_carter",
@@ -1392,19 +1431,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "This Sunday, @rodarmor and I are hosting Bitcoin Show & Tell, a Twitter space for everyone who hasn't let the bear market deter them from building on bitcoin. The goal is simple: highlight the interesting work that is often obscured by market noise and daily outrage cycle de-jour",
-      "link": "https://x.com/robin_linus/status/2080116361431597196#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This Sunday, @rodarmor and I are hosting Bitcoin Show & Tell, a Twitter space for everyone who hasn't let the bear market deter them from building on bitcoin. The goal is simple: highlight the interesting work that is often obscured by market noise and daily outrage cycle de-jour",
-      "publishedAt": "2026-07-23T02:22:41+00:00",
-      "publishedTs": 1784773361.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "There is nothing more public than the Bitcoin blockchain and yet nothing more private than the Bitcoin wallet key.",
@@ -1480,32 +1506,6 @@
       "summary": "",
       "publishedAt": "2026-07-22T18:56:07+00:00",
       "publishedTs": 1784746567.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
-      "link": "https://x.com/nic_carter/status/2079994042473935090#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Anthropic isn\u2019t some proud American institution. They\u2019re a tech company that has existed for a couple years. They are run by, for the most part, fringe socialist lunatics. The government doesn\u2019t need to announce DEFCON 1 because they suffered a setback.",
-      "publishedAt": "2026-07-22T18:16:38+00:00",
-      "publishedTs": 1784744198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
-      "link": "https://x.com/nic_carter/status/2079993626419962220#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s ok. China doesn\u2019t play fair. If your model of the world is \u201cbad guys will follow our conventions on IP\u201d you will lose. Think adversarially. Now what? - whitelist users - token merchants will find alternative monetization pathways - accept that AI safety as a discipline is ba",
-      "publishedAt": "2026-07-22T18:14:59+00:00",
-      "publishedTs": 1784744099.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
