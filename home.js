@@ -198,7 +198,7 @@ function homeSetSoundEnabled(on) {
     localStorage.setItem(HOME_SOUND_KEY, on ? "1" : "0");
     localStorage.removeItem(HOME_SOUND_KEY_LEGACY);
   } catch (_) {}
-  if (!on) homeStopSpeech();
+  if (!on) homeStopPlaybackOnly();
   homeSyncSoundButton();
 }
 
@@ -219,115 +219,99 @@ function homeSyncSoundButton() {
 }
 
 let homeMottoAudio = null;
-let homeMottoObjectUrl = null;
+let homeMottoPlayPending = false;
 
-function homeStopSpeech() {
+/**
+ * Static app asset — same Grok Luna clip every time (localhost + Vercel).
+ * No live TTS API, no browser SpeechSynthesis (those caused 1st-vs-2nd voice mismatch).
+ */
+const HOME_MOTTO_SRC = "assets/home-motto.mp3";
+
+function homeStopPlaybackOnly() {
   try {
     if (window.speechSynthesis) window.speechSynthesis.cancel();
   } catch (_) {}
   try {
     if (homeMottoAudio) {
       homeMottoAudio.pause();
-      homeMottoAudio.src = "";
+      homeMottoAudio.currentTime = 0;
       homeMottoAudio = null;
-    }
-    if (homeMottoObjectUrl) {
-      URL.revokeObjectURL(homeMottoObjectUrl);
-      homeMottoObjectUrl = null;
     }
   } catch (_) {}
 }
 
-/** Prefer a deeper English male voice when the OS exposes one (browser fallback). */
-function homePickVoice() {
-  try {
-    const voices = window.speechSynthesis?.getVoices?.() || [];
-    if (!voices.length) return null;
-    const score = (v) => {
-      let s = 0;
-      const name = `${v.name} ${v.lang}`.toLowerCase();
-      if (/en[-_]?(us|gb|au|ie|nz)/i.test(v.lang) || name.includes("english")) s += 4;
-      if (/en/i.test(v.lang)) s += 2;
-      if (/daniel|fred|alex|male|david|james|george|thomas|bruce|rishi|arthur|aaron/i.test(name))
-        s += 3;
-      if (/female|samantha|karen|moira|zira|susan|victoria|siri/i.test(name)) s -= 2;
-      if (v.default) s += 1;
-      return s;
-    };
-    return [...voices].sort((a, b) => score(b) - score(a))[0] || null;
-  } catch (_) {
-    return null;
-  }
+function homeStopSpeech() {
+  homeStopPlaybackOnly();
 }
 
-function homeSpeakMottoBrowser() {
-  if (!homeSoundEnabled()) return;
-  const synth = window.speechSynthesis;
-  if (!synth || typeof SpeechSynthesisUtterance === "undefined") return;
-
-  const speak = () => {
-    if (!homeSoundEnabled()) return;
-    const u = new SpeechSynthesisUtterance(HOME_MOTTO);
-    u.lang = "en-US";
-    u.rate = 0.98;
-    u.pitch = 1.12;
-    u.volume = 1;
-    // Prefer female system voices when Grok TTS unavailable
-    try {
-      const voices = synth.getVoices?.() || [];
-      const female = voices.find((v) =>
-        /samantha|karen|moira|zira|susan|victoria|female|siri|fiona|karen|tessa|veena|allison|ava|zoe/i.test(
-          `${v.name} ${v.lang}`,
-        ),
-      );
-      if (female) u.voice = female;
-      else {
-        const voice = homePickVoice();
-        if (voice) u.voice = voice;
-      }
-    } catch (_) {}
-    try {
-      synth.speak(u);
-    } catch (_) {}
-  };
-
-  const run = () => setTimeout(speak, 280);
-  if ((synth.getVoices?.() || []).length) run();
-  else {
-    const once = () => {
-      synth.removeEventListener("voiceschanged", once);
-      run();
-    };
-    synth.addEventListener("voiceschanged", once);
-    setTimeout(run, 500);
-  }
+function homePrefetchMotto() {
+  // Browser will cache the static file; hint via hidden Audio preload
+  try {
+    const a = new Audio();
+    a.preload = "auto";
+    a.src = HOME_MOTTO_SRC;
+  } catch (_) {}
+  return Promise.resolve(HOME_MOTTO_SRC);
 }
 
-/** Grok TTS via server (xAI) — falls back to browser SpeechSynthesis. */
-async function homeSpeakMotto() {
-  if (!homeSoundEnabled()) return;
-  homeStopSpeech();
-
-  try {
-    const res = await fetch(`/api/home/motto-tts?_=${Date.now()}`);
-    const ctype = (res.headers.get("content-type") || "").toLowerCase();
-    if (!res.ok || ctype.includes("application/json")) {
-      throw new Error("tts json/error");
+function homeArmMottoPlayOnGesture() {
+  if (homeMottoPlayPending) return;
+  homeMottoPlayPending = true;
+  const unlock = () => {
+    homeMottoPlayPending = false;
+    document.removeEventListener("pointerdown", unlock, true);
+    document.removeEventListener("keydown", unlock, true);
+    if (document.body?.dataset?.l1 === "home" && homeSoundEnabled()) {
+      void homePlayMottoClip({ force: true });
     }
-    const blob = await res.blob();
-    if (!blob || blob.size < 100) throw new Error("empty audio");
-    if (homeMottoObjectUrl) URL.revokeObjectURL(homeMottoObjectUrl);
-    homeMottoObjectUrl = URL.createObjectURL(blob);
-    const audio = new Audio(homeMottoObjectUrl);
+  };
+  document.addEventListener("pointerdown", unlock, true);
+  document.addEventListener("keydown", unlock, true);
+}
+
+/** Play the bundled motto MP3 only — never OS / API TTS. */
+async function homePlayMottoClip({ force = false } = {}) {
+  if (!force && !homeSoundEnabled()) return;
+  homeStopPlaybackOnly();
+  try {
+    const audio = new Audio(HOME_MOTTO_SRC);
     homeMottoAudio = audio;
+    audio.preload = "auto";
     audio.volume = 1;
-    // Voice starts after retro intro (caller may already delay; small extra headroom)
-    await new Promise((r) => setTimeout(r, 80));
-    if (!homeSoundEnabled()) return;
+    await new Promise((resolve, reject) => {
+      let settled = false;
+      const ok = () => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        resolve();
+      };
+      const bad = () => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        reject(new Error("audio error"));
+      };
+      const cleanup = () => {
+        audio.removeEventListener("canplaythrough", ok);
+        audio.removeEventListener("error", bad);
+      };
+      audio.addEventListener("canplaythrough", ok);
+      audio.addEventListener("error", bad);
+      audio.load();
+      if (audio.readyState >= 3) ok();
+      setTimeout(ok, 2000);
+    });
+    if (!homeSoundEnabled() && !force) return;
     await audio.play();
-  } catch (_) {
-    homeSpeakMottoBrowser();
+  } catch (err) {
+    // Autoplay block → same file on next gesture (never browser TTS)
+    homeArmMottoPlayOnGesture();
   }
+}
+
+async function homeSpeakMotto() {
+  return homePlayMottoClip();
 }
 
 /** 8-bit style blip (square pulse). */
@@ -378,9 +362,9 @@ function homePlayBuccaneersJingle({ force = false } = {}) {
   if (!force && now - homeJingleLastPlay < HOME_JINGLE_COOLDOWN_MS) return;
   homeJingleLastPlay = Date.now();
 
-  // Short retro sting, then natural voice (leave headroom so SFX don’t fight the speech)
+  // Short retro sting, then bundled motto MP3 (same file every time)
   setTimeout(() => {
-    if (homeSoundEnabled()) homeSpeakMotto();
+    if (homeSoundEnabled()) void homePlayMottoClip();
   }, 900);
 
   const AC = window.AudioContext || window.webkitAudioContext;
@@ -619,6 +603,11 @@ function initHomePage() {
   window.initSuperSummaryHome?.();
   window.decorateHelpLabels?.(document.getElementById("dashboard-home"));
 
+  // Warm the good server motto immediately so first play never uses OS TTS
+  if (homeSoundEnabled()) {
+    void homePrefetchMotto().catch(() => {});
+  }
+
   // Landing fanfare + motto (respects mute; first gesture if autoplay blocked)
   if (homeSoundEnabled()) {
     setTimeout(() => {
@@ -641,10 +630,12 @@ if (document.readyState === "loading") {
     renderHomeHighlights();
     bindHomeCards();
     homeSyncSoundButton();
+    if (homeSoundEnabled()) void homePrefetchMotto().catch(() => {});
   });
 } else {
   renderHomeCards();
   renderHomeHighlights();
   bindHomeCards();
   homeSyncSoundButton();
+  if (homeSoundEnabled()) void homePrefetchMotto().catch(() => {});
 }
