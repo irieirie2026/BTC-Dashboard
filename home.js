@@ -705,11 +705,11 @@ function initHomePage() {
   homeBindGlobalUiSounds();
   homeBindAudioUnlock();
 
-  // Boot SFX + voice as soon as Home is shown (no long delay)
+  // Boot SFX + voice as soon as Home is shown (skip if early boot already ran)
   if (homeSoundEnabled()) {
-    homeJingleLastPlay = 0; // allow re-entry to Home to play again after cooldown
-    homeBootPlayedThisLoad = false;
-    homePlayBuccaneersJingle({ force: true });
+    if (!homeBootPlayedThisLoad) {
+      homePlayBuccaneersJingle({ force: true });
+    }
     if (homeJingleCtx?.state === "suspended") homeArmBootOnGesture();
   }
 }
