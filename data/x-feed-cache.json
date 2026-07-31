@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-07-30T23:05:28Z",
+  "fetchedAt": "2026-07-31T02:40:30Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The United States Treasury Secretary quoted Satoshi Nakamoto, the inventor of Bitcoin, today.",
+      "link": "https://x.com/DocumentingBTC/status/2083002065874202824#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-31T01:29:27+00:00",
+      "publishedTs": 1785461367.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE",
+      "link": "https://x.com/nic_carter/status/2082981789417472152#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE Roman Helmet Guy (@romanhelmetguy) Remember when people thought \u201cprompt engineer\u201d was gonna be a job? \u2014 https://nitter.net/romanhelmetguy/status/2082864198044770723#m",
+      "publishedAt": "2026-07-31T00:08:53+00:00",
+      "publishedTs": 1785456533.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
+      "link": "https://x.com/lopp/status/2082969492284444816#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
+      "publishedAt": "2026-07-30T23:20:01+00:00",
+      "publishedTs": 1785453601.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "If your funds are on a seed phrase that was generated on a vulnerable coldcard firmware and you're looking to re-secure them by sending to a freshly generated seed phrase, the most important thing is to not panic and not rush. Mistakes can be catastrophic.",
+      "link": "https://x.com/lopp/status/2082966611372216814#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-30T23:08:34+00:00",
+      "publishedTs": 1785452914.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "COLDCARD Mk3 Security Advisory If you generated a seed on a Mk3 after firmware 4.0.1, your funds may be at risk. Mk4, Q and Mk5 are not affected based on our early analysis. Read the advisory and migrate carefully: https://blog.coinkite.com/coldcard-mk3-seed-generation-warning/",
       "link": "https://x.com/COLDCARDwallet/status/2082961993070247948#m",
@@ -42,19 +94,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Publicly traded AI company Vida now allows employees to be paid in Bitcoin over the Lightning Network \u26a1\ufe0f",
-      "link": "https://x.com/BitcoinMagazine/status/2082949595626192949#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T22:00:57+00:00",
-      "publishedTs": 1785448857.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Our Q2 2026 Earnings Call is LIVE on X: https://x.com/i/broadcasts/1kJzDDXjAVeKv",
       "link": "https://x.com/Strategy/status/2082938517143826520#m",
       "source": "@saylor",
@@ -63,6 +102,19 @@
       "summary": "Our Q2 2026 Earnings Call is LIVE on X: nitter.net/i/broadcasts/1kJzDDXjA\u2026 Link Strategy Strategy Q2 2026 Earnings Call https://nitter.net/i/broadcasts/1kJzDDXjAVeKv",
       "publishedAt": "2026-07-30T21:16:56+00:00",
       "publishedTs": 1785446216.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "IT'S OFFICIALLY #BITCOIN ASIA MONTH \ud83c\udded\ud83c\uddf0 ALL OF THE VOICES IN #BITCOIN ARE ABOUT TO COME TOGETHER \ud83d\udd25 See you August 27-28 \ud83d\udc4b",
+      "link": "https://x.com/Bitcoinconfasia/status/2082937110646964320#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "IT'S OFFICIALLY #BITCOIN ASIA MONTH \ud83c\udded\ud83c\uddf0 ALL OF THE VOICES IN #BITCOIN ARE ABOUT TO COME TOGETHER \ud83d\udd25 See you August 27-28 \ud83d\udc4b Video",
+      "publishedAt": "2026-07-30T21:11:20+00:00",
+      "publishedTs": 1785445880.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -965,19 +1017,6 @@
       "isRetweet": false
     },
     {
-      "title": "July 28 Update: #Bitcoin ETFs: 1D NetFlow: +20 $BTC(+$1.23M)\ud83d\udfe2 7D NetFlow: -3,170 $BTC(-$200.23M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +11,285 $ETH(+$21.16M)\ud83d\udfe2 7D NetFlow: +37,959 $ETH(+$71.17M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2082107911896199373#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 28 Update: #Bitcoin ETFs: 1D NetFlow: +20 $BTC (+$1.23M)\ud83d\udfe2 7D NetFlow: -3,170 $BTC (-$200.23M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +11,285 $ETH (+$21.16M)\ud83d\udfe2 7D NetFlow: +37,959 $ETH (+$71.17M)\ud83d\udfe2 Lookonchain (@lookonchain) July 27 Update: #Bitcoin ETFs: 1D NetFlow: -3,824 $BTC (-$246.6",
-      "publishedAt": "2026-07-28T14:16:24+00:00",
-      "publishedTs": 1785248184.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This brewery in Australia makes beer by recycling the hot water from Bitcoin mining computers",
       "link": "https://x.com/DocumentingBTC/status/2082107488812364021#m",
       "source": "@DocumentingBTC",
@@ -1316,19 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. https://blog.lopp.net/bitcoin",
-      "link": "https://x.com/lopp/status/2080269196995481633#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "On this day exactly 10 years ago I explained why Bitcoin's blockchain has use cases beyond money. Some people were upset about this 10 years ago. Far more are upset about it today. Don't be a block space Karen; it's detrimental to your mental health. blog.lopp.net/bitcoin-the-tr\u2026",
-      "publishedAt": "2026-07-23T12:30:00+00:00",
-      "publishedTs": 1784809800.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I was today years old when I finally read Hyperion and realized what Farcaster was a reference to \u2026",
       "link": "https://x.com/nic_carter/status/2080226090136605038#m",
       "source": "@nic_carter",
@@ -1459,32 +1485,6 @@
       "isRetweet": false
     },
     {
-      "title": "I'm getting lonely because I haven't received a social engineering call in over 2 weeks. Come on fellas, I want to talk shop! I know you're reading my posts; you have my number. Call meeeeeeeeeeeee \ud83e\udd72",
-      "link": "https://x.com/lopp/status/2079972320660054477#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-22T16:50:19+00:00",
-      "publishedTs": 1784739019.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "AI models got so good that METR ran out of long time horizon tasks to feed them for evals",
-      "link": "https://x.com/nic_carter/status/2079970292475089259#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-22T16:42:16+00:00",
-      "publishedTs": 1784738536.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Not one person in history can engineer a cryptocurrency more simple than bitcoin like not one person can engineer more round of a wheel.",
       "link": "https://x.com/DocumentingBTC/status/2079647731132379260#m",
       "source": "@DocumentingBTC",
@@ -1493,19 +1493,6 @@
       "summary": "",
       "publishedAt": "2026-07-21T19:20:31+00:00",
       "publishedTs": 1784661631.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The Internet has copy, paste, undo, edit, and send. Bitcoin gave it a new verb: pay.",
-      "link": "https://x.com/DocumentingBTC/status/2079634578344427751#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-21T18:28:15+00:00",
-      "publishedTs": 1784658495.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1805,6 +1792,45 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
+      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
+      "publishedAt": "2019-12-14T01:56:31+00:00",
+      "publishedTs": 1576288591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
+      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
+      "publishedAt": "2019-12-14T00:35:14+00:00",
+      "publishedTs": 1576283714.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
+      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "",
+      "publishedAt": "2019-06-29T16:44:44+00:00",
+      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
