@@ -2,8 +2,12 @@
 
 const HOME_SOUND_KEY = "btc-home-buccaneers-sound:v1";
 const HOME_SOUND_KEY_LEGACY = "btc-home-pirate-sound:v1";
-const HOME_JINGLE_COOLDOWN_MS = 12_000;
+const HOME_JINGLE_COOLDOWN_MS = 8_000;
+/** Motto starts while boot stinger is still playing */
+const HOME_MOTTO_AFTER_MS = 720;
 const HOME_MOTTO = "Fuck the system and dont forget to stack satoshis";
+/** Bundled Grok Luna clip — always the same (no live TTS / browser voice). */
+const HOME_MOTTO_SRC = "assets/home-motto.mp3";
 
 const HOME_SECTIONS = [
   {
@@ -175,15 +179,20 @@ const HOME_HIGHLIGHTS = [
 ];
 
 let homeBound = false;
+let homeUiSoundsBound = false;
 let homeJingleCtx = null;
 let homeJingleLastPlay = 0;
-let homeJinglePendingGesture = false;
+let homeBootPlayedThisLoad = false;
+let homeAudioUnlockBound = false;
+let homeMottoAudio = null;
+let homeMottoEl = null; // preloaded HTMLAudioElement for instant play
+let homeBootPendingGesture = false;
+let homeLastUiClickAt = 0;
 
 function homeSoundEnabled() {
   try {
     let v = localStorage.getItem(HOME_SOUND_KEY);
     if (v === null) {
-      // migrate prior mute pref
       v = localStorage.getItem(HOME_SOUND_KEY_LEGACY);
     }
     if (v === null) return true;
@@ -218,15 +227,6 @@ function homeSyncSoundButton() {
   btn.classList.toggle("is-muted", !on);
 }
 
-let homeMottoAudio = null;
-let homeMottoPlayPending = false;
-
-/**
- * Static app asset — same Grok Luna clip every time (localhost + Vercel).
- * No live TTS API, no browser SpeechSynthesis (those caused 1st-vs-2nd voice mismatch).
- */
-const HOME_MOTTO_SRC = "assets/home-motto.mp3";
-
 function homeStopPlaybackOnly() {
   try {
     if (window.speechSynthesis) window.speechSynthesis.cancel();
@@ -244,74 +244,39 @@ function homeStopSpeech() {
   homeStopPlaybackOnly();
 }
 
-function homePrefetchMotto() {
-  // Browser will cache the static file; hint via hidden Audio preload
-  try {
-    const a = new Audio();
-    a.preload = "auto";
-    a.src = HOME_MOTTO_SRC;
-  } catch (_) {}
-  return Promise.resolve(HOME_MOTTO_SRC);
-}
-
-function homeArmMottoPlayOnGesture() {
-  if (homeMottoPlayPending) return;
-  homeMottoPlayPending = true;
-  const unlock = () => {
-    homeMottoPlayPending = false;
-    document.removeEventListener("pointerdown", unlock, true);
-    document.removeEventListener("keydown", unlock, true);
-    if (document.body?.dataset?.l1 === "home" && homeSoundEnabled()) {
-      void homePlayMottoClip({ force: true });
-    }
-  };
-  document.addEventListener("pointerdown", unlock, true);
-  document.addEventListener("keydown", unlock, true);
-}
-
-/** Play the bundled motto MP3 only — never OS / API TTS. */
-async function homePlayMottoClip({ force = false } = {}) {
-  if (!force && !homeSoundEnabled()) return;
-  homeStopPlaybackOnly();
-  try {
-    const audio = new Audio(HOME_MOTTO_SRC);
-    homeMottoAudio = audio;
-    audio.preload = "auto";
-    audio.volume = 1;
-    await new Promise((resolve, reject) => {
-      let settled = false;
-      const ok = () => {
-        if (settled) return;
-        settled = true;
-        cleanup();
-        resolve();
-      };
-      const bad = () => {
-        if (settled) return;
-        settled = true;
-        cleanup();
-        reject(new Error("audio error"));
-      };
-      const cleanup = () => {
-        audio.removeEventListener("canplaythrough", ok);
-        audio.removeEventListener("error", bad);
-      };
-      audio.addEventListener("canplaythrough", ok);
-      audio.addEventListener("error", bad);
-      audio.load();
-      if (audio.readyState >= 3) ok();
-      setTimeout(ok, 2000);
-    });
-    if (!homeSoundEnabled() && !force) return;
-    await audio.play();
-  } catch (err) {
-    // Autoplay block → same file on next gesture (never browser TTS)
-    homeArmMottoPlayOnGesture();
+function homeEnsureAudioCtx() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  if (!homeJingleCtx || homeJingleCtx.state === "closed") {
+    homeJingleCtx = new AC();
   }
+  return homeJingleCtx;
 }
 
-async function homeSpeakMotto() {
-  return homePlayMottoClip();
+function homeResumeAudioCtx() {
+  const ctx = homeEnsureAudioCtx();
+  if (!ctx) return Promise.resolve(null);
+  if (ctx.state === "suspended") {
+    return ctx.resume().then(() => ctx).catch(() => ctx);
+  }
+  return Promise.resolve(ctx);
+}
+
+/** Keep motto element warm so play() is near-instant after unlock. */
+function homeWarmMottoElement() {
+  if (homeMottoEl) return homeMottoEl;
+  try {
+    const a = new Audio(HOME_MOTTO_SRC);
+    a.preload = "auto";
+    a.load();
+    homeMottoEl = a;
+  } catch (_) {}
+  return homeMottoEl;
+}
+
+function homePrefetchMotto() {
+  homeWarmMottoElement();
+  return Promise.resolve(HOME_MOTTO_SRC);
 }
 
 /** 8-bit style blip (square pulse). */
@@ -352,142 +317,275 @@ function homeRetroNoise(ctx, dest, { t, d = 0.06, vol = 0.1, hi = 4000 }) {
   src.start(t);
 }
 
+/** Short UI click — used on every button press app-wide. */
+function homePlayUiClick() {
+  if (!homeSoundEnabled()) return;
+  const now = Date.now();
+  if (now - homeLastUiClickAt < 40) return; // debounce double events
+  homeLastUiClickAt = now;
+
+  void homeResumeAudioCtx().then((ctx) => {
+    if (!ctx || !homeSoundEnabled()) return;
+    const t0 = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.value = 0.16;
+    master.connect(ctx.destination);
+    // Two-tone arcade click
+    homeRetroNote(ctx, master, { f: 880, t: t0, d: 0.035, vol: 0.14, type: "square" });
+    homeRetroNote(ctx, master, { f: 1320, t: t0 + 0.02, d: 0.04, vol: 0.1, type: "square" });
+  });
+}
+
+function homeIsUiClickTarget(el) {
+  if (!el || el.nodeType !== 1) return false;
+  if (el.closest("[data-no-ui-sfx]")) return false;
+  return Boolean(
+    el.closest(
+      [
+        "button",
+        "[role='button']",
+        "a.dash-tab",
+        ".dash-tab",
+        ".home-card",
+        ".home-highlight",
+        ".law-chip",
+        ".law-btn",
+        ".law-bc-btn",
+        ".law-link-btn",
+        ".md-btn",
+        ".ss-btn",
+        "input[type='button']",
+        "input[type='submit']",
+        "input[type='reset']",
+        "summary",
+        ".menu-tab",
+        "[data-dashboard]",
+        "[data-menu-id]",
+        "[data-law-chip]",
+        "[data-home-go]",
+      ].join(","),
+    ),
+  );
+}
+
+function homeBindGlobalUiSounds() {
+  if (homeUiSoundsBound) return;
+  homeUiSoundsBound = true;
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.button != null && e.button !== 0) return;
+      const t = e.target;
+      if (!homeIsUiClickTarget(t)) return;
+      homePlayUiClick();
+    },
+    true,
+  );
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const t = e.target;
+      if (!homeIsUiClickTarget(t)) return;
+      homePlayUiClick();
+    },
+    true,
+  );
+}
+
+/** Retro load stinger only (plays immediately while app boots). */
+function homePlayLoadStinger(ctx) {
+  if (!ctx) return;
+  const t0 = ctx.currentTime + 0.01;
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(0.16, t0);
+  master.gain.setValueAtTime(0.14, t0 + 0.7);
+  master.gain.exponentialRampToValueAtTime(0.03, t0 + 1.4);
+  master.connect(ctx.destination);
+
+  const bus = ctx.createBiquadFilter();
+  bus.type = "lowpass";
+  bus.frequency.value = 3400;
+  bus.Q.value = 0.7;
+  bus.connect(master);
+
+  // Instant “power on” blip
+  homeRetroNoise(ctx, bus, { t: t0, d: 0.04, vol: 0.15, hi: 3200 });
+  homeRetroNote(ctx, bus, { f: 523.25, t: t0, d: 0.05, vol: 0.14 });
+  homeRetroNote(ctx, bus, { f: 784, t: t0 + 0.05, d: 0.06, vol: 0.13 });
+  homeRetroNote(ctx, bus, { f: 1046.5, t: t0 + 0.11, d: 0.08, vol: 0.14 });
+
+  // Power-up arpeggio while loading
+  const arp = [523.25, 659.25, 783.99, 1046.5, 1318.5, 1046.5];
+  arp.forEach((f, i) => {
+    homeRetroNote(ctx, bus, {
+      f,
+      t: t0 + 0.22 + i * 0.05,
+      d: 0.06,
+      vol: 0.11,
+      type: i % 2 ? "square" : "triangle",
+    });
+  });
+
+  // Coin cascade
+  for (let i = 0; i < 4; i++) {
+    homeRetroNoise(ctx, bus, {
+      t: t0 + 0.55 + i * 0.06,
+      d: 0.04,
+      vol: 0.09,
+      hi: 2400 + i * 300,
+    });
+    homeRetroNote(ctx, bus, {
+      f: 1100 + i * 160,
+      t: t0 + 0.55 + i * 0.06,
+      d: 0.045,
+      vol: 0.08,
+    });
+  }
+
+  // Short fanfare tail under the voice
+  const fanfare = [
+    { f: 392.0, t: 0.85, d: 0.08 },
+    { f: 523.25, t: 0.93, d: 0.08 },
+    { f: 659.25, t: 1.01, d: 0.1 },
+    { f: 784.0, t: 1.12, d: 0.16 },
+  ];
+  for (const n of fanfare) {
+    homeRetroNote(ctx, bus, { f: n.f, t: t0 + n.t, d: n.d, vol: 0.12, type: "square" });
+  }
+}
+
+/** Bundled motto MP3 only. */
+async function homePlayMottoClip({ force = false } = {}) {
+  if (!force && !homeSoundEnabled()) return;
+  homeStopPlaybackOnly();
+  try {
+    // Reuse preloaded element when possible (faster first play)
+    let audio = homeMottoEl;
+    if (!audio) {
+      audio = new Audio(HOME_MOTTO_SRC);
+      homeMottoEl = audio;
+      audio.preload = "auto";
+    }
+    // Clone via new element if previous play already used this node
+    if (!audio.paused && !audio.ended) {
+      audio = new Audio(HOME_MOTTO_SRC);
+    }
+    homeMottoAudio = audio;
+    audio.volume = 1;
+    audio.currentTime = 0;
+    if (audio.readyState < 2) {
+      await new Promise((resolve) => {
+        const done = () => {
+          audio.removeEventListener("canplay", done);
+          resolve();
+        };
+        audio.addEventListener("canplay", done);
+        audio.load();
+        setTimeout(done, 800);
+      });
+    }
+    if (!homeSoundEnabled() && !force) return;
+    await audio.play();
+  } catch (_) {
+    homeArmBootOnGesture();
+  }
+}
+
+async function homeSpeakMotto() {
+  return homePlayMottoClip();
+}
+
 /**
- * Retro arcade insert-coin / level-up stinger (original, not a copyrighted tune)
- * + Grok TTS rebellious girl shout.
+ * Boot sequence: load SFX immediately → motto while stinger still rings.
+ * Called as early as possible when Home is active.
  */
 function homePlayBuccaneersJingle({ force = false } = {}) {
   if (!force && !homeSoundEnabled()) return;
   const now = Date.now();
   if (!force && now - homeJingleLastPlay < HOME_JINGLE_COOLDOWN_MS) return;
-  homeJingleLastPlay = Date.now();
+  homeJingleLastPlay = now;
+  homeBootPlayedThisLoad = true;
 
-  // Short retro sting, then bundled motto MP3 (same file every time)
+  homeWarmMottoElement();
+
+  // Motto overlaps the tail of the load stinger
   setTimeout(() => {
     if (homeSoundEnabled()) void homePlayMottoClip();
-  }, 900);
+  }, HOME_MOTTO_AFTER_MS);
 
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if (!AC) {
-    homeArmJingleOnGesture();
-    return;
-  }
-
-  try {
-    if (!homeJingleCtx || homeJingleCtx.state === "closed") {
-      homeJingleCtx = new AC();
+  void homeResumeAudioCtx().then((ctx) => {
+    if (!ctx) {
+      homeArmBootOnGesture();
+      return;
     }
-    const ctx = homeJingleCtx;
-    const start = () => {
-      const t0 = ctx.currentTime + 0.02;
-      const master = ctx.createGain();
-      // Keep SFX under the spoken line
-      master.gain.setValueAtTime(0.14, t0);
-      master.gain.setValueAtTime(0.14, t0 + 0.85);
-      master.gain.exponentialRampToValueAtTime(0.04, t0 + 1.1);
-      master.connect(ctx.destination);
-
-      // Soft bitcrush feel via mild lowpass on master bus
-      const bus = ctx.createBiquadFilter();
-      bus.type = "lowpass";
-      bus.frequency.value = 3200;
-      bus.Q.value = 0.7;
-      bus.connect(master);
-
-      // --- Arcade "insert coin" triple blip ---
-      homeRetroNoise(ctx, bus, { t: t0, d: 0.05, vol: 0.14, hi: 2800 });
-      homeRetroNote(ctx, bus, { f: 880, t: t0 + 0.02, d: 0.06, vol: 0.13 });
-      homeRetroNote(ctx, bus, { f: 1175, t: t0 + 0.09, d: 0.06, vol: 0.13 });
-      homeRetroNote(ctx, bus, { f: 1568, t: t0 + 0.16, d: 0.09, vol: 0.14 });
-
-      // --- Power-up arpeggio (C major 8-bit) ---
-      const arp = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5, 1318.5];
-      arp.forEach((f, i) => {
-        homeRetroNote(ctx, bus, {
-          f,
-          t: t0 + 0.32 + i * 0.055,
-          d: 0.07,
-          vol: 0.11,
-          type: i % 2 ? "square" : "triangle",
-        });
-      });
-
-      // --- Coin cascade ---
-      for (let i = 0; i < 5; i++) {
-        homeRetroNoise(ctx, bus, {
-          t: t0 + 0.75 + i * 0.07,
-          d: 0.045,
-          vol: 0.09,
-          hi: 2200 + i * 350,
-        });
-        homeRetroNote(ctx, bus, {
-          f: 1200 + i * 180,
-          t: t0 + 0.75 + i * 0.07,
-          d: 0.05,
-          vol: 0.08,
-        });
-      }
-
-      // --- Level-clear fanfare (short original 8-bit) ---
-      const fanfare = [
-        { f: 392.0, t: 1.15, d: 0.1 },
-        { f: 523.25, t: 1.25, d: 0.1 },
-        { f: 659.25, t: 1.35, d: 0.1 },
-        { f: 783.99, t: 1.45, d: 0.18 },
-        { f: 1046.5, t: 1.65, d: 0.28 },
-      ];
-      for (const n of fanfare) {
-        homeRetroNote(ctx, bus, {
-          f: n.f,
-          t: t0 + n.t,
-          d: n.d,
-          vol: 0.13,
-          type: "square",
-        });
-        // detuned triangle layer for thicker NES-ish tone
-        homeRetroNote(ctx, bus, {
-          f: n.f * 2,
-          t: t0 + n.t,
-          d: n.d * 0.85,
-          vol: 0.04,
-          type: "triangle",
-        });
-      }
-
-      // Final boom-bloop under the shout
-      homeRetroNoise(ctx, bus, { t: t0 + 2.0, d: 0.12, vol: 0.12, hi: 900 });
-      homeRetroNote(ctx, bus, { f: 196, t: t0 + 2.0, d: 0.2, vol: 0.1, type: "square" });
-      homeRetroNote(ctx, bus, { f: 784, t: t0 + 2.15, d: 0.15, vol: 0.09 });
-    };
-
-    if (ctx.state === "suspended") {
-      ctx
-        .resume()
-        .then(start)
-        .catch(() => {
-          homeArmJingleOnGesture();
-        });
-    } else {
-      start();
+    try {
+      homePlayLoadStinger(ctx);
+    } catch (_) {
+      homeArmBootOnGesture();
     }
-  } catch (_) {
-    homeArmJingleOnGesture();
-  }
+  });
 }
 
-function homeArmJingleOnGesture() {
-  if (homeJinglePendingGesture || !homeSoundEnabled()) return;
-  homeJinglePendingGesture = true;
+function homeArmBootOnGesture() {
+  if (homeBootPendingGesture || !homeSoundEnabled()) return;
+  homeBootPendingGesture = true;
   const unlock = () => {
-    homeJinglePendingGesture = false;
+    homeBootPendingGesture = false;
     document.removeEventListener("pointerdown", unlock, true);
     document.removeEventListener("keydown", unlock, true);
-    if (document.body?.dataset?.l1 === "home") {
-      homePlayBuccaneersJingle({ force: false });
-    }
+    void homeResumeAudioCtx().then(() => {
+      if (homeSoundEnabled()) {
+        // Always re-run boot after unlock so first real gesture gets SFX + voice
+        homeJingleLastPlay = 0;
+        homePlayBuccaneersJingle({ force: true });
+      }
+    });
   };
   document.addEventListener("pointerdown", unlock, true);
   document.addEventListener("keydown", unlock, true);
+}
+
+/** Unlock AudioContext on first user gesture app-wide (enables SFX + click sounds). */
+function homeBindAudioUnlock() {
+  if (homeAudioUnlockBound) return;
+  homeAudioUnlockBound = true;
+  const unlock = () => {
+    void homeResumeAudioCtx();
+    homeWarmMottoElement();
+  };
+  document.addEventListener("pointerdown", unlock, true);
+  document.addEventListener("keydown", unlock, true);
+}
+
+/**
+ * Start audio as soon as scripts run — SFX while app loads, then motto.
+ * If autoplay is blocked, first interaction unlocks and plays the same sequence.
+ */
+function homeBootAudioEarly() {
+  homeBindGlobalUiSounds();
+  homeBindAudioUnlock();
+  homeWarmMottoElement();
+  if (!homeSoundEnabled()) return;
+
+  // Try immediately (works after prior unlock / some browsers)
+  const tryBoot = () => {
+    if (homeBootPlayedThisLoad) return;
+    if (document.body?.dataset?.l1 && document.body.dataset.l1 !== "home") return;
+    homePlayBuccaneersJingle({ force: false });
+    // If still silent, arm gesture
+    setTimeout(() => {
+      if (homeJingleCtx?.state === "suspended" || homeBootPendingGesture) {
+        homeArmBootOnGesture();
+      }
+    }, 100);
+  };
+
+  tryBoot();
+  // Retry after dashboard sets body.dataset.l1 = home
+  setTimeout(tryBoot, 50);
+  setTimeout(tryBoot, 200);
+  setTimeout(tryBoot, 500);
 }
 
 function homeEsc(s) {
@@ -603,26 +701,30 @@ function initHomePage() {
   window.initSuperSummaryHome?.();
   window.decorateHelpLabels?.(document.getElementById("dashboard-home"));
 
-  // Warm the good server motto immediately so first play never uses OS TTS
-  if (homeSoundEnabled()) {
-    void homePrefetchMotto().catch(() => {});
-  }
+  homeWarmMottoElement();
+  homeBindGlobalUiSounds();
+  homeBindAudioUnlock();
 
-  // Landing fanfare + motto (respects mute; first gesture if autoplay blocked)
+  // Boot SFX + voice as soon as Home is shown (no long delay)
   if (homeSoundEnabled()) {
-    setTimeout(() => {
-      if (document.body?.dataset?.l1 === "home") {
-        homePlayBuccaneersJingle();
-        if (homeJingleCtx?.state === "suspended") homeArmJingleOnGesture();
-      }
-    }, 280);
+    homeJingleLastPlay = 0; // allow re-entry to Home to play again after cooldown
+    homeBootPlayedThisLoad = false;
+    homePlayBuccaneersJingle({ force: true });
+    if (homeJingleCtx?.state === "suspended") homeArmBootOnGesture();
   }
 }
 
 window.initHomePage = initHomePage;
 window.homePlayBuccaneersJingle = homePlayBuccaneersJingle;
+window.homePlayUiClick = homePlayUiClick;
+window.homeBootAudioEarly = homeBootAudioEarly;
 // back-compat alias
 window.homePlayPirateJingle = homePlayBuccaneersJingle;
+
+// Start UI click sounds + early boot immediately when this script loads
+homeBindGlobalUiSounds();
+homeBindAudioUnlock();
+homeWarmMottoElement();
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -630,12 +732,12 @@ if (document.readyState === "loading") {
     renderHomeHighlights();
     bindHomeCards();
     homeSyncSoundButton();
-    if (homeSoundEnabled()) void homePrefetchMotto().catch(() => {});
+    homeBootAudioEarly();
   });
 } else {
   renderHomeCards();
   renderHomeHighlights();
   bindHomeCards();
   homeSyncSoundButton();
-  if (homeSoundEnabled()) void homePrefetchMotto().catch(() => {});
+  homeBootAudioEarly();
 }
