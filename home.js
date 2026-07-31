@@ -279,15 +279,16 @@ function homePrefetchMotto() {
   return Promise.resolve(HOME_MOTTO_SRC);
 }
 
-/** 8-bit style blip (square pulse). */
+/** 8-bit style blip (square pulse). Uses linear ramps for short UI clicks. */
 function homeRetroNote(ctx, dest, { f, t, d = 0.08, vol = 0.12, type = "square" }) {
   const osc = ctx.createOscillator();
   const g = ctx.createGain();
   osc.type = type;
   osc.frequency.setValueAtTime(f, t);
+  const attack = Math.min(0.008, d * 0.25);
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  g.gain.linearRampToValueAtTime(vol, t + attack);
+  g.gain.linearRampToValueAtTime(0.0001, t + d);
   osc.connect(g);
   g.connect(dest);
   osc.start(t);
@@ -317,80 +318,124 @@ function homeRetroNoise(ctx, dest, { t, d = 0.06, vol = 0.1, hi = 4000 }) {
   src.start(t);
 }
 
-/** Short UI click — used on every button press app-wide. */
+/**
+ * UI click — same two-tone arcade blip as production (Vercel home.js?v=17):
+ * square 880 Hz then 1320 Hz. Gesture-safe resume so localhost actually plays it.
+ */
 function homePlayUiClick() {
   if (!homeSoundEnabled()) return;
   const now = Date.now();
-  if (now - homeLastUiClickAt < 40) return; // debounce double events
+  if (now - homeLastUiClickAt < 35) return;
   homeLastUiClickAt = now;
 
-  void homeResumeAudioCtx().then((ctx) => {
-    if (!ctx || !homeSoundEnabled()) return;
-    const t0 = ctx.currentTime;
-    const master = ctx.createGain();
-    master.gain.value = 0.16;
-    master.connect(ctx.destination);
-    // Two-tone arcade click
-    homeRetroNote(ctx, master, { f: 880, t: t0, d: 0.035, vol: 0.14, type: "square" });
-    homeRetroNote(ctx, master, { f: 1320, t: t0 + 0.02, d: 0.04, vol: 0.1, type: "square" });
-  });
+  const ctx = homeEnsureAudioCtx();
+  if (!ctx) return;
+
+  const fire = () => {
+    if (!homeSoundEnabled()) return;
+    try {
+      const t0 = ctx.currentTime + 0.001;
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.16, t0);
+      master.connect(ctx.destination);
+      // Match Vercel production click exactly
+      homeRetroNote(ctx, master, { f: 880, t: t0, d: 0.035, vol: 0.14, type: "square" });
+      homeRetroNote(ctx, master, { f: 1320, t: t0 + 0.02, d: 0.04, vol: 0.1, type: "square" });
+    } catch (err) {
+      console.warn("[home] UI click SFX failed", err);
+    }
+  };
+
+  // resume() in the gesture; schedule tones right after (not only in a detached then)
+  if (ctx.state === "suspended") {
+    try {
+      const p = ctx.resume();
+      if (p && typeof p.then === "function") p.then(fire).catch(fire);
+      else fire();
+    } catch (_) {
+      fire();
+    }
+  } else {
+    fire();
+  }
+}
+
+function homeEventElement(target) {
+  if (!target) return null;
+  // Clicks often land on text nodes or SVG children inside buttons
+  if (target.nodeType === 3) return target.parentElement;
+  if (target.nodeType === 1) return target;
+  return target.parentElement || null;
 }
 
 function homeIsUiClickTarget(el) {
-  if (!el || el.nodeType !== 1) return false;
-  if (el.closest("[data-no-ui-sfx]")) return false;
+  el = homeEventElement(el);
+  if (!el) return false;
+  if (el.closest?.("[data-no-ui-sfx]")) return false;
+  // Broad: any real button / tab / card control in the dashboard chrome
   return Boolean(
-    el.closest(
+    el.closest?.(
       [
         "button",
+        "a[href]",
         "[role='button']",
-        "a.dash-tab",
+        "[role='tab']",
         ".dash-tab",
         ".home-card",
         ".home-highlight",
+        ".home-sound-toggle",
         ".law-chip",
         ".law-btn",
         ".law-bc-btn",
         ".law-link-btn",
         ".md-btn",
         ".ss-btn",
+        ".spot-chart-btn",
+        ".spot-history-btn",
+        ".spot-tf-btn",
+        ".help-trigger",
         "input[type='button']",
         "input[type='submit']",
         "input[type='reset']",
+        "input[type='checkbox']",
+        "input[type='radio']",
+        "select",
         "summary",
-        ".menu-tab",
+        "label",
         "[data-dashboard]",
         "[data-menu-id]",
         "[data-law-chip]",
         "[data-home-go]",
+        "[data-spot-tf]",
+        "[data-spot-range]",
       ].join(","),
     ),
   );
 }
 
+function homeOnUiActivate(e) {
+  if (e.type === "pointerdown" && e.button != null && e.button !== 0) return;
+  if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return;
+  // Prefer composedPath for nested SVG / icon fonts
+  const path = typeof e.composedPath === "function" ? e.composedPath() : [];
+  let hit = null;
+  for (const n of path) {
+    if (n && n.nodeType === 1 && homeIsUiClickTarget(n)) {
+      hit = n;
+      break;
+    }
+  }
+  if (!hit && !homeIsUiClickTarget(e.target)) return;
+  homePlayUiClick();
+}
+
 function homeBindGlobalUiSounds() {
   if (homeUiSoundsBound) return;
   homeUiSoundsBound = true;
-  document.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (e.button != null && e.button !== 0) return;
-      const t = e.target;
-      if (!homeIsUiClickTarget(t)) return;
-      homePlayUiClick();
-    },
-    true,
-  );
-  document.addEventListener(
-    "keydown",
-    (e) => {
-      if (e.key !== "Enter" && e.key !== " ") return;
-      const t = e.target;
-      if (!homeIsUiClickTarget(t)) return;
-      homePlayUiClick();
-    },
-    true,
-  );
+  // Capture phase so we hear the click even if handlers stopPropagation
+  document.addEventListener("pointerdown", homeOnUiActivate, true);
+  document.addEventListener("click", homeOnUiActivate, true);
+  document.addEventListener("keydown", homeOnUiActivate, true);
 }
 
 /** Retro load stinger only (plays immediately while app boots). */
