@@ -837,7 +837,7 @@ def _llm_classify_ambiguous_types(
     type_list = ", ".join(sorted(NODE_TYPES - {"entity"}))
 
     payload = {
-        "model": os.environ.get("KG_LLM_MODEL", "grok-3-mini"),
+        "model": os.environ.get("KG_LLM_MODEL", "grok-4.5"),
         "messages": [
             {
                 "role": "system",
@@ -1354,7 +1354,7 @@ def _llm_answer(query: str, context: str) -> str | None:
     safe_query = (query or "").strip()[:2000]
     safe_context = (context or "")[:MAX_RAG_CONTEXT]
     payload = {
-        "model": os.environ.get("KG_LLM_MODEL", "grok-3-mini"),
+        "model": os.environ.get("KG_LLM_MODEL", "grok-4.5"),
         "messages": [
             {
                 "role": "system",
@@ -1993,7 +1993,7 @@ def _llm_extract_entities(
         )
 
     payload = {
-        "model": os.environ.get("KG_LLM_MODEL", "grok-3-mini"),
+        "model": os.environ.get("KG_LLM_MODEL", "grok-4.5"),
         "messages": [
             {"role": "system", "content": build_extract_system_prompt()},
             {
@@ -2916,7 +2916,7 @@ def _llm_score_discover_candidates(
             "url": (c.get("url") or "")[:200],
         })
     payload = {
-        "model": os.environ.get("KG_LLM_MODEL", "grok-3-mini"),
+        "model": os.environ.get("KG_LLM_MODEL", "grok-4.5"),
         "messages": [
             {
                 "role": "system",
@@ -3002,7 +3002,7 @@ def _llm_discover_plan(goal: str) -> tuple[dict, bool]:
 
     base = os.environ.get("XAI_BASE_URL", "https://api.x.ai/v1")
     payload = {
-        "model": os.environ.get("KG_LLM_MODEL", "grok-3-mini"),
+        "model": os.environ.get("KG_LLM_MODEL", "grok-4.5"),
         "messages": [
             {
                 "role": "system",

@@ -5,7 +5,11 @@ if lsof -ti :5173 >/dev/null 2>&1; then
   echo "Server already running at http://localhost:5173"
 else
   echo "Starting server..."
-  python3 server.py &
+  if [ -x "./.venv/bin/python" ]; then
+    ./.venv/bin/python server.py &
+  else
+    python3 server.py &
+  fi
   sleep 2
 fi
 

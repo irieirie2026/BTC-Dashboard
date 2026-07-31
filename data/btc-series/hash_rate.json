@@ -8010,19 +8010,29 @@
       "timestamp": 1784505600,
       "date": "2026-07-20",
       "value": 922.9652603282901
+    },
+    {
+      "timestamp": 1784851200,
+      "date": "2026-07-24",
+      "value": 973.5386992503883
+    },
+    {
+      "timestamp": 1785196800,
+      "date": "2026-07-28",
+      "value": 796.9252863573867
     }
   ],
   "latest": {
-    "timestamp": 1784505600,
-    "date": "2026-07-20",
-    "value": 922.9652603282901
+    "timestamp": 1785196800,
+    "date": "2026-07-28",
+    "value": 796.9252863573867
   },
   "source": "Blockchain.info",
   "unit": "EH/s",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:25:26Z",
-  "storedAt": "2026-07-23T14:25:26Z",
-  "pointCount": 1602
+  "fetchedAt": "2026-07-31T14:23:55Z",
+  "storedAt": "2026-07-31T14:23:55Z",
+  "pointCount": 1604
 }

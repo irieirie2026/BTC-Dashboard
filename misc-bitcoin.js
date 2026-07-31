@@ -1,5 +1,5 @@
 /**
- * Misc → Bitcoin — BTC-only indicators dashboard (Macro Drivers pattern).
+ * Valuation L1 — BTC on-chain indicators (shared shell; L2 tabs in MENU_TREE).
  */
 
 const MB_SETTINGS_KEY = "misc:bitcoin-settings:v1";
@@ -2323,7 +2323,7 @@ function mbRenderKpis() {
       mbSelectedIndicator = key;
       mbSaveSettings();
       const ind = mbMergedIndicators().find((i) => i.key === key);
-      if (ind?.tab && ind.tab !== "overview") mbSetTab(ind.tab);
+      if (ind?.tab && ind.tab !== "overview") mbNavigateTab(ind.tab);
     };
     card.addEventListener("click", go);
     card.addEventListener("keydown", (e) => {
@@ -2609,7 +2609,7 @@ function mbRenderTable() {
       const key = row.dataset.mbRow;
       const navTab = row.dataset.mbNavTab;
       if (navTab) {
-        mbSetTab(navTab);
+        mbNavigateTab(navTab);
         return;
       }
       // Overview no longer hosts a detail chart — open the indicator's dedicated tab.
@@ -2619,7 +2619,7 @@ function mbRenderTable() {
         mbState.indicator = key;
         mbSelectedIndicator = key;
         mbSaveSettings();
-        mbSetTab(tab);
+        mbNavigateTab(tab);
       }
     };
     row.addEventListener("click", go);
@@ -5572,42 +5572,62 @@ function mbStartAutoRefresh() {
   });
 }
 
+/** Switch Valuation L2 via global menu when possible (keeps L2 bar in sync). */
+function mbNavigateTab(tab) {
+  const t = tab || "overview";
+  const mc = window.MenuController;
+  if (mc?.l1 === "valuation" && mc.l2 !== t) {
+    mc.setLevel2(t);
+    return;
+  }
+  mbSetTab(t);
+}
+
 function mbSetTab(tab) {
-  mbActiveTab = tab;
-  document.querySelectorAll(".mb-subtab").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.mbSub === tab);
-  });
-  document.querySelectorAll(".mb-bitcoin-panel").forEach((panel) => {
-    panel.hidden = panel.dataset.mbSub !== tab;
-  });
+  mbActiveTab = tab || "overview";
+  // Panels live under Valuation shared L2 shell; primary nav is MENU_TREE L2
+  document
+    .querySelectorAll(
+      '.menu-screen[data-l1="valuation"] .mb-bitcoin-panel[data-mb-sub]',
+    )
+    .forEach((panel) => {
+      panel.hidden = panel.dataset.mbSub !== mbActiveTab;
+    });
   mbSyncFilterVisibility();
   mbPopulateIndicatorSelect();
   mbRenderKpis();
 
-  if (tab === "distribution") {
+  if (mbActiveTab === "distribution") {
     mbLoadDistribution().then(() => mbRenderDistribution());
   }
-  if (tab === "sentiment") {
+  if (mbActiveTab === "sentiment") {
     window.initMiscGreedFearPoll?.();
     mbRenderTabCharts("sentiment");
   }
-  if (tab === "onchain" || tab === "valuation" || tab === "intelligence" || tab === "miner") {
-    mbRenderTabCharts(tab);
+  if (
+    mbActiveTab === "onchain" ||
+    mbActiveTab === "valuation" ||
+    mbActiveTab === "intelligence" ||
+    mbActiveTab === "miner"
+  ) {
+    mbRenderTabCharts(mbActiveTab);
   }
-  if (tab === "4y-cycle") {
+  if (mbActiveTab === "4y-cycle") {
     window.initValuationCycle?.();
   }
-  if (tab === "methodology") {
+  if (mbActiveTab === "methodology") {
     mbRenderMethodologyInline();
     mbRenderPrefetchStatus();
   }
-  if (tab === "overview") {
+  if (mbActiveTab === "overview") {
     mbRenderMainChart();
     mbRenderOverviewExecutiveSummary();
   }
 
   const kpiSection = mbEl("mb-kpi-section");
-  if (kpiSection) kpiSection.hidden = tab === "methodology" || tab === "4y-cycle";
+  if (kpiSection) {
+    kpiSection.hidden = mbActiveTab === "methodology" || mbActiveTab === "4y-cycle";
+  }
 }
 
 function mbMethodologyBadge(badge) {
@@ -5646,7 +5666,7 @@ function mbRenderMethodologyInline() {
   }
   el.innerHTML = `
     <div class="mb-methodology-intro">
-      <p>Active providers for <strong>Valuation → Indicators</strong>. Badges mark what is always on, optional keys, locally computed models, or deliberately unused paid APIs.</p>
+      <p>Active providers for <strong>Valuation</strong>. Badges mark what is always on, optional keys, locally computed models, or deliberately unused paid APIs.</p>
     </div>
     <div class="mb-methodology-grid">
       ${mbMethodologyArticlesHtml(list)}
@@ -5699,20 +5719,20 @@ function mbExportCsv() {
 function mbBindUi() {
   if (mbReady) return;
   mbReady = true;
-
-  document.querySelectorAll(".mb-subtab").forEach((btn) => {
-    btn.addEventListener("click", () => mbSetTab(btn.dataset.mbSub));
-  });
-
+  // In-page subtabs removed — navigation is MENU_TREE L2 under Valuation
   mbEl("mb-methodology-close")?.addEventListener("click", () => mbEl("mb-methodology-dialog")?.close());
   mbStartAutoRefresh();
 }
 
-async function loadMiscBitcoin(force = false) {
+async function loadMiscBitcoin(force = false, tab) {
+  if (tab) mbActiveTab = tab;
   Object.assign(mbState, mbLoadSettings());
   mbState.timespan = MB_FULL_TIMESPAN;
   mbBindUi();
   mbSyncFilterVisibility();
+
+  // Switch panel immediately (works even while data is loading)
+  if (tab) mbSetTab(tab);
 
   const body = mbEl("mb-table-body");
   if (body && !mbSnapshot) body.innerHTML = '<tr><td colspan="6">Loading…</td></tr>';
@@ -5754,11 +5774,13 @@ async function loadMiscBitcoin(force = false) {
     mbPopulateIndicatorSelect();
     if (sessionStorage.getItem("vc-open-cycle") === "1") {
       sessionStorage.removeItem("vc-open-cycle");
-      mbSetTab("4y-cycle");
+      mbNavigateTab("4y-cycle");
     } else {
       mbSetTab(mbActiveTab);
     }
-    const mbScreen = document.querySelector('#dashboard-valuation .menu-screen[data-l2="indicators"]');
+    const mbScreen = document.querySelector(
+      '#dashboard-valuation .menu-screen[data-l1="valuation"]',
+    );
     window.decorateHelpLabels?.(mbScreen);
     mbScreen?.querySelectorAll(".md-kpi-card .help-trigger, .mb-table-row .help-trigger").forEach((btn) => {
       btn.addEventListener("click", (e) => e.stopPropagation());
@@ -5770,3 +5792,4 @@ async function loadMiscBitcoin(force = false) {
 
 window.loadMiscBitcoin = loadMiscBitcoin;
 window.mbSetTab = mbSetTab;
+window.mbNavigateTab = mbNavigateTab;

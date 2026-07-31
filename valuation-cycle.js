@@ -1305,8 +1305,8 @@ function vcRenderValuationZones(metrics = null) {
     </table>
     <p class="vc-note">${
       hasNums
-        ? `Values from on-chain series (${sources.join(" · ") || "Indicators store"}). Peak column uses nearest print to the Cycle 4 top (${vcFmtDate(peakDate)}); Now uses as-of ${vcFmtDate(nowDate)}. Series coverage is typically ~4y — pre-window tops fall back to “—”. Full charts under Valuation → Indicators.`
-        : `Loading on-chain series… If values stay blank, open Valuation → Indicators once to warm the store, or check the server metric API.`
+        ? `Values from on-chain series (${sources.join(" · ") || "Indicators store"}). Peak column uses nearest print to the Cycle 4 top (${vcFmtDate(peakDate)}); Now uses as-of ${vcFmtDate(nowDate)}. Series coverage is typically ~4y — pre-window tops fall back to “—”. Full charts under Valuation → Valuation & Cycles.`
+        : `Loading on-chain series… If values stay blank, open Valuation → Overview once to warm the store, or check the server metric API.`
     }</p>
   `;
 }
@@ -1598,7 +1598,7 @@ function vcRenderS2FPi() {
           <span class="panel-meta">111-DMA vs 2× 350-DMA</span>
         </div>
         <div class="vc-prose">
-          <p>When the <strong>111-day MA</strong> crosses above <strong>2 × 350-day MA</strong>, prior cycles often sat near major tops. Regime flag, not a guaranteed high. Full Pi series is available under Valuation → Indicators (valuation models).</p>
+          <p>When the <strong>111-day MA</strong> crosses above <strong>2 × 350-day MA</strong>, prior cycles often sat near major tops. Regime flag, not a guaranteed high. Full Pi series is available under Valuation → Valuation & Cycles.</p>
           <p class="vc-note">As of ${vcRef.asOfLabel}: ${vcFmtUsd(vcRef.currentPrice)} vs cycle ATH ${vcFmtUsd(vcRef.cycleAthPrice)} (${vcFmtPct(-((vcRef.cycleAthPrice - vcRef.currentPrice) / vcRef.cycleAthPrice) * 100, true)}). Pair Pi with drawdown phase and on-chain distribution.</p>
         </div>
       </article>

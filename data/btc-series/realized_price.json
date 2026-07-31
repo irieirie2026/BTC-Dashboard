@@ -2,46 +2,6 @@
   "metricId": "realized_price",
   "series": [
     {
-      "timestamp": 1658534400,
-      "date": "2022-07-23",
-      "value": 21877.0
-    },
-    {
-      "timestamp": 1658620800,
-      "date": "2022-07-24",
-      "value": 21872.7
-    },
-    {
-      "timestamp": 1658707200,
-      "date": "2022-07-25",
-      "value": 21843.4
-    },
-    {
-      "timestamp": 1658793600,
-      "date": "2022-07-26",
-      "value": 21825.6
-    },
-    {
-      "timestamp": 1658880000,
-      "date": "2022-07-27",
-      "value": 21838.6
-    },
-    {
-      "timestamp": 1658966400,
-      "date": "2022-07-28",
-      "value": 21850.7
-    },
-    {
-      "timestamp": 1659052800,
-      "date": "2022-07-29",
-      "value": 21850.4
-    },
-    {
-      "timestamp": 1659139200,
-      "date": "2022-07-30",
-      "value": 21849.3
-    },
-    {
       "timestamp": 1659225600,
       "date": "2022-07-31",
       "value": 21842.3
@@ -7305,19 +7265,59 @@
       "timestamp": 1784678400,
       "date": "2026-07-22",
       "value": 52471.83
+    },
+    {
+      "timestamp": 1784764800,
+      "date": "2026-07-23",
+      "value": 52457.42
+    },
+    {
+      "timestamp": 1784851200,
+      "date": "2026-07-24",
+      "value": 52430.87
+    },
+    {
+      "timestamp": 1784937600,
+      "date": "2026-07-25",
+      "value": 52470.83
+    },
+    {
+      "timestamp": 1785024000,
+      "date": "2026-07-26",
+      "value": 52468.49
+    },
+    {
+      "timestamp": 1785110400,
+      "date": "2026-07-27",
+      "value": 52460.75
+    },
+    {
+      "timestamp": 1785196800,
+      "date": "2026-07-28",
+      "value": 52441.81
+    },
+    {
+      "timestamp": 1785283200,
+      "date": "2026-07-29",
+      "value": 52437.77
+    },
+    {
+      "timestamp": 1785369600,
+      "date": "2026-07-30",
+      "value": 52449.96
     }
   ],
   "latest": {
-    "timestamp": 1784678400,
-    "date": "2026-07-22",
-    "value": 52471.83
+    "timestamp": 1785369600,
+    "date": "2026-07-30",
+    "value": 52449.96
   },
   "source": "BGeometrics \u00b7 bitcoin-data.com",
   "unit": "USD",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T09:27:07Z",
-  "storedAt": "2026-07-23T09:32:14Z",
+  "fetchedAt": "2026-07-31T14:23:33Z",
+  "storedAt": "2026-07-31T14:24:38Z",
   "pointCount": 1461
 }

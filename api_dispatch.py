@@ -6,38 +6,6 @@ import json
 import math
 from urllib.parse import parse_qs, urlparse
 
-from equity_insights import (
-    get_equity_company_payload,
-    get_equity_global_payload,
-    period_to_dates,
-)
-from global_macro import clear_all_caches as clear_global_macro_cache
-from global_macro import get_global_macro_payload
-from macro_drivers_api import (
-    clear_all_caches as clear_macro_drivers_api_cache,
-    get_liquidity_api_payload,
-    get_liquidity_map_api_payload,
-    get_map_payload,
-    get_meta_payload,
-    get_series_payload,
-    get_snapshot_payload,
-)
-from btc_indicators_api import (
-    clear_all_caches as clear_btc_indicators_cache,
-    get_distribution_payload,
-    get_meta_payload as get_btc_meta_payload,
-    get_series_payload as get_btc_series_payload,
-    get_snapshot_payload as get_btc_snapshot_payload,
-    get_flows_payload as get_btc_flows_payload,
-    get_network_payload as get_btc_network_payload,
-    get_valuation_payload as get_btc_valuation_payload,
-    get_intelligence_payload as get_btc_intelligence_payload,
-    get_miner_payload as get_btc_miner_payload,
-    get_prefetch_status_payload,
-    get_stored_series_payload,
-    get_valuation_models_meta_payload,
-    get_valuation_models_bundle_payload,
-)
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
@@ -53,6 +21,82 @@ from server import (
     get_tradfi_payload,
     get_treasury_payload,
 )
+
+
+def _equity_api():
+    """Lazy import so missing numpy/pandas only breaks equity routes, not all /api/*."""
+    from equity_insights import (
+        get_equity_company_payload,
+        get_equity_global_payload,
+        period_to_dates,
+    )
+
+    return get_equity_global_payload, get_equity_company_payload, period_to_dates
+
+
+def _global_macro_api():
+    from global_macro import clear_all_caches as clear_global_macro_cache
+    from global_macro import get_global_macro_payload
+
+    return get_global_macro_payload, clear_global_macro_cache
+
+
+def _macro_drivers_api():
+    from macro_drivers_api import (
+        clear_all_caches as clear_macro_drivers_api_cache,
+        get_liquidity_api_payload,
+        get_liquidity_map_api_payload,
+        get_map_payload,
+        get_meta_payload,
+        get_series_payload,
+        get_snapshot_payload,
+    )
+
+    return {
+        "clear": clear_macro_drivers_api_cache,
+        "liquidity": get_liquidity_api_payload,
+        "liquidity_map": get_liquidity_map_api_payload,
+        "map": get_map_payload,
+        "meta": get_meta_payload,
+        "series": get_series_payload,
+        "snapshot": get_snapshot_payload,
+    }
+
+
+def _btc_indicators_api():
+    from btc_indicators_api import (
+        clear_all_caches as clear_btc_indicators_cache,
+        get_distribution_payload,
+        get_meta_payload as get_btc_meta_payload,
+        get_series_payload as get_btc_series_payload,
+        get_snapshot_payload as get_btc_snapshot_payload,
+        get_flows_payload as get_btc_flows_payload,
+        get_network_payload as get_btc_network_payload,
+        get_valuation_payload as get_btc_valuation_payload,
+        get_intelligence_payload as get_btc_intelligence_payload,
+        get_miner_payload as get_btc_miner_payload,
+        get_prefetch_status_payload,
+        get_stored_series_payload,
+        get_valuation_models_meta_payload,
+        get_valuation_models_bundle_payload,
+    )
+
+    return {
+        "clear": clear_btc_indicators_cache,
+        "distribution": get_distribution_payload,
+        "meta": get_btc_meta_payload,
+        "series": get_btc_series_payload,
+        "snapshot": get_btc_snapshot_payload,
+        "flows": get_btc_flows_payload,
+        "network": get_btc_network_payload,
+        "valuation": get_btc_valuation_payload,
+        "intelligence": get_btc_intelligence_payload,
+        "miner": get_btc_miner_payload,
+        "prefetch_status": get_prefetch_status_payload,
+        "stored": get_stored_series_payload,
+        "vm_meta": get_valuation_models_meta_payload,
+        "vm_bundle": get_valuation_models_bundle_payload,
+    }
 
 
 def resolve_path_and_query(handler):
@@ -105,6 +149,7 @@ def dispatch_api(path, query, body: dict | None = None):
     path = (path or "").split("?")[0].rstrip("/") or "/"
 
     if path == "/api/equity/global":
+        get_equity_global_payload, _, period_to_dates = _equity_api()
         refresh = _query_refresh(query)
         symbols = _parse_tradfi_symbol_list(
             (query.get("symbols") or [""])[0], max_count=20
@@ -124,6 +169,7 @@ def dispatch_api(path, query, body: dict | None = None):
         )
 
     if path == "/api/equity/company":
+        _, get_equity_company_payload, period_to_dates = _equity_api()
         refresh = _query_refresh(query)
         symbol = ((query.get("symbol") or [""])[0]).strip().upper()
         peers = _parse_tradfi_symbol_list(
@@ -172,10 +218,12 @@ def dispatch_api(path, query, body: dict | None = None):
         return get_defi_payload(section, refresh=refresh)
 
     if path == "/api/macro/drivers" or path.startswith("/api/macro/drivers/"):
+        md = _macro_drivers_api()
         sub = path[len("/api/macro/drivers") :].strip("/") or "snapshot"
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         if refresh:
-            clear_macro_drivers_api_cache()
+            md["clear"]()
+            _, clear_global_macro_cache = _global_macro_api()
             clear_global_macro_cache()
 
         def _int_param(name: str) -> int | None:
@@ -189,7 +237,7 @@ def dispatch_api(path, query, body: dict | None = None):
             return str(raw).lower() in ("1", "true", "yes")
 
         if sub in ("", "snapshot"):
-            return get_snapshot_payload(
+            return md["snapshot"](
                 year=_int_param("year"),
                 region=(query.get("region") or [""])[0],
                 income=(query.get("income") or [""])[0],
@@ -200,9 +248,9 @@ def dispatch_api(path, query, body: dict | None = None):
                 refresh=refresh,
             )
         if sub == "meta":
-            return get_meta_payload(refresh=refresh)
+            return md["meta"](refresh=refresh)
         if sub == "map":
-            return get_map_payload(
+            return md["map"](
                 metric=(query.get("metric") or ["gdp_growth"])[0],
                 year=_int_param("year"),
                 region=(query.get("region") or [""])[0],
@@ -215,7 +263,7 @@ def dispatch_api(path, query, body: dict | None = None):
                 for e in (query.get("entities") or [""])[0].split(",")
                 if e.strip()
             ]
-            return get_series_payload(
+            return md["series"](
                 indicator=(query.get("indicator") or ["gdp_growth"])[0],
                 entities=entities,
                 start_year=_int_param("start"),
@@ -223,13 +271,13 @@ def dispatch_api(path, query, body: dict | None = None):
                 refresh=refresh,
             )
         if sub == "liquidity/map":
-            return get_liquidity_map_api_payload(
+            return md["liquidity_map"](
                 metric=(query.get("metric") or ["proxy"])[0],
                 year=_int_param("year"),
                 refresh=refresh,
             )
         if sub == "liquidity":
-            return get_liquidity_api_payload(
+            return md["liquidity"](
                 entity=(query.get("entity") or ["WLD"])[0],
                 year=_int_param("year"),
                 overlay=_bool_param("overlay"),
@@ -240,6 +288,7 @@ def dispatch_api(path, query, body: dict | None = None):
     if path.startswith("/api/macro/"):
         section = path[len("/api/macro/") :].strip("/")
         if section == "global":
+            get_global_macro_payload, clear_global_macro_cache = _global_macro_api()
             refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
             year_raw = (query.get("year") or [None])[0]
             year = int(year_raw) if year_raw and str(year_raw).isdigit() else None
@@ -255,6 +304,39 @@ def dispatch_api(path, query, body: dict | None = None):
         from macro_drivers_prediction_markets import get_prediction_markets_payload
 
         return get_prediction_markets_payload(refresh=refresh, mock_only=mock_only)
+
+    if path == "/api/law" or path.startswith("/api/law/"):
+        from law_data import get_law_payload
+
+        jid = None
+        if path.startswith("/api/law/") and len(path) > len("/api/law/"):
+            jid = path[len("/api/law/") :].strip("/")
+        if not jid:
+            jid = (query.get("jurisdiction") or query.get("id") or [None])[0]
+        return get_law_payload(jurisdiction=jid or None)
+
+    if path == "/api/home/motto-tts":
+        from home_tts import motto_tts_payload
+
+        result = motto_tts_payload(refresh=_query_refresh(query))
+        if result.get("ok") and result.get("bytes"):
+            return {
+                "__binary__": True,
+                "contentType": result.get("contentType") or "audio/mpeg",
+                "bytes": result["bytes"],
+                "cacheControl": "public, max-age=86400" if result.get("cached") else "public, max-age=3600",
+                "headers": {
+                    "X-TTS-Voice": str(result.get("voice") or ""),
+                    "X-TTS-Model": str(result.get("model") or "grok-tts"),
+                    "X-TTS-Cached": "1" if result.get("cached") else "0",
+                },
+            }
+        # JSON error so the client can fall back to browser speech
+        return {
+            "ok": False,
+            "error": result.get("error") or "TTS unavailable",
+            "fallback": result.get("fallback") or "browser",
+        }
 
     if path == "/api/cross-market/snapshot":
         refresh = _query_refresh(query)
@@ -369,52 +451,53 @@ def dispatch_api(path, query, body: dict | None = None):
         return get_fear_greed_payload(refresh=refresh)
 
     if path == "/api/misc/btc" or path.startswith("/api/misc/btc/"):
+        btc = _btc_indicators_api()
         sub = path[len("/api/misc/btc") :].strip("/") or "snapshot"
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         if refresh:
-            clear_btc_indicators_cache()
+            btc["clear"]()
         if sub in ("", "snapshot"):
-            return get_btc_snapshot_payload(refresh=refresh)
+            return btc["snapshot"](refresh=refresh)
         if sub == "meta":
-            return get_btc_meta_payload(refresh=refresh)
+            return btc["meta"](refresh=refresh)
         if sub == "distribution":
-            return get_distribution_payload(refresh=refresh)
+            return btc["distribution"](refresh=refresh)
         if sub == "series":
             indicator = (query.get("indicator") or [""])[0]
             # Full history by default; client zooms interactively. Disk cache keyed by timespan.
             timespan = (query.get("timespan") or ["all"])[0]
             if not indicator:
                 raise ValueError("Missing indicator parameter")
-            return get_btc_series_payload(indicator, timespan=timespan, refresh=refresh)
+            return btc["series"](indicator, timespan=timespan, refresh=refresh)
         if sub == "valuation":
             timespan = (query.get("timespan") or ["all"])[0]
-            return get_btc_valuation_payload(timespan=timespan, refresh=refresh)
+            return btc["valuation"](timespan=timespan, refresh=refresh)
         if sub == "flows":
             timespan = (query.get("timespan") or ["all"])[0]
-            return get_btc_flows_payload(timespan=timespan, refresh=refresh)
+            return btc["flows"](timespan=timespan, refresh=refresh)
         if sub == "network":
             timespan = (query.get("timespan") or ["all"])[0]
-            return get_btc_network_payload(timespan=timespan, refresh=refresh)
+            return btc["network"](timespan=timespan, refresh=refresh)
         if sub == "intelligence":
             timespan = (query.get("timespan") or ["all"])[0]
-            return get_btc_intelligence_payload(timespan=timespan, refresh=refresh)
+            return btc["intelligence"](timespan=timespan, refresh=refresh)
         if sub == "miner":
             timespan = (query.get("timespan") or ["all"])[0]
-            return get_btc_miner_payload(timespan=timespan, refresh=refresh)
+            return btc["miner"](timespan=timespan, refresh=refresh)
         if sub == "valuation-models/meta":
-            return get_valuation_models_meta_payload(refresh=refresh)
+            return btc["vm_meta"](refresh=refresh)
         if sub == "valuation-models/bundle":
             tab = (query.get("tab") or query.get("category") or [""])[0]
             if not tab:
                 raise ValueError("Missing tab parameter")
-            return get_valuation_models_bundle_payload(tab, refresh=refresh)
+            return btc["vm_bundle"](tab, refresh=refresh)
         if sub == "prefetch/status":
-            return get_prefetch_status_payload(refresh=refresh)
+            return btc["prefetch_status"](refresh=refresh)
         if sub == "stored":
             metric_id = (query.get("metric") or [""])[0]
             if not metric_id:
                 raise ValueError("Missing metric parameter")
-            return get_stored_series_payload(metric_id)
+            return btc["stored"](metric_id)
         raise ValueError(f"Unknown BTC indicators endpoint: {sub}")
 
     if path == "/api/onchain/chart":
@@ -449,8 +532,21 @@ def dispatch_api(path, query, body: dict | None = None):
     if path == "/api/stats/btc-history":
         return get_stats_btc_history_payload(refresh=_query_refresh(query))
 
+    if path == "/api/stats/correlation" or path.startswith("/api/stats/correlation/"):
+        from stats_correlation import get_correlation_payload
+
+        refresh = _query_refresh(query)
+        period = ((query.get("period") or ["max"])[0] or "max").strip().lower()
+        if period not in ("2y", "5y", "10y", "max"):
+            period = "max"
+        return get_correlation_payload(refresh=refresh, period=period)
+
     if path == "/api/stats/volatility" or path.startswith("/api/stats/volatility/"):
-        from volatility_models import get_volatility_model_payload, get_volatility_suite_payload
+        from volatility_models import (
+            get_volatility_model_payload,
+            get_volatility_suite_payload,
+            list_volatility_catalog,
+        )
 
         refresh = _query_refresh(query)
         days_raw = (query.get("days") or ["1095"])[0]
@@ -461,6 +557,19 @@ def dispatch_api(path, query, body: dict | None = None):
         days = max(90, min(days, 5000))
         dist = ((query.get("dist") or ["t"])[0] or "t").strip().lower()
         sub = path[len("/api/stats/volatility") :].strip("/")
+        if sub == "catalog":
+            return {
+                "catalog": list_volatility_catalog(),
+                "distributions": [
+                    {"id": "t", "name": "Student-t"},
+                    {"id": "normal", "name": "Normal"},
+                    {"id": "ged", "name": "GED"},
+                    {"id": "skewt", "name": "Skewed-t"},
+                ],
+                "archAvailable": __import__(
+                    "volatility_models", fromlist=["ARCH_AVAILABLE"]
+                ).ARCH_AVAILABLE,
+            }
         if sub and sub not in ("suite", "all"):
             return get_volatility_model_payload(
                 sub, days=days, dist=dist, refresh=refresh
@@ -469,6 +578,28 @@ def dispatch_api(path, query, body: dict | None = None):
         models = [m.strip() for m in models_raw.split(",") if m.strip()] or None
         return get_volatility_suite_payload(
             days=days, dist=dist, models=models, refresh=refresh
+        )
+
+    if path == "/api/stats/timeseries" or path.startswith("/api/stats/timeseries/"):
+        from timeseries_models import (
+            get_timeseries_model_payload,
+            get_timeseries_suite_payload,
+        )
+
+        refresh = _query_refresh(query)
+        days_raw = (query.get("days") or ["3650"])[0]
+        try:
+            days = int(days_raw)
+        except (TypeError, ValueError):
+            days = 3650
+        days = max(180, min(days, 8000))
+        sub = path[len("/api/stats/timeseries") :].strip("/")
+        if sub and sub not in ("suite", "all"):
+            return get_timeseries_model_payload(sub, days=days, refresh=refresh)
+        models_raw = (query.get("models") or [""])[0]
+        models = [m.strip() for m in models_raw.split(",") if m.strip()] or None
+        return get_timeseries_suite_payload(
+            days=days, models=models, refresh=refresh
         )
 
     if path == "/api/options":
@@ -562,12 +693,34 @@ def send_json(handler, status, payload):
         return
 
 
+def send_binary(handler, status, payload: dict):
+    raw = payload.get("bytes") or b""
+    if not isinstance(raw, (bytes, bytearray)):
+        raw = bytes(raw)
+    try:
+        handler.send_response(status)
+        handler.send_header("Content-Type", payload.get("contentType") or "application/octet-stream")
+        handler.send_header("Access-Control-Allow-Origin", "*")
+        handler.send_header("Cache-Control", payload.get("cacheControl") or "public, max-age=3600")
+        handler.send_header("Content-Length", str(len(raw)))
+        for hk, hv in (payload.get("headers") or {}).items():
+            if hv is not None and str(hv):
+                handler.send_header(str(hk), str(hv))
+        handler.end_headers()
+        handler.wfile.write(raw)
+    except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+        return
+
+
 def handle_api(handler):
     path, query = resolve_path_and_query(handler)
     body = read_post_json(handler) if handler.command == "POST" else None
     try:
         payload = dispatch_api(path, query, body)
-        send_json(handler, 200, payload)
+        if isinstance(payload, dict) and payload.get("__binary__"):
+            send_binary(handler, 200, payload)
+        else:
+            send_json(handler, 200, payload)
     except ValueError as exc:
         send_json(handler, 404, {"error": str(exc)})
     except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):

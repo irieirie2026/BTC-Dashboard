@@ -2,16 +2,6 @@
   "metricId": "exchange_inflow",
   "series": [
     {
-      "timestamp": 1753747200,
-      "date": "2025-07-29",
-      "value": 21927.75926175
-    },
-    {
-      "timestamp": 1753833600,
-      "date": "2025-07-30",
-      "value": 22089.96410076
-    },
-    {
       "timestamp": 1753920000,
       "date": "2025-07-31",
       "value": 22959.50168095
@@ -1825,19 +1815,29 @@
       "timestamp": 1785196800,
       "date": "2026-07-28",
       "value": 15215.52384634
+    },
+    {
+      "timestamp": 1785283200,
+      "date": "2026-07-29",
+      "value": 20090.33995148
+    },
+    {
+      "timestamp": 1785369600,
+      "date": "2026-07-30",
+      "value": 29896.30816885
     }
   ],
   "latest": {
-    "timestamp": 1785196800,
-    "date": "2026-07-28",
-    "value": 15215.52384634
+    "timestamp": 1785369600,
+    "date": "2026-07-30",
+    "value": 29896.30816885
   },
   "source": "Coin Metrics Community",
   "unit": "BTC",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-29T23:27:04Z",
-  "storedAt": "2026-07-29T23:27:04Z",
+  "fetchedAt": "2026-07-31T19:22:13Z",
+  "storedAt": "2026-07-31T19:22:13Z",
   "pointCount": 365
 }

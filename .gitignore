@@ -1,9 +1,11 @@
 .cache/
+.venv/
 __pycache__/
 *.pyc
 .DS_Store
 .env
 .env.local
 data/ss-payments.json
+data/tts-cache/
 node_modules/
 strategy-builder/node_modules/

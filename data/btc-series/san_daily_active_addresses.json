@@ -2,46 +2,6 @@
   "metricId": "san_daily_active_addresses",
   "series": [
     {
-      "timestamp": 1753228800,
-      "date": "2025-07-23",
-      "value": 759992.0
-    },
-    {
-      "timestamp": 1753315200,
-      "date": "2025-07-24",
-      "value": 714714.0
-    },
-    {
-      "timestamp": 1753401600,
-      "date": "2025-07-25",
-      "value": 758002.0
-    },
-    {
-      "timestamp": 1753488000,
-      "date": "2025-07-26",
-      "value": 649044.0
-    },
-    {
-      "timestamp": 1753574400,
-      "date": "2025-07-27",
-      "value": 621369.0
-    },
-    {
-      "timestamp": 1753660800,
-      "date": "2025-07-28",
-      "value": 708073.0
-    },
-    {
-      "timestamp": 1753747200,
-      "date": "2025-07-29",
-      "value": 725698.0
-    },
-    {
-      "timestamp": 1753833600,
-      "date": "2025-07-30",
-      "value": 728373.0
-    },
-    {
       "timestamp": 1753920000,
       "date": "2025-07-31",
       "value": 764771.0
@@ -1825,19 +1785,59 @@
       "timestamp": 1784678400,
       "date": "2026-07-22",
       "value": 615656.0
+    },
+    {
+      "timestamp": 1784764800,
+      "date": "2026-07-23",
+      "value": 638196.0
+    },
+    {
+      "timestamp": 1784851200,
+      "date": "2026-07-24",
+      "value": 681709.0
+    },
+    {
+      "timestamp": 1784937600,
+      "date": "2026-07-25",
+      "value": 568670.0
+    },
+    {
+      "timestamp": 1785024000,
+      "date": "2026-07-26",
+      "value": 572480.0
+    },
+    {
+      "timestamp": 1785110400,
+      "date": "2026-07-27",
+      "value": 620690.0
+    },
+    {
+      "timestamp": 1785196800,
+      "date": "2026-07-28",
+      "value": 629332.0
+    },
+    {
+      "timestamp": 1785283200,
+      "date": "2026-07-29",
+      "value": 624115.0
+    },
+    {
+      "timestamp": 1785369600,
+      "date": "2026-07-30",
+      "value": 644984.0
     }
   ],
   "latest": {
-    "timestamp": 1784678400,
-    "date": "2026-07-22",
-    "value": 615656.0
+    "timestamp": 1785369600,
+    "date": "2026-07-30",
+    "value": 644984.0
   },
   "source": "Santiment",
   "unit": "addrs",
   "note": "Free plan \u2014 restricted metrics may have 30d lag or 1y cap",
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:52:53Z",
-  "storedAt": "2026-07-23T14:52:53Z",
+  "fetchedAt": "2026-07-31T14:23:57Z",
+  "storedAt": "2026-07-31T14:23:57Z",
   "pointCount": 365
 }

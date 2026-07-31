@@ -2,46 +2,6 @@
   "metricId": "tx_count",
   "series": [
     {
-      "timestamp": 1753228800,
-      "date": "2025-07-23",
-      "value": 365110.0
-    },
-    {
-      "timestamp": 1753315200,
-      "date": "2025-07-24",
-      "value": 408556.0
-    },
-    {
-      "timestamp": 1753401600,
-      "date": "2025-07-25",
-      "value": 433467.0
-    },
-    {
-      "timestamp": 1753488000,
-      "date": "2025-07-26",
-      "value": 571396.0
-    },
-    {
-      "timestamp": 1753574400,
-      "date": "2025-07-27",
-      "value": 473722.0
-    },
-    {
-      "timestamp": 1753660800,
-      "date": "2025-07-28",
-      "value": 502425.0
-    },
-    {
-      "timestamp": 1753747200,
-      "date": "2025-07-29",
-      "value": 346511.0
-    },
-    {
-      "timestamp": 1753833600,
-      "date": "2025-07-30",
-      "value": 426989.0
-    },
-    {
       "timestamp": 1753920000,
       "date": "2025-07-31",
       "value": 477852.0
@@ -1825,19 +1785,59 @@
       "timestamp": 1784678400,
       "date": "2026-07-22",
       "value": 497232.0
+    },
+    {
+      "timestamp": 1784764800,
+      "date": "2026-07-23",
+      "value": 611799.0
+    },
+    {
+      "timestamp": 1784851200,
+      "date": "2026-07-24",
+      "value": 729761.0
+    },
+    {
+      "timestamp": 1784937600,
+      "date": "2026-07-25",
+      "value": 696377.0
+    },
+    {
+      "timestamp": 1785024000,
+      "date": "2026-07-26",
+      "value": 760079.0
+    },
+    {
+      "timestamp": 1785110400,
+      "date": "2026-07-27",
+      "value": 689945.0
+    },
+    {
+      "timestamp": 1785196800,
+      "date": "2026-07-28",
+      "value": 561079.0
+    },
+    {
+      "timestamp": 1785283200,
+      "date": "2026-07-29",
+      "value": 672610.0
+    },
+    {
+      "timestamp": 1785369600,
+      "date": "2026-07-30",
+      "value": 699087.0
     }
   ],
   "latest": {
-    "timestamp": 1784678400,
-    "date": "2026-07-22",
-    "value": 497232.0
+    "timestamp": 1785369600,
+    "date": "2026-07-30",
+    "value": 699087.0
   },
   "source": "Coin Metrics Community",
   "unit": "tx/day",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:52:15Z",
-  "storedAt": "2026-07-23T14:52:15Z",
+  "fetchedAt": "2026-07-31T14:23:55Z",
+  "storedAt": "2026-07-31T14:23:55Z",
   "pointCount": 365
 }

@@ -2,46 +2,6 @@
   "metricId": "puell_multiple",
   "series": [
     {
-      "timestamp": 1658534400,
-      "date": "2022-07-23",
-      "value": 0.568
-    },
-    {
-      "timestamp": 1658620800,
-      "date": "2022-07-24",
-      "value": 0.488
-    },
-    {
-      "timestamp": 1658707200,
-      "date": "2022-07-25",
-      "value": 0.542
-    },
-    {
-      "timestamp": 1658793600,
-      "date": "2022-07-26",
-      "value": 0.605
-    },
-    {
-      "timestamp": 1658880000,
-      "date": "2022-07-27",
-      "value": 0.539
-    },
-    {
-      "timestamp": 1658966400,
-      "date": "2022-07-28",
-      "value": 0.562
-    },
-    {
-      "timestamp": 1659052800,
-      "date": "2022-07-29",
-      "value": 0.49
-    },
-    {
-      "timestamp": 1659139200,
-      "date": "2022-07-30",
-      "value": 0.572
-    },
-    {
       "timestamp": 1659225600,
       "date": "2022-07-31",
       "value": 0.512
@@ -7305,19 +7265,59 @@
       "timestamp": 1784678400,
       "date": "2026-07-22",
       "value": 0.6009
+    },
+    {
+      "timestamp": 1784764800,
+      "date": "2026-07-23",
+      "value": 0.6833
+    },
+    {
+      "timestamp": 1784851200,
+      "date": "2026-07-24",
+      "value": 0.7925
+    },
+    {
+      "timestamp": 1784937600,
+      "date": "2026-07-25",
+      "value": 0.7043
+    },
+    {
+      "timestamp": 1785024000,
+      "date": "2026-07-26",
+      "value": 0.7521
+    },
+    {
+      "timestamp": 1785110400,
+      "date": "2026-07-27",
+      "value": 0.7166
+    },
+    {
+      "timestamp": 1785196800,
+      "date": "2026-07-28",
+      "value": 0.6455
+    },
+    {
+      "timestamp": 1785283200,
+      "date": "2026-07-29",
+      "value": 0.7337
+    },
+    {
+      "timestamp": 1785369600,
+      "date": "2026-07-30",
+      "value": 0.7911
     }
   ],
   "latest": {
-    "timestamp": 1784678400,
-    "date": "2026-07-22",
-    "value": 0.6009
+    "timestamp": 1785369600,
+    "date": "2026-07-30",
+    "value": 0.7911
   },
   "source": "BGeometrics \u00b7 bitcoin-data.com",
   "unit": "\u00d7",
-  "note": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
+  "note": null,
   "error": null,
-  "stale": true,
-  "fetchedAt": "2026-07-23T10:24:31Z",
-  "storedAt": "2026-07-23T10:24:41Z",
+  "stale": false,
+  "fetchedAt": "2026-07-31T17:59:32Z",
+  "storedAt": "2026-07-31T17:59:32Z",
   "pointCount": 1461
 }

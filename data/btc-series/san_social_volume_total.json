@@ -2,49 +2,9 @@
   "metricId": "san_social_volume_total",
   "series": [
     {
-      "timestamp": 1753228800,
-      "date": "2025-07-23",
-      "value": 2316.0
-    },
-    {
-      "timestamp": 1753315200,
-      "date": "2025-07-24",
-      "value": 5306.0
-    },
-    {
-      "timestamp": 1753401600,
-      "date": "2025-07-25",
-      "value": 5328.0
-    },
-    {
-      "timestamp": 1753488000,
-      "date": "2025-07-26",
-      "value": 3995.0
-    },
-    {
-      "timestamp": 1753574400,
-      "date": "2025-07-27",
-      "value": 3892.0
-    },
-    {
-      "timestamp": 1753660800,
-      "date": "2025-07-28",
-      "value": 5060.0
-    },
-    {
-      "timestamp": 1753747200,
-      "date": "2025-07-29",
-      "value": 4768.0
-    },
-    {
-      "timestamp": 1753833600,
-      "date": "2025-07-30",
-      "value": 4871.0
-    },
-    {
       "timestamp": 1753920000,
       "date": "2025-07-31",
-      "value": 4555.0
+      "value": 2211.0
     },
     {
       "timestamp": 1754006400,
@@ -1679,20 +1639,60 @@
     {
       "timestamp": 1782172800,
       "date": "2026-06-23",
-      "value": 1431.0
+      "value": 2453.0
+    },
+    {
+      "timestamp": 1782259200,
+      "date": "2026-06-24",
+      "value": 3586.0
+    },
+    {
+      "timestamp": 1782345600,
+      "date": "2026-06-25",
+      "value": 4240.0
+    },
+    {
+      "timestamp": 1782432000,
+      "date": "2026-06-26",
+      "value": 3475.0
+    },
+    {
+      "timestamp": 1782518400,
+      "date": "2026-06-27",
+      "value": 2596.0
+    },
+    {
+      "timestamp": 1782604800,
+      "date": "2026-06-28",
+      "value": 2680.0
+    },
+    {
+      "timestamp": 1782691200,
+      "date": "2026-06-29",
+      "value": 3505.0
+    },
+    {
+      "timestamp": 1782777600,
+      "date": "2026-06-30",
+      "value": 3150.0
+    },
+    {
+      "timestamp": 1782864000,
+      "date": "2026-07-01",
+      "value": 1900.0
     }
   ],
   "latest": {
-    "timestamp": 1782172800,
-    "date": "2026-06-23",
-    "value": 1431.0
+    "timestamp": 1782864000,
+    "date": "2026-07-01",
+    "value": 1900.0
   },
   "source": "Santiment",
   "unit": "posts",
   "note": "Free plan \u2014 restricted metrics may have 30d lag or 1y cap",
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:52:57Z",
-  "storedAt": "2026-07-23T14:52:57Z",
+  "fetchedAt": "2026-07-31T14:23:58Z",
+  "storedAt": "2026-07-31T14:23:58Z",
   "pointCount": 336
 }

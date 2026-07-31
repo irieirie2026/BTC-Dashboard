@@ -1,12 +1,17 @@
 const BINANCE_KLINES = "https://api.binance.com/api/v3/klines";
 const STATS_BTC_HISTORY_API = "/api/stats/btc-history";
 const STATS_PAIR = "BTC/USD";
-const STATS_SOURCE = "Bitstamp + Blockchain.info";
+const STATS_SOURCE = "Bitstamp";
+const STATS_SOURCE_FULL = "Bitstamp + Blockchain.info";
 const STATS_INTERVAL = "1d";
 const ETH_STATS_LIMIT = 1000;
 const CHART_MAX_POINTS = 1500;
-const TRADING_DAYS = 252;
+/** BTC trades 24/7; daily history is calendar days — not equity session days. */
+const TRADING_DAYS = 365;
+const YEAR_MS = 365.25 * 86_400_000;
 const STATS_POLL_MS = 3_600_000;
+/** Min bars for a return sample (Bitstamp starts ~2011). */
+const STATS_MIN_SAMPLE = 1000;
 
 let statsData = null;
 let statsTimer = null;
@@ -14,18 +19,39 @@ let statsReady = false;
 
 const stEl = (id) => document.getElementById(id);
 
-function fmtPct(n, d = 2) {
+/**
+ * Stats formatters use unique names on purpose.
+ * Later scripts (defi/macro/onchain) redefine global `fmtPct` WITHOUT ×100
+ * (they already pass percent points). That clobber turned fractions like
+ * maxDrawdown=-0.85 into a bogus "-0.85%" instead of "-85%".
+ */
+function statsFmtPct(n, d = 2) {
   if (n == null || Number.isNaN(n)) return "—";
   const prefix = n >= 0 ? "+" : "";
-  return prefix + (n * 100).toFixed(d) + "%";
+  return prefix + (Number(n) * 100).toFixed(d) + "%";
 }
 
-function fmtNum(n, d = 2) {
+/** Full-sample BTC multiples are huge; show as × capital when |return| ≥ 10×. */
+function statsFmtTotalReturn(r, d = 1) {
+  if (r == null || Number.isNaN(r)) return "—";
+  if (r >= 9.99) {
+    return (
+      (1 + r).toLocaleString("en-US", {
+        maximumFractionDigits: d,
+        minimumFractionDigits: 0,
+      }) + "×"
+    );
+  }
+  if (r <= -0.999) return "≈−100%";
+  return statsFmtPct(r, 2);
+}
+
+function statsFmtNum(n, d = 2) {
   if (n == null || Number.isNaN(n)) return "—";
   return Number(n).toFixed(d);
 }
 
-function fmtPrice(n) {
+function statsFmtPrice(n) {
   if (n == null || Number.isNaN(n)) return "—";
   return Number(n).toLocaleString("en-US", {
     minimumFractionDigits: 2,
@@ -33,7 +59,7 @@ function fmtPrice(n) {
   });
 }
 
-function fmtDate(ts) {
+function statsFmtDate(ts) {
   return new Date(ts).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -76,14 +102,33 @@ function percentile(arr, p) {
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
 }
 
+/** Peak-to-trough on cumulative simple returns (fraction, e.g. -0.85 = −85%). */
 function maxDrawdown(cumulative) {
+  if (!cumulative?.length) return 0;
   let peak = cumulative[0];
   let maxDd = 0;
   cumulative.forEach((v) => {
     if (v > peak) peak = v;
-    const dd = (v - peak) / (1 + peak);
+    const denom = 1 + peak;
+    if (!(denom > 0)) return;
+    const dd = (v - peak) / denom;
     if (dd < maxDd) maxDd = dd;
   });
+  return maxDd;
+}
+
+/** Peak-to-trough on price (fraction). Preferred for hero max DD. */
+function maxDrawdownFromCloses(closes) {
+  if (!closes?.length) return 0;
+  let peak = closes[0];
+  let maxDd = 0;
+  for (let i = 0; i < closes.length; i++) {
+    const c = closes[i];
+    if (!(c > 0)) continue;
+    if (c > peak) peak = c;
+    const dd = (c - peak) / peak;
+    if (dd < maxDd) maxDd = dd;
+  }
   return maxDd;
 }
 
@@ -159,7 +204,7 @@ function mountStatsChart(canvasId, options) {
 }
 
 function chartTipTitle(date) {
-  return `<div class="chart-tooltip-title">${fmtDate(date)}</div>`;
+  return `<div class="chart-tooltip-title">${statsFmtDate(date)}</div>`;
 }
 
 function chartTipRow(label, value) {
@@ -170,6 +215,11 @@ function chartTipRow(label, value) {
 window.mountStatsChart = mountStatsChart;
 window.chartTipTitle = chartTipTitle;
 window.chartTipRow = chartTipRow;
+window.statsFmtPct = statsFmtPct;
+window.statsFmtNum = statsFmtNum;
+window.statsFmtPrice = statsFmtPrice;
+window.statsFmtDate = statsFmtDate;
+window.statsFmtTotalReturn = statsFmtTotalReturn;
 
 function drawdownSeries(days) {
   let peak = days[0].close;
@@ -191,7 +241,7 @@ function computeVarBlock(returns) {
   const param95 = mu - 1.645 * sigma;
   const param99 = mu - 2.326 * sigma;
 
-  const rollingVar95 = rollingWindow(returns, 252, returns.map((_, i) => i), (slice) => ({
+  const rollingVar95 = rollingWindow(returns, TRADING_DAYS, returns.map((_, i) => i), (slice) => ({
     var95: percentile(slice, 5),
   }));
 
@@ -470,7 +520,7 @@ function extendRiskVar(base, ethReturns) {
 
   const varBlock = computeVarBlock(returns);
   const varDates = days.slice(1).map((d) => d.date);
-  const rollingVar95 = rollingWindow(returns, 252, varDates, (s) => ({
+  const rollingVar95 = rollingWindow(returns, TRADING_DAYS, varDates, (s) => ({
     var95: percentile(s, 5),
   }));
 
@@ -513,9 +563,22 @@ function computeStats(days) {
   const sigma = stdDev(returns);
   const muLog = mean(logReturns);
   const sigmaLog = stdDev(logReturns);
+  // Arithmetic annualization (for Sharpe); crypto calendar year.
   const annMu = mu * TRADING_DAYS;
   const annSigma = sigma * Math.sqrt(TRADING_DAYS);
   const sharpe = annSigma ? annMu / annSigma : null;
+
+  const startClose = closes[0];
+  const endClose = closes[closes.length - 1];
+  const spanYears =
+    days.length >= 2 ? (days[days.length - 1].date - days[0].date) / YEAR_MS : 0;
+  const priceTotalReturn =
+    startClose > 0 && Number.isFinite(endClose) ? endClose / startClose - 1 : null;
+  // Geometric CAGR — correct multi-year annualized return (not mean × 365).
+  const cagr =
+    spanYears > 0 && startClose > 0 && endClose > 0
+      ? Math.pow(endClose / startClose, 1 / spanYears) - 1
+      : null;
 
   const positive = returns.filter((r) => r > 0);
   const negative = returns.filter((r) => r < 0);
@@ -610,8 +673,13 @@ function computeStats(days) {
     p75: percentile(returns, 75),
     p95: percentile(returns, 95),
     p99: percentile(returns, 99),
-    maxDrawdown: maxDrawdown(cumulative),
-    totalReturn: cumulative[cumulative.length - 1] ?? 0,
+    maxDrawdown: maxDrawdownFromCloses(closes),
+    totalReturn:
+      priceTotalReturn != null
+        ? priceTotalReturn
+        : (cumulative[cumulative.length - 1] ?? 0),
+    cagr,
+    spanYears,
     bestDay: { date: days[bestIdx + 1]?.date, ret: returns[bestIdx] },
     worstDay: { date: days[worstIdx + 1]?.date, ret: returns[worstIdx] },
     recent: days
@@ -637,15 +705,17 @@ function buildCommentary(s) {
   const lines = [];
 
   lines.push(
-    `Over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}), ` +
-      `${STATS_PAIR} posted a cumulative return of ${fmtPct(s.totalReturn)} from ` +
-      `roughly $${fmtPrice(s.days[0]?.close)} to $${fmtPrice(s.lastClose)}.`,
+    `Over ${s.count} calendar days (${statsFmtDate(s.startDate)} → ${statsFmtDate(s.endDate)}), ` +
+      `${STATS_PAIR} (${s.source || STATS_SOURCE}) posted a cumulative return of ${statsFmtTotalReturn(s.totalReturn)} ` +
+      `(CAGR ${statsFmtPct(s.cagr, 1)}) from roughly $${statsFmtPrice(s.days[0]?.close)} to $${statsFmtPrice(s.lastClose)}. ` +
+      `Return stats use liquid daily closes only (early sparse/interpolated prints are excluded so CAGR is not inflated).`,
   );
 
   lines.push(
-    `Daily returns average ${fmtPct(s.mean, 3)} (${fmtPct(s.annMean, 1)} annualized) ` +
-      `with ${fmtPct(s.std, 2)} daily volatility (${fmtPct(s.annStd, 1)} annualized). ` +
-      `The Sharpe ratio (rf=0) is ${fmtNum(s.sharpe, 2)}.`,
+    `Daily returns average ${statsFmtPct(s.mean, 3)} ` +
+      `(arithmetic annualized ${statsFmtPct(s.annMean, 1)} · CAGR ${statsFmtPct(s.cagr, 1)}) ` +
+      `with ${statsFmtPct(s.std, 2)} daily volatility (${statsFmtPct(s.annStd, 1)} ann., √365). ` +
+      `Sharpe (rf=0, arithmetic) is ${statsFmtNum(s.sharpe, 2)}.`,
   );
 
   const skewDir =
@@ -655,24 +725,24 @@ function buildCommentary(s) {
         ? "negatively skewed — fat left tail; crash days dominate the distribution"
         : "approximately symmetric";
   lines.push(
-    `Distribution shape: ${skewDir} (skew ${fmtNum(s.skew, 2)}, excess kurtosis ${fmtNum(s.kurt, 2)}). ` +
-      `Median daily return is ${fmtPct(s.median, 3)} vs mean ${fmtPct(s.mean, 3)}.`,
+    `Distribution shape: ${skewDir} (skew ${statsFmtNum(s.skew, 2)}, excess kurtosis ${statsFmtNum(s.kurt, 2)}). ` +
+      `Median daily return is ${statsFmtPct(s.median, 3)} vs mean ${statsFmtPct(s.mean, 3)}.`,
   );
 
   lines.push(
     `${(s.winRate * 100).toFixed(1)}% of days closed green. ` +
-      `Average up-day: ${fmtPct(s.avgGain, 2)} · average down-day: ${fmtPct(-s.avgLoss, 2)} · ` +
-      `gain/loss ratio: ${s.gainLossRatio != null ? fmtNum(s.gainLossRatio, 2) : "—"}. ` +
-      `Best: ${fmtPct(s.bestDay.ret)} on ${fmtDate(s.bestDay.date)} · ` +
-      `worst: ${fmtPct(s.worstDay.ret)} on ${fmtDate(s.worstDay.date)}.`,
+      `Average up-day: ${statsFmtPct(s.avgGain, 2)} · average down-day: ${statsFmtPct(-s.avgLoss, 2)} · ` +
+      `gain/loss ratio: ${s.gainLossRatio != null ? statsFmtNum(s.gainLossRatio, 2) : "—"}. ` +
+      `Best: ${statsFmtPct(s.bestDay.ret)} on ${statsFmtDate(s.bestDay.date)} · ` +
+      `worst: ${statsFmtPct(s.worstDay.ret)} on ${statsFmtDate(s.worstDay.date)}.`,
   );
 
   const roll = s.roll30[s.roll30.length - 1];
   lines.push(
-    `Tail risk (1-day): 5th percentile ${fmtPct(s.p05)} · 1st percentile ${fmtPct(s.p01)}. ` +
-      `Peak-to-trough drawdown over the sample: ${fmtPct(s.maxDrawdown)}. ` +
+    `Tail risk (1-day): 5th percentile ${statsFmtPct(s.p05)} · 1st percentile ${statsFmtPct(s.p01)}. ` +
+      `Peak-to-trough drawdown over the sample: ${statsFmtPct(s.maxDrawdown)}. ` +
       (roll
-        ? `30-day realized vol as of ${fmtDate(roll.date)}: ${fmtPct(roll.vol, 1)}.`
+        ? `30-day realized vol as of ${statsFmtDate(roll.date)}: ${statsFmtPct(roll.vol, 1)}.`
         : ""),
   );
 
@@ -680,7 +750,7 @@ function buildCommentary(s) {
   if (last3.length) {
     lines.push(
       `Recent calendar months: ${last3
-        .map((m) => `${m.label} ${fmtPct(m.return)}`)
+        .map((m) => `${m.label} ${statsFmtPct(m.return)}`)
         .join(" · ")}.`,
     );
   }
@@ -694,9 +764,10 @@ function buildRiskCommentary(s) {
   const lines = [];
 
   lines.push(
-    `Over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}), ${STATS_PAIR} ` +
-      `returned ${fmtPct(s.totalReturn)} with ${fmtPct(s.annStd, 1)} full-sample realized volatility ` +
-      `($${fmtPrice(s.days[0]?.close)} → $${fmtPrice(s.lastClose)}).`,
+    `Over ${s.count} calendar days (${statsFmtDate(s.startDate)} → ${statsFmtDate(s.endDate)}), ${STATS_PAIR} ` +
+      `returned ${statsFmtTotalReturn(s.totalReturn)} (CAGR ${statsFmtPct(s.cagr, 1)}) with ` +
+      `${statsFmtPct(s.annStd, 1)} full-sample realized volatility (√365) ` +
+      `($${statsFmtPrice(s.days[0]?.close)} → $${statsFmtPrice(s.lastClose)}).`,
   );
 
   const volRegime =
@@ -706,14 +777,14 @@ function buildRiskCommentary(s) {
         ? "Short-term vol has compressed — the market is calmer than its 90-day average."
         : "Short- and medium-term vol are aligned — no major regime shift in the last month.";
   lines.push(
-    `Volatility regime: 30-day ${fmtPct(r.vol30, 1)} · 90-day ${fmtPct(r.vol90, 1)} · ` +
-      `full sample ${fmtPct(s.annStd, 1)}. ${volRegime} Downside semideviation is ` +
-      `${fmtPct(r.annDownDev, 1)} annualized.`,
+    `Volatility regime: 30-day ${statsFmtPct(r.vol30, 1)} · 90-day ${statsFmtPct(r.vol90, 1)} · ` +
+      `full sample ${statsFmtPct(s.annStd, 1)}. ${volRegime} Downside semideviation is ` +
+      `${statsFmtPct(r.annDownDev, 1)} annualized.`,
   );
 
   lines.push(
-    `Risk-adjusted metrics: Sharpe ${fmtNum(s.sharpe, 2)} · Sortino ${fmtNum(r.sortino, 2)} · ` +
-      `Calmar ${fmtNum(r.calmar, 2)}. Max drawdown ${fmtPct(s.maxDrawdown)} is the worst ` +
+    `Risk-adjusted metrics: Sharpe ${statsFmtNum(s.sharpe, 2)} · Sortino ${statsFmtNum(r.sortino, 2)} · ` +
+      `Calmar ${statsFmtNum(r.calmar, 2)}. Max drawdown ${statsFmtPct(s.maxDrawdown)} is the worst ` +
       `peak-to-trough loss over the sample.`,
   );
 
@@ -728,14 +799,14 @@ function buildRiskCommentary(s) {
           ? "Rolling Sharpe above 1 — favorable short-horizon risk/reward."
           : "Rolling Sharpe is modest — returns roughly match risk taken recently.";
     lines.push(
-      `Latest rolling readings (${fmtDate(lastRv30.date)}): 30-day vol ${fmtPct(lastRv30.vol30, 1)}, ` +
-        `90-day vol ${fmtPct(lastRv90?.vol90, 1)}, 90-day Sharpe ${fmtNum(lastRs.sharpe, 2)}. ${sharpeNote}`,
+      `Latest rolling readings (${statsFmtDate(lastRv30.date)}): 30-day vol ${statsFmtPct(lastRv30.vol30, 1)}, ` +
+        `90-day vol ${statsFmtPct(lastRv90?.vol90, 1)}, 90-day Sharpe ${statsFmtNum(lastRs.sharpe, 2)}. ${sharpeNote}`,
     );
   }
 
   if (r.beta != null) {
     lines.push(
-      `BTC beta to ETH is ${fmtNum(r.beta, 2)} with correlation ${fmtNum(r.corr, 2)}. ` +
+      `BTC beta to ETH is ${statsFmtNum(r.beta, 2)} with correlation ${statsFmtNum(r.corr, 2)}. ` +
         (r.beta > 1.1
           ? "BTC amplifies ETH moves — higher systematic crypto sensitivity."
           : r.beta < 0.9
@@ -751,8 +822,8 @@ function buildRiskCommentary(s) {
   );
   if (lastDd) {
     lines.push(
-      `Drawdown state: currently ${fmtPct(lastDd.dd)} underwater from peak (${fmtDate(lastDd.date)}). ` +
-        `Largest drawdown in sample: ${fmtPct(minDd.dd)} (${fmtDate(minDd.date)}).`,
+      `Drawdown state: currently ${statsFmtPct(lastDd.dd)} underwater from peak (${statsFmtDate(lastDd.date)}). ` +
+        `Largest drawdown in sample: ${statsFmtPct(minDd.dd)} (${statsFmtDate(minDd.date)}).`,
     );
   }
 
@@ -761,22 +832,22 @@ function buildRiskCommentary(s) {
       ? "Fat tails imply crash risk beyond Gaussian vol estimates."
       : "Tail thickness is moderate relative to a normal benchmark.";
   lines.push(
-    `Distribution shape: skew ${fmtNum(s.skew, 2)}, excess kurtosis ${fmtNum(s.kurt, 2)} — ${tailNote} ` +
-      `Daily percentiles: 5th ${fmtPct(s.p05)} · 95th ${fmtPct(s.p95)}. ` +
-      `Worst day ${fmtPct(s.worstDay.ret)} (${fmtDate(s.worstDay.date)}).`,
+    `Distribution shape: skew ${statsFmtNum(s.skew, 2)}, excess kurtosis ${statsFmtNum(s.kurt, 2)} — ${tailNote} ` +
+      `Daily percentiles: 5th ${statsFmtPct(s.p05)} · 95th ${statsFmtPct(s.p95)}. ` +
+      `Worst day ${statsFmtPct(s.worstDay.ret)} (${statsFmtDate(s.worstDay.date)}).`,
   );
 
   lines.push(
     `${(s.winRate * 100).toFixed(1)}% of days closed positive. Gain/loss ratio ` +
-      `${s.gainLossRatio != null ? fmtNum(s.gainLossRatio, 2) : "—"} ` +
-      `(avg up-day ${fmtPct(s.avgGain, 2)} vs avg down-day ${fmtPct(-s.avgLoss, 2)}).`,
+      `${s.gainLossRatio != null ? statsFmtNum(s.gainLossRatio, 2) : "—"} ` +
+      `(avg up-day ${statsFmtPct(s.avgGain, 2)} vs avg down-day ${statsFmtPct(-s.avgLoss, 2)}).`,
   );
 
   if (r.var) {
     lines.push(
-      `1-day historical VaR at 95% is ${fmtPct(r.var.historical.var95, 2)}; CVaR ` +
-        `${fmtPct(r.var.historical.cvar95, 2)}. Parametric (normal) 95% VaR is ` +
-        `${fmtPct(r.var.parametric.var95, 2)} — ` +
+      `1-day historical VaR at 95% is ${statsFmtPct(r.var.historical.var95, 2)}; CVaR ` +
+        `${statsFmtPct(r.var.historical.cvar95, 2)}. Parametric (normal) 95% VaR is ` +
+        `${statsFmtPct(r.var.parametric.var95, 2)} — ` +
         (r.var.parametric.var95 > r.var.historical.var95
           ? "the normal model understates left-tail risk."
           : "historical and parametric estimates are broadly aligned.") +
@@ -793,19 +864,19 @@ function buildVarCommentary(s) {
   const lines = [];
 
   lines.push(
-    `Historical 1-day VaR at 95% / 99% confidence is ${fmtPct(v.historical.var95, 2)} / ` +
-      `${fmtPct(v.historical.var99, 2)}. On a $${fmtPrice(s.lastClose)} BTC price, that implies ` +
-      `roughly $${fmtPrice(v.usd95)} / $${fmtPrice(v.usd99)} maximum expected loss per coin (1-day, historical).`,
+    `Historical 1-day VaR at 95% / 99% confidence is ${statsFmtPct(v.historical.var95, 2)} / ` +
+      `${statsFmtPct(v.historical.var99, 2)}. On a $${statsFmtPrice(s.lastClose)} BTC price, that implies ` +
+      `roughly $${statsFmtPrice(v.usd95)} / $${statsFmtPrice(v.usd99)} maximum expected loss per coin (1-day, historical).`,
   );
 
   lines.push(
-    `Expected shortfall (CVaR) at 95% / 99% is ${fmtPct(v.historical.cvar95, 2)} / ` +
-      `${fmtPct(v.historical.cvar99, 2)} — the average loss on the worst ${v.historical.var95 < 0 ? "5%" : "tail"} ` +
+    `Expected shortfall (CVaR) at 95% / 99% is ${statsFmtPct(v.historical.cvar95, 2)} / ` +
+      `${statsFmtPct(v.historical.cvar99, 2)} — the average loss on the worst ${v.historical.var95 < 0 ? "5%" : "tail"} ` +
       `of days, worse than VaR alone suggests.`,
   );
 
   lines.push(
-    `Parametric (normal) VaR: 95% ${fmtPct(v.parametric.var95, 2)} · 99% ${fmtPct(v.parametric.var99, 2)}. ` +
+    `Parametric (normal) VaR: 95% ${statsFmtPct(v.parametric.var95, 2)} · 99% ${statsFmtPct(v.parametric.var99, 2)}. ` +
       (v.parametric.var95 > v.historical.var95
         ? "Normal model understates left-tail risk — historical VaR is more conservative."
         : "Historical and parametric VaR are broadly aligned — tail risk near Gaussian assumptions."),
@@ -822,6 +893,29 @@ function buildVarCommentary(s) {
   );
 
   return lines;
+}
+
+/**
+ * Return stats need liquid daily closes. Full stitch includes sparse early
+ * Blockchain.info prints + linear interpolations from ~$0.07 that inflate CAGR
+ * and total return. Prefer continuous Bitstamp; fall back to non-interpolated.
+ * Power-law / long-horizon tools still receive the full series separately.
+ */
+function selectStatsReturnDays(days) {
+  if (!days?.length) return [];
+  const bitstamp = days.filter((d) => d.source === "bitstamp");
+  if (bitstamp.length >= STATS_MIN_SAMPLE) {
+    return { days: bitstamp, sample: "bitstamp", label: "Bitstamp daily (liquid)" };
+  }
+  const real = days.filter((d) => d.source && d.source !== "interpolated");
+  if (real.length >= STATS_MIN_SAMPLE) {
+    return { days: real, sample: "observed", label: "Observed closes (no fill)" };
+  }
+  const withVol = days.filter((d) => Number(d.volume) > 0 && d.close > 0);
+  if (withVol.length >= STATS_MIN_SAMPLE) {
+    return { days: withVol, sample: "volume", label: "Days with volume" };
+  }
+  return { days, sample: "full", label: STATS_SOURCE_FULL };
 }
 
 async function fetchBtcHistory() {
@@ -841,10 +935,11 @@ async function fetchBtcHistory() {
       low: d.low,
       close: d.close,
       volume: d.volume,
+      source: d.source || "",
     })),
     meta: {
       pair: payload.pair || STATS_PAIR,
-      source: payload.source || STATS_SOURCE,
+      source: payload.source || STATS_SOURCE_FULL,
       count: payload.count,
       startDate: payload.startDate,
       endDate: payload.endDate,
@@ -897,23 +992,27 @@ async function fetchBtcStats() {
 
   try {
     await swr.runSWR({
-      key: "stats-btcusd-v2",
+      key: "stats-btcusd-v3",
       l1: "stats",
       source: STATS_SOURCE,
       persist: false,
       validate: (d) =>
-        d?.count > 4000 &&
+        d?.count > STATS_MIN_SAMPLE &&
         d?.pair === STATS_PAIR &&
-        (d?.source || "").includes("Bitstamp"),
+        d?.sampleKind != null,
       fetch: async () => {
         const [btcHistory, ethDays] = await Promise.all([
           fetchBtcHistory(),
           fetchKlines("ETHUSDT").catch(() => null),
         ]);
-        const base = computeStats(btcHistory.days);
+        const fullDays = btcHistory.days;
+        const selected = selectStatsReturnDays(fullDays);
+        const base = computeStats(selected.days);
         const meta = btcHistory.meta;
         base.pair = meta.pair || STATS_PAIR;
-        base.source = meta.source || STATS_SOURCE;
+        base.source = selected.label || STATS_SOURCE;
+        base.sampleKind = selected.sample;
+        base.fullHistoryCount = fullDays.length;
         base.historyMeta = meta;
         const ethR = ethDays ? ethReturns(ethDays) : null;
         const extended = extendRiskVar(base, ethR);
@@ -923,7 +1022,8 @@ async function fetchBtcStats() {
           base.returns,
           base.days.slice(1).map((d) => d.date),
         );
-        base.powerlaw = computePowerLaw(base.days);
+        // Power law benefits from the longest price path (incl. early chain).
+        base.powerlaw = computePowerLaw(fullDays);
         base.fetchedAt = meta.fetchedAt || new Date().toISOString();
         base.stale = meta.stale;
         base.warnings = meta.warnings;
@@ -931,7 +1031,7 @@ async function fetchBtcStats() {
       },
       render: (data, opts = {}) => {
         if (opts.loading) {
-          if (updateEl) updateEl.textContent = "Loading Bitstamp + Blockchain.info daily history…";
+          if (updateEl) updateEl.textContent = "Loading Bitstamp daily history…";
           return;
         }
         applyStatsBundle(data);
@@ -969,48 +1069,77 @@ function renderStatsScreen() {
     if (cls) node.className = cls;
   };
 
-  set("stat-ann-mean", fmtPct(s.annMean, 1));
-  set("stat-ann-vol", fmtPct(s.annStd, 1));
+  set(
+    "stat-ann-mean",
+    s.cagr != null ? statsFmtPct(s.cagr, 1) : statsFmtPct(s.annMean, 1),
+    "deriv-hero-value " + ((s.cagr ?? s.annMean) >= 0 ? "positive" : "negative"),
+  );
+  set("stat-ann-vol", statsFmtPct(s.annStd, 1));
   set(
     "stat-sharpe",
-    s.sharpe != null ? fmtNum(s.sharpe, 2) : "—",
+    s.sharpe != null ? statsFmtNum(s.sharpe, 2) : "—",
     "deriv-hero-value " + (s.sharpe >= 0 ? "positive" : "negative"),
   );
-  set("stat-skew", fmtNum(s.skew, 2));
+  set("stat-skew", statsFmtNum(s.skew, 2));
   set("stat-win-rate", (s.winRate * 100).toFixed(1) + "%");
-  set("stat-total-ret", fmtPct(s.totalReturn), "deriv-hero-value " + (s.totalReturn >= 0 ? "positive" : "negative"));
-  set("stat-max-dd", fmtPct(s.maxDrawdown), "deriv-hero-value negative");
-  set("stat-sample", s.count + " days");
+  set(
+    "stat-total-ret",
+    statsFmtTotalReturn(s.totalReturn),
+    "deriv-hero-value " + (s.totalReturn >= 0 ? "positive" : "negative"),
+  );
+  set("stat-max-dd", statsFmtPct(s.maxDrawdown), "deriv-hero-value negative");
+  set(
+    "stat-sample",
+    s.spanYears
+      ? `${s.count} days · ${statsFmtNum(s.spanYears, 1)}y`
+      : `${s.count} days`,
+  );
+  const pairSub = stEl("stat-pair-sub");
+  if (pairSub) {
+    pairSub.textContent = s.source
+      ? `${s.source} · daily`
+      : "Bitstamp daily · return sample";
+  }
 
+  const help = window.labelWithHelp || ((t) => t);
   const metricsBody = stEl("stats-metrics-body");
   if (metricsBody) {
     const rows = [
-      ["Mean (daily)", fmtPct(s.mean, 4)],
-      ["Median (daily)", fmtPct(s.median, 4)],
-      ["Std deviation (daily)", fmtPct(s.std, 4)],
-      ["Annualized mean", fmtPct(s.annMean, 2)],
-      ["Annualized volatility", fmtPct(s.annStd, 2)],
-      ["Sharpe ratio (rf=0)", fmtNum(s.sharpe, 3)],
-      ["Skewness", fmtNum(s.skew, 3)],
-      ["Excess kurtosis", fmtNum(s.kurt, 3)],
-      ["Win rate", (s.winRate * 100).toFixed(2) + "%"],
-      ["Avg gain / avg loss", `${fmtPct(s.avgGain, 2)} / ${fmtPct(-s.avgLoss, 2)}`],
-      ["Gain/loss ratio", s.gainLossRatio != null ? fmtNum(s.gainLossRatio, 2) : "—"],
-      ["Min daily return", fmtPct(s.min, 2)],
-      ["Max daily return", fmtPct(s.max, 2)],
-      ["1st percentile", fmtPct(s.p01, 2)],
-      ["5th percentile", fmtPct(s.p05, 2)],
-      ["95th percentile", fmtPct(s.p95, 2)],
-      ["99th percentile", fmtPct(s.p99, 2)],
-      ["Max drawdown", fmtPct(s.maxDrawdown, 2)],
-      ["Total return (sample)", fmtPct(s.totalReturn, 2)],
-      ["Log-return mean", fmtPct(s.logMean, 4)],
-      ["Log-return std", fmtPct(s.logStd, 4)],
+      { label: "Mean (daily)", key: "stat-mean-daily", val: statsFmtPct(s.mean, 4) },
+      { label: "Median (daily)", key: "stat-median-daily", val: statsFmtPct(s.median, 4) },
+      { label: "Std deviation (daily)", key: "stat-std-daily", val: statsFmtPct(s.std, 4) },
+      { label: "CAGR (geometric)", key: "stat-ann-mean", val: statsFmtPct(s.cagr, 2) },
+      { label: "Arithmetic ann. mean (×365)", key: "stat-arith-ann", val: statsFmtPct(s.annMean, 2) },
+      { label: "Annualized volatility (√365)", key: "stat-ann-vol", val: statsFmtPct(s.annStd, 2) },
+      { label: "Sharpe ratio (rf=0, arith.)", key: "stat-sharpe", val: statsFmtNum(s.sharpe, 3) },
+      { label: "Skewness", key: "stat-skew", val: statsFmtNum(s.skew, 3) },
+      { label: "Excess kurtosis", key: "stat-kurtosis", val: statsFmtNum(s.kurt, 3) },
+      { label: "Win rate", key: "stat-win-rate", val: (s.winRate * 100).toFixed(2) + "%" },
+      {
+        label: "Avg gain / avg loss",
+        key: "stat-avg-gain-loss",
+        val: `${statsFmtPct(s.avgGain, 2)} / ${statsFmtPct(-s.avgLoss, 2)}`,
+      },
+      {
+        label: "Gain/loss ratio",
+        key: "risk-gain-loss",
+        val: s.gainLossRatio != null ? statsFmtNum(s.gainLossRatio, 2) : "—",
+      },
+      { label: "Min daily return", key: "stat-min-day", val: statsFmtPct(s.min, 2) },
+      { label: "Max daily return", key: "stat-max-day", val: statsFmtPct(s.max, 2) },
+      { label: "1st percentile", key: "stat-p01", val: statsFmtPct(s.p01, 2) },
+      { label: "5th percentile", key: "stat-p05", val: statsFmtPct(s.p05, 2) },
+      { label: "95th percentile", key: "stat-p95", val: statsFmtPct(s.p95, 2) },
+      { label: "99th percentile", key: "stat-p99", val: statsFmtPct(s.p99, 2) },
+      { label: "Max drawdown", key: "stat-max-dd", val: statsFmtPct(s.maxDrawdown, 2) },
+      { label: "Total return (sample)", key: "stat-total-ret", val: statsFmtTotalReturn(s.totalReturn) },
+      { label: "Log-return mean", key: "stat-log-mean", val: statsFmtPct(s.logMean, 4) },
+      { label: "Log-return std", key: "stat-log-std", val: statsFmtPct(s.logStd, 4) },
     ];
     metricsBody.innerHTML = rows
       .map(
-        ([label, val]) =>
-          `<tr><td>${label}</td><td class="mono">${val}</td></tr>`,
+        (row) =>
+          `<tr><td>${help(row.label, row.key)}</td><td class="mono">${row.val}</td></tr>`,
       )
       .join("");
   }
@@ -1021,9 +1150,9 @@ function renderStatsScreen() {
       .map((r) => {
         const cls = r.ret >= 0 ? "positive" : "negative";
         return `<tr>
-          <td>${fmtDate(r.date)}</td>
-          <td class="mono">$${fmtPrice(r.close)}</td>
-          <td class="mono ${cls}">${fmtPct(r.ret, 2)}</td>
+          <td>${statsFmtDate(r.date)}</td>
+          <td class="mono">$${statsFmtPrice(r.close)}</td>
+          <td class="mono ${cls}">${statsFmtPct(r.ret, 2)}</td>
         </tr>`;
       })
       .join("");
@@ -1038,7 +1167,7 @@ function renderStatsScreen() {
         const cls = m.return >= 0 ? "positive" : "negative";
         return `<tr>
           <td>${m.label}</td>
-          <td class="mono ${cls}">${fmtPct(m.return, 2)}</td>
+          <td class="mono ${cls}">${statsFmtPct(m.return, 2)}</td>
           <td class="mono">${m.days}</td>
         </tr>`;
       })
@@ -1055,6 +1184,11 @@ function renderStatsScreen() {
   drawCumulativeChart(s);
   drawHistogramChart(s);
   drawRollingVolChart(s);
+
+  const statsScreen = document.querySelector(
+    '.menu-screen[data-l1="stats"][data-l2="statistics"]',
+  );
+  window.decorateHelpLabels?.(statsScreen || stEl("dashboard-stats"));
 }
 
 function renderRiskScreen() {
@@ -1069,53 +1203,53 @@ function renderRiskScreen() {
     if (cls) node.className = cls;
   };
 
-  set("risk-vol-30", fmtPct(r.vol30, 1));
+  set("risk-vol-30", statsFmtPct(r.vol30, 1));
   set(
     "risk-sortino",
-    r.sortino != null ? fmtNum(r.sortino, 2) : "—",
+    r.sortino != null ? statsFmtNum(r.sortino, 2) : "—",
     "deriv-hero-value " + (r.sortino >= 0 ? "positive" : "negative"),
   );
-  set("risk-beta", r.beta != null ? fmtNum(r.beta, 2) : "—");
-  set("risk-max-dd", fmtPct(s.maxDrawdown), "deriv-hero-value negative");
+  set("risk-beta", r.beta != null ? statsFmtNum(r.beta, 2) : "—");
+  set("risk-max-dd", statsFmtPct(s.maxDrawdown), "deriv-hero-value negative");
   set(
     "risk-sharpe",
-    s.sharpe != null ? fmtNum(s.sharpe, 2) : "—",
+    s.sharpe != null ? statsFmtNum(s.sharpe, 2) : "—",
     "deriv-hero-value " + (s.sharpe >= 0 ? "positive" : "negative"),
   );
-  set("risk-calmar", r.calmar != null ? fmtNum(r.calmar, 2) : "—");
-  set("risk-downside", fmtPct(r.annDownDev, 1));
-  set("risk-corr", r.corr != null ? fmtNum(r.corr, 2) : "—");
+  set("risk-calmar", r.calmar != null ? statsFmtNum(r.calmar, 2) : "—");
+  set("risk-downside", statsFmtPct(r.annDownDev, 1));
+  set("risk-corr", r.corr != null ? statsFmtNum(r.corr, 2) : "—");
 
   const updateEl = stEl("risk-update");
   if (updateEl) {
     updateEl.textContent =
-      `${s.count} days · ${s.pair || STATS_PAIR} · ${s.source || STATS_SOURCE} · Updated ` +
+      `${s.count} days · ${s.pair || STATS_PAIR} · ${s.source || STATS_SOURCE} · ` +
       new Date().toLocaleTimeString("en-US", { hour12: false });
   }
 
   const body = stEl("risk-metrics-body");
   if (body) {
     const rows = [
-      { label: "30-day volatility (ann.)", key: "risk-vol-30", val: fmtPct(r.vol30, 2) },
-      { label: "90-day volatility (ann.)", key: "risk-vol-90", val: fmtPct(r.vol90, 2) },
-      { label: "Full-sample volatility (ann.)", key: "stat-ann-vol", val: fmtPct(s.annStd, 2) },
-      { label: "Downside semideviation (ann.)", key: "risk-downside", val: fmtPct(r.annDownDev, 2) },
-      { label: "Sharpe ratio (rf=0)", key: "stat-sharpe", val: fmtNum(s.sharpe, 3) },
-      { label: "Sortino ratio", key: "risk-sortino", val: fmtNum(r.sortino, 3) },
-      { label: "Calmar ratio", key: "risk-calmar", val: fmtNum(r.calmar, 3) },
-      { label: "Max drawdown", key: "stat-max-dd", val: fmtPct(s.maxDrawdown, 2) },
-      { label: "Beta vs ETH/USDT", key: "risk-beta", val: r.beta != null ? fmtNum(r.beta, 3) : "—" },
-      { label: "Correlation vs ETH", key: "risk-corr", val: r.corr != null ? fmtNum(r.corr, 3) : "—" },
-      { label: "Skewness", key: "stat-skew", val: fmtNum(s.skew, 3) },
-      { label: "Excess kurtosis", key: "risk-kurt", val: fmtNum(s.kurt, 3) },
+      { label: "30-day volatility (ann.)", key: "risk-vol-30", val: statsFmtPct(r.vol30, 2) },
+      { label: "90-day volatility (ann.)", key: "risk-vol-90", val: statsFmtPct(r.vol90, 2) },
+      { label: "Full-sample volatility (ann.)", key: "stat-ann-vol", val: statsFmtPct(s.annStd, 2) },
+      { label: "Downside semideviation (ann.)", key: "risk-downside", val: statsFmtPct(r.annDownDev, 2) },
+      { label: "Sharpe ratio (rf=0)", key: "stat-sharpe", val: statsFmtNum(s.sharpe, 3) },
+      { label: "Sortino ratio", key: "risk-sortino", val: statsFmtNum(r.sortino, 3) },
+      { label: "Calmar ratio", key: "risk-calmar", val: statsFmtNum(r.calmar, 3) },
+      { label: "Max drawdown", key: "stat-max-dd", val: statsFmtPct(s.maxDrawdown, 2) },
+      { label: "Beta vs ETH/USDT", key: "risk-beta", val: r.beta != null ? statsFmtNum(r.beta, 3) : "—" },
+      { label: "Correlation vs ETH", key: "risk-corr", val: r.corr != null ? statsFmtNum(r.corr, 3) : "—" },
+      { label: "Skewness", key: "stat-skew", val: statsFmtNum(s.skew, 3) },
+      { label: "Excess kurtosis", key: "risk-kurt", val: statsFmtNum(s.kurt, 3) },
       {
         label: "Gain/loss ratio",
         key: "risk-gain-loss",
-        val: s.gainLossRatio != null ? fmtNum(s.gainLossRatio, 2) : "—",
+        val: s.gainLossRatio != null ? statsFmtNum(s.gainLossRatio, 2) : "—",
       },
-      { label: "Worst single day", key: "risk-worst-day", val: fmtPct(s.worstDay.ret, 2) },
-      { label: "95th pct daily gain", key: "risk-p95-gain", val: fmtPct(s.p95, 2) },
-      { label: "5th pct daily loss", key: "risk-p05-loss", val: fmtPct(s.p05, 2) },
+      { label: "Worst single day", key: "risk-worst-day", val: statsFmtPct(s.worstDay.ret, 2) },
+      { label: "95th pct daily gain", key: "risk-p95-gain", val: statsFmtPct(s.p95, 2) },
+      { label: "5th pct daily loss", key: "risk-p05-loss", val: statsFmtPct(s.p05, 2) },
     ];
     body.innerHTML = rows
       .map(
@@ -1152,12 +1286,12 @@ function renderVarScreen() {
     if (cls) node.className = cls;
   };
 
-  set("var-95", fmtPct(v.historical.var95, 2), "deriv-hero-value negative");
-  set("var-99", fmtPct(v.historical.var99, 2), "deriv-hero-value negative");
-  set("var-cvar-95", fmtPct(v.historical.cvar95, 2), "deriv-hero-value negative");
-  set("var-usd-95", "$" + fmtPrice(v.usd95), "deriv-hero-value negative");
+  set("var-95", statsFmtPct(v.historical.var95, 2), "deriv-hero-value negative");
+  set("var-99", statsFmtPct(v.historical.var99, 2), "deriv-hero-value negative");
+  set("var-cvar-95", statsFmtPct(v.historical.cvar95, 2), "deriv-hero-value negative");
+  set("var-usd-95", "$" + statsFmtPrice(v.usd95), "deriv-hero-value negative");
   const usdSub = stEl("var-usd-sub");
-  if (usdSub) usdSub.textContent = `Per 1 BTC @ $${fmtPrice(s.lastClose)} · 95%`;
+  if (usdSub) usdSub.textContent = `Per 1 BTC @ $${statsFmtPrice(s.lastClose)} · 95%`;
 
   const updateEl = stEl("var-update");
   if (updateEl) {
@@ -1170,15 +1304,15 @@ function renderVarScreen() {
   if (methodsBody) {
     methodsBody.innerHTML = `<tr>
       <td>Historical</td>
-      <td class="mono negative">${fmtPct(v.historical.var95, 2)}</td>
-      <td class="mono negative">${fmtPct(v.historical.var99, 2)}</td>
-      <td class="mono negative">${fmtPct(v.historical.cvar95, 2)}</td>
-      <td class="mono negative">${fmtPct(v.historical.cvar99, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.historical.var95, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.historical.var99, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.historical.cvar95, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.historical.cvar99, 2)}</td>
     </tr>
     <tr>
       <td>Parametric (normal)</td>
-      <td class="mono negative">${fmtPct(v.parametric.var95, 2)}</td>
-      <td class="mono negative">${fmtPct(v.parametric.var99, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.parametric.var95, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.parametric.var99, 2)}</td>
       <td class="mono">—</td>
       <td class="mono">—</td>
     </tr>`;
@@ -1189,9 +1323,9 @@ function renderVarScreen() {
     breachesBody.innerHTML = (v.breachRows || [])
       .map(
         (row) => `<tr>
-          <td>${fmtDate(row.date)}</td>
-          <td class="mono negative">${fmtPct(row.ret, 2)}</td>
-          <td class="mono">${fmtPct(row.var95, 2)}</td>
+          <td>${statsFmtDate(row.date)}</td>
+          <td class="mono negative">${statsFmtPct(row.ret, 2)}</td>
+          <td class="mono">${statsFmtPct(row.var95, 2)}</td>
         </tr>`,
       )
       .join("") || '<tr><td colspan="3">No breaches in recent tail</td></tr>';
@@ -1229,7 +1363,7 @@ function buildVolCommentary(s) {
         })()
       : null;
   return [
-    `Realized volatility (annualized from daily returns): 30-day ${fmtPct(v30, 1)}, 90-day ${fmtPct(v90, 1)}, full sample ${fmtPct(s.annStd, 1)}.`,
+    `Realized volatility (annualized from daily returns): 30-day ${statsFmtPct(v30, 1)}, 90-day ${statsFmtPct(v90, 1)}, full sample ${statsFmtPct(s.annStd, 1)}.`,
     `Short-horizon regime is ${regime}.`,
     pct != null
       ? `Current 30-day vol sits at about the ${pct}th percentile of its own history in this sample — ${
@@ -1252,8 +1386,8 @@ function renderVolatilityScreen() {
     if (cls) node.className = cls;
   };
 
-  set("vol-realized", fmtPct(r.vol30, 1));
-  set("vol-realized-90", fmtPct(r.vol90, 1));
+  set("vol-realized", statsFmtPct(r.vol30, 1));
+  set("vol-realized-90", statsFmtPct(r.vol90, 1));
 
   let pctLabel = "—";
   let regime = "—";
@@ -1358,7 +1492,7 @@ function drawVolRollingChart(r) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
       ctx.textAlign = "left";
       ctx.fillStyle = "#2dd4bf";
       ctx.fillText("30d", api.pad.left, api.pad.top + 10);
@@ -1375,8 +1509,8 @@ function drawVolRollingChart(r) {
       const v90 = vol90[globalIdx];
       return (
         chartTipTitle(v30.date) +
-        chartTipRow("30d vol", fmtPct(v30.vol30, 1)) +
-        (v90 ? chartTipRow("90d vol", fmtPct(v90.vol90, 1)) : "")
+        chartTipRow("30d vol", statsFmtPct(v30.vol30, 1)) +
+        (v90 ? chartTipRow("90d vol", statsFmtPct(v90.vol90, 1)) : "")
       );
     },
   });
@@ -1422,7 +1556,7 @@ function drawVolAbsReturnChart(s) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
       drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
         fmtChartDate(dates[indices[i]], drawCount > 180),
       );
@@ -1430,8 +1564,8 @@ function drawVolAbsReturnChart(s) {
     formatTooltip(globalIdx) {
       return (
         chartTipTitle(dates[globalIdx]) +
-        chartTipRow("|return|", fmtPct(abs[globalIdx], 2)) +
-        chartTipRow("signed", fmtPct(rets[globalIdx], 2))
+        chartTipRow("|return|", statsFmtPct(abs[globalIdx], 2)) +
+        chartTipRow("signed", statsFmtPct(rets[globalIdx], 2))
       );
     },
   });
@@ -1445,13 +1579,13 @@ function buildMarkovCommentary(s) {
 
   lines.push(
     `${STATS_PAIR} daily returns are classified into ${m.nStates} tercile states ` +
-      `(Bear ≤ ${fmtPct(m.thresholds[0], 2)}, Neutral, Bull > ${fmtPct(m.thresholds[1], 2)}) ` +
-      `over ${s.count} trading days (${fmtDate(s.startDate)} → ${fmtDate(s.endDate)}). ` +
+      `(Bear ≤ ${statsFmtPct(m.thresholds[0], 2)}, Neutral, Bull > ${statsFmtPct(m.thresholds[1], 2)}) ` +
+      `over ${s.count} trading days (${statsFmtDate(s.startDate)} → ${statsFmtDate(s.endDate)}). ` +
       `${m.transitions} observed transitions inform the matrix below.`,
   );
 
   lines.push(
-    `Current regime: ${cur.label} (${fmtPct(m.lastReturn, 2)} on the latest day) — ` +
+    `Current regime: ${cur.label} (${statsFmtPct(m.lastReturn, 2)} on the latest day) — ` +
       `${m.streak} consecutive day${m.streak === 1 ? "" : "s"} in this state. ` +
       `Average diagonal persistence is ${(m.persistence * 100).toFixed(1)}%, meaning regimes ` +
       `tend to ${m.persistence > 0.55 ? "cluster rather than flip daily" : "shift frequently"}.`,
@@ -1490,7 +1624,7 @@ function buildMarkovCommentary(s) {
   lines.push(
     `Strongest single-step transition: ${bestExit.from} → ${bestExit.to} ` +
       `(${(bestExit.p * 100).toFixed(1)}%). Expected duration in current ${cur.label} state ` +
-      `is ~${Number.isFinite(m.expectedDur[m.currentState]) ? fmtNum(m.expectedDur[m.currentState], 1) : "∞"} days ` +
+      `is ~${Number.isFinite(m.expectedDur[m.currentState]) ? statsFmtNum(m.expectedDur[m.currentState], 1) : "∞"} days ` +
       `if the estimated chain persists.`,
   );
 
@@ -1582,7 +1716,7 @@ function drawMarkovRegimeChart(m) {
       return (
         chartTipTitle(pt.date) +
         chartTipRow("Regime", def.label) +
-        chartTipRow("Return", fmtPct(pt.ret, 2))
+        chartTipRow("Return", statsFmtPct(pt.ret, 2))
       );
     },
   });
@@ -1603,12 +1737,12 @@ function buildPowerLawCommentary(s) {
   lines.push(
     `Giovanni Santostasi's Bitcoin Power Law Theory (PLT) models long-run price as ` +
       `A × (days since the Jan 3, 2009 Genesis Block)^n with A ≈ 10⁻¹⁶·⁴⁹³ and n ≈ 5.68 ` +
-      `(source: bitcoinpower.law). Over ${pl.sampleDays} daily closes (${fmtDate(s.startDate)} → ` +
-      `${fmtDate(s.endDate)}), log–log regression R² is ${(pl.fit.r2 * 100).toFixed(2)}%.`,
+      `(source: bitcoinpower.law). Over ${pl.sampleDays} daily closes (${statsFmtDate(s.startDate)} → ` +
+      `${statsFmtDate(s.endDate)}), log–log regression R² is ${(pl.fit.r2 * 100).toFixed(2)}%.`,
   );
 
   lines.push(
-    `Spot $${fmtPrice(pl.last.close)} is ${devWord} the fair-value line at ` +
+    `Spot $${statsFmtPrice(pl.last.close)} is ${devWord} the fair-value line at ` +
       `${fmtPriceCompact(pl.last.fair)} (${dev >= 0 ? "+" : ""}${dev.toFixed(1)}% deviation). ` +
       `Empirical support/resistance multipliers: ${pl.supportMult.toFixed(2)}× fair ` +
       `(${fmtPriceCompact(pl.last.support)}) · ${pl.resistMult.toFixed(2)}× fair ` +
@@ -1624,7 +1758,7 @@ function buildPowerLawCommentary(s) {
   const next = pl.forecasts[0];
   if (next) {
     lines.push(
-      `Neutral 1-year fair value: ${fmtPriceCompact(next.neutral)} (${fmtDate(next.date)}). ` +
+      `Neutral 1-year fair value: ${fmtPriceCompact(next.neutral)} (${statsFmtDate(next.date)}). ` +
         `Scenario band: bear ${fmtPriceCompact(next.bear)} (−60%) · bull ${fmtPriceCompact(next.bull)} (+50%), ` +
         `matching bitcoinpower.law calculator assumptions.`,
     );
@@ -1634,7 +1768,7 @@ function buildPowerLawCommentary(s) {
   if (pending.length) {
     lines.push(
       `Next model milestones: ${pending
-        .map((m) => `${fmtPriceCompact(m.price)} ~${fmtDate(m.date)}`)
+        .map((m) => `${fmtPriceCompact(m.price)} ~${statsFmtDate(m.date)}`)
         .join(" · ")}. Past performance of the curve is not a guarantee.`,
     );
   }
@@ -1721,7 +1855,7 @@ function drawPowerLawBandChart(pl) {
       const p = pl.points[globalIdx];
       return (
         chartTipTitle(p.date) +
-        chartTipRow("Close", "$" + fmtPrice(p.close)) +
+        chartTipRow("Close", "$" + statsFmtPrice(p.close)) +
         chartTipRow("Fair", fmtPriceCompact(p.fair)) +
         chartTipRow("Support", fmtPriceCompact(p.support)) +
         chartTipRow("Resistance", fmtPriceCompact(p.resistance))
@@ -1863,7 +1997,7 @@ function drawPowerLawRatioChart(pl) {
       return (
         chartTipTitle(p.date) +
         chartTipRow("Price / Fair", p.ratio.toFixed(2) + "×") +
-        chartTipRow("Close", "$" + fmtPrice(p.close))
+        chartTipRow("Close", "$" + statsFmtPrice(p.close))
       );
     },
   });
@@ -1881,7 +2015,7 @@ function renderPowerLawScreen() {
     if (cls) node.className = cls;
   };
 
-  set("pl-spot", "$" + fmtPrice(pl.last.close), "deriv-hero-value");
+  set("pl-spot", "$" + statsFmtPrice(pl.last.close), "deriv-hero-value");
   set("pl-fair", fmtPriceCompact(pl.last.fair), "deriv-hero-value");
   const devPrefix = pl.deviationPct >= 0 ? "+" : "";
   set(
@@ -1930,7 +2064,7 @@ function renderPowerLawScreen() {
       .map(
         (f) => `<tr>
           <td>${f.label}</td>
-          <td class="mono">${fmtDate(f.date)}</td>
+          <td class="mono">${statsFmtDate(f.date)}</td>
           <td class="mono">${fmtPriceCompact(f.bear)}</td>
           <td class="mono">${fmtPriceCompact(f.neutral)}</td>
           <td class="mono">${fmtPriceCompact(f.bull)}</td>
@@ -1946,7 +2080,7 @@ function renderPowerLawScreen() {
         const status = m.reached
           ? '<span class="positive">Reached</span>'
           : m.date
-            ? fmtDate(m.date)
+            ? statsFmtDate(m.date)
             : "—";
         return `<tr>
           <td class="mono">${fmtPriceCompact(m.price)}</td>
@@ -2008,7 +2142,7 @@ function renderMarkovScreen() {
       .map((d, i) => {
         const exp =
           Number.isFinite(m.expectedDur[i]) && m.expectedDur[i] < 100
-            ? fmtNum(m.expectedDur[i], 1) + "d"
+            ? statsFmtNum(m.expectedDur[i], 1) + "d"
             : "—";
         return `<tr>
           <td style="color:${d.color}">${d.label}</td>
@@ -2085,14 +2219,14 @@ function drawRiskDrawdownChart(r) {
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
       ctx.fillText("0%", api.pad.left - 6, api.pad.top + 10);
-      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      ctx.fillText(statsFmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
       drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
         fmtChartDate(r.drawdowns[indices[i]].date, drawCount > 180),
       );
     },
     formatTooltip(globalIdx) {
       const pt = r.drawdowns[globalIdx];
-      return chartTipTitle(pt.date) + chartTipRow("Drawdown", fmtPct(pt.dd, 2));
+      return chartTipTitle(pt.date) + chartTipRow("Drawdown", statsFmtPct(pt.dd, 2));
     },
   });
 }
@@ -2148,7 +2282,7 @@ function drawRiskRollingVolChart(r) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
       ctx.textAlign = "left";
       ctx.fillText("30d", api.pad.left, api.pad.top + 10);
       ctx.fillText("90d", api.pad.left + 28, api.pad.top + 10);
@@ -2161,8 +2295,8 @@ function drawRiskRollingVolChart(r) {
       const v90 = vol90[globalIdx];
       return (
         chartTipTitle(v30.date) +
-        chartTipRow("30d vol", fmtPct(v30.vol30, 1)) +
-        chartTipRow("90d vol", fmtPct(v90.vol90, 1))
+        chartTipRow("30d vol", statsFmtPct(v30.vol30, 1)) +
+        chartTipRow("90d vol", statsFmtPct(v90.vol90, 1))
       );
     },
   });
@@ -2213,7 +2347,7 @@ function drawRiskRollingSharpeChart(r) {
     },
     formatTooltip(globalIdx) {
       const pt = r.rollSharpe90[globalIdx];
-      return chartTipTitle(pt.date) + chartTipRow("90d Sharpe", fmtNum(pt.sharpe, 2));
+      return chartTipTitle(pt.date) + chartTipRow("90d Sharpe", statsFmtNum(pt.sharpe, 2));
     },
   });
 }
@@ -2270,7 +2404,7 @@ function drawVarHistogramChart(s) {
 
       const minR = hist[0].lo;
       const maxR = hist[hist.length - 1].hi;
-      drawReturnAxisLabels(ctx, w, h, api.pad, minR, maxR, (val) => fmtPct(val, 1), {
+      drawReturnAxisLabels(ctx, w, h, api.pad, minR, maxR, (val) => statsFmtPct(val, 1), {
         ticks: 7,
         y: h - 6,
       });
@@ -2282,7 +2416,7 @@ function drawVarHistogramChart(s) {
     formatTooltip(globalIdx) {
       const b = s.histogram[globalIdx];
       return (
-        `<div class="chart-tooltip-title">${fmtPct(b.lo, 2)} → ${fmtPct(b.hi, 2)}</div>` +
+        `<div class="chart-tooltip-title">${statsFmtPct(b.lo, 2)} → ${statsFmtPct(b.hi, 2)}</div>` +
         chartTipRow("Days in bin", String(b.count))
       );
     },
@@ -2324,15 +2458,15 @@ function drawVarRollingChart(v) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
-      ctx.fillText(fmtPct(minV, 1), api.pad.left - 6, h - api.pad.bottom);
+      ctx.fillText(statsFmtPct(maxV, 1), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtPct(minV, 1), api.pad.left - 6, h - api.pad.bottom);
       drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
         fmtChartDate(v.rollingVar95[indices[i]].date, drawCount > 180),
       );
     },
     formatTooltip(globalIdx) {
       const pt = v.rollingVar95[globalIdx];
-      return chartTipTitle(pt.date) + chartTipRow("Rolling 95% VaR", fmtPct(pt.var95, 2));
+      return chartTipTitle(pt.date) + chartTipRow("Rolling 95% VaR", statsFmtPct(pt.var95, 2));
     },
   });
 }
@@ -2379,8 +2513,9 @@ function drawCumulativeChart(s) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
-      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      // Cumulative is a return fraction; multi-year BTC needs multiples, not +587186%.
+      ctx.fillText(statsFmtTotalReturn(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtTotalReturn(minV, 0), api.pad.left - 6, h - api.pad.bottom);
       drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
         fmtChartDate(s.days[indices[i] + 1]?.date, drawCount > 180),
       );
@@ -2390,8 +2525,8 @@ function drawCumulativeChart(s) {
       const close = s.days[globalIdx + 1]?.close;
       return (
         chartTipTitle(date) +
-        chartTipRow("Cumulative", fmtPct(s.cumulative[globalIdx])) +
-        chartTipRow("Close", "$" + fmtPrice(close))
+        chartTipRow("Cumulative", statsFmtTotalReturn(s.cumulative[globalIdx], 1)) +
+        chartTipRow("Close", "$" + statsFmtPrice(close))
       );
     },
   });
@@ -2438,13 +2573,13 @@ function drawHistogramChart(s) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "center";
-      ctx.fillText(fmtPct(hist[0].lo, 1), api.pad.left, h - 8);
-      ctx.fillText(fmtPct(hist[hist.length - 1].hi, 1), w - api.pad.right, h - 8);
+      ctx.fillText(statsFmtPct(hist[0].lo, 1), api.pad.left, h - 8);
+      ctx.fillText(statsFmtPct(hist[hist.length - 1].hi, 1), w - api.pad.right, h - 8);
     },
     formatTooltip(globalIdx) {
       const b = s.histogram[globalIdx];
       return (
-        `<div class="chart-tooltip-title">${fmtPct(b.lo, 2)} → ${fmtPct(b.hi, 2)}</div>` +
+        `<div class="chart-tooltip-title">${statsFmtPct(b.lo, 2)} → ${statsFmtPct(b.hi, 2)}</div>` +
         chartTipRow("Days", String(b.count))
       );
     },
@@ -2486,15 +2621,15 @@ function drawRollingVolChart(s) {
       ctx.fillStyle = "#7d8799";
       ctx.font = "10px IBM Plex Mono, monospace";
       ctx.textAlign = "right";
-      ctx.fillText(fmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
-      ctx.fillText(fmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
+      ctx.fillText(statsFmtPct(maxV, 0), api.pad.left - 6, api.pad.top + 10);
+      ctx.fillText(statsFmtPct(minV, 0), api.pad.left - 6, h - api.pad.bottom);
       drawTimeAxisLabels(ctx, w, h, api.pad, drawCount, (i) =>
         fmtChartDate(s.roll30[indices[i]].date, drawCount > 180),
       );
     },
     formatTooltip(globalIdx) {
       const pt = s.roll30[globalIdx];
-      return chartTipTitle(pt.date) + chartTipRow("30d vol (ann.)", fmtPct(pt.vol, 1));
+      return chartTipTitle(pt.date) + chartTipRow("30d vol (ann.)", statsFmtPct(pt.vol, 1));
     },
   });
 }
@@ -2510,6 +2645,7 @@ function initStatsModule() {
   try {
     localStorage.removeItem("swr:payload:v1:stats");
     localStorage.removeItem("swr:payload:v1:stats-btcusd-v2");
+    localStorage.removeItem("swr:payload:v1:stats-btcusd-v3");
   } catch {
     /* ignore */
   }

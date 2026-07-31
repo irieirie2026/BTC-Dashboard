@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Root-absolute asset resolution when deep-linked (e.g. /law/united-states) -->
+    <base href="/" />
     <link rel="icon" type="image/png" sizes="32x32" href="https://btc-dashboard-bay.vercel.app/favicon-32.png?v=8" />
     <link rel="apple-touch-icon" href="https://btc-dashboard-bay.vercel.app/apple-touch-icon.png?v=8" sizes="180x180" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -30,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=155" />
+    <link rel="stylesheet" href="styles.css?v=202" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
   </head>
   <body>
@@ -50,6 +52,7 @@
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="macro">Macro</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="news">News</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="valuation">Valuation</button>
+          <button type="button" class="dash-tab dash-tab--l1" data-dashboard="law">The Law</button>
           <button type="button" class="dash-tab dash-tab--l1" data-dashboard="misc">Misc</button>
         </nav>
         <div id="menu-l2-slot" class="menu-l2-slot">
@@ -127,21 +130,29 @@
                   </svg>
                 </div>
                 <div class="home-banner-copy">
-                  <p class="home-banner-eyebrow">Command deck · Twelve live dashboards</p>
+                  <p class="home-banner-eyebrow">Command deck · Fourteen live dashboards</p>
                   <h2 class="home-banner-title" data-help-key="home-page">The Buccaneers</h2>
                   <p class="home-banner-lead">
-                    Navigate spot markets, on-chain metrics, derivatives, corporate treasuries,
-                    macro drivers, and TradFi equity — all from one bridge.
+                    Spot &amp; prediction-market arbs, on-chain valuation, stats (correlation · vol · time series),
+                    The Law world map, treasuries, macro, and TradFi — one bridge for the full Bitcoin desk.
                   </p>
+                  <button type="button" class="home-sound-toggle" id="home-sound-toggle" aria-pressed="true">🔊 Buccaneers</button>
                 </div>
                 <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
-                  <li class="home-banner-chip"><span class="home-banner-chip-val">12</span><span class="home-banner-chip-lbl">Dashboards</span></li>
-                  <li class="home-banner-chip"><span class="home-banner-chip-val">Live</span><span class="home-banner-chip-lbl">Spot &amp; perps</span></li>
-                  <li class="home-banner-chip"><span class="home-banner-chip-val">On-chain</span><span class="home-banner-chip-lbl">Network data</span></li>
-                  <li class="home-banner-chip"><span class="home-banner-chip-val">TradFi</span><span class="home-banner-chip-lbl">Equity insights</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">14</span><span class="home-banner-chip-lbl">Dashboards</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">Law</span><span class="home-banner-chip-lbl">70+ countries</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">Arbs</span><span class="home-banner-chip-lbl">PM + Deribit</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val">Stats</span><span class="home-banner-chip-lbl">Corr · vol · TS</span></li>
                 </ul>
               </div>
             </header>
+            <section class="home-highlights-section" aria-label="New material">
+              <div class="home-highlights-head">
+                <h3 class="home-highlights-title">Fresh in the hold</h3>
+                <p class="home-highlights-sub">Jump straight to recently expanded decks</p>
+              </div>
+              <div id="home-highlights" class="home-highlights" role="list"></div>
+            </section>
             <section class="home-ss-report-section" id="ss-report-section" aria-label="Final multi-domain report">
               <div class="ss-report-toolbar panel">
                 <div class="panel-header md-toolbar-header">
@@ -480,6 +491,7 @@
             <button type="button" class="pm-refresh-btn" aria-label="Refresh markets">↻</button>
           </div>
           <p class="pm-section-note">Live odds from Polymarket &amp; Kalshi — Bitcoin, finance, economics, politics, and geopolitics. Refreshes every 60s.</p>
+          <div class="pm-censorship-banner" id="pm-censorship-banner" hidden role="alert"></div>
           <div class="pm-loading" id="pm-loading">Loading prediction markets…</div>
           <div class="pm-error" id="pm-error" hidden></div>
           <div class="pm-toolbar" id="pm-toolbar" aria-label="Market filters"></div>
@@ -1307,19 +1319,19 @@
         <div class="menu-screen" data-l1="stats" data-l2="statistics" data-l3="panel">
           <section class="deriv-hero-strip">
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label" data-help-key="stat-ann-mean">Ann. Mean</span>
+              <span class="deriv-hero-label" data-help-key="stat-ann-mean">CAGR</span>
               <span class="deriv-hero-value" id="stat-ann-mean">—</span>
-              <span class="deriv-hero-sub">Daily return · 252d</span>
+              <span class="deriv-hero-sub">Geometric · liquid sample</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="stat-ann-vol">Ann. Volatility</span>
               <span class="deriv-hero-value" id="stat-ann-vol">—</span>
-              <span class="deriv-hero-sub">Realized · daily</span>
+              <span class="deriv-hero-sub">σ daily · √365</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="stat-sharpe">Sharpe Ratio</span>
               <span class="deriv-hero-value" id="stat-sharpe">—</span>
-              <span class="deriv-hero-sub">rf = 0</span>
+              <span class="deriv-hero-sub">arith. mean / vol · rf=0</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="stat-skew">Skewness</span>
@@ -1329,12 +1341,12 @@
           </section>
           <section class="deriv-hero-strip stats-hero-strip--secondary">
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label">Win Rate</span>
+              <span class="deriv-hero-label" data-help-key="stat-win-rate">Win Rate</span>
               <span class="deriv-hero-value" id="stat-win-rate">—</span>
               <span class="deriv-hero-sub">Positive close days</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label">Total Return</span>
+              <span class="deriv-hero-label" data-help-key="stat-total-ret">Total Return</span>
               <span class="deriv-hero-value" id="stat-total-ret">—</span>
               <span class="deriv-hero-sub" id="stat-sample">—</span>
             </article>
@@ -1344,14 +1356,14 @@
               <span class="deriv-hero-sub">Peak-to-trough</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label">Pair</span>
+              <span class="deriv-hero-label" data-help-key="stat-pair">Pair</span>
               <span class="deriv-hero-value">BTC/USD</span>
-              <span class="deriv-hero-sub">Bitstamp + Blockchain.info · daily</span>
+              <span class="deriv-hero-sub" id="stat-pair-sub">Bitstamp daily · return sample</span>
             </article>
           </section>
           <section class="panel">
             <div class="panel-header">
-              <h2>Cumulative Return</h2>
+              <h2 data-help-key="stat-cumulative-chart">Cumulative Return</h2>
               <span class="panel-meta" id="stats-analysis-update">Loading…</span>
             </div>
             <div class="deriv-chart-wrap deriv-chart-wrap--compact">
@@ -1361,7 +1373,7 @@
           <div class="stats-charts-row">
             <section class="panel">
               <div class="panel-header">
-                <h2>Return Distribution</h2>
+                <h2 data-help-key="stat-histogram-chart">Return Distribution</h2>
                 <span class="panel-meta">Daily simple returns · histogram</span>
               </div>
               <div class="deriv-chart-wrap">
@@ -1370,8 +1382,8 @@
             </section>
             <section class="panel">
               <div class="panel-header">
-                <h2>Rolling Volatility</h2>
-                <span class="panel-meta">30-day realized · annualized</span>
+                <h2 data-help-key="stat-rolling-vol-chart">Rolling Volatility</h2>
+                <span class="panel-meta">30-day realized · annualized √365</span>
               </div>
               <div class="deriv-chart-wrap">
                 <canvas id="stats-rolling-vol-chart" height="180"></canvas>
@@ -1380,8 +1392,8 @@
           </div>
           <section class="panel">
             <div class="panel-header">
-              <h2>Descriptive Statistics</h2>
-              <span class="panel-meta">Full sample · simple daily returns</span>
+              <h2 data-help-key="stat-metrics-table">Descriptive Statistics</h2>
+              <span class="panel-meta">Liquid sample · simple daily returns</span>
             </div>
             <div class="deriv-table-wrap stats-metrics-table-wrap stats-metrics-table-wrap--scroll">
               <table class="deriv-table stats-metrics-table stats-l1-table stats-l1-table--metric">
@@ -1391,8 +1403,8 @@
                 </colgroup>
                 <thead>
                   <tr>
-                    <th>Metric</th>
-                    <th>Value</th>
+                    <th data-help-key="stat-metrics-col-metric">Metric</th>
+                    <th data-help-key="stat-metrics-col-value">Value</th>
                   </tr>
                 </thead>
                 <tbody id="stats-metrics-body"></tbody>
@@ -1402,8 +1414,8 @@
           <div class="stats-tables-row">
             <section class="panel">
               <div class="panel-header">
-                <h2>Recent Daily Returns</h2>
-                <span class="panel-meta">Last 30 trading days</span>
+                <h2 data-help-key="stat-recent-table">Recent Daily Returns</h2>
+                <span class="panel-meta">Last 30 calendar days</span>
               </div>
               <div class="deriv-table-wrap">
                 <table class="deriv-table stats-l1-table stats-l1-table--cols-3num">
@@ -1414,9 +1426,9 @@
                   </colgroup>
                   <thead>
                     <tr>
-                      <th>Date</th>
-                      <th>Close</th>
-                      <th>Return</th>
+                      <th data-help-key="stat-recent-col-date">Date</th>
+                      <th data-help-key="stat-recent-col-close">Close</th>
+                      <th data-help-key="stat-recent-col-return">Return</th>
                     </tr>
                   </thead>
                   <tbody id="stats-recent-body"></tbody>
@@ -1425,7 +1437,7 @@
             </section>
             <section class="panel">
               <div class="panel-header">
-                <h2>Monthly Returns</h2>
+                <h2 data-help-key="stat-monthly-table">Monthly Returns</h2>
                 <span class="panel-meta">Calendar month · last 24 months</span>
               </div>
               <div class="deriv-table-wrap">
@@ -1437,9 +1449,9 @@
                   </colgroup>
                   <thead>
                     <tr>
-                      <th>Month</th>
-                      <th>Return</th>
-                      <th>Days</th>
+                      <th data-help-key="stat-monthly-col-month">Month</th>
+                      <th data-help-key="stat-monthly-col-return">Return</th>
+                      <th data-help-key="stat-monthly-col-days">Days</th>
                     </tr>
                   </thead>
                   <tbody id="stats-monthly-body"></tbody>
@@ -1449,11 +1461,135 @@
           </div>
           <section class="panel stats-commentary-panel">
             <div class="panel-header">
-              <h2>Analysis</h2>
+              <h2 data-help-key="stat-analysis">Analysis</h2>
               <span class="panel-meta">Automated commentary on return behavior</span>
             </div>
             <div class="stats-commentary" id="stats-commentary">
               <p>Loading return analysis…</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="correlation" data-l3="panel" hidden>
+          <section class="deriv-hero-strip" id="corr-heroes" aria-label="Correlation KPIs">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="corr-sample">Sample</span>
+              <span class="deriv-hero-value" id="corr-kpi-sample">—</span>
+              <span class="deriv-hero-sub" id="corr-kpi-sample-sub">BTC daily log rets</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="corr-top">Highest ρ vs BTC</span>
+              <span class="deriv-hero-value" id="corr-kpi-top">—</span>
+              <span class="deriv-hero-sub" id="corr-kpi-top-sub">Full sample</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="corr-low">Lowest ρ vs BTC</span>
+              <span class="deriv-hero-value" id="corr-kpi-low">—</span>
+              <span class="deriv-hero-sub" id="corr-kpi-low-sub">Full sample</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="corr-engine">Engine</span>
+              <span class="deriv-hero-value" id="corr-kpi-engine">—</span>
+              <span class="deriv-hero-sub" id="corr-meta">Pearson · log returns</span>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="corr-matrix">BTC correlation matrix</h2>
+              <span class="panel-meta" id="corr-matrix-meta">Flagship assets · daily log returns</span>
+              <button type="button" class="mm-refresh-btn" id="corr-refresh" aria-label="Refresh correlations">↻</button>
+            </div>
+            <p class="mm-section-note">
+              Pearson ρ of daily log returns vs Bitcoin and across the book (Nasdaq via QQQ, gold via GLD, mega-cap stocks, crypto, rates, dollar, VIX).
+              Equities are weekday-only — weekend BTC moves drop out of cross-asset ρ. Hover a cell for the pair and sample size.
+            </p>
+            <div class="corr-controls corr-matrix-controls">
+              <label class="corr-ctrl">
+                <span data-help-key="corr-matrix-sample">Sample size</span>
+                <select id="corr-matrix-sample" aria-label="Matrix sample length">
+                  <option value="365">1 year</option>
+                  <option value="730">2 years</option>
+                  <option value="1095">3 years</option>
+                  <option value="1825">5 years</option>
+                  <option value="all" selected>All</option>
+                </select>
+              </label>
+            </div>
+            <div class="mm-loading" id="corr-loading">Loading multi-asset history…</div>
+            <div class="mm-error" id="corr-error" hidden></div>
+            <div class="corr-matrix-scroll" id="corr-matrix-host" aria-label="Correlation heatmap matrix"></div>
+            <p class="ts-chart-caption cal-caption">
+              Color: red = negative ρ, teal = positive. Diagonal = 1.
+              Sample size = trailing 1y–5y of overlapping days, or All history. Pairs table below follows the same sample.
+            </p>
+          </section>
+
+          <div class="stats-charts-row corr-bottom-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="corr-btc-pairs">ρ vs Bitcoin</h2>
+                <span class="panel-meta">Matches matrix sample · sorted by |ρ|</span>
+              </div>
+              <div class="deriv-table-wrap corr-pairs-wrap">
+                <table class="deriv-table stats-l1-table" id="corr-pairs-table">
+                  <thead>
+                    <tr>
+                      <th data-help-key="corr-col-asset">Asset</th>
+                      <th class="vol-th-num" data-help-key="corr-col-full">ρ sample</th>
+                      <th class="vol-th-num" data-help-key="corr-col-90">ρ 90d</th>
+                      <th class="vol-th-num" data-help-key="corr-col-n">N days</th>
+                    </tr>
+                  </thead>
+                  <tbody id="corr-pairs-body">
+                    <tr><td colspan="4">Run load…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="ts-chart-caption cal-caption">
+                Pearson ρ of <strong>daily log returns</strong> (close-to-close) vs BTC over the matrix sample.
+                Click a row to plot that asset on the rolling chart.
+              </p>
+            </section>
+
+            <section class="panel corr-rolling-panel">
+              <div class="panel-header">
+                <h2 data-help-key="corr-rolling">Rolling correlation vs BTC</h2>
+                <span class="panel-meta" id="corr-roll-meta">Daily log returns · select asset &amp; window</span>
+              </div>
+              <div class="corr-controls">
+                <label class="corr-ctrl">
+                  <span data-help-key="corr-asset-sel">Asset</span>
+                  <select id="corr-asset-select" aria-label="Asset vs Bitcoin"></select>
+                </label>
+                <label class="corr-ctrl">
+                  <span data-help-key="corr-window-sel">Window</span>
+                  <select id="corr-window-select" aria-label="Rolling window">
+                    <option value="365" selected>1 year</option>
+                    <option value="730">2 years</option>
+                    <option value="1095">3 years</option>
+                    <option value="1825">5 years</option>
+                    <option value="all">All (expanding)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="deriv-chart-wrap corr-rolling-chart-wrap">
+                <canvas id="corr-rolling-chart" height="200"></canvas>
+              </div>
+              <p class="ts-chart-caption cal-caption">
+                Rolling Pearson ρ of <strong>daily log returns</strong> (not price levels). Y-axis scales to the series range.
+                Long windows look smoother — that is expected. <strong>All</strong> = expanding ρ from first overlap.
+              </p>
+            </section>
+          </div>
+
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="corr-commentary">Correlation read</h2>
+              <span class="panel-meta">After load</span>
+            </div>
+            <div class="stats-commentary" id="corr-commentary">
+              <p>Load correlations to summarize how BTC co-moves with equities, gold, rates, and crypto.</p>
             </div>
           </section>
         </div>
@@ -1600,7 +1736,7 @@
             <section class="panel">
               <div class="panel-header">
                 <h2>Rolling 95% VaR</h2>
-                <span class="panel-meta">252-day window · daily returns</span>
+                <span class="panel-meta">365-day window · daily returns</span>
               </div>
               <div class="deriv-chart-wrap deriv-chart-wrap--compact">
                 <canvas id="var-rolling-chart" height="150"></canvas>
@@ -1675,17 +1811,18 @@
               <span class="panel-meta" id="vol-suite-meta">ARCH / GARCH suite · BTC log returns</span>
               <div class="vol-toolbar-actions">
                 <label class="vol-ctrl">
-                  <span>Range</span>
+                  <span data-help-key="vol-range">Range</span>
                   <select id="vol-range" class="md-select vol-select" aria-label="Date range">
                     <option value="365">1Y</option>
                     <option value="730">2Y</option>
-                    <option value="1095" selected>3Y</option>
+                    <option value="1095">3Y</option>
                     <option value="1825">5Y</option>
+                    <option value="3650" selected>10Y</option>
                     <option value="5000">All</option>
                   </select>
                 </label>
                 <label class="vol-ctrl">
-                  <span>Distribution</span>
+                  <span data-help-key="vol-dist">Distribution</span>
                   <select id="vol-dist" class="md-select vol-select" aria-label="Error distribution">
                     <option value="t" selected>Student-t</option>
                     <option value="normal">Normal</option>
@@ -1693,15 +1830,33 @@
                     <option value="skewt">Skewed-t</option>
                   </select>
                 </label>
-                <button type="button" class="md-btn" id="vol-run-all">Run all models</button>
+                <button type="button" class="md-btn" id="vol-run-selected" title="Estimate only the checked models">Run selected</button>
+                <button type="button" class="md-btn md-btn--secondary" id="vol-run-all" title="Select every model and estimate for the current range and distribution">Run all</button>
                 <button type="button" class="md-btn md-btn--secondary" id="vol-export-csv">Export CSV</button>
+                <span class="vol-toolbar-help" data-help-key="vol-run-all">Run / export</span>
               </div>
             </div>
             <p class="md-stats vc-intro">
-              Conditional volatility models for BTC (ARCH/GARCH family + HAR-RV). Estimation uses the
+              Conditional volatility models for BTC (ARCH/GARCH family + HAR-RV + EWMA). Estimation uses the
               <code>arch</code> library when installed; otherwise a pure-NumPy GARCH(1,1) fallback.
-              Annualization √365. Educational — not a trading signal.
+              Annualization √365. Choose models below — selection and distribution are saved for faster re-runs.
             </p>
+            <div class="vol-model-picker" id="vol-model-picker" data-help-key="vol-model-picker">
+              <div class="vol-model-picker-head">
+                <span class="vol-model-picker-title">Models to estimate</span>
+                <div class="vol-model-picker-actions">
+                  <button type="button" class="vol-mini-btn" id="vol-models-all" title="Select every catalog model">All</button>
+                  <button type="button" class="vol-mini-btn" id="vol-models-defaults" title="Recommended default set">Defaults</button>
+                  <button type="button" class="vol-mini-btn" id="vol-models-core" title="Core GARCH/ARCH only">Core</button>
+                  <button type="button" class="vol-mini-btn" id="vol-models-asym" title="Asymmetric only">Asymmetric</button>
+                  <button type="button" class="vol-mini-btn" id="vol-models-none" title="Clear selection">None</button>
+                </div>
+              </div>
+              <div class="vol-model-picker-grid" id="vol-model-picker-grid">
+                <p class="macro-muted">Loading catalog…</p>
+              </div>
+              <p class="vol-model-picker-meta" id="vol-model-picker-meta"></p>
+            </div>
           </div>
 
           <section class="deriv-hero-strip" id="vol-kpi-strip" aria-label="Volatility KPIs">
@@ -1774,7 +1929,7 @@
           <div class="stats-charts-row vol-charts-row">
             <section class="panel">
               <div class="panel-header">
-                <h2>Conditional volatility</h2>
+                <h2 data-help-key="vol-chart-cond">Conditional volatility</h2>
                 <span class="panel-meta" id="vol-chart-meta">Selected / best model</span>
               </div>
               <div class="deriv-chart-wrap">
@@ -1783,7 +1938,7 @@
             </section>
             <section class="panel">
               <div class="panel-header">
-                <h2>Multi-step forecast</h2>
+                <h2 data-help-key="vol-chart-forecast">Multi-step forecast</h2>
                 <span class="panel-meta">1–30 day annualized</span>
               </div>
               <div class="deriv-chart-wrap">
@@ -1795,7 +1950,7 @@
           <div class="stats-charts-row vol-charts-row">
             <section class="panel">
               <div class="panel-header">
-                <h2>News impact curve</h2>
+                <h2 data-help-key="vol-chart-nic">News impact curve</h2>
                 <span class="panel-meta">Asymmetry of ± shocks</span>
               </div>
               <div class="deriv-chart-wrap">
@@ -1804,7 +1959,7 @@
             </section>
             <section class="panel">
               <div class="panel-header">
-                <h2>Std. residuals</h2>
+                <h2 data-help-key="vol-chart-resid">Std. residuals</h2>
                 <span class="panel-meta">Histogram · selected model</span>
               </div>
               <div class="deriv-chart-wrap">
@@ -1815,7 +1970,7 @@
 
           <section class="panel" id="vol-detail-panel">
             <div class="panel-header">
-              <h2 id="vol-detail-title">Model detail</h2>
+              <h2 id="vol-detail-title" data-help-key="vol-detail">Model detail</h2>
               <span class="panel-meta" id="vol-detail-sub">Select a row</span>
             </div>
             <p class="vol-detail-blurb" id="vol-detail-blurb"></p>
@@ -1898,7 +2053,7 @@
               <table class="deriv-table stats-l1-table vol-backtest-table" id="vol-backtest-table">
                 <thead>
                   <tr>
-                    <th class="vol-th-text">Horizon</th>
+                    <th class="vol-th-text" data-help-key="vol-bt-horizon">Horizon</th>
                     <th class="vol-th-num" data-help-key="vol-bt-n">Origins</th>
                     <th class="vol-th-num" data-help-key="vol-bt-qlike">QLIKE ↓</th>
                     <th class="vol-th-num" data-help-key="vol-bt-rmse">RMSE (ann.)</th>
@@ -1922,7 +2077,10 @@
             <div class="deriv-table-wrap">
               <table class="deriv-table stats-l1-table" id="vol-guide-table">
                 <thead>
-                  <tr><th>Prefer</th><th>When</th></tr>
+                  <tr>
+                    <th data-help-key="vol-guide-prefer">Prefer</th>
+                    <th data-help-key="vol-guide-when">When</th>
+                  </tr>
                 </thead>
                 <tbody id="vol-guide-body"></tbody>
               </table>
@@ -1931,7 +2089,7 @@
 
           <section class="panel stats-commentary-panel">
             <div class="panel-header">
-              <h2>Glossary</h2>
+              <h2 data-help-key="vol-glossary">Glossary</h2>
               <span class="panel-meta">Core terms</span>
             </div>
             <div class="stats-commentary" id="vol-glossary"></div>
@@ -1944,6 +2102,374 @@
             </div>
             <div class="stats-commentary" id="vol-run-commentary">
               <p>Run all models to generate a desk read of this estimation pass.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="stats" data-l2="timeseries" data-l3="panel" hidden>
+          <div class="panel md-toolbar ts-toolbar">
+            <div class="panel-header md-toolbar-header">
+              <h2 data-help-key="ts-section">Time Series</h2>
+              <span class="panel-meta" id="ts-suite-meta">Price forecasts · 1d / 1w / 1M</span>
+              <div class="vol-toolbar-actions">
+                <label class="vol-ctrl">
+                  <span>Range</span>
+                  <select id="ts-range" class="md-select vol-select" aria-label="Sample range">
+                    <option value="365">1Y</option>
+                    <option value="730">2Y</option>
+                    <option value="1095">3Y</option>
+                    <option value="1825">5Y</option>
+                    <option value="2555">7Y</option>
+                    <option value="3650" selected>10Y</option>
+                    <option value="5475">15Y</option>
+                    <option value="8000">All</option>
+                  </select>
+                </label>
+                <button type="button" class="md-btn" id="ts-run-all">Run all models</button>
+                <button type="button" class="md-btn md-btn--secondary" id="ts-export-csv">Export CSV</button>
+              </div>
+            </div>
+            <p class="md-stats vc-intro">
+              Univariate and multivariate time-series models for BTC/USD price forecasting at
+              <strong>1 day</strong>, <strong>1 week</strong>, and <strong>1 month</strong>.
+              Includes baselines, ARIMA/SARIMA, ETS, Prophet, ARIMAX (macro + on-chain), Kalman/state-space,
+              ridge lags, VAR/SVAR, and VECM. Exog uses SPX, DXY, rates, and chain metrics when available.
+              Expanding-window OOS backtest on log-return RMSE, MAPE, and directional hit rate.
+              Educational research only — not a trading signal.
+            </p>
+            <div class="ts-range-info" id="ts-range-info" data-help-key="ts-range-info" role="status">
+              <h3 class="ts-range-info-title">Selected estimation period</h3>
+              <p class="ts-range-info-body" id="ts-range-info-body">Choose a range, then press <strong>Run all models</strong>.</p>
+              <ul class="ts-range-info-list" id="ts-range-info-list"></ul>
+            </div>
+            <div class="ts-progress" id="ts-progress" hidden aria-live="polite">
+              <div class="ts-progress-head">
+                <span class="ts-progress-title" id="ts-progress-title">Estimating models…</span>
+                <span class="ts-progress-eta" id="ts-progress-eta">—</span>
+              </div>
+              <div class="ts-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="ts-progress-bar">
+                <div class="ts-progress-fill" id="ts-progress-fill"></div>
+              </div>
+              <p class="ts-progress-detail" id="ts-progress-detail">Starting…</p>
+            </div>
+            <div class="ts-howto" data-help-key="ts-howto">
+              <h3 class="ts-howto-title">How to read this page</h3>
+              <ol class="ts-howto-list">
+                <li><strong>Pick a range</strong> (does not start estimation). Read the period note for sample length, expected OOS origins, and rough runtime.</li>
+                <li><strong>Press Run all models</strong> to estimate — progress bar shows a rough time remaining. Changing range alone never re-runs.</li>
+                <li><strong>Primary accuracy = directional hit %</strong>. Tables sort by hit (then RMSE). Rank badges: BEST/HIT, RMSE, MAE, MAPE, AIC, BIC; MARK = suite desk pick.</li>
+                <li><strong>Why this model</strong> explains the desk mark (7d hit first; ties → RMSE / MAE / AIC / BIC). AIC/BIC are in-sample only.</li>
+                <li><strong>N OOS</strong> = thinned expanding-window origins, not calendar days. Hit ~50% ≈ coin-flip; prefer models that beat <strong>Naive (RW)</strong>.</li>
+              </ol>
+            </div>
+          </div>
+
+          <section class="deriv-hero-strip" id="ts-kpi-strip" aria-label="Time series KPIs">
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-last">Last price</span>
+              <span class="deriv-hero-value" id="ts-kpi-last">—</span>
+              <span class="deriv-hero-sub" id="ts-kpi-last-sub">Sample end</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-fcast">Forecast 1d / 7d / 30d</span>
+              <span class="deriv-hero-value" id="ts-kpi-fcast">—</span>
+              <span class="deriv-hero-sub" id="ts-kpi-fcast-sub">Best OOS model</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-ret">Implied return 1d / 7d / 30d</span>
+              <span class="deriv-hero-value" id="ts-kpi-ret">—</span>
+              <span class="deriv-hero-sub">Log return path</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-best">Desk mark (hit-primary)</span>
+              <span class="deriv-hero-value" id="ts-kpi-best">—</span>
+              <span class="deriv-hero-sub" id="ts-kpi-best-sub">HIT · AIC · BIC leaders</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-macro">Macro (VAR)</span>
+              <span class="deriv-hero-value" id="ts-kpi-macro">—</span>
+              <span class="deriv-hero-sub">SPX · DXY aligned</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="ts-engine">Engines</span>
+              <span class="deriv-hero-value" id="ts-kpi-engine">—</span>
+              <span class="deriv-hero-sub">statsmodels · yfinance</span>
+            </article>
+          </section>
+
+          <section class="panel ts-selection-panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-selection-why">Why this model</h2>
+              <span class="panel-meta" id="ts-selection-why-meta">Hit-primary selection</span>
+            </div>
+            <div class="ts-selection-why" id="ts-selection-why">
+              <p class="ts-selection-empty">Press <strong>Run all models</strong> to rank by directional hit rate and see why a model is selected.</p>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-compare">Model comparison by horizon</h2>
+              <span class="panel-meta" id="ts-compare-meta">Sorted by hit % · 1d / 7d / 30d</span>
+            </div>
+            <div class="ts-horizon-stack" id="ts-horizon-grid">
+              <article class="ts-horizon-card panel" data-horizon="1">
+                <div class="panel-header ts-horizon-head">
+                  <h3 data-help-key="ts-h1">1-day horizon</h3>
+                  <span class="panel-meta" id="ts-h1-meta">Next session</span>
+                </div>
+                <div class="deriv-table-wrap ts-hz-table-wrap">
+                  <table class="deriv-table stats-l1-table ts-compare-table" id="ts-compare-1d">
+                    <thead>
+                      <tr>
+                        <th class="vol-th-text ts-th-model" data-help-key="ts-col-model">Model</th>
+                        <th class="vol-th-text ts-th-family" data-help-key="ts-col-family" title="U = univariate · M = multivariate · X = with exog">Fam</th>
+                        <th class="vol-th-num" data-help-key="ts-col-fcst">Fcst $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-ret">Ret %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-delta">Δ vs last</th>
+                        <th class="vol-th-num ts-th-hit" data-help-key="ts-col-hit">Hit %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-ret">RMSE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mae">MAE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-px">RMSE $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mape">MAPE %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-n">N OOS</th>
+                        <th class="vol-th-num" data-help-key="ts-col-aic">AIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-bic">BIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-params">Params</th>
+                        <th class="vol-th-text" data-help-key="ts-col-status">Status</th>
+                        <th class="vol-th-rank" data-help-key="ts-col-rank">Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ts-compare-body-1d">
+                      <tr><td colspan="16">Run models to populate…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+              <article class="ts-horizon-card panel" data-horizon="7">
+                <div class="panel-header ts-horizon-head">
+                  <h3 data-help-key="ts-h7">7-day horizon</h3>
+                  <span class="panel-meta" id="ts-h7-meta">≈ 1 week · desk mark horizon</span>
+                </div>
+                <div class="deriv-table-wrap ts-hz-table-wrap">
+                  <table class="deriv-table stats-l1-table ts-compare-table" id="ts-compare-7d">
+                    <thead>
+                      <tr>
+                        <th class="vol-th-text ts-th-model" data-help-key="ts-col-model">Model</th>
+                        <th class="vol-th-text ts-th-family" data-help-key="ts-col-family" title="U = univariate · M = multivariate · X = with exog">Fam</th>
+                        <th class="vol-th-num" data-help-key="ts-col-fcst">Fcst $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-ret">Ret %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-delta">Δ vs last</th>
+                        <th class="vol-th-num ts-th-hit" data-help-key="ts-col-hit">Hit %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-ret">RMSE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mae">MAE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-px">RMSE $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mape">MAPE %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-n">N OOS</th>
+                        <th class="vol-th-num" data-help-key="ts-col-aic">AIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-bic">BIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-params">Params</th>
+                        <th class="vol-th-text" data-help-key="ts-col-status">Status</th>
+                        <th class="vol-th-rank" data-help-key="ts-col-rank">Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ts-compare-body-7d">
+                      <tr><td colspan="16">Run models to populate…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+              <article class="ts-horizon-card panel" data-horizon="30">
+                <div class="panel-header ts-horizon-head">
+                  <h3 data-help-key="ts-h30">30-day horizon</h3>
+                  <span class="panel-meta" id="ts-h30-meta">≈ 1 month</span>
+                </div>
+                <div class="deriv-table-wrap ts-hz-table-wrap">
+                  <table class="deriv-table stats-l1-table ts-compare-table" id="ts-compare-30d">
+                    <thead>
+                      <tr>
+                        <th class="vol-th-text ts-th-model" data-help-key="ts-col-model">Model</th>
+                        <th class="vol-th-text ts-th-family" data-help-key="ts-col-family" title="U = univariate · M = multivariate · X = with exog">Fam</th>
+                        <th class="vol-th-num" data-help-key="ts-col-fcst">Fcst $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-ret">Ret %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-delta">Δ vs last</th>
+                        <th class="vol-th-num ts-th-hit" data-help-key="ts-col-hit">Hit %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-ret">RMSE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mae">MAE ret</th>
+                        <th class="vol-th-num" data-help-key="ts-col-rmse-px">RMSE $</th>
+                        <th class="vol-th-num" data-help-key="ts-col-mape">MAPE %</th>
+                        <th class="vol-th-num" data-help-key="ts-col-n">N OOS</th>
+                        <th class="vol-th-num" data-help-key="ts-col-aic">AIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-bic">BIC</th>
+                        <th class="vol-th-num" data-help-key="ts-col-params">Params</th>
+                        <th class="vol-th-text" data-help-key="ts-col-status">Status</th>
+                        <th class="vol-th-rank" data-help-key="ts-col-rank">Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ts-compare-body-30d">
+                      <tr><td colspan="16">Run models to populate…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+            <p class="vol-engine-note" id="ts-engine-note" hidden></p>
+          </section>
+
+          <div class="stats-charts-row vol-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-chart-price">Price + forecast path</h2>
+                <span class="panel-meta" id="ts-chart-price-meta">Selected model</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="ts-price-chart" height="180"></canvas>
+              </div>
+              <p class="ts-chart-caption" id="ts-cap-price">
+                <strong>What:</strong> recent BTC closes (blue) and multi-step forecast (amber dashed).
+                <strong>How:</strong> hover for date/horizon and price. Select a model row above to change the series.
+              </p>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-chart-fcast">Horizon forecast fan</h2>
+                <span class="panel-meta" id="ts-chart-fcast-meta">1 … 30 days ahead</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="ts-forecast-chart" height="180"></canvas>
+              </div>
+              <p class="ts-chart-caption" id="ts-cap-fcast">
+                <strong>What:</strong> selected model’s price path for horizons 1–30 days. Grey dashed = last close; green dots = 1d / 7d / 30d.
+                <strong>How:</strong> X = days ahead, Y = forecast USD. Hover a point for exact level vs last.
+              </p>
+            </section>
+          </div>
+
+          <div class="stats-charts-row vol-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-chart-bt">Backtest RMSE by horizon</h2>
+                <span class="panel-meta" id="ts-chart-bt-meta">OOS log-return RMSE</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="ts-backtest-chart" height="160"></canvas>
+              </div>
+              <p class="ts-chart-caption" id="ts-cap-bt">
+                <strong>What:</strong> expanding-window out-of-sample RMSE of <em>log returns</em> at 1d, 7d, 30d for the selected model only.
+                <strong>How:</strong> shorter bars = better forecast skill. Compare to Naive in the tables, not only absolute height.
+              </p>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-chart-resid">Residual histogram</h2>
+                <span class="panel-meta" id="ts-chart-resid-meta">1-step fit residuals</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="ts-resid-chart" height="160"></canvas>
+              </div>
+              <p class="ts-chart-caption" id="ts-cap-resid">
+                <strong>What:</strong> distribution of approximate 1-step residuals (actual return − fitted) for the selected model.
+                <strong>How:</strong> roughly bell-shaped and centered near 0 is healthier; heavy tails/skew mean the linear model understates extremes.
+              </p>
+            </section>
+          </div>
+
+          <div class="stats-charts-row vol-charts-row">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-irf">SVAR impulse responses</h2>
+                <span class="panel-meta" id="ts-irf-meta">When SVAR is selected</span>
+              </div>
+              <div class="deriv-chart-wrap">
+                <canvas id="ts-irf-chart" height="160"></canvas>
+              </div>
+              <p class="ts-chart-caption" id="ts-cap-irf">
+                <strong>What:</strong> only for <strong>SVAR</strong> — response of BTC returns to a one-unit structural shock in DXY / SPX / BTC (Cholesky order).
+                <strong>How:</strong> X = days after shock, Y = BTC return response. Zero line = no effect. Other models show an empty placeholder.
+              </p>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="ts-detail">Model detail</h2>
+                <span class="panel-meta" id="ts-detail-meta">Equation · params · insights</span>
+              </div>
+              <div class="vol-equation-box" id="ts-equation">—</div>
+              <div class="deriv-table-wrap">
+                <table class="deriv-table stats-l1-table ts-params-table" id="ts-params-table">
+                  <thead>
+                    <tr>
+                      <th class="vol-th-text" data-help-key="ts-col-param-name">Parameter</th>
+                      <th class="vol-th-num" data-help-key="ts-col-param-est">Estimate</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ts-params-body">
+                    <tr><td colspan="2">Select a model…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="stats-commentary" id="ts-insights" style="margin-top:0.75rem">
+                <p>Run the suite and click a model row.</p>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-bt-table">Backtest detail</h2>
+              <span class="panel-meta" id="ts-bt-table-meta">Expanding window · selected model</span>
+            </div>
+            <p class="ts-chart-caption" id="ts-cap-bt-table">
+              Numeric OOS metrics for the <strong>selected</strong> model at each horizon. Same definitions as the comparison tables (RMSE/MAE on log returns; RMSE $ and MAPE on price; hit = sign accuracy).
+            </p>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table stats-l1-table ts-bt-table" id="ts-bt-table">
+                <thead>
+                  <tr>
+                    <th class="vol-th-text" data-help-key="ts-col-bt-h">Horizon</th>
+                    <th class="vol-th-num" data-help-key="ts-col-n">N</th>
+                    <th class="vol-th-num" data-help-key="ts-col-rmse-ret">RMSE (ret)</th>
+                    <th class="vol-th-num" data-help-key="ts-col-mae">MAE (ret)</th>
+                    <th class="vol-th-num" data-help-key="ts-col-rmse-px">RMSE ($)</th>
+                    <th class="vol-th-num" data-help-key="ts-col-mape">MAPE %</th>
+                    <th class="vol-th-num" data-help-key="ts-col-hit">Dir. hit</th>
+                  </tr>
+                </thead>
+                <tbody id="ts-bt-body">
+                  <tr><td colspan="7">Select a model…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-guide">Model selection guide</h2>
+              <span class="panel-meta">When to use which family</span>
+            </div>
+            <div class="stats-commentary" id="ts-guide-body"></div>
+          </section>
+
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-run-commentary">Run commentary</h2>
+              <span class="panel-meta" id="ts-run-commentary-meta">After estimation</span>
+            </div>
+            <div class="stats-commentary" id="ts-run-commentary">
+              <p>Run all models to generate a desk read of this forecasting pass.</p>
+            </div>
+          </section>
+
+          <section class="panel stats-commentary-panel ts-trader-memo-panel">
+            <div class="panel-header">
+              <h2 data-help-key="ts-trader-memo">Trader memo · combined forecast &amp; trade plan</h2>
+              <span class="panel-meta" id="ts-trader-memo-meta">After estimation</span>
+            </div>
+            <div class="ts-trader-memo" id="ts-trader-memo">
+              <p class="ts-trader-memo-empty">
+                Press <strong>Run all models</strong> for a plain-language memo: how all models vote together,
+                a blended forecast, quality score, whether it’s usable for investing, stance, hold length,
+                stop / take-profit ideas, sizing, and a junior-friendly risk checklist.
+              </p>
             </div>
           </section>
         </div>
@@ -2894,7 +3420,7 @@
       </div>
 
       <div id="dashboard-macro" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="macro" data-l2="drivers" data-l3="overview">
+        <div class="menu-screen" data-l1="macro" data-l2="drivers" data-l3="overview" data-l3-shared="true">
           <section class="panel md-toolbar">
             <div class="panel-header md-toolbar-header">
               <h2 data-help-key="macro-drivers-title">Macro Drivers</h2>
@@ -2902,13 +3428,6 @@
             </div>
             <p class="md-stats" id="md-stats"></p>
           </section>
-          <nav class="macro-drivers-subnav" aria-label="Macro Drivers sections">
-            <button type="button" class="macro-drivers-subtab active" data-md-sub="overview">Overview</button>
-            <button type="button" class="macro-drivers-subtab" data-md-sub="economy">Economy &amp; Growth</button>
-            <button type="button" class="macro-drivers-subtab" data-md-sub="charts">Charts</button>
-            <button type="button" class="macro-drivers-subtab" data-md-sub="liquidity">Liquidity</button>
-            <button type="button" class="macro-drivers-subtab" data-md-sub="commentary">Commentary</button>
-          </nav>
           <section class="panel md-filters" id="md-filters-panel">
             <div class="md-controls">
               <div class="md-control-group" data-md-control-group="overview,economy,charts">
@@ -3468,29 +3987,127 @@
             <div class="stats-commentary mm-about-body" id="mm-about-body"><p>Loading…</p></div>
           </section>
         </div>
-        <div class="menu-screen" data-l1="misc" data-l2="whale-proxies" hidden>
-          <section class="panel mm-whales-panel" aria-label="Whale proxies">
+        <div class="menu-screen" data-l1="misc" data-l2="calendar" hidden>
+          <section class="deriv-hero-strip cal-hero-strip" id="cal-heroes" aria-label="Calendar seasonality KPIs"></section>
+          <section class="panel cal-panel">
             <div class="panel-header">
-              <h2 data-help-key="mm-whales-overview">Whale Proxies</h2>
-              <span class="panel-meta" id="mw-meta">Loading…</span>
-              <button type="button" class="mm-refresh-btn mw-refresh-btn" aria-label="Refresh whale proxies">↻</button>
+              <h2 data-help-key="cal-overview">Calendar seasonality</h2>
+              <span class="panel-meta" id="cal-meta">Loading…</span>
+              <button type="button" class="mm-refresh-btn" id="cal-refresh" aria-label="Refresh calendar" title="Reload daily history and recompute seasonality">↻</button>
             </div>
-            <p class="mm-section-note">Exchange hot/cold wallet tracking, large-tx scanner, and CDD-style proxies. Data from <a href="https://mempool.space" target="_blank" rel="noopener noreferrer">Mempool.space</a> (free). Full entity labeling requires paid analytics.</p>
-            <div class="mm-loading" id="mw-loading">Loading whale proxies…</div>
+            <div class="ts-howto cal-howto">
+              <h3 class="ts-howto-title" data-help-key="cal-howto">How to read this page</h3>
+              <ol class="ts-howto-list">
+                <li><strong>Hover</strong> any heatmap cell, bar, or chip for exact return, win rate, and sample size. Click <strong>?</strong> next to headings for definitions.</li>
+                <li><strong>Color</strong> — green up, red down; intensity scales with |return| inside each table (see legend <span class="cal-inline-help" data-help-key="cal-legend">scale</span>).</li>
+                <li><strong>Bars &amp; chips first</strong> — multi-year seasonality is more reliable than one extreme year cell.</li>
+                <li><strong>Footer rows</strong> — <span class="cal-inline-help" data-help-key="cal-row-avg">Avg</span>, <span class="cal-inline-help" data-help-key="cal-row-med">Med</span>, <span class="cal-inline-help" data-help-key="cal-row-win">Win%</span> summarize each column across years.</li>
+                <li><strong>Returns</strong> — monthly/weekly cells use <span class="cal-inline-help" data-help-key="cal-compounded">compounded</span> daily <span class="cal-inline-help" data-help-key="cal-simple-return">simple returns</span>; weekday cells are averages. Weeks use <span class="cal-inline-help" data-help-key="cal-iso-week">ISO week</span> numbering.</li>
+              </ol>
+            </div>
+            <p class="mm-section-note">
+              BTC/USD daily history (same source as Stats). Prefer liquid Bitstamp when available.
+              Historical seasonality is descriptive only — not investment advice.
+            </p>
+            <div class="mm-loading" id="cal-loading">Loading daily history…</div>
+            <div class="mm-error" id="cal-error" hidden></div>
+            <div class="cal-legend" id="cal-legend" aria-label="Return color legend"></div>
+          </section>
+
+          <section class="panel cal-panel">
+            <div class="panel-header">
+              <h2 data-help-key="cal-months">Monthly returns &amp; seasonality</h2>
+              <span class="panel-meta">Years × months · profile + heatmap</span>
+            </div>
+            <h3 class="cal-subhead" data-help-key="cal-month-bars">Monthly seasonality profile</h3>
+            <div id="cal-month-bars" class="cal-season-bars" aria-label="Monthly seasonality profile"></div>
+            <h3 class="cal-subhead" data-help-key="cal-month-quarters">Quarter &amp; half-year seasonality</h3>
+            <div id="cal-month-chips" class="cal-chips" aria-label="Quarter and half-year seasonality"></div>
+            <h3 class="cal-subhead" data-help-key="cal-month-heat">Year × month heatmap</h3>
+            <div id="cal-month-table" class="cal-table-host" aria-label="Monthly return heatmap"></div>
+            <p class="ts-chart-caption cal-caption">
+              <strong>Seasonality:</strong> bars = multi-year average return by month; % under bars = share of years that month was green.
+              Quarters / halves compound months in each block per year, then average.
+              <strong>Heatmap:</strong> cell = compounded return in that month-year.
+              Footer: <strong>Avg</strong>, <strong>Med</strong>, <strong>Win%</strong> — hover footer cells for explanations.
+            </p>
+          </section>
+
+          <section class="panel cal-panel">
+            <div class="panel-header">
+              <h2 data-help-key="cal-weeks">Weekly returns &amp; seasonality (ISO 1–53)</h2>
+              <span class="panel-meta">Years × ISO week · profile + heatmap</span>
+            </div>
+            <h3 class="cal-subhead" data-help-key="cal-week-bars">ISO-week seasonality profile</h3>
+            <div id="cal-week-bars" class="cal-season-bars cal-season-bars--wide" aria-label="Weekly seasonality profile"></div>
+            <h3 class="cal-subhead" data-help-key="cal-week-rank">Strongest &amp; weakest weeks</h3>
+            <div id="cal-week-rank" class="cal-chips" aria-label="Strongest and weakest ISO weeks"></div>
+            <h3 class="cal-subhead" data-help-key="cal-week-heat">Year × ISO week heatmap</h3>
+            <div id="cal-week-table" class="cal-table-host cal-table-host--wide" aria-label="Weekly return heatmap"></div>
+            <p class="ts-chart-caption cal-caption">
+              <strong>Seasonality:</strong> bar strip = average ISO-week return across years; chips rank strongest/weakest weeks.
+              <strong>Heatmap:</strong> compounded return inside each ISO week (Monday-based). Rows use ISO week-year near 1 Jan.
+              Footer: Avg · Med · Win%. Hover any cell for full detail.
+            </p>
+          </section>
+
+          <section class="panel cal-panel">
+            <div class="panel-header">
+              <h2 data-help-key="cal-dow">Day-of-week seasonality</h2>
+              <span class="panel-meta">Years × weekday · average daily return</span>
+            </div>
+            <h3 class="cal-subhead" data-help-key="cal-dow-bars">Weekday seasonality profile</h3>
+            <div id="cal-dow-bars" class="cal-dow-bars" aria-label="Average weekday returns"></div>
+            <h3 class="cal-subhead" data-help-key="cal-dow-heat">Year × weekday heatmap</h3>
+            <div id="cal-dow-table" class="cal-table-host" aria-label="Day of week return heatmap"></div>
+            <p class="ts-chart-caption cal-caption">
+              <strong>Bars:</strong> full-sample average daily return and up-day hit rate per weekday.
+              <strong>Heatmap:</strong> average daily return for that weekday <em>within each year</em> (not a year compound).
+              Crypto trades 24/7 — weekend columns are real sessions.
+            </p>
+          </section>
+
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header">
+              <h2 data-help-key="cal-commentary">Seasonality read</h2>
+              <span class="panel-meta">After load</span>
+            </div>
+            <div class="stats-commentary" id="cal-commentary">
+              <p>Load the calendar to summarize month, week, and weekday patterns.</p>
+            </div>
+          </section>
+          <div id="cal-tip" class="cal-tip" role="tooltip" hidden></div>
+        </div>
+        <div class="menu-screen" data-l1="misc" data-l2="whale-proxies" hidden>
+          <section class="panel mm-whales-panel" aria-label="Whale tracker">
+            <div class="panel-header">
+              <h2 data-help-key="mm-whales-overview">Whale tracker</h2>
+              <span class="panel-meta" id="mw-meta">Loading…</span>
+              <button type="button" class="mm-refresh-btn mw-refresh-btn" aria-label="Refresh whale tracker">↻</button>
+            </div>
+            <p class="mm-section-note">
+              Large on-chain transfers (≥10 BTC) from <a href="https://mempool.space" target="_blank" rel="noopener noreferrer">Mempool.space</a> —
+              <strong>including unidentified</strong> moves, not only labeled exchange wallets.
+              Tiers: notable 10 · large 50 · whale 100 · mega 500 · leviathan 1000+. Sample-based (recent mempool + recent blocks), not a full-chain indexer.
+            </p>
+            <div class="mm-loading" id="mw-loading">Loading whale tracker…</div>
             <div class="mm-error" id="mw-error" hidden></div>
             <section class="deriv-hero-strip mw-hero-strip" id="mw-heroes"></section>
-            <div class="panel mm-whales-subpanel">
+
+            <div class="panel mm-whales-subpanel mw-feed-panel">
               <div class="panel-header">
-                <h3 data-help-key="mw-exchange-panel">Exchange Address Tracking</h3>
+                <h3 data-help-key="mw-large-panel">Transfer feed</h3>
+                <span class="panel-meta">Identified + unidentified · filter below</span>
               </div>
-              <div class="deriv-table-wrap mw-table-wrap" id="mw-exchange-table"></div>
+              <div id="mw-feed-body" class="mw-large-tx-body"></div>
             </div>
+
             <div class="mw-whales-row">
               <div class="panel mm-whales-subpanel">
                 <div class="panel-header">
-                  <h3 data-help-key="mw-large-panel">Large Transaction Proxy</h3>
+                  <h3 data-help-key="mw-exchange-panel">Labeled exchange wallets</h3>
                 </div>
-                <div id="mw-large-tx-body" class="mw-large-tx-body"></div>
+                <div class="deriv-table-wrap mw-table-wrap" id="mw-exchange-table"></div>
               </div>
               <div class="mw-proxy-cards" id="mw-proxy-cards" aria-label="Whale proxy indicators"></div>
             </div>
@@ -4038,7 +4655,7 @@
         </div>
       </div>
       <div id="dashboard-valuation" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="valuation" data-l2="indicators">
+        <div class="menu-screen" data-l1="valuation" data-l2="overview" data-l2-shared="true">
           <section class="panel md-toolbar mb-toolbar">
             <div class="panel-header md-toolbar-header">
               <h2 data-help-key="mb-title">Bitcoin Indicators</h2>
@@ -4046,17 +4663,6 @@
             </div>
             <p class="md-stats" id="mb-stats"></p>
           </section>
-          <nav class="mb-bitcoin-subnav macro-drivers-subnav" aria-label="Bitcoin indicator sections">
-            <button type="button" class="macro-drivers-subtab mb-subtab active" data-mb-sub="overview">Overview</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="distribution">Distribution &amp; Whales</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="onchain">On-Chain Activity</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="intelligence">On-Chain Intelligence</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="miner">Miner &amp; Network</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="valuation">Valuation &amp; Cycles</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="sentiment">Sentiment &amp; Market</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="4y-cycle" title="Bitcoin 4-year cycle">4y Cycle</button>
-            <button type="button" class="macro-drivers-subtab mb-subtab" data-mb-sub="methodology">Sources</button>
-          </nav>
           <div class="md-kpi-section" id="mb-kpi-section">
             <div id="mb-kpis" class="md-kpi-grid"></div>
           </div>
@@ -4694,47 +5300,123 @@
             <div id="mb-methodology-body" class="md-methodology-body"></div>
           </dialog>
         </div>
-
       </div>
+
+      <div id="dashboard-law" class="dashboard-view" hidden>
+        <div class="menu-screen law-screen" data-l1="law" data-l2="overview" data-l2-shared="true">
+          <nav class="law-breadcrumb" id="law-breadcrumb" aria-label="Breadcrumb"></nav>
+          <div id="law-disclaimer-bar" class="law-disclaimer-slot"></div>
+          <div class="law-loading" id="law-loading" hidden>Loading legal status data…</div>
+          <div class="law-error" id="law-error" hidden></div>
+
+          <div id="law-panel-overview" class="law-stack">
+            <section class="panel">
+              <div class="panel-header">
+                <h2 data-help-key="law-overview">The Law</h2>
+                <span class="panel-meta" id="law-data-meta">Bitcoin legal status · educational</span>
+              </div>
+              <div class="law-panel-body">
+                <p class="law-hero-text" id="law-hero-text">Loading global overview…</p>
+                <div class="law-stats" id="law-stats" aria-label="Status counts"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>World map</h2>
+                <span class="panel-meta">Country fills + markers · click for detail</span>
+              </div>
+              <div class="law-panel-body">
+                <div class="law-map-legend" aria-hidden="true">
+                  <span><i class="law-leg-dot law-leg-dot--legal"></i> Legal / regulated</span>
+                  <span><i class="law-leg-dot law-leg-dot--restricted"></i> Restricted</span>
+                  <span><i class="law-leg-dot law-leg-dot--banned"></i> Banned</span>
+                  <span><i class="law-leg-dot law-leg-dot--unclear"></i> Unclear</span>
+                </div>
+                <div class="law-map-wrap">
+                  <svg id="law-map-svg" class="law-map-svg" role="img" aria-label="Bitcoin legal status world map"></svg>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Featured &amp; recent changes</h2>
+                <span class="panel-meta">Major markets and updates</span>
+              </div>
+              <div class="law-panel-body" id="law-featured"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Browse jurisdictions</h2>
+                <span class="panel-meta" id="law-list-count">Search and filter</span>
+              </div>
+              <div class="law-panel-body">
+                <div class="law-toolbar">
+                  <div class="law-search-wrap">
+                    <input type="search" id="law-search" class="law-search" placeholder="Search country…" autocomplete="off" aria-label="Search jurisdictions" />
+                    <div id="law-search-suggest" class="law-search-suggest" hidden></div>
+                  </div>
+                  <select id="law-filter-status" class="law-select" aria-label="Filter by status"></select>
+                  <select id="law-filter-region" class="law-select" aria-label="Filter by region"></select>
+                  <button type="button" class="law-btn law-btn--ghost" id="law-clear-filters">Clear</button>
+                </div>
+                <div class="law-filter-chips" id="law-filter-chips" aria-label="Quick filters"></div>
+                <p class="law-empty" id="law-list-empty" hidden>No jurisdictions match your filters.</p>
+                <div class="law-list" id="law-list" role="listbox" aria-label="Jurisdictions"></div>
+              </div>
+            </section>
+          </div>
+
+          <div id="law-panel-country" class="law-panel-country law-stack" hidden></div>
+          <div id="law-panel-utility" class="law-panel-utility law-stack" hidden></div>
+        </div>
+      </div>
+
     </div>
 
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <div id="xm-heat-tooltip" class="xm-heat-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=6"></script>
-    <script src="swr-cache.js?v=5"></script>
+    <script src="swr-cache.js?v=6"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=135"></script>
-    <script src="home.js?v=6"></script>
-    <script src="dashboard.js?v=58"></script>
+    <script src="help.js?v=171"></script>
+    <script src="home.js?v=11"></script>
+    <script src="dashboard.js?v=70"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=13"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=2"></script>
-    <script src="stats.js?v=23"></script>
-    <script src="stats-volatility.js?v=11"></script>
+    <script src="stats.js?v=27"></script>
+    <script src="stats-volatility.js?v=20"></script>
+    <script src="stats-timeseries.js?v=16"></script>
+    <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
     <script src="defi.js?v=3"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=4"></script>
-    <script src="macro-drivers.js?v=33"></script>
+    <script src="macro-drivers.js?v=34"></script>
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=3"></script>
-    <script src="misc-whales.js?v=1"></script>
-    <script src="misc-greed-fear.js?v=3"></script>
+    <script src="misc-calendar.js?v=3"></script>
+    <script src="misc-whales.js?v=2"></script>
+    <script src="misc-greed-fear.js?v=4"></script>
     <script src="misc-bitcoin-valuation-models.js?v=11"></script>
-    <script src="misc-bitcoin.js?v=33"></script>
-    <script src="valuation-cycle.js?v=10"></script>
+    <script src="misc-bitcoin.js?v=34"></script>
+    <script src="valuation-cycle.js?v=11"></script>
     <script src="super-summary.js?v=19"></script>
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
     <script src="chart-patterns.js?v=15"></script>
 
-    <script src="prediction-markets.js?v=2"></script>
+    <script src="law.js?v=5"></script>
+    <script src="prediction-markets.js?v=10"></script>
     <script src="cross-market-engine.js?v=12"></script>
     <script src="cross-market-ws.js?v=4"></script>
     <script src="cross-market-charts.js?v=20"></script>

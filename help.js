@@ -511,13 +511,129 @@ const METRIC_HELP = {
     title: "Category",
     body: "Multi-select topic tags: Bitcoin, Finance, Economics, Politics, Geopolitics. Empty selection shows all.",
   },
+  "law-overview": {
+    title: "The Law",
+    body: "Educational map of Bitcoin legal status by jurisdiction: holding, trading, payments, mining, legal-tender history, and headline individual tax notes. Color codes: green = legal/regulated, amber = restricted, red = banned, gray = unclear. Not legal, tax, or financial advice — always verify official sources. Data versioned with last-verified dates and primary links on each country card.",
+  },
   "prediction-markets-outlook": {
     title: "Market Outlook",
-    body: "Aggregated sentiment by topic, lead macro contracts, and automated arb scan across Polymarket/Kalshi: cross-venue spreads (>5pp), Yes+No sum discounts, and BTC strike-ladder inconsistencies. Edges are pre-fee; not financial advice.",
+    body: "Topic sentiment plus fee-aware arb cards. Hover any <strong>?</strong> for tooltips.<br><br>Each card: metrics (net edge, gross edge, fees + slippage, return on capital, $1,000 example, confidence), cost-stack or prediction-market-vs-Deribit chart, payoff strip, plain English + desk notes, leg table, linked markets, risks/checklist.<br><br><strong>Locked</strong> = still pays at least $1 face after fees/slippage if rules match.<br><strong>Relative value</strong> = prediction market vs Deribit <strong>Black–Scholes</strong> digital probability (option model — never abbreviated “BS” here).<br>Educational only.",
   },
   "mm-overview": {
     title: "Misc Metrics",
     body: "Cross-source BTC dashboard metrics from free public APIs only: CoinGecko, Mempool.space, Blockchain.info, and Alternative.me. Server cache refreshes every 5 minutes.",
+  },
+  "cal-overview": {
+    title: "Calendar seasonality",
+    body: "BTC/USD daily returns rearranged by <strong>calendar month</strong>, <strong>ISO week of year</strong>, and <strong>weekday</strong>. Green = positive, red = negative; stronger color = larger |return|. Same long daily history as Stats (prefers liquid Bitstamp). Hover cells and bars for detail; click <strong>?</strong> for definitions. Patterns are descriptive — not a trading edge.",
+  },
+  "cal-howto": {
+    title: "How to read this page",
+    body: "1) Color = sign and intensity of return. 2) Bars/chips = multi-year seasonality (prefer these over one hot cell). 3) Heatmap = year × period grid. 4) Footer Avg / Med / Win% summarize columns across years. 5) Hover any cell or bar for exact numbers and sample size.",
+  },
+  "cal-legend": {
+    title: "Color scale",
+    body: "Diverging palette: green positive, red negative, grey near zero. Intensity is scaled to about the 92nd percentile of |returns| <em>within that table</em>, so months and weeks are not forced onto the same absolute scale.",
+  },
+  "cal-sample": {
+    title: "Sample",
+    body: "Number of daily simple returns used after selecting the liquid history (Bitstamp when long enough). Longer samples give more year columns in the heatmaps.",
+  },
+  "cal-best-month": {
+    title: "Best avg month",
+    body: "Calendar month with the highest equal-weight average return across years (from the monthly seasonality profile). Compare to Win% — a high average with a low win rate is outlier-driven.",
+  },
+  "cal-worst-month": {
+    title: "Worst avg month",
+    body: "Calendar month with the lowest multi-year average return. Often a historically weak month for BTC, but regimes change.",
+  },
+  "cal-best-dow": {
+    title: "Best avg weekday",
+    body: "Weekday with the highest average daily simple return over the full sample. Hit rate (up-days) is shown when available. Crypto trades 24/7 — weekends count.",
+  },
+  "cal-worst-dow": {
+    title: "Worst avg weekday",
+    body: "Weekday with the lowest average daily return in the full sample.",
+  },
+  "cal-best-week": {
+    title: "Best avg ISO week",
+    body: "ISO week-of-year (1–53) with the highest multi-year average weekly return. Week numbering follows the ISO calendar (Monday-based).",
+  },
+  "cal-months": {
+    title: "Monthly returns & seasonality",
+    body: "Bars = multi-year average return by month and win rate (% of years green). Quarter/half chips compound months in each block per year, then average. Heatmap: rows = years, columns = Jan–Dec; cell = that month’s compounded return. Footer: Avg, Med, Win%. Hover cells/bars for details.",
+  },
+  "cal-month-bars": {
+    title: "Monthly seasonality bars",
+    body: "One bar per calendar month. Height ∝ |average return| across years (equal weight). Label shows average return; percentage is the share of years that month finished positive. Hover for median and year count.",
+  },
+  "cal-month-quarters": {
+    title: "Quarter seasonality",
+    body: "For each year, compounds Jan–Mar / Apr–Jun / Jul–Sep / Oct–Dec monthly returns into a quarterly return, then averages across years. Win% = share of years that quarter was green. More stable than single months when months are noisy.",
+  },
+  "cal-month-halves": {
+    title: "Half-year seasonality",
+    body: "H1 = Jan–Jun, H2 = Jul–Dec. Compounds available months in the half for each year, then averages. Useful for “first half vs second half” tape reads.",
+  },
+  "cal-month-heat": {
+    title: "Monthly heatmap",
+    body: "Each cell is the compounded simple return of all daily moves in that calendar month for that year. Empty = no data. Prefer footer Avg/Med/Win% over one extreme early-year cell.",
+  },
+  "cal-weeks": {
+    title: "Weekly returns & seasonality (ISO)",
+    body: "Bar strip = average return by ISO week of year; chips rank strongest/weakest weeks. Heatmap: ISO week-year × weeks 1–53; cell = compounded week return. Footer: Avg, Med, Win%. ISO week-year can differ from calendar year near 1 Jan.",
+  },
+  "cal-week-bars": {
+    title: "ISO-week seasonality bars",
+    body: "One thin bar per ISO week (1–53). Height ∝ |multi-year average weekly return|. Percentage under the bar ≈ share of years that week was positive. Scroll horizontally on small screens. Hover for median and n.",
+  },
+  "cal-week-rank": {
+    title: "Strongest / weakest weeks",
+    body: "Ranks ISO weeks by multi-year average return (requires enough year observations). Useful to spot recurring week-of-year strength or weakness without scanning all 52 columns.",
+  },
+  "cal-week-heat": {
+    title: "Weekly heatmap",
+    body: "Rows = ISO week-year; columns = ISO week number. Cell = compounded return of days in that week. Near year-end, a day may belong to week 52/53 of the prior ISO year — that is intentional ISO behaviour.",
+  },
+  "cal-dow": {
+    title: "Day-of-week seasonality",
+    body: "Bars = average daily return and up-day hit rate by weekday over the full sample. Heatmap cells = average daily return for that weekday within each year (not a full-year compound). BTC trades weekends.",
+  },
+  "cal-dow-bars": {
+    title: "Weekday seasonality bars",
+    body: "Height ∝ |average daily simple return| for that weekday across all days in the sample. %↑ = share of days with positive return (not years). Hover for n and exact average.",
+  },
+  "cal-dow-heat": {
+    title: "Weekday heatmap",
+    body: "Rows = calendar years; columns = Mon–Sun. Each cell averages that year’s daily simple returns on that weekday. Differs from the monthly table, which compounds a full month.",
+  },
+  "cal-row-avg": {
+    title: "Avg row",
+    body: "Equal-weight average of the column’s year values (only years with data). For months/weeks this is the average of yearly period returns; for weekdays it is the average of yearly weekday averages.",
+  },
+  "cal-row-med": {
+    title: "Med row",
+    body: "Median across years for that column. More robust than Avg when a few early high-vol years dominate the mean.",
+  },
+  "cal-row-win": {
+    title: "Win% row",
+    body: "Share of years in which that period’s return was strictly positive. 50% ≈ coin-flip by year; well above/below 50% is a stronger seasonal hint (still not a guarantee).",
+  },
+  "cal-compounded": {
+    title: "Compounded return",
+    body: "Product of (1 + daily simple returns) − 1 over the days in the period. Equivalent to last close vs first close of the period when using contiguous daily closes.",
+  },
+  "cal-simple-return": {
+    title: "Simple return",
+    body: "Close-to-close: (P_t − P_{t−1}) / P_{t−1}. Daily averages use this; monthly/weekly cells compound a sequence of them.",
+  },
+  "cal-iso-week": {
+    title: "ISO week",
+    body: "Week numbering from the ISO calendar: weeks start Monday; week 1 is the week with the year’s first Thursday. The ISO week-year of a day near 1 Jan can be the previous or next calendar year.",
+  },
+  "cal-commentary": {
+    title: "Seasonality read",
+    body: "Automated summary of strongest/weakest average months, quarters, weeks, and weekdays from this sample. Descriptive only — not investment advice and not a live trading signal.",
   },
   "mm-btc-dominance": {
     title: "Bitcoin Dominance",
@@ -556,8 +672,32 @@ const METRIC_HELP = {
     body: "Derived ratios are approximations for dashboard context, not trading signals. Sources are free-tier public endpoints with no API keys; partial failures may leave some cards empty.",
   },
   "mm-whales-overview": {
-    title: "Whale Proxies",
-    body: "Free Mempool.space-based whale activity proxies: labeled exchange wallet balances/flows, large-transaction scanner (≥100 BTC), dormant-movement spike score, and rich-address snapshots. Not a substitute for paid entity attribution.",
+    title: "Whale tracker",
+    body: "Large on-chain BTC transfers from Mempool.space (free): feed of ≥10 BTC moves <strong>including unidentified</strong> addresses, plus labeled exchange wallet balances/flows. Tiers: notable 10 · large 50 · whale 100 · mega 500 · leviathan 1000+. Sample-based (mempool + recent blocks), not a full-chain indexer or paid entity graph.",
+  },
+  "mw-unknown": {
+    title: "Unidentified transfers",
+    body: "Transfers in the sample where neither the dominant input nor output matches this panel’s public exchange labels. Still real on-chain volume — often OTC, self-custody, mixers, or unlabeled exchange wallets.",
+  },
+  "mw-buckets": {
+    title: "Size buckets",
+    body: "Count of 24h sample transfers by size tier. Helps see whether the tape is many mid-size moves or a few leviathan txs.",
+  },
+  "mw-top-tx": {
+    title: "Largest in sample",
+    body: "Biggest single transfer currently in the scanned window (by BTC). Links to Mempool.space for full vin/vout detail.",
+  },
+  "mw-flow-dir": {
+    title: "Exchange flow (sample)",
+    body: "How many sample transfers touch a labeled wallet as unknown→exchange vs exchange→unknown. Only this panel’s address book — not all exchanges.",
+  },
+  "mw-ex-net": {
+    title: "Tracked 24h net",
+    body: "Sum of 24h inflow minus outflow across labeled wallets in this panel. Positive ≈ net deposits into tracked addresses; not a complete CEX flow metric.",
+  },
+  "mw-ex-net-row": {
+    title: "Net (row)",
+    body: "24h inflow − outflow for that labeled wallet.",
   },
   "mw-exchange-panel": {
     title: "Exchange Address Tracking",
@@ -588,24 +728,24 @@ const METRIC_HELP = {
     body: "Count of confirmed transactions touching this address in the last 24 hours.",
   },
   "mw-large-panel": {
-    title: "Large Transaction Proxy",
-    body: "Scans mempool recent txs plus the first page of txs from the last 10 blocks for outputs ≥100 BTC. Sample-based, not exhaustive.",
+    title: "Transfer feed",
+    body: "Whale Alert–style list of large transfers (≥10 BTC) from mempool + recent blocks. Shows from → to, size tier, direction (to/from exchange when labeled), confirmed vs unconfirmed. Unidentified rows are included on purpose. Filters: All · Unidentified · Labeled · Mempool · ≥100 BTC · exchange direction.",
   },
   "mw-large-1h": {
-    title: "Large Txs (1h)",
-    body: "Count and total BTC volume of ≥100 BTC transactions detected in the last hour.",
+    title: "Transfers (1h)",
+    body: "Count and total BTC volume of ≥10 BTC transfers in the last hour within the sample window (not full mempool).",
   },
   "mw-large-24h": {
-    title: "Large Txs (24h)",
-    body: "Count and total BTC volume of ≥100 BTC transactions in the last 24 hours (sample window).",
+    title: "Transfers (24h)",
+    body: "Count and total BTC volume of ≥10 BTC transfers in the last 24 hours within the sample window.",
   },
   "mw-large-spark": {
-    title: "24h Large-Tx Activity",
-    body: "Hourly count of large transactions in the sampled window.",
+    title: "24h activity",
+    body: "Hourly count of sampled large transfers over the last 24 hours.",
   },
   "mw-dormant": {
-    title: "Dormant Movement Proxy",
-    body: "CDD-style approximation: spike score when ≥100 BTC movements in the last hour exceed the 24h hourly average. True coin-age dormancy requires input-age data from paid providers.",
+    title: "Activity spike proxy",
+    body: "Compares last-hour transfer rate to the 24h hourly average for ≥10 BTC sample moves. High score = bursty large-value tape. Not true coin-days-destroyed.",
   },
   "mw-rich-100": {
     title: "Addresses >100 BTC",
@@ -669,7 +809,7 @@ const METRIC_HELP = {
   },
   "kg-grok-tip": {
     title: "Grok LLM (optional)",
-    body: "Set XAI_API_KEY in Vercel or .env.local (default model grok-3-mini). Powers bulk discover search planning, node/edge extraction after ingest, and RAG answers. For Google results also set GOOGLE_API_KEY + GOOGLE_CSE_ID (Programmable Search Engine).",
+    body: "Set XAI_API_KEY in Vercel or .env.local (default model grok-4.5). Powers bulk discover search planning, node/edge extraction after ingest, and RAG answers. For Google results also set GOOGLE_API_KEY + GOOGLE_CSE_ID (Programmable Search Engine).",
   },
   "kg-workspace-select": {
     title: "Workspace selector",
@@ -905,16 +1045,16 @@ const METRIC_HELP = {
     body: "Largest open-interest strikes across the chain. Concentrated OI at specific levels can act as magnets or barriers as dealers hedge delta exposure around those strikes. When one strike dominates (≥4× the next), its bar uses a scale break; call/put split is preserved.",
   },
   "stat-ann-mean": {
-    title: "Annualized Mean Return",
-    body: "Average daily simple return multiplied by 252 trading days. A coarse estimate of expected yearly drift if recent daily behavior persisted.",
+    title: "CAGR (Compound Annual Growth Rate)",
+    body: "Geometric annualized return over the <strong>liquid return sample</strong> (Bitstamp daily closes): (end ÷ start)^(1/years) − 1. This is the constant yearly rate that compounds to the observed total return. Early sparse Blockchain.info prints and linear gap-fills are excluded so CAGR is not inflated by unreliable ~$0.07 era prices. The metrics table also lists arithmetic mean × 365 for comparison.",
   },
   "stat-ann-vol": {
     title: "Annualized Volatility",
-    body: "Standard deviation of daily returns scaled by √252. Measures typical year-to-year dispersion if daily variance stayed constant.",
+    body: "Sample standard deviation of daily simple returns scaled by √365. Crypto trades every calendar day, so the series is annualized with 365 (not the equity-market 252 convention). Computed on the same liquid Bitstamp sample as the other headline KPIs.",
   },
   "stat-sharpe": {
     title: "Sharpe Ratio",
-    body: "Annualized mean return divided by annualized volatility, assuming zero risk-free rate. Higher values mean more return per unit of risk over the sample.",
+    body: "Arithmetic annualized mean (daily mean × 365) divided by annualized volatility (σ × √365), assuming zero risk-free rate. Uses the standard arithmetic Sharpe definition — not CAGR in the numerator. Higher values mean more return per unit of risk over the liquid sample.",
   },
   "stat-skew": {
     title: "Skewness",
@@ -922,7 +1062,183 @@ const METRIC_HELP = {
   },
   "stat-max-dd": {
     title: "Maximum Drawdown",
-    body: "Largest peak-to-trough decline in the cumulative return series over the sample. Measures the worst buy-and-hold loss from a local high.",
+    body: "Largest peak-to-trough decline in the cumulative return series over the liquid sample. Measures the worst buy-and-hold loss from a local high (e.g. cycle tops to cycle bottoms).",
+  },
+  "stat-win-rate": {
+    title: "Win Rate",
+    body: "Share of days with a positive simple close-to-close return. Near 50% is normal for BTC; long-term edge shows up more in average win size and CAGR than in win rate alone.",
+  },
+  "stat-total-ret": {
+    title: "Total Return",
+    body: "End price ÷ start price − 1 over the liquid sample. When the multiple is ≥10×, the hero shows capital multiple (e.g. 5,873×) instead of a huge percentage. Subtitle shows sample length in days and years.",
+  },
+  "stat-pair": {
+    title: "Pair & sample",
+    body: "BTC/USD return statistics use continuous <strong>Bitstamp</strong> daily closes (liquid venue). A longer Blockchain.info + interpolated stitch exists for power-law / long-horizon tools, but is not used for CAGR, vol, or Sharpe — those early fills from pennies overstate long-run returns.",
+  },
+  "stat-cumulative-chart": {
+    title: "Cumulative Return chart",
+    body: "Growth of $1 invested at the start of the liquid sample, compounding daily simple returns. Hover for date and cumulative %. Path includes full bull/bear cycles in the Bitstamp window.",
+  },
+  "stat-histogram-chart": {
+    title: "Return Distribution",
+    body: "Histogram of daily simple returns over the liquid sample. Shows how often small moves vs extreme up/down days occur. Fat tails (heavy extremes) are typical for BTC versus a normal bell curve.",
+  },
+  "stat-rolling-vol-chart": {
+    title: "Rolling Volatility",
+    body: "30-day trailing standard deviation of daily returns, annualized with √365. Spikes mark stress regimes (e.g. crashes); compression marks quieter markets.",
+  },
+  "corr-sample": {
+    title: "Sample",
+    body: "Number of BTC daily log-return observations in the downloaded window (Yahoo BTC-USD). Cross-asset ρ only uses days both series trade.",
+  },
+  "corr-top": {
+    title: "Highest ρ vs BTC",
+    body: "Asset with the largest full-sample Pearson correlation against Bitcoin daily log returns.",
+  },
+  "corr-low": {
+    title: "Lowest ρ vs BTC",
+    body: "Asset with the smallest (most negative or least positive) full-sample ρ vs BTC.",
+  },
+  "corr-engine": {
+    title: "Engine",
+    body: "Prices from Yahoo Finance via yfinance. Correlations are Pearson on close-to-close log returns.",
+  },
+  "corr-matrix": {
+    title: "BTC correlation matrix",
+    body: "Pearson correlation matrix among Bitcoin and flagship assets. Use Sample size (1y–5y or All) to set how many trailing overlapping days enter each ρ. Cell color scales with ρ (− red, + teal). Hover for pair and n.",
+  },
+  "corr-matrix-sample": {
+    title: "Matrix sample size",
+    body: "Trailing window of overlapping daily log returns used for every cell in the matrix (and the ρ vs Bitcoin table). All = full history; 1y–5y = last N calendar days of overlap per pair.",
+  },
+  "corr-btc-pairs": {
+    title: "ρ vs Bitcoin",
+    body: "Each asset’s full-sample and trailing 90-day correlation with BTC, sorted by |full ρ|. Click a row to load that asset on the rolling chart.",
+  },
+  "corr-col-asset": { title: "Asset", body: "Instrument name and group tag (crypto, equity, commodity, rates, fx, vol, stock)." },
+  "corr-col-full": { title: "ρ full", body: "Pearson correlation over the full overlapping sample with BTC." },
+  "corr-col-90": { title: "ρ 90d", body: "Same Pearson ρ using only the last ~90 overlapping return days." },
+  "corr-col-n": { title: "N days", body: "Number of overlapping daily return observations used for the full-sample ρ." },
+  "corr-rolling": {
+    title: "Rolling correlation vs BTC",
+    body: "Pearson ρ of <strong>daily log returns</strong> (close-to-close), not price levels. Chart Y-axis auto-scales to the series range. Windows: 1y–5y fixed, or All = expanding ρ. Long windows look smoother than short ones — that is normal.",
+  },
+  "corr-asset-sel": {
+    title: "Asset",
+    body: "Which instrument’s rolling correlation vs Bitcoin to plot.",
+  },
+  "corr-window-sel": {
+    title: "Window",
+    body: "1y–5y = fixed trailing window on aligned daily returns. All = expanding correlation using every day from the start of the overlap (min ~90 days). Longer windows are smoother; All shows the long-run co-movement path.",
+  },
+  "corr-commentary": {
+    title: "Correlation read",
+    body: "Automated summary of strongest/weakest links to BTC and a note on average equity co-movement. Descriptive only — not a trading signal.",
+  },
+  "stat-metrics-table": {
+    title: "Descriptive Statistics table",
+    body: "Full set of sample moments and percentiles on daily simple returns (liquid Bitstamp window). Use the ? next to each metric for the formula. Values match the hero strip where labels overlap.",
+  },
+  "stat-metrics-col-metric": {
+    title: "Metric",
+    body: "Name of the descriptive statistic. Hover the ? on each row for how it is calculated.",
+  },
+  "stat-metrics-col-value": {
+    title: "Value",
+    body: "Computed value for the liquid return sample. Percents are daily or annualized as stated in the metric name.",
+  },
+  "stat-recent-table": {
+    title: "Recent Daily Returns",
+    body: "Last ~30 calendar days: UTC date, Bitstamp close (USD), and day-over-day simple return. Green = up day, red = down day.",
+  },
+  "stat-recent-col-date": {
+    title: "Date",
+    body: "Calendar day of the close (UTC session for the daily bar).",
+  },
+  "stat-recent-col-close": {
+    title: "Close",
+    body: "Daily closing price in USD for BTC/USD on Bitstamp.",
+  },
+  "stat-recent-col-return": {
+    title: "Return",
+    body: "Simple return vs prior close: (close − prev) / prev.",
+  },
+  "stat-monthly-table": {
+    title: "Monthly Returns",
+    body: "Calendar-month simple returns for the last 24 months in the sample: month-end close vs prior month-end close, plus count of daily bars in that month.",
+  },
+  "stat-monthly-col-month": {
+    title: "Month",
+    body: "Calendar month label (UTC).",
+  },
+  "stat-monthly-col-return": {
+    title: "Month return",
+    body: "Simple return from the last close of the previous month to the last close of this month.",
+  },
+  "stat-monthly-col-days": {
+    title: "Days",
+    body: "Number of daily bars included in that calendar month.",
+  },
+  "stat-analysis": {
+    title: "Analysis commentary",
+    body: "Auto-generated narrative summarizing sample length, CAGR, vol, Sharpe, skew, win rate, tails, and recent months. Refresh when the price history updates.",
+  },
+  "stat-mean-daily": {
+    title: "Mean (daily)",
+    body: "Arithmetic average of daily simple returns. Annualized as mean × 365 for the arithmetic ann. mean and Sharpe numerator.",
+  },
+  "stat-median-daily": {
+    title: "Median (daily)",
+    body: "50th percentile of daily returns. Less sensitive to extreme crash/pump days than the mean.",
+  },
+  "stat-std-daily": {
+    title: "Std deviation (daily)",
+    body: "Sample standard deviation (n−1) of daily simple returns. Annualized vol = this value × √365.",
+  },
+  "stat-arith-ann": {
+    title: "Arithmetic annualized mean",
+    body: "Daily mean × 365. Not path-correct for multi-year buy-and-hold (use CAGR for that). Used in the standard Sharpe ratio.",
+  },
+  "stat-kurtosis": {
+    title: "Excess kurtosis",
+    body: "Fourth standardized moment minus 3. Positive values mean fatter tails than a normal distribution — large daily moves are more common than Gaussian models imply.",
+  },
+  "stat-avg-gain-loss": {
+    title: "Avg gain / avg loss",
+    body: "Mean of positive daily returns and mean of absolute negative daily returns. Shows whether up-days or down-days are larger on average.",
+  },
+  "stat-min-day": {
+    title: "Min daily return",
+    body: "Worst single-day simple return in the liquid sample.",
+  },
+  "stat-max-day": {
+    title: "Max daily return",
+    body: "Best single-day simple return in the liquid sample.",
+  },
+  "stat-p01": {
+    title: "1st percentile",
+    body: "Daily return exceeded only 1% of the time to the downside — extreme left-tail threshold.",
+  },
+  "stat-p05": {
+    title: "5th percentile",
+    body: "Daily return threshold for the worst 5% of days — related to historical 95% VaR on the loss side.",
+  },
+  "stat-p95": {
+    title: "95th percentile",
+    body: "Daily return exceeded only 5% of the time to the upside — large green-day threshold.",
+  },
+  "stat-p99": {
+    title: "99th percentile",
+    body: "Daily return threshold for the best 1% of days — extreme right tail.",
+  },
+  "stat-log-mean": {
+    title: "Log-return mean",
+    body: "Average of ln(close_t / close_{t−1}). Closely tied to geometric growth; exp(mean × 365) − 1 approximates CAGR when sampling is continuous.",
+  },
+  "stat-log-std": {
+    title: "Log-return std",
+    body: "Sample standard deviation of daily log returns. Often used for continuous-time vol; similar magnitude to simple-return std for BTC.",
   },
   "risk-vol-30": {
     title: "30-Day Realized Volatility",
@@ -1346,7 +1662,7 @@ const METRIC_HELP = {
   },
   "home-page": {
     title: "The Buccaneers — Home",
-    body: "Landing page for the full Bitcoin dashboard collection. The banner highlights the Buccaneers command-deck theme; each card below opens a live section — Market, On Chain, Exchanges, Derivatives, ETFs, DATCO treasuries, Stats, TradFi equity insights, DeFi, Macro, and News. Your last visited section is remembered in this browser.",
+    body: "Landing page for the full Bitcoin dashboard collection (14 decks). Highlights include The Law (global BTC legal status map), Market → Prediction Markets (fee-aware arbs & Deribit relative value), Stats (correlation, volatility, time series), and Valuation (on-chain cycles & 4y board). Super Summary is the paid multi-domain final report. A short original Buccaneers fanfare plus Grok TTS motto plays on home land (mute with Buccaneers). Cards below open each live section; your last visit is remembered in this browser.",
   },
   "equity-global-insights": {
     title: "Global Equity Insights",
@@ -2140,7 +2456,7 @@ const METRIC_HELP = {
   },
   "vc-valuation-zones": {
     title: "Valuation zone extremes",
-    body: "On-chain valuation at the Cycle 4 peak vs as-of, from the same metric store as Valuation → Indicators (MVRV Z, NUPL, MVRV, spot/realized, Puell).<br><br><strong>Historical extremes</strong> = classic cycle bands for context.<br><strong>At cycle peak / Now</strong> = nearest series print to the cycle top date and the as-of date, with a short zone label.<br><br>Series are typically ~4 years deep — values before the window show as —.",
+    body: "On-chain valuation at the Cycle 4 peak vs as-of, from the same metric store as Valuation (MVRV Z, NUPL, MVRV, spot/realized, Puell).<br><br><strong>Historical extremes</strong> = classic cycle bands for context.<br><strong>At cycle peak / Now</strong> = nearest series print to the cycle top date and the as-of date, with a short zone label.<br><br>Series are typically ~4 years deep — values before the window show as —.",
   },
   "vc-mvrv-z": {
     title: "MVRV Z-Score",
@@ -2180,7 +2496,7 @@ const METRIC_HELP = {
   },
   "vc-pi-cycle": {
     title: "Pi Cycle Top indicator",
-    body: "111-day MA vs 2× 350-day MA. Cross of 111 above 2×350 has historically appeared near several cycle tops. Known early/false prints; use with phase, distribution, and liquidity — not alone. Full series under Valuation → Indicators.",
+    body: "111-day MA vs 2× 350-day MA. Cross of 111 above 2×350 has historically appeared near several cycle tops. Known early/false prints; use with phase, distribution, and liquidity — not alone. Full series under Valuation → Valuation &amp; Cycles.",
   },
   "vc-phases": {
     title: "The four phases",
@@ -2238,9 +2554,227 @@ const METRIC_HELP = {
     title: "Volatility",
     body: "ARCH/GARCH family estimation on BTC log returns (√365 annualization). Compare models by AIC/BIC, inspect conditional vol, forecasts, news-impact curves, and desk risk metrics. Prefer <code>pip install arch</code> for full model coverage; otherwise a NumPy GARCH(1,1) fallback is used.",
   },
+  "ts-section": {
+    title: "Time Series",
+    body: "Univariate, with-exog, and multivariate models for BTC/USD at 1d / 7d / 30d: baselines, ARIMA/SARIMA, ETS, Prophet, ARIMAX (SPX/DXY/rates + hashrate/stablecoins/ETF flow when available), Kalman local level/trend and UC+cycle, ridge lags, VAR/SVAR, VECM. Prefer <code>pip install statsmodels</code>; optional <code>pip install prophet</code>. OOS backtest: RMSE, MAPE, hit rate.",
+  },
+  "ts-col-family": {
+    title: "Family (Fam)",
+    body: "<strong>U</strong> = univariate · <strong>M</strong> = multivariate (VAR/SVAR/VECM) · <strong>X</strong> = with exogenous drivers (ARIMAX). Hover the cell for the full label.",
+  },
+  "ts-howto": {
+    title: "How to read this page",
+    body: "Workflow: (1) Choose a range — estimation does not start yet. (2) Press <strong>Run all models</strong> and wait for the progress bar. (3) Use the three horizon tables (sorted by RMSE). (4) Click a row for charts. Educational only.",
+  },
+  "ts-range-info": {
+    title: "Selected estimation period",
+    body: "Updates when you change the Range control. Explains sample length, warm-up days, expected <strong>N OOS</strong> (thinned expanding-window origins — not calendar days), and a rough runtime. Press <strong>Run all models</strong> to start estimation.",
+  },
+  "ts-col-fcst": {
+    title: "Forecast $",
+    body: "Point forecast of BTC/USD at this table’s horizon (1d, 7d, or 30d) for the model row.",
+  },
+  "ts-col-ret": {
+    title: "Ret %",
+    body: "Implied cumulative log return from last sample close to the horizon forecast, shown as a percent.",
+  },
+  "ts-col-rmse-ret": {
+    title: "RMSE ret",
+    body: "Out-of-sample root mean squared error of log-return forecasts at this horizon (expanding window). Lower is better.",
+  },
+  "ts-col-param-name": {
+    title: "Parameter",
+    body: "Coefficient name in the selected model (e.g. AR lags, intercept, VAR matrix entries).",
+  },
+  "ts-col-param-est": {
+    title: "Estimate",
+    body: "Point estimate of that coefficient from the full-sample fit (not the OOS backtest).",
+  },
+  "ts-col-bt-h": {
+    title: "Horizon",
+    body: "Forecast horizon in calendar days used for the expanding-window backtest row.",
+  },
+  "ts-last": {
+    title: "Last price",
+    body: "Latest close in the estimation sample (not necessarily live spot).",
+  },
+  "ts-fcast": {
+    title: "Price forecasts",
+    body: "Point forecasts of BTC/USD at 1, 7, and 30 calendar days from the desk mark model (selected primarily by 7d OOS directional hit rate).",
+  },
+  "ts-ret": {
+    title: "Implied log returns",
+    body: "Cumulative log-return path implied by the selected model’s multi-step forecast to each horizon.",
+  },
+  "ts-best": {
+    title: "Desk mark (hit-primary)",
+    body: "Suite selection maximizes 7d OOS directional hit rate; ties use 1d/30d hit, then RMSE, MAE, AIC, BIC. Subtitle lists HIT/AIC/BIC leaders by criterion.",
+  },
+  "ts-engine": {
+    title: "Engines",
+    body: "sm = statsmodels (ARIMA/ETS/UC/VECM/SARIMAX); yf = yfinance macro; optional prophet. NumPy baselines always run.",
+  },
+  "ts-macro": {
+    title: "Macro / exog",
+    body: "SPX, DXY, rates (TNX/TLT), and on-chain series (hashrate, stablecoin supply, ETF flow when BGeometrics cache has them) for ARIMAX / VAR / VECM.",
+  },
+  "ts-col-model": { title: "Model", body: "Specification name." },
+  "ts-col-f1": { title: "Forecast 1d", body: "1-day ahead point price forecast." },
+  "ts-col-f7": { title: "Forecast 7d", body: "1-week ahead point price forecast." },
+  "ts-col-f30": { title: "Forecast 30d", body: "1-month ahead point price forecast." },
+  "ts-col-rmse1": {
+    title: "RMSE 1d",
+    body: "OOS root mean squared error of 1-day log-return forecasts (lower better).",
+  },
+  "ts-col-rmse7": {
+    title: "RMSE 7d",
+    body: "OOS RMSE of 7-day cumulative log-return forecasts — primary weekly ranking metric.",
+  },
+  "ts-col-rmse30": {
+    title: "RMSE 30d",
+    body: "OOS RMSE of 30-day cumulative log-return forecasts.",
+  },
+  "ts-col-r1": {
+    title: "Return 1d",
+    body: "Model-implied 1-day log return (percent).",
+  },
+  "ts-col-r7": {
+    title: "Return 7d",
+    body: "Model-implied 7-day cumulative log return (percent).",
+  },
+  "ts-col-r30": {
+    title: "Return 30d",
+    body: "Model-implied 30-day cumulative log return (percent).",
+  },
+  "ts-col-mae7": {
+    title: "MAE 7d",
+    body: "OOS mean absolute error of 7-day log-return forecasts (lower better).",
+  },
+  "ts-col-hit1": {
+    title: "Hit rate 1d",
+    body: "Share of backtest origins where the sign of the 1d predicted return matches realized.",
+  },
+  "ts-col-hit7": {
+    title: "Hit rate 7d",
+    body: "Share of backtest origins where the sign of the 7d predicted return matches realized.",
+  },
+  "ts-col-hit30": {
+    title: "Hit rate 30d",
+    body: "Share of backtest origins where the sign of the 30d predicted return matches realized.",
+  },
+  "ts-col-mape7": {
+    title: "MAPE 7d",
+    body: "Mean absolute percentage error on 7d price-level forecasts.",
+  },
+  "ts-col-mape30": {
+    title: "MAPE 30d",
+    body: "Mean absolute percentage error on 30d price-level forecasts.",
+  },
+  "ts-col-aic": {
+    title: "AIC",
+    body: "Akaike information criterion (in-sample). Lower is better. Measures fit vs complexity on the estimation sample — not the same as OOS accuracy. Secondary badge only.",
+  },
+  "ts-col-params": { title: "Params", body: "Number of estimated coefficients (approx)." },
+  "ts-col-status": {
+    title: "Status",
+    body: "ok · fallback (simpler engine substituted) · failed. Hover for error detail when failed.",
+  },
+  "ts-col-rank": {
+    title: "Rank",
+    body: "Criterion badges for this run: <strong>BEST + HIT</strong> (top directional hit at this horizon), <strong>RMSE</strong>, <strong>MAE</strong>, <strong>MAPE</strong>, suite-wide <strong>AIC</strong> / <strong>BIC</strong>, and <strong>MARK</strong> on the 7d table for the desk selection. Badges wrap so they do not overlap names.",
+  },
+  "ts-col-hit": {
+    title: "Hit %",
+    body: "Directional hit rate: share of expanding-window OOS origins where the sign of the predicted h-day log return matches realized. Primary accuracy metric for ranking and desk mark selection. ~50% ≈ coin-flip.",
+  },
+  "ts-col-bic": {
+    title: "BIC",
+    body: "Bayesian information criterion (in-sample). Lower is better; penalizes parameters more than AIC. Secondary badge only — does not outrank OOS hit rate.",
+  },
+  "ts-selection-why": {
+    title: "Why this model",
+    body: "Explains the suite desk mark: maximize 7d OOS directional hit; break ties with 1d/30d hit, then lower RMSE, MAE, AIC, BIC. Lists criterion badges earned and leaders by metric. Always compare to Naive (RW).",
+  },
+  "ts-compare": {
+    title: "Model comparison by horizon",
+    body: "Three full-width tables (1d → 7d → 30d), each sorted by OOS <strong>hit %</strong> then RMSE. Hit is first among accuracy columns. Rank badges: BEST/HIT, RMSE, MAE, MAPE, AIC, BIC, MARK. Click a row for charts.",
+  },
+  "ts-h1": {
+    title: "1-day horizon",
+    body: "Next-day forecast and 1-day OOS metrics. Sorted by directional hit; BEST marks the hit leader.",
+  },
+  "ts-h7": {
+    title: "7-day horizon",
+    body: "One-week ahead — primary desk horizon. Suite MARK is chosen mainly on 7d hit (ties → RMSE/MAE/AIC/BIC).",
+  },
+  "ts-h30": {
+    title: "30-day horizon",
+    body: "One-month ahead forecast and monthly OOS metrics (hit-primary sort).",
+  },
+  "ts-col-delta": {
+    title: "Δ vs last",
+    body: "Forecast price minus last sample close, as a percent of last close (same information as Ret % when the model is pure log-return based).",
+  },
+  "ts-col-mae": {
+    title: "MAE ret",
+    body: "Mean absolute error of OOS log-return forecasts at this horizon (lower better).",
+  },
+  "ts-col-rmse-px": {
+    title: "RMSE $",
+    body: "Root mean squared error of OOS price-level forecasts in dollars (lower better).",
+  },
+  "ts-col-mape": {
+    title: "MAPE %",
+    body: "Mean absolute percentage error on OOS price forecasts at this horizon.",
+  },
+  "ts-col-n": {
+    title: "N OOS",
+    body: "Number of <strong>expanding-window origin dates</strong> used for this horizon — <em>not</em> the length of the estimation sample. The suite warms up ~1 year, then places origins every few weeks across the rest of the history (thinned for speed). A 10Y sample therefore does not produce ~3650 OOS points; it produces on the order of ~80–120 origins. Longer ranges increase N OOS up to a hard cap so the full model suite stays runnable.",
+  },
+
+  "ts-chart-price": {
+    title: "Price + forecast path",
+    body: "Always the <strong>selected</strong> model. Blue = recent daily closes; amber dashed = multi-step USD forecast path. Hover for date/horizon and price. Point path only — no confidence band.",
+  },
+  "ts-chart-fcast": {
+    title: "Horizon forecast fan",
+    body: "Selected model’s USD forecast for days 1…30 ahead. Grey dashed line = last close; green dots = 1d / 7d / 30d. Hover for exact USD and implied log return.",
+  },
+  "ts-chart-bt": {
+    title: "Backtest RMSE by horizon",
+    body: "Selected model only. Bars = expanding-window OOS RMSE of log returns at 1d, 7d, 30d. Shorter is better. Hover for RMSE, hit rate, and N origins.",
+  },
+  "ts-chart-resid": {
+    title: "Residual histogram",
+    body: "Selected model’s approximate 1-step residuals (actual − fitted return). Hover a bin for range and count. Centered near zero is healthier; fat tails mean understated extremes.",
+  },
+  "ts-irf": {
+    title: "SVAR impulse responses",
+    body: "Only when <strong>SVAR</strong> is selected. Plots BTC return response to structural shocks (DXY / SPX / BTC) under recursive Cholesky identification. Empty for other models.",
+  },
+  "ts-detail": {
+    title: "Model detail",
+    body: "Equation, fitted parameters, and desk notes for the selected model. Updates when you click a comparison-table row.",
+  },
+  "ts-bt-table": {
+    title: "Backtest detail",
+    body: "Full numeric OOS metrics for the selected model at 1d / 7d / 30d (N, RMSE ret, MAE ret, RMSE $, MAPE, directional hit). Same definitions as the horizon comparison tables.",
+  },
+  "ts-guide": {
+    title: "Selection guide",
+    body: "When to prefer baselines, ARIMA, ETS, ridge, or VAR/SVAR.",
+  },
+  "ts-run-commentary": {
+    title: "Run commentary",
+    body: "Automated desk read of the forecasting pass, including whether the OOS leader beats the Naive random walk.",
+  },
+  "ts-trader-memo": {
+    title: "Trader memo",
+    body: "Plain-language memo after estimation. Starts with a <strong>combined reading of all finished models</strong> (votes counts, skill-weighted blend, agreement). Then quality, investment suitability, stance, hold length, stop/TP scaffolding, sizing, and a junior-friendly checklist. Educational only — not investment advice.",
+  },
   "vol-cond": {
     title: "Conditional volatility",
-    body: "Model-implied expected volatility given information up to yesterday — not a trailing historical window. Annualized with √365 for crypto.",
+    body: "Model-implied expected volatility given information up to the last sample day — not a trailing historical window. Annualized with √365 for crypto. For the selected model, the chart’s last point is the same quantity as that model’s table “Cond. vol” cell (last fitted σ × √365).",
   },
   "vol-fcast": {
     title: "Volatility forecast",
@@ -2308,7 +2842,7 @@ const METRIC_HELP = {
   },
   "vol-col-condvol": {
     title: "Cond. vol (ann.)",
-    body: "Latest conditional volatility annualized with √365. Model-implied expected vol given information up to the last sample day.",
+    body: "Latest fitted conditional volatility for that row’s model, annualized with √365: σ_t from the last in-sample day × √365. Same definition as the last point on the Conditional volatility chart when that model is selected (the chart plots the full σ path; the table only shows the endpoint).",
   },
   "vol-col-status": {
     title: "Status",
@@ -2324,11 +2858,11 @@ const METRIC_HELP = {
   },
   "vol-run-commentary": {
     title: "Run commentary",
-    body: "Automated desk read of the estimation pass (sample, IC scope, QLIKE mark, regime) plus a structured <strong>Deribit position &amp; trade plan</strong>: stance, structure, IV−RV entry gate, invalidation, sizing, and hedges. Rule-based from this suite only — educational, not a live order ticket. Live DVOL/IV must be checked at the desk.",
+    body: "Automated desk read of the estimation pass (sample, IC scope, QLIKE mark, regime) plus a junior-friendly <strong>Deribit position &amp; trade plan</strong>: plain-English long/short vol stance, IV−RV entry gate, kill rules, sizing, and <strong>example multi-leg tickets</strong> (strikes, Friday expiries, BUY/SELL legs). Rule-based from this suite only — educational, not a live order ticket. Always re-check live DVOL/IV and instrument codes on Deribit before any fill.",
   },
   "vol-param-name": {
-    title: "Parameter",
-    body: "Coefficient name in the fitted specification (e.g. omega, alpha, beta for GARCH; RV_d / RV_w / RV_m for HAR).",
+    title: "Parameter & role",
+    body: "Each row shows the <strong>Greek symbol</strong> from the model equation (e.g. α₁, β, ω), the software name (e.g. alpha[1]), a short <strong>role</strong> tag (news reaction, vol memory, leverage…), and a plain-language description of what that coefficient does for BTC volatility.",
   },
   "vol-param-est": {
     title: "Estimate",
@@ -2390,6 +2924,194 @@ const METRIC_HELP = {
     title: "Desk verdict",
     body: "Rule-based fitness score (0–100) from OOS QLIKE, engine quality, and persistence. States whether the model is usable as a Deribit RV mark, a cross-check only, or unfit for option P&amp;L decisions. Not a trade recommendation.",
   },
+  "vol-dist": {
+    title: "Error distribution",
+    body: "Assumed distribution of standardized residuals in the GARCH likelihood: Student-t (fatter tails, default for BTC), Normal, GED, or skewed-t. Affects fit and VaR/ES under the model, not the RV path shape alone.",
+  },
+  "vol-run-all": {
+    title: "Run selected · Run all · Export",
+    body: "<strong>Run selected</strong> estimates only the checked models for the current range and distribution (faster). <strong>Run all</strong> checks every catalog model and estimates them for the same range and distribution, then saves that selection. <strong>Export CSV</strong> downloads the last comparison table. Prefs persist in this browser.",
+  },
+  "vol-model-picker": {
+    title: "Models to estimate",
+    body: "Multi-select catalog of ARCH/GARCH candidates. Only checked models are estimated when you press Run selected — prefs (models + distribution + range) persist in <code>localStorage</code>. Defaults: <strong>10Y</strong> range and <strong>Student-t</strong> distribution. Presets: All, Defaults, Core, Asymmetric, None. Tags: <strong>arch</strong> needs the Python package; <strong>lite</strong> runs without it (EWMA/HAR or GARCH fallback).",
+  },
+  "vol-range": {
+    title: "Sample range",
+    body: "How many calendar days of BTC history to estimate on. Default is <strong>10Y</strong> (3650 days) with Student-t errors. Longer samples stabilize long-run vol but may mix regimes; shorter samples track the current cluster more tightly.",
+  },
+  "vol-chart-cond": {
+    title: "Conditional volatility chart",
+    body: "Time series of model-implied expected volatility (√365 ann.) for the selected/detail model. Last point matches that model’s table Cond. vol when the series is not thinned away from the endpoint.",
+  },
+  "vol-chart-forecast": {
+    title: "Multi-step forecast",
+    body: "Annualized conditional vol path for horizons 1…30 days from the selected model. Use 7d/30d anchors when comparing to Deribit weeklies/monthlies.",
+  },
+  "vol-chart-nic": {
+    title: "News impact curve",
+    body: "How next-period variance responds to a same-day return shock (±%). Asymmetric curves (EGARCH/GJR) load more on negative shocks — relevant for crash premium on Deribit.",
+  },
+  "vol-chart-resid": {
+    title: "Standardized residuals",
+    body: "Histogram of (return ÷ conditional σ). Should look roughly like the chosen error distribution if the model is well specified; heavy tails or skew residual patterns flag misspecification.",
+  },
+  "vol-detail": {
+    title: "Model detail",
+    body: "Equation, plain-language why-for-BTC blurb, and coefficient table for the selected comparison row. Click a different row to switch charts and this panel.",
+  },
+  "vol-bt-horizon": {
+    title: "Horizon",
+    body: "Forecast length in calendar days for the expanding-window OOS evaluation (1, 7, 14, 30).",
+  },
+  "vol-guide-prefer": {
+    title: "Prefer",
+    body: "Model family the desk would lean on under the scenario in the When column.",
+  },
+  "vol-guide-when": {
+    title: "When",
+    body: "Market or data condition that favors that family (e.g. strong leverage effect → GJR/EGARCH; multi-scale RV → HAR).",
+  },
+  "vol-glossary": {
+    title: "Glossary",
+    body: "Short definitions of core suite terms (AIC, QLIKE, persistence, etc.) returned with the estimation payload.",
+  },
+  "vol-plan-section": {
+    title: "Deribit position &amp; trade plan",
+    body: "Rule-based stance from the suite mark model, junior primer, click rules, ranked example tickets with theo BS stats/payoffs, emergency dry-run buttons, and a summary table. Educational — not a live order ticket.",
+  },
+  "vol-plan-primer": {
+    title: "Read this first (junior)",
+    body: "Plain-English long vol vs short vol, and how to use IV − model RV before clicking anything on Deribit.",
+  },
+  "vol-plan-why": {
+    title: "Why this stance",
+    body: "Links the suite regime (cond. vol vs long-run), 1d/7d/30d RV anchors, and desk confidence to the long / short / neutral / paper stance.",
+  },
+  "vol-plan-rules": {
+    title: "Rules before you click",
+    body: "Entry gate, kill criteria, greeks intent, sizing, hedge with BTC-PERPETUAL, and hard don’ts (naked shorts, AIC-only sizing).",
+  },
+  "vol-plan-tickets": {
+    title: "Example Deribit tickets",
+    body: "Ranked multi-leg sketches with real sample spot, Friday expiries, BS premiums/greeks, payoff chart, and emergency actions. Short-vol tickets assume rich IV vs model for the entry thesis. Always re-check live mids.",
+  },
+  "vol-plan-summary": {
+    title: "Ranked summary table",
+    body: "All suggested tickets sorted by composite score (42% attractiveness + 58% success). Win zone is the theo expiry grid share with P&amp;L &gt; 0 — not a live probability of profit.",
+  },
+  "vol-ticket-score": {
+    title: "Desk rank &amp; scores",
+    body: "<strong>Attract</strong> = edge / R:R / structure fit. <strong>Success</strong> = win-zone, defined risk, delta neutrality, simplicity. <strong>Composite</strong> ranks the list. Grade A–D is a coarse band on composite.",
+  },
+  "vol-ticket-stats": {
+    title: "Ticket theo stats",
+    body: "Black–Scholes (r=0) summary for the multi-leg book at model IV (with optional vol-pt bump). Premium, max P/L, breakevens, greeks, and ±1σ/±2σ expiry scenarios.",
+  },
+  "vol-ticket-iv": {
+    title: "Theo IV used",
+    body: "Implied vol fed into BS for this ticket: model 7d or 30d RV, plus any entry premium assumption (e.g. +6 vol pts for short-vol thesis).",
+  },
+  "vol-ticket-premium": {
+    title: "Net premium",
+    body: "Sum of signed BS leg prices in USD per structure (credit received or debit paid). Not a live Deribit mid.",
+  },
+  "vol-ticket-maxprofit": {
+    title: "Max profit (expiry)",
+    body: "Best expiry P&amp;L on the scanned spot grid (or uncapped for some long-wing structures).",
+  },
+  "vol-ticket-maxloss": {
+    title: "Max loss (expiry)",
+    body: "Worst expiry P&amp;L on the scanned spot grid — use as structure risk, then apply tighter emergency stops.",
+  },
+  "vol-ticket-be": {
+    title: "Breakeven(s)",
+    body: "Spot levels where expiry P&amp;L crosses zero on the theo payoff curve (yellow dots on the chart).",
+  },
+  "vol-ticket-greeks": {
+    title: "Net Greeks",
+    body: "Aggregate Δ (unitless), Γ (per $1 spot), ν (per 1 vol point), Θ ($/day) for the option legs at theo IV. Perp hedges are not included in these numbers.",
+  },
+  "vol-ticket-sigma1": {
+    title: "±1σ expiry P&amp;L",
+    body: "Theo expiry P&amp;L if spot finishes one model daily-σ move below/above spot (using ticket IV).",
+  },
+  "vol-ticket-sigma2": {
+    title: "±2σ expiry P&amp;L",
+    body: "Same as ±1σ but at two daily standard deviations — stress moves for emergency planning.",
+  },
+  "vol-ticket-bands": {
+    title: "1σ / 2σ spot bands",
+    body: "Spot intervals around the sample spot using daily σ = IV/√365. Used in emergency “leave the band” rules.",
+  },
+  "vol-ticket-dte": {
+    title: "DTE / T",
+    body: "Calendar days to the ticket expiry (or front expiry for multi-expiry books) and year fraction used in BS.",
+  },
+  "vol-ticket-payoff": {
+    title: "Payoff chart",
+    body: "Expiry P&amp;L (USD) vs spot. Teal path = structure; dashed line = sample spot; yellow dots = breakevens. Approximation for multi-expiry books.",
+  },
+  "vol-ticket-emergency": {
+    title: "Emergency actions",
+    body: "Numeric kill rules (loss cap, ±2σ band, IV jump/crush) plus preliminary buttons that log a dry-run checklist. Live Deribit routing is not connected yet — confirm dialogs do not send orders.",
+  },
+  "vol-sum-rank": {
+    title: "Rank",
+    body: "1 = best composite desk score in this suggestion list.",
+  },
+  "vol-sum-trade": {
+    title: "Trade",
+    body: "Structure name. PAPER means process-only / no live risk from the suite stance.",
+  },
+  "vol-sum-style": {
+    title: "Style",
+    body: "Core = standard junior-friendly structures. Advanced = more legs, multi-expiry, or path-dependent risk.",
+  },
+  "vol-sum-grade": {
+    title: "Grade",
+    body: "Letter band on composite score (A … D). Prefer A/B+ for first live size if any.",
+  },
+  "vol-sum-attract": {
+    title: "Attractiveness",
+    body: "0–100 score for edge and structure appeal (R:R, credit vs max loss, bias fit).",
+  },
+  "vol-sum-success": {
+    title: "Chance of success",
+    body: "0–100 score from theo win-zone, defined risk, delta neutrality, and operational simplicity — not a live POP.",
+  },
+  "vol-sum-score": {
+    title: "Composite score",
+    body: "0.42 × Attract + 0.58 × Success. Sorts the ticket list.",
+  },
+  "vol-sum-winzone": {
+    title: "Win zone",
+    body: "Share of the theo expiry spot grid with P&amp;L &gt; 0 under ticket IV.",
+  },
+  "vol-sum-premium": {
+    title: "Premium",
+    body: "Theo net credit (Cr) or debit (Db) in USD.",
+  },
+  "vol-sum-maxloss": {
+    title: "Max loss",
+    body: "Worst theo expiry P&amp;L on the scanned grid.",
+  },
+  "vol-sum-maxprofit": {
+    title: "Max profit",
+    body: "Best theo expiry P&amp;L on the scanned grid (or uncapped note).",
+  },
+  "vol-sum-rr": {
+    title: "R:R",
+    body: "max profit ÷ |max loss| on the theo grid (capped constructions only).",
+  },
+  "vol-sum-legs": {
+    title: "Legs",
+    body: "Count of option legs (calls/puts). More legs ⇒ higher operational load.",
+  },
+  "vol-sum-dte": {
+    title: "DTE",
+    body: "Days to expiry used for ranking (front expiry if multi-expiry).",
+  },
   "ss-title": {
     title: "Final Report · Super Summary",
     body: "Paid client-style multi-domain report on Home (1 USDT or 1 USDC). After unlock, press Generate to build a fact pack + narrative with charts/tables under each section. Download PDF exports the on-screen report. Wallet addresses via env (SS_PAY_USDT_* / SS_PAY_USDC_*). Not under Valuation.",
@@ -2404,7 +3126,7 @@ const METRIC_HELP = {
   },
   "vc-subtab": {
     title: "4y Cycle",
-    body: "Halving-cycle analysis: status clocks, overlays, spiral &amp; radar, drawdown, ROI, bottom timing, valuation zones, S2F/Pi, phases, and full statistics. Under Valuation → Indicators, next to Sentiment &amp; Market.",
+    body: "Halving-cycle analysis: status clocks, overlays, spiral &amp; radar, drawdown, ROI, bottom timing, valuation zones, S2F/Pi, phases, and full statistics. Under Valuation → 4y Cycle, next to Sentiment &amp; Market.",
   },
 };
 

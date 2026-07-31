@@ -4597,12 +4597,60 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    # Client-side routes only — never rewrite static assets (relative URLs under /law/…)
+    _SPA_ASSET_SUFFIXES = (
+        ".js",
+        ".css",
+        ".map",
+        ".json",
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".webp",
+        ".svg",
+        ".ico",
+        ".woff",
+        ".woff2",
+        ".ttf",
+        ".eot",
+        ".txt",
+        ".xml",
+        ".pdf",
+        ".html",
+        ".wasm",
+        ".mp3",
+        ".mp4",
+        ".webm",
+    )
+
     def do_GET(self):
         if self.path.startswith("/api/"):
             from api_dispatch import handle_api
 
             handle_api(self)
             return
+
+        # SPA deep links (e.g. /law/united-states) — serve index.html for nav routes only.
+        # Do NOT rewrite /law/dashboard.js etc.; that returns HTML as JS and kills the app.
+        raw = self.path.split("?", 1)[0]
+        try:
+            from urllib.parse import unquote
+
+            raw = unquote(raw)
+        except Exception:
+            pass
+        if raw not in ("", "/") and not raw.startswith("/api/"):
+            rel = raw.lstrip("/")
+            lower = rel.lower()
+            if ".." not in rel.split("/") and rel:
+                if any(lower.endswith(suf) for suf in self._SPA_ASSET_SUFFIXES):
+                    # Missing asset → real 404 (do not fall back to index.html)
+                    pass
+                else:
+                    candidate = ROOT / rel
+                    if not candidate.is_file():
+                        self.path = "/index.html"
         return super().do_GET()
 
     def do_POST(self):

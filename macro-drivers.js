@@ -717,13 +717,15 @@ function mdUpdateControlVisibility() {
 }
 
 function mdShowTab(tab) {
-  mdActiveTab = tab;
-  document.querySelectorAll(".macro-drivers-subtab").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.mdSub === tab);
-  });
-  document.querySelectorAll(".macro-drivers-panel").forEach((p) => {
-    p.hidden = p.dataset.mdSub !== tab;
-  });
+  mdActiveTab = tab || "overview";
+  // Panel visibility under Macro Drivers (shared L2 shell; L3 is top menu-l3)
+  document
+    .querySelectorAll(
+      '.menu-screen[data-l1="macro"][data-l2="drivers"] .macro-drivers-panel[data-md-sub]',
+    )
+    .forEach((p) => {
+      p.hidden = p.dataset.mdSub !== mdActiveTab;
+    });
   document.querySelectorAll(".md-economy-subtab").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.mdEco === mdEconomyTab);
   });
@@ -737,10 +739,33 @@ function mdShowTab(tab) {
   const titleEl = mdEl("md-table-title");
   if (titleEl) {
     titleEl.textContent =
-      tab === "economy" ? titles[mdEconomyTab] || "Economy" : tab === "overview" ? "Global snapshot" : titleEl.textContent;
+      mdActiveTab === "economy"
+        ? titles[mdEconomyTab] || "Economy"
+        : mdActiveTab === "overview"
+          ? "Global snapshot"
+          : titleEl.textContent;
   }
   mdUpdateControlVisibility();
   window.decorateHelpLabels?.(mdEl("md-filters-panel"));
+}
+
+/** Activate a Macro Drivers L3 tab and load panel-specific data. */
+function mdActivateTab(tab) {
+  mdShowTab(tab);
+  if (tab === "overview") {
+    mdRenderTable();
+    void mdRenderMap();
+  } else if (tab === "economy") {
+    mdRenderTable();
+  } else if (tab === "charts") {
+    void mdRenderCharts();
+  } else if (tab === "liquidity") {
+    if (mdLiquidity?.global?.series?.length) mdLqRenderAll();
+    else void loadMacroLiquidity();
+  } else if (tab === "commentary") {
+    mdRenderCommentary();
+  }
+  window.decorateHelpLabels?.(document.getElementById("dashboard-macro"));
 }
 
 function mdRenderAll(opts = {}) {
@@ -1719,22 +1744,7 @@ function mdBindUi() {
   mdEl("md-methodology-btn")?.addEventListener("click", mdOpenMethodology);
   mdEl("md-methodology-close")?.addEventListener("click", () => mdEl("md-methodology-dialog")?.close());
 
-  document.querySelectorAll(".macro-drivers-subtab").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      mdShowTab(btn.dataset.mdSub);
-      if (btn.dataset.mdSub === "overview") {
-        mdRenderTable();
-        void mdRenderMap();
-      }
-      if (btn.dataset.mdSub === "economy") mdRenderTable();
-      if (btn.dataset.mdSub === "charts") void mdRenderCharts();
-      if (btn.dataset.mdSub === "liquidity") {
-        if (mdLiquidity?.global?.series?.length) mdLqRenderAll();
-        else void loadMacroLiquidity();
-      }
-      window.decorateHelpLabels?.(document.getElementById("dashboard-macro"));
-    });
-  });
+  // In-page subtabs removed — navigation is MENU_TREE L3 (Overview / Economy / Charts / …)
 
   mdEl("md-lq-entity")?.addEventListener("change", (e) => {
     mdLqState.entity = e.target.value;
@@ -1809,14 +1819,19 @@ async function mdReloadSnapshot(force = false) {
   return mdSnapshotInflight;
 }
 
-async function loadMacroDrivers(force = false) {
-  if (mdInflight) return mdInflight;
+async function loadMacroDrivers(force = false, tab) {
+  if (tab) mdActiveTab = tab;
+  if (mdInflight) {
+    // Still switch panel while a load is in flight
+    if (tab) mdActivateTab(tab);
+    return mdInflight;
+  }
 
   mdInflight = (async () => {
     Object.assign(mdState, mdLoadSettings());
     await mdLoadMeta(force);
     await mdLoadSnapshot(force);
-    mdShowTab(mdActiveTab);
+    mdActivateTab(mdActiveTab);
     mdRenderAll({ fromCache: mdSnapshotFromCache });
   })()
     .catch((err) => {
@@ -1846,3 +1861,5 @@ function initMacroDrivers() {
 window.initMacroDrivers = initMacroDrivers;
 window.loadMacroDrivers = loadMacroDrivers;
 window.loadMacroLiquidity = loadMacroLiquidity;
+window.mdShowTab = mdShowTab;
+window.mdActivateTab = mdActivateTab;

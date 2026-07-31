@@ -71,7 +71,7 @@ def _default_model() -> str:
     return (
         (os.environ.get("SS_LLM_MODEL") or "").strip()
         or (os.environ.get("KG_LLM_MODEL") or "").strip()
-        or "grok-3-mini"
+        or "grok-4.5"
     )
 
 
@@ -845,8 +845,8 @@ def _call_xai(fact_pack: dict[str, Any], *, timeout: int | None = None) -> dict[
     for m in (
         primary,
         (os.environ.get("SS_LLM_FALLBACK_MODEL") or "").strip(),
+        "grok-4.5",
         "grok-3-mini",
-        "grok-3",
     ):
         if m and m not in models:
             models.append(m)

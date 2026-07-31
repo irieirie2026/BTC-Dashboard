@@ -314,7 +314,7 @@ async function loadMiscGreedFear(force = false) {
     fngRenderAll();
     window.mbRefreshSentimentFngCommentary?.();
     window.decorateHelpLabels?.(
-      document.querySelector('#dashboard-valuation .menu-screen[data-l2="indicators"]'),
+      document.querySelector('#dashboard-valuation .menu-screen[data-l1="valuation"]'),
     );
   } catch (err) {
     if (gauge) gauge.innerHTML = `<p class="misc-fng-empty">Load failed — ${err.message || "try again"}</p>`;

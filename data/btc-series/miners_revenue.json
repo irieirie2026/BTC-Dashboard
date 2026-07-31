@@ -7995,19 +7995,29 @@
       "timestamp": 1784419200,
       "date": "2026-07-19",
       "value": 35924593.96592124
+    },
+    {
+      "timestamp": 1784764800,
+      "date": "2026-07-23",
+      "value": 28366911.134696368
+    },
+    {
+      "timestamp": 1785110400,
+      "date": "2026-07-27",
+      "value": 34806779.22227191
     }
   ],
   "latest": {
-    "timestamp": 1784419200,
-    "date": "2026-07-19",
-    "value": 35924593.96592124
+    "timestamp": 1785110400,
+    "date": "2026-07-27",
+    "value": 34806779.22227191
   },
   "source": "Blockchain.info",
   "unit": "USD",
   "note": null,
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-23T14:53:11Z",
-  "storedAt": "2026-07-23T14:53:11Z",
-  "pointCount": 1599
+  "fetchedAt": "2026-07-31T14:23:56Z",
+  "storedAt": "2026-07-31T14:23:56Z",
+  "pointCount": 1601
 }

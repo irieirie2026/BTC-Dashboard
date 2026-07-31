@@ -99,6 +99,14 @@ function setHeaderStamp(l1, opts = {}) {
   const el = elId ? swrEl(elId) : null;
   if (!el) return;
 
+  // Only stamp the active L1 so a background revalidate on Market/Stats
+  // does not overwrite the visible header while the user is elsewhere.
+  const activeL1 = document.body?.dataset?.l1;
+  if (activeL1 && l1 && activeL1 !== l1) return;
+
+  // Market Live/Binance stamp lives on #last-update; never write into a hidden bar.
+  if (el.hidden || el.closest?.("[hidden]")) return;
+
   el.textContent = formatPanelMeta(opts);
   el.classList.toggle(
     "header-meta--stale",

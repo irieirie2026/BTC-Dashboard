@@ -206,6 +206,210 @@ MODEL_CATALOG: list[dict[str, Any]] = [
         "arch": {"vol": "FIGARCH", "p": 1, "q": 1},
     },
     {
+        "id": "arch2",
+        "name": "ARCH(2)",
+        "family": "core",
+        "orders": {"p": 2, "q": 0},
+        "blurb": "Two lags of squared residuals only (no GARCH memory of σ²).",
+        "whyBtc": "Short-memory shock response; baseline for multi-day jump clusters without variance lag.",
+        "equation": "σ²_t = ω + α₁ε²_{t-1} + α₂ε²_{t-2}",
+        "equationNote": "No β·σ² term — volatility forgets faster than GARCH unless α lags are large.",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Weight on ε²_{t-1}.",
+            "alpha[2]": "Weight on ε²_{t-2}.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "ARCH", "p": 2, "q": 0},
+    },
+    {
+        "id": "arch5",
+        "name": "ARCH(5)",
+        "family": "core",
+        "orders": {"p": 5, "q": 0},
+        "blurb": "Five ARCH lags — richer short-run news response without σ² lag.",
+        "whyBtc": "Can approximate a week of squared-return memory; often over-parameterized vs GARCH(1,1).",
+        "equation": "σ²_t = ω + Σ_{i=1..5} α_i ε²_{t-i}",
+        "equationNote": "Many α parameters; use when you want pure shock lags without GARCH β.",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Lag-1 squared residual weight.",
+            "alpha[2]": "Lag-2 squared residual weight.",
+            "alpha[3]": "Lag-3 squared residual weight.",
+            "alpha[4]": "Lag-4 squared residual weight.",
+            "alpha[5]": "Lag-5 squared residual weight.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "ARCH", "p": 5, "q": 0},
+    },
+    {
+        "id": "garch22",
+        "name": "GARCH(2,2)",
+        "family": "core",
+        "orders": {"p": 2, "q": 2},
+        "blurb": "Two ARCH and two GARCH lags for flexible short/medium memory.",
+        "whyBtc": "Richer clustering than (1,1); watch overfit on short samples.",
+        "equation": "σ²_t = ω + α₁ε²_{t-1} + α₂ε²_{t-2} + β₁σ²_{t-1} + β₂σ²_{t-2}",
+        "equationNote": "Persistence ≈ α₁+α₂+β₁+β₂.",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Shock lag 1.",
+            "alpha[2]": "Shock lag 2.",
+            "beta[1]": "Variance lag 1.",
+            "beta[2]": "Variance lag 2.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "Garch", "p": 2, "q": 2},
+    },
+    {
+        "id": "egarch12",
+        "name": "EGARCH(1,2)",
+        "family": "asymmetric",
+        "orders": {"p": 1, "q": 2, "o": 1},
+        "blurb": "EGARCH with two log-variance lags for slower asymmetric mean reversion.",
+        "whyBtc": "When leverage persists beyond one lag after dumps.",
+        "equation": "ln(σ²_t) = ω + β₁ ln(σ²_{t-1}) + β₂ ln(σ²_{t-2}) + α g(z_{t-1}) + γ z_{t-1}",
+        "equationNote": "Same leverage idea as EGARCH(1,1) with extra β lag.",
+        "paramHelp": {
+            "omega": "Log-variance level.",
+            "alpha[1]": "Size effect of |z|.",
+            "gamma[1]": "Sign/leverage effect.",
+            "beta[1]": "Log-variance lag 1.",
+            "beta[2]": "Log-variance lag 2.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "EGARCH", "p": 1, "q": 2, "o": 1},
+    },
+    {
+        "id": "egarch21",
+        "name": "EGARCH(2,1)",
+        "family": "asymmetric",
+        "orders": {"p": 2, "q": 1, "o": 1},
+        "blurb": "EGARCH with two news lags (p) for multi-day shock asymmetry.",
+        "whyBtc": "Captures consecutive dump days lifting vol more than a single lag allows.",
+        "equation": "ln(σ²_t) = ω + β ln(σ²_{t-1}) + α₁ g(z_{t-1}) + α₂ g(z_{t-2}) + γ terms",
+        "equationNote": "Two magnitude lags on standardized residuals.",
+        "paramHelp": {
+            "omega": "Log-variance level.",
+            "alpha[1]": "Size effect lag 1.",
+            "alpha[2]": "Size effect lag 2.",
+            "gamma[1]": "Leverage lag 1.",
+            "beta[1]": "Log-variance memory.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "EGARCH", "p": 2, "q": 1, "o": 1},
+    },
+    {
+        "id": "gjr12",
+        "name": "GJR-GARCH(1,2)",
+        "family": "asymmetric",
+        "orders": {"p": 1, "q": 2, "o": 1},
+        "blurb": "GJR leverage with two variance lags.",
+        "whyBtc": "Crash asymmetry plus slower mean reversion of σ².",
+        "equation": "σ²_t = ω + (α+γ I_{ε<0})ε²_{t-1} + β₁σ²_{t-1} + β₂σ²_{t-2}",
+        "equationNote": "γ > 0 adds variance after negative returns; two β lags.",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Base shock weight.",
+            "gamma[1]": "Extra weight on down days.",
+            "beta[1]": "Variance lag 1.",
+            "beta[2]": "Variance lag 2.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "GARCH", "p": 1, "q": 2, "o": 1},
+    },
+    {
+        "id": "gjr21",
+        "name": "GJR-GARCH(2,1)",
+        "family": "asymmetric",
+        "orders": {"p": 2, "q": 1, "o": 1},
+        "blurb": "GJR with two ARCH lags for multi-day asymmetric shock response.",
+        "whyBtc": "Useful after liquidation cascades spanning several sessions.",
+        "equation": "σ²_t = ω + Σ_i (α_i + γ_i I)ε²_{t-i} + β σ²_{t-1}",
+        "equationNote": "Asymmetry on multiple shock lags.",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Shock lag 1.",
+            "alpha[2]": "Shock lag 2.",
+            "gamma[1]": "Leverage lag 1.",
+            "gamma[2]": "Leverage lag 2 (if estimated).",
+            "beta[1]": "Variance memory.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "GARCH", "p": 2, "q": 1, "o": 1},
+    },
+    {
+        "id": "aparch12",
+        "name": "APARCH(1,2)",
+        "family": "asymmetric",
+        "orders": {"p": 1, "q": 2, "o": 1},
+        "blurb": "APARCH with two powered-variance lags — flexible news curve + slower decay.",
+        "whyBtc": "Heavier model; use when APARCH(1,1) underfits persistence.",
+        "equation": "σ^δ_t = ω + α(|ε|−γε)^δ + β₁σ^δ_{t-1} + β₂σ^δ_{t-2}",
+        "equationNote": "δ power; γ asymmetry; two β lags.",
+        "paramHelp": {
+            "omega": "Floor for powered variance.",
+            "alpha[1]": "Weight on powered residual.",
+            "gamma[1]": "Asymmetry.",
+            "beta[1]": "Powered variance lag 1.",
+            "beta[2]": "Powered variance lag 2.",
+            "delta": "Power on volatility.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "APARCH", "p": 1, "q": 2, "o": 1},
+    },
+    {
+        "id": "harch",
+        "name": "HARCH(1,5,22)",
+        "family": "long_memory",
+        "orders": {},
+        "blurb": "Heterogeneous ARCH: variance depends on multi-horizon squared-return aggregates.",
+        "whyBtc": "Mimics HAR-style multi-scale memory inside a GARCH-style MLE (daily / weekly / monthly horizons).",
+        "equation": "σ²_t = ω + α₁ ε²_{t-1} + α₅ (avg of last 5 ε²) + α₂₂ (avg of last 22 ε²)",
+        "equationNote": "Lags [1,5,22] match day / week / month trading horizons (approx).",
+        "paramHelp": {
+            "omega": "Variance floor.",
+            "alpha[1]": "Daily horizon shock weight.",
+            "alpha[5]": "Weekly aggregated shock weight.",
+            "alpha[22]": "Monthly aggregated shock weight.",
+            "mu": "Mean return.",
+            "const": "Mean return.",
+            "nu": "Student-t df.",
+        },
+        "arch": {"vol": "HARCH", "lags": [1, 5, 22]},
+    },
+    {
+        "id": "ewma",
+        "name": "EWMA / RiskMetrics (λ=0.94)",
+        "family": "benchmark",
+        "orders": {},
+        "blurb": "Exponentially weighted moving variance — no MLE; classic RiskMetrics smoother.",
+        "whyBtc": "Fast baseline for cond. vol path and desk comparison; not a full likelihood model (AIC/BIC N/A).",
+        "equation": "σ²_t = λ σ²_{t-1} + (1−λ) ε²_{t-1},  λ=0.94",
+        "equationNote": "No estimated parameters; λ fixed. IC not comparable to GARCH MLE.",
+        "paramHelp": {
+            "lambda": "Fixed decay 0.94 (RiskMetrics daily).",
+        },
+        "arch": None,
+        "special": "ewma",
+    },
+    {
         "id": "har_rv",
         "name": "HAR-RV",
         "family": "benchmark",
@@ -226,6 +430,31 @@ MODEL_CATALOG: list[dict[str, Any]] = [
         "arch": None,
     },
 ]
+
+
+def list_volatility_catalog() -> list[dict[str, Any]]:
+    """Lightweight catalog for UI model picker (no estimation)."""
+    return [
+        {
+            "id": m["id"],
+            "name": m["name"],
+            "family": m["family"],
+            "blurb": m.get("blurb") or "",
+            "whyBtc": m.get("whyBtc") or "",
+            "requiresArch": m.get("arch") is not None and m.get("special") != "ewma",
+            "defaultOn": m["id"]
+            in (
+                "garch11",
+                "egarch11",
+                "gjr11",
+                "aparch11",
+                "figarch11",
+                "har_rv",
+                "ewma",
+            ),
+        }
+        for m in MODEL_CATALOG
+    ]
 
 # Backtest horizons (calendar days of crypto returns)
 BT_HORIZONS = (1, 7, 14, 30)
@@ -599,14 +828,87 @@ def _fit_garch11_numpy(returns: np.ndarray) -> dict[str, Any]:
     }
 
 
+def _fit_ewma(data: dict[str, Any], lam: float = 0.94) -> dict[str, Any]:
+    """RiskMetrics EWMA variance — no MLE; fixed λ."""
+    r = np.asarray(data["returns"], dtype=float) * 100.0  # percent, match arch scale
+    n = len(r)
+    if n < 30:
+        return {"ok": False, "error": "Need ≥30 returns for EWMA"}
+    var = np.empty(n, dtype=float)
+    var[0] = float(np.var(r[: min(30, n)]))
+    for t in range(1, n):
+        var[t] = lam * var[t - 1] + (1.0 - lam) * (r[t - 1] ** 2)
+    var = np.maximum(var, 1e-12)
+    sigma = np.sqrt(var) / 100.0  # back to return units
+    std_resid = (r / 100.0) / sigma
+    # Forecast: iterate EWMA with zero future shocks (mean-revert to last var)
+    last_v = float(var[-1])
+    forecasts = []
+    v_h = last_v
+    for h in range(1, 31):
+        # Under zero innovation, EWMA holds last variance if we plug ε=0:
+        # σ²_t = λ σ²_{t-1} + (1-λ)·0 → pure decay of last level is wrong;
+        # RiskMetrics multi-step often holds constant daily var.
+        forecasts.append(_ann_vol(math.sqrt(max(v_h, 1e-12)) / 100.0))
+    unc = _ann_vol(float(np.mean(sigma)))
+    return {
+        "ok": True,
+        "params": [
+            {
+                "name": "lambda",
+                "estimate": float(lam),
+                "stdError": None,
+                "tStat": None,
+                "pValue": None,
+            }
+        ],
+        "logLikelihood": None,
+        "aic": None,
+        "bic": None,
+        "hqic": None,
+        "nParams": 0,
+        "persistence": float(lam),
+        "halfLifeDays": _half_life(lam),
+        "unconditionalVolAnn": unc,
+        "condVol": sigma.tolist(),
+        "stdResid": std_resid.tolist(),
+        "forecastAnn": forecasts,
+        "currentCondVolAnn": _ann_vol(float(sigma[-1])),
+        "engine": "ewma-riskmetrics",
+        "icComparable": False,
+        "icNote": "EWMA has fixed λ — no MLE AIC/BIC.",
+        "distribution": "n/a",
+    }
+
+
 def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist: str) -> dict[str, Any]:
     if catalog["id"] == "har_rv":
         return _fit_har(data)
+    if catalog.get("special") == "ewma" or catalog["id"] == "ewma":
+        return _fit_ewma(data, lam=0.94)
 
     returns = data["returns"]
     if not ARCH_AVAILABLE or catalog.get("arch") is None:
         # Fallback: only GARCH-like via numpy
-        if catalog["id"] in ("garch11", "arch11", "garch12", "garch21", "gjr11", "egarch11", "aparch11", "figarch11"):
+        if catalog["id"] in (
+            "garch11",
+            "arch11",
+            "arch2",
+            "arch5",
+            "garch12",
+            "garch21",
+            "garch22",
+            "gjr11",
+            "gjr12",
+            "gjr21",
+            "egarch11",
+            "egarch12",
+            "egarch21",
+            "aparch11",
+            "aparch12",
+            "figarch11",
+            "harch",
+        ):
             out = _fit_garch11_numpy(returns)
             if catalog["id"] != "garch11":
                 out["warning"] = (
@@ -630,12 +932,27 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
     }
     dist_key = dist_map.get((dist or "t").lower(), "t")
     try:
-        am = arch_model(y, mean="Constant", dist=dist_key, **kwargs)
+        # HARCH uses lags= instead of p/q
+        if kwargs.get("vol") == "HARCH" and "lags" in kwargs:
+            am = arch_model(
+                y,
+                mean="Constant",
+                dist=dist_key,
+                vol="HARCH",
+                lags=list(kwargs["lags"]),
+            )
+        else:
+            am = arch_model(y, mean="Constant", dist=dist_key, **kwargs)
         res = am.fit(disp="off", show_warning=False)
     except Exception as exc:
         # Retry with normal dist
         try:
-            am = arch_model(y, mean="Constant", dist="normal", **kwargs)
+            if kwargs.get("vol") == "HARCH" and "lags" in kwargs:
+                am = arch_model(
+                    y, mean="Constant", dist="normal", vol="HARCH", lags=list(kwargs["lags"])
+                )
+            else:
+                am = arch_model(y, mean="Constant", dist="normal", **kwargs)
             res = am.fit(disp="off", show_warning=False)
         except Exception as exc2:
             return {"ok": False, "error": str(exc2)[:240]}
@@ -815,26 +1132,157 @@ def _regime_label(ann_vol: float, unc_ann: float | None) -> str:
     return "Extreme"
 
 
+# Pretty symbols / short roles for common GARCH coefficient names (arch naming)
+_PARAM_SYMBOLS: dict[str, str] = {
+    "omega": "ω",
+    "const": "μ",
+    "mu": "μ",
+    "alpha": "α",
+    "beta": "β",
+    "gamma": "γ",
+    "delta": "δ",
+    "nu": "ν",
+    "eta": "η",
+    "lambda": "λ",
+    "phi": "φ",
+    "d": "d",
+    "theta": "θ",
+    "psi": "ψ",
+}
+
+_PARAM_ROLES: dict[str, str] = {
+    "omega": "Variance floor",
+    "const": "Mean return",
+    "mu": "Mean return",
+    "alpha": "News / shock reaction",
+    "beta": "Vol memory / clustering",
+    "gamma": "Asymmetry / leverage",
+    "delta": "Power on volatility",
+    "nu": "Tail thickness",
+    "eta": "GED shape",
+    "lambda": "Decay / skew",
+    "phi": "Short-run AR filter",
+    "d": "Long memory",
+}
+
+_PARAM_MEANING_DEFAULT: dict[str, str] = {
+    "omega": (
+        "Baseline level of conditional variance (must stay positive). "
+        "Higher ω lifts the long-run floor of volatility when shocks die out."
+    ),
+    "const": (
+        "Constant mean of daily log returns (drift). Usually near zero for BTC; "
+        "not the volatility of interest for Deribit RV marks."
+    ),
+    "mu": (
+        "Constant mean of daily log returns (drift). Usually near zero for BTC; "
+        "not the volatility of interest for Deribit RV marks."
+    ),
+    "alpha": (
+        "How strongly yesterday’s squared return shock raises today’s variance (ARCH effect). "
+        "Larger α ⇒ vol jumps more after a large move."
+    ),
+    "beta": (
+        "How much past conditional variance carries forward (GARCH memory / clustering). "
+        "Larger β ⇒ vol stays high longer after a shock; persistence often ≈ α+β."
+    ),
+    "gamma": (
+        "Asymmetry / leverage: extra weight when returns are negative (or signed news in EGARCH). "
+        "In GJR, γ>0 means dumps raise next-day vol more than pumps of the same size."
+    ),
+    "delta": (
+        "Power transform in APARCH (δ). δ=2 is variance-like; other values reshape the news-impact curve."
+    ),
+    "nu": (
+        "Student-t degrees of freedom for residual tails. Lower ν ⇒ fatter tails "
+        "(extreme days more likely than Normal). Critical for VaR/ES under this fit."
+    ),
+    "eta": (
+        "GED shape parameter controlling residual tail thickness relative to Normal."
+    ),
+    "lambda": (
+        "Skew (skewed-t) or fixed EWMA decay depending on model. "
+        "For RiskMetrics EWMA, λ close to 1 means slow decay of variance shocks."
+    ),
+    "phi": (
+        "Short-run AR coefficient in the FIGARCH filter — how recent shocks enter the long-memory structure."
+    ),
+    "d": (
+        "Fractional integration order in FIGARCH (between 0 and 1). "
+        "Higher d ⇒ shocks to variance die out more slowly (long memory)."
+    ),
+}
+
+
+def _param_base_and_index(name: str) -> tuple[str, str | None]:
+    """Split arch-style 'alpha[1]' → ('alpha', '1')."""
+    n = (name or "").strip()
+    if "[" in n and n.endswith("]"):
+        base, rest = n.split("[", 1)
+        idx = rest[:-1].strip()
+        return base.strip().lower(), idx or None
+    return n.lower(), None
+
+
+def _param_symbol(name: str) -> str:
+    base, idx = _param_base_and_index(name)
+    sym = _PARAM_SYMBOLS.get(base)
+    if not sym:
+        # HAR / custom names
+        if base.startswith("rv"):
+            return "RV"
+        return name or "—"
+    if idx is not None and base in ("alpha", "beta", "gamma", "phi", "theta", "psi"):
+        # subscript index: α₁
+        sub = "".join("₀₁₂₃₄₅₆₇₈₉"[int(c)] if c.isdigit() else c for c in idx)
+        return f"{sym}{sub}" if sub else sym
+    return sym
+
+
 def _annotate_params(params: list[dict[str, Any]], catalog: dict[str, Any]) -> list[dict[str, Any]]:
     help_map = catalog.get("paramHelp") or {}
     out = []
     for p in params or []:
         name = str(p.get("name") or "")
+        base, idx = _param_base_and_index(name)
         meaning = (
             help_map.get(name)
             or help_map.get(name.lower())
-            or help_map.get(name.split("[")[0].lower())
-            or "Coefficient in the fitted specification (see equation)."
+            or help_map.get(base)
+            or _PARAM_MEANING_DEFAULT.get(base)
+            or "Coefficient in the fitted specification (see equation above)."
         )
         # fuzzy for arch names like alpha[1]
-        if meaning.startswith("Coefficient") and "[" in name:
-            base = name.split("[")[0]
+        if "Coefficient in the fitted" in meaning and "[" in name:
             for k, v in help_map.items():
-                if k.lower().startswith(base.lower()):
+                if k.lower().startswith(base):
                     meaning = v
                     break
+            else:
+                meaning = _PARAM_MEANING_DEFAULT.get(base, meaning)
+
+        # Enrich lag index in the description when present
+        if idx is not None and base in ("alpha", "beta", "gamma") and f"lag {idx}" not in meaning.lower():
+            lag_note = {
+                "alpha": f" This is lag {idx} on the squared residual (ε²).",
+                "beta": f" This is lag {idx} on past conditional variance (σ²).",
+                "gamma": f" This is lag {idx} on the asymmetry / leverage term.",
+            }.get(base)
+            if lag_note and lag_note.strip() not in meaning:
+                meaning = meaning.rstrip() + lag_note
+
+        role = _PARAM_ROLES.get(base)
+        if not role:
+            if base.startswith("rv"):
+                role = "Realized-vol lag"
+            else:
+                role = "Model coefficient"
+
         q = dict(p)
         q["meaning"] = meaning
+        q["symbol"] = _param_symbol(name)
+        q["role"] = role
+        q["baseName"] = base
         out.append(q)
     return out
 
@@ -1120,20 +1568,46 @@ def get_volatility_suite_payload(
 
     best_detail = _detail(detail_row)
 
-    # Price / returns series for charts (downsample if huge)
+    def _downsample_keep_last(arr, step: int):
+        """Thin long series for charts but always keep the final observation.
+
+        Plain ``arr[::step]`` can drop the last fitted point when (n-1) % step != 0,
+        which would make the chart endpoint disagree with table ``currentCondVolAnn``.
+        """
+        if arr is None:
+            return arr
+        try:
+            length = len(arr)
+        except TypeError:
+            return arr
+        if length <= 1 or step <= 1:
+            if hasattr(arr, "tolist"):
+                return arr.tolist()
+            return list(arr) if not isinstance(arr, list) else arr
+        idxs = list(range(0, length, step))
+        if idxs[-1] != length - 1:
+            idxs.append(length - 1)
+        if hasattr(arr, "__getitem__") and not isinstance(arr, (list, tuple)):
+            # numpy array
+            return [arr[i] for i in idxs]
+        return [arr[i] for i in idxs]
+
+    # Price / returns series for charts (downsample if huge; keep last bar)
     n = data["n"]
     step = max(1, n // 1200)
     series = {
-        "dates": data["dates"][::step],
-        "close": data["close"][::step].tolist(),
-        "returns": data["returns"][::step].tolist(),
+        "dates": _downsample_keep_last(data["dates"], step),
+        "close": _downsample_keep_last(data["close"], step),
+        "returns": _downsample_keep_last(data["returns"], step),
     }
     if best_detail and best_detail.get("condVol"):
         cv = best_detail["condVol"]
-        best_detail["condVol"] = cv[::step] if len(cv) == n else cv
+        best_detail["condVol"] = (
+            _downsample_keep_last(cv, step) if len(cv) == n else cv
+        )
         sr = best_detail.get("stdResid") or []
         if len(sr) == n:
-            best_detail["stdResid"] = sr[::step]
+            best_detail["stdResid"] = _downsample_keep_last(sr, step)
 
     # Comparison table without heavy arrays
     table = []
@@ -1151,6 +1625,8 @@ def get_volatility_suite_payload(
         "distribution": dist,
         "archAvailable": ARCH_AVAILABLE,
         "annualization": "sqrt(365)",
+        "catalog": list_volatility_catalog(),
+        "selectedModelIds": [m["id"] for m in catalog],
         "models": table,
         "bestByAic": best_aic["id"] if best_aic else None,
         "bestByBic": best_bic["id"] if best_bic else None,

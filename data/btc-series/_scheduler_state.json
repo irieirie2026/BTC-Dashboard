@@ -1,13 +1,31 @@
 {
   "runs": [
     {
-      "metricId": "active_addresses",
-      "source": "blockchain",
+      "metricId": "san_price_usd",
+      "source": "santiment",
       "ok": true,
-      "points": 1597,
+      "points": 366,
       "error": null,
-      "fetchedAt": "2026-07-29T23:27:04Z",
-      "at": "2026-07-29T23:27:04Z"
+      "fetchedAt": "2026-07-31T19:25:58Z",
+      "at": "2026-07-31T19:25:58Z"
+    },
+    {
+      "metricId": "exchange_balance",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-07-31T19:25:57Z",
+      "at": "2026-07-31T19:25:57Z"
+    },
+    {
+      "metricId": "exchange_outflow",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-07-31T19:22:55Z",
+      "at": "2026-07-31T19:22:55Z"
     },
     {
       "metricId": "exchange_inflow",
@@ -15,8 +33,8 @@
       "ok": true,
       "points": 365,
       "error": null,
-      "fetchedAt": "2026-07-29T23:27:04Z",
-      "at": "2026-07-29T23:27:04Z"
+      "fetchedAt": "2026-07-31T19:22:13Z",
+      "at": "2026-07-31T19:22:13Z"
     },
     {
       "metricId": "blockchair_stats",
@@ -24,8 +42,8 @@
       "ok": true,
       "points": 1,
       "error": null,
-      "fetchedAt": "2026-07-29T23:27:03Z",
-      "at": "2026-07-29T23:27:03Z"
+      "fetchedAt": "2026-07-31T18:23:52Z",
+      "at": "2026-07-31T18:23:52Z"
     },
     {
       "metricId": "mempool_fees",
@@ -33,8 +51,215 @@
       "ok": true,
       "points": 1,
       "error": null,
-      "fetchedAt": "2026-07-29T23:27:03Z",
-      "at": "2026-07-29T23:27:03Z"
+      "fetchedAt": "2026-07-31T18:23:50Z",
+      "at": "2026-07-31T18:23:50Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T18:22:49Z",
+      "at": "2026-07-31T18:22:49Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T18:22:45Z",
+      "at": "2026-07-31T18:22:45Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:56:08Z",
+      "at": "2026-07-31T17:56:08Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:56:07Z",
+      "at": "2026-07-31T17:56:07Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:47:44Z",
+      "at": "2026-07-31T17:47:44Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:47:41Z",
+      "at": "2026-07-31T17:47:41Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:41:02Z",
+      "at": "2026-07-31T17:41:02Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:40:59Z",
+      "at": "2026-07-31T17:40:59Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:01:02Z",
+      "at": "2026-07-31T17:01:02Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T17:01:01Z",
+      "at": "2026-07-31T17:01:01Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:39:17Z",
+      "at": "2026-07-31T16:39:17Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:39:14Z",
+      "at": "2026-07-31T16:39:14Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:28:43Z",
+      "at": "2026-07-31T16:28:43Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:28:41Z",
+      "at": "2026-07-31T16:28:41Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:26:02Z",
+      "at": "2026-07-31T16:26:02Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:25:58Z",
+      "at": "2026-07-31T16:25:58Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:13:50Z",
+      "at": "2026-07-31T16:13:50Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T16:13:49Z",
+      "at": "2026-07-31T16:13:49Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T15:08:54Z",
+      "at": "2026-07-31T15:08:54Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T15:08:53Z",
+      "at": "2026-07-31T15:08:53Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T15:01:00Z",
+      "at": "2026-07-31T15:01:00Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T15:00:59Z",
+      "at": "2026-07-31T15:00:59Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T14:50:41Z",
+      "at": "2026-07-31T14:50:41Z"
     },
     {
       "metricId": "market_price",
@@ -42,35 +267,98 @@
       "ok": true,
       "points": 1605,
       "error": null,
-      "fetchedAt": "2026-07-29T23:27:02Z",
-      "at": "2026-07-29T23:27:02Z"
+      "fetchedAt": "2026-07-31T14:50:40Z",
+      "at": "2026-07-31T14:50:40Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T09:55:39Z",
+      "at": "2026-07-31T09:55:39Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T09:55:39Z",
+      "at": "2026-07-31T09:55:39Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T08:05:27Z",
+      "at": "2026-07-31T08:05:27Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T08:05:26Z",
+      "at": "2026-07-31T08:05:26Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T08:05:16Z",
+      "at": "2026-07-31T08:05:16Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T08:05:15Z",
+      "at": "2026-07-31T08:05:15Z"
+    },
+    {
+      "metricId": "blockchair_stats",
+      "source": "blockchair",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T07:10:54Z",
+      "at": "2026-07-31T07:10:54Z"
+    },
+    {
+      "metricId": "mempool_fees",
+      "source": "mempool",
+      "ok": true,
+      "points": 1,
+      "error": null,
+      "fetchedAt": "2026-07-31T07:10:53Z",
+      "at": "2026-07-31T07:10:53Z"
     },
     {
       "metricId": "market_price",
       "source": "blockchain",
       "ok": true,
-      "points": 1604,
+      "points": 1605,
       "error": null,
-      "fetchedAt": "2026-07-27T17:59:14Z",
-      "at": "2026-07-27T17:59:14Z"
+      "fetchedAt": "2026-07-31T07:03:57Z",
+      "at": "2026-07-31T07:03:57Z"
     },
     {
-      "metricId": "market_price",
-      "source": "blockchain",
+      "metricId": "btc_price",
+      "source": "bgeometrics",
       "ok": true,
-      "points": 1603,
+      "points": 1452,
       "error": null,
-      "fetchedAt": "2026-07-24T09:28:48Z",
-      "at": "2026-07-24T09:28:48Z"
-    },
-    {
-      "metricId": "market_price",
-      "source": "blockchain",
-      "ok": true,
-      "points": 1603,
-      "error": null,
-      "fetchedAt": "2026-07-23T23:43:04Z",
-      "at": "2026-07-23T23:43:04Z"
+      "fetchedAt": "2026-07-31T07:03:56Z",
+      "at": "2026-07-31T07:03:56Z"
     },
     {
       "metricId": "san_transaction_volume",
@@ -146,24 +434,21 @@
     }
   ],
   "lastSourceFetch": {
-    "coinmetrics": "2026-07-29T23:27:04Z",
-    "bgeometrics": "2026-06-29T13:39:28Z",
-    "blockchain": "2026-07-29T23:27:04Z",
-    "mempool": "2026-07-29T23:27:03Z",
-    "blockchair": "2026-07-29T23:27:03Z",
-    "santiment": "2026-06-29T16:48:41Z"
+    "coinmetrics": "2026-07-31T19:25:57Z",
+    "bgeometrics": "2026-07-31T07:03:56Z",
+    "blockchain": "2026-07-31T14:50:40Z",
+    "mempool": "2026-07-31T18:23:50Z",
+    "blockchair": "2026-07-31T18:23:52Z",
+    "santiment": "2026-07-31T19:25:58Z"
   },
-  "errors": {
-    "btc_price": "BGeometrics rate limit (429) \u2014 cached data shown when available. Free tier allows 8 requests/hour; data is cached 24h.",
-    "san_price_usd": "error code: 1010\n"
-  },
+  "errors": {},
   "lastSourceFetchMono": {
-    "coinmetrics": 362.882120758,
-    "bgeometrics": 5.913402375,
-    "blockchain": 363.506503983,
-    "mempool": 362.474078055,
-    "blockchair": 362.78766938,
-    "santiment": 436.538587666
+    "coinmetrics": 555.231007791,
+    "bgeometrics": 31840.77339525,
+    "blockchain": 59845.092844208,
+    "mempool": 72636.1237675,
+    "blockchair": 72637.502406875,
+    "santiment": 556.012543541
   },
-  "updatedAt": "2026-07-29T23:27:04Z"
+  "updatedAt": "2026-07-31T19:25:58Z"
 }

@@ -422,6 +422,37 @@ const MENU_TREE = {
             accentDim: "rgba(56, 189, 248, 0.18)",
             onShow: () => window.refreshStatsCharts?.(),
           },
+          // Jump to Stats → Correlation (same destination as the L2 tab)
+          correlation: {
+            label: "Correlation",
+            accent: "#a78bfa",
+            accentDim: "rgba(167, 139, 250, 0.18)",
+            onShow: () => {
+              if (window.MenuController?.l2 !== "correlation") {
+                window.MenuController?.setLevel2?.("correlation");
+              }
+            },
+          },
+        },
+      },
+      correlation: {
+        label: "Correlation",
+        accent: "#a78bfa",
+        accentDim: "rgba(167, 139, 250, 0.18)",
+        children: {
+          panel: {
+            label: "Matrix & rolling",
+            accent: "#a78bfa",
+            accentDim: "rgba(167, 139, 250, 0.18)",
+            onShow: () => {
+              window.refreshCorrelationCharts?.();
+              window.decorateHelpLabels?.(
+                document.querySelector(
+                  '.menu-screen[data-l1="stats"][data-l2="correlation"]',
+                ),
+              );
+            },
+          },
         },
       },
       risk: {
@@ -460,6 +491,19 @@ const MENU_TREE = {
             accent: "#2dd4bf",
             accentDim: "rgba(45, 212, 191, 0.18)",
             onShow: () => window.refreshVolatilityCharts?.(),
+          },
+        },
+      },
+      timeseries: {
+        label: "Time Series",
+        accent: "#38bdf8",
+        accentDim: "rgba(56, 189, 248, 0.18)",
+        children: {
+          panel: {
+            label: "Time Series",
+            accent: "#38bdf8",
+            accentDim: "rgba(56, 189, 248, 0.18)",
+            onShow: () => window.refreshTimeSeriesCharts?.(),
           },
         },
       },
@@ -689,7 +733,43 @@ const MENU_TREE = {
             accentDim: "rgba(20, 184, 166, 0.18)",
             onShow: () => {
               window.initMacroDrivers?.();
-              window.loadMacroDrivers?.();
+              window.loadMacroDrivers?.(false, "overview");
+            },
+          },
+          economy: {
+            label: "Economy & Growth",
+            accent: "#0d9488",
+            accentDim: "rgba(13, 148, 136, 0.18)",
+            onShow: () => {
+              window.initMacroDrivers?.();
+              window.loadMacroDrivers?.(false, "economy");
+            },
+          },
+          charts: {
+            label: "Charts",
+            accent: "#2dd4bf",
+            accentDim: "rgba(45, 212, 191, 0.18)",
+            onShow: () => {
+              window.initMacroDrivers?.();
+              window.loadMacroDrivers?.(false, "charts");
+            },
+          },
+          liquidity: {
+            label: "Liquidity",
+            accent: "#5eead4",
+            accentDim: "rgba(94, 234, 212, 0.18)",
+            onShow: () => {
+              window.initMacroDrivers?.();
+              window.loadMacroDrivers?.(false, "liquidity");
+            },
+          },
+          commentary: {
+            label: "Commentary",
+            accent: "#99f6e4",
+            accentDim: "rgba(153, 246, 228, 0.18)",
+            onShow: () => {
+              window.initMacroDrivers?.();
+              window.loadMacroDrivers?.(false, "commentary");
             },
           },
         },
@@ -879,11 +959,96 @@ const MENU_TREE = {
     accent: "#f59e0b",
     accentDim: "rgba(245, 158, 11, 0.18)",
     children: {
-      indicators: {
-        label: "Indicators",
+      overview: {
+        label: "Overview",
         accent: "#f59e0b",
         accentDim: "rgba(245, 158, 11, 0.18)",
-        onShow: () => window.loadMiscBitcoin?.(),
+        onShow: () => window.loadMiscBitcoin?.(false, "overview"),
+      },
+      distribution: {
+        label: "Distribution & Whales",
+        accent: "#fbbf24",
+        accentDim: "rgba(251, 191, 36, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "distribution"),
+      },
+      onchain: {
+        label: "On-Chain Activity",
+        accent: "#f97316",
+        accentDim: "rgba(249, 115, 22, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "onchain"),
+      },
+      intelligence: {
+        label: "On-Chain Intelligence",
+        accent: "#fb923c",
+        accentDim: "rgba(251, 146, 60, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "intelligence"),
+      },
+      miner: {
+        label: "Miner & Network",
+        accent: "#fdba74",
+        accentDim: "rgba(253, 186, 116, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "miner"),
+      },
+      valuation: {
+        label: "Valuation & Cycles",
+        accent: "#f59e0b",
+        accentDim: "rgba(245, 158, 11, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "valuation"),
+      },
+      sentiment: {
+        label: "Sentiment & Market",
+        accent: "#eab308",
+        accentDim: "rgba(234, 179, 8, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "sentiment"),
+      },
+      "4y-cycle": {
+        label: "4y Cycle",
+        accent: "#ca8a04",
+        accentDim: "rgba(202, 138, 4, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "4y-cycle"),
+      },
+      methodology: {
+        label: "Sources",
+        accent: "#a16207",
+        accentDim: "rgba(161, 98, 7, 0.18)",
+        onShow: () => window.loadMiscBitcoin?.(false, "methodology"),
+      },
+    },
+  },
+  law: {
+    label: "The Law",
+    accent: "#94a3b8",
+    accentDim: "rgba(148, 163, 184, 0.18)",
+    children: {
+      overview: {
+        label: "Overview",
+        accent: "#94a3b8",
+        accentDim: "rgba(148, 163, 184, 0.18)",
+        onShow: () => window.initLaw?.("overview"),
+      },
+      compare: {
+        label: "Compare",
+        accent: "#64748b",
+        accentDim: "rgba(100, 116, 139, 0.18)",
+        onShow: () => window.initLaw?.("compare"),
+      },
+      watchlist: {
+        label: "Watchlist",
+        accent: "#fbbf24",
+        accentDim: "rgba(251, 191, 36, 0.18)",
+        onShow: () => window.initLaw?.("watchlist"),
+      },
+      changes: {
+        label: "Changes",
+        accent: "#38bdf8",
+        accentDim: "rgba(56, 189, 248, 0.18)",
+        onShow: () => window.initLaw?.("changes"),
+      },
+      sources: {
+        label: "Sources",
+        accent: "#a78bfa",
+        accentDim: "rgba(167, 139, 250, 0.18)",
+        onShow: () => window.initLaw?.("sources"),
       },
     },
   },
@@ -897,6 +1062,17 @@ const MENU_TREE = {
         accent: "#e879f9",
         accentDim: "rgba(232, 121, 249, 0.18)",
         onShow: () => window.initMiscMetrics?.(),
+      },
+      calendar: {
+        label: "Calendar",
+        accent: "#34d399",
+        accentDim: "rgba(52, 211, 153, 0.18)",
+        onShow: () => {
+          window.initMiscCalendar?.();
+          window.decorateHelpLabels?.(
+            document.querySelector('#dashboard-misc .menu-screen[data-l2="calendar"]'),
+          );
+        },
       },
       "whale-proxies": {
         label: "Whale Proxies",
@@ -956,7 +1132,7 @@ const MENU_TREE = {
 const DASHBOARD_META = {
   home: {
     title: "The Buccaneers",
-    subtitle: "Bitcoin command center · All dashboards",
+    subtitle: "Command deck · Law · Arbs · Stats · Valuation · 14 dashboards",
     pageTitle: "Home — BTC Dashboard",
   },
   market: {
@@ -991,7 +1167,7 @@ const DASHBOARD_META = {
   },
   stats: {
     title: "BTC Stats",
-    subtitle: "Statistics · Risk · VaR · Volatility · Markov",
+    subtitle: "Statistics · Correlation · Risk · VaR · Volatility · Time Series · Markov",
     pageTitle: "BTC Stats — Live Dashboard",
   },
   tradfi: {
@@ -1019,9 +1195,14 @@ const DASHBOARD_META = {
     subtitle: "On-chain indicators · cycles · distribution",
     pageTitle: "BTC Valuation — Live Dashboard",
   },
+  law: {
+    title: "The Law",
+    subtitle: "Bitcoin legal status by jurisdiction · educational reference",
+    pageTitle: "The Law — Bitcoin Legal Status",
+  },
   misc: {
     title: "BTC Misc",
-    subtitle: "Dominance · sentiment · on-chain ratios · mempool pressure",
+    subtitle: "Metrics · calendar seasonality · whales · cross-market",
     pageTitle: "BTC Misc Metrics — Live Dashboard",
   },
 };
@@ -1087,15 +1268,22 @@ const LEGACY_L2 = {
   treasury: { st1: "summary", st2: "companies", summary: "summary", companies: "companies" },
   stats: {
     st1: "statistics",
-    st2: "risk",
-    st3: "var",
-    st4: "volatility",
-    st5: "valuation",
-    st6: "markov",
+    st2: "correlation",
+    st3: "risk",
+    st4: "var",
+    st5: "volatility",
+    st6: "timeseries",
+    st7: "valuation",
+    st8: "markov",
     statistics: "statistics",
+    correlation: "correlation",
+    corr: "correlation",
     risk: "risk",
     var: "var",
     volatility: "volatility",
+    timeseries: "timeseries",
+    "time-series": "timeseries",
+    ts: "timeseries",
     valuation: "valuation",
     markov: "valuation",
     powerlaw: "valuation",
@@ -1169,29 +1357,55 @@ const LEGACY_L2 = {
     headlines: "all",
   },
   valuation: {
-    indicators: "indicators",
-    bitcoin: "indicators",
-    btc: "indicators",
-    overview: "indicators",
-    "greed-fear": "indicators",
-    greed: "indicators",
-    fear: "indicators",
-    "4y-cycle": "indicators",
-    "4ycycle": "indicators",
-    cycle: "indicators",
-    cycles: "indicators",
-    "four-year": "indicators",
-    "4y": "indicators",
-    "super-summary": "landing",
-    supersummary: "landing",
-    summary: "landing",
-    brief: "landing",
+    // Legacy "Indicators" shell → Overview; deep links map to real L2 tabs
+    indicators: "overview",
+    bitcoin: "overview",
+    btc: "overview",
+    overview: "overview",
+    distribution: "distribution",
+    whales: "distribution",
+    onchain: "onchain",
+    activity: "onchain",
+    intelligence: "intelligence",
+    miner: "miner",
+    network: "miner",
+    valuation: "valuation",
+    cycles: "valuation",
+    "valuation-cycles": "valuation",
+    sentiment: "sentiment",
+    "greed-fear": "sentiment",
+    greed: "sentiment",
+    fear: "sentiment",
+    "4y-cycle": "4y-cycle",
+    "4ycycle": "4y-cycle",
+    cycle: "4y-cycle",
+    "four-year": "4y-cycle",
+    "4y": "4y-cycle",
+    methodology: "methodology",
+    sources: "methodology",
+  },
+  law: {
+    overview: "overview",
+    map: "overview",
+    global: "overview",
+    compare: "compare",
+    comparison: "compare",
+    watchlist: "watchlist",
+    favorites: "watchlist",
+    fav: "watchlist",
+    changes: "changes",
+    changelog: "changes",
+    sources: "sources",
+    methodology: "sources",
   },
   misc: {
     metrics: "metrics",
     park: "metrics",
     parking: "metrics",
     overview: "metrics",
+    calendar: "calendar",
+    seasonality: "calendar",
+    cal: "calendar",
     whales: "whale-proxies",
     "whale-proxies": "whale-proxies",
     whaleproxies: "whale-proxies",
@@ -1217,10 +1431,18 @@ const LEGACY_L3 = {
   "etf/flows": { table: "table" },
   "treasury/summary": { st1: "stats", stats: "stats", dominance: "dominance" },
   "treasury/companies": { rankings: "rankings" },
-  "stats/statistics": { panel: "panel" },
+  "stats/statistics": {
+    panel: "panel",
+    summary: "panel",
+    correlation: "correlation",
+    corr: "correlation",
+  },
+  "stats/correlation": { panel: "panel", correlation: "panel", corr: "panel" },
   "stats/risk": { panel: "panel" },
   "stats/var": { panel: "panel" },
   "stats/volatility": { panel: "panel" },
+  "stats/timeseries": { panel: "panel" },
+  "stats/time-series": { panel: "panel" },
   "stats/valuation": { markov: "markov", powerlaw: "powerlaw", panel: "markov" },
   "stats/markov": { panel: "markov" },
   "stats/powerlaw": { panel: "powerlaw" },
@@ -1255,7 +1477,18 @@ const LEGACY_L3 = {
   "onchain/supply": { overview: "overview" },
   "onchain/addresses": { overview: "overview" },
   "onchain/lightning": { overview: "overview" },
-  "macro/drivers": { overview: "overview" },
+  "macro/drivers": {
+    overview: "overview",
+    economy: "economy",
+    "economy-growth": "economy",
+    growth: "economy",
+    charts: "charts",
+    chart: "charts",
+    liquidity: "liquidity",
+    lq: "liquidity",
+    commentary: "commentary",
+    notes: "commentary",
+  },
 
   "macro/rates": { overview: "overview" },
   "macro/dollar": { overview: "overview" },
@@ -1396,7 +1629,8 @@ function renderLevelNav(slotId, level, l1, l2, activeId, onSelect, parentL3) {
     return;
   }
 
-  if (level === 2 && Object.keys(items).length === 1) {
+  // Single-item rows are noise (e.g. Risk → Metrics only). Still route via that id.
+  if ((level === 2 || level === 3) && Object.keys(items).length === 1) {
     slot.hidden = true;
     return;
   }
@@ -1443,19 +1677,32 @@ function hideLevel4Nav() {
 
 function showScreen(l1, l2, l3, l4) {
   document.querySelectorAll(".menu-screen").forEach((el) => {
-    if (el.dataset.l1 !== l1 || el.dataset.l2 !== l2) {
+    if (el.dataset.l1 !== l1) {
       el.hidden = true;
       return;
     }
 
     let match = true;
 
-    if (l2HasChildren(l1, l2)) {
-      match = el.dataset.l3 === l3;
-      if (l3HasChildren(l1, l2, l3)) {
-        match = match && el.dataset.l4 === l4;
-      } else if (el.dataset.l4) {
-        match = false;
+    // Shared L1 shell: one screen hosts many L2 panels (e.g. Valuation indicators)
+    if (el.dataset.l2Shared === "true") {
+      match = true;
+      if (l2) el.dataset.l2 = l2;
+    } else if (el.dataset.l2 !== l2) {
+      el.hidden = true;
+      return;
+    } else if (l2HasChildren(l1, l2)) {
+      // Shared L2 shell: one screen hosts all L3 panels (e.g. Macro Drivers)
+      if (el.dataset.l3Shared === "true") {
+        match = true;
+        if (l3) el.dataset.l3 = l3;
+      } else {
+        match = el.dataset.l3 === l3;
+        if (l3HasChildren(l1, l2, l3)) {
+          match = match && el.dataset.l4 === l4;
+        } else if (el.dataset.l4) {
+          match = false;
+        }
       }
     } else if (el.dataset.l3) {
       match = false;
@@ -1495,9 +1742,11 @@ function refreshActiveDashboardCharts() {
     treasury: () => window.loadTreasuryDashboard?.(),
     stats: () => {
       window.refreshStatsCharts?.();
+      window.refreshCorrelationCharts?.();
       window.refreshRiskCharts?.();
       window.refreshVarCharts?.();
       window.refreshVolatilityCharts?.();
+      window.refreshTimeSeriesCharts?.();
       window.refreshMarkovCharts?.();
       window.refreshPowerLawCharts?.();
     },
@@ -1640,7 +1889,13 @@ const MenuController = {
     }
 
     const savedL3 = localStorage.getItem(MENU_L3_KEY);
-    const defaultL3 = normalizeL3(l1, activeL2, savedL3);
+    // When entering Statistics, prefer Summary unless user already chose Correlation
+    let preferL3 = savedL3;
+    if (l1 === "stats" && activeL2 === "statistics" && savedL3 === "correlation") {
+      // keep correlation if user was there
+      preferL3 = "correlation";
+    }
+    const defaultL3 = normalizeL3(l1, activeL2, preferL3);
     this.setLevel3(defaultL3);
   },
 
@@ -1669,22 +1924,29 @@ const MenuController = {
     if (title) title.textContent = meta.title;
     document.title = meta.pageTitle;
 
+    // Apply body.dataset.l1 first so SWR header stamps only write for the active section.
+    document.body.dataset.l1 = l1;
+
     const marketMeta = document.getElementById("header-market-meta");
     const derivativesMeta = document.getElementById("header-derivatives-meta");
     const etfMeta = document.getElementById("header-etf-meta");
     const treasuryMeta = document.getElementById("header-treasury-meta");
     const dashboardMeta = document.getElementById("header-dashboard-meta");
+    // Shared "Updated · source" bar — not the Market Live/Binance WebSocket badge.
     const usesDashboardMeta = [
-      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news", "valuation", "misc",
+      "onchain", "exchanges", "stats", "tradfi", "defi", "macro", "news", "valuation", "law", "misc",
     ];
     const hideAllHeaderMeta = l1 === "home";
+    // Market Live + Binance clock is only meaningful on Market (spot WS / REST).
     if (marketMeta) marketMeta.hidden = hideAllHeaderMeta || l1 !== "market";
     if (derivativesMeta) derivativesMeta.hidden = hideAllHeaderMeta || l1 !== "derivatives";
     if (etfMeta) etfMeta.hidden = hideAllHeaderMeta || l1 !== "etf";
     if (treasuryMeta) treasuryMeta.hidden = hideAllHeaderMeta || l1 !== "treasury";
-    if (dashboardMeta) dashboardMeta.hidden = hideAllHeaderMeta || !usesDashboardMeta.includes(l1);
-
-    document.body.dataset.l1 = l1;
+    if (dashboardMeta) {
+      dashboardMeta.hidden = hideAllHeaderMeta || !usesDashboardMeta.includes(l1);
+      // Clear when leaving so a previous section's "Updated · Source" does not flash back.
+      if (dashboardMeta.hidden) dashboardMeta.textContent = "—";
+    }
 
     if (l1 === "onchain" && typeof loadOnchainDashboard === "function") {
       loadOnchainDashboard();
@@ -1758,9 +2020,20 @@ function migrateMiscMenu() {
   const l2 = localStorage.getItem(MENU_L2_KEY);
   if (l2 === "bitcoin" || l2 === "btc" || l2 === "greed-fear" || l2 === "greed" || l2 === "fear") {
     localStorage.setItem(MENU_L1_KEY, "valuation");
-    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.setItem(MENU_L2_KEY, "overview");
   } else if (!l2 || l2 === "park" || l2 === "parking" || l2 === "knowledge-graph") {
     localStorage.setItem(MENU_L2_KEY, "metrics");
+  }
+  localStorage.removeItem(MENU_L3_KEY);
+  localStorage.removeItem(MENU_L4_KEY);
+}
+
+/** Old Valuation shell was a single L2 "Indicators" with in-page subtabs. */
+function migrateValuationMenu() {
+  if (localStorage.getItem(MENU_L1_KEY) !== "valuation") return;
+  const l2 = localStorage.getItem(MENU_L2_KEY);
+  if (l2 === "indicators" || l2 === "bitcoin" || l2 === "btc") {
+    localStorage.setItem(MENU_L2_KEY, "overview");
   }
   localStorage.removeItem(MENU_L3_KEY);
   localStorage.removeItem(MENU_L4_KEY);
@@ -1776,6 +2049,11 @@ function bootstrapPathMenu() {
   } else if (path === "/misc/whale-proxies") {
     localStorage.setItem(MENU_L1_KEY, "misc");
     localStorage.setItem(MENU_L2_KEY, "whale-proxies");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/misc/calendar" || path === "/misc/seasonality") {
+    localStorage.setItem(MENU_L1_KEY, "misc");
+    localStorage.setItem(MENU_L2_KEY, "calendar");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
   } else if (path === "/misc/knowledge-graph") {
@@ -1801,9 +2079,10 @@ function bootstrapPathMenu() {
   } else if (
     path === "/valuation"
     || path === "/valuation/indicators"
+    || path === "/valuation/overview"
   ) {
     localStorage.setItem(MENU_L1_KEY, "valuation");
-    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.setItem(MENU_L2_KEY, "overview");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
   } else if (
@@ -1812,10 +2091,9 @@ function bootstrapPathMenu() {
     || path === "/valuation/cycle"
   ) {
     localStorage.setItem(MENU_L1_KEY, "valuation");
-    localStorage.setItem(MENU_L2_KEY, "indicators");
+    localStorage.setItem(MENU_L2_KEY, "4y-cycle");
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
-    sessionStorage.setItem("vc-open-cycle", "1");
   } else if (
     path === "/valuation/super-summary"
     || path === "/valuation/summary"
@@ -1828,6 +2106,30 @@ function bootstrapPathMenu() {
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
     sessionStorage.setItem("ss-open-report", "1");
+  } else if (path.startsWith("/valuation/")) {
+    // /valuation/{distribution|onchain|…}
+    const slug = path.slice("/valuation/".length).split("/")[0];
+    localStorage.setItem(MENU_L1_KEY, "valuation");
+    localStorage.setItem(MENU_L2_KEY, slug || "overview");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path === "/law" || path === "/the-law") {
+    localStorage.setItem(MENU_L1_KEY, "law");
+    localStorage.setItem(MENU_L2_KEY, "overview");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+  } else if (path.startsWith("/law/")) {
+    const slug = path.slice("/law/".length).split("/")[0];
+    localStorage.setItem(MENU_L1_KEY, "law");
+    if (["compare", "watchlist", "changes", "sources", "overview"].includes(slug)) {
+      localStorage.setItem(MENU_L2_KEY, slug === "overview" ? "overview" : slug);
+    } else {
+      // Country deep link: keep Overview L2; law.js opens the country panel
+      localStorage.setItem(MENU_L2_KEY, "overview");
+      sessionStorage.setItem("law-open-country", slug);
+    }
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
   }
 }
 
@@ -1868,6 +2170,7 @@ function initDashboardSwitcher() {
   migrateCrossMarketMenu();
 
   migrateMiscMenu();
+  migrateValuationMenu();
   bootstrapPathMenu();
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 

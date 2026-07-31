@@ -7,7 +7,11 @@ cd "$PROJECT" || { echo "Project not found"; read -r _; exit 1; }
 
 if ! lsof -ti :5173 >/dev/null 2>&1; then
   echo "Starting server…"
-  nohup python3 server.py >> "$LOG" 2>&1 &
+  if [ -x "$PROJECT/.venv/bin/python" ]; then
+    nohup "$PROJECT/.venv/bin/python" server.py >> "$LOG" 2>&1 &
+  else
+    nohup python3 server.py >> "$LOG" 2>&1 &
+  fi
   sleep 2
 fi
 
