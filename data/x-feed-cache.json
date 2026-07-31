@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-07-31T06:12:01Z",
+  "fetchedAt": "2026-07-31T09:43:11Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. https://arkm.com/explorer/address/bc1qnk4zh9qcnap2mycp56qjrgza3cc8ylrh8fecp0 https://blog.coinkite.c",
+      "link": "https://x.com/lookonchain/status/2083074854190985535#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. arkm.com/explorer/address/bc\u2026 blog.coinkite.com/coldcard-m\u2026",
+      "publishedAt": "2026-07-31T06:18:41+00:00",
+      "publishedTs": 1785478721.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The United States Treasury Secretary quoted Satoshi Nakamoto, the inventor of Bitcoin, today.",
       "link": "https://x.com/DocumentingBTC/status/2083002065874202824#m",
