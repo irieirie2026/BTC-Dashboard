@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-31T02:40:30Z",
+  "fetchedAt": "2026-07-31T06:12:01Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -92,6 +92,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "If you have bitcoin residing under a single key that was generated on a Coldcard Mk3 between 2021-2023, and you - did not incorporate dice rolls - do not use a passphrase - do not use multi-sig I would advise moving funds as soon as possible.",
+      "link": "https://x.com/jamesob/status/2082946043696574756#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "",
+      "publishedAt": "2026-07-30T21:46:50+00:00",
+      "publishedTs": 1785448010.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Our Q2 2026 Earnings Call is LIVE on X: https://x.com/i/broadcasts/1kJzDDXjAVeKv",
