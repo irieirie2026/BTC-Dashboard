@@ -1,16 +1,81 @@
 {
-  "fetchedAt": "2026-07-31T20:18:53Z",
+  "fetchedAt": "2026-07-31T22:03:49Z",
   "source": "nitter.net",
   "tweets": [
     {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Lummis on CLARITY ACT updates: \"The bill literally requires President Trump to divest his digital asset holdings and it's becoming painfully clear some of my Democrat colleagues would rather let consumers lose everything if a crypto exchange fails\" \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2083285950365356284#m",
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Head of Strategy says that he is \"relentlessly optimistic\" that the CLARITY ACT gets passed by the Senate \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2083307234298134648#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Head of Strategy says that he is \"relentlessly optimistic\" that the CLARITY ACT gets passed by the Senate \ud83d\udc40 Video",
+      "publishedAt": "2026-07-31T21:42:05+00:00",
+      "publishedTs": 1785534125.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
+      "link": "https://x.com/nic_carter/status/2083294845624320450#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
+      "publishedAt": "2026-07-31T20:52:51+00:00",
+      "publishedTs": 1785531171.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: I did this completely out of order by reading the contemporary Yudkowski/ Bostrom / Kokotajlo/Urban alignment literature and THEN reading the novels from the 80s that they\u2019re basically all rewriting for modern audiences",
+      "link": "https://x.com/nic_carter/status/2083294744159907919#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I did this completely out of order by reading the contemporary Yudkowski/ Bostrom / Kokotajlo/Urban alignment literature and THEN reading the novels from the 80s that they\u2019re basically all rewriting for modern audiences",
+      "publishedAt": "2026-07-31T20:52:27+00:00",
+      "publishedTs": 1785531147.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I finally read Hyperion and belatedly realized that basically the entire \u201cmisaligned superintelligence\u201d and p_doom literature is just repackaged Simmons. Interesting",
+      "link": "https://x.com/nic_carter/status/2083293961976725535#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
       "summary": "",
-      "publishedAt": "2026-07-31T20:17:30+00:00",
-      "publishedTs": 1785529050.0,
+      "publishedAt": "2026-07-31T20:49:20+00:00",
+      "publishedTs": 1785530960.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor and Strategy now officially endorse the passage of the Clarity Act: \"We support the CLARITY Act and believe a clear, durable market structure framework would help advance the digital asset industry and encourage broader institutional adoption in the United",
+      "link": "https://x.com/BitcoinMagazine/status/2083291615364264068#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Michael Saylor and Strategy now officially endorse the passage of the Clarity Act: \"We support the CLARITY Act and believe a clear, durable market structure framework would help advance the digital asset industry and encourage broader institutional adoption in the United",
+      "publishedAt": "2026-07-31T20:40:01+00:00",
+      "publishedTs": 1785530401.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I support advancing the CLARITY Act through bipartisan work to establish clear, durable rules, protect property rights, promote innovation, and strengthen American capital markets. Bitcoin will succeed with or without legislation, but America needs clarity for digital assets.",
+      "link": "https://x.com/saylor/status/2083288999192359239#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "I support advancing the CLARITY Act through bipartisan work to establish clear, durable rules, protect property rights, promote innovation, and strengthen American capital markets. Bitcoin will succeed with or without legislation, but America needs clarity for digital assets. Str",
+      "publishedAt": "2026-07-31T20:29:37+00:00",
+      "publishedTs": 1785529777.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -167,6 +232,19 @@
       "summary": "",
       "publishedAt": "2026-07-31T17:18:28+00:00",
       "publishedTs": 1785518308.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "URGENT: If you have EVER generated a seed phrase on a ColdCard, your bitcoin may be at risk. Just recorded this emergency episode explaining what happened with @Rob1Ham of AnchorWatch. Please watch and share with those in your Bitcoin community, especially other non-technical bit",
+      "link": "https://x.com/natbrunell/status/2083239999575646468#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "URGENT: If you have EVER generated a seed phrase on a ColdCard, your bitcoin may be at risk. Just recorded this emergency episode explaining what happened with @Rob1Ham of AnchorWatch. Please watch and share with those in your Bitcoin community, especially other non-technical bit",
+      "publishedAt": "2026-07-31T17:14:55+00:00",
+      "publishedTs": 1785518095.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1056,19 +1134,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 JPMorgan says failing to pass the Clarity Act this year would be a setback that could undermine one of the industry's biggest regulatory catalysts. Pass the bill \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2082864276897722698#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T16:21:56+00:00",
-      "publishedTs": 1785428516.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Looking forward to closing the door on Bitcoin's decade-long spam debate so that we can move on to more important topics like consensus cleanup, covenants, and quantum preparation!",
       "link": "https://x.com/lopp/status/2082857102943420894#m",
       "source": "@lopp",
@@ -1550,19 +1615,6 @@
       "isRetweet": false
     },
     {
-      "title": "BIP110 ADVENT continues. Today: PDFs. The Bitcoin Whitepaper embedded contiguously in a BIP110 valid (and Knots standard!) transaction. - Wouldn't fit in a Core-standard OP_RETURN - Fits in BIP110 blocks for ~4x cheaper",
-      "link": "https://x.com/steverabinow/status/2082107018970554826#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-07-28T14:12:51+00:00",
-      "publishedTs": 1785247971.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "BREAKING: $MSTR from @Strategy is live on Solana via @sunrise, issued by @Backpack Securities",
       "link": "https://x.com/solana/status/2082100191768031600#m",
       "source": "@saylor",
@@ -1615,19 +1667,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @nic_carter: remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black b",
-      "link": "https://x.com/nic_carter/status/2081726607257907598#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "remember, this is the same DSA wing of the left that believes in \"direct action\" and \"making RW politicians uncomfortable everywhere\" and harassing SCOTUS justices in their homes. to imagine a short target list of wealthy individuals wont be exploited by black bloc antifa types i",
-      "publishedAt": "2026-07-27T13:01:14+00:00",
-      "publishedTs": 1785157274.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 57% Loading\u2026Please HODL Current Block: 959,831 Halving Block: 1,050,000 Blocks Remaining: 90,169 Days Remaining: ~626",
       "link": "https://x.com/DocumentingBTC/status/2081707998066393233#m",
       "source": "@DocumentingBTC",
@@ -1636,32 +1675,6 @@
       "summary": "",
       "publishedAt": "2026-07-27T11:47:17+00:00",
       "publishedTs": 1785152837.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "So this is a list of wealthy people and their addresses. As we\u2019ve seen in France and Sweden this leads to crypto kidnappings torturings and murders. Yes real estate records are semi public but this is an easily searchable database and target list. That makes a difference - again ",
-      "link": "https://x.com/nic_carter/status/2081698106429579283#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "So this is a list of wealthy people and their addresses. As we\u2019ve seen in France and Sweden this leads to crypto kidnappings torturings and murders. Yes real estate records are semi public but this is an easily searchable database and target list. That makes a difference - again ",
-      "publishedAt": "2026-07-27T11:07:59+00:00",
-      "publishedTs": 1785150479.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "All political questions in America reduce to this reality. Social security, Medicare, government spending, everything - it\u2019s this debate a thousand times over. And the highly mobilized older population keeps winning. The young will be sacrificed for the old. Over and over.",
-      "link": "https://x.com/nic_carter/status/2081336832600481835#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "All political questions in America reduce to this reality. Social security, Medicare, government spending, everything - it\u2019s this debate a thousand times over. And the highly mobilized older population keeps winning. The young will be sacrificed for the old. Over and over. Laura ",
-      "publishedAt": "2026-07-26T11:12:24+00:00",
-      "publishedTs": 1785064344.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
