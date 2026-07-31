@@ -1,6 +1,69 @@
 {
   "runs": [
     {
+      "metricId": "san_social_volume_total",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-07-31T20:11:46Z",
+      "at": "2026-07-31T20:11:47Z"
+    },
+    {
+      "metricId": "san_mvrv_usd",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-07-31T20:11:34Z",
+      "at": "2026-07-31T20:11:34Z"
+    },
+    {
+      "metricId": "san_exchange_outflow",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-07-31T20:09:58Z",
+      "at": "2026-07-31T20:09:58Z"
+    },
+    {
+      "metricId": "san_exchange_inflow",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-07-31T20:05:57Z",
+      "at": "2026-07-31T20:05:57Z"
+    },
+    {
+      "metricId": "san_transaction_volume",
+      "source": "santiment",
+      "ok": true,
+      "points": 336,
+      "error": null,
+      "fetchedAt": "2026-07-31T19:56:44Z",
+      "at": "2026-07-31T19:56:44Z"
+    },
+    {
+      "metricId": "san_daily_active_addresses",
+      "source": "santiment",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-07-31T19:40:40Z",
+      "at": "2026-07-31T19:40:40Z"
+    },
+    {
+      "metricId": "tx_count",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
+      "fetchedAt": "2026-07-31T19:40:39Z",
+      "at": "2026-07-31T19:40:39Z"
+    },
+    {
       "metricId": "san_price_usd",
       "source": "santiment",
       "ok": true,
@@ -434,21 +497,21 @@
     }
   ],
   "lastSourceFetch": {
-    "coinmetrics": "2026-07-31T19:25:57Z",
+    "coinmetrics": "2026-07-31T19:40:39Z",
     "bgeometrics": "2026-07-31T07:03:56Z",
     "blockchain": "2026-07-31T14:50:40Z",
     "mempool": "2026-07-31T18:23:50Z",
     "blockchair": "2026-07-31T18:23:52Z",
-    "santiment": "2026-07-31T19:25:58Z"
+    "santiment": "2026-07-31T20:11:47Z"
   },
   "errors": {},
   "lastSourceFetchMono": {
-    "coinmetrics": 555.231007791,
+    "coinmetrics": 1437.52938875,
     "bgeometrics": 31840.77339525,
     "blockchain": 59845.092844208,
     "mempool": 72636.1237675,
     "blockchair": 72637.502406875,
-    "santiment": 556.012543541
+    "santiment": 3305.148262208
   },
-  "updatedAt": "2026-07-31T19:25:58Z"
+  "updatedAt": "2026-07-31T20:11:47Z"
 }

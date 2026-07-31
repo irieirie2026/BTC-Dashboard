@@ -328,6 +328,7 @@ def dispatch_api(path, query, body: dict | None = None):
                 "headers": {
                     "X-TTS-Voice": str(result.get("voice") or ""),
                     "X-TTS-Model": str(result.get("model") or "grok-tts"),
+                    "X-TTS-Engine": str(result.get("engine") or ""),
                     "X-TTS-Cached": "1" if result.get("cached") else "0",
                 },
             }

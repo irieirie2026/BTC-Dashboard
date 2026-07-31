@@ -3,8 +3,7 @@
 const HOME_SOUND_KEY = "btc-home-buccaneers-sound:v1";
 const HOME_SOUND_KEY_LEGACY = "btc-home-pirate-sound:v1";
 const HOME_JINGLE_COOLDOWN_MS = 12_000;
-const HOME_MOTTO =
-  "Fuck the system, and don't forget to stack satoshis.";
+const HOME_MOTTO = "Fuck the system and dont forget to stack satoshis";
 
 const HOME_SECTIONS = [
   {
@@ -270,11 +269,23 @@ function homeSpeakMottoBrowser() {
     if (!homeSoundEnabled()) return;
     const u = new SpeechSynthesisUtterance(HOME_MOTTO);
     u.lang = "en-US";
-    u.rate = 1.05; // fluid
-    u.pitch = 0.88;
+    u.rate = 0.98;
+    u.pitch = 1.12;
     u.volume = 1;
-    const voice = homePickVoice();
-    if (voice) u.voice = voice;
+    // Prefer female system voices when Grok TTS unavailable
+    try {
+      const voices = synth.getVoices?.() || [];
+      const female = voices.find((v) =>
+        /samantha|karen|moira|zira|susan|victoria|female|siri|fiona|karen|tessa|veena|allison|ava|zoe/i.test(
+          `${v.name} ${v.lang}`,
+        ),
+      );
+      if (female) u.voice = female;
+      else {
+        const voice = homePickVoice();
+        if (voice) u.voice = voice;
+      }
+    } catch (_) {}
     try {
       synth.speak(u);
     } catch (_) {}
@@ -310,8 +321,8 @@ async function homeSpeakMotto() {
     const audio = new Audio(homeMottoObjectUrl);
     homeMottoAudio = audio;
     audio.volume = 1;
-    // Start shortly after jingle kicks in
-    await new Promise((r) => setTimeout(r, 380));
+    // Voice starts after retro intro (caller may already delay; small extra headroom)
+    await new Promise((r) => setTimeout(r, 80));
     if (!homeSoundEnabled()) return;
     await audio.play();
   } catch (_) {
@@ -319,9 +330,47 @@ async function homeSpeakMotto() {
   }
 }
 
+/** 8-bit style blip (square pulse). */
+function homeRetroNote(ctx, dest, { f, t, d = 0.08, vol = 0.12, type = "square" }) {
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(f, t);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  osc.connect(g);
+  g.connect(dest);
+  osc.start(t);
+  osc.stop(t + d + 0.02);
+}
+
+/** Coin / power-up noise chirp (classic arcade). */
+function homeRetroNoise(ctx, dest, { t, d = 0.06, vol = 0.1, hi = 4000 }) {
+  const len = Math.max(1, Math.floor(ctx.sampleRate * d));
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.22));
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  const filt = ctx.createBiquadFilter();
+  filt.type = "bandpass";
+  filt.frequency.setValueAtTime(hi, t);
+  filt.Q.value = 1.2;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(vol, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  src.connect(filt);
+  filt.connect(g);
+  g.connect(dest);
+  src.start(t);
+}
+
 /**
- * Original short Buccaneers deck fanfare (not a copyrighted tune).
- * Brass-ish square waves + light drum hits + Grok TTS motto.
+ * Retro arcade insert-coin / level-up stinger (original, not a copyrighted tune)
+ * + Grok TTS rebellious girl shout.
  */
 function homePlayBuccaneersJingle({ force = false } = {}) {
   if (!force && !homeSoundEnabled()) return;
@@ -329,7 +378,10 @@ function homePlayBuccaneersJingle({ force = false } = {}) {
   if (!force && now - homeJingleLastPlay < HOME_JINGLE_COOLDOWN_MS) return;
   homeJingleLastPlay = Date.now();
 
-  homeSpeakMotto();
+  // Short retro sting, then natural voice (leave headroom so SFX don’t fight the speech)
+  setTimeout(() => {
+    if (homeSoundEnabled()) homeSpeakMotto();
+  }, 900);
 
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) {
@@ -345,87 +397,83 @@ function homePlayBuccaneersJingle({ force = false } = {}) {
     const start = () => {
       const t0 = ctx.currentTime + 0.02;
       const master = ctx.createGain();
-      master.gain.setValueAtTime(0.0001, t0);
-      master.gain.exponentialRampToValueAtTime(0.18, t0 + 0.06);
-      master.gain.setValueAtTime(0.14, t0 + 2.6);
-      master.gain.exponentialRampToValueAtTime(0.0001, t0 + 3.5);
+      // Keep SFX under the spoken line
+      master.gain.setValueAtTime(0.14, t0);
+      master.gain.setValueAtTime(0.14, t0 + 0.85);
+      master.gain.exponentialRampToValueAtTime(0.04, t0 + 1.1);
       master.connect(ctx.destination);
 
-      // Low drone (ship hull)
-      const drone = ctx.createOscillator();
-      const droneG = ctx.createGain();
-      drone.type = "triangle";
-      drone.frequency.setValueAtTime(73.42, t0); // D2
-      droneG.gain.setValueAtTime(0.055, t0);
-      droneG.gain.exponentialRampToValueAtTime(0.0001, t0 + 3.2);
-      drone.connect(droneG);
-      droneG.connect(master);
-      drone.start(t0);
-      drone.stop(t0 + 3.3);
+      // Soft bitcrush feel via mild lowpass on master bus
+      const bus = ctx.createBiquadFilter();
+      bus.type = "lowpass";
+      bus.frequency.value = 3200;
+      bus.Q.value = 0.7;
+      bus.connect(master);
 
-      // Melody — original minor “yo-ho” flourish (D minor-ish)
-      const notes = [
-        { f: 293.66, t: 0.0, d: 0.22 },
-        { f: 440.0, t: 0.2, d: 0.2 },
-        { f: 587.33, t: 0.38, d: 0.28 },
-        { f: 523.25, t: 0.66, d: 0.18 },
-        { f: 440.0, t: 0.84, d: 0.18 },
-        { f: 349.23, t: 1.02, d: 0.22 },
-        { f: 392.0, t: 1.24, d: 0.18 },
-        { f: 440.0, t: 1.42, d: 0.28 },
-        { f: 587.33, t: 1.78, d: 0.45 },
-        { f: 440.0, t: 2.28, d: 0.35 },
-        { f: 293.66, t: 2.7, d: 0.55 },
+      // --- Arcade "insert coin" triple blip ---
+      homeRetroNoise(ctx, bus, { t: t0, d: 0.05, vol: 0.14, hi: 2800 });
+      homeRetroNote(ctx, bus, { f: 880, t: t0 + 0.02, d: 0.06, vol: 0.13 });
+      homeRetroNote(ctx, bus, { f: 1175, t: t0 + 0.09, d: 0.06, vol: 0.13 });
+      homeRetroNote(ctx, bus, { f: 1568, t: t0 + 0.16, d: 0.09, vol: 0.14 });
+
+      // --- Power-up arpeggio (C major 8-bit) ---
+      const arp = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5, 1318.5];
+      arp.forEach((f, i) => {
+        homeRetroNote(ctx, bus, {
+          f,
+          t: t0 + 0.32 + i * 0.055,
+          d: 0.07,
+          vol: 0.11,
+          type: i % 2 ? "square" : "triangle",
+        });
+      });
+
+      // --- Coin cascade ---
+      for (let i = 0; i < 5; i++) {
+        homeRetroNoise(ctx, bus, {
+          t: t0 + 0.75 + i * 0.07,
+          d: 0.045,
+          vol: 0.09,
+          hi: 2200 + i * 350,
+        });
+        homeRetroNote(ctx, bus, {
+          f: 1200 + i * 180,
+          t: t0 + 0.75 + i * 0.07,
+          d: 0.05,
+          vol: 0.08,
+        });
+      }
+
+      // --- Level-clear fanfare (short original 8-bit) ---
+      const fanfare = [
+        { f: 392.0, t: 1.15, d: 0.1 },
+        { f: 523.25, t: 1.25, d: 0.1 },
+        { f: 659.25, t: 1.35, d: 0.1 },
+        { f: 783.99, t: 1.45, d: 0.18 },
+        { f: 1046.5, t: 1.65, d: 0.28 },
       ];
-
-      for (const n of notes) {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = "square";
-        osc.frequency.setValueAtTime(n.f, t0 + n.t);
-        const osc2 = ctx.createOscillator();
-        const g2 = ctx.createGain();
-        osc2.type = "sawtooth";
-        osc2.frequency.setValueAtTime(n.f * 1.003, t0 + n.t);
-        g2.gain.value = 0.35;
-
-        const at = t0 + n.t;
-        g.gain.setValueAtTime(0.0001, at);
-        g.gain.exponentialRampToValueAtTime(0.11, at + 0.03);
-        g.gain.exponentialRampToValueAtTime(0.0001, at + n.d);
-
-        osc.connect(g);
-        osc2.connect(g2);
-        g2.connect(g);
-        g.connect(master);
-        osc.start(at);
-        osc.stop(at + n.d + 0.02);
-        osc2.start(at);
-        osc2.stop(at + n.d + 0.02);
+      for (const n of fanfare) {
+        homeRetroNote(ctx, bus, {
+          f: n.f,
+          t: t0 + n.t,
+          d: n.d,
+          vol: 0.13,
+          type: "square",
+        });
+        // detuned triangle layer for thicker NES-ish tone
+        homeRetroNote(ctx, bus, {
+          f: n.f * 2,
+          t: t0 + n.t,
+          d: n.d * 0.85,
+          vol: 0.04,
+          type: "triangle",
+        });
       }
 
-      // Cannon / drum thump (noise burst)
-      const thumps = [0.05, 1.75, 2.65];
-      for (const tt of thumps) {
-        const len = Math.floor(ctx.sampleRate * 0.12);
-        const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-        const data = buf.getChannelData(0);
-        for (let i = 0; i < len; i++) {
-          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.18));
-        }
-        const src = ctx.createBufferSource();
-        src.buffer = buf;
-        const ng = ctx.createGain();
-        const filt = ctx.createBiquadFilter();
-        filt.type = "lowpass";
-        filt.frequency.value = 420;
-        ng.gain.setValueAtTime(0.22, t0 + tt);
-        ng.gain.exponentialRampToValueAtTime(0.0001, t0 + tt + 0.14);
-        src.connect(filt);
-        filt.connect(ng);
-        ng.connect(master);
-        src.start(t0 + tt);
-      }
+      // Final boom-bloop under the shout
+      homeRetroNoise(ctx, bus, { t: t0 + 2.0, d: 0.12, vol: 0.12, hi: 900 });
+      homeRetroNote(ctx, bus, { f: 196, t: t0 + 2.0, d: 0.2, vol: 0.1, type: "square" });
+      homeRetroNote(ctx, bus, { f: 784, t: t0 + 2.15, d: 0.15, vol: 0.09 });
     };
 
     if (ctx.state === "suspended") {

@@ -4,7 +4,7 @@
     {
       "timestamp": 1753920000,
       "date": "2025-07-31",
-      "value": 2211.0
+      "value": 809.0
     },
     {
       "timestamp": 1754006400,
@@ -1679,20 +1679,20 @@
     {
       "timestamp": 1782864000,
       "date": "2026-07-01",
-      "value": 1900.0
+      "value": 2750.0
     }
   ],
   "latest": {
     "timestamp": 1782864000,
     "date": "2026-07-01",
-    "value": 1900.0
+    "value": 2750.0
   },
   "source": "Santiment",
   "unit": "posts",
   "note": "Free plan \u2014 restricted metrics may have 30d lag or 1y cap",
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-31T14:23:58Z",
-  "storedAt": "2026-07-31T14:23:58Z",
+  "fetchedAt": "2026-07-31T20:11:46Z",
+  "storedAt": "2026-07-31T20:11:46Z",
   "pointCount": 336
 }

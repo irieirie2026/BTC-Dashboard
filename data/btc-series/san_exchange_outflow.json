@@ -4,7 +4,7 @@
     {
       "timestamp": 1753920000,
       "date": "2025-07-31",
-      "value": 9885.937357280005
+      "value": 3325.597308000002
     },
     {
       "timestamp": 1754006400,
@@ -1179,7 +1179,7 @@
     {
       "timestamp": 1774224000,
       "date": "2026-03-23",
-      "value": 24892.538577550004
+      "value": 24892.53857755
     },
     {
       "timestamp": 1774310400,
@@ -1679,20 +1679,20 @@
     {
       "timestamp": 1782864000,
       "date": "2026-07-01",
-      "value": 16798.414537750003
+      "value": 29308.740053030004
     }
   ],
   "latest": {
     "timestamp": 1782864000,
     "date": "2026-07-01",
-    "value": 16798.414537750003
+    "value": 29308.740053030004
   },
   "source": "Santiment",
   "unit": "USD",
   "note": "Free plan \u2014 restricted metrics may have 30d lag or 1y cap",
   "error": null,
   "stale": false,
-  "fetchedAt": "2026-07-31T14:23:57Z",
-  "storedAt": "2026-07-31T14:23:57Z",
+  "fetchedAt": "2026-07-31T20:09:58Z",
+  "storedAt": "2026-07-31T20:09:58Z",
   "pointCount": 336
 }

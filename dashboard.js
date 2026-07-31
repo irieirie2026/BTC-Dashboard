@@ -2039,8 +2039,27 @@ function migrateValuationMenu() {
   localStorage.removeItem(MENU_L4_KEY);
 }
 
+function isAppRootPath(path) {
+  // Bare site entry (localhost, Vercel production root, optional /home)
+  return (
+    path === "/"
+    || path === ""
+    || path === "/index.html"
+    || path === "/home"
+    || path === "/home/landing"
+  );
+}
+
 function bootstrapPathMenu() {
   const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
+  // Always open the Home deck on root entry — do not restore last L1 tab.
+  if (isAppRootPath(path)) {
+    localStorage.setItem(MENU_L1_KEY, "home");
+    localStorage.setItem(MENU_L2_KEY, "landing");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
+    return;
+  }
   if (path === "/misc" || path === "/misc/metrics") {
     localStorage.setItem(MENU_L1_KEY, "misc");
     localStorage.setItem(MENU_L2_KEY, "metrics");
@@ -2186,7 +2205,9 @@ function initDashboardSwitcher() {
 
   const savedL1 = localStorage.getItem(MENU_L1_KEY);
   const validL1 = Object.keys(MENU_TREE);
-  MenuController.setLevel1(validL1.includes(savedL1) ? savedL1 : "home");
+  // Prefer path/bootstrap result; fall back to Home (never leave the app on a blank view).
+  const initialL1 = validL1.includes(savedL1) ? savedL1 : "home";
+  MenuController.setLevel1(initialL1);
 }
 
 window.MenuController = MenuController;
