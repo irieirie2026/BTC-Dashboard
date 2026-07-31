@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-07-31T18:19:17Z",
+  "fetchedAt": "2026-07-31T20:18:53Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Sen. Lummis on CLARITY ACT updates: \"The bill literally requires President Trump to divest his digital asset holdings and it's becoming painfully clear some of my Democrat colleagues would rather let consumers lose everything if a crypto exchange fails\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2083285950365356284#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-31T20:17:30+00:00",
+      "publishedTs": 1785529050.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\u20bfREAKING: Bitkey, Ledger, Trezor, Jade, and other Bitcoin hardware wallets report they are unaffected and safe from the hack of ColdCards.",
+      "link": "https://x.com/DocumentingBTC/status/2083277876984455630#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-07-31T19:45:25+00:00",
+      "publishedTs": 1785527125.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Massive investment platform Grayscale officially endorses passing the Clarity Act: \"For Grayscale, the Clarity Act is critical in ensuring that innovation in asset management will happen in U.S. capital markets\" \ud83c\uddfa\ud83c\uddf8",
+      "link": "https://x.com/BitcoinMagazine/status/2083270070931730851#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-07-31T19:14:24+00:00",
+      "publishedTs": 1785525264.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "x.com/i/spaces/1AGRnnOZXDjGl",
+      "link": "https://x.com/Nneuman/status/2083269957530309017#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "nitter.net/i/spaces/1AGRnnOZXDjGl Link Twitter Space Click to view Space https://nitter.net/i/spaces/1AGRnnOZXDjGl",
+      "publishedAt": "2026-07-31T19:13:57+00:00",
+      "publishedTs": 1785525237.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "COLDCARD BTC MIGRATION VIDEO Here is an explainer video showing you how to do two things: 1. Set up a Casa multisig with your current Coldcard and send the assets from the Coldcard to the multisig. This eliminates the risk of loss from the CC vulnerability. Useful for people who ",
+      "link": "https://x.com/Nneuman/status/2083256427649388797#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "COLDCARD BTC MIGRATION VIDEO Here is an explainer video showing you how to do two things: 1. Set up a Casa multisig with your current Coldcard and send the assets from the Coldcard to the multisig. This eliminates the risk of loss from the CC vulnerability. Useful for people who ",
+      "publishedAt": "2026-07-31T18:20:12+00:00",
+      "publishedTs": 1785522012.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Abra CEO tells FOX \"Our aim with CLARITY and everything else going on is for the U.S. to lead\" \"We need to codify these rules as law and give startups and entrepreneurs explicit federal guidelines to get licenses and registrations\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2083253831501045922#m",
@@ -27,6 +92,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach https://bitcoinmagazine.com/business/coinkite-releases-fixed-firmware-after-coldcard-bug-ai-likely-involved-in-the-hack via @bitcoinmagazine",
+      "link": "https://x.com/JuanSGalt/status/2083250958214045929#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach bitcoinmagazine.com/business\u2026 via @bitcoinmagazine Link Coldcard Bug Exposes The New Reality: AI Is Auditing Every Open-Source Wallet Users who generated seeds on affected Coldcard MK3 devices w",
+      "publishedAt": "2026-07-31T17:58:28+00:00",
+      "publishedTs": 1785520708.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Given the emergency nature of this mass key compromise event, @CasaHODL advisors will be working through the weekend and we're opening up calendar availability to work with affected clients to restore their key sets to full health.",
@@ -835,6 +913,19 @@
       "isRetweet": false
     },
     {
+      "title": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
+      "link": "https://x.com/DavidZell_/status/2082917609477935551#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
+      "publishedAt": "2026-07-30T19:53:51+00:00",
+      "publishedTs": 1785441231.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says a Senate vote is still on track before the August recess \ud83d\udc40 \"Sen. Thune has kept a place for the CLARITY ACT on the agenda before the August recess...and I believe he does intend to go through with it...We will be moving forward.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2082910847215571099#m",
       "source": "@BitcoinMagazine",
@@ -1030,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Pro organization of police executives representing the largest cities in the U.S. now officially endorse the passage of the Clarity Act:",
-      "link": "https://x.com/BitcoinMagazine/status/2082833653583716510#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T14:20:14+00:00",
-      "publishedTs": 1785421214.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: $65,000 Bitcoin \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2082825922600665465#m",
       "source": "@BitcoinMagazine",
@@ -1119,19 +1197,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "WE ARE SO EXCITED ABOUT THE 2026 SPEAKER LINEUP \ud83d\udd25 But we're not finished. Can you guess who we're announcing next?",
-      "link": "https://x.com/Bitcoinconfasia/status/2082693981171826793#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T05:05:14+00:00",
-      "publishedTs": 1785387914.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. https://arkm.com/explorer/entity/lazarus-group",
@@ -1238,19 +1303,6 @@
       "isRetweet": false
     },
     {
-      "title": "Russia has issued an arrest warrant for @telegram founder Pavel @durov with the charge of \"facilitating terrorism.\"",
-      "link": "https://x.com/lopp/status/2082522091543203907#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Russia has issued an arrest warrant for @telegram founder Pavel @durov with the charge of \"facilitating terrorism.\" Telegram Messenger (@telegram) \u2014 https://nitter.net/telegram/status/2082364471339786357#m",
-      "publishedAt": "2026-07-29T17:42:12+00:00",
-      "publishedTs": 1785346932.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: https://youtu.be/",
       "link": "https://x.com/APompliano/status/2082497548804030966#m",
       "source": "@APompliano",
@@ -1288,19 +1340,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Cypherpunk performance art.",
-      "link": "https://x.com/lopp/status/2082475166290842075#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Cypherpunk performance art. Steve (@steverabinow) BIP110 ADVENT. Big one today. Introducing BIPflix: Contiguous MP4s! -Too big for OP_RETURN -4x cheaper -BIP110 valid -High quality bitcoin-cli getrawtransaction 06214483dcbf9f2025f9709aa5a7dce85277a8ce15076d2d0029f3d64f4bc7b6 | xx",
-      "publishedAt": "2026-07-29T14:35:44+00:00",
-      "publishedTs": 1785335744.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC(-$62.73M)\ud83d\udd34 7D NetFlow: -7,225 $BTC(-$464.05M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +2,000 $ETH(+$3.8M)\ud83d\udfe2 7D NetFlow: +20,277 $ETH(+$38.49M)\ud83d\udfe2",
@@ -1623,19 +1662,6 @@
       "summary": "All political questions in America reduce to this reality. Social security, Medicare, government spending, everything - it\u2019s this debate a thousand times over. And the highly mobilized older population keeps winning. The young will be sacrificed for the old. Over and over. Laura ",
       "publishedAt": "2026-07-26T11:12:24+00:00",
       "publishedTs": 1785064344.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jack Dorsey\u2019s company released an open source version of the team chat app Slack called \u201cBuzz\u201d Within a day, users have enabled agentic economic collaboration. Artificial intelligence agents are paying each other back and forth independently using bitcoin",
-      "link": "https://x.com/DocumentingBTC/status/2081334299614224420#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Jack Dorsey\u2019s company released an open source version of the team chat app Slack called \u201cBuzz\u201d Within a day, users have enabled agentic economic collaboration. Artificial intelligence agents are paying each other back and forth independently using bitcoin Video",
-      "publishedAt": "2026-07-26T11:02:21+00:00",
-      "publishedTs": 1785063741.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
