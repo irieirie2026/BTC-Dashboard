@@ -1,16 +1,55 @@
 {
-  "fetchedAt": "2026-08-01T16:07:48Z",
+  "fetchedAt": "2026-08-01T17:59:08Z",
   "source": "nitter.net",
   "tweets": [
     {
-      "title": "For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
-      "link": "https://x.com/lopp/status/2083575437599371321#m",
+      "title": "As the mass key compromise event continues to unfold, I'm keeping my eyes on the \"Bitcoin Days Destroyed\" chart which is an easy way to notice when lots of long-dormant coins start moving.",
+      "link": "https://x.com/lopp/status/2083591099998675333#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
       "summary": "",
+      "publishedAt": "2026-08-01T16:30:04+00:00",
+      "publishedTs": 1785601804.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: A second Coldcard hack has been reported. A total of 1,158.81 BTC has been stolen from 2,673 addresses so far, according to Galaxy Research. Users are urged to review the company's official security guidance as soon as possible\u203c",
+      "link": "https://x.com/BitcoinMagazine/status/2083585185845518353#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-01T16:06:34+00:00",
+      "publishedTs": 1785600394.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
+      "link": "https://x.com/lopp/status/2083575437599371321#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
       "publishedAt": "2026-08-01T15:27:49+00:00",
       "publishedTs": 1785598069.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Yes, an ETF fixes this (and it is kinda ironic given some cold storage ppl label ETFs as \u2018paper bitcoin\u2019). That said this truly sucks. Feel for the victims and hope the thiefs get hard time. What losers. In order for the bitcoin ETFs to do well the underlying Bitcoin network need",
+      "link": "https://x.com/EricBalchunas/status/2083566053502652589#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Yes, an ETF fixes this (and it is kinda ironic given some cold storage ppl label ETFs as \u2018paper bitcoin\u2019). That said this truly sucks. Feel for the victims and hope the thiefs get hard time. What losers. In order for the bitcoin ETFs to do well the underlying Bitcoin network need",
+      "publishedAt": "2026-08-01T14:50:32+00:00",
+      "publishedTs": 1785595832.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -131,6 +170,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "No product has ever given me more peace of mind for the money than multi-vendor, multi-sig via @CasaHODL",
+      "link": "https://x.com/btchorn/status/2083407867403776138#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-01T04:21:58+00:00",
+      "publishedTs": 1785558118.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "R to @saylor: Image",
@@ -577,15 +629,15 @@
     {
       "title": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff. In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month. ",
       "link": "https://x.com/EricBalchunas/status/2083207573566632051#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff . In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month.",
       "publishedAt": "2026-07-31T15:06:04+00:00",
       "publishedTs": 1785510364.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "July 31 Update: #Bitcoin ETFs: 1D NetFlow: +3,397 $BTC(+$212.73M)\ud83d\udfe2 7D NetFlow: -800 $BTC(-$50.09M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -1,757 $ETH(-$3.27M)\ud83d\udd34 7D NetFlow: -38,195 $ETH(-$71.08M)\ud83d\udd34",
@@ -809,6 +861,32 @@
       "isRetweet": false
     },
     {
+      "title": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
+      "link": "https://x.com/EricBalchunas/status/2083160784440287308#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
+      "publishedAt": "2026-07-31T12:00:08+00:00",
+      "publishedTs": 1785499208.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
+      "link": "https://x.com/EricBalchunas/status/2083158244487262546#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
+      "publishedAt": "2026-07-31T11:50:03+00:00",
+      "publishedTs": 1785498603.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "R to @nic_carter: Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
       "link": "https://x.com/nic_carter/status/2083158132604211615#m",
       "source": "@nic_carter",
@@ -952,7 +1030,7 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be",
+      "title": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
       "link": "https://x.com/lopp/status/2082969492284444816#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -989,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Coldcard users should take notice: your private keys may be compromised if you generated them under these conditions. We should be getting a full report of the vulnerability soon.",
-      "link": "https://x.com/lopp/status/2082960180849819745#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Coldcard users should take notice: your private keys may be compromised if you generated them under these conditions. We should be getting a full report of the vulnerability soon. James O'Beirne (@jamesob) If you have bitcoin residing under a single key that was generated on a Co",
-      "publishedAt": "2026-07-30T22:43:01+00:00",
-      "publishedTs": 1785451381.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "it brings me no joy to say this but if you\u2019re the kind of guy that can get into a position to lose one or even ten billion dollars you\u2019re the kind of guy that will be entrusted with billions more",
@@ -1095,6 +1160,19 @@
       "isRetweet": false
     },
     {
+      "title": "Amplify just filed for a S&P 500 Buffered Autocallable Yield Opportunity ETF... there's a lot going on there.",
+      "link": "https://x.com/EricBalchunas/status/2082931207184994399#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Amplify just filed for a S&amp;P 500 Buffered Autocallable Yield Opportunity ETF... there's a lot going on there.",
+      "publishedAt": "2026-07-30T20:47:53+00:00",
+      "publishedTs": 1785444473.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says over 100+ compromises have been made on the CLARITY ACT and calls on the Senate to pass the bill \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2082926696928272562#m",
       "source": "@BitcoinMagazine",
@@ -1142,19 +1220,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says a Senate vote is still on track before the August recess \ud83d\udc40 \"Sen. Thune has kept a place for the CLARITY ACT on the agenda before the August recess...and I believe he does intend to go through with it...We will be moving forward.\" \ud83d\udc4f Video",
       "publishedAt": "2026-07-30T19:26:59+00:00",
       "publishedTs": 1785439619.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Hearing unverified reports of partial bitcoin wallet thefts that correspond to odd on-chain fund movements. Root cause is unclear at this time. Please check your wallet balance and report back if you notice any loss of funds - more information is needed to aid the investigation!",
-      "link": "https://x.com/lopp/status/2082908635412181392#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-30T19:18:11+00:00",
-      "publishedTs": 1785439091.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1238,19 +1303,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Treasury Secretary Scott Bessent says Senate Democrats are stalling the Clarity Act: \u201cThe Senate needs to vote NOW on this landmark legislation.\u201d \"I believe Satoshi once said it best: If you don\u2019t believe me or don\u2019t get it, I don\u2019t have time to try to convince you, s",
-      "link": "https://x.com/BitcoinMagazine/status/2082876154873090211#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Treasury Secretary Scott Bessent says Senate Democrats are stalling the Clarity Act: \u201cThe Senate needs to vote NOW on this landmark legislation.\u201d \"I believe Satoshi once said it best: If you don\u2019t believe me or don\u2019t get it, I don\u2019t have time to try to convince you, s",
-      "publishedAt": "2026-07-30T17:09:07+00:00",
-      "publishedTs": 1785431347.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "More than a year ago, the House passed the Clarity Act. There\u2019s been progress since \u2014 thousands of hours of bipartisan negotiations took place at the staff and Member levels. The Senate Committees on Banking and Agriculture advanced their respective titles. And Senate Republicans",
       "link": "https://x.com/SecScottBessent/status/2082866826426364332#m",
       "source": "@saylor",
@@ -1272,6 +1324,19 @@
       "summary": "Whale 0x2684 keeps accumulating $BTC and $ETH ! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. arkm.com/explorer/address/0x\u2026",
       "publishedAt": "2026-07-30T15:03:45+00:00",
       "publishedTs": 1785423825.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
+      "link": "https://x.com/EricBalchunas/status/2082843568779952161#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
+      "publishedAt": "2026-07-30T14:59:38+00:00",
+      "publishedTs": 1785423578.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1303,17 +1368,30 @@
       "isRetweet": false
     },
     {
+      "title": "R to @EricBalchunas: Read the full piece here: https://www.bloomberg.com/news/articles/2026-07-30/ai-fueled-corgi-chases-blackrock-s-etf-crown-with-500-fund-push?utm_medium=email&utm_source=author_alert&utm_term=260730&utm_campaign=author_21953717",
+      "link": "https://x.com/EricBalchunas/status/2082817069888770057#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Read the full piece here: bloomberg.com/news/articles/\u2026 Link AI-Fueled Corgi Chases BlackRock\u2019s ETF Crown With 500-Fund Push Corgi Funds does not look much like a traditional asset manager. Its parent company runs 24-hour cafes in San Francisco and Atlanta, operates a bus to the ",
+      "publishedAt": "2026-07-30T13:14:20+00:00",
+      "publishedTs": 1785417260.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "publishedAt": "2026-07-30T13:13:41+00:00",
       "publishedTs": 1785417221.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "First look at new Braiins Forge Axe bitcoin miner",
