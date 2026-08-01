@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-01T04:19:14Z",
+  "fetchedAt": "2026-08-01T07:26:04Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Whale 0x2684 bought another 7,919.5 $ETH($14.89M) today. Since June 30, the whale has bought 74,265 $ETH($131.5M) at an average price of $1,771 and 1,050 $WBTC($67.49M) at an average price of $64,277. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
+      "link": "https://x.com/lookonchain/status/2083443438985646261#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whale 0x2684 bought another 7,919.5 $ETH ($14.89M) today. Since June 30, the whale has bought 74,265 $ETH ($131.5M) at an average price of $1,771 and 1,050 $WBTC ($67.49M) at an average price of $64,277. arkm.com/explorer/address/0x\u2026",
+      "publishedAt": "2026-08-01T06:43:19+00:00",
+      "publishedTs": 1785566599.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @saylor: Image",
       "link": "https://x.com/saylor/status/2083342249635483939#m",
@@ -1303,19 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. https://arkm.com/explorer/entity/lazarus-group",
-      "link": "https://x.com/lookonchain/status/2082660141313540511#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The Lazarus Group hackers moved 121.5 $BTC ($7.74M) an hour ago. arkm.com/explorer/entity/laz\u2026",
-      "publishedAt": "2026-07-30T02:50:46+00:00",
-      "publishedTs": 1785379846.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "First look at new Braiins Forge Axe bitcoin miner",
       "link": "https://x.com/DocumentingBTC/status/2082651447745823210#m",
       "source": "@DocumentingBTC",
@@ -1428,19 +1428,6 @@
       "summary": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&amp;A tomorrow at 5 PM ET: Lyn Alden ( @LynAldenContact ), Matt Hougan ( @Matt_Hougan ), Samson Mow ( @Excellion ), and James Van Straten ( @btcjvs ).",
       "publishedAt": "2026-07-29T15:17:03+00:00",
       "publishedTs": 1785338223.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "\"They're just lighting money on fire, it's a VC playbook, they're spraying and praying\" James Seyffart on Corgi's insane ETF filing spree \"Corgi just filed for every single country ETF imaginable. These guys launched their first ETF in late fall 2025, they now have like 180 to 20",
-      "link": "https://x.com/scottmelker/status/2082481433227256011#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "\"They're just lighting money on fire, it's a VC playbook, they're spraying and praying\" James Seyffart on Corgi's insane ETF filing spree \"Corgi just filed for every single country ETF imaginable. These guys launched their first ETF in late fall 2025, they now have like 180 to 20",
-      "publishedAt": "2026-07-29T15:00:38+00:00",
-      "publishedTs": 1785337238.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
