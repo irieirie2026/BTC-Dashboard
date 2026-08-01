@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-01T14:59:10Z",
+  "fetchedAt": "2026-08-01T16:07:48Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
+      "link": "https://x.com/lopp/status/2083575437599371321#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-01T15:27:49+00:00",
+      "publishedTs": 1785598069.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\u20bfREAKING: Market price of bitcoin is now twice as valuable as all other cryptocurrencies combined.",
       "link": "https://x.com/DocumentingBTC/status/2083557986522312877#m",
@@ -564,15 +577,15 @@
     {
       "title": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff. In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month. ",
       "link": "https://x.com/EricBalchunas/status/2083207573566632051#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff . In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month.",
       "publishedAt": "2026-07-31T15:06:04+00:00",
       "publishedTs": 1785510364.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "July 31 Update: #Bitcoin ETFs: 1D NetFlow: +3,397 $BTC(+$212.73M)\ud83d\udfe2 7D NetFlow: -800 $BTC(-$50.09M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -1,757 $ETH(-$3.27M)\ud83d\udd34 7D NetFlow: -38,195 $ETH(-$71.08M)\ud83d\udd34",
@@ -791,32 +804,6 @@
       "summary": "Diversify your keys, not your coins. Jameson Lopp (@lopp) There is no perfect hardware device for securing private keys. They all have different trade-offs, different pros and cons. The way to address weaknesses of hardware devices is by leveraging the magic of additive security.",
       "publishedAt": "2026-07-31T12:08:06+00:00",
       "publishedTs": 1785499686.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
-      "link": "https://x.com/EricBalchunas/status/2083160784440287308#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
-      "publishedAt": "2026-07-31T12:00:08+00:00",
-      "publishedTs": 1785499208.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
-      "link": "https://x.com/EricBalchunas/status/2083158244487262546#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
-      "publishedAt": "2026-07-31T11:50:03+00:00",
-      "publishedTs": 1785498603.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1108,19 +1095,6 @@
       "isRetweet": false
     },
     {
-      "title": "Amplify just filed for a S&P 500 Buffered Autocallable Yield Opportunity ETF... there's a lot going on there.",
-      "link": "https://x.com/EricBalchunas/status/2082931207184994399#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Amplify just filed for a S&amp;P 500 Buffered Autocallable Yield Opportunity ETF... there's a lot going on there.",
-      "publishedAt": "2026-07-30T20:47:53+00:00",
-      "publishedTs": 1785444473.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says over 100+ compromises have been made on the CLARITY ACT and calls on the Senate to pass the bill \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2082926696928272562#m",
       "source": "@BitcoinMagazine",
@@ -1290,19 +1264,6 @@
       "isRetweet": true
     },
     {
-      "title": "Looking forward to closing the door on Bitcoin's decade-long spam debate so that we can move on to more important topics like consensus cleanup, covenants, and quantum preparation!",
-      "link": "https://x.com/lopp/status/2082857102943420894#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-30T15:53:25+00:00",
-      "publishedTs": 1785426805.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Whale 0x2684 keeps accumulating $BTC and $ETH! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. https://arkm.com/explorer/address/0x268448f3",
       "link": "https://x.com/lookonchain/status/2082844605016613144#m",
       "source": "@lookonchain",
@@ -1311,19 +1272,6 @@
       "summary": "Whale 0x2684 keeps accumulating $BTC and $ETH ! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. arkm.com/explorer/address/0x\u2026",
       "publishedAt": "2026-07-30T15:03:45+00:00",
       "publishedTs": 1785423825.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
-      "link": "https://x.com/EricBalchunas/status/2082843568779952161#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
-      "publishedAt": "2026-07-30T14:59:38+00:00",
-      "publishedTs": 1785423578.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1355,30 +1303,17 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Read the full piece here: https://www.bloomberg.com/news/articles/2026-07-30/ai-fueled-corgi-chases-blackrock-s-etf-crown-with-500-fund-push?utm_medium=email&utm_source=author_alert&utm_term=260730&utm_campaign=author_21953717",
-      "link": "https://x.com/EricBalchunas/status/2082817069888770057#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Read the full piece here: bloomberg.com/news/articles/\u2026 Link AI-Fueled Corgi Chases BlackRock\u2019s ETF Crown With 500-Fund Push Corgi Funds does not look much like a traditional asset manager. Its parent company runs 24-hour cafes in San Francisco and Atlanta, operates a bus to the ",
-      "publishedAt": "2026-07-30T13:14:20+00:00",
-      "publishedTs": 1785417260.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "publishedAt": "2026-07-30T13:13:41+00:00",
       "publishedTs": 1785417221.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "First look at new Braiins Forge Axe bitcoin miner",
