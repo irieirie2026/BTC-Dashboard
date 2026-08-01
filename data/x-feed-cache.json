@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-31T22:03:49Z",
+  "fetchedAt": "2026-08-01T00:00:36Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -115,6 +115,19 @@
       "summary": "nitter.net/i/spaces/1AGRnnOZXDjGl Link Twitter Space Click to view Space https://nitter.net/i/spaces/1AGRnnOZXDjGl",
       "publishedAt": "2026-07-31T19:13:57+00:00",
       "publishedTs": 1785525237.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "her: It's 3am, why are you rooting through the hall closet?!? me: need entropy. have you seen Yahtzee?",
+      "link": "https://x.com/skot9000/status/2083259141078876403#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-07-31T18:30:58+00:00",
+      "publishedTs": 1785522658.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1405,19 +1418,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC(-$62.73M)\ud83d\udd34 7D NetFlow: -7,225 $BTC(-$464.05M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +2,000 $ETH(+$3.8M)\ud83d\udfe2 7D NetFlow: +20,277 $ETH(+$38.49M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2082471854611308758#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC (-$62.73M)\ud83d\udd34 7D NetFlow: -7,225 $BTC (-$464.05M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +2,000 $ETH (+$3.8M)\ud83d\udfe2 7D NetFlow: +20,277 $ETH (+$38.49M)\ud83d\udfe2 Lookonchain (@lookonchain) July 28 Update: #Bitcoin ETFs: 1D NetFlow: +20 $BTC (+$1.23M)\ud83d\udfe2 7",
-      "publishedAt": "2026-07-29T14:22:35+00:00",
-      "publishedTs": 1785334955.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Crypto money is leaking into other markets from both directions \"If you're a crypto guy and you left the crypto world and went into the ETF world, you've got one toe already into flipping into other markets. Now your money is in your Schwab account, and all of a sudden you see NV",
