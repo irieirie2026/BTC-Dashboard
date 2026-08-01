@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-08-01T17:59:08Z",
+  "fetchedAt": "2026-08-01T19:21:14Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: There's now a 65% chance Bitcoin will be above $65,000 this month, according to Polymarket DeFi \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2083631605071892737#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-01T19:11:01+00:00",
+      "publishedTs": 1785611461.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This is a fair point.. but it brings me back to how ETFs were such an intermediary upgrade for Bitcoin. Just what the doctor ordered. Safer, more secure and almost always cheaper. 33yr old industry 15T in aum, 500T in volume, 5400 funds and never once \u201clost\u201d someone\u2019s money.",
+      "link": "https://x.com/EricBalchunas/status/2083617036177969337#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "This is a fair point.. but it brings me back to how ETFs were such an intermediary upgrade for Bitcoin. Just what the doctor ordered. Safer, more secure and almost always cheaper. 33yr old industry 15T in aum, 500T in volume, 5400 funds and never once \u201clost\u201d someone\u2019s money. Raju",
+      "publishedAt": "2026-08-01T18:13:07+00:00",
+      "publishedTs": 1785607987.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The scammers have updated their playbooks.",
+      "link": "https://x.com/lopp/status/2083614303127547977#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The scammers have updated their playbooks. Jameson Lopp (@lopp) Only a matter of time before phishing emails claiming to be security notices from Coinkite start going out; they will be trying to trick you into entering your seed phrase into a malicious web site. Don't fall for it",
+      "publishedAt": "2026-08-01T18:02:16+00:00",
+      "publishedTs": 1785607336.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: The public evidence of BIP-110 adoption is concentrated among Knots users and OCEAN/DATUM miners. There is no identified major exchange, custodian, ETF platform, wallet, or payment network enforcing it. More than 99% of Bitcoin\u2019s economic weight has not adopted it.",
+      "link": "https://x.com/saylor/status/2083613203863326987#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "The public evidence of BIP-110 adoption is concentrated among Knots users and OCEAN/DATUM miners. There is no identified major exchange, custodian, ETF platform, wallet, or payment network enforcing it. More than 99% of Bitcoin\u2019s economic weight has not adopted it.",
+      "publishedAt": "2026-08-01T17:57:54+00:00",
+      "publishedTs": 1785607074.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Less than 1% of Bitcoin\u2019s economic weight has adopted BIP-110. The claim that 16%-18% of nodes equals 16%-18% support confuses software distribution with economic consensus. Bitcoin is not one node, one vote.",
+      "link": "https://x.com/saylor/status/2083613201111945636#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-01T17:57:53+00:00",
+      "publishedTs": 1785607073.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Reachable node counts are a census of software endpoints, not economic actors. A hobbyist node and a node serving millions via an exchange, custodian, wallet, or payment app are not economically equivalent. Every node is sovereign, but nodes are not equal votes over",
+      "link": "https://x.com/saylor/status/2083613202516938852#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Reachable node counts are a census of software endpoints, not economic actors. A hobbyist node and a node serving millions via an exchange, custodian, wallet, or payment app are not economically equivalent. Every node is sovereign, but nodes are not equal votes over Bitcoin.",
+      "publishedAt": "2026-08-01T17:57:53+00:00",
+      "publishedTs": 1785607073.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "As the mass key compromise event continues to unfold, I'm keeping my eyes on the \"Bitcoin Days Destroyed\" chart which is an easy way to notice when lots of long-dormant coins start moving.",
       "link": "https://x.com/lopp/status/2083591099998675333#m",
@@ -1056,19 +1134,6 @@
       "isRetweet": false
     },
     {
-      "title": "COLDCARD Mk3 Security Advisory If you generated a seed on a Mk3 after firmware 4.0.1, your funds may be at risk. Mk4, Q and Mk5 are not affected based on our early analysis. Read the advisory and migrate carefully: https://blog.coinkite.com/coldcard-mk3-seed-generation-warning/",
-      "link": "https://x.com/COLDCARDwallet/status/2082961993070247948#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "COLDCARD Mk3 Security Advisory If you generated a seed on a Mk3 after firmware 4.0.1, your funds may be at risk. Mk4, Q and Mk5 are not affected based on our early analysis. Read the advisory and migrate carefully: blog.coinkite.com/coldcard-m\u2026 Link Mk3 Security Advisory Coinkite",
-      "publishedAt": "2026-07-30T22:50:13+00:00",
-      "publishedTs": 1785451813.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "it brings me no joy to say this but if you\u2019re the kind of guy that can get into a position to lose one or even ten billion dollars you\u2019re the kind of guy that will be entrusted with billions more",
       "link": "https://x.com/nic_carter/status/2082959453385527308#m",
       "source": "@nic_carter",
@@ -1277,19 +1342,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senators Thom Tillis and Ruben Gallego have sent their new ethics proposal for the CLARITY ACT to the White House this morning, Punchbowl News reports \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2082891584610119739#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T18:10:26+00:00",
-      "publishedTs": 1785435026.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 12 years ago, the first Bitcoin hardware wallet was released by Trezor",
       "link": "https://x.com/DocumentingBTC/status/2082879925963350162#m",
       "source": "@DocumentingBTC",
@@ -1301,19 +1353,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "More than a year ago, the House passed the Clarity Act. There\u2019s been progress since \u2014 thousands of hours of bipartisan negotiations took place at the staff and Member levels. The Senate Committees on Banking and Agriculture advanced their respective titles. And Senate Republicans",
-      "link": "https://x.com/SecScottBessent/status/2082866826426364332#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "More than a year ago, the House passed the Clarity Act. There\u2019s been progress since \u2014 thousands of hours of bipartisan negotiations took place at the staff and Member levels. The Senate Committees on Banking and Agriculture advanced their respective titles. And Senate Republicans",
-      "publishedAt": "2026-07-30T16:32:03+00:00",
-      "publishedTs": 1785429123.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Whale 0x2684 keeps accumulating $BTC and $ETH! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. https://arkm.com/explorer/address/0x268448f3",
@@ -1350,19 +1389,6 @@
       "summary": "",
       "publishedAt": "2026-07-30T13:49:31+00:00",
       "publishedTs": 1785419371.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin is inside the gates of Wall Street.",
-      "link": "https://x.com/saylor/status/2082818586263830820#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-30T13:20:22+00:00",
-      "publishedTs": 1785417622.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1444,19 +1470,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "THE CREATOR OF ORDINALS SAYS BIP-110 IS DOOMED Casey @Rodarmor and @realizingerin dive into the history and drama behind BIP-110, Bitcoin's controversial anti-spam filter proposal. This episode covers the origins of Bitcoin's spam debate, @LukeDashjr's decade-long anti-spam crusa",
-      "link": "https://x.com/hellmoneypod/status/2082545518165811709#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "THE CREATOR OF ORDINALS SAYS BIP-110 IS DOOMED Casey @Rodarmor and @realizingerin dive into the history and drama behind BIP-110, Bitcoin's controversial anti-spam filter proposal. This episode covers the origins of Bitcoin's spam debate, @LukeDashjr 's decade-long anti-spam crus",
-      "publishedAt": "2026-07-29T19:15:18+00:00",
-      "publishedTs": 1785352518.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "RT @ColeMacro: BIP-110 made me even more bullish on Bitcoin. Why? Because of how decisively and publicly it is failing. Every large, suc\u2026",
