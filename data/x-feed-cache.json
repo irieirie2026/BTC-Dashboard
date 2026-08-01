@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-08-01T19:21:14Z",
+  "fetchedAt": "2026-08-01T20:53:08Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Happy UASF day! Nearly a decade has passed. BCH now trades at 0.33% of the real Bitcoin.",
+      "link": "https://x.com/lopp/status/2083654093441060875#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Happy UASF day! Nearly a decade has passed. BCH now trades at 0.33% of the real Bitcoin. Jameson Lopp (@lopp) Today Bitcoiners celebrate their independence from miner governance via UASF while Bcashers celebrate their independence from Bitcoin via miner governance. The unfortunat",
+      "publishedAt": "2026-08-01T20:40:22+00:00",
+      "publishedTs": 1785616822.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Someone said it\u2019s prob current or ex-employee. That feels right but I\u2019ve no idea. Also If there\u2019s a silver lining, it\u2019s that the price of bitcoin hasn\u2019t really moved at all really. pretty amazing.",
+      "link": "https://x.com/EricBalchunas/status/2083653746358182003#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Someone said it\u2019s prob current or ex-employee. That feels right but I\u2019ve no idea. Also If there\u2019s a silver lining, it\u2019s that the price of bitcoin hasn\u2019t really moved at all really. pretty amazing.",
+      "publishedAt": "2026-08-01T20:39:00+00:00",
+      "publishedTs": 1785616740.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "$88 million would make this one of the biggest heists in U.S. history. At one point is the FBI et al on the case to bust these scumbags and return the btc? The company is Canadian tho so not sure that works.",
+      "link": "https://x.com/EricBalchunas/status/2083653146157502766#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "$88 million would make this one of the biggest heists in U.S. history. At one point is the FBI et al on the case to bust these scumbags and return the btc? The company is Canadian tho so not sure that works. Crypto Rover (@cryptorover) BREAKING: A third wave of suspected Coldcard",
+      "publishedAt": "2026-08-01T20:36:37+00:00",
+      "publishedTs": 1785616597.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 16 years ago, Wikipedia deleted the page about Bitcoin because they said there was a \u201cLack of significant third-party coverage to confer notability.\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2083648808651456941#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-01T20:19:22+00:00",
+      "publishedTs": 1785615562.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Perhaps we need a nomenclature update so that folks stop overlooking the obvious.",
+      "link": "https://x.com/lopp/status/2083645438226264535#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-01T20:05:59+00:00",
+      "publishedTs": 1785614759.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: A third Coldcard hack has been reported with another 207.7294 BTC stolen. A total of 1,367.05 BTC has been stolen from 4,585 addresses so far, according to Galaxy Research. Users are urged to review the company's official security guidance as soon as possible\u203c",
+      "link": "https://x.com/BitcoinMagazine/status/2083634238104940884#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-01T19:21:29+00:00",
+      "publishedTs": 1785612089.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: There's now a 65% chance Bitcoin will be above $65,000 this month, according to Polymarket DeFi \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2083631605071892737#m",
@@ -1108,32 +1186,6 @@
       "isRetweet": false
     },
     {
-      "title": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
-      "link": "https://x.com/lopp/status/2082969492284444816#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This is the part where I remind folks once again that every hardware vendor is fallible. If you want to hedge against vendor risks and supply chain risks, the solution is multi-vendor multisig. We have plenty of coldcard users over at @CasaHODL and this event will just be a minor",
-      "publishedAt": "2026-07-30T23:20:01+00:00",
-      "publishedTs": 1785453601.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "If your funds are on a seed phrase that was generated on a vulnerable coldcard firmware and you're looking to re-secure them by sending to a freshly generated seed phrase, the most important thing is to not panic and not rush. Mistakes can be catastrophic.",
-      "link": "https://x.com/lopp/status/2082966611372216814#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-30T23:08:34+00:00",
-      "publishedTs": 1785452914.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "it brings me no joy to say this but if you\u2019re the kind of guy that can get into a position to lose one or even ten billion dollars you\u2019re the kind of guy that will be entrusted with billions more",
       "link": "https://x.com/nic_carter/status/2082959453385527308#m",
       "source": "@nic_carter",
@@ -1212,7 +1264,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
+      "title": "LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
       "link": "https://x.com/BitcoinMagazine/status/2082934205550379358#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -1316,19 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: IF YOU'RE SEEING THIS, YOU'RE STILL EARLY \u203c\ufe0f BITCOIN ASIA TICKET PRICES INCREASE IN ONE WEEK \ud83d\udc40 Now is the time to grab yours \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2082901505149907256#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "IF YOU'RE SEEING THIS, YOU'RE STILL EARLY \u203c\ufe0f BITCOIN ASIA TICKET PRICES INCREASE IN ONE WEEK \ud83d\udc40 Now is the time to grab yours \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
-      "publishedAt": "2026-07-30T18:49:51+00:00",
-      "publishedTs": 1785437391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Join us today at 5 PM ET for our Q2 2026 earnings call. We\u2019ll discuss the $BTC outlook, our plans for $MSTR and $STRC, plus a live Q&A with Lyn Alden (@LynAldenContact), Matt Hougan (@Matt_Hougan), Samson Mow (@Excellion), and James Van Straten (@btcjvs).https://x.com/i/broadcast",
       "link": "https://x.com/saylor/status/2082894285406425255#m",
       "source": "@saylor",
@@ -1381,43 +1420,17 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: $65,000 Bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2082825922600665465#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-30T13:49:31+00:00",
-      "publishedTs": 1785419371.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Read the full piece here: https://www.bloomberg.com/news/articles/2026-07-30/ai-fueled-corgi-chases-blackrock-s-etf-crown-with-500-fund-push?utm_medium=email&utm_source=author_alert&utm_term=260730&utm_campaign=author_21953717",
-      "link": "https://x.com/EricBalchunas/status/2082817069888770057#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Read the full piece here: bloomberg.com/news/articles/\u2026 Link AI-Fueled Corgi Chases BlackRock\u2019s ETF Crown With 500-Fund Push Corgi Funds does not look much like a traditional asset manager. Its parent company runs 24-hour cafes in San Francisco and Atlanta, operates a bus to the ",
-      "publishedAt": "2026-07-30T13:14:20+00:00",
-      "publishedTs": 1785417260.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "publishedAt": "2026-07-30T13:13:41+00:00",
       "publishedTs": 1785417221.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "First look at new Braiins Forge Axe bitcoin miner",
@@ -1571,19 +1584,6 @@
       "summary": "",
       "publishedAt": "2026-07-28T17:12:10+00:00",
       "publishedTs": 1785258730.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This new vibe coded website shows the Bitcoin blockchain as a post office of real live transactions",
-      "link": "https://x.com/DocumentingBTC/status/2082107985845719081#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This new vibe coded website shows the Bitcoin blockchain as a post office of real live transactions Video",
-      "publishedAt": "2026-07-28T14:16:42+00:00",
-      "publishedTs": 1785248202.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
