@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-01T21:54:04Z",
+  "fetchedAt": "2026-08-01T22:53:59Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Jack Dorsey just made his Bitcoin wallet \u2018Bitkey\u2019 free next-day shipping by default for customers.",
+      "link": "https://x.com/DocumentingBTC/status/2083685112739238225#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-01T22:43:38+00:00",
+      "publishedTs": 1785624218.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Blue Wallet has a feature allowing users to add your own entropy using dice rolls or coin flips to create a Bitcoin private key, and if insufficient manual entropy is provided, it fills the remainder from the system random number generation.",
+      "link": "https://x.com/DocumentingBTC/status/2083683740417495461#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Blue Wallet has a feature allowing users to add your own entropy using dice rolls or coin flips to create a Bitcoin private key, and if insufficient manual entropy is provided, it fills the remainder from the system random number generation. Video",
+      "publishedAt": "2026-08-01T22:38:11+00:00",
+      "publishedTs": 1785623891.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "You\u2019re never going to get a frontier model ever again. OAI and Ant will just do all the discoveries and science themselves. Can\u2019t trust the unwashed masses with frontier tech ever again. Too risky",
       "link": "https://x.com/nic_carter/status/2083664259972469015#m",
@@ -1290,7 +1316,7 @@
       "isRetweet": true
     },
     {
-      "title": "LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
+      "title": "Pinned: LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
       "link": "https://x.com/BitcoinMagazine/status/2082934205550379358#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -1511,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "RT @ColeMacro: BIP-110 made me even more bullish on Bitcoin. Why? Because of how decisively and publicly it is failing. Every large, suc\u2026",
-      "link": "https://x.com/JSeyff/status/2082529555802214566#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "RT @ColeMacro : BIP-110 made me even more bullish on Bitcoin. Why? Because of how decisively and publicly it is failing. Every large, suc\u2026",
-      "publishedAt": "2026-07-29T18:11:52+00:00",
-      "publishedTs": 1785348712.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\u20bfREAKING: Bitcoin mining officially reached a new all-time high for sustainable energy use. Cambridge reports that 59.4% of the network is now powered by renewable electricity sources, higher than any other reported global industry.",
       "link": "https://x.com/DocumentingBTC/status/2082454836054732895#m",
       "source": "@DocumentingBTC",
@@ -1571,32 +1584,6 @@
       "summary": "",
       "publishedAt": "2026-07-28T18:07:24+00:00",
       "publishedTs": 1785262044.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The Bitcoin developers write the rules but can\u2019t impose them on anyone. The Bitcoin miners follow the rules but can\u2019t change them. The Bitcoin nodes enforce the rules, but only on themselves. The Bitcoin holders own all the money, but the money makes none of the rules.",
-      "link": "https://x.com/DocumentingBTC/status/2082163257666621868#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-28T17:56:20+00:00",
-      "publishedTs": 1785261380.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto wrote, \u201cIf you don\u2019t believe me or don\u2019t get it, I don\u2019t have time to convince you, sorry.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2082152145005031515#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-28T17:12:10+00:00",
-      "publishedTs": 1785258730.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
