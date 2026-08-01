@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-01T00:00:36Z",
+  "fetchedAt": "2026-08-01T04:19:14Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @saylor: Image",
+      "link": "https://x.com/saylor/status/2083342249635483939#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-01T00:01:13+00:00",
+      "publishedTs": 1785542473.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Stretch Dividend Rate maintained at 12.00% for August 2026. $STRC",
+      "link": "https://x.com/saylor/status/2083342244250014180#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-01T00:01:12+00:00",
+      "publishedTs": 1785542472.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Head of Strategy says that he is \"relentlessly optimistic\" that the CLARITY ACT gets passed by the Senate \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2083307234298134648#m",
@@ -1459,19 +1485,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin Is Setting Up for $70K - But The Fed Could RUIN It Discussing Live with @JSeyff @ 9 AM EST Live https://www.youtube.com/watch?v=INF9xVwSOqw",
-      "link": "https://x.com/scottmelker/status/2082447503753187735#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Bitcoin Is Setting Up for $70K - But The Fed Could RUIN It Discussing Live with @JSeyff @ 9 AM EST Live piped.video/watch?v=INF9xVwS\u2026",
-      "publishedAt": "2026-07-29T12:45:49+00:00",
-      "publishedTs": 1785329149.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to e",
       "link": "https://x.com/nic_carter/status/2082413486999585160#m",
       "source": "@nic_carter",
@@ -1545,45 +1558,6 @@
       "summary": "",
       "publishedAt": "2026-07-28T17:12:10+00:00",
       "publishedTs": 1785258730.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: Once one faction captures consensus, every faction learns it can seize through politics what it could not earn in the market. Protocol warfare becomes permanent. Capital flees, innovation dies, security erodes, and Bitcoin is doomed to 1% of its potential.",
-      "link": "https://x.com/saylor/status/2082141017977856159#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Once one faction captures consensus, every faction learns it can seize through politics what it could not earn in the market. Protocol warfare becomes permanent. Capital flees, innovation dies, security erodes, and Bitcoin is doomed to 1% of its potential.",
-      "publishedAt": "2026-07-28T16:27:57+00:00",
-      "publishedTs": 1785256077.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: Keep Bitcoin\u2019s base layer simple, neutral, scarce, and secure. Keep innovation at the edges, where adoption is voluntary and failure is local. Protocol changes must be rare, conservative, and driven by necessity, not ambition. Defend Bitcoin\u2019s constitution. Defend t",
-      "link": "https://x.com/saylor/status/2082141019303202998#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Keep Bitcoin\u2019s base layer simple, neutral, scarce, and secure. Keep innovation at the edges, where adoption is voluntary and failure is local. Protocol changes must be rare, conservative, and driven by necessity, not ambition. Defend Bitcoin\u2019s constitution. Defend the future.",
-      "publishedAt": "2026-07-28T16:27:57+00:00",
-      "publishedTs": 1785256077.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin has won. Now it must survive victory. Its gravest threat is not an enemy at the gates, but corruption from within: factions that invent pretexts, rewrite the rules, and seize economic rights until freedom becomes permission and law becomes loot.",
-      "link": "https://x.com/saylor/status/2082141006443491489#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-28T16:27:54+00:00",
-      "publishedTs": 1785256074.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
