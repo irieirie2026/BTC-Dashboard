@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-01T07:26:04Z",
+  "fetchedAt": "2026-08-01T09:56:57Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "We\u2019re living in the most exciting time in human history",
+      "link": "https://x.com/nic_carter/status/2083474874396184589#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "We\u2019re living in the most exciting time in human history Noam Brown (@polynoamial) An internal version of Astra, @OpenAI \u2019s next major model family, solved 10 major open problems in mathematics, quantum complexity, and theoretical computer science. We believe it will be a major st",
+      "publishedAt": "2026-08-01T08:48:13+00:00",
+      "publishedTs": 1785574093.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whale 0x2684 bought another 7,919.5 $ETH($14.89M) today. Since June 30, the whale has bought 74,265 $ETH($131.5M) at an average price of $1,771 and 1,050 $WBTC($67.49M) at an average price of $64,277. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
       "link": "https://x.com/lookonchain/status/2083443438985646261#m",
@@ -1613,19 +1626,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Our Investment in Standard Bots",
-      "link": "https://x.com/RoboStrategy/status/2081739713430409519#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Article Our Investment in Standard Bots We led Standard Bots\u2019 $200 million Series C because we believe it\u2019s the company built to reinvent the robot arm for physical AI and to bring the industry back to America. In this public thesis we will",
-      "publishedAt": "2026-07-27T13:53:19+00:00",
-      "publishedTs": 1785160399.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 57% Loading\u2026Please HODL Current Block: 959,831 Halving Block: 1,050,000 Blocks Remaining: 90,169 Days Remaining: ~626",
