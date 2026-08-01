@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-08-01T13:16:49Z",
+  "fetchedAt": "2026-08-01T14:59:10Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "\u20bfREAKING: Market price of bitcoin is now twice as valuable as all other cryptocurrencies combined.",
+      "link": "https://x.com/DocumentingBTC/status/2083557986522312877#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-01T14:18:29+00:00",
+      "publishedTs": 1785593909.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\u20bfREAKING: New Bitcoin improvement proposal #110 network update fails to achieve miner signaling support this difficult adjustment period.",
+      "link": "https://x.com/DocumentingBTC/status/2083557418248593562#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-01T14:16:13+00:00",
+      "publishedTs": 1785593773.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I spoke with @jvisserlabs to break down the Leopold Aschenbrenner hedge fund unwind, the market crashes in South Korea and Japan, Kevin Warsh and the Fed's next move, and the case for compute scarcity as AI demand outpaces supply. We also discuss tokenization and why bitcoin rema",
+      "link": "https://x.com/APompliano/status/2083553678871400629#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I spoke with @jvisserlabs to break down the Leopold Aschenbrenner hedge fund unwind, the market crashes in South Korea and Japan, Kevin Warsh and the Fed's next move, and the case for compute scarcity as AI demand outpaces supply. We also discuss tokenization and why bitcoin rema",
+      "publishedAt": "2026-08-01T14:01:22+00:00",
+      "publishedTs": 1785592882.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Before block 961,632, BIP-110 signaling is voluntary. From blocks 961,632\u2013963,647, its software rejects every non-signaling block. Any \u201c100% signaling\u201d shown during that window reflects the rule, not voluntary miner support or Bitcoin consensus.",
+      "link": "https://x.com/saylor/status/2083544127795294231#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Before block 961,632, BIP-110 signaling is voluntary. From blocks 961,632\u2013963,647, its software rejects every non-signaling block. Any \u201c100% signaling\u201d shown during that window reflects the rule, not voluntary miner support or Bitcoin consensus.",
+      "publishedAt": "2026-08-01T13:23:25+00:00",
+      "publishedTs": 1785590605.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "At block 960,561, BIP-110 has 24 signals in 946 blocks (2.54%). Every signal came from a DATUM miner sharing rewards through OCEAN. Signals outside OCEAN: 0. The 55% voluntary threshold is now mathematically unreachable this period. This is not miner consensus.",
+      "link": "https://x.com/saylor/status/2083544124901253624#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-01T13:23:24+00:00",
+      "publishedTs": 1785590604.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: OCEAN made BIP-110 signaling the default on its existing endpoint. The BIP-110 guide directs node operators to Bitcoin Knots and miners to DATUM. Whatever the intent, BIP-110 functions as a vertically integrated marketing campaign for Knots and OCEAN/DATUM.",
+      "link": "https://x.com/saylor/status/2083544126373429600#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "OCEAN made BIP-110 signaling the default on its existing endpoint. The BIP-110 guide directs node operators to Bitcoin Knots and miners to DATUM. Whatever the intent, BIP-110 functions as a vertically integrated marketing campaign for Knots and OCEAN/DATUM.",
+      "publishedAt": "2026-08-01T13:23:24+00:00",
+      "publishedTs": 1785590604.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This was possibly one of the worst weeks in the history of Bitcoin. Many people believed they had done virtually everything right. They bought a respected hardware wallet, generated their seed offline, followed established best practices, and still lost significant amounts of Bit",
+      "link": "https://x.com/IIICapital/status/2083535304095334590#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "This was possibly one of the worst weeks in the history of Bitcoin. Many people believed they had done virtually everything right. They bought a respected hardware wallet, generated their seed offline, followed established best practices, and still lost significant amounts of Bit",
+      "publishedAt": "2026-08-01T12:48:21+00:00",
+      "publishedTs": 1785588501.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "We\u2019re living in the most exciting time in human history",
       "link": "https://x.com/nic_carter/status/2083474874396184589#m",
@@ -1238,19 +1329,6 @@
       "isRetweet": false
     },
     {
-      "title": "July 30 Update: #Bitcoin ETFs: 1D NetFlow: +585 $BTC(+$37.81M)\ud83d\udfe2 7D NetFlow: -7,704 $BTC(-$498.09M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -6,440 $ETH(-$12.34M)\ud83d\udd34 7D NetFlow: -23,916 $ETH(-$45.95M)\ud83d\udd34",
-      "link": "https://x.com/lookonchain/status/2082836698275475480#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "July 30 Update: #Bitcoin ETFs: 1D NetFlow: +585 $BTC (+$37.81M)\ud83d\udfe2 7D NetFlow: -7,704 $BTC (-$498.09M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -6,440 $ETH (-$12.34M)\ud83d\udd34 7D NetFlow: -23,916 $ETH (-$45.95M)\ud83d\udd34 Lookonchain (@lookonchain) July 29 Update: #Bitcoin ETFs: 1D NetFlow: -977 $BTC (-$62.73M",
-      "publishedAt": "2026-07-30T14:32:20+00:00",
-      "publishedTs": 1785421940.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: $65,000 Bitcoin \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2082825922600665465#m",
       "source": "@BitcoinMagazine",
@@ -1298,19 +1376,6 @@
       "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "publishedAt": "2026-07-30T13:13:41+00:00",
       "publishedTs": 1785417221.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A newly created wallet (bc1qwz) just withdrew 1,250 $BTC($80.94M) from #Binance. https://arkm.com/explorer/address/bc1qwzcyf09xc7prjhfn9jvl8g7wukx8yf5kur22gv",
-      "link": "https://x.com/lookonchain/status/2082800392807801233#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "A newly created wallet (bc1qwz) just withdrew 1,250 $BTC ($80.94M) from #Binance . arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-07-30T12:08:04+00:00",
-      "publishedTs": 1785413284.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1368,19 +1433,6 @@
       "isRetweet": false
     },
     {
-      "title": "6 of the top 10 most traded ETFs today are semiconductor related.. about $40b in combined volume",
-      "link": "https://x.com/EricBalchunas/status/2082553553940328824#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-07-29T19:47:13+00:00",
-      "publishedTs": 1785354433.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "THE CREATOR OF ORDINALS SAYS BIP-110 IS DOOMED Casey @Rodarmor and @realizingerin dive into the history and drama behind BIP-110, Bitcoin's controversial anti-spam filter proposal. This episode covers the origins of Bitcoin's spam debate, @LukeDashjr's decade-long anti-spam crusa",
       "link": "https://x.com/hellmoneypod/status/2082545518165811709#m",
       "source": "@saylor",
@@ -1407,32 +1459,6 @@
       "isRetweet": false
     },
     {
-      "title": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: https://youtu.be/",
-      "link": "https://x.com/APompliano/status/2082497548804030966#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "I sat with @polinapompliano to discuss why socialism is the biggest threat to investor portfolios, and why the economy feels painful despite the stock market hitting all-time highs. We also discuss bitcoin, the Clarity Act, and Google's AI spending bet. YouTube: piped.video/fibXI",
-      "publishedAt": "2026-07-29T16:04:41+00:00",
-      "publishedTs": 1785341081.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&A tomorrow at 5 PM ET: Lyn Alden (@LynAldenContact), Matt Hougan (@Matt_Hougan), Samson Mow (@Excellion), and James Van Straten (@btcjvs).",
-      "link": "https://x.com/Strategy/status/2082485563727225041#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bringing the sharpest $BTC minds to our Q2 Earnings Call. Joining our live Q&amp;A tomorrow at 5 PM ET: Lyn Alden ( @LynAldenContact ), Matt Hougan ( @Matt_Hougan ), Samson Mow ( @Excellion ), and James Van Straten ( @btcjvs ).",
-      "publishedAt": "2026-07-29T15:17:03+00:00",
-      "publishedTs": 1785338223.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Crypto money is leaking into other markets from both directions \"If you're a crypto guy and you left the crypto world and went into the ETF world, you've got one toe already into flipping into other markets. Now your money is in your Schwab account, and all of a sudden you see NV",
       "link": "https://x.com/scottmelker/status/2082470145902186783#m",
       "source": "@JSeyff",
@@ -1444,19 +1470,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Governments can accelerate Bitcoin adoption. Governments can delay Bitcoin adoption. They cannot stop Bitcoin. Block by block. Nation by nation. Bitcoin advances.",
-      "link": "https://x.com/saylor/status/2082458617425395720#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-29T13:29:59+00:00",
-      "publishedTs": 1785331799.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "\u20bfREAKING: Bitcoin mining officially reached a new all-time high for sustainable energy use. Cambridge reports that 59.4% of the network is now powered by renewable electricity sources, higher than any other reported global industry.",
@@ -1496,19 +1509,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Yep, this is why we don't want to rush to add novel crypto to bitcoin on the basis of an invented threat",
-      "link": "https://x.com/jamesob/status/2082202791271858294#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Yep, this is why we don't want to rush to add novel crypto to bitcoin on the basis of an invented threat Peter Van Valkenburgh (@valkenburgh) Funniest timeline: Bitcoin upgrades to a post-quantum lattice signature scheme... ...and then frontier LLMs break the lattice math before ",
-      "publishedAt": "2026-07-28T20:33:25+00:00",
-      "publishedTs": 1785270805.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The reason bitcoin doesn\u2019t change is not that change is forbidden. It\u2019s that the change requires convincing millions of strangers to change Bitcoin who bought it because it doesn\u2019t change.",
@@ -1563,32 +1563,6 @@
       "isRetweet": false
     },
     {
-      "title": "This brewery in Australia makes beer by recycling the hot water from Bitcoin mining computers",
-      "link": "https://x.com/DocumentingBTC/status/2082107488812364021#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This brewery in Australia makes beer by recycling the hot water from Bitcoin mining computers Video",
-      "publishedAt": "2026-07-28T14:14:43+00:00",
-      "publishedTs": 1785248083.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "BREAKING: $MSTR from @Strategy is live on Solana via @sunrise, issued by @Backpack Securities",
-      "link": "https://x.com/solana/status/2082100191768031600#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "BREAKING: $MSTR from @Strategy is live on Solana via @sunrise , issued by @Backpack Securities Video",
-      "publishedAt": "2026-07-28T13:45:43+00:00",
-      "publishedTs": 1785246343.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "If you hang out at a high end resort anywhere in Europe they are full of wealthy Brits. There\u2019s just no shortage of British founders. They just don\u2019t live or work in the UK",
       "link": "https://x.com/nic_carter/status/2082048455975866589#m",
       "source": "@nic_carter",
@@ -1610,19 +1584,6 @@
       "summary": "",
       "publishedAt": "2026-07-28T09:25:01+00:00",
       "publishedTs": 1785230701.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 57% Loading\u2026Please HODL Current Block: 959,831 Halving Block: 1,050,000 Blocks Remaining: 90,169 Days Remaining: ~626",
-      "link": "https://x.com/DocumentingBTC/status/2081707998066393233#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-27T11:47:17+00:00",
-      "publishedTs": 1785152837.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
