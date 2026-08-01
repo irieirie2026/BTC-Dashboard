@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-01T22:53:59Z",
+  "fetchedAt": "2026-08-01T23:56:47Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "On this day in history, 9 years ago, Bitcoin Cash was created by a fork in the blockchain and code.",
+      "link": "https://x.com/DocumentingBTC/status/2083689248608100383#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-01T23:00:04+00:00",
+      "publishedTs": 1785625204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Jack Dorsey just made his Bitcoin wallet \u2018Bitkey\u2019 free next-day shipping by default for customers.",
       "link": "https://x.com/DocumentingBTC/status/2083685112739238225#m",
@@ -1571,19 +1584,6 @@
       "summary": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
       "publishedAt": "2026-07-29T10:29:14+00:00",
       "publishedTs": 1785320954.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The reason bitcoin doesn\u2019t change is not that change is forbidden. It\u2019s that the change requires convincing millions of strangers to change Bitcoin who bought it because it doesn\u2019t change.",
-      "link": "https://x.com/DocumentingBTC/status/2082166044290949259#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-28T18:07:24+00:00",
-      "publishedTs": 1785262044.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
