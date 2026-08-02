@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-02T17:09:26Z",
+  "fetchedAt": "2026-08-02T19:07:21Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin maximalism is over. Bitcoin \"culture\" is over. Bitcoin influencers are over. Every popular hardcore Bitcoin figure has disgraced themself in some way. Bitcoin will remain, beneficially stripped of the cult around it.",
+      "link": "https://x.com/nic_carter/status/2083985178825765251#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-02T18:35:59+00:00",
+      "publishedTs": 1785695759.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\ud83d\udea8COLDCARD FUNDS MIGRATION\ud83d\udea8 If you need to move funds off of a weakly generated seed phrase, I suggest doing so BEFORE you upgrade the device firmware. There's a non-zero chance that the firmware upgrade will brick the device according to some reports we're hearing.",
       "link": "https://x.com/lopp/status/2083958797354127631#m",
@@ -120,12 +133,12 @@
       "isRetweet": false
     },
     {
-      "title": "Entropy is your friend.",
+      "title": "Pinned: Entropy is your friend.",
       "link": "https://x.com/lopp/status/2083893075785531504#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
+      "summary": "Entropy is your friend.",
       "publishedAt": "2026-08-02T12:30:00+00:00",
       "publishedTs": 1785673800.0,
       "category": "x",
@@ -406,12 +419,12 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
+      "title": "For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
       "link": "https://x.com/lopp/status/2083575437599371321#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "For years there has been a narrative that \"bitcoin-only\" products and services are inherently more secure than multi-coin counterparts due to having a smaller attack surface. I hope it's clear now that you can't judge a product's security posture upon that single point.",
+      "summary": "",
       "publishedAt": "2026-08-01T15:27:49+00:00",
       "publishedTs": 1785598069.0,
       "category": "x",
@@ -1563,19 +1576,6 @@
       "isRetweet": false
     },
     {
-      "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
-      "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
-      "publishedAt": "2026-07-30T13:13:41+00:00",
-      "publishedTs": 1785417221.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "First look at new Braiins Forge Axe bitcoin miner",
       "link": "https://x.com/DocumentingBTC/status/2082651447745823210#m",
       "source": "@DocumentingBTC",
@@ -1610,32 +1610,6 @@
       "summary": "",
       "publishedAt": "2026-07-29T20:47:21+00:00",
       "publishedTs": 1785358041.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to e",
-      "link": "https://x.com/nic_carter/status/2082413486999585160#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Claude found holes in a candidate PQ algorithm; not one that has been put forth as a potential option for any blockchain and one in which theoretical vulnerabilities were already known. This doesn\u2019t undermine the need to move to PQ, just reinforces the need to end reliance on any",
-      "publishedAt": "2026-07-29T10:30:39+00:00",
-      "publishedTs": 1785321039.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
-      "link": "https://x.com/nic_carter/status/2082413132777935279#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Something I (and many others) have been saying. It\u2019s not about \u201cpre and post quantum\u201d, it\u2019s about exiting the golden era of ECC and moving into the new crypto agile era thanks to AI + Q. Rapid progress in math means rapid progress destroying cryptographic puzzles and one way func",
-      "publishedAt": "2026-07-29T10:29:14+00:00",
-      "publishedTs": 1785320954.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
