@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-01T23:56:47Z",
+  "fetchedAt": "2026-08-02T02:48:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "It looks like Trump Media sold another 2,628 $BTC($165.07M). Trump Media bought 11,542 $BTC($1.37B) at an average price of $118,522, then started selling 7 months ago, selling a total of 7,281 $BTC ($545M) at an average price of $74,855. Trump Media is now down a total of $555M o",
+      "link": "https://x.com/lookonchain/status/2083729126725497083#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "It looks like Trump Media sold another 2,628 $BTC ($165.07M). Trump Media bought 11,542 $BTC ($1.37B) at an average price of $118,522, then started selling 7 months ago, selling a total of 7,281 $BTC ($545M) at an average price of $74,855. Trump Media is now down a total of $555M",
+      "publishedAt": "2026-08-02T01:38:32+00:00",
+      "publishedTs": 1785634712.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Critical infrastructure should not be connected to the internet. Full stop. https://worldwaterreserve.com/minnesota-water-systems-cyberattack-30-communities-coordinated-attack/",
+      "link": "https://x.com/lopp/status/2083710603655319679#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Critical infrastructure should not be connected to the internet. Full stop. worldwaterreserve.com/minnes\u2026 Link Hackers hit 30-plus Minnesota water systems in 48 hours, forcing... A 48-hour cyberattack struck more than 30 Minnesota water systems. One plant shut down, and officials",
+      "publishedAt": "2026-08-02T00:24:56+00:00",
+      "publishedTs": 1785630296.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "On this day in history, 9 years ago, Bitcoin Cash was created by a fork in the blockchain and code.",
       "link": "https://x.com/DocumentingBTC/status/2083689248608100383#m",
@@ -312,7 +338,7 @@
       "publishedTs": 1785592882.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "R to @saylor: Before block 961,632, BIP-110 signaling is voluntary. From blocks 961,632\u2013963,647, its software rejects every non-signaling block. Any \u201c100% signaling\u201d shown during that window reflects the rule, not voluntary miner support or Bitcoin consensus.",
@@ -1454,19 +1480,6 @@
       "summary": "",
       "publishedAt": "2026-07-30T17:24:07+00:00",
       "publishedTs": 1785432247.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Whale 0x2684 keeps accumulating $BTC and $ETH! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. https://arkm.com/explorer/address/0x268448f3",
-      "link": "https://x.com/lookonchain/status/2082844605016613144#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale 0x2684 keeps accumulating $BTC and $ETH ! Over the past month, the whale accumulated 1,050 $WBTC ($67.49M) at an average price of $64,277 and 66,345.5 $ETH ($116.62M) at an average price of $1,758. The positions are now up $10.8M. arkm.com/explorer/address/0x\u2026",
-      "publishedAt": "2026-07-30T15:03:45+00:00",
-      "publishedTs": 1785423825.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
