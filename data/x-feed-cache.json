@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-08-02T12:01:21Z",
+  "fetchedAt": "2026-08-02T14:27:47Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @EricBalchunas: This is where Coinbase and Ledger make more sense and worth the high transaction fees. But of course with an ETF you get *both* the safety of a massive not-effing-around professional regulated co as well dirt cheap fees.",
+      "link": "https://x.com/EricBalchunas/status/2083919160199753903#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "This is where Coinbase and Ledger make more sense and worth the high transaction fees. But of course with an ETF you get *both* the safety of a massive not-effing-around professional regulated co as well dirt cheap fees.",
+      "publishedAt": "2026-08-02T14:13:39+00:00",
+      "publishedTs": 1785680019.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Generating truly random numbers is a deceptively difficult problem. 12 years ago I participated in crowdfunding the production of the Mycelium Entropy device for that sole purpose. Sadly, few folks cared about this issue and they only produced ~500.",
+      "link": "https://x.com/lopp/status/2083916478156362171#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Generating truly random numbers is a deceptively difficult problem. 12 years ago I participated in crowdfunding the production of the Mycelium Entropy device for that sole purpose. Sadly, few folks cared about this issue and they only produced ~500. Jameson Lopp (@lopp) I backed ",
+      "publishedAt": "2026-08-02T14:03:00+00:00",
+      "publishedTs": 1785679380.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This CEO just challenged Anthropic to hack the 100 bitcoin in his wallet address, worth $6 million.",
+      "link": "https://x.com/DocumentingBTC/status/2083897321901732209#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-02T12:46:53+00:00",
+      "publishedTs": 1785674813.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes",
+      "link": "https://x.com/DocumentingBTC/status/2083895871364608178#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes Video",
+      "publishedAt": "2026-08-02T12:41:07+00:00",
+      "publishedTs": 1785674467.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints at buying more Bitcoin \ud83d\udc40 \u201cBitcoin Drive engaged.\u201d \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2083894900848816462#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-02T12:37:15+00:00",
+      "publishedTs": 1785674235.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin Drive engaged.",
+      "link": "https://x.com/saylor/status/2083894636087574837#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-02T12:36:12+00:00",
+      "publishedTs": 1785674172.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Entropy is your friend.",
+      "link": "https://x.com/lopp/status/2083893075785531504#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-02T12:30:00+00:00",
+      "publishedTs": 1785673800.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "It looks like Trump Media sold another 2,628 $BTC($165.07M). Trump Media bought 11,542 $BTC($1.37B) at an average price of $118,522, then started selling 7 months ago, selling a total of 7,281 $BTC ($545M) at an average price of $74,855. Trump Media is now down a total of $555M o",
       "link": "https://x.com/lookonchain/status/2083729126725497083#m",
@@ -1173,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "\"I'm scared there's no safe place for my bitcoin.\" Security is not a binary attribute. You are always making trade-offs between convenience of your own access & inconvenience of unauthorized access. The only perfectly secure BTC is that which you send to an unspendable script.",
-      "link": "https://x.com/lopp/status/2083155994905866530#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "\"I'm scared there's no safe place for my bitcoin.\" Security is not a binary attribute. You are always making trade-offs between convenience of your own access &amp; inconvenience of unauthorized access. The only perfectly secure BTC is that which you send to an unspendable script",
-      "publishedAt": "2026-07-31T11:41:07+00:00",
-      "publishedTs": 1785498067.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83d\udea8 NEW: Over 594 BTC worth $38 million was stolen from Bitcoin hardware wallet Coldcard users. The attacker then moved around the BTC and consolidated 562 BTC into this address below. Users are urged to review the company's official security guidance as soon as possible. \u203c",
       "link": "https://x.com/BitcoinMagazine/status/2083155812608798827#m",
       "source": "@BitcoinMagazine",
@@ -1194,19 +1272,6 @@
       "summary": "",
       "publishedAt": "2026-07-31T11:40:23+00:00",
       "publishedTs": 1785498023.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Should you lose faith in self custody due to recent events? I think not. Third party custodians are also susceptible to weak RNGs. Interestingly enough, COLDCARD is one of the few devices that support dice rolls (along with seedsigner and krux.) https://blog.lopp.net/how-to-secur",
-      "link": "https://x.com/lopp/status/2083151303853641881#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Should you lose faith in self custody due to recent events? I think not. Third party custodians are also susceptible to weak RNGs. Interestingly enough, COLDCARD is one of the few devices that support dice rolls (along with seedsigner and krux.) blog.lopp.net/how-to-securel\u2026 Link",
-      "publishedAt": "2026-07-31T11:22:28+00:00",
-      "publishedTs": 1785496948.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1498,19 +1563,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
-      "link": "https://x.com/EricBalchunas/status/2082843568779952161#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Someone should launch a Reality Strikes Back ETF w garbage toothpaste toilet paper etc Staples and HALO I guess is close but needs to overweight garbage more",
-      "publishedAt": "2026-07-30T14:59:38+00:00",
-      "publishedTs": 1785423578.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Corgi is bringing silicon valley playbook to ETF Terrodome: \u201cWe have goals of competing with the likes of BlackRock, Vanguard, Invesco and State Street,\u201d said Anthony Crinieri, 27, PM at Corgi. \u201cIt doesn\u2019t happen overnight; we\u2019re not naive.\u201d Corgi needs $56mil in ann revenue to b",
       "link": "https://x.com/EricBalchunas/status/2082816903869780250#m",
       "source": "@JSeyff",
@@ -1537,19 +1589,6 @@
       "isRetweet": false
     },
     {
-      "title": "Running a Bitcoin computer node to verify every transaction on the blockchain costs on average $6.80 a month, according to new research.",
-      "link": "https://x.com/DocumentingBTC/status/2082650649687159125#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-30T02:13:03+00:00",
-      "publishedTs": 1785377583.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "hearing completely uncorroborated rumors that boy wonder got margin called",
       "link": "https://x.com/nic_carter/status/2082575499205706122#m",
       "source": "@nic_carter",
@@ -1571,19 +1610,6 @@
       "summary": "",
       "publishedAt": "2026-07-29T20:47:21+00:00",
       "publishedTs": 1785358041.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfREAKING: Bitcoin mining officially reached a new all-time high for sustainable energy use. Cambridge reports that 59.4% of the network is now powered by renewable electricity sources, higher than any other reported global industry.",
-      "link": "https://x.com/DocumentingBTC/status/2082454836054732895#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-29T13:14:57+00:00",
-      "publishedTs": 1785330897.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
