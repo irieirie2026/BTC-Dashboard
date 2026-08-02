@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-02T21:54:23Z",
+  "fetchedAt": "2026-08-02T22:55:01Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "We\u2019re now tracking Bitcoin\u2019s 200-week moving average and its premium to that level on http://Strategy.com. Since the 200W MA became available, Bitcoin has traded above it 92% of the time. Today, it sits almost exactly on the line.",
+      "link": "https://x.com/saylor/status/2084045087818891762#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We\u2019re now tracking Bitcoin\u2019s 200-week moving average and its premium to that level on Strategy.com . Since the 200W MA became available, Bitcoin has traded above it 92% of the time. Today, it sits almost exactly on the line.",
+      "publishedAt": "2026-08-02T22:34:03+00:00",
+      "publishedTs": 1785710043.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The last 24 hours of Bitcoin posts on \ud835\udd4f discussing the hack of ColdCard wallets has been the largest open source technical support initiative ever undertaken by an organic community of educators, organizers, developers, and ordinary well-meaning people in history.",
       "link": "https://x.com/DocumentingBTC/status/2083995630284701996#m",
@@ -1459,7 +1472,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
+      "title": "LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
       "link": "https://x.com/BitcoinMagazine/status/2082934205550379358#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -1480,19 +1493,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says over 100+ compromises have been made on the CLARITY ACT and calls on the Senate to pass the bill \ud83d\udc40 Video",
       "publishedAt": "2026-07-30T20:29:58+00:00",
       "publishedTs": 1785443398.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy announces Q2 2026 results: - Increased $BTC Holdings by 11% - Reduced Convertible Debt by 18% - Increased USD Reserve by 12% - Increased BPS by 5% https://www.strategy.com/press/strategy-announces-second-quarter-2026-financial-results_07-30-2026",
-      "link": "https://x.com/saylor/status/2082920028484018528#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy announces Q2 2026 results: - Increased $BTC Holdings by 11% - Reduced Convertible Debt by 18% - Increased USD Reserve by 12% - Increased BPS by 5% strategy.com/press/strategy-\u2026 Link Strategy Announces Second Quarter 2026 Financial Results July 30, 2026 strategy.com",
-      "publishedAt": "2026-07-30T20:03:28+00:00",
-      "publishedTs": 1785441808.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
