@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-02T15:59:18Z",
+  "fetchedAt": "2026-08-02T17:09:26Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "\ud83d\udea8COLDCARD FUNDS MIGRATION\ud83d\udea8 If you need to move funds off of a weakly generated seed phrase, I suggest doing so BEFORE you upgrade the device firmware. There's a non-zero chance that the firmware upgrade will brick the device according to some reports we're hearing.",
+      "link": "https://x.com/lopp/status/2083958797354127631#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-02T16:51:10+00:00",
+      "publishedTs": 1785689470.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin maximalism is an inverse prosperity gospel. The more you believe in it the poorer you become",
+      "link": "https://x.com/nic_carter/status/2083948613550424442#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-02T16:10:42+00:00",
+      "publishedTs": 1785687042.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Weak random number generation is not a new problem. RNG vulnerabilities have previously been found in: bip3x Python library http://bitaddress.org BitcoinSpinner http://Blockchain.com Android wallet http://Blockchain.com web wallet http://brainwallet.org browser generator Cake Wal",
       "link": "https://x.com/lopp/status/2083933846622384587#m",
@@ -1160,19 +1186,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @lopp: We at the Cryptocurrency Certification Consortium did an hour-long stream about key entropy last year, but of course it only got 100 views. \ud83e\udd72",
-      "link": "https://x.com/lopp/status/2083178337891971432#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "We at the Cryptocurrency Certification Consortium did an hour-long stream about key entropy last year, but of course it only got 100 views. \ud83e\udd72 C4 (@LearnMoreWithC4) Weak randomness is one of the most fundamental risks in crypto. If keys are generated with poor entropy, the rest of",
-      "publishedAt": "2026-07-31T13:09:53+00:00",
-      "publishedTs": 1785503393.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: Former \u00a355.8 billion Barclay\u2019s bank CEO tells CNBC the Clarity Act \"is really good for the banks\" \ud83d\udc40 \"The largest, most successful banks are going to benefit from this.\" \u201cNo one is investing more in innovation right now\u201d than the big banks \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2083176557728714980#m",
       "source": "@BitcoinMagazine",
@@ -1301,19 +1314,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "An unfortunate aspect of being in the security business is that your \"paranoid\" warnings tend to fall on deaf ears until catastrophe strikes. Over a long enough time frame, bad things tend to happen. If your life savings are on the line, it's best to mitigate every edge case.",
-      "link": "https://x.com/lopp/status/2083138740868796449#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-31T10:32:33+00:00",
-      "publishedTs": 1785493953.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. https://arkm.com/explorer/address/bc1qnk4zh9qcnap2mycp56qjrgza3cc8ylrh8fecp0 https://blog.coinkite.c",
