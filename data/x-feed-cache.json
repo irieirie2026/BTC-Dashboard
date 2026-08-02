@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-02T02:48:12Z",
+  "fetchedAt": "2026-08-02T05:56:15Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -336,6 +336,19 @@
       "summary": "I spoke with @jvisserlabs to break down the Leopold Aschenbrenner hedge fund unwind, the market crashes in South Korea and Japan, Kevin Warsh and the Fed's next move, and the case for compute scarcity as AI demand outpaces supply. We also discuss tokenization and why bitcoin rema",
       "publishedAt": "2026-08-01T14:01:22+00:00",
       "publishedTs": 1785592882.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "A distributed team of engineers around the world are scrambling to try and save people's bitcoin, with over 1,000 already stolen by hackers using llms, and @OpenAI is chiding us. I'll continue using @Kimi_Moonshot K3 and you should to for cyber. What are we doing America?",
+      "link": "https://x.com/Rob1Ham/status/2083546478409056301#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "A distributed team of engineers around the world are scrambling to try and save people's bitcoin, with over 1,000 already stolen by hackers using llms, and @OpenAI is chiding us. I'll continue using @Kimi_Moonshot K3 and you should to for cyber. What are we doing America? stu \ud83e\udd6a\ud83e\udd5e ",
+      "publishedAt": "2026-08-01T13:32:45+00:00",
+      "publishedTs": 1785591165.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
