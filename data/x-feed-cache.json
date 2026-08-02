@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-02T14:27:47Z",
+  "fetchedAt": "2026-08-02T15:59:18Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Weak random number generation is not a new problem. RNG vulnerabilities have previously been found in: bip3x Python library http://bitaddress.org BitcoinSpinner http://Blockchain.com Android wallet http://Blockchain.com web wallet http://brainwallet.org browser generator Cake Wal",
+      "link": "https://x.com/lopp/status/2083933846622384587#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Weak random number generation is not a new problem. RNG vulnerabilities have previously been found in: bip3x Python library bitaddress.org BitcoinSpinner Blockchain.com Android wallet Blockchain.com web wallet brainwallet.org browser generator Cake Wallet CoinPunk COLDCARD Mk2 \u2013 ",
+      "publishedAt": "2026-08-02T15:12:01+00:00",
+      "publishedTs": 1785683521.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @EricBalchunas: This is where Coinbase and Ledger make more sense and worth the high transaction fees. But of course with an ETF you get *both* the safety of a massive not-effing-around professional regulated co as well dirt cheap fees.",
       "link": "https://x.com/EricBalchunas/status/2083919160199753903#m",
@@ -1194,19 +1207,6 @@
       "summary": "",
       "publishedAt": "2026-07-31T12:49:43+00:00",
       "publishedTs": 1785502183.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Diversify your keys, not your coins.",
-      "link": "https://x.com/lopp/status/2083162788461941224#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Diversify your keys, not your coins. Jameson Lopp (@lopp) There is no perfect hardware device for securing private keys. They all have different trade-offs, different pros and cons. The way to address weaknesses of hardware devices is by leveraging the magic of additive security.",
-      "publishedAt": "2026-07-31T12:08:06+00:00",
-      "publishedTs": 1785499686.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
