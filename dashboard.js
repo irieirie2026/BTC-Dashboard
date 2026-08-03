@@ -1026,6 +1026,12 @@ const MENU_TREE = {
         accentDim: "rgba(148, 163, 184, 0.18)",
         onShow: () => window.initLaw?.("overview"),
       },
+      "eu-mica": {
+        label: "EU MiCA / Founders",
+        accent: "#60a5fa",
+        accentDim: "rgba(96, 165, 250, 0.18)",
+        onShow: () => window.initLaw?.("eu-mica"),
+      },
       compare: {
         label: "Compare",
         accent: "#64748b",
@@ -1388,6 +1394,10 @@ const LEGACY_L2 = {
     overview: "overview",
     map: "overview",
     global: "overview",
+    "eu-mica": "eu-mica",
+    mica: "eu-mica",
+    founders: "eu-mica",
+    "eu-founders": "eu-mica",
     compare: "compare",
     comparison: "compare",
     watchlist: "watchlist",
@@ -2140,8 +2150,14 @@ function bootstrapPathMenu() {
   } else if (path.startsWith("/law/")) {
     const slug = path.slice("/law/".length).split("/")[0];
     localStorage.setItem(MENU_L1_KEY, "law");
-    if (["compare", "watchlist", "changes", "sources", "overview"].includes(slug)) {
-      localStorage.setItem(MENU_L2_KEY, slug === "overview" ? "overview" : slug);
+    if (["compare", "watchlist", "changes", "sources", "overview", "eu-mica", "mica", "founders"].includes(slug)) {
+      const l2 =
+        slug === "overview"
+          ? "overview"
+          : slug === "mica" || slug === "founders"
+            ? "eu-mica"
+            : slug;
+      localStorage.setItem(MENU_L2_KEY, l2);
     } else {
       // Country deep link: keep Overview L2; law.js opens the country panel
       localStorage.setItem(MENU_L2_KEY, "overview");

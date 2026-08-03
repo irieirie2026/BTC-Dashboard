@@ -16964,6 +16964,104 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
 .law-map-dot:hover circle { filter: brightness(1.25); }
 .law-map-dot--fav circle { stroke: #fbbf24; stroke-width: 2; }
 
+/* EU MiCA founder guide */
+.law-guide-root {
+  max-width: 52rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+.law-guide-h1 {
+  font-size: 1.45rem;
+  font-weight: 750;
+  color: #f8fafc;
+  margin: 0 0 0.75rem;
+}
+.law-guide-h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 1.5rem 0 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(42, 49, 66, 0.85);
+}
+.law-guide-h3 {
+  font-size: 0.98rem;
+  font-weight: 650;
+  color: #f1f5f9;
+  margin: 1.15rem 0 0.45rem;
+}
+.law-guide-h4 {
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: #e2e8f0;
+  margin: 0.85rem 0 0.35rem;
+}
+.law-guide-p { margin: 0.4rem 0 0.65rem; }
+.law-guide-ul,
+.law-guide-ol {
+  margin: 0.35rem 0 0.75rem 1.15rem;
+  padding: 0;
+}
+.law-guide-ul li,
+.law-guide-ol li { margin: 0.25rem 0; }
+.law-guide-callout {
+  margin: 0.75rem 0;
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 0 8px 8px 0;
+  color: #fde68a;
+}
+.law-guide-table-wrap {
+  overflow-x: auto;
+  margin: 0.65rem 0 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(42, 49, 66, 0.75);
+}
+.law-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.law-guide-table th,
+.law-guide-table td {
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid rgba(42, 49, 66, 0.65);
+  text-align: left;
+  vertical-align: top;
+}
+.law-guide-table th {
+  background: rgba(15, 23, 42, 0.75);
+  color: #94a3b8;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.law-guide-table tr:last-child td { border-bottom: none; }
+.law-guide-pre {
+  margin: 0.5rem 0 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(10, 14, 20, 0.85);
+  border: 1px solid rgba(42, 49, 66, 0.75);
+  overflow-x: auto;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #a5b4fc;
+}
+.law-guide-hr {
+  border: none;
+  border-top: 1px solid rgba(42, 49, 66, 0.85);
+  margin: 1.25rem 0;
+}
+.law-guide-root a { color: #93c5fd; }
+.law-guide-root a:hover { color: #bfdbfe; }
+.law-guide-root code {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.84em;
+  color: #fcd34d;
+}
+
 .law-toolbar {
   display: flex;
   flex-wrap: wrap;

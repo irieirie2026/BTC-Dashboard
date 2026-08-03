@@ -177,9 +177,188 @@ function lawDisclaimerHtml(compact = false) {
   </aside>`;
 }
 
+/** Trusted static markdown → HTML (EU MiCA founder guide). */
+function lawMarkdownToHtml(md) {
+  if (!md) return "";
+  const lines = String(md).replace(/\r\n/g, "\n").split("\n");
+  const out = [];
+  let i = 0;
+  let inList = false;
+  let inCode = false;
+  let codeBuf = [];
+
+  const flushList = () => {
+    if (inList === "ol") out.push("</ol>");
+    else if (inList) out.push("</ul>");
+    inList = false;
+  };
+  const flushCode = () => {
+    if (!inCode) return;
+    out.push(`<pre class="law-guide-pre"><code>${lawEsc(codeBuf.join("\n"))}</code></pre>`);
+    codeBuf = [];
+    inCode = false;
+  };
+  const inline = (s) => {
+    let t = lawEsc(s);
+    t = t.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    t = t.replace(/`([^`]+)`/g, "<code>$1</code>");
+    return t;
+  };
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith("```")) {
+      if (inCode) flushCode();
+      else {
+        flushList();
+        inCode = true;
+        codeBuf = [];
+      }
+      i += 1;
+      continue;
+    }
+    if (inCode) {
+      codeBuf.push(line);
+      i += 1;
+      continue;
+    }
+
+    // Tables
+    if (trimmed.startsWith("|") && i + 1 < lines.length && /^\|[\s:-|]+\|$/.test(lines[i + 1].trim())) {
+      flushList();
+      const rows = [];
+      while (i < lines.length && lines[i].trim().startsWith("|")) {
+        const cells = lines[i]
+          .trim()
+          .replace(/^\|/, "")
+          .replace(/\|$/, "")
+          .split("|")
+          .map((c) => c.trim());
+        if (!/^[\s:-]+$/.test(cells.join(""))) rows.push(cells);
+        i += 1;
+      }
+      if (rows.length) {
+        const head = rows[0];
+        const body = rows.slice(1);
+        out.push('<div class="law-guide-table-wrap"><table class="law-guide-table"><thead><tr>');
+        head.forEach((c) => out.push(`<th>${inline(c)}</th>`));
+        out.push("</tr></thead><tbody>");
+        body.forEach((r) => {
+          out.push("<tr>");
+          r.forEach((c) => out.push(`<td>${inline(c)}</td>`));
+          out.push("</tr>");
+        });
+        out.push("</tbody></table></div>");
+      }
+      continue;
+    }
+
+    if (!trimmed) {
+      flushList();
+      i += 1;
+      continue;
+    }
+    if (trimmed === "---") {
+      flushList();
+      out.push('<hr class="law-guide-hr" />');
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("> ")) {
+      flushList();
+      out.push(`<blockquote class="law-guide-callout">${inline(trimmed.slice(2))}</blockquote>`);
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("#### ")) {
+      flushList();
+      out.push(`<h4 class="law-guide-h4">${inline(trimmed.slice(5))}</h4>`);
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("### ")) {
+      flushList();
+      out.push(`<h3 class="law-guide-h3">${inline(trimmed.slice(4))}</h3>`);
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("## ")) {
+      flushList();
+      out.push(`<h2 class="law-guide-h2">${inline(trimmed.slice(3))}</h2>`);
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("# ")) {
+      flushList();
+      out.push(`<h1 class="law-guide-h1">${inline(trimmed.slice(2))}</h1>`);
+      i += 1;
+      continue;
+    }
+    if (/^\d+\.\s+/.test(trimmed)) {
+      // render ordered as bullets for simplicity
+      if (!inList) {
+        out.push('<ol class="law-guide-ol">');
+        inList = "ol";
+      } else if (inList === true) {
+        out.push("</ul>");
+        out.push('<ol class="law-guide-ol">');
+        inList = "ol";
+      }
+      out.push(`<li>${inline(trimmed.replace(/^\d+\.\s+/, ""))}</li>`);
+      i += 1;
+      continue;
+    }
+    if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+      if (inList === "ol") {
+        out.push("</ol>");
+        inList = false;
+      }
+      if (!inList) {
+        out.push('<ul class="law-guide-ul">');
+        inList = true;
+      }
+      out.push(`<li>${inline(trimmed.slice(2))}</li>`);
+      i += 1;
+      continue;
+    }
+
+    if (inList === "ol") {
+      out.push("</ol>");
+      inList = false;
+    } else flushList();
+    out.push(`<p class="law-guide-p">${inline(trimmed)}</p>`);
+    i += 1;
+  }
+  if (inList === "ol") out.push("</ol>");
+  else flushList();
+  flushCode();
+  return out.join("\n");
+}
+
+let lawMicaGuideHtml = null;
+
+async function lawLoadMicaGuide() {
+  if (lawMicaGuideHtml) return lawMicaGuideHtml;
+  const res = await fetch(`/law-eu-mica-guide.md?v=1`);
+  if (!res.ok) throw new Error(`Guide HTTP ${res.status}`);
+  const md = await res.text();
+  lawMicaGuideHtml = lawMarkdownToHtml(md);
+  return lawMicaGuideHtml;
+}
+
 function lawRenderHero() {
   const el = lawEl("law-hero-text");
-  if (el) el.textContent = lawData?.hero || "";
+  if (el) {
+    const base = lawData?.hero || "";
+    el.innerHTML = `${lawEsc(base)}
+      <span class="law-hero-cta"> · <button type="button" class="law-link-btn" data-law-open-mica>EU MiCA / Founders guide</button> (Italy-first, post–1 Jul 2026)</span>`;
+    el.querySelector("[data-law-open-mica]")?.addEventListener("click", () => {
+      void lawShowPanel("eu-mica");
+    });
+  }
   const meta = lawEl("law-data-meta");
   if (meta) {
     meta.textContent = `Dataset ${lawData?.dataVersion || "—"} · Updated ${
@@ -536,7 +715,6 @@ async function lawOpenCountry(id) {
     const lt = j.legalTender || {};
     const prev = lt.previous;
     panel.innerHTML = `
-      ${lawDisclaimerHtml(true)}
       <header class="law-country-header">
         <div class="law-country-header__main">
           <span class="law-country-iso mono">${lawEsc(j.iso2)}</span>
@@ -617,8 +795,6 @@ async function lawOpenCountry(id) {
             .join("") || "<li>No primary links recorded.</li>"}
         </ul>
       </section>
-
-      ${lawDisclaimerHtml(false)}
     `;
 
     panel.querySelector("[data-law-back]")?.addEventListener("click", () => lawShowOverview());
@@ -646,9 +822,6 @@ async function lawOpenCountry(id) {
       lawShowPanel("compare");
     });
     panel.querySelector("[data-law-feedback]")?.addEventListener("click", () => lawOpenFeedback(j.id));
-    panel.querySelector("[data-law-expand-disclaimer]")?.addEventListener("click", () => {
-      alert((data.disclaimer || lawData?.disclaimer)?.full || "");
-    });
   } catch (err) {
     panel.innerHTML = `<p class="law-error">Could not load jurisdiction — ${lawEsc(err.message || "error")}.
       <button type="button" class="law-btn" data-law-back>Back</button></p>`;
@@ -734,14 +907,22 @@ function lawSetPanel(which) {
 }
 
 async function lawShowPanel(name) {
-  const allowed = ["watchlist", "compare", "changes", "sources"];
+  const allowed = ["watchlist", "compare", "changes", "sources", "eu-mica"];
   if (!allowed.includes(name)) {
     lawShowOverview();
     return;
   }
-  if (!lawData) {
+  if (!lawData && name !== "eu-mica") {
     await lawLoad(name);
     return;
+  }
+  // Guide can load even if jurisdiction payload is slow; still prefer full load for chrome
+  if (!lawData) {
+    try {
+      await lawLoad(name);
+    } catch (_) {
+      /* guide-only fallback below */
+    }
   }
 
   lawView = name;
@@ -759,6 +940,7 @@ async function lawShowPanel(name) {
     compare: "Compare",
     changes: "Changes",
     sources: "Sources",
+    "eu-mica": "EU MiCA / Founders",
   };
   lawBreadcrumb([
     { label: "The Law", action: "overview" },
@@ -776,7 +958,29 @@ async function lawShowPanel(name) {
     }
   } catch (_) {}
 
-  if (name === "watchlist") {
+  if (name === "eu-mica") {
+    util.innerHTML = `
+      <section class="panel law-guide-panel">
+        <div class="panel-header">
+          <h2>EU MiCA / Founders</h2>
+          <span class="panel-meta">Italy-first · post–1 Jul 2026 · educational</span>
+        </div>
+        <div class="law-panel-body">
+          <p class="law-muted">Comprehensive founder guide for Italian and EU crypto startups under fully in-force MiCA. Not legal advice — verify the live ESMA register and local counsel.</p>
+          <div id="law-mica-guide-root" class="law-guide-root"><p class="law-loading">Loading guide…</p></div>
+          <p style="margin-top:1rem"><button type="button" class="law-btn" data-law-back>← Overview</button></p>
+        </div>
+      </section>`;
+    const root = lawEl("law-mica-guide-root");
+    try {
+      const html = await lawLoadMicaGuide();
+      if (root) root.innerHTML = html;
+    } catch (err) {
+      if (root) {
+        root.innerHTML = `<p class="law-error">Could not load guide — ${lawEsc(err.message || "error")}. Ensure <code>law-eu-mica-guide.md</code> is deployed.</p>`;
+      }
+    }
+  } else if (name === "watchlist") {
     const favs = (lawPrefs.favorites || [])
       .map((id) => (lawData?.jurisdictions || []).find((j) => j.id === id))
       .filter(Boolean);
@@ -790,7 +994,6 @@ async function lawShowPanel(name) {
           <span class="panel-meta">Saved on this device only</span>
         </div>
         <div class="law-panel-body">
-          ${lawDisclaimerHtml(true)}
           <p class="law-muted">Favorites stay in local browser storage — they are not synced to an account.</p>
           <div class="law-list">${
             favs.length
@@ -812,7 +1015,6 @@ async function lawShowPanel(name) {
           <span class="panel-meta">Select up to 3 countries</span>
         </div>
         <div class="law-panel-body">
-          ${lawDisclaimerHtml(true)}
           <p class="law-muted">Tick 2–3 countries below, or add from a country page with <strong>Add to compare</strong>.</p>
           <div class="law-compare-pick" id="law-compare-pick"></div>
           <div class="law-compare-grid" id="law-compare-grid"><p class="law-loading">Select countries to compare…</p></div>
@@ -829,7 +1031,6 @@ async function lawShowPanel(name) {
           <span class="panel-meta">From curated change logs</span>
         </div>
         <div class="law-panel-body">
-          ${lawDisclaimerHtml(true)}
           <ul class="law-updates-list law-updates-list--full">
             ${
               updates
@@ -854,7 +1055,6 @@ async function lawShowPanel(name) {
           <span class="panel-meta">Dataset ${lawEsc(lawData?.dataVersion || "—")}</span>
         </div>
         <div class="law-panel-body">
-          ${lawDisclaimerHtml(false)}
           <p>${lawEsc(lawData?.sourcing || "")}</p>
           <p class="law-muted">${lawEsc(lawData?.processNote || "")}</p>
           <p>Content freshness process: <strong>${lawEsc(lawData?.contentFreshness || "—")}</strong></p>
@@ -885,9 +1085,6 @@ async function lawShowPanel(name) {
     n.addEventListener("click", () => lawOpenCountry(n.getAttribute("data-law-open")));
   });
   util.querySelector("[data-law-feedback]")?.addEventListener("click", () => lawOpenFeedback(null));
-  util.querySelector("[data-law-expand-disclaimer]")?.addEventListener("click", () => {
-    alert(lawData?.disclaimer?.full || "");
-  });
 }
 
 async function lawRenderCompare() {
@@ -947,11 +1144,7 @@ async function lawRenderCompare() {
           )
           .join("")}
       </tbody>
-    </table></div>
-    ${lawDisclaimerHtml(true)}`;
-    grid.querySelector("[data-law-expand-disclaimer]")?.addEventListener("click", () => {
-      alert(lawData?.disclaimer?.full || "");
-    });
+    </table></div>`;
   } catch (err) {
     grid.innerHTML = `<p class="law-error">${lawEsc(err.message || "Compare failed")}</p>`;
   }
@@ -1089,10 +1282,11 @@ async function lawLoad(preferredTab) {
       });
     }
 
-    const utilityTabs = ["compare", "watchlist", "changes", "sources"];
+    const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica"];
     const path = (location.pathname || "").replace(/\/$/, "");
     const m = path.match(/^\/law\/([a-z0-9-]+)$/i);
-    const pathSlug = m ? m[1].toLowerCase() : "";
+    let pathSlug = m ? m[1].toLowerCase() : "";
+    if (pathSlug === "mica" || pathSlug === "founders") pathSlug = "eu-mica";
     const sessionCountry = sessionStorage.getItem("law-open-country");
     if (sessionCountry) sessionStorage.removeItem("law-open-country");
 
@@ -1130,7 +1324,7 @@ async function lawLoad(preferredTab) {
 
 function initLaw(tab) {
   const t = tab || "overview";
-  const utilityTabs = ["compare", "watchlist", "changes", "sources"];
+  const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica"];
 
   // Data already loaded — switch panels immediately (L2 tab clicks)
   if (lawData) {
