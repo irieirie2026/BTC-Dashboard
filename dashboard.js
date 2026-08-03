@@ -1038,6 +1038,12 @@ const MENU_TREE = {
         accentDim: "rgba(52, 211, 153, 0.18)",
         onShow: () => window.initLaw?.("global-founders"),
       },
+      "focus-hubs": {
+        label: "Focus hubs",
+        accent: "#2dd4bf",
+        accentDim: "rgba(45, 212, 191, 0.18)",
+        onShow: () => window.initLaw?.("focus-hubs"),
+      },
       compare: {
         label: "Compare",
         accent: "#64748b",
@@ -1409,6 +1415,9 @@ const LEGACY_L2 = {
     relocate: "global-founders",
     relocation: "global-founders",
     expat: "global-founders",
+    "focus-hubs": "focus-hubs",
+    focus: "focus-hubs",
+    hubs: "focus-hubs",
     compare: "compare",
     comparison: "compare",
     watchlist: "watchlist",
@@ -2176,16 +2185,17 @@ function bootstrapPathMenu() {
         "relocate",
         "relocation",
         "expat",
-      ].includes(slug)
+        "focus-hubs",
+        "focus",
+        "hubs",
+      ].includes(slug) || slug.startsWith("hub-")
     ) {
-      const l2 =
-        slug === "overview"
-          ? "overview"
-          : slug === "mica" || slug === "founders"
-            ? "eu-mica"
-            : slug === "global" || slug === "relocate" || slug === "relocation" || slug === "expat"
-              ? "global-founders"
-              : slug;
+      let l2 = slug;
+      if (slug === "overview") l2 = "overview";
+      else if (slug === "mica" || slug === "founders") l2 = "eu-mica";
+      else if (["global", "relocate", "relocation", "expat"].includes(slug)) l2 = "global-founders";
+      else if (slug === "focus" || slug === "hubs") l2 = "focus-hubs";
+      else if (slug.startsWith("hub-")) l2 = "global-founders";
       localStorage.setItem(MENU_L2_KEY, l2);
     } else {
       // Country deep link: keep Overview L2; law.js opens the country panel
