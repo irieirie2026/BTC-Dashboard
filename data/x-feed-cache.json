@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-08-03T16:23:33Z",
+  "fetchedAt": "2026-08-03T18:50:07Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Incredible video explaining the Bitcoin wallet hack",
+      "link": "https://x.com/DocumentingBTC/status/2084347267067113825#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Incredible video explaining the Bitcoin wallet hack Video",
+      "publishedAt": "2026-08-03T18:34:48+00:00",
+      "publishedTs": 1785782088.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddec\ud83c\udde7 U.K. public company 'The Smarter Web Company', just increased their Bitcoin treasury to 2,712 BTC \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2084340553022406749#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T18:08:07+00:00",
+      "publishedTs": 1785780487.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Jim Cramer says, \u201cI\u2019m going to sell my bitcoin\u201d \ud83e\udd23",
+      "link": "https://x.com/DocumentingBTC/status/2084338863963607375#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Jim Cramer says, \u201cI\u2019m going to sell my bitcoin\u201d \ud83e\udd23 Video",
+      "publishedAt": "2026-08-03T18:01:24+00:00",
+      "publishedTs": 1785780084.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: DON'T WAIT \u203c\ufe0f Get your passes now before prices increase by 30% this week \ud83d\udc40 Don't pay more than you have to, get discounted passes here \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
+      "link": "https://x.com/BitcoinMagazine/status/2084336119903035557#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "DON'T WAIT \u203c\ufe0f Get your passes now before prices increase by 30% this week \ud83d\udc40 Don't pay more than you have to, get discounted passes here \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
+      "publishedAt": "2026-08-03T17:50:30+00:00",
+      "publishedTs": 1785779430.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "RT @apyx_fi: $STRC is recovering toward par. \ud83d\udc40 Want exposure to that upside plus Apyx's enhanced digital credit yield? Now is your chance.\u2026",
+      "link": "https://x.com/saylor/status/2084323933805748653#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @apyx_fi : $STRC is recovering toward par. \ud83d\udc40 Want exposure to that upside plus Apyx's enhanced digital credit yield? Now is your chance.\u2026",
+      "publishedAt": "2026-08-03T17:02:05+00:00",
+      "publishedTs": 1785776525.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Former Defense Secretary Dr. Mark Esper tells MS NOW the CLARITY ACT \"Is too important for the leadership of our country...if we're going to dominate and lead in this technology...we gotta get this bill done.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2084323544121348377#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "NEW: \ud83c\uddfa\ud83c\uddf8 Former Defense Secretary Dr. Mark Esper tells MS NOW the CLARITY ACT \"Is too important for the leadership of our country...if we're going to dominate and lead in this technology...we gotta get this bill done.\" \ud83d\udc4f Video",
+      "publishedAt": "2026-08-03T17:00:32+00:00",
+      "publishedTs": 1785776432.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "When I say \u201cNever Sell Your Bitcoin,\u201d I speak as one saver to another. I have never sold mine. Not one satoshi. Strategy is a public company, not my wallet. Since 2020, it has disclosed it may buy or sell $BTC to manage capital. Our shared conviction in Bitcoin remains unchanged.",
+      "link": "https://x.com/saylor/status/2084315637715763579#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-03T16:29:07+00:00",
+      "publishedTs": 1785774547.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "On this day in history, 16 years ago, Satoshi. Nakamoto wrote what would happen if governments split the Bitcoin network off from each other, \u201cIt could tell if it's not hearing the hum of the world anymore\u2026your transactions can get into the other chain at any time later.\u201d",
       "link": "https://x.com/DocumentingBTC/status/2084309049122681045#m",
@@ -154,19 +245,6 @@
       "summary": "my biggest takeaway from the coldcard debacle is that open weight AI is completely essential. otherwise the bad guys will always outgun the good guys (due to safety constraints on white hat imposed by the closed labs) unless they want to dramatically dial back safety, the default",
       "publishedAt": "2026-08-03T14:52:14+00:00",
       "publishedTs": 1785768734.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The \ud835\udd4f algorithm update showing mutual followers more often has saved millions of dollars for regular, everyday, hardworking Bitcoin users this week. Good timing, @ElonMusk. Victims of the ColdCard hack have likely been better informed as news and education circulated faster.",
-      "link": "https://x.com/DocumentingBTC/status/2084290224717193442#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "The \ud835\udd4f algorithm update showing mutual followers more often has saved millions of dollars for regular, everyday, hardworking Bitcoin users this week. Good timing, @ElonMusk . Victims of the ColdCard hack have likely been better informed as news and education circulated faster.",
-      "publishedAt": "2026-08-03T14:48:08+00:00",
-      "publishedTs": 1785768488.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1290,19 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d Video",
-      "publishedAt": "2026-07-31T18:02:51+00:00",
-      "publishedTs": 1785520971.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach https://bitcoinmagazine.com/business/coinkite-releases-fixed-firmware-after-coldcard-bug-ai-likely-involved-in-the-hack via @bitcoinmagazine",
       "link": "https://x.com/JuanSGalt/status/2083250958214045929#m",
       "source": "@BitcoinMagazine",
@@ -1472,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase buys 819 BTC worth $52 million for their balance sheet \ud83d\udc40 Now they hold 17,311 BTC, making them the 9th largest public company holding Bitcoin! \ud83d\udca5",
-      "link": "https://x.com/BitcoinMagazine/status/2083196505188442491#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-31T14:22:05+00:00",
-      "publishedTs": 1785507725.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @saylor: The slides behind our Q2 earnings call: Strategy\u2019s balance sheet, Bitcoin KPIs, active capital management, the path to par for $STRC, and the long-term opportunity for $MSTR. https://www.strategy.com/press/strategy-q2-2026-financial-results-presentation",
       "link": "https://x.com/saylor/status/2083192868613554454#m",
       "source": "@saylor",
@@ -1563,19 +1615,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Former \u00a355.8 billion Barclay\u2019s bank CEO tells CNBC the Clarity Act \"is really good for the banks\" \ud83d\udc40 \"The largest, most successful banks are going to benefit from this.\" \u201cNo one is investing more in innovation right now\u201d than the big banks \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2083176557728714980#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Former \u00a355.8 billion Barclay\u2019s bank CEO tells CNBC the Clarity Act \"is really good for the banks\" \ud83d\udc40 \"The largest, most successful banks are going to benefit from this.\" \u201cNo one is investing more in innovation right now\u201d than the big banks \ud83d\ude80 Video",
-      "publishedAt": "2026-07-31T13:02:49+00:00",
-      "publishedTs": 1785502969.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
       "link": "https://x.com/nic_carter/status/2083158132604211615#m",
       "source": "@nic_carter",
@@ -1602,45 +1641,6 @@
       "isRetweet": false
     },
     {
-      "title": "\ud83d\udea8 NEW: Over 594 BTC worth $38 million was stolen from Bitcoin hardware wallet Coldcard users. The attacker then moved around the BTC and consolidated 562 BTC into this address below. Users are urged to review the company's official security guidance as soon as possible. \u203c",
-      "link": "https://x.com/BitcoinMagazine/status/2083155812608798827#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-07-31T11:40:23+00:00",
-      "publishedTs": 1785498023.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Welcome Back to The Hurdle Rate Episode 67: We\u2019re Playing For Trillions In this week\u2019s Hurdle Rate, the crew breaks down Strategy\u2019s Q2 2026 earnings call and its focus on returning STRC to par while building a trillion-dollar digital credit market. We explore why liquidity, simpl",
-      "link": "https://x.com/HurdleRatePod/status/2083145651987374301#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Welcome Back to The Hurdle Rate Episode 67: We\u2019re Playing For Trillions In this week\u2019s Hurdle Rate, the crew breaks down Strategy\u2019s Q2 2026 earnings call and its focus on returning STRC to par while building a trillion-dollar digital credit market. We explore why liquidity, simpl",
-      "publishedAt": "2026-07-31T11:00:01+00:00",
-      "publishedTs": 1785495601.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Our primary corporate objective.",
-      "link": "https://x.com/phongle/status/2083143729494327359#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-07-31T10:52:22+00:00",
-      "publishedTs": 1785495142.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE",
       "link": "https://x.com/nic_carter/status/2082981789417472152#m",
       "source": "@nic_carter",
@@ -1652,19 +1652,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "IT'S OFFICIALLY #BITCOIN ASIA MONTH \ud83c\udded\ud83c\uddf0 ALL OF THE VOICES IN #BITCOIN ARE ABOUT TO COME TOGETHER \ud83d\udd25 See you August 27-28 \ud83d\udc4b",
-      "link": "https://x.com/Bitcoinconfasia/status/2082937110646964320#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "IT'S OFFICIALLY #BITCOIN ASIA MONTH \ud83c\udded\ud83c\uddf0 ALL OF THE VOICES IN #BITCOIN ARE ABOUT TO COME TOGETHER \ud83d\udd25 See you August 27-28 \ud83d\udc4b Video",
-      "publishedAt": "2026-07-30T21:11:20+00:00",
-      "publishedTs": 1785445880.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
