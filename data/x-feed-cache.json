@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-08-03T20:26:03Z",
+  "fetchedAt": "2026-08-03T22:07:50Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The only thing we learned today is that I\u2019m simply not that bright. Lol",
+      "link": "https://x.com/JSeyff/status/2084386282805862430#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "The only thing we learned today is that I\u2019m simply not that bright. Lol Bloomberg TV (@BloombergTV) Bloomberg's @scarletfu puts @EricBalchunas , @JSeyff and Amrita Nandakumar, president of Vident Asset Management, to the test on Bloomberg ETF IQ in this week's edition of \"IQ Test",
+      "publishedAt": "2026-08-03T21:09:50+00:00",
+      "publishedTs": 1785791390.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THE BITCOIN ASIA 2026 AGENDA IS NOW LIVE \ud83c\udded\ud83c\uddf0 START PICKING YOUR CAN'T-MISS SESSIONS NOW \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2084382611741241682#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T20:55:15+00:00",
+      "publishedTs": 1785790515.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Strategy is the JPMorgan of the crypto economy.",
+      "link": "https://x.com/saylor/status/2084378738553143523#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy is the JPMorgan of the crypto economy. Phong Le (@phongle) \"Strategy is the JPMorgan of the crypto economy.\" I join @KellyCNBC and @TheDomino on @CNBC today to discuss $MSTR and $BTC . 00:53 - Bitcoin\u2019s bear cycle, macro headwinds, and how Strategy is navigating volatili",
+      "publishedAt": "2026-08-03T20:39:51+00:00",
+      "publishedTs": 1785789591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bloomberg's @scarletfu puts @EricBalchunas, @JSeyff and Amrita Nandakumar, president of Vident Asset Management, to the test on Bloomberg ETF IQ in this week's edition of \"IQ Test\" https://bloom.bg/4t2duMm",
+      "link": "https://x.com/BloombergTV/status/2084378344582246564#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Bloomberg's @scarletfu puts @EricBalchunas , @JSeyff and Amrita Nandakumar, president of Vident Asset Management, to the test on Bloomberg ETF IQ in this week's edition of \"IQ Test\" bloom.bg/4t2duMm Video",
+      "publishedAt": "2026-08-03T20:38:17+00:00",
+      "publishedTs": 1785789497.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: $5.3 billion Cardone Capital bought another 350 BTC worth $22.3 million \ud83d\udca5",
+      "link": "https://x.com/BitcoinMagazine/status/2084376449830568182#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T20:30:46+00:00",
+      "publishedTs": 1785789046.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The Senate has 4 days to pass the CLARITY Act before recess. \ud83d\udc40 Contact your Senator and tell them to pass the bill! \ud83c\uddfa\ud83c\uddf8",
       "link": "https://x.com/BitcoinMagazine/status/2084361097058939140#m",
@@ -349,19 +414,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T13:40:12+00:00",
       "publishedTs": 1785764412.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitkey is testing new coin control security feature",
-      "link": "https://x.com/DocumentingBTC/status/2084272507675103340#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Bitkey is testing new coin control security feature Video",
-      "publishedAt": "2026-08-03T13:37:44+00:00",
-      "publishedTs": 1785764264.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1381,6 +1433,19 @@
       "isRetweet": false
     },
     {
+      "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d Video",
+      "publishedAt": "2026-07-31T18:02:51+00:00",
+      "publishedTs": 1785520971.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach https://bitcoinmagazine.com/business/coinkite-releases-fixed-firmware-after-coldcard-bug-ai-likely-involved-in-the-hack via @bitcoinmagazine",
       "link": "https://x.com/JuanSGalt/status/2083250958214045929#m",
       "source": "@BitcoinMagazine",
@@ -1446,19 +1511,6 @@
       "isRetweet": false
     },
     {
-      "title": "BIP-110",
-      "link": "https://x.com/JSeyff/status/2083232438541598765#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "BIP-110 Dr. Margot Paez (@jyn_urso) Bitcoin adoption real talk. People fighting over \u201cspam\u201d when we can\u2019t even secure our keys, folks. We need to get our heads out of our asses and grow up already. This is pathetic. Bitcoin wants to be serious money but most of you are too busy h",
-      "publishedAt": "2026-07-31T16:44:52+00:00",
-      "publishedTs": 1785516292.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those",
       "link": "https://x.com/nic_carter/status/2083225881871368463#m",
       "source": "@nic_carter",
@@ -1485,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer talks CLARITY ACT progress on The Hill: \"\"We've got ethics nailed down, we've got nominations nailed down, we've got a bipartisan bill on the substance, we should be good to go\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2083223099399459088#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Chief Policy Officer talks CLARITY ACT progress on The Hill: \"\"We've got ethics nailed down, we've got nominations nailed down, we've got a bipartisan bill on the substance, we should be good to go\" \ud83d\udc4f Video",
-      "publishedAt": "2026-07-31T16:07:45+00:00",
-      "publishedTs": 1785514065.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "this is what cracks me up when people construct these elaborate bear cases based on AI being \"too expensive\". ok just wait 6 months and it will probably be 10x cheaper for the same unit of intelligence. (4 months/13x in this case)",
       "link": "https://x.com/nic_carter/status/2083215139109573052#m",
       "source": "@nic_carter",
@@ -1511,19 +1550,6 @@
       "isRetweet": false
     },
     {
-      "title": "Mostly posted it for the people who aren't on Twitter all the time, but my and a few others current thoughts on immediate actions to take right now: https://bitcoinmagazine.com/news/coldcard-security-risk-immediate-action-required",
-      "link": "https://x.com/brian_trollz/status/2083214543660933623#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Mostly posted it for the people who aren't on Twitter all the time, but my and a few others current thoughts on immediate actions to take right now: bitcoinmagazine.com/news/col\u2026 Link COLDCARD SECURITY RISK: IMMEDIATE ACTION REQUIRED IMPORTANT: Major security vulnerability discov",
-      "publishedAt": "2026-07-31T15:33:46+00:00",
-      "publishedTs": 1785512026.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Happy 8th birthday to \"Visions of Bitcoin\"! https://medium.com/@nic__carter/visions-of-bitcoin-4b7b7cbcd24c",
       "link": "https://x.com/nic_carter/status/2083210923355910520#m",
       "source": "@nic_carter",
@@ -1532,19 +1558,6 @@
       "summary": "Happy 8th birthday to \"Visions of Bitcoin\"! medium.com/@nic__carter/visi\u2026 Link Visions of Bitcoin How major Bitcoin narratives changed over time medium.com",
       "publishedAt": "2026-07-31T15:19:22+00:00",
       "publishedTs": 1785511162.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff. In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month. ",
-      "link": "https://x.com/EricBalchunas/status/2083207573566632051#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Really great breakdown on the cash burn/creation of leveraged ETFs from @JSeyff . In short, index leveraged long ETFs (eg TQQQ, SOXL) have been like a degen ATM Machine, generating them $26b in gains this year and $138b lifetime and that's incl the big, nasty pullback this month.",
-      "publishedAt": "2026-07-31T15:06:04+00:00",
-      "publishedTs": 1785510364.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1587,19 +1600,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Podcasters and YouTubers please put out short 5-10 min emergency broadcast episodes today or tomorrow with a technical guest about the coldcard situation. That way we can reach all the people in the audience who aren\u2019t too online twitter people. There are still bitcoiners who don",
-      "link": "https://x.com/americanhodl8/status/2083183147332825465#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Podcasters and YouTubers please put out short 5-10 min emergency broadcast episodes today or tomorrow with a technical guest about the coldcard situation. That way we can reach all the people in the audience who aren\u2019t too online twitter people. There are still bitcoiners who don",
-      "publishedAt": "2026-07-31T13:29:00+00:00",
-      "publishedTs": 1785504540.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "meanwhile hundreds of thousnads of travelers will miss their connections through EU airports this summer because they waited for hours in immigration lines so they could give the EU their fingerprints for the new entry/exit system anarchotyranny",
