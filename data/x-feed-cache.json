@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-02T23:57:42Z",
+  "fetchedAt": "2026-08-03T03:27:49Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted their philosophy on securing Bitcoin software code with the quote, \u201cThe serialization format we have is as dead simple and flat as possible. There is no extra freedom in the way the input stream is formed.\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2084110008363417793#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-03T02:52:01+00:00",
+      "publishedTs": 1785725521.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Two wallets are heavily long $BTC, with a combined position of 1,364 $BTC($86.2M). Liquidation prices: $61,079.4 $61,096.7 https://hypurrscan.io/address/0x8c96e5a2d770f9f2c9d2464ce4e741df0b2bca57#perps https://hypurrscan.io/address/0x431f1cbb550be14da5cb3da1157010d1e83a6cee#perps",
+      "link": "https://x.com/lookonchain/status/2084103701606936959#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Two wallets are heavily long $BTC , with a combined position of 1,364 $BTC ($86.2M). Liquidation prices: $61,079.4 $61,096.7 hypurrscan.io/address/0x8c96\u2026 hypurrscan.io/address/0x431f\u2026",
+      "publishedAt": "2026-08-03T02:26:57+00:00",
+      "publishedTs": 1785724017.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Is Michael Saylor's @Strategy selling $BTC again? A wallet linked to #Strategy moved 299.84 $BTC($18.91M) 9 hours ago. The last time they moved $BTC was between July 1 and July 5. During that week, #Strategy sold 3,588 $BTC($216M). https://arkm.com/explorer/address/3B6oqtG4qQ1bWY",
+      "link": "https://x.com/lookonchain/status/2084074062008275095#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Is Michael Saylor's @Strategy selling $BTC again? A wallet linked to #Strategy moved 299.84 $BTC ($18.91M) 9 hours ago. The last time they moved $BTC was between July 1 and July 5. During that week, #Strategy sold 3,588 $BTC ($216M). arkm.com/explorer/address/3B\u2026",
+      "publishedAt": "2026-08-03T00:29:11+00:00",
+      "publishedTs": 1785716951.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Image",
       "link": "https://x.com/lopp/status/2084063471839092778#m",
@@ -40,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Unfortunately, if this has happened, MK3s no passphrase are very likely entirely lost to attackers. Which means other attackers are going to skip to pass phrases, this will accelerate. IF YOU OR SOMEONE YOU KNOW HAS USED A COLD CARD GET YOUR BITCOIN OFF OF IT NOW.",
+      "link": "https://x.com/Rob1Ham/status/2084037760764027128#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Unfortunately, if this has happened, MK3s no passphrase are very likely entirely lost to attackers. Which means other attackers are going to skip to pass phrases, this will accelerate. IF YOU OR SOMEONE YOU KNOW HAS USED A COLD CARD GET YOUR BITCOIN OFF OF IT NOW. BTC Sessions \ud83d\ude0e ",
+      "publishedAt": "2026-08-02T22:04:56+00:00",
+      "publishedTs": 1785708296.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "The last 24 hours of Bitcoin posts on \ud835\udd4f discussing the hack of ColdCard wallets has been the largest open source technical support initiative ever undertaken by an organic community of educators, organizers, developers, and ordinary well-meaning people in history.",
@@ -1561,19 +1613,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "On this day in history, 12 years ago, the first Bitcoin hardware wallet was released by Trezor",
-      "link": "https://x.com/DocumentingBTC/status/2082879925963350162#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-30T17:24:07+00:00",
-      "publishedTs": 1785432247.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "hearing completely uncorroborated rumors that boy wonder got margin called",
