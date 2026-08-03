@@ -1032,6 +1032,12 @@ const MENU_TREE = {
         accentDim: "rgba(96, 165, 250, 0.18)",
         onShow: () => window.initLaw?.("eu-mica"),
       },
+      "global-founders": {
+        label: "Global / Relocate",
+        accent: "#34d399",
+        accentDim: "rgba(52, 211, 153, 0.18)",
+        onShow: () => window.initLaw?.("global-founders"),
+      },
       compare: {
         label: "Compare",
         accent: "#64748b",
@@ -1398,6 +1404,11 @@ const LEGACY_L2 = {
     mica: "eu-mica",
     founders: "eu-mica",
     "eu-founders": "eu-mica",
+    "global-founders": "global-founders",
+    global: "global-founders",
+    relocate: "global-founders",
+    relocation: "global-founders",
+    expat: "global-founders",
     compare: "compare",
     comparison: "compare",
     watchlist: "watchlist",
@@ -2150,13 +2161,31 @@ function bootstrapPathMenu() {
   } else if (path.startsWith("/law/")) {
     const slug = path.slice("/law/".length).split("/")[0];
     localStorage.setItem(MENU_L1_KEY, "law");
-    if (["compare", "watchlist", "changes", "sources", "overview", "eu-mica", "mica", "founders"].includes(slug)) {
+    if (
+      [
+        "compare",
+        "watchlist",
+        "changes",
+        "sources",
+        "overview",
+        "eu-mica",
+        "mica",
+        "founders",
+        "global-founders",
+        "global",
+        "relocate",
+        "relocation",
+        "expat",
+      ].includes(slug)
+    ) {
       const l2 =
         slug === "overview"
           ? "overview"
           : slug === "mica" || slug === "founders"
             ? "eu-mica"
-            : slug;
+            : slug === "global" || slug === "relocate" || slug === "relocation" || slug === "expat"
+              ? "global-founders"
+              : slug;
       localStorage.setItem(MENU_L2_KEY, l2);
     } else {
       // Country deep link: keep Overview L2; law.js opens the country panel

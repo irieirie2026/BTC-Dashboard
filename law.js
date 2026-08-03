@@ -338,15 +338,24 @@ function lawMarkdownToHtml(md) {
   return out.join("\n");
 }
 
-let lawMicaGuideHtml = null;
+const lawGuideCache = Object.create(null);
 
-async function lawLoadMicaGuide() {
-  if (lawMicaGuideHtml) return lawMicaGuideHtml;
-  const res = await fetch(`/law-eu-mica-guide.md?v=1`);
+async function lawLoadGuide(path, cacheKey) {
+  const key = cacheKey || path;
+  if (lawGuideCache[key]) return lawGuideCache[key];
+  const res = await fetch(path);
   if (!res.ok) throw new Error(`Guide HTTP ${res.status}`);
   const md = await res.text();
-  lawMicaGuideHtml = lawMarkdownToHtml(md);
-  return lawMicaGuideHtml;
+  lawGuideCache[key] = lawMarkdownToHtml(md);
+  return lawGuideCache[key];
+}
+
+async function lawLoadMicaGuide() {
+  return lawLoadGuide("/law-eu-mica-guide.md?v=1", "eu-mica");
+}
+
+async function lawLoadGlobalFoundersGuide() {
+  return lawLoadGuide("/law-global-founders-guide.md?v=1", "global-founders");
 }
 
 function lawRenderHero() {
@@ -354,9 +363,17 @@ function lawRenderHero() {
   if (el) {
     const base = lawData?.hero || "";
     el.innerHTML = `${lawEsc(base)}
-      <span class="law-hero-cta"> · <button type="button" class="law-link-btn" data-law-open-mica>EU MiCA / Founders guide</button> (Italy-first, post–1 Jul 2026)</span>`;
+      <span class="law-hero-cta"> ·
+        <button type="button" class="law-link-btn" data-law-open-mica>EU MiCA / Founders</button>
+        ·
+        <button type="button" class="law-link-btn" data-law-open-global>Global / Relocate</button>
+        (company seat, visas, CoL — Panama · GT · Japan · Cuba + more)
+      </span>`;
     el.querySelector("[data-law-open-mica]")?.addEventListener("click", () => {
       void lawShowPanel("eu-mica");
+    });
+    el.querySelector("[data-law-open-global]")?.addEventListener("click", () => {
+      void lawShowPanel("global-founders");
     });
   }
   const meta = lawEl("law-data-meta");
@@ -907,16 +924,16 @@ function lawSetPanel(which) {
 }
 
 async function lawShowPanel(name) {
-  const allowed = ["watchlist", "compare", "changes", "sources", "eu-mica"];
+  const allowed = ["watchlist", "compare", "changes", "sources", "eu-mica", "global-founders"];
   if (!allowed.includes(name)) {
     lawShowOverview();
     return;
   }
-  if (!lawData && name !== "eu-mica") {
+  const isGuide = name === "eu-mica" || name === "global-founders";
+  if (!lawData && !isGuide) {
     await lawLoad(name);
     return;
   }
-  // Guide can load even if jurisdiction payload is slow; still prefer full load for chrome
   if (!lawData) {
     try {
       await lawLoad(name);
@@ -941,6 +958,7 @@ async function lawShowPanel(name) {
     changes: "Changes",
     sources: "Sources",
     "eu-mica": "EU MiCA / Founders",
+    "global-founders": "Global / Relocate",
   };
   lawBreadcrumb([
     { label: "The Law", action: "overview" },
@@ -958,26 +976,44 @@ async function lawShowPanel(name) {
     }
   } catch (_) {}
 
-  if (name === "eu-mica") {
+  if (name === "eu-mica" || name === "global-founders") {
+    const isGlobal = name === "global-founders";
     util.innerHTML = `
       <section class="panel law-guide-panel">
         <div class="panel-header">
-          <h2>EU MiCA / Founders</h2>
-          <span class="panel-meta">Italy-first · post–1 Jul 2026 · educational</span>
+          <h2>${isGlobal ? "Global / Relocate" : "EU MiCA / Founders"}</h2>
+          <span class="panel-meta">${
+            isGlobal
+              ? "Company seat · visas · CoL · Panama · GT · Japan · Cuba"
+              : "Italy-first · post–1 Jul 2026 · educational"
+          }</span>
         </div>
         <div class="law-panel-body">
-          <p class="law-muted">Comprehensive founder guide for Italian and EU crypto startups under fully in-force MiCA. Not legal advice — verify the live ESMA register and local counsel.</p>
-          <div id="law-mica-guide-root" class="law-guide-root"><p class="law-loading">Loading guide…</p></div>
+          <p class="law-muted">${
+            isGlobal
+              ? "For Italian/EU-resident crypto founders choosing where to live and incorporate worldwide (not only Europe). Four-layer model: tax residence · company · banking · lifestyle. Not immigration or tax advice."
+              : "Comprehensive founder guide for Italian and EU crypto startups under fully in-force MiCA. Not legal advice — verify the live ESMA register and local counsel."
+          }</p>
+          <div class="law-guide-nav">
+            <button type="button" class="law-btn law-btn--ghost${isGlobal ? "" : " active"}" data-law-guide="eu-mica">EU MiCA</button>
+            <button type="button" class="law-btn law-btn--ghost${isGlobal ? " active" : ""}" data-law-guide="global-founders">Global / Relocate</button>
+            <button type="button" class="law-btn law-btn--ghost" data-law-guide-overview>Jurisdiction map</button>
+          </div>
+          <div id="law-guide-root" class="law-guide-root"><p class="law-loading">Loading guide…</p></div>
           <p style="margin-top:1rem"><button type="button" class="law-btn" data-law-back>← Overview</button></p>
         </div>
       </section>`;
-    const root = lawEl("law-mica-guide-root");
+    util.querySelectorAll("[data-law-guide]").forEach((btn) => {
+      btn.addEventListener("click", () => void lawShowPanel(btn.getAttribute("data-law-guide")));
+    });
+    util.querySelector("[data-law-guide-overview]")?.addEventListener("click", () => lawShowOverview());
+    const root = lawEl("law-guide-root");
     try {
-      const html = await lawLoadMicaGuide();
+      const html = isGlobal ? await lawLoadGlobalFoundersGuide() : await lawLoadMicaGuide();
       if (root) root.innerHTML = html;
     } catch (err) {
       if (root) {
-        root.innerHTML = `<p class="law-error">Could not load guide — ${lawEsc(err.message || "error")}. Ensure <code>law-eu-mica-guide.md</code> is deployed.</p>`;
+        root.innerHTML = `<p class="law-error">Could not load guide — ${lawEsc(err.message || "error")}. Ensure the guide markdown file is deployed.</p>`;
       }
     }
   } else if (name === "watchlist") {
@@ -1282,11 +1318,12 @@ async function lawLoad(preferredTab) {
       });
     }
 
-    const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica"];
+    const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica", "global-founders"];
     const path = (location.pathname || "").replace(/\/$/, "");
     const m = path.match(/^\/law\/([a-z0-9-]+)$/i);
     let pathSlug = m ? m[1].toLowerCase() : "";
     if (pathSlug === "mica" || pathSlug === "founders") pathSlug = "eu-mica";
+    if (["global", "relocate", "relocation", "expat"].includes(pathSlug)) pathSlug = "global-founders";
     const sessionCountry = sessionStorage.getItem("law-open-country");
     if (sessionCountry) sessionStorage.removeItem("law-open-country");
 
@@ -1324,7 +1361,7 @@ async function lawLoad(preferredTab) {
 
 function initLaw(tab) {
   const t = tab || "overview";
-  const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica"];
+  const utilityTabs = ["compare", "watchlist", "changes", "sources", "eu-mica", "global-founders"];
 
   // Data already loaded — switch panels immediately (L2 tab clicks)
   if (lawData) {
