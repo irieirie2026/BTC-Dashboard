@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-03T18:50:07Z",
+  "fetchedAt": "2026-08-03T20:26:03Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The Senate has 4 days to pass the CLARITY Act before recess. \ud83d\udc40 Contact your Senator and tell them to pass the bill! \ud83c\uddfa\ud83c\uddf8",
+      "link": "https://x.com/BitcoinMagazine/status/2084361097058939140#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T19:29:45+00:00",
+      "publishedTs": 1785785385.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Incredible video explaining the Bitcoin wallet hack",
       "link": "https://x.com/DocumentingBTC/status/2084347267067113825#m",
@@ -16,14 +29,14 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddec\ud83c\udde7 U.K. public company 'The Smarter Web Company', just increased their Bitcoin treasury to 2,712 BTC \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2084340553022406749#m",
+      "title": "Our first trading card auctions are wrapping up today Don't miss out! \ud83d\udc40",
+      "link": "https://x.com/BMAG_HQ/status/2084347103862460469#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-03T18:08:07+00:00",
-      "publishedTs": 1785780487.0,
+      "summary": "Our first trading card auctions are wrapping up today Don't miss out! \ud83d\udc40 Video",
+      "publishedAt": "2026-08-03T18:34:09+00:00",
+      "publishedTs": 1785782049.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
