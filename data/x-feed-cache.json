@@ -1,7 +1,137 @@
 {
-  "fetchedAt": "2026-08-03T10:48:33Z",
+  "fetchedAt": "2026-08-03T13:39:42Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: A solo miner mined a Bitcoin block receiving 3.157 BTC worth $199,320. LEGEND \ud83e\udd2f",
+      "link": "https://x.com/BitcoinMagazine/status/2084270247217860957#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T13:28:45+00:00",
+      "publishedTs": 1785763725.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strives purchases 20 BTC for $1.3 million, now holds 20,020 BTC worth $1.3 billion \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2084253617964351658#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-03T12:22:40+00:00",
+      "publishedTs": 1785759760.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This CEO just spent $10,000 today on AI models and found more vulnerabilities in Bitcoin apps",
+      "link": "https://x.com/DocumentingBTC/status/2084250678138962106#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-03T12:10:59+00:00",
+      "publishedTs": 1785759059.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Just as we tracked, Michael Saylor's @Strategy did sell $BTC again. Last week, Strategy sold 1,638 $BTC($102.4M) and now holds 842,138 $BTC ($52.65B).",
+      "link": "https://x.com/lookonchain/status/2084250557683003751#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Just as we tracked, Michael Saylor's @Strategy did sell $BTC again. Last week, Strategy sold 1,638 $BTC ($102.4M) and now holds 842,138 $BTC ($52.65B). Lookonchain (@lookonchain) Is Michael Saylor's @Strategy selling $BTC again? A wallet linked to #Strategy moved 299.84 $BTC ($18",
+      "publishedAt": "2026-08-03T12:10:31+00:00",
+      "publishedTs": 1785759031.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy increased its USD Reserve by $250M and repurchased $81M of $STRC. This increased USD Duration by 57 days to 2.3 years and tightened STRC\u2019s BTC Credit by 5 bps. As of 8/2/26, we hold \u20bf842,138 in our BTC Reserve and $4.0B in our USD Reserve. $MSTR https://www.strategy.com/",
+      "link": "https://x.com/saylor/status/2084248751925776403#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy increased its USD Reserve by $250M and repurchased $81M of $STRC . This increased USD Duration by 57 days to 2.3 years and tightened STRC\u2019s BTC Credit by 5 bps. As of 8/2/26, we hold \u20bf842,138 in our BTC Reserve and $4.0B in our USD Reserve. $MSTR strategy.com/press/strat",
+      "publishedAt": "2026-08-03T12:03:20+00:00",
+      "publishedTs": 1785758600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: STRC\u2019s BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $62,900. https://www.strategy.com/credit",
+      "link": "https://x.com/saylor/status/2084248753662202257#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "STRC\u2019s BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $62,900. strategy.com/credit Link Credit Metrics - Strategy strategy.com",
+      "publishedAt": "2026-08-03T12:03:20+00:00",
+      "publishedTs": 1785758600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The top 3 ETFs by weekly flows are all semiconductor ETFs.. that's def a first. Semi stocks' selloff/vol was like chum in water for degen traders who piled into it prior to the 7% bounce (24% for SOXL) and are now beginning to take some profits (1D outflows)",
+      "link": "https://x.com/EricBalchunas/status/2084243421925949701#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-03T11:42:09+00:00",
+      "publishedTs": 1785757329.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
+      "link": "https://x.com/lopp/status/2084241215852068992#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
+      "publishedAt": "2026-08-03T11:33:23+00:00",
+      "publishedTs": 1785756803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Here's the full article: https://www.bloomberg.com/news/articles/2026-08-02/banks-offload-risk-from-leveraged-etfs-with-exotic-crash-puts?srnd=undefined",
+      "link": "https://x.com/EricBalchunas/status/2084238610383946224#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Here's the full article: bloomberg.com/news/articles/\u2026 Link Banks Offload Risk from Leveraged ETFs With Exotic \u2018Crash Puts\u2019 Leveraged ETFs that offer the tantalizing prospect of doubling or tripling the daily returns of an individual stock are famously risky for investors who buy",
+      "publishedAt": "2026-08-03T11:23:02+00:00",
+      "publishedTs": 1785756182.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Nice look at the banks who do the swaps for leveraged ETFs, index vs single stock (hello Clear Street).. in a piece on the rise of 'crash puts' that help banks hedge gap risk where the stock goes down more than the leverage amt can cover (they're also used for income a la short V",
+      "link": "https://x.com/EricBalchunas/status/2084238459049279558#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Nice look at the banks who do the swaps for leveraged ETFs, index vs single stock (hello Clear Street).. in a piece on the rise of 'crash puts' that help banks hedge gap risk where the stock goes down more than the leverage amt can cover (they're also used for income a la short V",
+      "publishedAt": "2026-08-03T11:22:26+00:00",
+      "publishedTs": 1785756146.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whale wallet bc1qpt, holding 16,400 $BTC ($1.04B), transferred all 16,400 $BTC to a new wallet 1 hour ago after 7 months of inactivity. https://arkm.com/explorer/address/bc1qptc9cz269u2mc5yguun5a5d6yd5c7f7ne4qj26",
       "link": "https://x.com/lookonchain/status/2084118050450874710#m",
@@ -1030,19 +1160,6 @@
       "isRetweet": false
     },
     {
-      "title": "Here are three things that have to happen for bitcoin to break out\u2026",
-      "link": "https://x.com/APompliano/status/2083229508648206698#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Here are three things that have to happen for bitcoin to break out\u2026 Video",
-      "publishedAt": "2026-07-31T16:33:14+00:00",
-      "publishedTs": 1785515594.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those",
       "link": "https://x.com/nic_carter/status/2083225881871368463#m",
       "source": "@nic_carter",
@@ -1238,32 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "A whale just deposited 1,060 $BTC($67.52M) into #Binance. https://arkm.com/explorer/address/bc1qsylwjhesm58uw9vsp7vwgadq5fqna4e3e8qnpd",
-      "link": "https://x.com/lookonchain/status/2083190700083134713#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "A whale just deposited 1,060 $BTC ($67.52M) into #Binance . arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-07-31T13:59:01+00:00",
-      "publishedTs": 1785506341.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Fun double-edged sword: Coinkite purges all their customer records after 120 days to protect against data breaches. Which means they are unable to reach out to customers who bought vulnerable coldcards over the past 5 years to warn them of this vulnerability. \ud83e\udee0",
-      "link": "https://x.com/lopp/status/2083187480002429090#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-07-31T13:46:13+00:00",
-      "publishedTs": 1785505573.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: I just went through this in zurich yesterday. absolute bedlam. avoiding schengen for the foreseeable.",
       "link": "https://x.com/nic_carter/status/2083183572110778425#m",
       "source": "@nic_carter",
@@ -1355,32 +1446,6 @@
       "isRetweet": false
     },
     {
-      "title": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
-      "link": "https://x.com/EricBalchunas/status/2083160784440287308#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "TIL gambling is pretty much totally prohibited in South Korea.. the laws apply when they go overseas. Just really strict. May help explain why they went so hog wild with stocks and 2x ETFs. So much pent up degen, like that dude who was sheltered in HS and became party animal in c",
-      "publishedAt": "2026-07-31T12:00:08+00:00",
-      "publishedTs": 1785499208.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
-      "link": "https://x.com/EricBalchunas/status/2083158244487262546#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows this week) as degen traders bought the crap out of the Mon-Wed dip. Rewarded again w yest 7% bounce. You can also see just how insane these number",
-      "publishedAt": "2026-07-31T11:50:03+00:00",
-      "publishedTs": 1785498603.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
       "link": "https://x.com/nic_carter/status/2083158132604211615#m",
       "source": "@nic_carter",
@@ -1446,32 +1511,6 @@
       "isRetweet": true
     },
     {
-      "title": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. https://arkm.com/explorer/address/bc1qnk4zh9qcnap2mycp56qjrgza3cc8ylrh8fecp0 https://blog.coinkite.c",
-      "link": "https://x.com/lookonchain/status/2083074854190985535#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "More than $38M has been stolen due to a Coldcard wallet vulnerability.\u26a0\ufe0f Funds from around 500 wallets were transferred to wallet bc1qnk, totaling 594.48 $BTC ($38.2M). Stay safe. arkm.com/explorer/address/bc\u2026 blog.coinkite.com/coldcard-m\u2026",
-      "publishedAt": "2026-07-31T06:18:41+00:00",
-      "publishedTs": 1785478721.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The United States Treasury Secretary quoted Satoshi Nakamoto, the inventor of Bitcoin, today.",
-      "link": "https://x.com/DocumentingBTC/status/2083002065874202824#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-31T01:29:27+00:00",
-      "publishedTs": 1785461367.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE",
       "link": "https://x.com/nic_carter/status/2082981789417472152#m",
       "source": "@nic_carter",
@@ -1511,19 +1550,6 @@
       "isRetweet": true
     },
     {
-      "title": "Our Q2 2026 Earnings Call is LIVE on X: https://x.com/i/broadcasts/1kJzDDXjAVeKv",
-      "link": "https://x.com/Strategy/status/2082938517143826520#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Our Q2 2026 Earnings Call is LIVE on X: nitter.net/i/broadcasts/1kJzDDXjA\u2026 Link Strategy Strategy Q2 2026 Earnings Call https://nitter.net/i/broadcasts/1kJzDDXjAVeKv",
-      "publishedAt": "2026-07-30T21:16:56+00:00",
-      "publishedTs": 1785446216.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "IT'S OFFICIALLY #BITCOIN ASIA MONTH \ud83c\udded\ud83c\uddf0 ALL OF THE VOICES IN #BITCOIN ARE ABOUT TO COME TOGETHER \ud83d\udd25 See you August 27-28 \ud83d\udc4b",
       "link": "https://x.com/Bitcoinconfasia/status/2082937110646964320#m",
       "source": "@BitcoinMagazine",
@@ -1550,45 +1576,6 @@
       "isRetweet": false
     },
     {
-      "title": "\ud83d\udfe0 LIVE NOW: @Strategy reports Q2 2026 earnings. Join BFC live at 5:00 PM ET for the earnings call and post-call analysis featuring: \u27a4 Strategy execs including @saylor & @phongle \u27a4 Wall Street analyst Q&A \u27a4 Bitcoin analyst Q&A w/ @LynAldenContact, @Matt_Hougan, @Excellion & @btcjv",
-      "link": "https://x.com/BitcoinForCorps/status/2082934590562304225#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "\ud83d\udfe0 LIVE NOW: @Strategy reports Q2 2026 earnings. Join BFC live at 5:00 PM ET for the earnings call and post-call analysis featuring: \u27a4 Strategy execs including @saylor & @phongle \u27a4 Wall Street analyst Q&A \u27a4 Bitcoin analyst Q&A w/ @LynAldenContact , @Matt_Hougan , @Excellion & @btc",
-      "publishedAt": "2026-07-30T21:01:20+00:00",
-      "publishedTs": 1785445280.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Pinned: LIVE: Strategy ($MSTR) Q2 2026 Earnings Call https://x.com/i/broadcasts/1kJzDDjAqVdKv",
-      "link": "https://x.com/BitcoinMagazine/status/2082934205550379358#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "LIVE: Strategy ($MSTR) Q2 2026 Earnings Call nitter.net/i/broadcasts/1kJzDDjAq\u2026 Link Bitcoin Magazine LIVE: $MSTR Earnings Call Q2 2026 \ud83d\udfe7 https://nitter.net/i/broadcasts/1kJzDDjAqVdKv",
-      "publishedAt": "2026-07-30T20:59:48+00:00",
-      "publishedTs": 1785445188.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says over 100+ compromises have been made on the CLARITY ACT and calls on the Senate to pass the bill \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2082926696928272562#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says over 100+ compromises have been made on the CLARITY ACT and calls on the Senate to pass the bill \ud83d\udc40 Video",
-      "publishedAt": "2026-07-30T20:29:58+00:00",
-      "publishedTs": 1785443398.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
       "link": "https://x.com/DavidZell_/status/2082917609477935551#m",
       "source": "@JSeyff",
@@ -1600,19 +1587,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says a Senate vote is still on track before the August recess \ud83d\udc40 \"Sen. Thune has kept a place for the CLARITY ACT on the agenda before the August recess...and I believe he does intend to go through with it...We will be moving forward.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2082910847215571099#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Cynthia Lummis says a Senate vote is still on track before the August recess \ud83d\udc40 \"Sen. Thune has kept a place for the CLARITY ACT on the agenda before the August recess...and I believe he does intend to go through with it...We will be moving forward.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-07-30T19:26:59+00:00",
-      "publishedTs": 1785439619.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Join us today at 5 PM ET for our Q2 2026 earnings call. We\u2019ll discuss the $BTC outlook, our plans for $MSTR and $STRC, plus a live Q&A with Lyn Alden (@LynAldenContact), Matt Hougan (@Matt_Hougan), Samson Mow (@Excellion), and James Van Straten (@btcjvs).https://x.com/i/broadcast",
