@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-04T00:07:40Z",
+  "fetchedAt": "2026-08-04T04:12:01Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "This is insane! According to @glxyresearch, the total losses from the #Coldcard hack may have reached 2,055 $BTC($130M). More than 7,700 victim addresses have been affected.",
+      "link": "https://x.com/lookonchain/status/2084465607932854717#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "This is insane! According to @glxyresearch , the total losses from the #Coldcard hack may have reached 2,055 $BTC ($130M). More than 7,700 victim addresses have been affected.",
+      "publishedAt": "2026-08-04T02:25:03+00:00",
+      "publishedTs": 1785810303.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @coinbase: WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win Youtube: https://youtu.be/U7wPrNtUn9o Rumble: https://rumble.com/v7djtwo-coinbases-john-dagostino-why-bitcoin-doesnt-need-the-clarity-act-to-win.html Spotify: https://open.spotify.c",
       "link": "https://x.com/BitcoinMagazine/status/2084407880074264882#m",
@@ -1251,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Whale 0x2684 bought another 7,919.5 $ETH($14.89M) today. Since June 30, the whale has bought 74,265 $ETH($131.5M) at an average price of $1,771 and 1,050 $WBTC($67.49M) at an average price of $64,277. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
-      "link": "https://x.com/lookonchain/status/2083443438985646261#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale 0x2684 bought another 7,919.5 $ETH ($14.89M) today. Since June 30, the whale has bought 74,265 $ETH ($131.5M) at an average price of $1,771 and 1,050 $WBTC ($67.49M) at an average price of $64,277. arkm.com/explorer/address/0x\u2026",
-      "publishedAt": "2026-08-01T06:43:19+00:00",
-      "publishedTs": 1785566599.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "No product has ever given me more peace of mind for the money than multi-vendor, multi-sig via @CasaHODL",
       "link": "https://x.com/btchorn/status/2083407867403776138#m",
       "source": "@lopp",
@@ -1496,19 +1496,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Here are the top 5 US ETFs by flows over the last week: 1-- Semis ($SOXX ) 3-- Semis ($SMH ) 4-- 3X Semis ($SOXL )",
-      "link": "https://x.com/JSeyff/status/2083235971848376673#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Here are the top 5 US ETFs by flows over the last week: 1-- Semis ($SOXX ) 3-- Semis ($SMH ) 4-- 3X Semis ($SOXL ) Eric Balchunas (@EricBalchunas) Semi ETFs took in $12b leading up to the big bounce yesterday (btw semi ETFs accnt for 1% of ETF aum but took in 25% of the net flows",
-      "publishedAt": "2026-07-31T16:58:54+00:00",
-      "publishedTs": 1785517134.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those",
