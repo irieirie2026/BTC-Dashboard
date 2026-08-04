@@ -1,16 +1,81 @@
 {
-  "fetchedAt": "2026-08-04T20:22:29Z",
+  "fetchedAt": "2026-08-04T22:09:59Z",
   "source": "nitter.net",
   "tweets": [
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Former CFTC Commissioner on CLARITY ACT progress: \"I think we're getting there on ethics. We seem to be on the 10 yard-line here. The right players are working on it...I think we're headed in a direction we're gonna get a good vote on this bill\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2084736089974046983#m",
+      "title": "Elite ticker choice guys @LeverageETFs",
+      "link": "https://x.com/JSeyff/status/2084754415269867785#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Elite ticker choice guys @LeverageETFs Eric Balchunas (@EricBalchunas) LeverageShares has launched a 2x Tesla + SpaceX ETF (100% exposure to each stock). Ticker: ELOL h/t @Todd_Sohn \u2014 https://nitter.net/EricBalchunas/status/2084728552885289406#m",
+      "publishedAt": "2026-08-04T21:32:40+00:00",
+      "publishedTs": 1785879160.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Self Custody Is Dead. Long Live Self Custody https://bitcoinmagazine.com/culture/self-custody-is-dead-long-live-self-custody via @bitcoinmagazine",
+      "link": "https://x.com/JuanSGalt/status/2084753846614491433#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Former CFTC Commissioner on CLARITY ACT progress: \"I think we're getting there on ethics. We seem to be on the 10 yard-line here. The right players are working on it...I think we're headed in a direction we're gonna get a good vote on this bill\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-04T20:19:51+00:00",
-      "publishedTs": 1785874791.0,
+      "summary": "Self Custody Is Dead. Long Live Self Custody bitcoinmagazine.com/culture/\u2026 via @bitcoinmagazine Link Self Custody Is Dead. Long Live Self Custody The Coldcard compromise has become one of the most consequential security events in Bitcoin&apos;s history. Whether it marks the begin",
+      "publishedAt": "2026-08-04T21:30:24+00:00",
+      "publishedTs": 1785879024.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Every skill you own was taught by someone who learned it from someone. Securing a bitcoin wallet has no chain of teachers behind it. The first generation of keepers is alive right now, writing the instructions while following them alongside you.",
+      "link": "https://x.com/DocumentingBTC/status/2084747889406804071#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-04T21:06:44+00:00",
+      "publishedTs": 1785877604.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Price of bitcoin has surprisingly increased since news of a popular hardware wallet being hacked.",
+      "link": "https://x.com/DocumentingBTC/status/2084747751036768558#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-04T21:06:11+00:00",
+      "publishedTs": 1785877571.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Here come a bunch of \"where did you pay 140bps I only pay 40bps\" The answer is 40bps is still insane from an ETF perspective and doing research I decided to try and get bitcoin on my own. Ledger app sources many exchanges 150bps was MINIMUM to convert my doll",
+      "link": "https://x.com/EricBalchunas/status/2084739947316261215#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Here come a bunch of \"where did you pay 140bps I only pay 40bps\" The answer is 40bps is still insane from an ETF perspective and doing research I decided to try and get bitcoin on my own. Ledger app sources many exchanges 150bps was MINIMUM to convert my dollars to bitcoin. Coinb",
+      "publishedAt": "2026-08-04T20:35:10+00:00",
+      "publishedTs": 1785875710.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BlackRock has announced a 1 for 3 reverse split for $ETHA so the price will go from $14 to $42 in Oct.. this will lower cost to trade from 7bps to 2bps ish. Gotta love how ETF issuers consider a 7bp spread a PROBLEM and is adjusting to cut it to 2bps, meanwhile the crypto exchang",
+      "link": "https://x.com/EricBalchunas/status/2084737824830758934#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "BlackRock has announced a 1 for 3 reverse split for $ETHA so the price will go from $14 to $42 in Oct.. this will lower cost to trade from 7bps to 2bps ish. Gotta love how ETF issuers consider a 7bp spread a PROBLEM and is adjusting to cut it to 2bps, meanwhile the crypto exchang",
+      "publishedAt": "2026-08-04T20:26:44+00:00",
+      "publishedTs": 1785875204.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -92,6 +157,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp & @Nneuman https://x.com/i/broadcasts/1yJAPPLvorMGb",
+      "link": "https://x.com/BitcoinNewsCom/status/2084702211758858337#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman nitter.net/i/broadcasts/1yJAPPLvo\u2026 Link Bitcoin News MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman https://nitter.net/i/broadcasts/1yJAPPLvorMGb",
+      "publishedAt": "2026-08-04T18:05:13+00:00",
+      "publishedTs": 1785866713.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "very funny that Leo was a forced seller at the generational pico nano bottom here",
@@ -1212,32 +1290,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Someone said it\u2019s prob current or ex-employee. That feels right but I\u2019ve no idea. Also If there\u2019s a silver lining, it\u2019s that the price of bitcoin hasn\u2019t really moved at all really. pretty amazing.",
-      "link": "https://x.com/EricBalchunas/status/2083653746358182003#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Someone said it\u2019s prob current or ex-employee. That feels right but I\u2019ve no idea. Also If there\u2019s a silver lining, it\u2019s that the price of bitcoin hasn\u2019t really moved at all really. pretty amazing.",
-      "publishedAt": "2026-08-01T20:39:00+00:00",
-      "publishedTs": 1785616740.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "$88 million would make this one of the biggest heists in U.S. history. At one point is the FBI et al on the case to bust these scumbags and return the btc? The company is Canadian tho so not sure that works.",
-      "link": "https://x.com/EricBalchunas/status/2083653146157502766#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "$88 million would make this one of the biggest heists in U.S. history. At one point is the FBI et al on the case to bust these scumbags and return the btc? The company is Canadian tho so not sure that works. Crypto Rover (@cryptorover) BREAKING: A third wave of suspected Coldcard",
-      "publishedAt": "2026-08-01T20:36:37+00:00",
-      "publishedTs": 1785616597.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 16 years ago, Wikipedia deleted the page about Bitcoin because they said there was a \u201cLack of significant third-party coverage to confer notability.\u201d",
       "link": "https://x.com/DocumentingBTC/status/2083648808651456941#m",
       "source": "@DocumentingBTC",
@@ -1537,32 +1589,6 @@
       "isRetweet": false
     },
     {
-      "title": "\u20bfREAKING: Bitkey, Ledger, Trezor, Jade, and other Bitcoin hardware wallets report they are unaffected and safe from the hack of ColdCards.",
-      "link": "https://x.com/DocumentingBTC/status/2083277876984455630#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-31T19:45:25+00:00",
-      "publishedTs": 1785527125.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d Video",
-      "publishedAt": "2026-07-31T18:02:51+00:00",
-      "publishedTs": 1785520971.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "URGENT: If you have EVER generated a seed phrase on a ColdCard, your bitcoin may be at risk. Just recorded this emergency episode explaining what happened with @Rob1Ham of AnchorWatch. Please watch and share with those in your Bitcoin community, especially other non-technical bit",
       "link": "https://x.com/natbrunell/status/2083239999575646468#m",
       "source": "@JSeyff",
@@ -1652,19 +1678,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
-      "link": "https://x.com/DavidZell_/status/2082917609477935551#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "A journalist from @theragetech informed me today about an upcoming article on Bitcoin Policy Institute's participation in the State Department's new Freedom Tech Excellence Program. They asked me for comments on the Department's \"stated remarks to use debanking to disrupt left-wi",
-      "publishedAt": "2026-07-30T19:53:51+00:00",
-      "publishedTs": 1785441231.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
