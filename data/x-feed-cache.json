@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-03T22:07:50Z",
+  "fetchedAt": "2026-08-04T00:07:40Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @coinbase: WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win Youtube: https://youtu.be/U7wPrNtUn9o Rumble: https://rumble.com/v7djtwo-coinbases-john-dagostino-why-bitcoin-doesnt-need-the-clarity-act-to-win.html Spotify: https://open.spotify.c",
+      "link": "https://x.com/BitcoinMagazine/status/2084407880074264882#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win Youtube: piped.video/U7wPrNtUn9o Rumble: rumble.com/v7djtwo-coinbases\u2026 Spotify: open.spotify.com/episode/15d\u2026 Apple: podcasts.apple.com/us/podcas\u2026 Link Coinbase\u2019s John D\u2019Agostino: Why Bitcoin Doesn",
+      "publishedAt": "2026-08-03T22:35:39+00:00",
+      "publishedTs": 1785796539.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win @coinbase's head of institutional strategy @johnjdagostino tells @DeSpencer_ that Bitcoin is already proven technology that doesn't need the Clarity Act to pass \u2014 the United ",
+      "link": "https://x.com/BitcoinMagazine/status/2084407446169334189#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win @coinbase 's head of institutional strategy @johnjdagostino tells @DeSpencer_ that Bitcoin is already proven technology that doesn't need the Clarity Act to pass \u2014 the United States is the one that",
+      "publishedAt": "2026-08-03T22:33:56+00:00",
+      "publishedTs": 1785796436.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The only thing we learned today is that I\u2019m simply not that bright. Lol",
       "link": "https://x.com/JSeyff/status/2084386282805862430#m",
@@ -1420,19 +1446,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Abra CEO tells FOX \"Our aim with CLARITY and everything else going on is for the U.S. to lead\" \"We need to codify these rules as law and give startups and entrepreneurs explicit federal guidelines to get licenses and registrations\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2083253831501045922#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Abra CEO tells FOX \"Our aim with CLARITY and everything else going on is for the U.S. to lead\" \"We need to codify these rules as law and give startups and entrepreneurs explicit federal guidelines to get licenses and registrations\" \ud83d\ude80 Video",
-      "publishedAt": "2026-07-31T18:09:53+00:00",
-      "publishedTs": 1785521393.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
       "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
       "source": "@DocumentingBTC",
@@ -1444,19 +1457,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach https://bitcoinmagazine.com/business/coinkite-releases-fixed-firmware-after-coldcard-bug-ai-likely-involved-in-the-hack via @bitcoinmagazine",
-      "link": "https://x.com/JuanSGalt/status/2083250958214045929#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Coinkite Releases Fixed Firmware After Coldcard Bug; AI Likely Involved In The Breach bitcoinmagazine.com/business\u2026 via @bitcoinmagazine Link Coldcard Bug Exposes The New Reality: AI Is Auditing Every Open-Source Wallet Users who generated seeds on affected Coldcard MK3 devices w",
-      "publishedAt": "2026-07-31T17:58:28+00:00",
-      "publishedTs": 1785520708.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Given the emergency nature of this mass key compromise event, @CasaHODL advisors will be working through the weekend and we're opening up calendar availability to work with affected clients to restore their key sets to full health.",
