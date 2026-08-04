@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-04T07:37:49Z",
+  "fetchedAt": "2026-08-04T10:36:40Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -276,19 +276,6 @@
       "isRetweet": false
     },
     {
-      "title": "Rob Hamilton (@Rob1Ham) Over a thousand bitcoin moved today in an attack. Doing emergency triage to identify the source of the issue this is how it went: @AnthropicAI - Instant Downgrade. @OpenAI - A little help. @Kimi_Moonshot - One shot. The US needs to get it shits together. @",
-      "link": "https://x.com/nic_carter/status/2084300071588315269#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-03T15:27:16+00:00",
-      "publishedTs": 1785770836.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This is one of the coolest stories I've heard from this whole bad situation. A Casa client helped sweep his friend's assets off a single sig Mk3 into his own Casa multisig to save them. Casa clients looking out for other Bitcoiners.",
       "link": "https://x.com/Nneuman/status/2084297019191967809#m",
       "source": "@lopp",
@@ -315,19 +302,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @nic_carter: I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
-      "link": "https://x.com/nic_carter/status/2084291844804911473#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
-      "publishedAt": "2026-08-03T14:54:34+00:00",
-      "publishedTs": 1785768874.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "July 27\u2013Aug 2, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Despite a $2.55B stablecoin outflow, DEX trading rebounded strongly, while public companies reduced their $BTC holdings by 319 $BTC, including Strategy's sale of 1,638 $BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market ca",
       "link": "https://x.com/lookonchain/status/2084291801251447269#m",
       "source": "@lookonchain",
@@ -349,19 +323,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T14:54:22+00:00",
       "publishedTs": 1785768862.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "my biggest takeaway from the coldcard debacle is that open weight AI is completely essential. otherwise the bad guys will always outgun the good guys (due to safety constraints on white hat imposed by the closed labs) unless they want to dramatically dial back safety, the default",
-      "link": "https://x.com/nic_carter/status/2084291256645992810#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "my biggest takeaway from the coldcard debacle is that open weight AI is completely essential. otherwise the bad guys will always outgun the good guys (due to safety constraints on white hat imposed by the closed labs) unless they want to dramatically dial back safety, the default",
-      "publishedAt": "2026-08-03T14:52:14+00:00",
-      "publishedTs": 1785768734.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -705,19 +666,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin maximalism is over. Bitcoin \"culture\" is over. Bitcoin influencers are over. Every popular hardcore Bitcoin figure has disgraced themself in some way. Bitcoin will remain, beneficially stripped of the cult around it.",
-      "link": "https://x.com/nic_carter/status/2083985178825765251#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-02T18:35:59+00:00",
-      "publishedTs": 1785695759.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83d\udea8COLDCARD FUNDS MIGRATION\ud83d\udea8 If you need to move funds off of a weakly generated seed phrase, I suggest doing so BEFORE you upgrade the device firmware. There's a non-zero chance that the firmware upgrade will brick the device according to some reports we're hearing.",
       "link": "https://x.com/lopp/status/2083958797354127631#m",
       "source": "@lopp",
@@ -726,19 +674,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T16:51:10+00:00",
       "publishedTs": 1785689470.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin maximalism is an inverse prosperity gospel. The more you believe in it the poorer you become",
-      "link": "https://x.com/nic_carter/status/2083948613550424442#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-02T16:10:42+00:00",
-      "publishedTs": 1785687042.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -911,32 +846,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "You\u2019re never going to get a frontier model ever again. OAI and Ant will just do all the discoveries and science themselves. Can\u2019t trust the unwashed masses with frontier tech ever again. Too risky",
-      "link": "https://x.com/nic_carter/status/2083664259972469015#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "You\u2019re never going to get a frontier model ever again. OAI and Ant will just do all the discoveries and science themselves. Can\u2019t trust the unwashed masses with frontier tech ever again. Too risky Ryan Petersen (@typesfast) So what are we going to get? \u2014 https://nitter.net/typesf",
-      "publishedAt": "2026-08-01T21:20:46+00:00",
-      "publishedTs": 1785619246.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s terrible for Bitcoin out there. I never considered myself a maxi because I\u2019m a free thinker. I just own Bitcoin. I\u2019ve always used the storage methods that made the most sense for me. I\u2019ve promoted Ledger and Coinbase on my podcast before, and maxis would criticize it. Lookin",
-      "link": "https://x.com/aubreystrobel/status/2083659999818235935#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s terrible for Bitcoin out there. I never considered myself a maxi because I\u2019m a free thinker. I just own Bitcoin. I\u2019ve always used the storage methods that made the most sense for me. I\u2019ve promoted Ledger and Coinbase on my podcast before, and maxis would criticize it. Lookin",
-      "publishedAt": "2026-08-01T21:03:51+00:00",
-      "publishedTs": 1785618231.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Happy UASF day! Nearly a decade has passed. BCH now trades at 0.33% of the real Bitcoin.",
@@ -1251,19 +1160,6 @@
       "isRetweet": true
     },
     {
-      "title": "We\u2019re living in the most exciting time in human history",
-      "link": "https://x.com/nic_carter/status/2083474874396184589#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "We\u2019re living in the most exciting time in human history Noam Brown (@polynoamial) An internal version of Astra, @OpenAI \u2019s next major model family, solved 10 major open problems in mathematics, quantum complexity, and theoretical computer science. We believe it will be a major st",
-      "publishedAt": "2026-08-01T08:48:13+00:00",
-      "publishedTs": 1785574093.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "No product has ever given me more peace of mind for the money than multi-vendor, multi-sig via @CasaHODL",
       "link": "https://x.com/btchorn/status/2083407867403776138#m",
       "source": "@lopp",
@@ -1311,45 +1207,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Coinbase Head of Strategy says that he is \"relentlessly optimistic\" that the CLARITY ACT gets passed by the Senate \ud83d\udc40 Video",
       "publishedAt": "2026-07-31T21:42:05+00:00",
       "publishedTs": 1785534125.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
-      "link": "https://x.com/nic_carter/status/2083294845624320450#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
-      "publishedAt": "2026-07-31T20:52:51+00:00",
-      "publishedTs": 1785531171.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: I did this completely out of order by reading the contemporary Yudkowski/ Bostrom / Kokotajlo/Urban alignment literature and THEN reading the novels from the 80s that they\u2019re basically all rewriting for modern audiences",
-      "link": "https://x.com/nic_carter/status/2083294744159907919#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I did this completely out of order by reading the contemporary Yudkowski/ Bostrom / Kokotajlo/Urban alignment literature and THEN reading the novels from the 80s that they\u2019re basically all rewriting for modern audiences",
-      "publishedAt": "2026-07-31T20:52:27+00:00",
-      "publishedTs": 1785531147.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I finally read Hyperion and belatedly realized that basically the entire \u201cmisaligned superintelligence\u201d and p_doom literature is just repackaged Simmons. Interesting",
-      "link": "https://x.com/nic_carter/status/2083293961976725535#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-07-31T20:49:20+00:00",
-      "publishedTs": 1785530960.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1498,58 +1355,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @nic_carter: NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those",
-      "link": "https://x.com/nic_carter/status/2083225881871368463#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those 600 BTC today? ni",
-      "publishedAt": "2026-07-31T16:18:49+00:00",
-      "publishedTs": 1785514729.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "200 hours not spent reviewing his own codebase",
-      "link": "https://x.com/nic_carter/status/2083225431734399475#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "200 hours not spent reviewing his own codebase nvk (@nvk) Article &quot;I&quot; Spent &quot;200&quot; Hours Reading Quantum Computing Papers So You Don&apos;t Have To. Bitcoin Is F. &quot;I&quot; Spent &quot;200&quot; Hours Reading Quantum Computing Papers So You Don&apos;t Have ",
-      "publishedAt": "2026-07-31T16:17:02+00:00",
-      "publishedTs": 1785514622.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "this is what cracks me up when people construct these elaborate bear cases based on AI being \"too expensive\". ok just wait 6 months and it will probably be 10x cheaper for the same unit of intelligence. (4 months/13x in this case)",
-      "link": "https://x.com/nic_carter/status/2083215139109573052#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "this is what cracks me up when people construct these elaborate bear cases based on AI being \"too expensive\". ok just wait 6 months and it will probably be 10x cheaper for the same unit of intelligence. (4 months/13x in this case) nic (@nicdunz) GPT-5.4 full at xhigh scored 51, e",
-      "publishedAt": "2026-07-31T15:36:08+00:00",
-      "publishedTs": 1785512168.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Happy 8th birthday to \"Visions of Bitcoin\"! https://medium.com/@nic__carter/visions-of-bitcoin-4b7b7cbcd24c",
-      "link": "https://x.com/nic_carter/status/2083210923355910520#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Happy 8th birthday to \"Visions of Bitcoin\"! medium.com/@nic__carter/visi\u2026 Link Visions of Bitcoin How major Bitcoin narratives changed over time medium.com",
-      "publishedAt": "2026-07-31T15:19:22+00:00",
-      "publishedTs": 1785511162.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @saylor: The slides behind our Q2 earnings call: Strategy\u2019s balance sheet, Bitcoin KPIs, active capital management, the path to par for $STRC, and the long-term opportunity for $MSTR. https://www.strategy.com/press/strategy-q2-2026-financial-results-presentation",
       "link": "https://x.com/saylor/status/2083192868613554454#m",
       "source": "@saylor",
@@ -1571,84 +1376,6 @@
       "summary": "How does Strategy navigate a challenging Bitcoin market, return $STRC to par, and continue compounding Bitcoin per share? In our Q2 earnings call, we laid out the strategy, reviewed our financial position and capital-management framework, and answered questions from equity analys",
       "publishedAt": "2026-07-31T14:07:37+00:00",
       "publishedTs": 1785506857.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: I just went through this in zurich yesterday. absolute bedlam. avoiding schengen for the foreseeable.",
-      "link": "https://x.com/nic_carter/status/2083183572110778425#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I just went through this in zurich yesterday. absolute bedlam. avoiding schengen for the foreseeable.",
-      "publishedAt": "2026-07-31T13:30:41+00:00",
-      "publishedTs": 1785504641.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "meanwhile hundreds of thousnads of travelers will miss their connections through EU airports this summer because they waited for hours in immigration lines so they could give the EU their fingerprints for the new entry/exit system anarchotyranny",
-      "link": "https://x.com/nic_carter/status/2083183134292517231#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "meanwhile hundreds of thousnads of travelers will miss their connections through EU airports this summer because they waited for hours in immigration lines so they could give the EU their fingerprints for the new entry/exit system anarchotyranny Visegr\u00e1d 24 (@visegrad24) \ud83c\uddea\ud83c\uddf8 Insan",
-      "publishedAt": "2026-07-31T13:28:57+00:00",
-      "publishedTs": 1785504537.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: the difference is that there's no such thing as \"being generally good at prompting\" (past a certain threshold of basic capability). you have to be a subject matter expert to prompt well in your discipline. the actual day to day of white collar labor IS different",
-      "link": "https://x.com/nic_carter/status/2083182381935001873#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "the difference is that there's no such thing as \"being generally good at prompting\" (past a certain threshold of basic capability). you have to be a subject matter expert to prompt well in your discipline. the actual day to day of white collar labor IS different now, but people's",
-      "publishedAt": "2026-07-31T13:25:58+00:00",
-      "publishedTs": 1785504358.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
-      "link": "https://x.com/nic_carter/status/2083158132604211615#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Feel very bad for the people affected by the coldcard exploit. I have been a user of coinkites products in the past. Very bitter day for many.",
-      "publishedAt": "2026-07-31T11:49:36+00:00",
-      "publishedTs": 1785498576.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Nick is right. Elaborate self custody setups that involve hundreds of dice rolls are nonstarters for 99% of people. Better: multi vendor multisig with Casa. Or worst case, Coinbase with the appropriate 2FA settings. Or an ETF. Excessive paranoia ends up causing users to rely on b",
-      "link": "https://x.com/nic_carter/status/2083157386190061735#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Nick is right. Elaborate self custody setups that involve hundreds of dice rolls are nonstarters for 99% of people. Better: multi vendor multisig with Casa. Or worst case, Coinbase with the appropriate 2FA settings. Or an ETF. Excessive paranoia ends up causing users to rely on b",
-      "publishedAt": "2026-07-31T11:46:38+00:00",
-      "publishedTs": 1785498398.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE",
-      "link": "https://x.com/nic_carter/status/2082981789417472152#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Most people\u2019s jobs are prompt engineering nowadays it\u2019s just called being a lawyer or an accountant or SWE Roman Helmet Guy (@romanhelmetguy) Remember when people thought \u201cprompt engineer\u201d was gonna be a job? \u2014 https://nitter.net/romanhelmetguy/status/2082864198044770723#m",
-      "publishedAt": "2026-07-31T00:08:53+00:00",
-      "publishedTs": 1785456533.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
