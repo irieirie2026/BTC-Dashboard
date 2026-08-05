@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-05T09:36:13Z",
+  "fetchedAt": "2026-08-05T11:58:51Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper & better, they can act as our verification agents.",
+      "link": "https://x.com/lopp/status/2084969501485842498#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper &amp; better, they can act as our verification agents.",
+      "publishedAt": "2026-08-05T11:47:20+00:00",
+      "publishedTs": 1785930440.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Strategy creates Digital Credit.",
       "link": "https://x.com/saylor/status/2084910576304554179#m",
@@ -1548,19 +1561,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "No product has ever given me more peace of mind for the money than multi-vendor, multi-sig via @CasaHODL",
-      "link": "https://x.com/btchorn/status/2083407867403776138#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-01T04:21:58+00:00",
-      "publishedTs": 1785558118.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
