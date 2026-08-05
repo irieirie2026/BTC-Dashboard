@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-05T22:11:38Z",
+  "fetchedAt": "2026-08-05T23:58:43Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
+      "link": "https://x.com/tonylfeng/status/2085131179678691537#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
+      "publishedAt": "2026-08-05T22:29:47+00:00",
+      "publishedTs": 1785968987.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Following the recent Coldcard incident, Nick Neuman (@Nneuman), CEO of @CasaHODL, explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of human",
+      "link": "https://x.com/SimplyBitcoin/status/2085123684591673520#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Following the recent Coldcard incident, Nick Neuman ( @Nneuman ), CEO of @CasaHODL , explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of hu",
+      "publishedAt": "2026-08-05T22:00:00+00:00",
+      "publishedTs": 1785967200.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions!",
       "link": "https://x.com/Nneuman/status/2085116103106208108#m",
@@ -115,32 +141,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Rick Scott says Sen. Lummis has \"Worked her butt off with the Clarity Act\" and urges the Senate to stay and pass the bill: \"We\u2019ve got to figure out how do we get these things done\u2026We\u2019ve got to stay here and start talking to each other.\u201d Video",
       "publishedAt": "2026-08-05T17:31:59+00:00",
       "publishedTs": 1785951119.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: oneshotted this. legitimately very good",
-      "link": "https://x.com/nic_carter/status/2085046505384169761#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "oneshotted this. legitimately very good",
-      "publishedAt": "2026-08-05T16:53:19+00:00",
-      "publishedTs": 1785948799.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "i asked chat to draw a picture depicting the collapse of boy wonder",
-      "link": "https://x.com/nic_carter/status/2085043018743054543#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-05T16:39:28+00:00",
-      "publishedTs": 1785947968.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1316,19 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "Generating truly random numbers is a deceptively difficult problem. 12 years ago I participated in crowdfunding the production of the Mycelium Entropy device for that sole purpose. Sadly, few folks cared about this issue and they only produced ~500.",
-      "link": "https://x.com/lopp/status/2083916478156362171#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Generating truly random numbers is a deceptively difficult problem. 12 years ago I participated in crowdfunding the production of the Mycelium Entropy device for that sole purpose. Sadly, few folks cared about this issue and they only produced ~500. Jameson Lopp (@lopp) I backed ",
-      "publishedAt": "2026-08-02T14:03:00+00:00",
-      "publishedTs": 1785679380.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This CEO just challenged Anthropic to hack the 100 bitcoin in his wallet address, worth $6 million.",
       "link": "https://x.com/DocumentingBTC/status/2083897321901732209#m",
       "source": "@DocumentingBTC",
@@ -1636,6 +1623,19 @@
       "summary": "this is what cracks me up when people construct these elaborate bear cases based on AI being \"too expensive\". ok just wait 6 months and it will probably be 10x cheaper for the same unit of intelligence. (4 months/13x in this case) nic (@nicdunz) GPT-5.4 full at xhigh scored 51, e",
       "publishedAt": "2026-07-31T15:36:08+00:00",
       "publishedTs": 1785512168.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Happy 8th birthday to \"Visions of Bitcoin\"! https://medium.com/@nic__carter/visions-of-bitcoin-4b7b7cbcd24c",
+      "link": "https://x.com/nic_carter/status/2083210923355910520#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Happy 8th birthday to \"Visions of Bitcoin\"! medium.com/@nic__carter/visi\u2026 Link Visions of Bitcoin How major Bitcoin narratives changed over time medium.com",
+      "publishedAt": "2026-07-31T15:19:22+00:00",
+      "publishedTs": 1785511162.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
