@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-05T03:24:24Z",
+  "fetchedAt": "2026-08-05T06:26:35Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -1030,19 +1030,6 @@
       "isRetweet": false
     },
     {
-      "title": "Whale wallet bc1qpt, holding 16,400 $BTC ($1.04B), transferred all 16,400 $BTC to a new wallet 1 hour ago after 7 months of inactivity. https://arkm.com/explorer/address/bc1qptc9cz269u2mc5yguun5a5d6yd5c7f7ne4qj26",
-      "link": "https://x.com/lookonchain/status/2084118050450874710#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale wallet bc1qpt, holding 16,400 $BTC ($1.04B), transferred all 16,400 $BTC to a new wallet 1 hour ago after 7 months of inactivity. arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-08-03T03:23:58+00:00",
-      "publishedTs": 1785727438.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted their philosophy on securing Bitcoin software code with the quote, \u201cThe serialization format we have is as dead simple and flat as possible. There is no extra freedom in the way the input stream is formed.\u201d",
       "link": "https://x.com/DocumentingBTC/status/2084110008363417793#m",
       "source": "@DocumentingBTC",
@@ -2026,45 +2013,6 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
