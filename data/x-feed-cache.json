@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-05T20:25:32Z",
+  "fetchedAt": "2026-08-05T22:11:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions!",
+      "link": "https://x.com/Nneuman/status/2085116103106208108#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions! Casa (@CasaHODL) The past week has made a lot of people rethink their security. If you're c",
+      "publishedAt": "2026-08-05T21:29:53+00:00",
+      "publishedTs": 1785965393.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 South Carolina Senator Darline Graham says her state will play a role in getting the Clarity Act \"across the finish line.\" \ud83d\udc40 \"I stand ready to support Chairman Tim Scott, Senator Lummis, and President Trump to create market structure and get this important priority do",
+      "link": "https://x.com/BitcoinMagazine/status/2085114487502192713#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 South Carolina Senator Darline Graham says her state will play a role in getting the Clarity Act \"across the finish line.\" \ud83d\udc40 \"I stand ready to support Chairman Tim Scott, Senator Lummis, and President Trump to create market structure and get this important priority do",
+      "publishedAt": "2026-08-05T21:23:28+00:00",
+      "publishedTs": 1785965008.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy is a major buyer of $BTC but a minor participant in its trading market.",
+      "link": "https://x.com/Strategy/status/2085113969505665418#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy is a major buyer of $BTC but a minor participant in its trading market. Video",
+      "publishedAt": "2026-08-05T21:21:24+00:00",
+      "publishedTs": 1785964884.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Bitcoin Red Team Finds 85 Critical Flaws Across 390 Open Source Repos After Coldcard Exploit https://bitcoinmagazine.com/business/bitcoin-red-team-finds-85-critical-flaws-across-390-open-source-repos-after-coldcard-exploit via @bitcoinmagazine",
+      "link": "https://x.com/JuanSGalt/status/2085102236179333442#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Bitcoin Red Team Finds 85 Critical Flaws Across 390 Open Source Repos After Coldcard Exploit bitcoinmagazine.com/business\u2026 via @bitcoinmagazine Link 4,962 Vulnerabilities In 27.5 Hours: Bitcoin Red Team\u2019s AI Blitz Is Rewriting Open-Source Security They plan to open-source the ful",
+      "publishedAt": "2026-08-05T20:34:47+00:00",
+      "publishedTs": 1785962087.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Tillis tells says the White House is now engaging on bipartisan Clarity Act ethics text, Punchbowl News reports. \u201cWe\u2019ve got people working with the White House right now\u2026they're going through some of the lines right now\u201d \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2085096180850012667#m",
@@ -653,19 +705,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Join us for our upcoming X Space \ud83c\udf99\ufe0f @isaiahdaustin sits down with @Justdoitalex, author of 'Bitcoin: The Honest Money', to discuss why inflation is dishonest, why Bitcoin stores your working life, and what sound money would change. RSPV & tune in: https://x",
-      "link": "https://x.com/BitcoinMagazine/status/2084658740423254321#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Join us for our upcoming X Space \ud83c\udf99\ufe0f @isaiahdaustin sits down with @Justdoitalex , author of 'Bitcoin: The Honest Money', to discuss why inflation is dishonest, why Bitcoin stores your working life, and what sound money would change. RSPV &amp; tune in: nitter.net/i/spaces/1yxBeeW",
-      "publishedAt": "2026-08-04T15:12:29+00:00",
-      "publishedTs": 1785856349.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "At 961,022, BIP-110 has 38 signals (2.70%). Its 55% voluntary threshold is impossible. At 961,632, BIP-110 nodes reject non-signaling blocks. Unless major miners reverse, Bitcoin continues normally while BIP-110 stalls or forks into irrelevance. Its backers should stand down.",
       "link": "https://x.com/saylor/status/2084653839555219533#m",
       "source": "@saylor",
@@ -729,19 +768,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Bill Hagerty tells Fox Business \"We're going to have to pass the Clarity Act.\" \ud83d\udc40 \"There's no way that we can allow the U.S. to fall behind in the digital assets arena.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2084639116616933844#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Bill Hagerty tells Fox Business \"We're going to have to pass the Clarity Act.\" \ud83d\udc40 \"There's no way that we can allow the U.S. to fall behind in the digital assets arena.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-04T13:54:30+00:00",
-      "publishedTs": 1785851670.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Two guys who enjoyed flaunting their crypto wealth on social media ended up getting kidnapped and tortured for several days in London last year, before finally being rescued by police. https://www.dailymail.com/news/article-16023625/Crypto-torture-gang-Bitcoin-millionaires-forced",
@@ -991,19 +1017,6 @@
       "isRetweet": true
     },
     {
-      "title": "\ud83d\udea8 BLOOMBERG'S @JSeyff ON WHY THE LEVEL OF SPECULATION IN MARKETS RIGHT NOW IS CONCERNING: \"The amount of gambling coming to the ETF market is crazy.\" On what the history of speculation actually tells us: \"The level of speculation does not usually come when people feel stable and ",
-      "link": "https://x.com/WOLF_Bitcoin_/status/2084293216015110476#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "\ud83d\udea8 BLOOMBERG'S @JSeyff ON WHY THE LEVEL OF SPECULATION IN MARKETS RIGHT NOW IS CONCERNING: \"The amount of gambling coming to the ETF market is crazy.\" On what the history of speculation actually tells us: \"The level of speculation does not usually come when people feel stable and ",
-      "publishedAt": "2026-08-03T15:00:01+00:00",
-      "publishedTs": 1785769201.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
       "link": "https://x.com/nic_carter/status/2084291844804911473#m",
       "source": "@nic_carter",
@@ -1238,19 +1251,6 @@
       "isRetweet": false
     },
     {
-      "title": "Unfortunately, if this has happened, MK3s no passphrase are very likely entirely lost to attackers. Which means other attackers are going to skip to pass phrases, this will accelerate. IF YOU OR SOMEONE YOU KNOW HAS USED A COLD CARD GET YOUR BITCOIN OFF OF IT NOW.",
-      "link": "https://x.com/Rob1Ham/status/2084037760764027128#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Unfortunately, if this has happened, MK3s no passphrase are very likely entirely lost to attackers. Which means other attackers are going to skip to pass phrases, this will accelerate. IF YOU OR SOMEONE YOU KNOW HAS USED A COLD CARD GET YOUR BITCOIN OFF OF IT NOW. BTC Sessions \ud83d\ude0e ",
-      "publishedAt": "2026-08-02T22:04:56+00:00",
-      "publishedTs": 1785708296.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The last 24 hours of Bitcoin posts on \ud835\udd4f discussing the hack of ColdCard wallets has been the largest open source technical support initiative ever undertaken by an organic community of educators, organizers, developers, and ordinary well-meaning people in history.",
       "link": "https://x.com/DocumentingBTC/status/2083995630284701996#m",
       "source": "@DocumentingBTC",
@@ -1363,19 +1363,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T12:36:12+00:00",
       "publishedTs": 1785674172.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Entropy is your friend.",
-      "link": "https://x.com/lopp/status/2083893075785531504#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-02T12:30:00+00:00",
-      "publishedTs": 1785673800.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1535,19 +1522,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "This was possibly one of the worst weeks in the history of Bitcoin. Many people believed they had done virtually everything right. They bought a respected hardware wallet, generated their seed offline, followed established best practices, and still lost significant amounts of Bit",
-      "link": "https://x.com/IIICapital/status/2083535304095334590#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "This was possibly one of the worst weeks in the history of Bitcoin. Many people believed they had done virtually everything right. They bought a respected hardware wallet, generated their seed offline, followed established best practices, and still lost significant amounts of Bit",
-      "publishedAt": "2026-08-01T12:48:21+00:00",
-      "publishedTs": 1785588501.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "We\u2019re living in the most exciting time in human history",
