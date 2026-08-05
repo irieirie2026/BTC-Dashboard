@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-05T06:26:35Z",
+  "fetchedAt": "2026-08-05T09:36:13Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Strategy creates Digital Credit.",
+      "link": "https://x.com/saylor/status/2084910576304554179#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy creates Digital Credit. Strategy (@Strategy) Our corporate objective is to return $STRC to $100, and we have the means to do it. Video \u2014 https://nitter.net/Strategy/status/2084709016211501453#m",
+      "publishedAt": "2026-08-05T07:53:11+00:00",
+      "publishedTs": 1785916391.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Is the market trying to squeeze this $BTC mega bear? $BTC is moving higher. Just another 0.8% move up, and the trader's 1,600 $BTC ($103M) short will be liquidated.",
       "link": "https://x.com/lookonchain/status/2084827007561629826#m",
@@ -1550,32 +1563,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @saylor: Image",
-      "link": "https://x.com/saylor/status/2083342249635483939#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-01T00:01:13+00:00",
-      "publishedTs": 1785542473.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Stretch Dividend Rate maintained at 12.00% for August 2026. $STRC",
-      "link": "https://x.com/saylor/status/2083342244250014180#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-01T00:01:12+00:00",
-      "publishedTs": 1785542472.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: Yes I\u2019m deliberately trivializing their work by describing it as speculative science fiction because that\u2019s what it is",
       "link": "https://x.com/nic_carter/status/2083294845624320450#m",
       "source": "@nic_carter",
@@ -2013,6 +2000,45 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
+      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
+      "publishedAt": "2019-12-14T01:56:31+00:00",
+      "publishedTs": 1576288591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
+      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
+      "publishedAt": "2019-12-14T00:35:14+00:00",
+      "publishedTs": 1576283714.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
+      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "",
+      "publishedAt": "2019-06-29T16:44:44+00:00",
+      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
