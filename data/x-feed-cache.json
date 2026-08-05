@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-04T22:09:59Z",
+  "fetchedAt": "2026-08-05T00:00:21Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Tranquilize the \u20bfears.",
+      "link": "https://x.com/saylor/status/2084787271631356402#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Tranquilize the \u20bfears. Video",
+      "publishedAt": "2026-08-04T23:43:13+00:00",
+      "publishedTs": 1785886993.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The best part is that this also happened when cumulative inflation in the US was over 20% so it\u2019s actually sooo much worse.",
+      "link": "https://x.com/JSeyff/status/2084766712772104397#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "The best part is that this also happened when cumulative inflation in the US was over 20% so it\u2019s actually sooo much worse. Zack Voell (@zackvoell) If you bought $10,000 of bitcoin five years ago, you have $10,000 today. \u2014 https://nitter.net/zackvoell/status/2084641586458059168#m",
+      "publishedAt": "2026-08-04T22:21:32+00:00",
+      "publishedTs": 1785882092.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Elite ticker choice guys @LeverageETFs",
       "link": "https://x.com/JSeyff/status/2084754415269867785#m",
@@ -24,6 +50,19 @@
       "summary": "Self Custody Is Dead. Long Live Self Custody bitcoinmagazine.com/culture/\u2026 via @bitcoinmagazine Link Self Custody Is Dead. Long Live Self Custody The Coldcard compromise has become one of the most consequential security events in Bitcoin&apos;s history. Whether it marks the begin",
       "publishedAt": "2026-08-04T21:30:24+00:00",
       "publishedTs": 1785879024.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "\ud83d\udfe0 The FIRST ever Bitcoin Conference card pack is available NOW\u203c\ufe0f Prizes in every pack! \ud83d\udc40 Get yours today or at the @Bitcoinconfasia Card Expo \ud83c\udded\ud83c\uddf0 Produced by @raxonchain and printed by @Ocapgames the team behind @vibes_tcg @moonbirds \ud83e\udde1",
+      "link": "https://x.com/TheBitcoinConf/status/2084748043396464863#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "\ud83d\udfe0 The FIRST ever Bitcoin Conference card pack is available NOW\u203c\ufe0f Prizes in every pack! \ud83d\udc40 Get yours today or at the @Bitcoinconfasia Card Expo \ud83c\udded\ud83c\uddf0 Produced by @raxonchain and printed by @Ocapgames the team behind @vibes_tcg @moonbirds \ud83e\udde1 Video",
+      "publishedAt": "2026-08-04T21:07:20+00:00",
+      "publishedTs": 1785877640.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1587,19 +1626,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "URGENT: If you have EVER generated a seed phrase on a ColdCard, your bitcoin may be at risk. Just recorded this emergency episode explaining what happened with @Rob1Ham of AnchorWatch. Please watch and share with those in your Bitcoin community, especially other non-technical bit",
-      "link": "https://x.com/natbrunell/status/2083239999575646468#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "URGENT: If you have EVER generated a seed phrase on a ColdCard, your bitcoin may be at risk. Just recorded this emergency episode explaining what happened with @Rob1Ham of AnchorWatch. Please watch and share with those in your Bitcoin community, especially other non-technical bit",
-      "publishedAt": "2026-07-31T17:14:55+00:00",
-      "publishedTs": 1785518095.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: NVK spent a genuinely huge amount of time harassing project eleven, me (just look through his old tweets), doing code review on P11s stuff - anything but review his own vulnerable code. one wonders if his priorities were straight would his users still have those",
