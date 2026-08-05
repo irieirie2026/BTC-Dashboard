@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-05T18:20:42Z",
+  "fetchedAt": "2026-08-05T20:25:32Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Tillis tells says the White House is now engaging on bipartisan Clarity Act ethics text, Punchbowl News reports. \u201cWe\u2019ve got people working with the White House right now\u2026they're going through some of the lines right now\u201d \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2085096180850012667#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-05T20:10:43+00:00",
+      "publishedTs": 1785960643.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Freedom isn't safe. Safety isn't free.",
+      "link": "https://x.com/lopp/status/2085077311087329399#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-05T18:55:44+00:00",
+      "publishedTs": 1785956144.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: \ud83c\uddf7\ud83c\uddfa Russia President Putin has signed a law providing comprehensive regulation for digital assets and rights for investors \ud83d\udc40 \"The legislation governs the organization, accounting, and custody of digital currencies and foreign digital instruments.\" \ud83d\udca5",
+      "link": "https://x.com/BitcoinMagazine/status/2085075028966531124#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-05T18:46:40+00:00",
+      "publishedTs": 1785955600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @BitcoinMagazine: Friendly reminder: Bitcoin doesn't wait... and neither do Bitcoin Asia ticket prices. \ud83d\udc40 Prices go up 30% in 2 days \u203c\ufe0f Lock in yours now \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
       "link": "https://x.com/BitcoinMagazine/status/2085061312409743677#m",
@@ -79,6 +118,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
+      "link": "https://x.com/shorttsqueeze/status/2085035593663459822#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
+      "publishedAt": "2026-08-05T16:09:58+00:00",
+      "publishedTs": 1785946198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. McCormick says \"It\u2019s time to bring the CLARITY Act to the Senate Floor for a vote.\" \"Enough of the obstruction and let\u2019s pass this bill.\" PASS IT \ud83d\udc4f",
@@ -705,19 +757,6 @@
       "isRetweet": false
     },
     {
-      "title": "NEW: So far, 1,596 BTC worth $102 million is estimated to be stolen from 7,300 addresses in the Coldcard hack, according to Galaxy Research \ud83d\udc40 The threat is still ongoing and users are urged to review Coldcard's official security guidance as soon as possible \u203c",
-      "link": "https://x.com/BitcoinMagazine/status/2084619469574303811#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-04T12:36:26+00:00",
-      "publishedTs": 1785846986.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "NEW: Coldcard hack could spur greater migration to ETFs. What used to be seen as a bug by coiners (dorky boomer TradFi) may all the sudden seem like a feature (large, established financial institutions with decades of experience safeguarding client assets) esp vs a Canadian co w/",
       "link": "https://x.com/EricBalchunas/status/2084609942074327452#m",
       "source": "@ericbalchunas",
@@ -765,32 +804,6 @@
       "summary": "This is insane! According to @glxyresearch , the total losses from the #Coldcard hack may have reached 2,055 $BTC ($130M). More than 7,700 victim addresses have been affected.",
       "publishedAt": "2026-08-04T02:25:03+00:00",
       "publishedTs": 1785810303.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @coinbase: WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win Youtube: https://youtu.be/U7wPrNtUn9o Rumble: https://rumble.com/v7djtwo-coinbases-john-dagostino-why-bitcoin-doesnt-need-the-clarity-act-to-win.html Spotify: https://open.spotify.c",
-      "link": "https://x.com/BitcoinMagazine/status/2084407880074264882#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win Youtube: piped.video/U7wPrNtUn9o Rumble: rumble.com/v7djtwo-coinbases\u2026 Spotify: open.spotify.com/episode/15d\u2026 Apple: podcasts.apple.com/us/podcas\u2026 Link Coinbase\u2019s John D\u2019Agostino: Why Bitcoin Doesn",
-      "publishedAt": "2026-08-03T22:35:39+00:00",
-      "publishedTs": 1785796539.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinMagazine: WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win @coinbase's head of institutional strategy @johnjdagostino tells @DeSpencer_ that Bitcoin is already proven technology that doesn't need the Clarity Act to pass \u2014 the United ",
-      "link": "https://x.com/BitcoinMagazine/status/2084407446169334189#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "WATCH: Coinbase's John D'Agostino: Why Bitcoin Doesn't Need the Clarity Act to Win @coinbase 's head of institutional strategy @johnjdagostino tells @DeSpencer_ that Bitcoin is already proven technology that doesn't need the Clarity Act to pass \u2014 the United States is the one that",
-      "publishedAt": "2026-08-03T22:33:56+00:00",
-      "publishedTs": 1785796436.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -921,19 +934,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T16:00:15+00:00",
       "publishedTs": 1785772815.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Coinbase releases advertisement urging lawmakers to sign the Clarity Act into law: \"AMERICA NEEDS CLARITY. SUPPORT THE CLARITY ACT.\" \ud83c\uddfa\ud83c\uddf8",
-      "link": "https://x.com/BitcoinMagazine/status/2084307890731438159#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Coinbase releases advertisement urging lawmakers to sign the Clarity Act into law: \"AMERICA NEEDS CLARITY. SUPPORT THE CLARITY ACT.\" \ud83c\uddfa\ud83c\uddf8 Video",
-      "publishedAt": "2026-08-03T15:58:20+00:00",
-      "publishedTs": 1785772700.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1381,19 +1381,6 @@
       "isRetweet": false
     },
     {
-      "title": "Critical infrastructure should not be connected to the internet. Full stop. https://worldwaterreserve.com/minnesota-water-systems-cyberattack-30-communities-coordinated-attack/",
-      "link": "https://x.com/lopp/status/2083710603655319679#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Critical infrastructure should not be connected to the internet. Full stop. worldwaterreserve.com/minnes\u2026 Link Hackers hit 30-plus Minnesota water systems in 48 hours, forcing... A 48-hour cyberattack struck more than 30 Minnesota water systems. One plant shut down, and officials",
-      "publishedAt": "2026-08-02T00:24:56+00:00",
-      "publishedTs": 1785630296.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 9 years ago, Bitcoin Cash was created by a fork in the blockchain and code.",
       "link": "https://x.com/DocumentingBTC/status/2083689248608100383#m",
       "source": "@DocumentingBTC",
@@ -1457,19 +1444,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Happy UASF day! Nearly a decade has passed. BCH now trades at 0.33% of the real Bitcoin.",
-      "link": "https://x.com/lopp/status/2083654093441060875#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Happy UASF day! Nearly a decade has passed. BCH now trades at 0.33% of the real Bitcoin. Jameson Lopp (@lopp) Today Bitcoiners celebrate their independence from miner governance via UASF while Bcashers celebrate their independence from Bitcoin via miner governance. The unfortunat",
-      "publishedAt": "2026-08-01T20:40:22+00:00",
-      "publishedTs": 1785616822.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "On this day in history, 16 years ago, Wikipedia deleted the page about Bitcoin because they said there was a \u201cLack of significant third-party coverage to confer notability.\u201d",
