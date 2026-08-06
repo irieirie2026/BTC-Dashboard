@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-06T06:29:01Z",
+  "fetchedAt": "2026-08-06T09:38:36Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Would you bet EVERYTHING on one idea? Michael Saylor did. Michael is a technology entrepreneur and the founder of the company now called Strategy. Long before Bitcoin, he built businesses in business intelligence, speech recognition and smart-home technology. Today, he is probabl",
+      "link": "https://x.com/StevenBartlett/status/2085259853174366242#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Would you bet EVERYTHING on one idea? Michael Saylor did. Michael is a technology entrepreneur and the founder of the company now called Strategy. Long before Bitcoin, he built businesses in business intelligence, speech recognition and smart-home technology. Today, he is probabl",
+      "publishedAt": "2026-08-06T07:01:05+00:00",
+      "publishedTs": 1785999665.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Whales are accumulating $BTC! Four newly created wallets have received 1,540 $BTC($99.4M) from #GalaxyDigital and #BitGo in the past 3 hours. https://arkm.com/explorer/address/bc1qdt0jqrt6n386akfpm0636mf3ux2wzs5uujpwumpkglgxdmr3vzzs0ev4f9 https://arkm.com/explorer/address/bc1q954",
       "link": "https://x.com/lookonchain/status/2085187450775961822#m",
@@ -14,6 +27,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed.",
+      "link": "https://x.com/natbrunell/status/2085175887733858441#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed. Video",
+      "publishedAt": "2026-08-06T01:27:26+00:00",
+      "publishedTs": 1785979646.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "The 1600BTC-short trader closed 200 $BTC ($12.92M) early, taking a $146.5K loss and avoiding liquidation. He still holds a 1,400 $BTC($90.44M) short. New liquidation price: $64,998.73.",
@@ -349,6 +375,19 @@
       "summary": "After nearly a decade in Bitcoin, I can conclude that the average person has no interest in rolling dice, buying multiple hardware wallets, and setting up a maximum-paranoia multisig vault just to avoid losing Bitcoin. There is nothing wrong with doing that. It simply does not me",
       "publishedAt": "2026-08-05T14:12:36+00:00",
       "publishedTs": 1785939156.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
+      "link": "https://x.com/ChrisMMillas/status/2085002891321115112#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
+      "publishedAt": "2026-08-05T14:00:01+00:00",
+      "publishedTs": 1785938401.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1316,19 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin Drive engaged.",
-      "link": "https://x.com/saylor/status/2083894636087574837#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-02T12:36:12+00:00",
-      "publishedTs": 1785674172.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 9 years ago, Bitcoin Cash was created by a fork in the blockchain and code.",
       "link": "https://x.com/DocumentingBTC/status/2083689248608100383#m",
       "source": "@DocumentingBTC",
@@ -1402,45 +1428,6 @@
       "summary": "",
       "publishedAt": "2026-08-01T20:19:22+00:00",
       "publishedTs": 1785615562.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: The public evidence of BIP-110 adoption is concentrated among Knots users and OCEAN/DATUM miners. There is no identified major exchange, custodian, ETF platform, wallet, or payment network enforcing it. More than 99% of Bitcoin\u2019s economic weight has not adopted it.",
-      "link": "https://x.com/saylor/status/2083613203863326987#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "The public evidence of BIP-110 adoption is concentrated among Knots users and OCEAN/DATUM miners. There is no identified major exchange, custodian, ETF platform, wallet, or payment network enforcing it. More than 99% of Bitcoin\u2019s economic weight has not adopted it.",
-      "publishedAt": "2026-08-01T17:57:54+00:00",
-      "publishedTs": 1785607074.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Less than 1% of Bitcoin\u2019s economic weight has adopted BIP-110. The claim that 16%-18% of nodes equals 16%-18% support confuses software distribution with economic consensus. Bitcoin is not one node, one vote.",
-      "link": "https://x.com/saylor/status/2083613201111945636#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-01T17:57:53+00:00",
-      "publishedTs": 1785607073.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: Reachable node counts are a census of software endpoints, not economic actors. A hobbyist node and a node serving millions via an exchange, custodian, wallet, or payment app are not economically equivalent. Every node is sovereign, but nodes are not equal votes over",
-      "link": "https://x.com/saylor/status/2083613202516938852#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Reachable node counts are a census of software endpoints, not economic actors. A hobbyist node and a node serving millions via an exchange, custodian, wallet, or payment app are not economically equivalent. Every node is sovereign, but nodes are not equal votes over Bitcoin.",
-      "publishedAt": "2026-08-01T17:57:53+00:00",
-      "publishedTs": 1785607073.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
