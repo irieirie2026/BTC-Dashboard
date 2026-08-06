@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-06T03:24:22Z",
+  "fetchedAt": "2026-08-06T06:29:01Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -856,19 +856,6 @@
       "summary": "",
       "publishedAt": "2026-08-04T10:44:02+00:00",
       "publishedTs": 1785840242.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This is insane! According to @glxyresearch, the total losses from the #Coldcard hack may have reached 2,055 $BTC($130M). More than 7,700 victim addresses have been affected.",
-      "link": "https://x.com/lookonchain/status/2084465607932854717#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "This is insane! According to @glxyresearch , the total losses from the #Coldcard hack may have reached 2,055 $BTC ($130M). More than 7,700 victim addresses have been affected.",
-      "publishedAt": "2026-08-04T02:25:03+00:00",
-      "publishedTs": 1785810303.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
