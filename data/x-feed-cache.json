@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-06T09:38:36Z",
+  "fetchedAt": "2026-08-06T12:01:37Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -81,32 +81,6 @@
       "isRetweet": true
     },
     {
-      "title": "Following the recent Coldcard incident, Nick Neuman (@Nneuman), CEO of @CasaHODL, explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of human",
-      "link": "https://x.com/SimplyBitcoin/status/2085123684591673520#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Following the recent Coldcard incident, Nick Neuman ( @Nneuman ), CEO of @CasaHODL , explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of hu",
-      "publishedAt": "2026-08-05T22:00:00+00:00",
-      "publishedTs": 1785967200.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions!",
-      "link": "https://x.com/Nneuman/status/2085116103106208108#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions! Casa (@CasaHODL) The past week has made a lot of people rethink their security. If you're c",
-      "publishedAt": "2026-08-05T21:29:53+00:00",
-      "publishedTs": 1785965393.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 South Carolina Senator Darline Graham says her state will play a role in getting the Clarity Act \"across the finish line.\" \ud83d\udc40 \"I stand ready to support Chairman Tim Scott, Senator Lummis, and President Trump to create market structure and get this important priority do",
       "link": "https://x.com/BitcoinMagazine/status/2085114487502192713#m",
       "source": "@BitcoinMagazine",
@@ -154,19 +128,6 @@
       "summary": "",
       "publishedAt": "2026-08-05T20:10:43+00:00",
       "publishedTs": 1785960643.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Freedom isn't safe. Safety isn't free.",
-      "link": "https://x.com/lopp/status/2085077311087329399#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-05T18:55:44+00:00",
-      "publishedTs": 1785956144.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -237,19 +198,6 @@
       "isRetweet": false
     },
     {
-      "title": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
-      "link": "https://x.com/shorttsqueeze/status/2085035593663459822#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
-      "publishedAt": "2026-08-05T16:09:58+00:00",
-      "publishedTs": 1785946198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. McCormick says \"It\u2019s time to bring the CLARITY Act to the Senate Floor for a vote.\" \"Enough of the obstruction and let\u2019s pass this bill.\" PASS IT \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2085035443184136469#m",
       "source": "@BitcoinMagazine",
@@ -287,19 +235,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "I know everyone is busy right now, but I need you to take a few minutes and write me a letter of support for .bitcoin",
-      "link": "https://x.com/wiz/status/2085029140453830725#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I know everyone is busy right now, but I need you to take a few minutes and write me a letter of support for .bitcoin Article Notice of ICANN .bitcoin TLD community application Dear Bitcoiners, As the operator of mempool.space and one of Bitcoin\u2019s DNS seeds (wiz.biz/bitcoin/seed)",
-      "publishedAt": "2026-08-05T15:44:19+00:00",
-      "publishedTs": 1785944659.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "August 5 Update: #Bitcoin ETFs: 1D NetFlow: +3,275 $BTC(+$211.08M)\ud83d\udfe2 7D NetFlow: +5,565 $BTC(+$358.05M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +23,222 $ETH(+$43.54M)\ud83d\udfe2 7D NetFlow: +4,953 $ETH(+$9.27M)\ud83d\udfe2",
@@ -349,19 +284,6 @@
       "summary": "",
       "publishedAt": "2026-08-05T14:53:46+00:00",
       "publishedTs": 1785941626.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Pinned: If you're looking to download NEW wallet software to migrate funds into, don't use a web or app store search. Many results are for malicious software. First, use multiple sources to verify the real web site belonging to that project. Then use links on their site to downlo",
-      "link": "https://x.com/lopp/status/2085009215530180851#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "If you're looking to download NEW wallet software to migrate funds into, don't use a web or app store search. Many results are for malicious software. First, use multiple sources to verify the real web site belonging to that project. Then use links on their site to download.",
-      "publishedAt": "2026-08-05T14:25:09+00:00",
-      "publishedTs": 1785939909.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -427,19 +349,6 @@
       "summary": "Whale 0x2684 bought another 3,960 $ETH ($7.4M) 3 hours ago. Since June 30, the whale has bought 79,216 $ETH ($140.77M) at an average price of $1,777 and 1,400 $WBTC ($89.44M) at an average price of $63,887. arkm.com/explorer/address/0x\u2026",
       "publishedAt": "2026-08-05T12:07:09+00:00",
       "publishedTs": 1785931629.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper & better, they can act as our verification agents.",
-      "link": "https://x.com/lopp/status/2084969501485842498#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper &amp; better, they can act as our verification agents.",
-      "publishedAt": "2026-08-05T11:47:20+00:00",
-      "publishedTs": 1785930440.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -705,19 +614,6 @@
       "isRetweet": false
     },
     {
-      "title": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp & @Nneuman https://x.com/i/broadcasts/1yJAPPLvorMGb",
-      "link": "https://x.com/BitcoinNewsCom/status/2084702211758858337#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman nitter.net/i/broadcasts/1yJAPPLvo\u2026 Link Bitcoin News MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman https://nitter.net/i/broadcasts/1yJAPPLvorMGb",
-      "publishedAt": "2026-08-04T18:05:13+00:00",
-      "publishedTs": 1785866713.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "very funny that Leo was a forced seller at the generational pico nano bottom here",
       "link": "https://x.com/nic_carter/status/2084697511399186637#m",
       "source": "@nic_carter",
@@ -726,19 +622,6 @@
       "summary": "",
       "publishedAt": "2026-08-04T17:46:33+00:00",
       "publishedTs": 1785865593.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "To give some perspective of how AI tooling has also accelerated defender capabilities: Before this year if I wanted a comprehensive external pentest & code audit I was looking at $50K - $100K and a month to receive the report. Now I can do it for $1K in 1 day.",
-      "link": "https://x.com/lopp/status/2084695423076151780#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "To give some perspective of how AI tooling has also accelerated defender capabilities: Before this year if I wanted a comprehensive external pentest &amp; code audit I was looking at $50K - $100K and a month to receive the report. Now I can do it for $1K in 1 day.",
-      "publishedAt": "2026-08-04T17:38:15+00:00",
-      "publishedTs": 1785865095.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -796,19 +679,6 @@
       "isRetweet": false
     },
     {
-      "title": "As expected, phishing emails claiming to be from a variety of Bitcoin custody companies are now claiming to \"help\" people secure their funds. Don't believe their lies!",
-      "link": "https://x.com/lopp/status/2084648046059565066#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-04T14:29:59+00:00",
-      "publishedTs": 1785853799.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "August 4 Update: #Bitcoin ETFs: 1D NetFlow: +1,600 $BTC(+$102.33M)\ud83d\udfe2 7D NetFlow: +1,241 $BTC(+$79.36M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -6,558 $ETH(-$12.27M)\ud83d\udd34 7D NetFlow: -16,270 $ETH(-$30.44M)\ud83d\udd34",
       "link": "https://x.com/lookonchain/status/2084647176651870441#m",
       "source": "@lookonchain",
@@ -848,19 +718,6 @@
       "isRetweet": true
     },
     {
-      "title": "Two guys who enjoyed flaunting their crypto wealth on social media ended up getting kidnapped and tortured for several days in London last year, before finally being rescued by police. https://www.dailymail.com/news/article-16023625/Crypto-torture-gang-Bitcoin-millionaires-forced",
-      "link": "https://x.com/lopp/status/2084630432352743455#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Two guys who enjoyed flaunting their crypto wealth on social media ended up getting kidnapped and tortured for several days in London last year, before finally being rescued by police. dailymail.com/news/article-1\u2026 Link Millionaires forced to strip and held for days in blackmail ",
-      "publishedAt": "2026-08-04T13:20:00+00:00",
-      "publishedTs": 1785849600.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "NEW: Coldcard hack could spur greater migration to ETFs. What used to be seen as a bug by coiners (dorky boomer TradFi) may all the sudden seem like a feature (large, established financial institutions with decades of experience safeguarding client assets) esp vs a Canadian co w/",
       "link": "https://x.com/EricBalchunas/status/2084609942074327452#m",
       "source": "@ericbalchunas",
@@ -869,32 +726,6 @@
       "summary": "NEW: Coldcard hack could spur greater migration to ETFs. What used to be seen as a bug by coiners (dorky boomer TradFi) may all the sudden seem like a feature (large, established financial institutions with decades of experience safeguarding client assets) esp vs a Canadian co w/",
       "publishedAt": "2026-08-04T11:58:35+00:00",
       "publishedTs": 1785844715.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THE STARTING BLOCK: Is Bitcoin in self-custody under threat after the Coldcard exploit? @CasaHODL CTO @lopp offers some sage wisdom: \"The freedom of the protocol means people can choose whatever security model they want. They can choose convenience or security.\" \ud83d\udcfa\ud83d\udc47",
-      "link": "https://x.com/TheBlockCo/status/2084592454221672673#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "THE STARTING BLOCK: Is Bitcoin in self-custody under threat after the Coldcard exploit? @CasaHODL CTO @lopp offers some sage wisdom: \"The freedom of the protocol means people can choose whatever security model they want. They can choose convenience or security.\" \ud83d\udcfa\ud83d\udc47 Video",
-      "publishedAt": "2026-08-04T10:49:05+00:00",
-      "publishedTs": 1785840545.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Security engineers these days:",
-      "link": "https://x.com/lopp/status/2084591183922139289#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-04T10:44:02+00:00",
-      "publishedTs": 1785840242.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1017,32 +848,6 @@
       "isRetweet": false
     },
     {
-      "title": "Unpopular opinion for social media since the incentives of social media are to drive drama: Blaming folks who make a mistake that leads to a security incident doesn't actually help anyone. No one is infallible; the key is to learn from mistakes so that we stop repeating them.",
-      "link": "https://x.com/lopp/status/2084306566887407948#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-03T15:53:04+00:00",
-      "publishedTs": 1785772384.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @lopp: Is the worst already behind us? Possibly from a \"number of wallets\" perspective but it only takes 1 sufficiently high value wallet to blow out the BTC amount.",
-      "link": "https://x.com/lopp/status/2084301641759576385#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Is the worst already behind us? Possibly from a \"number of wallets\" perspective but it only takes 1 sufficiently high value wallet to blow out the BTC amount.",
-      "publishedAt": "2026-08-03T15:33:30+00:00",
-      "publishedTs": 1785771210.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Rob Hamilton (@Rob1Ham) Over a thousand bitcoin moved today in an attack. Doing emergency triage to identify the source of the issue this is how it went: @AnthropicAI - Instant Downgrade. @OpenAI - A little help. @Kimi_Moonshot - One shot. The US needs to get it shits together. @",
       "link": "https://x.com/nic_carter/status/2084300071588315269#m",
       "source": "@nic_carter",
@@ -1054,19 +859,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "This is one of the coolest stories I've heard from this whole bad situation. A Casa client helped sweep his friend's assets off a single sig Mk3 into his own Casa multisig to save them. Casa clients looking out for other Bitcoiners.",
-      "link": "https://x.com/Nneuman/status/2084297019191967809#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This is one of the coolest stories I've heard from this whole bad situation. A Casa client helped sweep his friend's assets off a single sig Mk3 into his own Casa multisig to save them. Casa clients looking out for other Bitcoiners. Gui (@bc1gui) THIS IS NOT A DRILL We had a Casa",
-      "publishedAt": "2026-08-03T15:15:08+00:00",
-      "publishedTs": 1785770108.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
@@ -1212,19 +1004,6 @@
       "isRetweet": false
     },
     {
-      "title": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
-      "link": "https://x.com/lopp/status/2084241215852068992#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
-      "publishedAt": "2026-08-03T11:33:23+00:00",
-      "publishedTs": 1785756803.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted their philosophy on securing Bitcoin software code with the quote, \u201cThe serialization format we have is as dead simple and flat as possible. There is no extra freedom in the way the input stream is formed.\u201d",
       "link": "https://x.com/DocumentingBTC/status/2084110008363417793#m",
       "source": "@DocumentingBTC",
@@ -1233,19 +1012,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T02:52:01+00:00",
       "publishedTs": 1785725521.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Image",
-      "link": "https://x.com/lopp/status/2084063471839092778#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Jameson Lopp (@lopp) Given the emergency nature of this mass key compromise event, @CasaHODL advisors will be working through the weekend and we're opening up calendar availability to work with affected clients to restore their key sets to full health. \u2014 https://nitter.net/lopp/s",
-      "publishedAt": "2026-08-02T23:47:06+00:00",
-      "publishedTs": 1785714426.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1290,19 +1056,6 @@
       "isRetweet": false
     },
     {
-      "title": "\ud83d\udea8COLDCARD FUNDS MIGRATION\ud83d\udea8 If you need to move funds off of a weakly generated seed phrase, I suggest doing so BEFORE you upgrade the device firmware. There's a non-zero chance that the firmware upgrade will brick the device according to some reports we're hearing.",
-      "link": "https://x.com/lopp/status/2083958797354127631#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-02T16:51:10+00:00",
-      "publishedTs": 1785689470.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin maximalism is an inverse prosperity gospel. The more you believe in it the poorer you become",
       "link": "https://x.com/nic_carter/status/2083948613550424442#m",
       "source": "@nic_carter",
@@ -1311,19 +1064,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T16:10:42+00:00",
       "publishedTs": 1785687042.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Weak random number generation is not a new problem. RNG vulnerabilities have previously been found in: bip3x Python library http://bitaddress.org BitcoinSpinner http://Blockchain.com Android wallet http://Blockchain.com web wallet http://brainwallet.org browser generator Cake Wal",
-      "link": "https://x.com/lopp/status/2083933846622384587#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Weak random number generation is not a new problem. RNG vulnerabilities have previously been found in: bip3x Python library bitaddress.org BitcoinSpinner Blockchain.com Android wallet Blockchain.com web wallet brainwallet.org browser generator Cake Wallet CoinPunk COLDCARD Mk2 \u2013 ",
-      "publishedAt": "2026-08-02T15:12:01+00:00",
-      "publishedTs": 1785683521.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1428,19 +1168,6 @@
       "summary": "",
       "publishedAt": "2026-08-01T20:19:22+00:00",
       "publishedTs": 1785615562.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "As the mass key compromise event continues to unfold, I'm keeping my eyes on the \"Bitcoin Days Destroyed\" chart which is an easy way to notice when lots of long-dormant coins start moving.",
-      "link": "https://x.com/lopp/status/2083591099998675333#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-01T16:30:04+00:00",
-      "publishedTs": 1785601804.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
