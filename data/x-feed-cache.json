@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-07T22:32:55Z",
+  "fetchedAt": "2026-08-07T23:31:52Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -26,7 +26,7 @@
       "publishedTs": 1786136971.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "CHART OF THE WEEK: Equity ETF flows during weeks when the S&P 500 is red. This dip buying army is made up of both degens and Vanguardians, an odd couple, but this is what the bears are up against. Good luck with that.. via @psarofagis",
@@ -908,6 +908,19 @@
       "summary": "Would you bet EVERYTHING on one idea? Michael Saylor did. Michael is a technology entrepreneur and the founder of the company now called Strategy. Long before Bitcoin, he built businesses in business intelligence, speech recognition and smart-home technology. Today, he is probabl",
       "publishedAt": "2026-08-06T07:01:05+00:00",
       "publishedTs": 1785999665.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "HOW DO YOU KNOW IF YOUR BITCOIN IS ACTUALLY SECURE? \ud83d\udc40 X has never been noisier when it comes to self custody solutions and opinions, but we're here to give you the truth. \ud83d\udd12 Stop by the Open Source Hub at Bitcoin Asia 2026 to get support on any self custody device that you use. \ud83d\udfe0",
+      "link": "https://x.com/Bitcoinconfasia/status/2085259691106381863#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-06T07:00:27+00:00",
+      "publishedTs": 1785999627.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
