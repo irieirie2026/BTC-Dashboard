@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-07T04:53:09Z",
+  "fetchedAt": "2026-08-07T06:08:04Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The #Coldcard hacker, who stole 2,055 $BTC($130M), is active again. An hour ago, the hacker transferred 30.185 $BTC($1.94M) to a new wallet. https://arkm.com/explorer/address/bc1qmd5m5ktv7m5ffujxv4248fxv36myvdx79n8jp6",
+      "link": "https://x.com/lookonchain/status/2085593899465416881#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The #Coldcard hacker, who stole 2,055 $BTC ($130M), is active again. An hour ago, the hacker transferred 30.185 $BTC ($1.94M) to a new wallet. arkm.com/explorer/address/bc\u2026 Lookonchain (@lookonchain) This is insane! According to @glxyresearch , the total losses from the #Coldcard",
+      "publishedAt": "2026-08-07T05:08:28+00:00",
+      "publishedTs": 1786079308.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate postpones Clarity Act vote to September for when they return from August recess, Politico reports.",
       "link": "https://x.com/BitcoinMagazine/status/2085544732252320150#m",
