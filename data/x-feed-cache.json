@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-08-07T11:01:09Z",
+  "fetchedAt": "2026-08-07T12:59:11Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: $65,177 Bitcoin! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2085701153082208346#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-07T12:14:40+00:00",
+      "publishedTs": 1786104880.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "$BWET (oil shipping futures in middle east) best performing ETF (again) for the past month, YTD returns now 1,294%! Insane. 5x more than any other ETF and yet still no one cares. It's odd, the degens are out in full too. Sometimes fishing is like this, you can literally see the f",
+      "link": "https://x.com/EricBalchunas/status/2085701101731409936#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "$BWET (oil shipping futures in middle east) best performing ETF (again) for the past month, YTD returns now 1,294%! Insane. 5x more than any other ETF and yet still no one cares. It's odd, the degens are out in full too. Sometimes fishing is like this, you can literally see the f",
+      "publishedAt": "2026-08-07T12:14:27+00:00",
+      "publishedTs": 1786104867.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "T-minus 200 blocks on the http://bip110.com countdown!",
+      "link": "https://x.com/lopp/status/2085691877144076351#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "T-minus 200 blocks on the bip110.com countdown!",
+      "publishedAt": "2026-08-07T11:37:48+00:00",
+      "publishedTs": 1786102668.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201cI see it more and more where people are paying with Bitcoin, they don\u2019t even know about cash anymore.\u201d \u201cCrypto\u2019s a big deal.\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2085688974119489736#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201cI see it more and more where people are paying with Bitcoin, they don\u2019t even know about cash anymore.\u201d \u201cCrypto\u2019s a big deal.\u201d Video",
+      "publishedAt": "2026-08-07T11:26:16+00:00",
+      "publishedTs": 1786101976.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Macro Dirt #109 with Eric Balchunas - Bloomberg Senior ETF Analyst @EricBalchunas @dailydirtnap https://youtu.be/S1u5RTxsLmA?si=vruJ6NkwEqmUIPcd",
+      "link": "https://x.com/TgMacro/status/2085683024125939759#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Macro Dirt #109 with Eric Balchunas - Bloomberg Senior ETF Analyst @EricBalchunas @dailydirtnap piped.video/S1u5RTxsLmA?si=vruJ\u2026 Link Eric Balchunas on Stocks, Gold, ETFs &amp; AI In this podcast, Tony Greer and Jared Dillian are joined by Bloombe... youtube.com",
+      "publishedAt": "2026-08-07T11:02:37+00:00",
+      "publishedTs": 1786100557.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year",
       "link": "https://x.com/DocumentingBTC/status/2085677641223250298#m",
@@ -14,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Dusted off that pen to explain what could happen when Bitcoin Knots starts rejecting blocks that don\u2019t signal support for BIP110 this weekend. https://bitcoinmagazine.com/technical/bitcoins-bip110-moment-three-possible-scenarios",
+      "link": "https://x.com/AaronvanW/status/2085669916238074210#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Dusted off that pen to explain what could happen when Bitcoin Knots starts rejecting blocks that don\u2019t signal support for BIP110 this weekend. bitcoinmagazine.com/technica\u2026 Link Bitcoin&apos;s BIP110 Moment: Three Possible Scenarios Will BIP110 fail, activate, or split Bitcoin? A",
+      "publishedAt": "2026-08-07T10:10:32+00:00",
+      "publishedTs": 1786097432.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Whales continue to accumulate $BTC. Another newly created wallet withdrew 434.87 $BTC($27.96M) from #Binance. https://arkm.com/explorer/address/bc1qaqecvj4uvp598q7pqxv3z37xc8tcapkumm73qv",
@@ -65,7 +143,7 @@
       "publishedTs": 1786067586.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Bitcoin mining companies are selling $BTC. MARA, which holds 36,303 $BTC($2.34B), deposited 200 $BTC($12.86M) into NYDIG 10 hours ago. Riot Platforms also continues to send $BTC to NYDIG, depositing another 381 $BTC($24.51M) 10 hours ago. https://arkm.com/explorer/entity/mara-poo",
@@ -640,19 +718,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Rick Scott says Sen. Lummis has \"Worked her butt off with the Clarity Act\" and urges the Senate to stay and pass the bill: \"We\u2019ve got to figure out how do we get these things done\u2026We\u2019ve got to stay here and start talking to each other.\u201d",
-      "link": "https://x.com/BitcoinMagazine/status/2085056233204011366#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Rick Scott says Sen. Lummis has \"Worked her butt off with the Clarity Act\" and urges the Senate to stay and pass the bill: \"We\u2019ve got to figure out how do we get these things done\u2026We\u2019ve got to stay here and start talking to each other.\u201d Video",
-      "publishedAt": "2026-08-05T17:31:59+00:00",
-      "publishedTs": 1785951119.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Think \u20bfigger.",
       "link": "https://x.com/saylor/status/2085039380746404187#m",
       "source": "@saylor",
@@ -690,19 +755,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. McCormick says \"It\u2019s time to bring the CLARITY Act to the Senate Floor for a vote.\" \"Enough of the obstruction and let\u2019s pass this bill.\" PASS IT \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2085035443184136469#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-05T16:09:22+00:00",
-      "publishedTs": 1785946162.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "MARKETS: $STRC surges 30%+ from its June low to $94 as @Strategy sells $BTC to fund dividends, repurchases $106M in preferred shares and builds its USD reserve to $4B",
@@ -1233,19 +1285,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T12:10:59+00:00",
       "publishedTs": 1785759059.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
-      "link": "https://x.com/lopp/status/2084241215852068992#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "1. Bug was non-obvious, not in the main code but in the build system. 2. Pretty sure Ledger DonJon reviewed coldcard several times over the years & missed it. 3. Most LLMs miss it due to not pulling in full submodule context. 4. Critical vulns have gone undetected for 10+ years i",
-      "publishedAt": "2026-08-03T11:33:23+00:00",
-      "publishedTs": 1785756803.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
