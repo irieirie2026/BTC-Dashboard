@@ -20,10 +20,24 @@ let lawCompareIds = [];
 /** @type {{ w:number, h:number, latMin:number, latMax:number, land:string, countries: Array<{iso2:string,name:string,d:string}> } | null} */
 let lawWorldMap = null;
 let lawWorldMapPromise = null;
+/** Default Focus hubs shortlist (relocate browser ids). User can pin/unpin; stored in localStorage. */
+const LAW_DEFAULT_FOCUS_HUBS = [
+  "panama",
+  "uae",
+  "el-salvador",
+  "paraguay",
+  "georgia",
+  "costa-rica",
+  "kazakhstan",
+  "guatemala",
+  "japan",
+];
+
 let lawPrefs = {
   favorites: [],
   lastViewed: [],
-  filters: { status: "", region: "", q: "", chips: [] },
+  focusHubs: [...LAW_DEFAULT_FOCUS_HUBS],
+  filters: { status: "", region: "", q: "", chips: [], favoritesOnly: false },
 };
 
 function lawEl(id) {
@@ -35,17 +49,69 @@ function lawLoadPrefs() {
     const raw = localStorage.getItem(LAW_PREF_KEY);
     if (!raw) return;
     const p = JSON.parse(raw);
+    const focusHubs = Array.isArray(p.focusHubs)
+      ? p.focusHubs.filter((id) => typeof id === "string" && id)
+      : [...LAW_DEFAULT_FOCUS_HUBS];
     lawPrefs = {
       favorites: Array.isArray(p.favorites) ? p.favorites : [],
       lastViewed: Array.isArray(p.lastViewed) ? p.lastViewed : [],
+      focusHubs: focusHubs.length ? focusHubs : [...LAW_DEFAULT_FOCUS_HUBS],
       filters: {
         status: p.filters?.status || "",
         region: p.filters?.region || "",
         q: p.filters?.q || "",
         chips: Array.isArray(p.filters?.chips) ? p.filters.chips : [],
+        favoritesOnly: Boolean(p.filters?.favoritesOnly),
       },
     };
   } catch (_) {}
+}
+
+function lawGetFocusHubIds() {
+  const ids = Array.isArray(lawPrefs.focusHubs) ? lawPrefs.focusHubs.filter(Boolean) : [];
+  return ids.length ? ids : [...LAW_DEFAULT_FOCUS_HUBS];
+}
+
+function lawIsFocusHub(relocateId) {
+  if (!relocateId) return false;
+  return lawGetFocusHubIds().includes(relocateId);
+}
+
+/** Pin or unpin a relocate destination from Focus hubs (persisted locally). */
+function lawToggleFocusHub(relocateId) {
+  if (!relocateId) return false;
+  const set = new Set(lawGetFocusHubIds());
+  if (set.has(relocateId)) set.delete(relocateId);
+  else set.add(relocateId);
+  lawPrefs.focusHubs = [...set];
+  // Keep browser `priority` flag in sync for filters / badges
+  LAW_RELOCATE_BROWSER.forEach((c) => {
+    c.priority = set.has(c.id);
+    if (c.priority && !(c.tags || []).includes("priority")) {
+      c.tags = [...(c.tags || []), "priority"];
+    } else if (!c.priority && c.tags) {
+      c.tags = c.tags.filter((t) => t !== "priority");
+    }
+  });
+  lawSavePrefs();
+  return set.has(relocateId);
+}
+
+function lawResetFocusHubs() {
+  lawPrefs.focusHubs = [...LAW_DEFAULT_FOCUS_HUBS];
+  const set = new Set(lawPrefs.focusHubs);
+  LAW_RELOCATE_BROWSER.forEach((c) => {
+    c.priority = set.has(c.id);
+  });
+  lawSavePrefs();
+}
+
+/** Apply stored focus hubs onto browser priority flags (call after prefs + browser load). */
+function lawApplyFocusHubFlags() {
+  const set = new Set(lawGetFocusHubIds());
+  LAW_RELOCATE_BROWSER.forEach((c) => {
+    c.priority = set.has(c.id);
+  });
 }
 
 function lawSavePrefs() {
@@ -64,13 +130,301 @@ function lawEsc(s) {
 
 function lawTip(label, tip) {
   const t = lawEsc(tip);
-  return `<span class="law-tip" tabindex="0" data-tip="${t}" title="${t}">${label}<span class="law-tip__mark" aria-hidden="true">?</span></span>`;
+  // data-tip only — never set title= (browser native tooltip doubles the styled box)
+  return `<span class="law-tip" tabindex="0" data-tip="${t}" aria-label="${t}">${label}<span class="law-tip__mark" aria-hidden="true">?</span></span>`;
 }
 
 /** Tooltip data attrs only — add class="law-has-tip" on the element yourself when needed */
 function lawTipAttrs(tip) {
   const t = lawEsc(tip);
-  return `tabindex="0" data-tip="${t}" title="${t}"`;
+  return `tabindex="0" data-tip="${t}" aria-label="${t}"`;
+}
+
+/**
+ * Acronym / term glossary for The Law (tooltips + per-page legend of terms actually used).
+ * Keys matched case-insensitively as whole tokens; longest keys win first.
+ */
+const LAW_GLOSSARY = {
+  // EU / product law
+  MiCA: "Markets in Crypto-Assets — EU regulation for crypto-asset issuance and service providers.",
+  CASP: "Crypto-Asset Service Provider — a firm authorised under MiCA to offer crypto services in the EU.",
+  EMT: "E-Money Token — MiCA category of crypto-asset that aims to maintain a stable value by referencing one fiat currency.",
+  ART: "Asset-Referenced Token — MiCA category referencing multiple assets/currencies (not a single fiat).",
+  ESMA: "European Securities and Markets Authority — EU financial markets supervisor; publishes MiCA guidance and registers.",
+  EBA: "European Banking Authority — EU banking supervisor; relevant for e-money and some crypto-asset rules.",
+  TFR: "Transfer of Funds Regulation (EU) — “Travel Rule” for crypto transfers: originator/beneficiary info between VASPs/CASPs.",
+  "Travel Rule": "Requirement for crypto service providers to share sender/receiver information on transfers (EU TFR and FATF-style rules).",
+  NCA: "National Competent Authority — a country’s supervisor that licenses/supervises CASPs under MiCA.",
+  CONSOB: "Commissione Nazionale per le Società e la Borsa — Italy’s securities markets authority.",
+  CNMV: "Comisión Nacional del Mercado de Valores — Spain’s securities markets authority.",
+  BaFin: "Bundesanstalt für Finanzdienstleistungsaufsicht — Germany’s financial supervisor.",
+  AMF: "Autorité des Marchés Financiers — France’s financial markets authority.",
+  ACPR: "Autorité de Contrôle Prudentiel et de Résolution — France’s prudential supervisor (banks/insurers).",
+  FCA: "Financial Conduct Authority — UK financial markets regulator (cryptoasset registration and promotions).",
+  FINMA: "Swiss Financial Market Supervisory Authority.",
+  MAS: "Monetary Authority of Singapore — Singapore’s central bank and financial regulator.",
+  FSA: "Financial Services Agency (Japan) — or, depending on country, another financial services authority; check local context.",
+  SFC: "Securities and Futures Commission — Hong Kong’s securities regulator (virtual asset platforms).",
+  SEC: "Securities and Exchange Commission — US (or local) securities regulator; context-dependent.",
+  CFTC: "Commodity Futures Trading Commission — US derivatives/commodities regulator.",
+  FinCEN: "Financial Crimes Enforcement Network — US AML authority; MSB registration.",
+  MSB: "Money Services Business — US AML category for many money transmitters and crypto exchanges.",
+  MTL: "Money Transmitter License — US state licence often needed for crypto exchange/transfer businesses.",
+  BCB: "Banco Central do Brasil — Brazil’s central bank (virtual-asset service provider rules).",
+  CVM: "Comissão de Valores Mobiliários — Brazil’s securities commission.",
+  FSCA: "Financial Sector Conduct Authority — South Africa’s market conduct regulator.",
+  FAIS: "Financial Advisory and Intermediary Services Act (South Africa) — licensing perimeter that can cover crypto products.",
+  AUSTRAC: "Australian Transaction Reports and Analysis Centre — Australia’s AML/CTF regulator; DCE registration.",
+  DCE: "Digital Currency Exchange — Australian AUSTRAC registration category for crypto exchanges.",
+  ASIC: "Australian Securities and Investments Commission.",
+  VARA: "Virtual Assets Regulatory Authority — Dubai free-zone crypto regulator.",
+  ADGM: "Abu Dhabi Global Market — Abu Dhabi financial free zone.",
+  FSRA: "Financial Services Regulatory Authority — ADGM’s regulator.",
+  AIFC: "Astana International Financial Centre — Kazakhstan’s English-law special financial zone.",
+  CNBV: "Comisión Nacional Bancaria y de Valores — Mexico’s banking/securities commission.",
+  BSP: "Bangko Sentral ng Pilipinas — Philippines central bank (VASP licensing).",
+  VAITOS: "Virtual Asset and Initial Token Offering Services Act — Mauritius VASP framework.",
+  PSAN: "Prestataire de Services sur Actifs Numériques — France’s pre-MiCA digital-asset service provider registration.",
+  // AML / banking
+  KYC: "Know Your Customer — identity checks banks/VASPs run before opening accounts or services.",
+  AML: "Anti-Money Laundering — laws and controls against laundering criminal proceeds.",
+  CTF: "Counter-Terrorist Financing — controls against financing terrorism (often paired with AML).",
+  CDD: "Customer Due Diligence — standard KYC/AML checks on a customer.",
+  EDD: "Enhanced Due Diligence — deeper AML checks for higher-risk customers (e.g. crypto wealth).",
+  SOF: "Source of Funds — where the money for a specific transfer or deposit came from.",
+  SOW: "Source of Wealth — how the customer built their overall wealth (broader than SOF).",
+  UBO: "Ultimate Beneficial Owner — the natural person who ultimately owns/controls a company.",
+  CRS: "Common Reporting Standard — automatic exchange of financial account information between tax authorities.",
+  FATCA: "Foreign Account Tax Compliance Act (US) — reporting of foreign accounts held by US persons.",
+  FATF: "Financial Action Task Force — international AML/CFT standard-setter (Travel Rule recommendations).",
+  SEPA: "Single Euro Payments Area — euro bank transfer scheme across participating European countries.",
+  EMI: "Electronic Money Institution — regulated e-money / payment firm (often used as multi-rail banking).",
+  PSP: "Payment Service Provider — firm that processes payments for merchants or platforms.",
+  VASP: "Virtual Asset Service Provider — FATF term for businesses exchanging, transferring, or custodising virtual assets.",
+  DPT: "Digital Payment Token — Singapore MAS term for certain crypto payment tokens.",
+  VATP: "Virtual Asset Trading Platform — Hong Kong SFC-licensed trading platform category.",
+  // Tax / corporate
+  PE: "Permanent Establishment — a taxable presence of a foreign company in a country (e.g. fixed place or dependent agent).",
+  CFC: "Controlled Foreign Company — anti-avoidance rules that can tax a foreign subsidiary’s profits on the resident shareholder.",
+  PIT: "Personal Income Tax — tax on an individual’s income.",
+  CIT: "Corporate Income Tax — tax on company profits.",
+  CGT: "Capital Gains Tax — tax on gains from disposing of assets (including often crypto).",
+  TP: "Transfer Pricing — rules for pricing transactions between related companies.",
+  HoldCo: "Holding Company — entity that holds shares or assets of other companies rather than operating day-to-day trade.",
+  OpCo: "Operating Company — the entity that runs the business operations.",
+  GTM: "Go-To-Market — how a product is launched and sold into a market.",
+  HQ: "Headquarters — main office / management centre of a company.",
+  SA: "Sociedad Anónima (or Société Anonyme) — a common limited company form in LatAm/Europe; context-dependent.",
+  SRL: "Società a Responsabilità Limitata / Sociedad de Responsabilidad Limitada — limited liability company form (IT/ES/LatAm).",
+  GmbH: "Gesellschaft mit beschränkter Haftung — German/Austrian private limited company.",
+  LLC: "Limited Liability Company — common US (and some other) company form.",
+  "Pte Ltd": "Private Limited Company — common Singapore company form.",
+  // Residence / lifestyle
+  CoL: "Cost of Living — rough band for rent, food, and day-to-day expenses.",
+  DNV: "Digital Nomad Visa — residence permit for remote workers (rules vary by country).",
+  NHR: "Non-Habitual Resident — Portugal’s former special tax regime (largely reformed; do not assume old benefits).",
+  LTR: "Long-Term Resident / Long-Term Residence — longer-stay residence programmes (e.g. Thailand LTR); rules change often.",
+  MM2H: "Malaysia My Second Home — long-stay residence programme (terms change frequently).",
+  "e-Residency": "Estonia’s digital identity for company admin online — not the same as tax residence or a visa.",
+  // Founder stack
+  ICO: "Initial Coin Offering — public sale of tokens to raise funds.",
+  TGE: "Token Generation Event — creation/distribution of a new token (often with a sale).",
+  NFT: "Non-Fungible Token — unique on-chain token (collectibles, tickets, etc.).",
+  OTC: "Over-The-Counter — private off-exchange trades, often large block size.",
+  CEX: "Centralised Exchange — custodial trading venue run by a company.",
+  DEX: "Decentralised Exchange — on-chain trading protocol, usually non-custodial.",
+  FX: "Foreign Exchange — currency conversion and related controls/risks.",
+  EEA: "European Economic Area — EU plus Iceland, Liechtenstein, and Norway for many financial rules.",
+  UAE: "United Arab Emirates.",
+  // Other
+  IRAS: "Inland Revenue Authority of Singapore — Singapore tax authority.",
+  NTA: "National Tax Agency — Japan’s tax authority.",
+  SAT: "Servicio de Administración Tributaria — Mexico’s tax authority.",
+  AFIP: "Administración Federal de Ingresos Públicos — Argentina’s (former name) tax authority; practice may cite ARCA.",
+  DIAN: "Dirección de Impuestos y Aduanas Nacionales — Colombia’s tax authority.",
+  SUNAT: "Superintendencia Nacional de Aduanas y de Administración Tributaria — Peru’s tax authority.",
+  SARS: "South African Revenue Service.",
+  CRA: "Canada Revenue Agency.",
+  ATO: "Australian Taxation Office.",
+  HMRC: "His Majesty’s Revenue & Customs — UK tax authority.",
+  IRS: "Internal Revenue Service — US federal tax authority.",
+  OFAC: "Office of Foreign Assets Control — US sanctions authority.",
+  IVIE: "Imposta sul valore degli immobili situati all’estero — Italian tax on foreign real estate (often discussed with crypto monitoring).",
+  IVAFE: "Imposta sul valore delle attività finanziarie all’estero — Italian tax on foreign financial assets.",
+  RW: "Quadro RW — Italian tax return schedule for monitoring foreign assets (including often crypto).",
+  "Title II": "MiCA Title II — rules on public offers and admission to trading of crypto-assets (white paper duties).",
+  Howey: "Howey test — US case-law test for whether an arrangement is an investment contract (securities).",
+};
+
+/**
+ * Obvious terms we never auto-tooltip or put in the page legend
+ * (currencies, Bitcoin, common country codes, everyday words).
+ */
+const LAW_GLOSSARY_SKIP = new Set([
+  "USD",
+  "EUR",
+  "BTC",
+  "HQ",
+  "NFT",
+  "EU",
+  "UK",
+  "US",
+  "IT",
+  "JP",
+  "SG",
+  "HK",
+  "CH",
+  "BR",
+  "MX",
+  "AR",
+  "ZA",
+  "KR",
+  "AU",
+  "CA",
+  "DE",
+  "FR",
+  "ES",
+  "PT",
+  "NL",
+  "IE",
+  "LU",
+  "PL",
+  "CZ",
+  "UAE",
+]);
+
+/** 2-letter keys that are safe to auto-detect (jargon only). */
+const LAW_GLOSSARY_SHORT_ALLOW = new Set(["PE", "FX", "TP"]);
+
+const LAW_GLOSSARY_KEYS = Object.keys(LAW_GLOSSARY)
+  .filter((k) => !LAW_GLOSSARY_SKIP.has(k))
+  .filter((k) => k.length > 2 || LAW_GLOSSARY_SHORT_ALLOW.has(k))
+  .sort((a, b) => b.length - a.length);
+
+function lawGlossaryEscapeRe(s) {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** Which glossary keys appear in free text (case-insensitive whole tokens). */
+function lawScanGlossaryKeys(text) {
+  const t = String(text || "");
+  if (!t.trim()) return [];
+  const found = [];
+  for (const key of LAW_GLOSSARY_KEYS) {
+    let re;
+    if (/\s/.test(key) || key.includes("-") || key.includes(".")) {
+      re = new RegExp(`(?:^|[^A-Za-z0-9])${lawGlossaryEscapeRe(key)}(?=[^A-Za-z0-9]|$)`, "i");
+    } else if (key.length <= 2) {
+      // Short allow-list: match exact case tokens only (PE, EU, UK, US, FX, TP)
+      re = new RegExp(`(?:^|[^A-Za-z0-9])${lawGlossaryEscapeRe(key)}(?=[^A-Za-z0-9]|$)`);
+    } else {
+      re = new RegExp(`(?:^|[^A-Za-z0-9])${lawGlossaryEscapeRe(key)}(?=[^A-Za-z0-9]|$)`, "i");
+    }
+    if (re.test(t)) found.push(key);
+  }
+  return found.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+}
+
+function lawGlossaryLegendHtml(fromText) {
+  const keys = lawScanGlossaryKeys(fromText);
+  if (!keys.length) return "";
+  return `<aside class="law-glossary" aria-label="Acronym legend for this page">
+    <h3 class="law-glossary__title">${lawTip("Acronyms on this page", "Only terms that appear in the content above. Hover underlined abbreviations in the text for the same definitions.")}</h3>
+    <p class="law-glossary__hint law-muted">Hover any term in the text (dotted underline) or read the short definitions below. Educational plain-English — not legal definitions.</p>
+    <dl class="law-glossary__list">
+      ${keys
+        .map((k) => {
+          const def = LAW_GLOSSARY[k];
+          return `<div class="law-glossary__item">
+            <dt><abbr class="law-abbr law-has-tip" ${lawTipAttrs(def)}>${lawEsc(k)}</abbr></dt>
+            <dd>${lawEsc(def)}</dd>
+          </div>`;
+        })
+        .join("")}
+    </dl>
+  </aside>`;
+}
+
+/**
+ * Wrap glossary acronyms in text nodes with hover tooltips.
+ * Skips existing tips, glossary, buttons, code, and script/style.
+ */
+function lawDecorateAcronymsInRoot(root) {
+  if (!root || !root.querySelectorAll) return;
+  const skipSel = "script,style,code,pre,.law-abbr,.law-tip,.law-glossary,.law-has-tip,.mono,button,input,select,textarea,a,svg,title";
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p = node.parentElement;
+      if (!p) return NodeFilter.FILTER_REJECT;
+      if (p.closest(skipSel)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  // Build alternation of keys (longest first already in LAW_GLOSSARY_KEYS)
+  const alt = LAW_GLOSSARY_KEYS.map(lawGlossaryEscapeRe).join("|");
+  if (!alt) return;
+  const re = new RegExp(`(^|[^A-Za-z0-9])(${alt})(?=[^A-Za-z0-9]|$)`, "gi");
+
+  for (const textNode of nodes) {
+    const text = textNode.nodeValue;
+    re.lastIndex = 0;
+    if (!re.test(text)) continue;
+    re.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const full = m[0];
+      const lead = m[1] || "";
+      const token = m[2];
+      const start = m.index;
+      if (start > last) frag.appendChild(document.createTextNode(text.slice(last, start)));
+      if (lead) frag.appendChild(document.createTextNode(lead));
+      // Resolve canonical key casing from glossary
+      const canon =
+        LAW_GLOSSARY_KEYS.find((k) => k.toLowerCase() === token.toLowerCase()) || token;
+      const def = LAW_GLOSSARY[canon];
+      if (def) {
+        const span = document.createElement("abbr");
+        span.className = "law-abbr law-has-tip";
+        span.textContent = token;
+        span.setAttribute("data-tip", def);
+        span.setAttribute("aria-label", def);
+        span.setAttribute("tabindex", "0");
+        frag.appendChild(span);
+      } else {
+        frag.appendChild(document.createTextNode(token));
+      }
+      last = start + full.length;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    textNode.parentNode.replaceChild(frag, textNode);
+  }
+}
+
+/** Decorate acronym tooltips and append a legend of terms used on this page. */
+function lawAttachGlossary(root) {
+  if (!root) return;
+  root.querySelectorAll(":scope > .law-glossary, .law-glossary").forEach((el) => {
+    // Only remove glossaries that are direct children or final legends we added
+    if (el.parentElement === root || el.classList.contains("law-glossary--auto")) el.remove();
+  });
+  lawDecorateAcronymsInRoot(root);
+  const plain = root.innerText || root.textContent || "";
+  const legend = lawGlossaryLegendHtml(plain);
+  if (legend) {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = legend;
+    const aside = wrap.firstElementChild;
+    if (aside) {
+      aside.classList.add("law-glossary--auto");
+      root.appendChild(aside);
+    }
+  }
 }
 
 const LAW_META_TIPS = {
@@ -183,13 +537,15 @@ async function lawEnsureWorldMap() {
 
 function lawFilteredList() {
   const list = lawData?.jurisdictions || [];
-  const { status, region, q, chips } = lawPrefs.filters;
+  const { status, region, q, chips, favoritesOnly } = lawPrefs.filters;
   const qq = (q || "").trim().toLowerCase();
   return list.filter((j) => {
+    if (favoritesOnly && !lawPrefs.favorites.includes(j.id)) return false;
     if (status && j.status !== status) return false;
     if (region && j.region !== region) return false;
     if (chips?.length) {
       const ok = chips.every((c) => {
+        if (c === "starred" || c === "favorites") return lawPrefs.favorites.includes(j.id);
         if (["legal", "restricted", "banned", "unclear"].includes(c)) return j.status === c;
         if (c === "mica") return (j.tags || []).includes("mica") || j.region === "eu-mica";
         return (j.tags || []).includes(c);
@@ -746,18 +1102,18 @@ function lawEaseBadgeHtml(level, kind, audience) {
   const audTip = LAW_LAUNCH_AUDIENCE_TIPS[audience] || "";
   const kindLabel = kind === "meme" ? "Meme coin" : "ICO / public TGE";
   const full = `${kindLabel} · ${audience}: ${lv}. ${levelTip} ${audTip}`;
-  return `<span class="law-ease ${lawEaseClass(lv)} law-has-tip" tabindex="0" data-tip="${lawEsc(full)}" title="${lawEsc(full)}">${lawEsc(lv)}</span>`;
+  return `<span class="law-ease ${lawEaseClass(lv)} law-has-tip" tabindex="0" data-tip="${lawEsc(full)}" aria-label="${lawEsc(full)}">${lawEsc(lv)}</span>`;
 }
 
 function lawLaunchEaseTableHtml(id, compact = false) {
   const L = lawLaunchEaseFor(id);
   const thAud = (key, label) =>
-    `<th><span class="law-has-tip" tabindex="0" data-tip="${lawEsc(LAW_LAUNCH_AUDIENCE_TIPS[key])}" title="${lawEsc(LAW_LAUNCH_AUDIENCE_TIPS[key])}">${lawEsc(label)}</span></th>`;
+    `<th><span class="law-has-tip" tabindex="0" data-tip="${lawEsc(LAW_LAUNCH_AUDIENCE_TIPS[key])}" aria-label="${lawEsc(LAW_LAUNCH_AUDIENCE_TIPS[key])}">${lawEsc(label)}</span></th>`;
   const row = (kind, label) => {
     const o = L[kind] || {};
     const kindTip = LAW_LAUNCH_KIND_TIPS[kind] || "";
     return `<tr>
-      <th scope="row"><span class="law-has-tip" tabindex="0" data-tip="${lawEsc(kindTip)}" title="${lawEsc(kindTip)}">${lawEsc(label)}</span></th>
+      <th scope="row"><span class="law-has-tip" tabindex="0" data-tip="${lawEsc(kindTip)}" aria-label="${lawEsc(kindTip)}">${lawEsc(label)}</span></th>
       <td>${lawEaseBadgeHtml(o.local, kind, "local")}</td>
       <td>${lawEaseBadgeHtml(o.region, kind, "region")}</td>
       <td>${lawEaseBadgeHtml(o.world, kind, "world")}</td>
@@ -799,7 +1155,7 @@ function lawLayerCountryPills(ids) {
       if (!c) return "";
       const hub = LAW_RELOCATE_HUBS[id] || {};
       const tip = `${c.name}: ${c.blurb} Click to open the full hub page (tax, KYC, visas, meme/ICO ease).`;
-      return `<button type="button" class="law-layer-pill law-has-tip" data-layer-hub="${lawEsc(id)}" data-tip="${lawEsc(tip)}" title="${lawEsc(tip)}">
+      return `<button type="button" class="law-layer-pill law-has-tip" data-layer-hub="${lawEsc(id)}" data-tip="${lawEsc(tip)}" aria-label="${lawEsc(tip)}">
         <span class="law-layer-pill__flag" aria-hidden="true">${hub.flag || "🌐"}</span>
         <span class="law-layer-pill__name">${lawEsc(c.name)}</span>
         <span class="law-layer-pill__meta">${lawEsc(c.region)} · CoL ${lawEsc(c.col)}</span>
@@ -819,7 +1175,7 @@ function lawRelocateTreesHtml() {
     const opts = layer.options
       .map((o, i) => {
         const optTip = `${o.label}: ${o.why} Suggested: ${(o.ids || []).join(", ")}.`;
-        return `<button type="button" class="law-layer-opt law-has-tip${i === 0 ? " is-active" : ""}" data-layer="${lawEsc(layer.id)}" data-opt="${lawEsc(o.id)}" aria-pressed="${i === 0 ? "true" : "false"}" data-tip="${lawEsc(optTip)}" title="${lawEsc(optTip)}">
+        return `<button type="button" class="law-layer-opt law-has-tip${i === 0 ? " is-active" : ""}" data-layer="${lawEsc(layer.id)}" data-opt="${lawEsc(o.id)}" aria-pressed="${i === 0 ? "true" : "false"}" data-tip="${lawEsc(optTip)}" aria-label="${lawEsc(optTip)}">
             ${lawEsc(o.label)}
           </button>`;
       })
@@ -1567,37 +1923,409 @@ function lawGetRelocateEntry(id) {
   return LAW_RELOCATE_BROWSER.find((c) => c.id === id || c.lawId === id) || null;
 }
 
-/** Full hub brief for a browser entry — every destination has a deep dive (or safe fallback). */
+/**
+ * Enrich a hub brief to Focus-hub parity: services, startups, and full tax/KYC fields.
+ */
+function lawEnrichHubParity(entry, hub) {
+  const h = hub && typeof hub === "object" ? { ...hub } : {};
+  const j =
+    entry?.lawId && lawData?.jurisdictions
+      ? lawData.jurisdictions.find((x) => x.id === entry.lawId)
+      : null;
+  const jProxy = j || {
+    id: entry?.lawId || entry?.id,
+    name: entry?.name,
+    region: entry?.region,
+    tags: entry?.tags,
+    summary: entry?.blurb,
+    vaspLicensing: "",
+    regulators: [],
+    trading: {},
+    payments: {},
+  };
+  if (!h.localServices && typeof lawBuildLocalServices === "function") {
+    h.localServices = lawBuildLocalServices(jProxy, {});
+  }
+  if ((!h.cryptoStartups || !h.cryptoStartups.rows?.length) && typeof lawBuildCryptoStartups === "function") {
+    h.cryptoStartups = lawBuildCryptoStartups(jProxy, {});
+  }
+  if (!h.kycAml) {
+    h.kycAml =
+      "Banks and VASPs apply CDD/EDD, SOF/SOW, sanctions screening, and CRS. Crypto founders should prepare exchange exports and wallet history. Verify local obliged-entity rules.";
+  }
+  if (!h.taxPersonal) {
+    h.taxPersonal = j?.taxHeadline
+      ? `${j.taxHeadline} ${j.taxNote || ""} Confirm resident tests with local + Italian counsel.`.trim()
+      : "Confirm resident vs non-resident tests and worldwide vs territorial base with local + Italian counsel.";
+  }
+  if (!h.taxCompany) {
+    h.taxCompany =
+      "Corporate tax depends on entity type, substance, and activity. PE risk if managed from Italy.";
+  }
+  if (!h.wealthOnArrival) {
+    h.wealthOnArrival =
+      "Map whether residency creates wealth tax, remittance tax, or only future income tax. Banking origin-of-wealth checks are separate from formal tax.";
+  }
+  if (!h.cryptoTaxOnResidency) {
+    h.cryptoTaxOnResidency =
+      "Confirm whether disposals after day-one residency are taxed, whether there is a step-up, and how stables are characterised. Coordinate Italy exit-year timing. Not advice — written local memo required.";
+  }
+  if (!h.colBands?.length) {
+    h.colBands = [["CoL band", entry?.col || "—", "Indicative — verify local costs"]];
+  }
+  if (!h.pros?.length) h.pros = [entry?.blurb || "See legal-status card and local counsel."];
+  if (!h.cons?.length) h.cons = ["Verify live rules; this brief is educational only."];
+  if (!h.company) h.company = `Company ease (browser): ${entry?.company || "—"}`;
+  if (!h.visa) h.visa = `Visa vibe (browser): ${entry?.visa || "—"}`;
+  if (!h.banking) h.banking = `Banking (browser): ${entry?.banking || "—"}`;
+  if (!h.crypto) h.crypto = j?.framework || entry?.crypto || entry?.blurb || "—";
+  if (!h.next?.length) {
+    h.next = [
+      entry?.lawId ? "Open BTC legal-status card" : "Map legal status",
+      "Local tax + immigration counsel",
+      "Bank SOF/SOW pack",
+      "Italy exit memo if relocating",
+    ];
+  }
+  if (!h.headline) h.headline = entry?.blurb || entry?.name || "";
+  if (!h.fit) h.fit = entry?.blurb || "";
+  if (!h.flag) h.flag = "🌐";
+  if (!h.accent) h.accent = "#34d399";
+  h._deep = true;
+  return h;
+}
+
+/** Full hub brief for a browser entry — every destination has Focus-hub parity depth. */
 function lawGetRelocateHub(entryOrId) {
   const entry = typeof entryOrId === "string" ? lawGetRelocateEntry(entryOrId) : entryOrId;
   if (!entry) return null;
   const base = LAW_RELOCATE_HUBS[entry.id];
-  if (base) return { ...base, _deep: true };
-  return {
+  if (base) return lawEnrichHubParity(entry, base);
+  // Try builder from legal dataset
+  const j = entry.lawId && lawData?.jurisdictions?.find((x) => x.id === entry.lawId);
+  if (j && typeof lawBuildHubForLegal === "function") {
+    try {
+      const built = lawBuildHubForLegal(j, {}, {
+        col: entry.col,
+        company: entry.company,
+        banking: entry.banking,
+        visa: entry.visa,
+      });
+      LAW_RELOCATE_HUBS[entry.id] = built;
+      return lawEnrichHubParity(entry, built);
+    } catch (_) {}
+  }
+  return lawEnrichHubParity(entry, {
     flag: "🌐",
     accent: "#94a3b8",
     headline: entry.blurb,
     fit: entry.blurb,
-    colBands: [["CoL band", entry.col, "Indicative — verify local costs"]],
-    pros: ["Listed in Global / Relocate browser"],
-    cons: ["Deep-dive fields use generic defaults — verify with local counsel"],
-    company: `Company ease (browser): ${entry.company}`,
-    visa: `Visa vibe (browser): ${entry.visa}`,
-    banking: `Banking (browser): ${entry.banking}`,
-    crypto: `Crypto posture (browser): ${entry.crypto}`,
-    kycAml:
-      "Banks and VASPs apply CDD/EDD, SOF/SOW, sanctions screening, and CRS. Crypto founders should prepare exchange exports and wallet history. Verify local obliged-entity rules.",
-    taxPersonal:
-      "Confirm resident vs non-resident tests and worldwide vs territorial base with local + Italian counsel.",
-    taxCompany:
-      "Corporate tax depends on entity type, substance, and activity. PE risk if managed from Italy.",
-    wealthOnArrival:
-      "Map whether residency creates wealth tax, remittance tax, or only future income tax. Banking origin-of-wealth checks are separate from formal tax.",
-    cryptoTaxOnResidency:
-      "Confirm whether disposals after day-one residency are taxed, whether there is a step-up, and how stables are characterised. Coordinate Italy exit-year timing. Not advice — written local memo required.",
-    next: ["Open BTC legal status if available", "Local counsel", "Italy exit memo if relocating"],
-    _deep: false,
-  };
+  });
+}
+
+/**
+ * Expanded founder-facing commentary: teaches newcomers and sharpens intermediate founders.
+ * Built from jurisdiction status + hub fields — educational, not advice.
+ */
+function lawFounderTeachBlocks(entry, hub, j) {
+  const name = entry?.name || j?.name || "this country";
+  const status = j?.status || (entry?.mapLegal || (entry?.tags || []).includes("map-legal") ? "legal" : "unclear");
+  const tags = j?.tags || entry?.tags || [];
+  const isMica = tags.includes("mica") || j?.region === "eu-mica" || entry?.region === "EU";
+  const isLegal = status === "legal";
+  const isRestricted = status === "restricted";
+  const isBanned = status === "banned";
+  const h = hub || {};
+  const holding = j?.holding?.note || j?.holding?.status || "";
+  const trading = j?.trading?.note || j?.trading?.status || "";
+  const payments = j?.payments?.note || j?.payments?.status || "";
+  const mining = j?.mining?.note || j?.mining?.status || "";
+  const framework = j?.framework || h.crypto || "";
+  const vasp = j?.vaspLicensing || "";
+  const taxHead = j?.taxHeadline || "";
+  const taxNote = j?.taxNote || "";
+  const regs = (j?.regulators || []).join(", ");
+  const services = h.localServices || {};
+  const launch = typeof lawLaunchEaseFor === "function" ? lawLaunchEaseFor(entry?.id) : null;
+
+  const n = lawEsc(name);
+  // —— Big picture for beginners ——
+  let statusStory = "";
+  if (isLegal) {
+    statusStory = `On our map, ${n} is coloured <strong>green (legal / regulated)</strong>. In plain language: you are usually allowed to <em>own</em> Bitcoin as private property, and trading often happens through supervised platforms rather than a total free-for-all. “Legal” does <strong>not</strong> mean “no paperwork,” “no tax,” or “any token sale is fine.” It means the baseline activity of holding and using licensed rails is not treated like a crime the way it is in ban jurisdictions.`;
+  } else if (isRestricted) {
+    statusStory = `On our map, ${n} is <strong>amber (restricted / partial)</strong>. Founders should expect walls: banks may refuse crypto-linked clients, exchanges may be limited, advertising may be tight, or only certain activities are allowed. Holding might still be legal while building a public product is hard. Read every section below as “permission is incomplete.”`;
+  } else if (isBanned) {
+    statusStory = `On our map, ${n} is <strong>red (banned / prohibited)</strong> for core crypto activity in our heuristic. Treat public product launches, local exchanges, and banking as high-risk or off-limits until specialist counsel says otherwise. This page is still useful for understanding <em>why</em> the stack fails — not as a playbook to operate there casually.`;
+  } else {
+    statusStory = `On our map, ${n} is <strong>grey (unclear / thin framework)</strong>. That often means “not clearly banned,” but also “not clearly safe to build.” Founders should assume extra diligence: thin law can still produce bank freezes, tax surprises, or sudden new rules.`;
+  }
+
+  const fourLayers = `Tech founders often mix four decisions that are <em>not</em> the same thing:
+    <ol class="law-guide-ol law-teach-ol">
+      <li><strong>Where you live (tax residence)</strong> — which country taxes you as a person.</li>
+      <li><strong>Where the company sits</strong> — incorporation and management of the OpCo/HoldCo.</li>
+      <li><strong>Where money moves</strong> — banks, EMIs, exchange on/off ramps.</li>
+      <li><strong>Where life is sustainable</strong> — visas, cost of living, internet, safety, schools.</li>
+    </ol>
+    You can split these (e.g. live in one place, company in another, bank elsewhere) — but splits need substance, transfer pricing, and dual counsel. A foreign company alone does <strong>not</strong> fix personal tax if you still live in Italy or another high-tax home.`;
+
+  // —— Intermediate sharpeners ——
+  const intermediateBits = [];
+  if (isMica) {
+    intermediateBits.push(
+      `${name} sits in the EU MiCA perimeter for crypto-asset services and many public offers. If you serve EU retail users, you generally need a licensed CASP path (or a careful reverse-solicitation / partner model) — incorporating outside the EU does not magic-away MiCA when the clients are EU residents.`,
+    );
+  }
+  if (vasp) {
+    intermediateBits.push(`Service-provider licensing note from our dataset: ${vasp}`);
+  }
+  if (framework) {
+    intermediateBits.push(`Regulatory frame (headline): ${framework}`);
+  }
+  if (regs) {
+    intermediateBits.push(`Who to watch on the public register side: ${regs}. Intermediate founders should bookmark the live register before depositing client or treasury funds.`);
+  }
+  intermediateBits.push(
+    `When banks ask for SOF/SOW, they want a coherent story: exchange CSV exports, wallet history, company invoices, and (if you left Italy) an exit-year tax narrative. “I mined in 2017” without documents often fails enhanced due diligence.`,
+  );
+  if (taxHead || h.taxPersonal) {
+    intermediateBits.push(
+      `Tax headline for individuals: ${taxHead || "see personal tax section below"}. ${taxNote || ""} Intermediate trap: becoming tax resident can tax future disposals even if you bought BTC years earlier — basis and day-one timing matter more than Twitter memes.`,
+    );
+  }
+
+  // —— Holding / product / banking stories ——
+  const practiceHolding = `For a founder who just holds BTC personally: look at holding status first (${holding || "see status grid above"}). For most green jurisdictions, private holding is allowed, but tax on disposal is separate. Keeping records (cost basis, dates, wallets) is part of the job even if you never open a local company.`;
+
+  const practiceBuild = isMica
+    ? `If you build a product (wallet, exchange, brokerage, staking front-end, card, OTC desk): assume you are near a <strong>CASP</strong> or white-paper perimeter when EU users are in scope. “We’re just software” rarely survives if you custody assets, execute orders, or market tokens to retail.`
+    : `If you build a product for locals: map whether you need a ${isLegal ? "VASP / exchange / payment licence" : "special licence or whether the activity is even open"}. Many founders keep pure software offshore and use licensed local partners for custody and on/off ramps — that only works if marketing and client contracts match the real perimeter. Trading note from our dataset: ${trading || "see status grid"}.`;
+
+  const practiceBank = `Banking is often harder than the crypto statute. ${h.banking || services.banks || "Expect enhanced questions for crypto founders."} Practical stack for non-experts: (1) personal account after residence, (2) company account after incorporation + UBO pack, (3) licensed exchange for treasury, (4) EMI backup. ATMs are usually expensive side doors, not a treasury plan.`;
+
+  const practiceTokens = launch
+    ? `Token launches: our relative scores for ${name} treat meme coins and public ICOs separately across local / region / world / EU audiences. Even where chain deploy is easy, coordinated marketing and influencer armies can recreate “offeror” or financial-promotion liability. EU retail is almost always a MiCA analysis, not a local loophole.`
+    : `Token launches: separate the tech (deploy a contract) from the law (public offer, marketing, exchange listing). Intermediate founders should write down target audience geography before any TGE.`;
+
+  const paymentsStory = payments
+    ? `Merchant payments: ${payments} National currency is usually still legal tender; BTC pay is almost always voluntary.`
+    : `Merchant acceptance of BTC is usually voluntary and niche; do not plan a GTM that requires every café to take Lightning.`;
+
+  const miningStory = mining
+    ? `Mining: ${mining}`
+    : "";
+
+  // —— Paths by experience ——
+  const pathNew = [
+    `Read the status grid (holding / trading / payments / mining) and the summary at the top — that is the “is this even a place to touch crypto?” filter.`,
+    `If you only hold BTC: focus on personal tax residence and bank SOF packs, not company law.`,
+    `If you want to incorporate: read Company formation + Visas first; book a scout trip before wiring capital.`,
+    `Ignore “0% tax forever” social posts; use the tax sections as questions for a local advisor + Italian commercialista.`,
+    `Pin ${name} to Focus hubs only if it is a serious shortlist candidate — the pin is a personal bookmark, not a recommendation.`,
+  ].map((p) => lawEsc(p));
+  const pathMid = [
+    `Draw the four-layer diagram for your real stack (you / OpCo / bank / life) and mark which layer sits in ${name}.`,
+    `Pull the live VASP/CASP/exchange register for ${name} before any treasury or client funds move.`,
+    `Model Italy exit year vs day-one residency for crypto disposals; document cost basis before the move.`,
+    `If EU clients exist, run a separate MiCA workstream — do not assume a non-EU seat deletes EU perimeter.`,
+    `For token marketing: write audience geography (local / region / world / EU) and kill channels that hit harder perimeters.`,
+  ].map((p) => lawEsc(p));
+
+  const fitLine = h.fit || entry?.blurb || "";
+  const headline = h.headline || entry?.blurb || "";
+
+  return `
+    <div class="law-teach">
+      <div class="law-teach__hero law-hub-block">
+        <h3>For tech founders — how to read ${n}</h3>
+        <p class="law-teach__lead">${statusStory}</p>
+        ${headline ? `<p><strong>One-line hub read:</strong> ${lawEsc(headline)}</p>` : ""}
+        ${fitLine ? `<p><strong>Who this is usually for:</strong> ${lawEsc(fitLine)}</p>` : ""}
+        <div class="law-teach__layers">${fourLayers}</div>
+      </div>
+
+      <div class="law-teach__grid">
+        <article class="law-hub-block law-teach-card law-teach-card--new">
+          <h4>If you are learning this topic</h4>
+          <p>You do not need to become a lawyer. You need a clear mental model: <em>legal to hold</em>, <em>licensed to serve customers</em>, <em>taxed as a resident</em>, and <em>banked as a customer</em> are four different questions. Start with the status grid on this page, then the “practice” sections below, then the detailed tax/KYC blocks.</p>
+          <p>${lawEsc(practiceHolding)}</p>
+          <p>${lawEsc(paymentsStory)}</p>
+          <h5>Your first five moves</h5>
+          <ol class="law-guide-ol">${pathNew.map((p) => `<li>${p}</li>`).join("")}</ol>
+        </article>
+        <article class="law-hub-block law-teach-card law-teach-card--mid">
+          <h4>If you already know the basics</h4>
+          <p>You already know green ≠ free pass. Use this page to pressure-test perimeter, substance, and sequencing — not to collect flags.</p>
+          <ul class="law-guide-ul">${intermediateBits.map((p) => `<li>${lawEsc(p)}</li>`).join("")}</ul>
+          <h5>Intermediate checklist</h5>
+          <ol class="law-guide-ol">${pathMid.map((p) => `<li>${p}</li>`).join("")}</ol>
+        </article>
+      </div>
+
+      <div class="law-hub-block law-teach-card">
+        <h4>Building, banking, and tokens in practice</h4>
+        <p>${lawEsc(practiceBuild)}</p>
+        <p>${lawEsc(practiceBank)}</p>
+        <p>${lawEsc(practiceTokens)}</p>
+        ${miningStory ? `<p>${lawEsc(miningStory)}</p>` : ""}
+        ${services.summary ? `<p><strong>Local rails snapshot:</strong> ${lawEsc(services.summary)}</p>` : ""}
+      </div>
+    </div>`;
+}
+
+function lawTeachSection(title, why, bodyHtml) {
+  return `<div class="law-hub-block">
+    <h3>${title}</h3>
+    <p class="law-teach-why"><strong>Why founders care:</strong> ${why}</p>
+    ${bodyHtml}
+  </div>`;
+}
+
+/** Shared founder deep-dive body (Focus hub parity + teaching commentary). */
+function lawFounderDeepDiveHtml(entry, hub) {
+  const h = lawEnrichHubParity(entry, hub || {});
+  const j =
+    entry?.lawId && lawData?.jurisdictions
+      ? lawData.jurisdictions.find((x) => x.id === entry.lawId)
+      : null;
+  const services =
+    h.localServices ||
+    (typeof lawBuildLocalServices === "function"
+      ? lawBuildLocalServices(
+          j || {
+            id: entry.lawId || entry.id,
+            name: entry.name,
+            tags: entry.tags,
+          },
+          {},
+        )
+      : null);
+  const startups =
+    h.cryptoStartups ||
+    (typeof lawBuildCryptoStartups === "function"
+      ? lawBuildCryptoStartups(
+          j || {
+            id: entry.lawId || entry.id,
+            name: entry.name,
+            region: entry.region,
+            tags: entry.tags,
+          },
+          {},
+        )
+      : null);
+
+  const teach = lawFounderTeachBlocks(entry, h, j);
+
+  return `
+    ${teach}
+    <div class="law-hub-grid">
+      <div class="law-hub-block">
+        <h3>Cost of living</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> Runway math. A “cheap” jurisdiction that forces expensive schools or failed banking is not cheap.</p>
+        <div class="law-guide-table-wrap"><table class="law-guide-table">
+          <thead><tr><th>Lifestyle</th><th>Band</th><th>Note</th></tr></thead>
+          <tbody>
+            ${(h.colBands || [])
+              .map(
+                (r) =>
+                  `<tr><td>${lawEsc(r[0])}</td><td class="mono">${lawEsc(r[1])}</td><td>${lawEsc(r[2] || "")}</td></tr>`,
+              )
+              .join("")}
+          </tbody>
+        </table></div>
+        <dl class="law-hub-meta">
+          <div><dt>Company</dt><dd>${lawEsc(entry.company || "—")}</dd></div>
+          <div><dt>Banking</dt><dd>${lawEsc(entry.banking || "—")}</dd></div>
+          <div><dt>Visa</dt><dd>${lawEsc(entry.visa || "—")}</dd></div>
+          <div><dt>Crypto</dt><dd>${lawEsc(entry.crypto || "—")}</dd></div>
+        </dl>
+      </div>
+      <div class="law-hub-block">
+        <h3>Pros &amp; cons (founder lens)</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> Pros are marketing; cons are usually where deals die (banks, visas, tax surprises).</p>
+        <h4 class="law-teach-sub">Pros</h4>
+        <ul class="law-guide-ul">${(h.pros || []).map((p) => `<li>${lawEsc(p)}</li>`).join("") || "<li>—</li>"}</ul>
+        <h4 class="law-teach-sub">Cons / watch-outs</h4>
+        <ul class="law-guide-ul">${(h.cons || []).map((p) => `<li>${lawEsc(p)}</li>`).join("") || "<li>—</li>"}</ul>
+      </div>
+    </div>
+    <div class="law-hub-blocks-stack">
+      ${lawTeachSection(
+        "KYC / AML",
+        "Without a clean identity and wealth story, you cannot open bank or exchange accounts — the product never ships.",
+        `<p>${lawEsc(h.kycAml || "")}</p>
+         <p class="law-teach-note">Beginner tip: collect passport, proof of address, exchange history, and company ownership chart before you fly. Intermediate tip: align SOF narrative with Italian tax returns and wallet clusters.</p>`,
+      )}
+      ${lawTeachSection(
+        "Personal tax (indicative)",
+        "Your personal tax residence can tax crypto gains even if the company is elsewhere.",
+        `<p>${lawEsc(h.taxPersonal || "")}</p>
+         <p class="law-teach-note">Beginner tip: “I incorporated abroad” ≠ “I left my home tax system.” Intermediate tip: map dual-residence risk (days, home, family, economic ties) before the move year.</p>`,
+      )}
+      ${lawTeachSection(
+        "Company tax (indicative)",
+        "Entity tax and permanent establishment rules decide whether profits stick in the company seat you chose.",
+        `<p>${lawEsc(h.taxCompany || "")}</p>
+         <p class="law-teach-note">Beginner tip: pick a real company form with local counsel; avoid anonymous “offshore in a weekend” kits. Intermediate tip: document management location — PE risk if decisions stay in Italy.</p>`,
+      )}
+      ${lawTeachSection(
+        "Personal wealth when becoming resident",
+        "Some countries tax net wealth yearly; others only tax income. Day-one residency can change how large BTC bags are treated going forward.",
+        `<p>${lawEsc(h.wealthOnArrival || "")}</p>
+         <p class="law-teach-note">Beginner tip: banks will still ask where wealth came from even if there is no formal wealth tax. Intermediate tip: model wealth tax / remittance / step-up myths with written local advice before moving bags.</p>`,
+      )}
+      ${lawTeachSection(
+        "BTC & stablecoins on residency",
+        "The year you change tax residence is when disposal timing can create or destroy a large tax bill.",
+        `<p>${lawEsc(h.cryptoTaxOnResidency || "")}</p>
+         <p class="law-teach-note">Beginner tip: export cost basis before you move. Intermediate tip: coordinate Italy exit-year disposals with the new country’s start date; stables can be taxed like crypto or FX depending on local rules.</p>`,
+      )}
+      ${lawTeachSection(
+        "Company formation",
+        "Speed and foreign-ownership rules decide whether you can ship as a local entity or must keep OpCo elsewhere.",
+        `<p>${lawEsc(h.company || "")}</p>`,
+      )}
+      ${lawTeachSection(
+        "Visas & residence",
+        "Tourist stamps are not work rights and not tax residence — mixing them is a classic founder failure mode.",
+        `<p>${lawEsc(h.visa || "")}</p>
+         <p class="law-teach-note">Beginner tip: match visa type to what you will actually do (build, hire, invoice). Intermediate tip: track days calendars for both immigration and tax simultaneously.</p>`,
+      )}
+      ${lawTeachSection(
+        "Banking & payments",
+        "If you cannot receive salary, client funds, or pay contractors, the jurisdiction is theoretical only.",
+        `<p>${lawEsc(h.banking || "")}</p>`,
+      )}
+      ${lawTeachSection(
+        "Crypto / product notes",
+        "This is the bridge between “BTC is legal to hold” and “my app can legally serve customers.”",
+        `<p>${lawEsc(h.crypto || "")}</p>`,
+      )}
+      <div class="law-hub-block law-hub-block--services">
+        <h3>${lawTip("Local crypto services", "Authorized exchanges/CASPs, banks, ATMs, merchants, fiat rails.")}</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> This is your on/off-ramp map. Prefer official registers over app-store screenshots.</p>
+        <p class="law-muted" style="margin:0 0 0.65rem">Local or locally authorized infrastructure. Verify live registers.</p>
+        ${lawLocalServicesHtml(services)}
+      </div>
+      <div class="law-hub-block law-hub-block--startups">
+        <h3>${lawTip("Local crypto startups", "Illustrative industry table — not complete or endorsed.")}</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> Ecosystem density signals talent, counsel familiarity, and competitive pressure — not a buy list.</p>
+        <p class="law-muted" style="margin:0 0 0.65rem">Sample of the domestic crypto industry landscape.</p>
+        ${lawCryptoStartupsTableHtml(startups)}
+      </div>
+      <div class="law-hub-block law-hub-block--accent">
+        <h3>${lawTip("Meme coin & ICO ease", "Relative scores for local · region · world · EU. Educational only.")}</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> Deploying a token is easy; marketing it into regulated retail markets is the hard part.</p>
+        <p class="law-muted" style="margin:0 0 0.65rem">Hover badges and headers for explanations. Intermediate founders: write target geography before any TGE.</p>
+        ${lawLaunchEaseTableHtml(entry.id, false)}
+      </div>
+      <div class="law-hub-block">
+        <h3>Founder next steps</h3>
+        <p class="law-teach-why"><strong>Why founders care:</strong> Sequencing beats perfection. Do the evidence pack and counsel memos before the flight.</p>
+        <ol class="law-guide-ol">${(h.next || []).map((p) => `<li>${lawEsc(p)}</li>`).join("")}</ol>
+      </div>
+    </div>`;
 }
 
 function lawRelocateBrowserHtml() {
@@ -1631,7 +2359,7 @@ function lawRelocateBrowserHtml() {
           <option value="high">High / very high</option>
         </select>
         <label class="law-relocate-check" title="Only destinations that are Legal / regulated (green) on the overview map"><input type="checkbox" id="law-relocate-map-legal" checked /> Map green only</label>
-        <label class="law-relocate-check"><input type="checkbox" id="law-relocate-priority" /> Priority only</label>
+        <label class="law-relocate-check" title="Only destinations you pinned to Focus hubs"><input type="checkbox" id="law-relocate-priority" /> Focus hubs only</label>
       </div>
       <div class="law-relocate-grid" id="law-relocate-grid"></div>
       <p class="law-muted law-relocate-count" id="law-relocate-count"></p>
@@ -1654,11 +2382,12 @@ function lawRenderRelocateGrid() {
   const q = (lawEl("law-relocate-search")?.value || "").trim().toLowerCase();
   const region = lawEl("law-relocate-region")?.value || "";
   const col = lawEl("law-relocate-col")?.value || "";
+  lawApplyFocusHubFlags();
   const priorityOnly = Boolean(lawEl("law-relocate-priority")?.checked);
   const mapLegalOnly = Boolean(lawEl("law-relocate-map-legal")?.checked);
 
   const list = LAW_RELOCATE_BROWSER.filter((c) => {
-    if (priorityOnly && !c.priority) return false;
+    if (priorityOnly && !lawIsFocusHub(c.id)) return false;
     if (mapLegalOnly && !(c.mapLegal || (c.tags || []).includes("map-legal"))) return false;
     if (region && c.region !== region) return false;
     if (!lawRelocateColMatch(c.col, col)) return false;
@@ -1678,9 +2407,10 @@ function lawRenderRelocateGrid() {
     .map((c) => {
       const lawOk = c.lawId && hasLaw(c.lawId);
       const isMapLegal = c.mapLegal || (c.tags || []).includes("map-legal");
-      return `<article class="law-relocate-card${c.priority ? " law-relocate-card--priority" : ""}${isMapLegal ? " law-relocate-card--map-legal" : ""}" data-relocate-id="${lawEsc(c.id)}" title="${lawEsc("Click card or Open hub for full founder brief")}">
+      const isFocus = lawIsFocusHub(c.id);
+      return `<article class="law-relocate-card${isFocus ? " law-relocate-card--priority" : ""}${isMapLegal ? " law-relocate-card--map-legal" : ""}" data-relocate-id="${lawEsc(c.id)}" title="${lawEsc("Click card or Open hub for full founder brief")}">
         <header class="law-relocate-card__head">
-          <h4 class="law-relocate-card__name">${lawEsc(c.name)}${c.priority ? ` <span class="law-relocate-priority-badge law-has-tip" ${lawTipAttrs("Priority focus destination for EU founders exploring relocation stacks.")}>Priority</span>` : ""}${isMapLegal ? ` <span class="law-relocate-map-legal-badge law-has-tip" ${lawTipAttrs("Legal / regulated (green) on The Law overview map.")}>Map green</span>` : ""}</h4>
+          <h4 class="law-relocate-card__name">${lawEsc(c.name)}${isFocus ? ` <span class="law-relocate-priority-badge law-has-tip" ${lawTipAttrs("Pinned on your Focus hubs shortlist (editable).")}>Focus</span>` : ""}${isMapLegal ? ` <span class="law-relocate-map-legal-badge law-has-tip" ${lawTipAttrs("Legal / regulated (green) on The Law overview map.")}>Map green</span>` : ""}</h4>
           <span class="law-relocate-card__region law-has-tip" ${lawTipAttrs(`Region grouping for filters: ${c.region}.`)}>${lawEsc(c.region)}</span>
         </header>
         <p class="law-relocate-card__blurb">${lawEsc(c.blurb)}</p>
@@ -1713,6 +2443,7 @@ function lawRenderRelocateGrid() {
           .join("")}</div>
         <div class="law-relocate-card__actions">
           <button type="button" class="law-btn" data-relocate-hub="${lawEsc(c.id)}" title="Full hub: tax, KYC/AML, visas, CoL, meme/ICO notes">Open hub page</button>
+          <button type="button" class="law-btn law-btn--ghost" data-relocate-focus="${lawEsc(c.id)}" title="Pin or unpin Focus hubs">${isFocus ? "★ Focus" : "☆ Focus"}</button>
           ${
             lawOk
               ? `<button type="button" class="law-btn law-btn--ghost" data-relocate-law="${lawEsc(c.lawId)}" title="BTC legal status from The Law dataset">BTC legal status</button>`
@@ -1726,11 +2457,19 @@ function lawRenderRelocateGrid() {
 
   if (countEl) {
     const legalN = LAW_RELOCATE_BROWSER.filter((c) => c.mapLegal || (c.tags || []).includes("map-legal")).length;
-    countEl.textContent = `${list.length} shown · ${legalN} map-green hubs in dataset · educational only`;
+    countEl.textContent = `${list.length} shown · ${legalN} map-green · ${lawGetFocusHubIds().length} focus · educational only`;
   }
 
   grid.querySelectorAll("[data-relocate-hub]").forEach((btn) => {
     btn.addEventListener("click", () => void lawShowRelocateHub(btn.getAttribute("data-relocate-hub")));
+  });
+  grid.querySelectorAll("[data-relocate-focus]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute("data-relocate-focus");
+      lawToggleFocusHub(id);
+      lawRenderRelocateGrid();
+    });
   });
   grid.querySelectorAll("[data-relocate-law]").forEach((btn) => {
     btn.addEventListener("click", () => lawOpenCountry(btn.getAttribute("data-relocate-law")));
@@ -1829,7 +2568,7 @@ function lawLayerUpdateStack() {
       if (!c) return "";
       const hub = LAW_RELOCATE_HUBS[id] || {};
       const tip = `${c.name} matches ${n} of your 4 selected goals. ${c.blurb} Click for hub page.`;
-      return `<button type="button" class="law-layer-pill law-layer-pill--ranked law-has-tip" data-layer-hub="${lawEsc(id)}" data-hits="${n}" data-tip="${lawEsc(tip)}" title="${lawEsc(tip)}">
+      return `<button type="button" class="law-layer-pill law-layer-pill--ranked law-has-tip" data-layer-hub="${lawEsc(id)}" data-hits="${n}" data-tip="${lawEsc(tip)}" aria-label="${lawEsc(tip)}">
         <span class="law-layer-pill__flag" aria-hidden="true">${hub.flag || "🌐"}</span>
         <span class="law-layer-pill__name">${lawEsc(c.name)}</span>
         <span class="law-layer-pill__meta">${n}/4 layers · ${lawEsc(c.region)}</span>
@@ -1946,12 +2685,13 @@ async function lawShowRelocateHub(hubId) {
   } catch (_) {}
 
   const hasLaw = entry.lawId && (lawData?.jurisdictions || []).some((j) => j.id === entry.lawId);
-  // Peers: same region first, then other priorities, then fill from browser
+  const isFocus = lawIsFocusHub(entry.id);
+  // Peers: same region first, then focus hubs, then fill from browser
   const peers = (() => {
     const rest = LAW_RELOCATE_BROWSER.filter((c) => c.id !== entry.id);
     const same = rest.filter((c) => c.region === entry.region);
-    const pri = rest.filter((c) => c.priority && c.region !== entry.region);
-    const other = rest.filter((c) => !c.priority && c.region !== entry.region);
+    const pri = rest.filter((c) => lawIsFocusHub(c.id) && c.region !== entry.region);
+    const other = rest.filter((c) => !lawIsFocusHub(c.id) && c.region !== entry.region);
     const seen = new Set();
     const out = [];
     for (const c of [...same, ...pri, ...other]) {
@@ -1968,7 +2708,7 @@ async function lawShowRelocateHub(hubId) {
       <div class="law-hub-hero">
         <div class="law-hub-hero__flag" aria-hidden="true">${hub.flag || "🌐"}</div>
         <div class="law-hub-hero__copy">
-          <p class="law-hub-kicker">${lawEsc(entry.region)}${entry.priority ? " · Priority hub" : ""}${entry.mapLegal || (entry.tags || []).includes("map-legal") ? " · Map green (legal / regulated)" : " · Full deep dive"}${hub._deep === false ? " · Generic brief" : ""}</p>
+          <p class="law-hub-kicker">${lawEsc(entry.region)}${isFocus ? " · Focus hub" : ""}${entry.mapLegal || (entry.tags || []).includes("map-legal") ? " · Map green (legal / regulated)" : " · Full deep dive"}</p>
           <h2 class="law-hub-title">${lawEsc(entry.name)}</h2>
           <p class="law-hub-headline">${lawEsc(hub.headline || entry.blurb)}</p>
           <p class="law-hub-fit"><strong>Best fit:</strong> ${lawEsc(hub.fit || entry.blurb)}</p>
@@ -1976,114 +2716,24 @@ async function lawShowRelocateHub(hubId) {
       </div>
       <div class="law-hub-actions">
         <button type="button" class="law-btn" data-hub-back>← Country browser</button>
+        <button type="button" class="law-btn${isFocus ? "" : " law-btn--ghost"}" data-hub-focus-toggle title="Pin or unpin this destination on your Focus hubs gallery (saved on this device)">
+          ${isFocus ? "★ In Focus hubs" : "☆ Add to Focus hubs"}
+        </button>
         ${hasLaw ? `<button type="button" class="law-btn law-btn--ghost" data-hub-law="${lawEsc(entry.lawId)}">BTC legal status</button>` : ""}
         <button type="button" class="law-btn law-btn--ghost" data-hub-guide>Scroll guide §</button>
         <button type="button" class="law-btn law-btn--ghost" data-hub-trees>Layer finder</button>
       </div>
-      <div class="law-hub-grid">
-        <div class="law-hub-block">
-          <h3>Cost of living</h3>
-          <div class="law-guide-table-wrap"><table class="law-guide-table">
-            <thead><tr><th>Lifestyle</th><th>Band</th><th>Note</th></tr></thead>
-            <tbody>
-              ${(hub.colBands || [])
-                .map(
-                  (r) =>
-                    `<tr><td>${lawEsc(r[0])}</td><td class="mono">${lawEsc(r[1])}</td><td>${lawEsc(r[2] || "")}</td></tr>`,
-                )
-                .join("")}
-            </tbody>
-          </table></div>
-          <dl class="law-hub-meta">
-            <div><dt>Company</dt><dd>${lawEsc(entry.company)}</dd></div>
-            <div><dt>Banking</dt><dd>${lawEsc(entry.banking)}</dd></div>
-            <div><dt>Visa</dt><dd>${lawEsc(entry.visa)}</dd></div>
-            <div><dt>Crypto</dt><dd>${lawEsc(entry.crypto)}</dd></div>
-          </dl>
-        </div>
-        <div class="law-hub-block">
-          <h3>Pros</h3>
-          <ul class="law-guide-ul">${(hub.pros || []).map((p) => `<li>${lawEsc(p)}</li>`).join("") || "<li>—</li>"}</ul>
-          <h3>Cons / watch-outs</h3>
-          <ul class="law-guide-ul">${(hub.cons || []).map((p) => `<li>${lawEsc(p)}</li>`).join("") || "<li>—</li>"}</ul>
-        </div>
-      </div>
-      <div class="law-hub-blocks-stack">
-        <div class="law-hub-block law-hub-block--accent">
-          <h3>KYC / AML</h3>
-          <p>${lawEsc(hub.kycAml || "Banks and VASPs apply CDD/EDD, SOF/SOW, sanctions screening, and CRS. Crypto founders should prepare exchange exports and wallet history. Verify local obliged-entity rules.")}</p>
-        </div>
-        <div class="law-hub-block law-hub-block--accent">
-          <h3>Personal tax (indicative)</h3>
-          <p>${lawEsc(hub.taxPersonal || "Confirm resident vs non-resident tests and worldwide vs territorial base with local + Italian counsel.")}</p>
-        </div>
-        <div class="law-hub-block law-hub-block--accent">
-          <h3>Company tax (indicative)</h3>
-          <p>${lawEsc(hub.taxCompany || "Corporate tax depends on entity type, substance, and activity. PE risk if managed from Italy.")}</p>
-        </div>
-        <div class="law-hub-block law-hub-block--warn">
-          <h3>Personal wealth when becoming resident</h3>
-          <p>${lawEsc(hub.wealthOnArrival || "Map whether residency creates wealth tax, remittance tax, or only future income tax. Banking origin-of-wealth checks are separate from formal tax.")}</p>
-        </div>
-        <div class="law-hub-block law-hub-block--warn">
-          <h3>BTC &amp; stablecoins on residency</h3>
-          <p>${lawEsc(hub.cryptoTaxOnResidency || "Confirm whether disposals after day-one residency are taxed, whether there is a step-up, and how stables are characterised. Coordinate Italy exit-year timing. Not advice — written local memo required.")}</p>
-        </div>
-        <div class="law-hub-block"><h3>Company formation</h3><p>${lawEsc(hub.company || "")}</p></div>
-        <div class="law-hub-block"><h3>Visas &amp; residence</h3><p>${lawEsc(hub.visa || "")}</p></div>
-        <div class="law-hub-block"><h3>Banking &amp; payments</h3><p>${lawEsc(hub.banking || "")}</p></div>
-        <div class="law-hub-block"><h3>Crypto / product notes</h3><p>${lawEsc(hub.crypto || "")}</p></div>
-        <div class="law-hub-block law-hub-block--services">
-          <h3>${lawTip("Local crypto services", "Where residents actually trade, bank, cash out, and pay: authorized exchanges/CASPs, banks, ATMs, merchants, and fiat rails. Educational only — verify live registers.")}</h3>
-          <p class="law-muted" style="margin:0 0 0.65rem">Local or locally authorized infrastructure for map-green markets. Prefer official VASP/CASP/exchange registers over app-store screenshots.</p>
-          ${lawLocalServicesHtml(
-            hub.localServices ||
-              (typeof lawBuildLocalServices === "function" && entry.lawId && lawData?.jurisdictions
-                ? lawBuildLocalServices(
-                    lawData.jurisdictions.find((j) => j.id === entry.lawId) || { id: entry.lawId, name: entry.name },
-                    {},
-                  )
-                : null),
-          )}
-        </div>
-        <div class="law-hub-block law-hub-block--startups">
-          <h3>${lawTip("Local crypto startups", "Illustrative table of startups and scale-ups in the local crypto industry — exchanges, custody, wallets, payments, mining, regtech. Not complete or endorsed.")}</h3>
-          <p class="law-muted" style="margin:0 0 0.65rem">Sample of the domestic crypto industry landscape. Prefer official company registries and licence lists for diligence.</p>
-          ${lawCryptoStartupsTableHtml(
-            hub.cryptoStartups ||
-              (typeof lawBuildCryptoStartups === "function"
-                ? lawBuildCryptoStartups(
-                    (lawData?.jurisdictions || []).find((j) => j.id === entry.lawId) || {
-                      id: entry.lawId || entry.id,
-                      name: entry.name,
-                      region: entry.region,
-                      tags: entry.tags,
-                    },
-                    {},
-                  )
-                : null),
-          )}
-        </div>
-        <div class="law-hub-block law-hub-block--accent">
-          <h3>${lawTip("Meme coin & ICO ease", "Educational relative friction scores — not legal advice. On-chain deploy ease is not the same as legal permission to market or sell tokens.")}</h3>
-          <p class="law-muted" style="margin:0 0 0.65rem">Hover column headers, row labels, and colour badges for full explanations. Four audiences: local residents, regional markets, global marketing, and EU retail (MiCA Title II / CASP). Not a local loophole for EU sales.</p>
-          ${lawLaunchEaseTableHtml(entry.id, false)}
-        </div>
-        <div class="law-hub-block">
-          <h3>Founder next steps</h3>
-          <ol class="law-guide-ol">${(hub.next || []).map((p) => `<li>${lawEsc(p)}</li>`).join("")}</ol>
-        </div>
-      </div>
+      ${lawFounderDeepDiveHtml(entry, hub)}
       <div class="law-hub-block">
         <h3>Related destinations</h3>
-        <p class="law-muted" style="margin:0 0 0.55rem">Same region first, then other browser countries — each has a full deep-dive hub.</p>
+        <p class="law-muted" style="margin:0 0 0.55rem">Same region first, then focus hubs — each has a full deep-dive.</p>
         <div class="law-hub-peers">
           ${peers
             .map(
               (p) =>
                 `<button type="button" class="law-hub-peer" data-hub-peer="${lawEsc(p.id)}">
                   <span class="law-hub-peer__name">${lawEsc(p.name)}</span>
-                  <span class="law-hub-peer__meta">${lawEsc(p.region)} · CoL ${lawEsc(p.col)}${p.priority ? " · Priority" : ""}</span>
+                  <span class="law-hub-peer__meta">${lawEsc(p.region)} · CoL ${lawEsc(p.col)}${lawIsFocusHub(p.id) ? " · Focus" : ""}</span>
                 </button>`,
             )
             .join("")}
@@ -2092,7 +2742,17 @@ async function lawShowRelocateHub(hubId) {
       <p class="law-muted" style="margin-top:0.75rem">Educational only — not immigration, tax, or legal advice. Verify local counsel and live rules.</p>
     </section>`;
 
+  lawAttachGlossary(util);
   util.querySelector("[data-hub-back]")?.addEventListener("click", () => void lawShowPanel("global-founders"));
+  util.querySelector("[data-hub-focus-toggle]")?.addEventListener("click", (e) => {
+    const on = lawToggleFocusHub(entry.id);
+    e.currentTarget.textContent = on ? "★ In Focus hubs" : "☆ Add to Focus hubs";
+    e.currentTarget.classList.toggle("law-btn--ghost", !on);
+    const kick = util.querySelector(".law-hub-kicker");
+    if (kick) {
+      kick.textContent = `${entry.region}${on ? " · Focus hub" : ""}${entry.mapLegal || (entry.tags || []).includes("map-legal") ? " · Map green (legal / regulated)" : " · Full deep dive"}`;
+    }
+  });
   util.querySelector("[data-hub-law]")?.addEventListener("click", (e) => {
     lawOpenCountry(e.currentTarget.getAttribute("data-hub-law"));
   });
@@ -2143,28 +2803,57 @@ async function lawShowFocusHubs() {
     }
   } catch (_) {}
 
-  const hubs = LAW_RELOCATE_BROWSER.filter((c) => c.priority);
+  lawApplyFocusHubFlags();
+  if (typeof lawSyncLegalRelocateDestinations === "function") {
+    try {
+      lawSyncLegalRelocateDestinations();
+      lawApplyFocusHubFlags();
+    } catch (_) {}
+  }
+  const focusIds = lawGetFocusHubIds();
+  const hubs = focusIds.map((id) => lawGetRelocateEntry(id)).filter(Boolean);
+  const addable = LAW_RELOCATE_BROWSER.filter((c) => !focusIds.includes(c.id)).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   util.innerHTML = `
     <section class="panel">
       <div class="panel-header">
         <h2>Focus hubs</h2>
-        <span class="panel-meta">${hubs.length} priority destinations · open a full hub page</span>
+        <span class="panel-meta">${hubs.length} pinned · full deep dives · editable shortlist</span>
       </div>
       <div class="law-panel-body">
-        <p class="law-muted">Priority shortlist with full deep dives. <strong>All</strong> browser destinations (UK, SG, PT, TH, …) have the same hub depth under Global / Relocate — not only these nine.</p>
+        <p class="law-muted">Your personal shortlist of founder destinations (saved on this device). Every map-green country has the <strong>same deep-dive depth</strong> under Global / Relocate — pin any of them here. Remove with ✕ or open a hub and use <strong>Add to Focus hubs</strong>.</p>
         <div class="law-focus-hubs-grid">
-          ${hubs
-            .map((c) => {
-              const h = LAW_RELOCATE_HUBS[c.id] || {};
-              return `<button type="button" class="law-focus-hub-card" data-focus-hub="${lawEsc(c.id)}" style="--hub-accent:${lawEsc(h.accent || "#34d399")}">
-                <span class="law-focus-hub-card__flag">${h.flag || "🌐"}</span>
-                <span class="law-focus-hub-card__name">${lawEsc(c.name)}</span>
-                <span class="law-focus-hub-card__region">${lawEsc(c.region)}</span>
-                <span class="law-focus-hub-card__blurb">${lawEsc(h.headline || c.blurb)}</span>
-                <span class="law-focus-hub-card__meta">CoL ${lawEsc(c.col)} · ${lawEsc(c.company)}</span>
-              </button>`;
-            })
-            .join("")}
+          ${
+            hubs.length
+              ? hubs
+                  .map((c) => {
+                    const h = lawGetRelocateHub(c) || {};
+                    return `<div class="law-focus-hub-card-wrap" style="--hub-accent:${lawEsc(h.accent || "#34d399")}">
+                      <button type="button" class="law-focus-hub-card" data-focus-hub="${lawEsc(c.id)}">
+                        <span class="law-focus-hub-card__flag">${h.flag || "🌐"}</span>
+                        <span class="law-focus-hub-card__name">${lawEsc(c.name)}</span>
+                        <span class="law-focus-hub-card__region">${lawEsc(c.region)}</span>
+                        <span class="law-focus-hub-card__blurb">${lawEsc(h.headline || c.blurb)}</span>
+                        <span class="law-focus-hub-card__meta">CoL ${lawEsc(c.col)} · ${lawEsc(c.company)}</span>
+                      </button>
+                      <button type="button" class="law-focus-hub-remove" data-focus-remove="${lawEsc(c.id)}" title="Remove from Focus hubs" aria-label="Remove ${lawEsc(c.name)} from Focus hubs">✕</button>
+                    </div>`;
+                  })
+                  .join("")
+              : `<p class="law-empty">No focus hubs pinned. Add destinations below or from a hub page.</p>`
+          }
+        </div>
+        <div class="law-focus-manage">
+          <h3 class="law-subhead">Add a country to Focus hubs</h3>
+          <div class="law-focus-add-row">
+            <select id="law-focus-add-select" class="law-select" aria-label="Choose destination to pin">
+              <option value="">Select destination…</option>
+              ${addable.map((c) => `<option value="${lawEsc(c.id)}">${lawEsc(c.name)} · ${lawEsc(c.region)}</option>`).join("")}
+            </select>
+            <button type="button" class="law-btn" data-focus-add>Add to Focus hubs</button>
+            <button type="button" class="law-btn law-btn--ghost" data-focus-reset title="Restore default shortlist (Panama, UAE, El Salvador, …)">Reset defaults</button>
+          </div>
         </div>
         <p style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap">
           <button type="button" class="law-btn" data-hub-all>Full Global / Relocate</button>
@@ -2175,8 +2864,30 @@ async function lawShowFocusHubs() {
   util.querySelectorAll("[data-focus-hub]").forEach((btn) => {
     btn.addEventListener("click", () => void lawShowRelocateHub(btn.getAttribute("data-focus-hub")));
   });
+  util.querySelectorAll("[data-focus-remove]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute("data-focus-remove");
+      if (lawIsFocusHub(id)) lawToggleFocusHub(id);
+      void lawShowFocusHubs();
+    });
+  });
+  util.querySelector("[data-focus-add]")?.addEventListener("click", () => {
+    const sel = util.querySelector("#law-focus-add-select");
+    const id = sel?.value;
+    if (!id) return;
+    if (!lawIsFocusHub(id)) lawToggleFocusHub(id);
+    void lawShowFocusHubs();
+  });
+  util.querySelector("[data-focus-reset]")?.addEventListener("click", () => {
+    if (confirm("Restore the default Focus hubs shortlist?")) {
+      lawResetFocusHubs();
+      void lawShowFocusHubs();
+    }
+  });
   util.querySelector("[data-hub-all]")?.addEventListener("click", () => void lawShowPanel("global-founders"));
   util.querySelector("[data-law-back]")?.addEventListener("click", () => lawShowOverview());
+  lawAttachGlossary(util);
 }
 
 function lawRenderHero() {
@@ -2345,12 +3056,26 @@ function lawRenderChips() {
   const el = lawEl("law-filter-chips");
   if (!el || !lawData) return;
   const chips = lawData.filters || [];
-  el.innerHTML = chips
-    .map((c) => {
-      const on = (lawPrefs.filters.chips || []).includes(c.id);
-      return `<button type="button" class="law-chip${on ? " active" : ""}" data-law-chip="${lawEsc(c.id)}">${lawEsc(c.label)}</button>`;
-    })
-    .join("");
+  const favOn = Boolean(lawPrefs.filters.favoritesOnly);
+  const favN = (lawPrefs.favorites || []).length;
+  const starChip = `<button type="button" class="law-chip law-chip--star${favOn ? " active" : ""}" data-law-fav-filter aria-pressed="${favOn ? "true" : "false"}" title="Show only jurisdictions you starred (favorites)">★ Starred${favN ? ` (${favN})` : ""}</button>`;
+  el.innerHTML =
+    starChip +
+    chips
+      .map((c) => {
+        const on = (lawPrefs.filters.chips || []).includes(c.id);
+        return `<button type="button" class="law-chip${on ? " active" : ""}" data-law-chip="${lawEsc(c.id)}">${lawEsc(c.label)}</button>`;
+      })
+      .join("");
+  el.querySelector("[data-law-fav-filter]")?.addEventListener("click", () => {
+    lawPrefs.filters.favoritesOnly = !lawPrefs.filters.favoritesOnly;
+    lawSavePrefs();
+    lawRenderList();
+    lawRenderMap();
+    lawRenderChips();
+    const chk = lawEl("law-filter-starred");
+    if (chk) chk.checked = lawPrefs.filters.favoritesOnly;
+  });
   el.querySelectorAll("[data-law-chip]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-law-chip");
@@ -2493,6 +3218,7 @@ function lawBreadcrumb(parts) {
       else if (a === "sources") void lawShowPanel("sources");
       else if (a === "global-founders") void lawShowPanel("global-founders");
       else if (a === "focus-hubs") void lawShowFocusHubs();
+      else if (a === "simulator") void lawShowPanel("simulator");
       else if (a === "eu-mica") void lawShowPanel("eu-mica");
     });
   });
@@ -2555,6 +3281,35 @@ async function lawOpenCountry(id) {
     const fav = lawPrefs.favorites.includes(j.id);
     const lt = j.legalTender || {};
     const prev = lt.previous;
+    if (typeof lawSyncLegalRelocateDestinations === "function") {
+      try {
+        lawSyncLegalRelocateDestinations();
+        lawApplyFocusHubFlags();
+      } catch (_) {}
+    }
+    let relocateEntry = lawGetRelocateEntry(j.id);
+    // Ensure legal jurisdictions get a browser + hub row for deep-dive parity
+    if (!relocateEntry && j.status === "legal" && j.id !== "european-union") {
+      const stub = {
+        id: j.id,
+        lawId: j.id,
+        name: j.name,
+        region: j.region || "Other",
+        priority: false,
+        tags: ["map-legal", ...(j.tags || [])],
+        col: "mid",
+        company: "medium",
+        banking: "selective",
+        crypto: "legal",
+        visa: "medium",
+        blurb: (j.summary || "").slice(0, 160),
+        mapLegal: true,
+      };
+      LAW_RELOCATE_BROWSER.push(stub);
+      relocateEntry = stub;
+    }
+    const hub = relocateEntry ? lawGetRelocateHub(relocateEntry) : null;
+    const isFocus = relocateEntry ? lawIsFocusHub(relocateEntry.id) : false;
     panel.innerHTML = `
       <header class="law-country-header">
         <div class="law-country-header__main">
@@ -2567,6 +3322,12 @@ async function lawOpenCountry(id) {
         </div>
         <div class="law-country-actions">
           <button type="button" class="law-btn" data-law-fav="${lawEsc(j.id)}">${fav ? "★ Favorited" : "☆ Add to favorites"}</button>
+          ${
+            relocateEntry
+              ? `<button type="button" class="law-btn${isFocus ? "" : " law-btn--ghost"}" data-law-focus-hub="${lawEsc(relocateEntry.id)}">${isFocus ? "★ In Focus hubs" : "☆ Add to Focus hubs"}</button>
+                 <button type="button" class="law-btn law-btn--ghost" data-law-open-hub="${lawEsc(relocateEntry.id)}">Open founder hub</button>`
+              : ""
+          }
           <button type="button" class="law-btn law-btn--ghost" data-law-share>Share</button>
           <button type="button" class="law-btn law-btn--ghost" data-law-export>Export text</button>
           <button type="button" class="law-btn law-btn--ghost" data-law-compare-add="${lawEsc(j.id)}">Add to compare</button>
@@ -2574,6 +3335,20 @@ async function lawOpenCountry(id) {
           <button type="button" class="law-btn law-btn--ghost" data-law-back>← All jurisdictions</button>
         </div>
       </header>
+
+      <section class="law-status-teach law-panel" aria-label="How to read this status">
+        <h3>How tech founders should read this status</h3>
+        <div class="law-teach__grid law-teach__grid--compact">
+          <div class="law-teach-card law-teach-card--new">
+            <h4>If you are learning</h4>
+            <p>Each box below answers a different question. <strong>Holding</strong> = can a person own BTC. <strong>Trading</strong> = can exchanges/brokers operate under rules. <strong>Payments</strong> = can shops accept BTC. <strong>Mining</strong> = industrial or home hashing. <strong>Legal tender</strong> = must people accept BTC as money (almost never, except rare policy experiments). Green overall status does not merge these into “anything goes.”</p>
+          </div>
+          <div class="law-teach-card law-teach-card--mid">
+            <h4>If you already know the basics</h4>
+            <p>Use the grid to spot product perimeter: a legal-hold / restricted-trading mix often means “treasury OK, public app hard.” Pair this with the founder deep dive (tax residence, CASP/VASP, banking) before you spend on incorporation.</p>
+          </div>
+        </div>
+      </section>
 
       <section class="law-grid-status" aria-label="Key status">
         ${[
@@ -2636,6 +3411,20 @@ async function lawOpenCountry(id) {
             .join("") || "<li>No primary links recorded.</li>"}
         </ul>
       </section>
+
+      ${
+        relocateEntry && hub
+          ? `<section class="law-panel law-country-founder-dive" aria-label="Founder deep dive">
+          <div class="law-country-founder-dive__head">
+            <h3>Founder deep dive · learning + intermediate tracks</h3>
+            <p class="law-muted">Written for tech founders: newcomers get plain-English framing; intermediate founders get perimeter and sequencing checks. Same depth as Focus hubs (tax, KYC, services, startups, tokens). Educational only — not legal advice. Pin to Focus hubs to keep this destination on your shortlist.</p>
+          </div>
+          ${lawFounderDeepDiveHtml(relocateEntry, hub)}
+        </section>`
+          : j.status === "legal"
+            ? `<section class="law-panel"><p class="law-muted">Founder deep-dive data is syncing — open <strong>Global / Relocate</strong> or refresh once the map dataset is loaded.</p></section>`
+            : ""
+      }
     `;
 
     panel.querySelector("[data-law-back]")?.addEventListener("click", () => lawShowOverview());
@@ -2645,6 +3434,16 @@ async function lawOpenCountry(id) {
       lawRenderList();
       lawRenderMap();
     });
+    panel.querySelector("[data-law-focus-hub]")?.addEventListener("click", (e) => {
+      const rid = e.currentTarget.getAttribute("data-law-focus-hub");
+      const on = lawToggleFocusHub(rid);
+      e.currentTarget.textContent = on ? "★ In Focus hubs" : "☆ Add to Focus hubs";
+      e.currentTarget.classList.toggle("law-btn--ghost", !on);
+    });
+    panel.querySelector("[data-law-open-hub]")?.addEventListener("click", (e) => {
+      void lawShowRelocateHub(e.currentTarget.getAttribute("data-law-open-hub"));
+    });
+    lawAttachGlossary(panel);
     panel.querySelector("[data-law-share]")?.addEventListener("click", async () => {
       const url = `${location.origin}/law/${j.id}`;
       try {
@@ -2752,6 +3551,19 @@ async function lawShowPanel(name) {
     await lawShowFocusHubs();
     return;
   }
+  if (name === "simulator") {
+    if (typeof lawShowSimulator === "function") {
+      if (!lawData) {
+        try {
+          await lawLoad("simulator");
+        } catch (_) {}
+      }
+      lawShowSimulator();
+      return;
+    }
+    lawShowOverview();
+    return;
+  }
   if (String(name || "").startsWith("hub-")) {
     await lawShowRelocateHub(String(name).slice(4));
     return;
@@ -2855,6 +3667,7 @@ async function lawShowPanel(name) {
         root.innerHTML = `<p class="law-error">Could not load guide — ${lawEsc(err.message || "error")}. Ensure the guide markdown file is deployed.</p>`;
       }
     }
+    lawAttachGlossary(util);
   } else if (name === "watchlist") {
     const favs = (lawPrefs.favorites || [])
       .map((id) => (lawData?.jurisdictions || []).find((j) => j.id === id))
@@ -3048,7 +3861,7 @@ function lawBindChrome() {
     lawRenderMap();
   });
   lawEl("law-clear-filters")?.addEventListener("click", () => {
-    lawPrefs.filters = { status: "", region: "", q: "", chips: [] };
+    lawPrefs.filters = { status: "", region: "", q: "", chips: [], favoritesOnly: false };
     lawSavePrefs();
     const s = lawEl("law-search");
     if (s) s.value = "";
@@ -3056,9 +3869,18 @@ function lawBindChrome() {
     if (st) st.value = "";
     const rg = lawEl("law-filter-region");
     if (rg) rg.value = "";
+    const starred = lawEl("law-filter-starred");
+    if (starred) starred.checked = false;
     lawRenderChips();
     lawRenderList();
     lawRenderMap();
+  });
+  lawEl("law-filter-starred")?.addEventListener("change", (e) => {
+    lawPrefs.filters.favoritesOnly = Boolean(e.target.checked);
+    lawSavePrefs();
+    lawRenderList();
+    lawRenderMap();
+    lawRenderChips();
   });
 }
 
@@ -3148,8 +3970,11 @@ async function lawLoad(preferredTab) {
         console.warn("lawSyncLegalRelocateDestinations", e);
       }
     }
+    lawApplyFocusHubFlags();
     await lawEnsureWorldMap();
     lawFillFilterSelects();
+    const starredChk = lawEl("law-filter-starred");
+    if (starredChk) starredChk.checked = Boolean(lawPrefs.filters.favoritesOnly);
     lawRenderHero();
     lawRenderStats();
     lawRenderChips();
@@ -3173,6 +3998,7 @@ async function lawLoad(preferredTab) {
       "eu-mica",
       "global-founders",
       "focus-hubs",
+      "simulator",
     ];
     const path = (location.pathname || "").replace(/\/$/, "");
     const m = path.match(/^\/law\/([a-z0-9-]+)$/i);
@@ -3180,6 +4006,7 @@ async function lawLoad(preferredTab) {
     if (pathSlug === "mica" || pathSlug === "founders") pathSlug = "eu-mica";
     if (["global", "relocate", "relocation", "expat"].includes(pathSlug)) pathSlug = "global-founders";
     if (pathSlug === "focus" || pathSlug === "hubs") pathSlug = "focus-hubs";
+    if (pathSlug === "sim" || pathSlug === "structure") pathSlug = "simulator";
     const sessionCountry = sessionStorage.getItem("law-open-country");
     if (sessionCountry) sessionStorage.removeItem("law-open-country");
 
@@ -3225,6 +4052,7 @@ function initLaw(tab) {
     "eu-mica",
     "global-founders",
     "focus-hubs",
+    "simulator",
   ];
 
   // Data already loaded — switch panels immediately (L2 tab clicks)
@@ -3248,3 +4076,4 @@ function initLaw(tab) {
 window.initLaw = initLaw;
 window.lawOpenCountry = lawOpenCountry;
 window.lawShowPanel = lawShowPanel;
+window.lawShowOverview = lawShowOverview;

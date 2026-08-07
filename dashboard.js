@@ -1044,6 +1044,12 @@ const MENU_TREE = {
         accentDim: "rgba(45, 212, 191, 0.18)",
         onShow: () => window.initLaw?.("focus-hubs"),
       },
+      simulator: {
+        label: "Simulator",
+        accent: "#f472b6",
+        accentDim: "rgba(244, 114, 182, 0.18)",
+        onShow: () => window.initLaw?.("simulator"),
+      },
       compare: {
         label: "Compare",
         accent: "#64748b",
@@ -1418,6 +1424,9 @@ const LEGACY_L2 = {
     "focus-hubs": "focus-hubs",
     focus: "focus-hubs",
     hubs: "focus-hubs",
+    simulator: "simulator",
+    sim: "simulator",
+    structure: "simulator",
     compare: "compare",
     comparison: "compare",
     watchlist: "watchlist",
@@ -2188,6 +2197,9 @@ function bootstrapPathMenu() {
         "focus-hubs",
         "focus",
         "hubs",
+        "simulator",
+        "sim",
+        "structure",
       ].includes(slug) || slug.startsWith("hub-")
     ) {
       let l2 = slug;
@@ -2195,6 +2207,7 @@ function bootstrapPathMenu() {
       else if (slug === "mica" || slug === "founders") l2 = "eu-mica";
       else if (["global", "relocate", "relocation", "expat"].includes(slug)) l2 = "global-founders";
       else if (slug === "focus" || slug === "hubs") l2 = "focus-hubs";
+      else if (slug === "sim" || slug === "structure") l2 = "simulator";
       else if (slug.startsWith("hub-")) l2 = "global-founders";
       localStorage.setItem(MENU_L2_KEY, l2);
     } else {
