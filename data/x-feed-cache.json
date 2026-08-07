@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-07T06:08:04Z",
+  "fetchedAt": "2026-08-07T08:12:20Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Whales continue to accumulate $BTC. Another newly created wallet withdrew 434.87 $BTC($27.96M) from #Binance. https://arkm.com/explorer/address/bc1qaqecvj4uvp598q7pqxv3z37xc8tcapkumm73qv",
+      "link": "https://x.com/lookonchain/status/2085636877370233068#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whales continue to accumulate $BTC . Another newly created wallet withdrew 434.87 $BTC ($27.96M) from #Binance . arkm.com/explorer/address/bc\u2026 Lookonchain (@lookonchain) Whales are accumulating $BTC ! Four newly created wallets have received 1,540 $BTC ($99.4M) from #GalaxyDigita",
+      "publishedAt": "2026-08-07T07:59:15+00:00",
+      "publishedTs": 1786089555.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin doesn\u2019t need CLARITY. America needs clarity.",
+      "link": "https://x.com/saylor/status/2085631181152829643#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-07T07:36:37+00:00",
+      "publishedTs": 1786088197.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The #Coldcard hacker, who stole 2,055 $BTC($130M), is active again. An hour ago, the hacker transferred 30.185 $BTC($1.94M) to a new wallet. https://arkm.com/explorer/address/bc1qmd5m5ktv7m5ffujxv4248fxv36myvdx79n8jp6",
       "link": "https://x.com/lookonchain/status/2085593899465416881#m",
@@ -1038,19 +1064,6 @@
       "summary": "Jim Cramer says, \u201cI\u2019m going to sell my bitcoin\u201d \ud83e\udd23 Video",
       "publishedAt": "2026-08-03T18:01:24+00:00",
       "publishedTs": 1785780084.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "RT @apyx_fi: $STRC is recovering toward par. \ud83d\udc40 Want exposure to that upside plus Apyx's enhanced digital credit yield? Now is your chance.\u2026",
-      "link": "https://x.com/saylor/status/2084323933805748653#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @apyx_fi : $STRC is recovering toward par. \ud83d\udc40 Want exposure to that upside plus Apyx's enhanced digital credit yield? Now is your chance.\u2026",
-      "publishedAt": "2026-08-03T17:02:05+00:00",
-      "publishedTs": 1785776525.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
