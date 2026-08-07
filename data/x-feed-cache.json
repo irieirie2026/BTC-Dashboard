@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-07T19:51:33Z",
+  "fetchedAt": "2026-08-07T20:38:58Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -39,7 +39,7 @@
       "publishedTs": 1786129320.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Lummis releases statement now Clarity Act vote is delayed: \"There will be a time where I can say more, but for now, let me say this, we've come too far to quit\"\ud83d\udc40 \"I will continue working with my colleagues to get this done \u2014 this fight is far from over\" \u270a",
