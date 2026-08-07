@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-07T12:59:11Z",
+  "fetchedAt": "2026-08-07T14:16:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A team of more than 24 volunteer coders calling themselves \u201cBitcoin Red Team\u201d have been using new AI models this week to check all open-source Bitcoin software apps. They have found 1029 high critical security vulnerabilities so far.",
+      "link": "https://x.com/DocumentingBTC/status/2085725415537049738#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-07T13:51:04+00:00",
+      "publishedTs": 1786110664.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $BTC(+$109.16M)\ud83d\udfe2 7D NetFlow: +7,306 $BTC(+$476.7M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +42,756 $ETH(+$82.52M)\ud83d\udfe2 7D NetFlow: +85,091 $ETH(+$164.22M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2085724779512987942#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $BTC (+$109.16M)\ud83d\udfe2 7D NetFlow: +7,306 $BTC (+$476.7M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +42,756 $ETH (+$82.52M)\ud83d\udfe2 7D NetFlow: +85,091 $ETH (+$164.22M)\ud83d\udfe2 Lookonchain (@lookonchain) August 6 Update: #Bitcoin ETFs: 1D NetFlow: +3,781 $BTC (",
+      "publishedAt": "2026-08-07T13:48:32+00:00",
+      "publishedTs": 1786110512.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The 1600BTC-short trader closed another 500 $BTC ($32.58M) to avoid liquidation. The total loss has now exceeded $1.5M. Current position: 900 $BTC($58.6M) New liquidation price: $64,998.73",
+      "link": "https://x.com/lookonchain/status/2085720096383865316#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The 1600BTC-short trader closed another 500 $BTC ($32.58M) to avoid liquidation. The total loss has now exceeded $1.5M. Current position: 900 $BTC ($58.6M) New liquidation price: $64,998.73 Lookonchain (@lookonchain) The 1600BTC-short trader closed 200 $BTC ($12.92M) early, takin",
+      "publishedAt": "2026-08-07T13:29:56+00:00",
+      "publishedTs": 1786109396.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "After a month of inactivity, Royal Government of Bhutan sold another 434.87 $BTC ($27.93M). https://arkm.com/explorer/address/bc1qwug26pvyaz8tjnzgvsthheqhaa77r3d7ukpqlh",
+      "link": "https://x.com/lookonchain/status/2085717867107058165#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "After a month of inactivity, Royal Government of Bhutan sold another 434.87 $BTC ($27.93M). arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-08-07T13:21:04+00:00",
+      "publishedTs": 1786108864.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: $65,177 Bitcoin! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2085701153082208346#m",
@@ -874,19 +926,6 @@
       "isRetweet": false
     },
     {
-      "title": "Whale 0x2684 bought another 3,960 $ETH($7.4M) 3 hours ago. Since June 30, the whale has bought 79,216 $ETH($140.77M) at an average price of $1,777 and 1,400 $WBTC($89.44M) at an average price of $63,887. https://arkm.com/explorer/address/0x268448f31594F4636D03cBB4E813b94801E47643",
-      "link": "https://x.com/lookonchain/status/2084974488840699975#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale 0x2684 bought another 3,960 $ETH ($7.4M) 3 hours ago. Since June 30, the whale has bought 79,216 $ETH ($140.77M) at an average price of $1,777 and 1,400 $WBTC ($89.44M) at an average price of $63,887. arkm.com/explorer/address/0x\u2026",
-      "publishedAt": "2026-08-05T12:07:09+00:00",
-      "publishedTs": 1785931629.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper & better, they can act as our verification agents.",
       "link": "https://x.com/lopp/status/2084969501485842498#m",
       "source": "@lopp",
@@ -1532,19 +1571,6 @@
       "summary": "",
       "publishedAt": "2026-07-31T20:49:20+00:00",
       "publishedTs": 1785530960.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfREAKING: Bitkey, Ledger, Trezor, Jade, and other Bitcoin hardware wallets report they are unaffected and safe from the hack of ColdCards.",
-      "link": "https://x.com/DocumentingBTC/status/2083277876984455630#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-07-31T19:45:25+00:00",
-      "publishedTs": 1785527125.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
