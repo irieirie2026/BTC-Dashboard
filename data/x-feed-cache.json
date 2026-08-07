@@ -1,16 +1,29 @@
 {
-  "fetchedAt": "2026-08-06T23:56:31Z",
+  "fetchedAt": "2026-08-07T02:43:34Z",
   "source": "nitter.net",
   "tweets": [
     {
-      "title": "Micheal Saylor says he used ChatGPT and bitcoin to make his company $15,000,000,000 last year",
-      "link": "https://x.com/DocumentingBTC/status/2085503004619227180#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Micheal Saylor says he used ChatGPT and bitcoin to make his company $15,000,000,000 last year Video",
-      "publishedAt": "2026-08-06T23:07:17+00:00",
-      "publishedTs": 1786057637.0,
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate postpones Clarity Act vote to September for when they return from August recess, Politico reports.",
+      "link": "https://x.com/BitcoinMagazine/status/2085544732252320150#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-07T01:53:06+00:00",
+      "publishedTs": 1786067586.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Bitcoin mining companies are selling $BTC. MARA, which holds 36,303 $BTC($2.34B), deposited 200 $BTC($12.86M) into NYDIG 10 hours ago. Riot Platforms also continues to send $BTC to NYDIG, depositing another 381 $BTC($24.51M) 10 hours ago. https://arkm.com/explorer/entity/mara-poo",
+      "link": "https://x.com/lookonchain/status/2085527400503537919#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Bitcoin mining companies are selling $BTC . MARA, which holds 36,303 $BTC ($2.34B), deposited 200 $BTC ($12.86M) into NYDIG 10 hours ago. Riot Platforms also continues to send $BTC to NYDIG, depositing another 381 $BTC ($24.51M) 10 hours ago. arkm.com/explorer/entity/mar\u2026 arkm.co",
+      "publishedAt": "2026-08-07T00:44:14+00:00",
+      "publishedTs": 1786063454.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -653,19 +666,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @SenLummis: \u26a1\ufe0f FLASH SALE: TODAY ONLY 'Bitcoin: The Honest Money' is 21% off to celebrate our X Spaces with the author @justdoitalex! Tune in at 12 pm CST and grab your copy \ud83d\udc47 https://store.bitcoinmagazine.com/collections/books/products/bitcoin-the-honest-money",
-      "link": "https://x.com/BitcoinMagazine/status/2085029769918198110#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "\u26a1\ufe0f FLASH SALE: TODAY ONLY 'Bitcoin: The Honest Money' is 21% off to celebrate our X Spaces with the author @justdoitalex ! Tune in at 12 pm CST and grab your copy \ud83d\udc47 store.bitcoinmagazine.com/co\u2026",
-      "publishedAt": "2026-08-05T15:46:49+00:00",
-      "publishedTs": 1785944809.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I know everyone is busy right now, but I need you to take a few minutes and write me a letter of support for .bitcoin",
       "link": "https://x.com/wiz/status/2085029140453830725#m",
       "source": "@lopp",
@@ -700,19 +700,6 @@
       "summary": "",
       "publishedAt": "2026-08-05T15:29:34+00:00",
       "publishedTs": 1785943774.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis says she's working late into the nights and \"with Democrats every day on the Clarity Act.\" \ud83d\udc4f \"Let's provide a clear regulatory framework and keep this industry here in the United States by passing the Clarity Act.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2085018255299658192#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-05T15:01:04+00:00",
-      "publishedTs": 1785942064.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -835,32 +822,6 @@
       "isRetweet": false
     },
     {
-      "title": "MARA, the Bitcoin mining company holding 36,303 $BTC($2.34B), transferred 6,000 $BTC($384.6M) to #TwoPrime over the past 5 hours. The transfer doesn't necessarily mean a sale\u2014it could be for asset management. https://arkm.com/explorer/address/bc1qkrr502g34cy5yusmurnzksc3elcxyrlh9",
-      "link": "https://x.com/lookonchain/status/2084825510656540722#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "MARA, the Bitcoin mining company holding 36,303 $BTC ($2.34B), transferred 6,000 $BTC ($384.6M) to #TwoPrime over the past 5 hours. The transfer doesn't necessarily mean a sale\u2014it could be for asset management. arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-08-05T02:15:10+00:00",
-      "publishedTs": 1785896110.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Is Michael Saylor's @Strategy dumping $BTC again? Wallets linked to #Strategy transferred out 1,030 $BTC($66.14M) again 2 hours ago. https://arkm.com/explorer/entity/2166fca0-97b5-4052-afa6-9f29bf8f58bd",
-      "link": "https://x.com/lookonchain/status/2084816808234959110#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Is Michael Saylor's @Strategy dumping $BTC again? Wallets linked to #Strategy transferred out 1,030 $BTC ($66.14M) again 2 hours ago. arkm.com/explorer/entity/216\u2026 Lookonchain (@lookonchain) Just as we tracked, Michael Saylor's @Strategy did sell $BTC again. Last week, Strategy s",
-      "publishedAt": "2026-08-05T01:40:35+00:00",
-      "publishedTs": 1785894035.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
       "link": "https://x.com/CryptoHayes/status/2084806878413099165#m",
       "source": "@CryptoHayes",
@@ -874,19 +835,6 @@
       "isRetweet": false
     },
     {
-      "title": "A mysterious trader is making a massive 40x short on $BTC! A newly created wallet, 0xff84, deposited 2.44M $USDC into Hyperliquid and opened a 40x short on 1,600 $BTC($102.6M). Liquidation price: $64,888.97. Does he know something, or is this just a huge bet? https://hypurrscan.i",
-      "link": "https://x.com/lookonchain/status/2084801638695657674#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "A mysterious trader is making a massive 40x short on $BTC ! A newly created wallet, 0xff84, deposited 2.44M $USDC into Hyperliquid and opened a 40x short on 1,600 $BTC ($102.6M). Liquidation price: $64,888.97. Does he know something, or is this just a huge bet? hypurrscan.io/addr",
-      "publishedAt": "2026-08-05T00:40:19+00:00",
-      "publishedTs": 1785890419.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Tranquilize the \u20bfears.",
       "link": "https://x.com/saylor/status/2084787271631356402#m",
       "source": "@saylor",
@@ -895,32 +843,6 @@
       "summary": "Tranquilize the \u20bfears. Video",
       "publishedAt": "2026-08-04T23:43:13+00:00",
       "publishedTs": 1785886993.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Here come a bunch of \"where did you pay 140bps I only pay 40bps\" The answer is 40bps is still insane from an ETF perspective and doing research I decided to try and get bitcoin on my own. Ledger app sources many exchanges 150bps was MINIMUM to convert my doll",
-      "link": "https://x.com/EricBalchunas/status/2084739947316261215#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Here come a bunch of \"where did you pay 140bps I only pay 40bps\" The answer is 40bps is still insane from an ETF perspective and doing research I decided to try and get bitcoin on my own. Ledger app sources many exchanges 150bps was MINIMUM to convert my dollars to bitcoin. Coinb",
-      "publishedAt": "2026-08-04T20:35:10+00:00",
-      "publishedTs": 1785875710.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "BlackRock has announced a 1 for 3 reverse split for $ETHA so the price will go from $14 to $42 in Oct.. this will lower cost to trade from 7bps to 2bps ish. Gotta love how ETF issuers consider a 7bp spread a PROBLEM and is adjusting to cut it to 2bps, meanwhile the crypto exchang",
-      "link": "https://x.com/EricBalchunas/status/2084737824830758934#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "BlackRock has announced a 1 for 3 reverse split for $ETHA so the price will go from $14 to $42 in Oct.. this will lower cost to trade from 7bps to 2bps ish. Gotta love how ETF issuers consider a 7bp spread a PROBLEM and is adjusting to cut it to 2bps, meanwhile the crypto exchang",
-      "publishedAt": "2026-08-04T20:26:44+00:00",
-      "publishedTs": 1785875204.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1558,6 +1480,19 @@
       "summary": "",
       "publishedAt": "2026-07-31T19:45:25+00:00",
       "publishedTs": 1785527125.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d Video",
+      "publishedAt": "2026-07-31T18:02:51+00:00",
+      "publishedTs": 1785520971.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
