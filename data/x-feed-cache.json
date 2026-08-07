@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-07T09:59:48Z",
+  "fetchedAt": "2026-08-07T11:01:09Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year",
+      "link": "https://x.com/DocumentingBTC/status/2085677641223250298#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year Video",
+      "publishedAt": "2026-08-07T10:41:14+00:00",
+      "publishedTs": 1786099274.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whales continue to accumulate $BTC. Another newly created wallet withdrew 434.87 $BTC($27.96M) from #Binance. https://arkm.com/explorer/address/bc1qaqecvj4uvp598q7pqxv3z37xc8tcapkumm73qv",
       "link": "https://x.com/lookonchain/status/2085636877370233068#m",
@@ -1493,19 +1506,6 @@
       "summary": "",
       "publishedAt": "2026-07-31T19:45:25+00:00",
       "publishedTs": 1785527125.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2083252063312507192#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Jack Mallers says the hack of ColdCards by new AI models is \u201cone of the most serious wallet security incidents Bitcoin has seen\u201d and to \u201cpay attention\u201d Video",
-      "publishedAt": "2026-07-31T18:02:51+00:00",
-      "publishedTs": 1785520971.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
