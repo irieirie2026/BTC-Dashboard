@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-07T21:37:13Z",
+  "fetchedAt": "2026-08-07T22:32:55Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "so nikita left and they instantly fixed monetization? huh",
+      "link": "https://x.com/nic_carter/status/2085854292888396242#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-07T22:23:11+00:00",
+      "publishedTs": 1786141391.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Jack Dorsey's 'Block' added 234 Bitcoin worth $15.1 million \ud83d\udc40 Their treasury now totals 9,117 BTC \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2085835753641082966#m",
@@ -1548,19 +1561,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "It\u2019s terrible for Bitcoin out there. I never considered myself a maxi because I\u2019m a free thinker. I just own Bitcoin. I\u2019ve always used the storage methods that made the most sense for me. I\u2019ve promoted Ledger and Coinbase on my podcast before, and maxis would criticize it. Lookin",
-      "link": "https://x.com/aubreystrobel/status/2083659999818235935#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s terrible for Bitcoin out there. I never considered myself a maxi because I\u2019m a free thinker. I just own Bitcoin. I\u2019ve always used the storage methods that made the most sense for me. I\u2019ve promoted Ledger and Coinbase on my podcast before, and maxis would criticize it. Lookin",
-      "publishedAt": "2026-08-01T21:03:51+00:00",
-      "publishedTs": 1785618231.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "On this day in history, 16 years ago, Wikipedia deleted the page about Bitcoin because they said there was a \u201cLack of significant third-party coverage to confer notability.\u201d",
