@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-07T15:54:17Z",
+  "fetchedAt": "2026-08-07T16:52:32Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: There's now a 62% chance Bitcoin will be above $67,500 this month, according to http://Polymarket.com \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2085767353778749485#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: There's now a 62% chance Bitcoin will be above $67,500 this month, according to Polymarket.com \ud83d\ude80",
+      "publishedAt": "2026-08-07T16:37:43+00:00",
+      "publishedTs": 1786120663.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I joined @GaryGillX to discuss Strategy\u2019s Digital Credit Capital Framework, $STRC\u2019s path to par, Bitcoin monetization, institutional adoption, regulatory Clarity, and $MSTR as Amplified Bitcoin. https://www.youtube.com/watch?v=ks2i176-se8",
+      "link": "https://x.com/phongle/status/2085757197565190379#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "I joined @GaryGillX to discuss Strategy\u2019s Digital Credit Capital Framework, $STRC\u2019s path to par, Bitcoin monetization, institutional adoption, regulatory Clarity, and $MSTR as Amplified Bitcoin. piped.video/watch?v=ks2i176-\u2026 Link Phong Le, CEO of Strategy: &quot;STRC to $100 and ",
+      "publishedAt": "2026-08-07T15:57:22+00:00",
+      "publishedTs": 1786118242.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "We are so \u20bfack.",
+      "link": "https://x.com/apyx_fi/status/2085756340065149043#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We are so \u20bfack. Video",
+      "publishedAt": "2026-08-07T15:53:57+00:00",
+      "publishedTs": 1786118037.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -> Server -> Maintenance -> Update & verify the 2.4.2 version string in the footer. If you are ",
+      "link": "https://x.com/BtcpayServer/status/2085755643659522240#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -&gt; Server -&gt; Maintenance -&gt; Update & verify the 2.4.2 version string in the footer. If",
+      "publishedAt": "2026-08-07T15:51:11+00:00",
+      "publishedTs": 1786117871.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation",
       "link": "https://x.com/DocumentingBTC/status/2085754712314306692#m",
@@ -848,19 +900,6 @@
       "isRetweet": false
     },
     {
-      "title": "NEW: \ud83c\uddf7\ud83c\uddfa Russia President Putin has signed a law providing comprehensive regulation for digital assets and rights for investors \ud83d\udc40 \"The legislation governs the organization, accounting, and custody of digital currencies and foreign digital instruments.\" \ud83d\udca5",
-      "link": "https://x.com/BitcoinMagazine/status/2085075028966531124#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-05T18:46:40+00:00",
-      "publishedTs": 1785955600.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Think \u20bfigger.",
       "link": "https://x.com/saylor/status/2085039380746404187#m",
       "source": "@saylor",
@@ -869,19 +908,6 @@
       "summary": "Think \u20bfigger. Strategy (@Strategy) Our ambition is to be the world's largest company by market cap by owning the most capital $BTC , issuing the strongest credit $STRC , and creating the best equity $MSTR . Video \u2014 https://nitter.net/Strategy/status/2085033509408702621#m",
       "publishedAt": "2026-08-05T16:25:01+00:00",
       "publishedTs": 1785947101.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "imagine if this helps to mark the bottom?",
-      "link": "https://x.com/JSeyff/status/2085037617842627041#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "imagine if this helps to mark the bottom? Jersey Jerry (@Jerrythekid21) Crypto guys comment below. How can I assist getting BTC to 150,000? \u2014 https://nitter.net/Jerrythekid21/status/2085001856603066475#m",
-      "publishedAt": "2026-08-05T16:18:00+00:00",
-      "publishedTs": 1785946680.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -924,19 +950,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "$CAIE (autocallable ETF) has now seen 60 straight weeks of inflows, meaning its taken in cash every single week since launching over a year ago. I don't think that's ever happened before. Looks all organic too, has 169 dif 13f owners making up 41% of ETF, rest is retail.",
-      "link": "https://x.com/EricBalchunas/status/2085025426301227212#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-05T15:29:34+00:00",
-      "publishedTs": 1785943774.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
@@ -1043,19 +1056,6 @@
       "isRetweet": false
     },
     {
-      "title": "Our corporate objective is to return $STRC to $100, and we have the means to do it.",
-      "link": "https://x.com/Strategy/status/2084709016211501453#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Our corporate objective is to return $STRC to $100, and we have the means to do it. Video",
-      "publishedAt": "2026-08-04T18:32:16+00:00",
-      "publishedTs": 1785868336.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp & @Nneuman https://x.com/i/broadcasts/1yJAPPLvorMGb",
       "link": "https://x.com/BitcoinNewsCom/status/2084702211758858337#m",
       "source": "@lopp",
@@ -1103,19 +1103,6 @@
       "summary": "Hey idiot did it collapse yet? Ed Zitron (@edzitron) Newsletter: Based on estimates of their burn rate and historic analyses, I hypothesize that OpenAI will collapse in the next 12-24 months unless it raises more funding than in the history of the valley and creates an entirely n",
       "publishedAt": "2026-08-04T15:33:43+00:00",
       "publishedTs": 1785857623.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "At 961,022, BIP-110 has 38 signals (2.70%). Its 55% voluntary threshold is impossible. At 961,632, BIP-110 nodes reject non-signaling blocks. Unless major miners reverse, Bitcoin continues normally while BIP-110 stalls or forks into irrelevance. Its backers should stand down.",
-      "link": "https://x.com/saylor/status/2084653839555219533#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-04T14:53:01+00:00",
-      "publishedTs": 1785855181.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1233,19 +1220,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T15:53:04+00:00",
       "publishedTs": 1785772384.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @lopp: Is the worst already behind us? Possibly from a \"number of wallets\" perspective but it only takes 1 sufficiently high value wallet to blow out the BTC amount.",
-      "link": "https://x.com/lopp/status/2084301641759576385#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Is the worst already behind us? Possibly from a \"number of wallets\" perspective but it only takes 1 sufficiently high value wallet to blow out the BTC amount.",
-      "publishedAt": "2026-08-03T15:33:30+00:00",
-      "publishedTs": 1785771210.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1506,19 +1480,6 @@
       "summary": "",
       "publishedAt": "2026-08-01T20:19:22+00:00",
       "publishedTs": 1785615562.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "As the mass key compromise event continues to unfold, I'm keeping my eyes on the \"Bitcoin Days Destroyed\" chart which is an easy way to notice when lots of long-dormant coins start moving.",
-      "link": "https://x.com/lopp/status/2083591099998675333#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-01T16:30:04+00:00",
-      "publishedTs": 1785601804.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
