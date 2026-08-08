@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-08T03:23:51Z",
+  "fetchedAt": "2026-08-08T04:54:53Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -814,7 +814,7 @@
       "source": "@saylor",
       "authorName": "Michael Saylor",
       "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is digital capital. AI is digital intelligence. I joined @StevenBartlett to discuss how they are reshaping money, business, markets, work, and the future. piped.video/watch?v=1aGpJQ8B\u2026 Link Man Who Owns 4% Of All Bitcoin: His Final WARNING To Everyone Who Doesn&apos;t Own",
+      "summary": "Bitcoin is digital capital. AI is digital intelligence. I joined @StevenBartlett to discuss how they are reshaping money, business, markets, work, and the future. piped.video/watch?v=1aGpJQ8B\u2026 Link The Man Who Owns 4% Of All Bitcoin: His Final WARNING To Those Who | Michael Saylo",
       "publishedAt": "2026-08-06T13:46:20+00:00",
       "publishedTs": 1786023980.0,
       "category": "x",
@@ -950,19 +950,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Whales are accumulating $BTC! Four newly created wallets have received 1,540 $BTC($99.4M) from #GalaxyDigital and #BitGo in the past 3 hours. https://arkm.com/explorer/address/bc1qdt0jqrt6n386akfpm0636mf3ux2wzs5uujpwumpkglgxdmr3vzzs0ev4f9 https://arkm.com/explorer/address/bc1q954",
-      "link": "https://x.com/lookonchain/status/2085187450775961822#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whales are accumulating $BTC ! Four newly created wallets have received 1,540 $BTC ($99.4M) from #GalaxyDigital and #BitGo in the past 3 hours. arkm.com/explorer/address/bc\u2026 arkm.com/explorer/address/bc\u2026 arkm.com/explorer/address/bc\u2026 arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-08-06T02:13:23+00:00",
-      "publishedTs": 1785982403.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed.",
