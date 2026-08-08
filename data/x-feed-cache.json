@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-08T19:28:10Z",
+  "fetchedAt": "2026-08-08T20:27:14Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "BIP-110 now has its own chain fork!",
+      "link": "https://x.com/lopp/status/2086184315495367038#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T20:14:34+00:00",
+      "publishedTs": 1786220074.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BIP-110 nodes and non BIP-110 nodes have officially diverged chain tips. 110 nodes are stuck at height 961,631. https://bip110.orange.surf/live.html",
+      "link": "https://x.com/lopp/status/2086177865414955098#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "BIP-110 nodes and non BIP-110 nodes have officially diverged chain tips. 110 nodes are stuck at height 961,631. bip110.orange.surf/live.html Link BIP110 Situation Monitor: Live A BIP-110-enforcing node vs a regular Bitcoin node, side by side, live. bip110.orange.surf",
+      "publishedAt": "2026-08-08T19:48:57+00:00",
+      "publishedTs": 1786218537.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "x.com/i/spaces/1jxXggWWaAvJZ",
+      "link": "https://x.com/BitcoinMagazine/status/2086175237989597688#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "nitter.net/i/spaces/1jxXggWWaAvJZ Link Twitter Space Click to view Space https://nitter.net/i/spaces/1jxXggWWaAvJZ",
+      "publishedAt": "2026-08-08T19:38:30+00:00",
+      "publishedTs": 1786217910.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It's go time! https://bip110.com",
+      "link": "https://x.com/lopp/status/2086174870656668146#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "It's go time! bip110.com",
+      "publishedAt": "2026-08-08T19:37:03+00:00",
+      "publishedTs": 1786217823.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Updated every 15 seconds on http://strategy.com.",
       "link": "https://x.com/Strategy/status/2086156982822564317#m",
@@ -952,19 +1004,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senator Elizabeth Warren says \"We need crypto legislation. I've been saying this for a long time.\" \"But crypto legislation that has been written by the crypto industry to protect and advance the crypto industry...that's just not good crypto legislation.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2085368396762222762#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senator Elizabeth Warren says \"We need crypto legislation. I've been saying this for a long time.\" \"But crypto legislation that has been written by the crypto industry to protect and advance the crypto industry...that's just not good crypto legislation.\" Video",
-      "publishedAt": "2026-08-06T14:12:24+00:00",
-      "publishedTs": 1786025544.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Are you a @CasaHODL client who wants to help your friends and family improve their bitcoin's security? Don't forget our referral program - you can find it at the top of the settings screen in the app!",
       "link": "https://x.com/lopp/status/2085365077532709310#m",
       "source": "@lopp",
@@ -1199,19 +1238,6 @@
       "isRetweet": false
     },
     {
-      "title": "If you're looking to download NEW wallet software to migrate funds into, don't use a web or app store search. Many results are for malicious software. First, use multiple sources to verify the real web site belonging to that project. Then use links on their site to download.",
-      "link": "https://x.com/lopp/status/2085009215530180851#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-05T14:25:09+00:00",
-      "publishedTs": 1785939909.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
       "link": "https://x.com/ChrisMMillas/status/2085002891321115112#m",
       "source": "@saylor",
@@ -1225,19 +1251,6 @@
       "isRetweet": true
     },
     {
-      "title": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper & better, they can act as our verification agents.",
-      "link": "https://x.com/lopp/status/2084969501485842498#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper &amp; better, they can act as our verification agents.",
-      "publishedAt": "2026-08-05T11:47:20+00:00",
-      "publishedTs": 1785930440.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
       "link": "https://x.com/CryptoHayes/status/2084806878413099165#m",
       "source": "@CryptoHayes",
@@ -1249,19 +1262,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp & @Nneuman https://x.com/i/broadcasts/1yJAPPLvorMGb",
-      "link": "https://x.com/BitcoinNewsCom/status/2084702211758858337#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman nitter.net/i/broadcasts/1yJAPPLvo\u2026 Link Bitcoin News MORE BITCOIN WALLETS EXPOSED \u2014 Do Not Assume You\u2019re Safe w/ @lopp &amp; @Nneuman https://nitter.net/i/broadcasts/1yJAPPLvorMGb",
-      "publishedAt": "2026-08-04T18:05:13+00:00",
-      "publishedTs": 1785866713.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "very funny that Leo was a forced seller at the generational pico nano bottom here",
