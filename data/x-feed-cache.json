@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-08T15:27:46Z",
+  "fetchedAt": "2026-08-08T16:31:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
+      "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required Video",
+      "publishedAt": "2026-08-08T16:23:27+00:00",
+      "publishedTs": 1786206207.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The disappointing thing about BIP-110 failing is that we won't be able to economically punish those folks for wasting our time since they won't put their bitcoin where their mouths are. The amusing thing is that any hard fork they end up launching will get filled with JPEGs.",
+      "link": "https://x.com/lopp/status/2086122366371844192#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T16:08:25+00:00",
+      "publishedTs": 1786205305.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "I spoke with @jvisserlabs to break down why the last two weeks may be the most important stretch in bitcoin's history, along with the US-Japan yen intervention and a weakening labor market. We also discuss the AI stock rebound, physical AI and Tesla's Terafab, Google's talent exo",
       "link": "https://x.com/APompliano/status/2086091396528660927#m",
@@ -1316,19 +1342,6 @@
       "isRetweet": true
     },
     {
-      "title": "Security engineers these days:",
-      "link": "https://x.com/lopp/status/2084591183922139289#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-04T10:44:02+00:00",
-      "publishedTs": 1785840242.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Incredible video explaining the Bitcoin wallet hack",
       "link": "https://x.com/DocumentingBTC/status/2084347267067113825#m",
       "source": "@DocumentingBTC",
@@ -1597,19 +1610,6 @@
       "summary": "",
       "publishedAt": "2026-08-01T20:19:22+00:00",
       "publishedTs": 1785615562.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfREAKING: Market price of bitcoin is now twice as valuable as all other cryptocurrencies combined.",
-      "link": "https://x.com/DocumentingBTC/status/2083557986522312877#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-01T14:18:29+00:00",
-      "publishedTs": 1785593909.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
