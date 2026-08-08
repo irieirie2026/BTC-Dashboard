@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-08T20:27:14Z",
+  "fetchedAt": "2026-08-08T21:27:52Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Tell Luke.",
+      "link": "https://x.com/sr_gi/status/2086191946691678211#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T20:44:54+00:00",
+      "publishedTs": 1786221894.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Epic karma. You can't make this up.",
+      "link": "https://x.com/lopp/status/2086189495502667925#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Epic karma. You can't make this up. l0rinc (@L0RINC) Ocean killed BIP110 \u2014 https://nitter.net/L0RINC/status/2086188544738074671#m",
+      "publishedAt": "2026-08-08T20:35:09+00:00",
+      "publishedTs": 1786221309.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "BIP-110 now has its own chain fork!",
       "link": "https://x.com/lopp/status/2086184315495367038#m",
@@ -1022,7 +1048,7 @@
       "source": "@saylor",
       "authorName": "Michael Saylor",
       "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is digital capital. AI is digital intelligence. I joined @StevenBartlett to discuss how they are reshaping money, business, markets, work, and the future. piped.video/watch?v=1aGpJQ8B\u2026 Link The Man Who Owns 4% Of All Bitcoin: &quot;I Made $15 Billion By Using ChatGpt&quot",
+      "summary": "Bitcoin is digital capital. AI is digital intelligence. I joined @StevenBartlett to discuss how they are reshaping money, business, markets, work, and the future. piped.video/watch?v=1aGpJQ8B\u2026 Link The Man Who Owns 4% Of All Bitcoin: &quot;I Made $15 Billion By Using ChatGPT!&quo",
       "publishedAt": "2026-08-06T13:46:20+00:00",
       "publishedTs": 1786023980.0,
       "category": "x",
@@ -1197,32 +1223,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
-      "link": "https://x.com/shorttsqueeze/status/2085035593663459822#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
-      "publishedAt": "2026-08-05T16:09:58+00:00",
-      "publishedTs": 1785946198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "I know everyone is busy right now, but I need you to take a few minutes and write me a letter of support for .bitcoin",
-      "link": "https://x.com/wiz/status/2085029140453830725#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I know everyone is busy right now, but I need you to take a few minutes and write me a letter of support for .bitcoin Article Notice of ICANN .bitcoin TLD community application Dear Bitcoiners, As the operator of mempool.space and one of Bitcoin\u2019s DNS seeds (wiz.biz/bitcoin/seed)",
-      "publishedAt": "2026-08-05T15:44:19+00:00",
-      "publishedTs": 1785944659.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
