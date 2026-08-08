@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-08T18:35:01Z",
+  "fetchedAt": "2026-08-08T19:28:10Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Updated every 15 seconds on http://strategy.com.",
+      "link": "https://x.com/Strategy/status/2086156982822564317#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Updated every 15 seconds on strategy.com .",
+      "publishedAt": "2026-08-08T18:25:58+00:00",
+      "publishedTs": 1786213558.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "I recall the tension while working at @BitGo in 2017 when we had intra-company disputes over supporting SegWit2X... I can only imagine how much fun the employees at @ocean_mining are having today! I hope y'all can protect your company from being destroyed by delusional folks!",
       "link": "https://x.com/lopp/status/2086155840948421089#m",
@@ -1197,19 +1210,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "After nearly a decade in Bitcoin, I can conclude that the average person has no interest in rolling dice, buying multiple hardware wallets, and setting up a maximum-paranoia multisig vault just to avoid losing Bitcoin. There is nothing wrong with doing that. It simply does not me",
-      "link": "https://x.com/IIICapital/status/2085006057646985434#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "After nearly a decade in Bitcoin, I can conclude that the average person has no interest in rolling dice, buying multiple hardware wallets, and setting up a maximum-paranoia multisig vault just to avoid losing Bitcoin. There is nothing wrong with doing that. It simply does not me",
-      "publishedAt": "2026-08-05T14:12:36+00:00",
-      "publishedTs": 1785939156.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
