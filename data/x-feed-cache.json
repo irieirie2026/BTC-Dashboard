@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-08T21:27:52Z",
+  "fetchedAt": "2026-08-08T22:27:07Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "You can't bluff your way into a successful UASF. Bitcoiners, take heed.",
+      "link": "https://x.com/lopp/status/2086213833668825350#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T22:11:52+00:00",
+      "publishedTs": 1786227112.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Image",
+      "link": "https://x.com/nic_carter/status/2086213522556424402#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Joe Weisenthal (@TheStalwart) It's boom times in Pyongyang. GDP for the DPRK has kicked into a higher gear, and if there's any doubt, you can see that from space that it's getting brighter and brighter at night. bloomberg.com/graphics/2026-\u2026 \u2014 https://nitter.net/TheStalwart/statu",
+      "publishedAt": "2026-08-08T22:10:38+00:00",
+      "publishedTs": 1786227038.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A simple explainer of what just happened RIP BIP110 \u2620\ufe0f",
+      "link": "https://x.com/OrangeSurfBTC/status/2086205758727672251#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T21:39:47+00:00",
+      "publishedTs": 1786225187.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Tell Luke.",
       "link": "https://x.com/sr_gi/status/2086191946691678211#m",
@@ -146,6 +185,19 @@
       "isRetweet": false
     },
     {
+      "title": "It\u2019s fork day. With negligible support from BTC miners for BIP110, it looks like the plan is a last minute Proof of Work (PoW) change to \u201cfire the miners\u201d. New PoW, new asset, new ticker. What shall we name this new shitcoin? Drop your best ideas below \ud83d\udc47",
+      "link": "https://x.com/DylanLeClair/status/2086116267035857025#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "It\u2019s fork day. With negligible support from BTC miners for BIP110, it looks like the plan is a last minute Proof of Work (PoW) change to \u201cfire the miners\u201d. New PoW, new asset, new ticker. What shall we name this new shitcoin? Drop your best ideas below \ud83d\udc47 Walker\u26a1\ufe0f (@WalkerAmerica)",
+      "publishedAt": "2026-08-08T15:44:10+00:00",
+      "publishedTs": 1786203850.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "I spoke with @jvisserlabs to break down why the last two weeks may be the most important stretch in bitcoin's history, along with the US-Japan yen intervention and a weakening labor market. We also discuss the AI stock rebound, physical AI and Tesla's Terafab, Google's talent exo",
       "link": "https://x.com/APompliano/status/2086091396528660927#m",
       "source": "@APompliano",
@@ -157,6 +209,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "This week's ETF buzz... https://theetfeducator.com/2026/08/08/etf-buzz-321/ (table via @EricBalchunas & @JSeyff)",
+      "link": "https://x.com/NateGeraci/status/2086083211877032000#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "This week's ETF buzz... theetfeducator.com/2026/08/0\u2026 (table via @EricBalchunas &amp; @JSeyff )",
+      "publishedAt": "2026-08-08T13:32:49+00:00",
+      "publishedTs": 1786195969.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 Senate Majority Leader John Thune has filed for cloture on the CLARITY ACT \ud83d\udc40 The Senate is now set up for a floor vote once they return in September. \ud83d\udc4f",
@@ -1186,19 +1251,6 @@
       "isRetweet": true
     },
     {
-      "title": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions!",
-      "link": "https://x.com/Nneuman/status/2085116103106208108#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "If you're one of the many people who has signed up for Casa in the last few days and want help setting up your vault, this workshop is a great opportunity to see it live and ask questions! Casa (@CasaHODL) The past week has made a lot of people rethink their security. If you're c",
-      "publishedAt": "2026-08-05T21:29:53+00:00",
-      "publishedTs": 1785965393.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Strategy is a major buyer of $BTC but a minor participant in its trading market.",
       "link": "https://x.com/Strategy/status/2085113969505665418#m",
       "source": "@saylor",
@@ -1210,19 +1262,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Freedom isn't safe. Safety isn't free.",
-      "link": "https://x.com/lopp/status/2085077311087329399#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-05T18:55:44+00:00",
-      "publishedTs": 1785956144.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
@@ -1467,19 +1506,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T19:17:31+00:00",
       "publishedTs": 1785698251.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin maximalism is over. Bitcoin \"culture\" is over. Bitcoin influencers are over. Every popular hardcore Bitcoin figure has disgraced themself in some way. Bitcoin will remain, beneficially stripped of the cult around it.",
-      "link": "https://x.com/nic_carter/status/2083985178825765251#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-02T18:35:59+00:00",
-      "publishedTs": 1785695759.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
