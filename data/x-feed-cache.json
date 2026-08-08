@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-08T11:26:34Z",
+  "fetchedAt": "2026-08-08T12:43:28Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 Senate Majority Leader John Thune has filed for cloture on the CLARITY ACT \ud83d\udc40 The Senate is now set up for a floor vote once they return in September. \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2086064747024203977#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-08T12:19:27+00:00",
+      "publishedTs": 1786191567.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The bitcoin ETFs just clocked their best week in flows (about $1b) since April and the 3rd best week since the good ole days were ruined by the Silent IPO last Oct. IBIT, FBTC and few others saw inflows every single day since Coldcard hack, making it hard not to see causation in ",
+      "link": "https://x.com/EricBalchunas/status/2086063650343673909#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "The bitcoin ETFs just clocked their best week in flows (about $1b) since April and the 3rd best week since the good ole days were ruined by the Silent IPO last Oct. IBIT, FBTC and few others saw inflows every single day since Coldcard hack, making it hard not to see causation in ",
+      "publishedAt": "2026-08-08T12:15:06+00:00",
+      "publishedTs": 1786191306.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "With only 2.6% miner signaling, BIP-110 has failed to earn broad miner support. At block 961,632, its nodes will reject non-signaling blocks. BIP-110 will then stall or fork into irrelevance while Bitcoin continues normally. Bitcoin is working as designed.",
+      "link": "https://x.com/saylor/status/2086057411056447861#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-08T11:50:18+00:00",
+      "publishedTs": 1786189818.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "T-minus 11 hours! The final countdown: http://bip110.com",
       "link": "https://x.com/lopp/status/2086036446733869314#m",
@@ -978,19 +1017,6 @@
       "isRetweet": true
     },
     {
-      "title": "HOW DO YOU KNOW IF YOUR BITCOIN IS ACTUALLY SECURE? \ud83d\udc40 X has never been noisier when it comes to self custody solutions and opinions, but we're here to give you the truth. \ud83d\udd12 Stop by the Open Source Hub at Bitcoin Asia 2026 to get support on any self custody device that you use. \ud83d\udfe0",
-      "link": "https://x.com/Bitcoinconfasia/status/2085259691106381863#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-06T07:00:27+00:00",
-      "publishedTs": 1785999627.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed.",
       "link": "https://x.com/natbrunell/status/2085175887733858441#m",
       "source": "@saylor",
@@ -1077,19 +1103,6 @@
       "summary": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
       "publishedAt": "2026-08-05T16:09:58+00:00",
       "publishedTs": 1785946198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "MARKETS: $STRC surges 30%+ from its June low to $94 as @Strategy sells $BTC to fund dividends, repurchases $106M in preferred shares and builds its USD reserve to $4B",
-      "link": "https://x.com/CoinDesk/status/2085031564723810440#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-05T15:53:57+00:00",
-      "publishedTs": 1785945237.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
