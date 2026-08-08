@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-08T06:50:12Z",
+  "fetchedAt": "2026-08-08T07:47:37Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -40,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "$BTC has won the race to be the dominant Digital Capital and monetary network in the world.",
+      "link": "https://x.com/Strategy/status/2085849585499386337#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "$BTC has won the race to be the dominant Digital Capital and monetary network in the world. Video",
+      "publishedAt": "2026-08-07T22:04:29+00:00",
+      "publishedTs": 1786140269.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Jack Dorsey's 'Block' added 234 Bitcoin worth $15.1 million \ud83d\udc40 Their treasury now totals 9,117 BTC \ud83d\ude80",
@@ -1142,19 +1155,6 @@
       "summary": "The root problem with conventional currency is all the trust that's required to make it work. The root problem with verifying is all the skill and work that's required to make it happen. Optimistically, as LLMs become cheaper &amp; better, they can act as our verification agents.",
       "publishedAt": "2026-08-05T11:47:20+00:00",
       "publishedTs": 1785930440.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy creates Digital Credit.",
-      "link": "https://x.com/saylor/status/2084910576304554179#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy creates Digital Credit. Strategy (@Strategy) Our corporate objective is to return $STRC to $100, and we have the means to do it. Video \u2014 https://nitter.net/Strategy/status/2084709016211501453#m",
-      "publishedAt": "2026-08-05T07:53:11+00:00",
-      "publishedTs": 1785916391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
