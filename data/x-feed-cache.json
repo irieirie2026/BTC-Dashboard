@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-08T17:28:15Z",
+  "fetchedAt": "2026-08-08T18:35:01Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "I recall the tension while working at @BitGo in 2017 when we had intra-company disputes over supporting SegWit2X... I can only imagine how much fun the employees at @ocean_mining are having today! I hope y'all can protect your company from being destroyed by delusional folks!",
+      "link": "https://x.com/lopp/status/2086155840948421089#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-08T18:21:26+00:00",
+      "publishedTs": 1786213286.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The best entropy is found in nature. Rolling dice is boring; every wallet should ship with a QuailSeed kit!",
       "link": "https://x.com/lopp/status/2086127914496520443#m",
@@ -92,6 +105,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "wsj.com/lifestyle/olivia-rod\u2026",
+      "link": "https://x.com/AntoineGara/status/2086056682124190043#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-08T11:47:24+00:00",
+      "publishedTs": 1786189644.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "T-minus 11 hours! The final countdown: http://bip110.com",
@@ -978,32 +1004,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: To be sure: if you want to transact in btc (or use it to flee a country or censorship) ETF is not gonna help and I think it\u2019s imp that btc be used that way. But for the basic need of long term investing I\u2019m hard pressed to find a reason to use anything but an",
-      "link": "https://x.com/EricBalchunas/status/2085344403791471073#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "To be sure: if you want to transact in btc (or use it to flee a country or censorship) ETF is not gonna help and I think it\u2019s imp that btc be used that way. But for the basic need of long term investing I\u2019m hard pressed to find a reason to use anything but an ETF.",
-      "publishedAt": "2026-08-06T12:37:04+00:00",
-      "publishedTs": 1786019824.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: if anyone from the OG bitcoin world is feeling internal tension over this, let me put you at east: ETFs are not The Man. They ain't like those fat cat hedge funds from TV. They are lean and mean and barely make any money for the industry- Wall St would much p",
-      "link": "https://x.com/EricBalchunas/status/2085341847015063835#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "if anyone from the OG bitcoin world is feeling internal tension over this, let me put you at east: ETFs are not The Man. They ain't like those fat cat hedge funds from TV. They are lean and mean and barely make any money for the industry- Wall St would much prefer if they went aw",
-      "publishedAt": "2026-08-06T12:26:54+00:00",
-      "publishedTs": 1786019214.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The accelerating pace of vulnerability discovery should be a wake up call for all software developers! The threat landscape has changed. If you wish to retain a strong defensive posture then you MUST adopt the same LLM tooling that attackers are using to find vunerabilities.",
       "link": "https://x.com/lopp/status/2085341618320867590#m",
       "source": "@lopp",
@@ -1019,15 +1019,15 @@
     {
       "title": "$IBIT, $FBTC, $BITC, $ARKB, $MSBT have all seen inflows every single day (and growing each day) since the Coldcard Hack this wknd for a total of $620m. I'm not saying it's connected, we just don't know, altho long-term I can't imagine there aren't some who migrate over, but it's ",
       "link": "https://x.com/EricBalchunas/status/2085337512982003819#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "$IBIT , $FBTC , $BITC , $ARKB , $MSBT have all seen inflows every single day (and growing each day) since the Coldcard Hack this wknd for a total of $620m. I'm not saying it's connected, we just don't know, altho long-term I can't imagine there aren't some who migrate over, but i",
       "publishedAt": "2026-08-06T12:09:41+00:00",
       "publishedTs": 1786018181.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "STRC has rebounded back to $94. In this week's video I walk through my key takeaways from last week's Strategy Q2 Earnings Call and why I believe STRC is just weeks away from returning to it's $99~$100 target range...",
@@ -1277,19 +1277,6 @@
       "isRetweet": false
     },
     {
-      "title": "To give some perspective of how AI tooling has also accelerated defender capabilities: Before this year if I wanted a comprehensive external pentest & code audit I was looking at $50K - $100K and a month to receive the report. Now I can do it for $1K in 1 day.",
-      "link": "https://x.com/lopp/status/2084695423076151780#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "To give some perspective of how AI tooling has also accelerated defender capabilities: Before this year if I wanted a comprehensive external pentest &amp; code audit I was looking at $50K - $100K and a month to receive the report. Now I can do it for $1K in 1 day.",
-      "publishedAt": "2026-08-04T17:38:15+00:00",
-      "publishedTs": 1785865095.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Hey idiot did it collapse yet?",
       "link": "https://x.com/nic_carter/status/2084664084658557369#m",
       "source": "@nic_carter",
@@ -1298,19 +1285,6 @@
       "summary": "Hey idiot did it collapse yet? Ed Zitron (@edzitron) Newsletter: Based on estimates of their burn rate and historic analyses, I hypothesize that OpenAI will collapse in the next 12-24 months unless it raises more funding than in the history of the valley and creates an entirely n",
       "publishedAt": "2026-08-04T15:33:43+00:00",
       "publishedTs": 1785857623.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "As expected, phishing emails claiming to be from a variety of Bitcoin custody companies are now claiming to \"help\" people secure their funds. Don't believe their lies!",
-      "link": "https://x.com/lopp/status/2084648046059565066#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-04T14:29:59+00:00",
-      "publishedTs": 1785853799.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1506,19 +1480,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T18:35:59+00:00",
       "publishedTs": 1785695759.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin maximalism is an inverse prosperity gospel. The more you believe in it the poorer you become",
-      "link": "https://x.com/nic_carter/status/2083948613550424442#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-02T16:10:42+00:00",
-      "publishedTs": 1785687042.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
