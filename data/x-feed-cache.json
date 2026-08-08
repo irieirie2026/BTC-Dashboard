@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-08T16:31:00Z",
+  "fetchedAt": "2026-08-08T17:28:15Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The best entropy is found in nature. Rolling dice is boring; every wallet should ship with a QuailSeed kit!",
+      "link": "https://x.com/lopp/status/2086127914496520443#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The best entropy is found in nature. Rolling dice is boring; every wallet should ship with a QuailSeed kit! Documenting \u20bfitcoin \ud83d\udcc4 (@DocumentingBTC) This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bit",
+      "publishedAt": "2026-08-08T16:30:27+00:00",
+      "publishedTs": 1786206627.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
@@ -1311,32 +1324,6 @@
       "summary": "Our first move into Asia-Pacific: 360MW contracted, 3 facilities in Indonesia, online 2028. More capacity for our global platform, and compute close to the data for customers with workloads in the region. $CRWV bloomberg.com/news/articles/\u2026 Link CoreWeave to Enter Asian Market Wi",
       "publishedAt": "2026-08-04T14:15:16+00:00",
       "publishedTs": 1785852916.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Two guys who enjoyed flaunting their crypto wealth on social media ended up getting kidnapped and tortured for several days in London last year, before finally being rescued by police. https://www.dailymail.com/news/article-16023625/Crypto-torture-gang-Bitcoin-millionaires-forced",
-      "link": "https://x.com/lopp/status/2084630432352743455#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Two guys who enjoyed flaunting their crypto wealth on social media ended up getting kidnapped and tortured for several days in London last year, before finally being rescued by police. dailymail.com/news/article-1\u2026 Link Millionaires forced to strip and held for days in blackmail ",
-      "publishedAt": "2026-08-04T13:20:00+00:00",
-      "publishedTs": 1785849600.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THE STARTING BLOCK: Is Bitcoin in self-custody under threat after the Coldcard exploit? @CasaHODL CTO @lopp offers some sage wisdom: \"The freedom of the protocol means people can choose whatever security model they want. They can choose convenience or security.\" \ud83d\udcfa\ud83d\udc47",
-      "link": "https://x.com/TheBlockCo/status/2084592454221672673#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "THE STARTING BLOCK: Is Bitcoin in self-custody under threat after the Coldcard exploit? @CasaHODL CTO @lopp offers some sage wisdom: \"The freedom of the protocol means people can choose whatever security model they want. They can choose convenience or security.\" \ud83d\udcfa\ud83d\udc47 Video",
-      "publishedAt": "2026-08-04T10:49:05+00:00",
-      "publishedTs": 1785840545.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
