@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-07T23:31:52Z",
+  "fetchedAt": "2026-08-08T01:24:55Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: I would actually love for someone to do this go out onto the street and ask someone to draw a pie chart of federal outlays. you give them the categories. can't do it in miami because that's cheating (people are too dumb).",
+      "link": "https://x.com/nic_carter/status/2085883448472768792#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I would actually love for someone to do this go out onto the street and ask someone to draw a pie chart of federal outlays. you give them the categories. can't do it in miami because that's cheating (people are too dumb).",
+      "publishedAt": "2026-08-08T00:19:02+00:00",
+      "publishedTs": 1786148342.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "so nikita left and they instantly fixed monetization? huh",
       "link": "https://x.com/nic_carter/status/2085854292888396242#m",
@@ -1558,19 +1571,6 @@
       "summary": "Blue Wallet has a feature allowing users to add your own entropy using dice rolls or coin flips to create a Bitcoin private key, and if insufficient manual entropy is provided, it fills the remainder from the system random number generation. Video",
       "publishedAt": "2026-08-01T22:38:11+00:00",
       "publishedTs": 1785623891.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "You\u2019re never going to get a frontier model ever again. OAI and Ant will just do all the discoveries and science themselves. Can\u2019t trust the unwashed masses with frontier tech ever again. Too risky",
-      "link": "https://x.com/nic_carter/status/2083664259972469015#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "You\u2019re never going to get a frontier model ever again. OAI and Ant will just do all the discoveries and science themselves. Can\u2019t trust the unwashed masses with frontier tech ever again. Too risky Ryan Petersen (@typesfast) So what are we going to get? \u2014 https://nitter.net/typesf",
-      "publishedAt": "2026-08-01T21:20:46+00:00",
-      "publishedTs": 1785619246.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
