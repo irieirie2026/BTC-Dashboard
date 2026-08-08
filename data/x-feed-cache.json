@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-08T09:36:01Z",
+  "fetchedAt": "2026-08-08T10:30:54Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "T-minus 11 hours! The final countdown: http://bip110.com",
+      "link": "https://x.com/lopp/status/2086036446733869314#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "T-minus 11 hours! The final countdown: bip110.com",
+      "publishedAt": "2026-08-08T10:27:00+00:00",
+      "publishedTs": 1786184820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whales keep accumulating $BTC. A newly created wallet (167YVr) received 1,346 $BTC ($87.28M) from #GalaxyDigital. https://arkm.com/explorer/address/167YVrHeroj8yuiH8ZmMFazQjn5sPjKBa7",
       "link": "https://x.com/lookonchain/status/2085914532007072087#m",
@@ -352,6 +365,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy.",
+      "link": "https://x.com/LaDoger/status/2085730043016151305#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy. Video",
+      "publishedAt": "2026-08-07T14:09:27+00:00",
+      "publishedTs": 1786111767.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "A team of more than 24 volunteer coders calling themselves \u201cBitcoin Red Team\u201d have been using new AI models this week to check all open-source Bitcoin software apps. They have found 1029 high critical security vulnerabilities so far.",
@@ -1043,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "Think \u20bfigger.",
-      "link": "https://x.com/saylor/status/2085039380746404187#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Think \u20bfigger. Strategy (@Strategy) Our ambition is to be the world's largest company by market cap by owning the most capital $BTC , issuing the strongest credit $STRC , and creating the best equity $MSTR . Video \u2014 https://nitter.net/Strategy/status/2085033509408702621#m",
-      "publishedAt": "2026-08-05T16:25:01+00:00",
-      "publishedTs": 1785947101.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Almost everyone I've talked to this week about moving off affected Coldcards says the same thing: they looked at multisig years ago and held off because doing it alone felt like a lot to get wrong. Reasonable call, but the fix was never \"figure it out yourself.\" You're never left",
       "link": "https://x.com/shorttsqueeze/status/2085035593663459822#m",
       "source": "@lopp",
@@ -1324,19 +1337,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T16:02:56+00:00",
       "publishedTs": 1785772976.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Unpopular opinion for social media since the incentives of social media are to drive drama: Blaming folks who make a mistake that leads to a security incident doesn't actually help anyone. No one is infallible; the key is to learn from mistakes so that we stop repeating them.",
-      "link": "https://x.com/lopp/status/2084306566887407948#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-03T15:53:04+00:00",
-      "publishedTs": 1785772384.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
