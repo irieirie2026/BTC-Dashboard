@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-09T21:30:13Z",
+  "fetchedAt": "2026-08-09T22:28:39Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -196,6 +196,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "A Data Center Came to A Small Town. You\u2019ll Never Guess What Happened Next* *unless you guessed lots of jobs, lots of tax revenue, spillover benefits to local business like hotels and restaurants, discounts on electric bills, and grants for teachers.",
+      "link": "https://x.com/LoganDobson/status/2086239113250812365#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "A Data Center Came to A Small Town. You\u2019ll Never Guess What Happened Next* *unless you guessed lots of jobs, lots of tax revenue, spillover benefits to local business like hotels and restaurants, discounts on electric bills, and grants for teachers. Emily Hoeven (@emily_hoeven) M",
+      "publishedAt": "2026-08-08T23:52:19+00:00",
+      "publishedTs": 1786233139.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "You can't bluff your way into a successful UASF. Bitcoiners, take heed.",
