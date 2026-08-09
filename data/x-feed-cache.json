@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-08T23:26:44Z",
+  "fetchedAt": "2026-08-09T01:37:08Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A mysterious whale (possibly a miner) has deposited 6,494 $BTC($420.5M) to #Binance over the past 3 weeks. https://arkm.com/explorer/address/bc1qsylwjhesm58uw9vsp7vwgadq5fqna4e3e8qnpd",
+      "link": "https://x.com/lookonchain/status/2086258729926955226#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A mysterious whale (possibly a miner) has deposited 6,494 $BTC ($420.5M) to #Binance over the past 3 weeks. arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-08-09T01:10:16+00:00",
+      "publishedTs": 1786237816.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "You can't bluff your way into a successful UASF. Bitcoiners, take heed.",
       "link": "https://x.com/lopp/status/2086213833668825350#m",
@@ -55,7 +68,7 @@
       "isRetweet": true
     },
     {
-      "title": "Epic karma. You can't make this up.",
+      "title": "Pinned: Epic karma. You can't make this up.",
       "link": "https://x.com/lopp/status/2086189495502667925#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -1004,7 +1017,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: The past week has been quite busy for us at @CasaHODL. This is my recap of how we prepared for this problem, our response to the security incident, and thoughts on the ever-evolving threat environment. https://blog.casa.io/the-rise-of-the-machines/",
+      "title": "The past week has been quite busy for us at @CasaHODL. This is my recap of how we prepared for this problem, our response to the security incident, and thoughts on the ever-evolving threat environment. https://blog.casa.io/the-rise-of-the-machines/",
       "link": "https://x.com/lopp/status/2085430345080422700#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
