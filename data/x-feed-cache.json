@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-09T19:31:49Z",
+  "fetchedAt": "2026-08-09T20:30:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
+      "link": "https://x.com/Nneuman/status/2086537762073727462#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
+      "publishedAt": "2026-08-09T19:39:03+00:00",
+      "publishedTs": 1786304343.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. https://www.lopp.net/bitco",
       "link": "https://x.com/lopp/status/2086528690356453650#m",
@@ -921,19 +934,6 @@
       "summary": "$BWET (oil shipping futures in middle east) best performing ETF (again) for the past month, YTD returns now 1,294%! Insane. 5x more than any other ETF and yet still no one cares. It's odd, the degens are out in full too. Sometimes fishing is like this, you can literally see the f",
       "publishedAt": "2026-08-07T12:14:27+00:00",
       "publishedTs": 1786104867.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "T-minus 200 blocks on the http://bip110.com countdown!",
-      "link": "https://x.com/lopp/status/2085691877144076351#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "T-minus 200 blocks on the bip110.com countdown!",
-      "publishedAt": "2026-08-07T11:37:48+00:00",
-      "publishedTs": 1786102668.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
