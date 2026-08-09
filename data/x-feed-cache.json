@@ -1,9 +1,74 @@
 {
-  "fetchedAt": "2026-08-09T12:45:53Z",
+  "fetchedAt": "2026-08-09T13:48:10Z",
   "source": "nitter.net",
   "tweets": [
     {
-      "title": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
+      "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
+      "link": "https://x.com/DocumentingBTC/status/2086442595886977154#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one Video",
+      "publishedAt": "2026-08-09T13:20:53+00:00",
+      "publishedTs": 1786281653.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin users are now shooting their ColdCard wallets after a hack found them to be insecure",
+      "link": "https://x.com/DocumentingBTC/status/2086440636987703354#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-09T13:13:06+00:00",
+      "publishedTs": 1786281186.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped",
+      "link": "https://x.com/DocumentingBTC/status/2086440149689258294#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped Video",
+      "publishedAt": "2026-08-09T13:11:10+00:00",
+      "publishedTs": 1786281070.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2086437967329972612#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-09T13:02:30+00:00",
+      "publishedTs": 1786280550.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Doing \u20bfusiness.",
+      "link": "https://x.com/saylor/status/2086437347193975069#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-09T13:00:02+00:00",
+      "publishedTs": 1786280402.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
       "link": "https://x.com/lopp/status/2086418507386835274#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -120,7 +185,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: Epic karma. You can't make this up.",
+      "title": "Epic karma. You can't make this up.",
       "link": "https://x.com/lopp/status/2086189495502667925#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -1108,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Majority Whip John Barrasso tells the Senate \u201cits time for the Senate to build on [the GENIUS Act] by passing the Clarity Act.\u201d \"America is safer and stronger when we innovate\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2085411739424694496#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Majority Whip John Barrasso tells the Senate \u201cits time for the Senate to build on [the GENIUS Act] by passing the Clarity Act.\u201d \"America is safer and stronger when we innovate\" \ud83d\ude80 Video",
-      "publishedAt": "2026-08-06T17:04:38+00:00",
-      "publishedTs": 1786035878.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The most lucrative use of a Bitcoin treasury is building a Digital Credit reactor. $MSTR $STRC",
       "link": "https://x.com/Strategy/status/2085389962455748840#m",
       "source": "@saylor",
@@ -1132,19 +1184,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Banking Committeeman Tim Scott says the Clarity Act \"should have the first vote on before we leave without question\" \ud83d\udc40 \"Frankly, we'll be here longer than the next two days...we'll get it done\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2085388519984218201#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Banking Committeeman Tim Scott says the Clarity Act \"should have the first vote on before we leave without question\" \ud83d\udc40 \"Frankly, we'll be here longer than the next two days...we'll get it done\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-06T15:32:22+00:00",
-      "publishedTs": 1786030342.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "August 6 Update: #Bitcoin ETFs: 1D NetFlow: +3,781 $BTC(+$243.49M)\ud83d\udfe2 7D NetFlow: +9,034 $BTC(+$581.79M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +27,749 $ETH(+$52.91M)\ud83d\udfe2 7D NetFlow: +40,578 $ETH(+$77.37M)\ud83d\udfe2",
@@ -1259,19 +1298,6 @@
       "summary": "@saylor used ChatGPT to make $15 Billion last year? \ud83e\udd2f He says he used ChatGPT alongside lawyers, bankers and investors to help solve complex problems and design new financial products, resulting in $15 billion of credit being sold. #bitcoin Video",
       "publishedAt": "2026-08-06T11:23:40+00:00",
       "publishedTs": 1786015420.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed.",
-      "link": "https://x.com/natbrunell/status/2085175887733858441#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed. Video",
-      "publishedAt": "2026-08-06T01:27:26+00:00",
-      "publishedTs": 1785979646.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1558,45 +1584,6 @@
       "summary": "",
       "publishedAt": "2026-08-01T23:00:04+00:00",
       "publishedTs": 1785625204.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jack Dorsey just made his Bitcoin wallet \u2018Bitkey\u2019 free next-day shipping by default for customers.",
-      "link": "https://x.com/DocumentingBTC/status/2083685112739238225#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-01T22:43:38+00:00",
-      "publishedTs": 1785624218.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Blue Wallet has a feature allowing users to add your own entropy using dice rolls or coin flips to create a Bitcoin private key, and if insufficient manual entropy is provided, it fills the remainder from the system random number generation.",
-      "link": "https://x.com/DocumentingBTC/status/2083683740417495461#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Blue Wallet has a feature allowing users to add your own entropy using dice rolls or coin flips to create a Bitcoin private key, and if insufficient manual entropy is provided, it fills the remainder from the system random number generation. Video",
-      "publishedAt": "2026-08-01T22:38:11+00:00",
-      "publishedTs": 1785623891.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 16 years ago, Wikipedia deleted the page about Bitcoin because they said there was a \u201cLack of significant third-party coverage to confer notability.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2083648808651456941#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-01T20:19:22+00:00",
-      "publishedTs": 1785615562.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
