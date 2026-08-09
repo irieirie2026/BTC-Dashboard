@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-09T14:32:34Z",
+  "fetchedAt": "2026-08-09T15:29:29Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
+      "link": "https://x.com/Rob1Ham/status/2086464831360549034#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
+      "publishedAt": "2026-08-09T14:49:15+00:00",
+      "publishedTs": 1786286955.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
       "link": "https://x.com/DocumentingBTC/status/2086442595886977154#m",
@@ -1259,19 +1272,6 @@
       "summary": "",
       "publishedAt": "2026-08-06T12:48:10+00:00",
       "publishedTs": 1786020490.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The accelerating pace of vulnerability discovery should be a wake up call for all software developers! The threat landscape has changed. If you wish to retain a strong defensive posture then you MUST adopt the same LLM tooling that attackers are using to find vunerabilities.",
-      "link": "https://x.com/lopp/status/2085341618320867590#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-06T12:26:00+00:00",
-      "publishedTs": 1786019160.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
