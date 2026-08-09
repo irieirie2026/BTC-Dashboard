@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-09T09:36:59Z",
+  "fetchedAt": "2026-08-09T10:32:36Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @saylor: At ~0.15% of Bitcoin's hashpower, BIP-110 must mine 2,015 more blocks before its first difficulty adjustment. At today's rate, that is ~25 years. Anyone can fork Bitcoin. Without security, utility, capital, and users, a fork is irrelevant. Consensus is earned, not d",
+      "link": "https://x.com/saylor/status/2086388339989492039#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "At ~0.15% of Bitcoin's hashpower, BIP-110 must mine 2,015 more blocks before its first difficulty adjustment. At today's rate, that is ~25 years. Anyone can fork Bitcoin. Without security, utility, capital, and users, a fork is irrelevant. Consensus is earned, not declared.",
+      "publishedAt": "2026-08-09T09:45:18+00:00",
+      "publishedTs": 1786268718.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin worked exactly as designed. BIP-110 was free to fork, and the network was free not to follow. The result was decisive: about 99.85% of Bitcoin's hashpower stayed with Bitcoin. The BIP-110 branch mined only two blocks and is already more than 80 blocks behind.",
+      "link": "https://x.com/saylor/status/2086388338521497714#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-09T09:45:17+00:00",
+      "publishedTs": 1786268717.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "There is no BIP110 fork\u2026 there is only Bitcoin",
+      "link": "https://x.com/AtlasHodld/status/2086320497088971235#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-09T05:15:43+00:00",
+      "publishedTs": 1786252543.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "A mysterious whale (possibly a miner) has deposited 6,494 $BTC($420.5M) to #Binance over the past 3 weeks. https://arkm.com/explorer/address/bc1qsylwjhesm58uw9vsp7vwgadq5fqna4e3e8qnpd",
       "link": "https://x.com/lookonchain/status/2086258729926955226#m",
@@ -1212,19 +1251,6 @@
       "isRetweet": true
     },
     {
-      "title": "Would you bet EVERYTHING on one idea? Michael Saylor did. Michael is a technology entrepreneur and the founder of the company now called Strategy. Long before Bitcoin, he built businesses in business intelligence, speech recognition and smart-home technology. Today, he is probabl",
-      "link": "https://x.com/StevenBartlett/status/2085259853174366242#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Would you bet EVERYTHING on one idea? Michael Saylor did. Michael is a technology entrepreneur and the founder of the company now called Strategy. Long before Bitcoin, he built businesses in business intelligence, speech recognition and smart-home technology. Today, he is probabl",
-      "publishedAt": "2026-08-06T07:01:05+00:00",
-      "publishedTs": 1785999665.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "On last week\u2019s show @parkeralewis shared his arguments against Bitcoin treasury companies. This week @DylanLeClair makes the case for them, with a look at what\u2019s next for Metaplanet. *Note: this show was recorded before the Coldcard news broke, so the hack is not discussed.",
       "link": "https://x.com/natbrunell/status/2085175887733858441#m",
       "source": "@saylor",
@@ -1264,19 +1290,6 @@
       "isRetweet": true
     },
     {
-      "title": "Strategy is a major buyer of $BTC but a minor participant in its trading market.",
-      "link": "https://x.com/Strategy/status/2085113969505665418#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy is a major buyer of $BTC but a minor participant in its trading market. Video",
-      "publishedAt": "2026-08-05T21:21:24+00:00",
-      "publishedTs": 1785964884.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
       "link": "https://x.com/nic_carter/status/2085016417653461094#m",
       "source": "@nic_carter",
@@ -1288,19 +1301,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
-      "link": "https://x.com/ChrisMMillas/status/2085002891321115112#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "$STRC is now the LARGEST holding in 3 of the leading preferred ETFs: \u2192 3.56% of BlackRock\u2019s $13B PFF \u2192 2.97% of Virtus\u2019 $2.4B PFFA \u2192 8.82% of VanEck\u2019s $2.4B PFXF In each case, $STRC ranks above preferred securities issued by some of the largest and most established companies in t",
-      "publishedAt": "2026-08-05T14:00:01+00:00",
-      "publishedTs": 1785938401.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
