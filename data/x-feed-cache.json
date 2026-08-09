@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-09T17:29:55Z",
+  "fetchedAt": "2026-08-09T18:37:42Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The \u20bfitcoin Blockchain Network Successfully Achieves 17 Years, 7 Months, and 6 Days Online \ud83c\uddfa\ud83c\uddf8",
+      "link": "https://x.com/DocumentingBTC/status/2086518256051904991#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-09T18:21:32+00:00",
+      "publishedTs": 1786299692.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives to suppo",
+      "link": "https://x.com/lopp/status/2086512275012075811#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives to suppo",
+      "publishedAt": "2026-08-09T17:57:46+00:00",
+      "publishedTs": 1786298266.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
       "link": "https://x.com/Rob1Ham/status/2086464831360549034#m",
@@ -1238,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Are you a @CasaHODL client who wants to help your friends and family improve their bitcoin's security? Don't forget our referral program - you can find it at the top of the settings screen in the app!",
-      "link": "https://x.com/lopp/status/2085365077532709310#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-06T13:59:13+00:00",
-      "publishedTs": 1786024753.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin is digital capital. AI is digital intelligence. I joined @StevenBartlett to discuss how they are reshaping money, business, markets, work, and the future. https://www.youtube.com/watch?v=1aGpJQ8BMLI",
       "link": "https://x.com/saylor/status/2085361837122462036#m",
       "source": "@saylor",
@@ -1584,19 +1597,6 @@
       "summary": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes Video",
       "publishedAt": "2026-08-02T12:41:07+00:00",
       "publishedTs": 1785674467.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 9 years ago, Bitcoin Cash was created by a fork in the blockchain and code.",
-      "link": "https://x.com/DocumentingBTC/status/2083689248608100383#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-01T23:00:04+00:00",
-      "publishedTs": 1785625204.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
