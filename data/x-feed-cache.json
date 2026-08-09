@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-09T11:27:10Z",
+  "fetchedAt": "2026-08-09T12:45:53Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
+      "link": "https://x.com/lopp/status/2086418507386835274#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB ! \ud83d\ude02 Video",
+      "publishedAt": "2026-08-09T11:45:10+00:00",
+      "publishedTs": 1786275910.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @saylor: At ~0.15% of Bitcoin's hashpower, BIP-110 must mine 2,015 more blocks before its first difficulty adjustment. At today's rate, that is ~25 years. Anyone can fork Bitcoin. Without security, utility, capital, and users, a fork is irrelevant. Consensus is earned, not d",
       "link": "https://x.com/saylor/status/2086388339989492039#m",
@@ -1272,19 +1285,6 @@
       "summary": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
       "publishedAt": "2026-08-05T22:29:47+00:00",
       "publishedTs": 1785968987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Following the recent Coldcard incident, Nick Neuman (@Nneuman), CEO of @CasaHODL, explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of human",
-      "link": "https://x.com/SimplyBitcoin/status/2085123684591673520#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Following the recent Coldcard incident, Nick Neuman ( @Nneuman ), CEO of @CasaHODL , explains how Bitcoiners can build a more resilient self-custody setup by eliminating single points of failure: \"I think that there's still a lot of potential for self-custody for the future of hu",
-      "publishedAt": "2026-08-05T22:00:00+00:00",
-      "publishedTs": 1785967200.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
