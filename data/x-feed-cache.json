@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-09T15:29:29Z",
+  "fetchedAt": "2026-08-09T16:32:54Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -11,6 +11,19 @@
       "summary": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
       "publishedAt": "2026-08-09T14:49:15+00:00",
       "publishedTs": 1786286955.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Bitcoin once again proves its resilience through Strategy sales, security threats, Senate stalls, and soft forks.",
+      "link": "https://x.com/phongle/status/2086463447332511849#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-09T14:43:45+00:00",
+      "publishedTs": 1786286625.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1285,19 +1298,6 @@
       "summary": "$IBIT , $FBTC , $BITC , $ARKB , $MSBT have all seen inflows every single day (and growing each day) since the Coldcard Hack this wknd for a total of $620m. I'm not saying it's connected, we just don't know, altho long-term I can't imagine there aren't some who migrate over, but i",
       "publishedAt": "2026-08-06T12:09:41+00:00",
       "publishedTs": 1786018181.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "STRC has rebounded back to $94. In this week's video I walk through my key takeaways from last week's Strategy Q2 Earnings Call and why I believe STRC is just weeks away from returning to it's $99~$100 target range...",
-      "link": "https://x.com/betirement/status/2085328784106922011#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "STRC has rebounded back to $94. In this week's video I walk through my key takeaways from last week's Strategy Q2 Earnings Call and why I believe STRC is just weeks away from returning to it's $99~$100 target range... Video",
-      "publishedAt": "2026-08-06T11:35:00+00:00",
-      "publishedTs": 1786016100.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
