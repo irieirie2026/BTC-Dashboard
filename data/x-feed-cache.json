@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-09T18:37:42Z",
+  "fetchedAt": "2026-08-09T19:31:49Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. https://www.lopp.net/bitco",
+      "link": "https://x.com/lopp/status/2086528690356453650#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. lopp.net/bitcoin-informati",
+      "publishedAt": "2026-08-09T19:03:00+00:00",
+      "publishedTs": 1786302180.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The \u20bfitcoin Blockchain Network Successfully Achieves 17 Years, 7 Months, and 6 Days Online \ud83c\uddfa\ud83c\uddf8",
       "link": "https://x.com/DocumentingBTC/status/2086518256051904991#m",
@@ -1184,19 +1197,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "The past week has been quite busy for us at @CasaHODL. This is my recap of how we prepared for this problem, our response to the security incident, and thoughts on the ever-evolving threat environment. https://blog.casa.io/the-rise-of-the-machines/",
-      "link": "https://x.com/lopp/status/2085430345080422700#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The past week has been quite busy for us at @CasaHODL . This is my recap of how we prepared for this problem, our response to the security incident, and thoughts on the ever-evolving threat environment. blog.casa.io/the-rise-of-the\u2026 Link The Rise of the Machines Casa&apos;s appro",
-      "publishedAt": "2026-08-06T18:18:34+00:00",
-      "publishedTs": 1786040314.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "R to @BitcoinMagazine: PRICES INCREASE IN ONE DAY \ud83d\udea8 Get your passes now and experience the unlimited networking, education, and celebrations Bitcoin Asia has to offer \ud83c\udded\ud83c\uddf0 \ud83c\udf9f\ufe0f \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
