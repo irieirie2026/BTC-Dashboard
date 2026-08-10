@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-10T20:40:08Z",
+  "fetchedAt": "2026-08-10T21:39:29Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media & Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
+      "link": "https://x.com/BitcoinMagazine/status/2086925681334657035#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media &amp; Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
+      "publishedAt": "2026-08-10T21:20:30+00:00",
+      "publishedTs": 1786396830.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis says \"Some community banks are suggesting stablecoins are driving deposit flight. The data says otherwise.\" \ud83d\udc40 \"Killing the Clarity Act won\u2019t help community banks. It just protects the status quo they say is broken.\" Pass it in September \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2086909689527205943#m",
@@ -13,7 +26,7 @@
       "publishedTs": 1786393017.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "Bitcoin's immune system is purging itself of cancerous cells.",
@@ -53,6 +66,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Strategy wants to be the \"central bank of Bitcoin.\" On CoinDesk's Public Keys at the @NYSE, @Strategy's @phongle makes the case for beating BTC with digital credit, @Bitwise's Ryan Rasmussen (@RasterlyRock) says the market is mispricing @circle, and Deus X Capital's Tim Grant on ",
+      "link": "https://x.com/CoinDesk/status/2086897125410181307#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy wants to be the \"central bank of Bitcoin.\" On CoinDesk's Public Keys at the @NYSE , @Strategy 's @phongle makes the case for beating BTC with digital credit, @Bitwise 's Ryan Rasmussen ( @RasterlyRock ) says the market is mispricing @circle , and Deus X Capital's Tim Gra",
+      "publishedAt": "2026-08-10T19:27:02+00:00",
+      "publishedTs": 1786390022.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Rand Paul says he successfully audited Fort Knox and all the gold \"is there\" \ud83d\udc40 \"Yes, the gold is there all (approximately) 147 million ounces. It is impressive,\"",
@@ -1147,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "It has been \"a minute\" since I caught up with a podcast by the inimitable @saylor of @Strategy but there was enough @X noise about this one on @Diary_Of_A_CEO that I could not resist. The wide-ranging interview was superb: Michael was expansive, detailed, and upbeat. It was 100 m",
-      "link": "https://x.com/tadtweets/status/2085812128913449462#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "It has been \"a minute\" since I caught up with a podcast by the inimitable @saylor of @Strategy but there was enough @X noise about this one on @Diary_Of_A_CEO that I could not resist. The wide-ranging interview was superb: Michael was expansive, detailed, and upbeat. It was 100 m",
-      "publishedAt": "2026-08-07T19:35:38+00:00",
-      "publishedTs": 1786131338.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Angela Alsobrooks on the Clarity Act vote getting delayed: \"We\u2019ve worked for over a year on a bipartisan basis...We will continue our work \u2014 getting the Clarity Act right remains our goal.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2085803664166248820#m",
       "source": "@BitcoinMagazine",
@@ -1277,19 +1290,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says Bitcoin \"is a good thing for our country.\" Bitcoin \"takes a lot of pressure off our dollar.\" \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2085738479791595803#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-07T14:42:59+00:00",
-      "publishedTs": 1786113779.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy.",
       "link": "https://x.com/LaDoger/status/2085730043016151305#m",
       "source": "@saylor",
@@ -1324,19 +1324,6 @@
       "summary": "August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $BTC (+$109.16M)\ud83d\udfe2 7D NetFlow: +7,306 $BTC (+$476.7M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +42,756 $ETH (+$82.52M)\ud83d\udfe2 7D NetFlow: +85,091 $ETH (+$164.22M)\ud83d\udfe2 Lookonchain (@lookonchain) August 6 Update: #Bitcoin ETFs: 1D NetFlow: +3,781 $BTC (",
       "publishedAt": "2026-08-07T13:48:32+00:00",
       "publishedTs": 1786110512.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: $65,177 Bitcoin! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2085701153082208346#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-07T12:14:40+00:00",
-      "publishedTs": 1786104880.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1392,19 +1379,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Isn\u2019t it funny that all the people working around the clock FOR FREE to do security audits on hundreds of Bitcoin projects are the same people BIP110ers have been calling scammers, spammers, grifters, shitcoiners, liars, pedos, etc for months? Isn\u2019t it funny that there are no BIP",
-      "link": "https://x.com/WalkerAmerica/status/2085437265233473821#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Isn\u2019t it funny that all the people working around the clock FOR FREE to do security audits on hundreds of Bitcoin projects are the same people BIP110ers have been calling scammers, spammers, grifters, shitcoiners, liars, pedos, etc for months? Isn\u2019t it funny that there are no BIP",
-      "publishedAt": "2026-08-06T18:46:04+00:00",
-      "publishedTs": 1786041964.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "now that nikita is gone, does anyone want to fix the bug where i (and others) get 3k new random followers a day for no reason? i want my follower count to reflect what I actually earned rather than this bot subsidy",
