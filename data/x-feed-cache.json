@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-10T19:54:25Z",
+  "fetchedAt": "2026-08-10T20:40:08Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis says \"Some community banks are suggesting stablecoins are driving deposit flight. The data says otherwise.\" \ud83d\udc40 \"Killing the Clarity Act won\u2019t help community banks. It just protects the status quo they say is broken.\" Pass it in September \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2086909689527205943#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T20:16:57+00:00",
+      "publishedTs": 1786393017.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin's immune system is purging itself of cancerous cells.",
+      "link": "https://x.com/lopp/status/2086909325038006491#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T20:15:30+00:00",
+      "publishedTs": 1786392930.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New filing from a new issuer \u201cKICK\u201d never heard of them. AI and space theme ETFs.",
+      "link": "https://x.com/EricBalchunas/status/2086904527773474847#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-10T19:56:26+00:00",
+      "publishedTs": 1786391786.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Jordi Visser (@jvisserlabs) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here:",
       "link": "https://x.com/APompliano/status/2086897873862426647#m",
@@ -42,6 +81,19 @@
       "isRetweet": false
     },
     {
+      "title": "JUST IN: Bitcoin is shifting from OGs to institutions and professionals, according to @EricBalchunas. \"The ownership of Bitcoin is changing. What happens now? We'll see.\"",
+      "link": "https://x.com/BitcoinArchive/status/2086883184109572360#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "JUST IN: Bitcoin is shifting from OGs to institutions and professionals, according to @EricBalchunas . \"The ownership of Bitcoin is changing. What happens now? We'll see.\" Video",
+      "publishedAt": "2026-08-10T18:31:38+00:00",
+      "publishedTs": 1786386698.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "this is how cutting edge mathematical research works now",
       "link": "https://x.com/nic_carter/status/2086876945422164471#m",
       "source": "@nic_carter",
@@ -50,19 +102,6 @@
       "summary": "",
       "publishedAt": "2026-08-10T18:06:50+00:00",
       "publishedTs": 1786385210.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: This is a no tax event in the above exchange he\u2019s talking about btw. You are exchanging btc for ETF shares, No dollars involved = no tax event. This in-kind creation redemption concept are why ETFs are so tax efficient across board, and almost never issue cap",
-      "link": "https://x.com/EricBalchunas/status/2086873315189117262#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "This is a no tax event in the above exchange he\u2019s talking about btw. You are exchanging btc for ETF shares, No dollars involved = no tax event. This in-kind creation redemption concept are why ETFs are so tax efficient across board, and almost never issue cap gains distribution.",
-      "publishedAt": "2026-08-10T17:52:25+00:00",
-      "publishedTs": 1786384345.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -900,19 +939,6 @@
       "isRetweet": false
     },
     {
-      "title": "The disappointing thing about BIP-110 failing is that we won't be able to economically punish those folks for wasting our time since they won't put their bitcoin where their mouths are. The amusing thing is that any hard fork they end up launching will get filled with JPEGs.",
-      "link": "https://x.com/lopp/status/2086122366371844192#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-08T16:08:25+00:00",
-      "publishedTs": 1786205305.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "It\u2019s fork day. With negligible support from BTC miners for BIP110, it looks like the plan is a last minute Proof of Work (PoW) change to \u201cfire the miners\u201d. New PoW, new asset, new ticker. What shall we name this new shitcoin? Drop your best ideas below \ud83d\udc47",
       "link": "https://x.com/DylanLeClair/status/2086116267035857025#m",
       "source": "@JSeyff",
@@ -1238,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Here's the latest 'New Launch Review' episode of Trillions. This month's Big Splash is $IQQ & $SKUU, the Wild Card is $TKNZ and our Good Luck with That is $YSAU, the The Y'ALL Street Gold ETF w/ @isabelletanlee https://youtu.be/xBvF-luRxFc?si=eyw949n6XojXYMyb via @YouTube",
-      "link": "https://x.com/EricBalchunas/status/2085744197626180072#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Here's the latest 'New Launch Review' episode of Trillions. This month's Big Splash is $IQQ &amp; $SKUU , the Wild Card is $TKNZ and our Good Luck with That is $YSAU , the The Y'ALL Street Gold ETF w/ @isabelletanlee piped.video/xBvF-luRxFc?si=eyw9\u2026 via @YouTube Link New ETFs to ",
-      "publishedAt": "2026-08-07T15:05:42+00:00",
-      "publishedTs": 1786115142.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "BlackRock has seen 4 consecutive trading days of $BTC net inflows, totaling 9,269 $BTC ($604M).",
       "link": "https://x.com/lookonchain/status/2085739600048468134#m",
       "source": "@lookonchain",
@@ -1340,19 +1353,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Dusted off that pen to explain what could happen when Bitcoin Knots starts rejecting blocks that don\u2019t signal support for BIP110 this weekend. https://bitcoinmagazine.com/technical/bitcoins-bip110-moment-three-possible-scenarios",
-      "link": "https://x.com/AaronvanW/status/2085669916238074210#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Dusted off that pen to explain what could happen when Bitcoin Knots starts rejecting blocks that don\u2019t signal support for BIP110 this weekend. bitcoinmagazine.com/technica\u2026 Link Bitcoin&apos;s BIP110 Moment: Three Possible Scenarios Will BIP110 fail, activate, or split Bitcoin? A",
-      "publishedAt": "2026-08-07T10:10:32+00:00",
-      "publishedTs": 1786097432.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "CEO OF ORANGE CAP GAMES @SPENCER GORDON-SAND TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"1 Bitcoin = 1 Bitcoin, USD depreciates steeply!\" \u270a",
