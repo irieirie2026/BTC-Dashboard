@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-10T18:55:00Z",
+  "fetchedAt": "2026-08-10T19:54:25Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Jordi Visser (@jvisserlabs) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here:",
+      "link": "https://x.com/APompliano/status/2086897873862426647#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Jordi Visser ( @jvisserlabs ) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here: Video",
+      "publishedAt": "2026-08-10T19:30:00+00:00",
+      "publishedTs": 1786390200.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Rand Paul says he successfully audited Fort Knox and all the gold \"is there\" \ud83d\udc40 \"Yes, the gold is there all (approximately) 147 million ounces. It is impressive,\"",
+      "link": "https://x.com/BitcoinMagazine/status/2086889918257561864#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T18:58:23+00:00",
+      "publishedTs": 1786388303.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Say hello to another nation state threat actor who thought he could fool me into hiring him!",
       "link": "https://x.com/lopp/status/2086886523425665455#m",
@@ -1298,19 +1324,6 @@
       "summary": "",
       "publishedAt": "2026-08-07T12:14:40+00:00",
       "publishedTs": 1786104880.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201cI see it more and more where people are paying with Bitcoin, they don\u2019t even know about cash anymore.\u201d \u201cCrypto\u2019s a big deal.\u201d",
-      "link": "https://x.com/BitcoinMagazine/status/2085688974119489736#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says \u201cI see it more and more where people are paying with Bitcoin, they don\u2019t even know about cash anymore.\u201d \u201cCrypto\u2019s a big deal.\u201d Video",
-      "publishedAt": "2026-08-07T11:26:16+00:00",
-      "publishedTs": 1786101976.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
