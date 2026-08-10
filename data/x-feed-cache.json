@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-10T01:40:13Z",
+  "fetchedAt": "2026-08-10T03:52:40Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Over the past 24 hours, $TUT has seen more than $44M in liquidations, far exceeding $BTC and $ETH, making it the most liquidated asset. https://www.coinglass.com/liquidations",
+      "link": "https://x.com/lookonchain/status/2086634394836709868#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Over the past 24 hours, $TUT has seen more than $44M in liquidations, far exceeding $BTC and $ETH , making it the most liquidated asset. coinglass.com/liquidations",
+      "publishedAt": "2026-08-10T02:03:02+00:00",
+      "publishedTs": 1786327382.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This whale sold another 1,019 $BTC($66.4M) 7 hours ago. Over the past 3 weeks, this whale has sold a total of 7,513 $BTC($486.9M).",
       "link": "https://x.com/lookonchain/status/2086609652507423184#m",
