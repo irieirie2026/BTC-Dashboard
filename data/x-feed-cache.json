@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-10T21:39:29Z",
+  "fetchedAt": "2026-08-10T22:35:27Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "We intend to make $STRC the iPhone of Digital Assets.",
+      "link": "https://x.com/saylor/status/2086936384367968739#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We intend to make $STRC the iPhone of Digital Assets. Phong Le (@phongle) I joined @LizClaman on @FoxBusiness to discuss Strategy buying 175K Bitcoin this year to be the world's largest institutional holder of Bitcoin. We are the JPMorgan of the digital economy. Video \u2014 https://n",
+      "publishedAt": "2026-08-10T22:03:02+00:00",
+      "publishedTs": 1786399382.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\"And as ye would that men should do to you, do ye also to them likewise.\" Luke 6:31",
+      "link": "https://x.com/lopp/status/2086929220559573072#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T21:34:34+00:00",
+      "publishedTs": 1786397674.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media & Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
       "link": "https://x.com/BitcoinMagazine/status/2086925681334657035#m",
@@ -26,7 +52,7 @@
       "publishedTs": 1786393017.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Bitcoin's immune system is purging itself of cancerous cells.",
@@ -1095,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "$BTC has won the race to be the dominant Digital Capital and monetary network in the world.",
-      "link": "https://x.com/Strategy/status/2085849585499386337#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "$BTC has won the race to be the dominant Digital Capital and monetary network in the world. Video",
-      "publishedAt": "2026-08-07T22:04:29+00:00",
-      "publishedTs": 1786140269.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Jack Dorsey's 'Block' added 234 Bitcoin worth $15.1 million \ud83d\udc40 Their treasury now totals 9,117 BTC \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2085835753641082966#m",
       "source": "@BitcoinMagazine",
@@ -1285,6 +1298,19 @@
       "summary": "",
       "publishedAt": "2026-08-07T14:47:26+00:00",
       "publishedTs": 1786114046.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says Bitcoin \"is a good thing for our country.\" Bitcoin \"takes a lot of pressure off our dollar.\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2085738479791595803#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-07T14:42:59+00:00",
+      "publishedTs": 1786113779.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
