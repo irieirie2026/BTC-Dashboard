@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-09T23:29:27Z",
+  "fetchedAt": "2026-08-10T01:40:13Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "This whale sold another 1,019 $BTC($66.4M) 7 hours ago. Over the past 3 weeks, this whale has sold a total of 7,513 $BTC($486.9M).",
+      "link": "https://x.com/lookonchain/status/2086609652507423184#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "This whale sold another 1,019 $BTC ($66.4M) 7 hours ago. Over the past 3 weeks, this whale has sold a total of 7,513 $BTC ($486.9M). Lookonchain (@lookonchain) A mysterious whale (possibly a miner) has deposited 6,494 $BTC ($420.5M) to #Binance over the past 3 weeks. arkm.com/exp",
+      "publishedAt": "2026-08-10T00:24:43+00:00",
+      "publishedTs": 1786321483.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
       "link": "https://x.com/Nneuman/status/2086537762073727462#m",
@@ -29,7 +42,7 @@
       "isRetweet": false
     },
     {
-      "title": "I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives to suppo",
+      "title": "Pinned: I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives ",
       "link": "https://x.com/lopp/status/2086512275012075811#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -133,7 +146,7 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
+      "title": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
       "link": "https://x.com/lopp/status/2086418507386835274#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
