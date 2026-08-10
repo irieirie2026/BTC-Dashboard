@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-08-10T11:06:26Z",
+  "fetchedAt": "2026-08-10T13:03:25Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Getting notified of data breaches is rather upsetting unless you're a cypherpunk who signs up for services under pseudonyms. Then it's just amusing!",
+      "link": "https://x.com/lopp/status/2086793686562558298#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T12:36:00+00:00",
+      "publishedTs": 1786365360.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Public company Strive purchases 147 Bitcoin for $9.5 million! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2086787351674544413#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T12:10:49+00:00",
+      "publishedTs": 1786363849.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Michael Saylor's @Strategy sold another 1,690 $BTC($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). https://www.sec.gov/ix?doc=/Archives/edgar/data/0001050446/000119312526341297/mstr-20260810.htm",
+      "link": "https://x.com/lookonchain/status/2086787041866793161#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Michael Saylor's @Strategy sold another 1,690 $BTC ($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). sec.gov/ix?doc=/Archives/edg\u2026",
+      "publishedAt": "2026-08-10T12:09:36+00:00",
+      "publishedTs": 1786363776.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: STRC's BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $64,915. https://www.strategy.com/credit",
+      "link": "https://x.com/saylor/status/2086785554008469988#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "STRC's BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $64,915. strategy.com/credit Link Credit Metrics - Strategy strategy.com",
+      "publishedAt": "2026-08-10T12:03:41+00:00",
+      "publishedTs": 1786363421.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy increased its USD Reserve by $650M and repurchased $109M of $STRC. This increased USD Duration by 143 days to 2.7 yrs and tightened STRC's BTC Credit by 10 bps. As of 8/9/26, we hold \u20bf840,447 in our BTC Reserve and $4.65B in our USD Reserve. $MSTR https://www.strategy.co",
+      "link": "https://x.com/saylor/status/2086785552355860895#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy increased its USD Reserve by $650M and repurchased $109M of $STRC . This increased USD Duration by 143 days to 2.7 yrs and tightened STRC's BTC Credit by 10 bps. As of 8/9/26, we hold \u20bf840,447 in our BTC Reserve and $4.65B in our USD Reserve. $MSTR strategy.com/press/str",
+      "publishedAt": "2026-08-10T12:03:40+00:00",
+      "publishedTs": 1786363420.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: This is the issuer historical mkt share small cap value ETFs + MFs. Just a total takeover in 6yrs flat.",
+      "link": "https://x.com/EricBalchunas/status/2086777526748065950#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "This is the issuer historical mkt share small cap value ETFs + MFs. Just a total takeover in 6yrs flat.",
+      "publishedAt": "2026-08-10T11:31:47+00:00",
+      "publishedTs": 1786361507.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Wrote today about $AVUV, a phenom small cap value ETF that has put down seemingly imposs returns and became the top cash-intaker among all 232 small cap ETFs over 1yr, 3yr, 5yr. To pull in $20b as an active small value fund in the Mag 7 Passive Era is remarkable feat. I don't thi",
+      "link": "https://x.com/EricBalchunas/status/2086776419493830853#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Wrote today about $AVUV , a phenom small cap value ETF that has put down seemingly imposs returns and became the top cash-intaker among all 232 small cap ETFs over 1yr, 3yr, 5yr. To pull in $20b as an active small value fund in the Mag 7 Passive Era is remarkable feat. I don't th",
+      "publishedAt": "2026-08-10T11:27:23+00:00",
+      "publishedTs": 1786361243.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Roundhill has another potential smash on their hands with the new Photonics ETF $LYTE it did $76m Day One and $103m Day Two, crazy for a new launch, but esp theme launch. Price up 5% in 2days. Now whether this converts into the flowmageddon we saw with $DRAM (which is 3rd in 3mo ",
+      "link": "https://x.com/EricBalchunas/status/2086773027807637875#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Roundhill has another potential smash on their hands with the new Photonics ETF $LYTE it did $76m Day One and $103m Day Two, crazy for a new launch, but esp theme launch. Price up 5% in 2days. Now whether this converts into the flowmageddon we saw with $DRAM (which is 3rd in 3mo ",
+      "publishedAt": "2026-08-10T11:13:54+00:00",
+      "publishedTs": 1786360434.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bitcoin mining company @MARA sold a total of 23,093 $BTC($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). https://ir.mara.com/sec-filings/all-sec-filings/content/0001507605-26-000022/mara-20260630.htm",
       "link": "https://x.com/lookonchain/status/2086742949409526141#m",
@@ -874,19 +978,6 @@
       "isRetweet": true
     },
     {
-      "title": "Saner 110 supporters are finally realizing the leaders of the movement are delusional. I warned you about Luke a year ago with extensively cited sources. I warned you 6 months ago that 110 was doomed. Instead you chose to believe propaganda that nearly everyone building Bitcoin i",
-      "link": "https://x.com/lopp/status/2085751326042943966#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Saner 110 supporters are finally realizing the leaders of the movement are delusional. I warned you about Luke a year ago with extensively cited sources. I warned you 6 months ago that 110 was doomed. Instead you chose to believe propaganda that nearly everyone building Bitcoin i",
-      "publishedAt": "2026-08-07T15:34:02+00:00",
-      "publishedTs": 1786116842.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Mike Green (aka @profplum99) is leaving Simplify to launch new ETF and SMA firm w/ the goal of converting his research on passive into implementable products, scoop via @denitsa_tsekova",
       "link": "https://x.com/EricBalchunas/status/2085748433961316710#m",
       "source": "@ericbalchunas",
@@ -1108,32 +1199,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin doesn\u2019t need CLARITY. America needs clarity.",
-      "link": "https://x.com/saylor/status/2085631181152829643#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-07T07:36:37+00:00",
-      "publishedTs": 1786088197.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The #Coldcard hacker, who stole 2,055 $BTC($130M), is active again. An hour ago, the hacker transferred 30.185 $BTC($1.94M) to a new wallet. https://arkm.com/explorer/address/bc1qmd5m5ktv7m5ffujxv4248fxv36myvdx79n8jp6",
-      "link": "https://x.com/lookonchain/status/2085593899465416881#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The #Coldcard hacker, who stole 2,055 $BTC ($130M), is active again. An hour ago, the hacker transferred 30.185 $BTC ($1.94M) to a new wallet. arkm.com/explorer/address/bc\u2026 Lookonchain (@lookonchain) This is insane! According to @glxyresearch , the total losses from the #Coldcard",
-      "publishedAt": "2026-08-07T05:08:28+00:00",
-      "publishedTs": 1786079308.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate postpones Clarity Act vote to September for when they return from August recess, Politico reports.",
       "link": "https://x.com/BitcoinMagazine/status/2085544732252320150#m",
       "source": "@BitcoinMagazine",
@@ -1155,19 +1220,6 @@
       "summary": "",
       "publishedAt": "2026-08-07T01:00:18+00:00",
       "publishedTs": 1786064418.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Strategy is leading institutional bitcoin adoption and intends to remain a net buyer of $BTC.",
-      "link": "https://x.com/Strategy/status/2085483782673469829#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy is leading institutional bitcoin adoption and intends to remain a net buyer of $BTC .",
-      "publishedAt": "2026-08-06T21:50:54+00:00",
-      "publishedTs": 1786053054.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1251,19 +1303,6 @@
       "isRetweet": true
     },
     {
-      "title": "Roundhill's brand new Photonics ETF $LYTE had a banner first day in volume, $72m, which is actually more than $DRAM did on Day One. Tracks 10 stocks only, fee 65bps.",
-      "link": "https://x.com/EricBalchunas/status/2085456607782047898#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-06T20:02:55+00:00",
-      "publishedTs": 1786046575.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Sen. Van Hollen and SIFMA CEO debate if the Clarity Act addresses concerns \ud83d\udc40 \"I think this is a warning for all of us that bill is not ready for prime time.\" - Senator \"We have long said congress should act in this space, so good for congress to be acting. We think th",
       "link": "https://x.com/BitcoinMagazine/status/2085438944293105856#m",
       "source": "@BitcoinMagazine",
@@ -1290,32 +1329,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @BitcoinMagazine: PRICES INCREASE IN ONE DAY \ud83d\udea8 Get your passes now and experience the unlimited networking, education, and celebrations Bitcoin Asia has to offer \ud83c\udded\ud83c\uddf0 \ud83c\udf9f\ufe0f \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2085427966851387816#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "PRICES INCREASE IN ONE DAY \ud83d\udea8 Get your passes now and experience the unlimited networking, education, and celebrations Bitcoin Asia has to offer \ud83c\udded\ud83c\uddf0 \ud83c\udf9f\ufe0f \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
-      "publishedAt": "2026-08-06T18:09:07+00:00",
-      "publishedTs": 1786039747.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Majority Whip John Barrasso tells the Senate \u201cits time for the Senate to build on [the GENIUS Act] by passing the Clarity Act.\u201d \"America is safer and stronger when we innovate\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2085411739424694496#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Majority Whip John Barrasso tells the Senate \u201cits time for the Senate to build on [the GENIUS Act] by passing the Clarity Act.\u201d \"America is safer and stronger when we innovate\" \ud83d\ude80 Video",
-      "publishedAt": "2026-08-06T17:04:38+00:00",
-      "publishedTs": 1786035878.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "now that nikita is gone, does anyone want to fix the bug where i (and others) get 3k new random followers a day for no reason? i want my follower count to reflect what I actually earned rather than this bot subsidy",
       "link": "https://x.com/nic_carter/status/2085356263156633974#m",
       "source": "@nic_carter",
@@ -1324,19 +1337,6 @@
       "summary": "",
       "publishedAt": "2026-08-06T13:24:11+00:00",
       "publishedTs": 1786022651.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Someone moved 500 BTC worth $32 million for a transaction fee of only $0.12. The magic of Bitcoin \u2728",
-      "link": "https://x.com/BitcoinMagazine/status/2085347199437635833#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-06T12:48:10+00:00",
-      "publishedTs": 1786020490.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
