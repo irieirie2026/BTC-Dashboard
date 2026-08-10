@@ -1,7 +1,124 @@
 {
-  "fetchedAt": "2026-08-10T17:02:15Z",
+  "fetchedAt": "2026-08-10T18:55:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Say hello to another nation state threat actor who thought he could fool me into hiring him!",
+      "link": "https://x.com/lopp/status/2086886523425665455#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T18:44:54+00:00",
+      "publishedTs": 1786387494.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "this is how cutting edge mathematical research works now",
+      "link": "https://x.com/nic_carter/status/2086876945422164471#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-10T18:06:50+00:00",
+      "publishedTs": 1786385210.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: This is a no tax event in the above exchange he\u2019s talking about btw. You are exchanging btc for ETF shares, No dollars involved = no tax event. This in-kind creation redemption concept are why ETFs are so tax efficient across board, and almost never issue cap",
+      "link": "https://x.com/EricBalchunas/status/2086873315189117262#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "This is a no tax event in the above exchange he\u2019s talking about btw. You are exchanging btc for ETF shares, No dollars involved = no tax event. This in-kind creation redemption concept are why ETFs are so tax efficient across board, and almost never issue cap gains distribution.",
+      "publishedAt": "2026-08-10T17:52:25+00:00",
+      "publishedTs": 1786384345.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Today, Bitcoin Policy Institute and a broad coalition from across the digital-asset ecosystem are publishing an open letter calling on the world\u2019s leading AI labs to provide qualified open-source defenders with trusted access to frontier AI models. The past several weeks have mad",
+      "link": "https://x.com/bitcoinpolicy/status/2086872430639771675#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Today, Bitcoin Policy Institute and a broad coalition from across the digital-asset ecosystem are publishing an open letter calling on the world\u2019s leading AI labs to provide qualified open-source defenders with trusted access to frontier AI models. The past several weeks have mad",
+      "publishedAt": "2026-08-10T17:48:54+00:00",
+      "publishedTs": 1786384134.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @EricBalchunas: Related:",
+      "link": "https://x.com/EricBalchunas/status/2086865719984025806#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Related: BRITISH HODL \u2764\ufe0f\u200d\ud83d\udd25\ud83d\udc02\u2764\ufe0f\u200d\ud83d\udd25 (@BritishHodl) As the ColdCard theft of people's Bitcoin started hitting people I know and love losing their entire Bitcoin stacks. I started getting one question - what the hell is the alternative here for me and if I move it to an ETF, I get taxe",
+      "publishedAt": "2026-08-10T17:22:14+00:00",
+      "publishedTs": 1786382534.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @intangiblecoins: WATCH: Tracking the Coldcard Hackers: Inside the $120M Bitcoin Theft with Alex Thorn | Bitcoin Magazine Podcast Episode 20 Youtube: https://youtu.be/XlvsJblW4Sg Rumble: https://rumble.com/v7duurw-uncovering-the-coldcard-hacker-on-chain-analysis-with-alex-th",
+      "link": "https://x.com/BitcoinMagazine/status/2086863151912636768#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: Tracking the Coldcard Hackers: Inside the $120M Bitcoin Theft with Alex Thorn | Bitcoin Magazine Podcast Episode 20 Youtube: piped.video/XlvsJblW4Sg Rumble: rumble.com/v7duurw-uncoverin\u2026 Spotify: open.spotify.com/episode/4lM\u2026 Apple: podcasts.apple.com/us/podcas\u2026 Link Track",
+      "publishedAt": "2026-08-10T17:12:02+00:00",
+      "publishedTs": 1786381922.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "WATCH: Tracking the Coldcard Hackers: Inside the $120M Bitcoin Theft with Alex Thorn | Bitcoin Magazine Podcast Episode 20 $120 Million in Bitcoin stolen from Coldcard hardware wallets and @intangiblecoins is at the forefront, working with victims and tracking the hackers on-chai",
+      "link": "https://x.com/BitcoinMagazine/status/2086862662269546567#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: Tracking the Coldcard Hackers: Inside the $120M Bitcoin Theft with Alex Thorn | Bitcoin Magazine Podcast Episode 20 $120 Million in Bitcoin stolen from Coldcard hardware wallets and @intangiblecoins is at the forefront, working with victims and tracking the hackers on-chai",
+      "publishedAt": "2026-08-10T17:10:05+00:00",
+      "publishedTs": 1786381805.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Bitcoin is the one thing in this universe you can truly own.",
+      "link": "https://x.com/saylor/status/2086862516206829937#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bitcoin is the one thing in this universe you can truly own. Video",
+      "publishedAt": "2026-08-10T17:09:30+00:00",
+      "publishedTs": 1786381770.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: BlackRock tells Bloomberg they've \"seen consistently\" that Bitcoin ETF investors are buying and holding BTC \"long term\" on this dip \ud83d\ude80 \"That is being exhibited through this downturn.\" HODL \u270a",
+      "link": "https://x.com/BitcoinMagazine/status/2086862332467020054#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: BlackRock tells Bloomberg they've \"seen consistently\" that Bitcoin ETF investors are buying and holding BTC \"long term\" on this dip \ud83d\ude80 \"That is being exhibited through this downturn.\" HODL \u270a Video",
+      "publishedAt": "2026-08-10T17:08:46+00:00",
+      "publishedTs": 1786381726.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil.",
       "link": "https://x.com/EricBalchunas/status/2086855864955048157#m",
@@ -14,6 +131,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Six years ago today, Strategy made its first $BTC purchase. Thank you to our shareholders and the Bitcoin community for joining us on this journey and for your courage, clarity, and conviction. \u20bf.",
+      "link": "https://x.com/Strategy/status/2086851696538398748#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-10T16:26:30+00:00",
+      "publishedTs": 1786379190.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Were you foolish enough to run a BIP-110 node despite my warnings that it would break? Now your node is stuck at height 961,633 and simply switching to a different client won't fix it. To get back on the real Bitcoin chain: $ bitcoin-cli invalidateblock 0000000000000000000169eb6f",
@@ -39,7 +169,7 @@
       "publishedTs": 1786377669.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "A stacked ETF IQ coming up in 20min: Robbie Mitchnick of BlackRock on $IBIT flows, coldcard hack. Jon Maier of JPM, Eduardo Repetto on the secret behind AVUV success and May from RayJay on Photonics ETFs w / @isabelletanlee filling in for Scarlett. On Bloomberg TV at Noon EST",
@@ -128,6 +258,19 @@
       "summary": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR Strategy (@Strategy) Strategy increased its USD Reserve by $650M and repurchased $109M",
       "publishedAt": "2026-08-10T13:25:34+00:00",
       "publishedTs": 1786368334.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "I am automating investigative journalism at http://Effort.News We're breaking five stories today based on verifiable financial data which everyone missed for years. This is what I\u2019ve been working on. \ud83e\uddf5",
+      "link": "https://x.com/brianchau57/status/2086803587699745170#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I am automating investigative journalism at Effort.News We're breaking five stories today based on verifiable financial data which everyone missed for years. This is what I\u2019ve been working on. \ud83e\uddf5",
+      "publishedAt": "2026-08-10T13:15:20+00:00",
+      "publishedTs": 1786367720.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -835,19 +978,6 @@
       "isRetweet": true
     },
     {
-      "title": "T-minus 11 hours! The final countdown: http://bip110.com",
-      "link": "https://x.com/lopp/status/2086036446733869314#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "T-minus 11 hours! The final countdown: bip110.com",
-      "publishedAt": "2026-08-08T10:27:00+00:00",
-      "publishedTs": 1786184820.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Whales keep accumulating $BTC. A newly created wallet (167YVr) received 1,346 $BTC ($87.28M) from #GalaxyDigital. https://arkm.com/explorer/address/167YVrHeroj8yuiH8ZmMFazQjn5sPjKBa7",
       "link": "https://x.com/lookonchain/status/2085914532007072087#m",
       "source": "@lookonchain",
@@ -1056,32 +1186,6 @@
       "isRetweet": false
     },
     {
-      "title": "I joined @GaryGillX to discuss Strategy\u2019s Digital Credit Capital Framework, $STRC\u2019s path to par, Bitcoin monetization, institutional adoption, regulatory Clarity, and $MSTR as Amplified Bitcoin. https://www.youtube.com/watch?v=ks2i176-se8",
-      "link": "https://x.com/phongle/status/2085757197565190379#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "I joined @GaryGillX to discuss Strategy\u2019s Digital Credit Capital Framework, $STRC\u2019s path to par, Bitcoin monetization, institutional adoption, regulatory Clarity, and $MSTR as Amplified Bitcoin. piped.video/watch?v=ks2i176-\u2026 Link Phong Le, CEO of Strategy: $100 STRC, BTC 4-Year C",
-      "publishedAt": "2026-08-07T15:57:22+00:00",
-      "publishedTs": 1786118242.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "We are so \u20bfack.",
-      "link": "https://x.com/apyx_fi/status/2085756340065149043#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We are so \u20bfack. Video",
-      "publishedAt": "2026-08-07T15:53:57+00:00",
-      "publishedTs": 1786118037.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -> Server -> Maintenance -> Update & verify the 2.4.2 version string in the footer. If you are ",
       "link": "https://x.com/BtcpayServer/status/2085755643659522240#m",
       "source": "@JSeyff",
@@ -1103,32 +1207,6 @@
       "summary": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation Video",
       "publishedAt": "2026-08-07T15:47:29+00:00",
       "publishedTs": 1786117649.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy has built an ATH $USD Reserve, providing 2.3 years of dividend and interest coverage, well above our minimum of 1 year of coverage.",
-      "link": "https://x.com/Strategy/status/2085753313086099834#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-07T15:41:55+00:00",
-      "publishedTs": 1786117315.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Mike Green (aka @profplum99) is leaving Simplify to launch new ETF and SMA firm w/ the goal of converting his research on passive into implementable products, scoop via @denitsa_tsekova",
-      "link": "https://x.com/EricBalchunas/status/2085748433961316710#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Mike Green (aka @profplum99 ) is leaving Simplify to launch new ETF and SMA firm w/ the goal of converting his research on passive into implementable products, scoop via @denitsa_tsekova",
-      "publishedAt": "2026-08-07T15:22:32+00:00",
-      "publishedTs": 1786116152.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1264,19 +1342,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate postpones Clarity Act vote to September for when they return from August recess, Politico reports.",
-      "link": "https://x.com/BitcoinMagazine/status/2085544732252320150#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-07T01:53:06+00:00",
-      "publishedTs": 1786067586.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "CEO OF ORANGE CAP GAMES @SPENCER GORDON-SAND TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"1 Bitcoin = 1 Bitcoin, USD depreciates steeply!\" \u270a",
       "link": "https://x.com/Bitcoinconfasia/status/2085531443514540442#m",
       "source": "@BitcoinMagazine",
@@ -1290,19 +1355,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Lummis says \"It's time to cinch up and get this done\", regarding the Clarity Act. \"To ensure our innovators in Wyoming and across the U.S. have the clarity they need to build a better financial future right here on U.S. soil.\" \ud83d\udca5",
-      "link": "https://x.com/BitcoinMagazine/status/2085482386263814318#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-06T21:45:21+00:00",
-      "publishedTs": 1786052721.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: if you look at it, the best predictor of whether you pay a little or a lot for electricity is NOT whether there are datacenters near you, but... whether your state voted for Trump or Harris. proof: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-ele",
       "link": "https://x.com/nic_carter/status/2085474055524683810#m",
       "source": "@nic_carter",
@@ -1314,19 +1366,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "20 DAYS UNTIL THE BIGGEST BITCOIN CONFERENCE IN ASIA \ud83d\ude80 125+ countries, 150+ speakers, and thousands of attendees will be meeting in Hong Kong \ud83d\udc4f",
-      "link": "https://x.com/Bitcoinconfasia/status/2085472281891913816#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-06T21:05:12+00:00",
-      "publishedTs": 1786050312.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "With some very minor exceptions, the data center buildout is happening in red states (historically some purple but on a go forward basis, red). The data center question is entirely a red on red issue. It\u2019s impossible to build in blues and power is expensive, hence no one is even ",
@@ -1493,45 +1532,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T16:02:56+00:00",
       "publishedTs": 1785772976.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Rob Hamilton (@Rob1Ham) Over a thousand bitcoin moved today in an attack. Doing emergency triage to identify the source of the issue this is how it went: @AnthropicAI - Instant Downgrade. @OpenAI - A little help. @Kimi_Moonshot - One shot. The US needs to get it shits together. @",
-      "link": "https://x.com/nic_carter/status/2084300071588315269#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-03T15:27:16+00:00",
-      "publishedTs": 1785770836.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
-      "link": "https://x.com/nic_carter/status/2084291844804911473#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I was pro open weight before mostly on a vibes basis (always countersignal EAs no matter what the topic is) but wow. this viscerally drove it home for me.",
-      "publishedAt": "2026-08-03T14:54:34+00:00",
-      "publishedTs": 1785768874.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "my biggest takeaway from the coldcard debacle is that open weight AI is completely essential. otherwise the bad guys will always outgun the good guys (due to safety constraints on white hat imposed by the closed labs) unless they want to dramatically dial back safety, the default",
-      "link": "https://x.com/nic_carter/status/2084291256645992810#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "my biggest takeaway from the coldcard debacle is that open weight AI is completely essential. otherwise the bad guys will always outgun the good guys (due to safety constraints on white hat imposed by the closed labs) unless they want to dramatically dial back safety, the default",
-      "publishedAt": "2026-08-03T14:52:14+00:00",
-      "publishedTs": 1785768734.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
