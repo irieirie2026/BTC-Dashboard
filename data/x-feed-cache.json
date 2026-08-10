@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-10T13:03:25Z",
+  "fetchedAt": "2026-08-10T14:56:20Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC(+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC(+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH(+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH(+$224.97M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2086826583105695813#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC (+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC (+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH (+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH (+$224.97M)\ud83d\udfe2 Lookonchain (@lookonchain) August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $B",
+      "publishedAt": "2026-08-10T14:46:43+00:00",
+      "publishedTs": 1786373203.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Bitcoin is bouncing off the 200 weekly moving average, which historically has been a great buying opportunity \ud83d\udc40 Bullish! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2086826064211259399#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T14:44:39+00:00",
+      "publishedTs": 1786373079.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR",
+      "link": "https://x.com/phongle/status/2086806160309465181#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR Strategy (@Strategy) Strategy increased its USD Reserve by $650M and repurchased $109M",
+      "publishedAt": "2026-08-10T13:25:34+00:00",
+      "publishedTs": 1786368334.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Getting notified of data breaches is rather upsetting unless you're a cypherpunk who signs up for services under pseudonyms. Then it's just amusing!",
       "link": "https://x.com/lopp/status/2086793686562558298#m",
@@ -26,7 +65,7 @@
       "publishedTs": 1786363849.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Michael Saylor's @Strategy sold another 1,690 $BTC($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). https://www.sec.gov/ix?doc=/Archives/edgar/data/0001050446/000119312526341297/mstr-20260810.htm",
@@ -991,19 +1030,6 @@
       "isRetweet": false
     },
     {
-      "title": "If I were looking for the next billion-dollar business in finance, I would study Digital Credit.",
-      "link": "https://x.com/saylor/status/2085746501720916354#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-07T15:14:51+00:00",
-      "publishedTs": 1786115691.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Here's the latest 'New Launch Review' episode of Trillions. This month's Big Splash is $IQQ & $SKUU, the Wild Card is $TKNZ and our Good Luck with That is $YSAU, the The Y'ALL Street Gold ETF w/ @isabelletanlee https://youtu.be/xBvF-luRxFc?si=eyw949n6XojXYMyb via @YouTube",
       "link": "https://x.com/EricBalchunas/status/2085744197626180072#m",
       "source": "@ericbalchunas",
@@ -1095,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "After a month of inactivity, Royal Government of Bhutan sold another 434.87 $BTC ($27.93M). https://arkm.com/explorer/address/bc1qwug26pvyaz8tjnzgvsthheqhaa77r3d7ukpqlh",
-      "link": "https://x.com/lookonchain/status/2085717867107058165#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "After a month of inactivity, Royal Government of Bhutan sold another 434.87 $BTC ($27.93M). arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-08-07T13:21:04+00:00",
-      "publishedTs": 1786108864.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: $65,177 Bitcoin! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2085701153082208346#m",
       "source": "@BitcoinMagazine",
@@ -1184,19 +1197,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Whales continue to accumulate $BTC. Another newly created wallet withdrew 434.87 $BTC($27.96M) from #Binance. https://arkm.com/explorer/address/bc1qaqecvj4uvp598q7pqxv3z37xc8tcapkumm73qv",
-      "link": "https://x.com/lookonchain/status/2085636877370233068#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whales continue to accumulate $BTC . Another newly created wallet withdrew 434.87 $BTC ($27.96M) from #Binance . arkm.com/explorer/address/bc\u2026 Lookonchain (@lookonchain) Whales are accumulating $BTC ! Four newly created wallets have received 1,540 $BTC ($99.4M) from #GalaxyDigita",
-      "publishedAt": "2026-08-07T07:59:15+00:00",
-      "publishedTs": 1786089555.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate postpones Clarity Act vote to September for when they return from August recess, Politico reports.",
