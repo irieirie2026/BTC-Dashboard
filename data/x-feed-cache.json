@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-10T16:00:08Z",
+  "fetchedAt": "2026-08-10T17:02:15Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil.",
+      "link": "https://x.com/EricBalchunas/status/2086855864955048157#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil. Eric Balchunas (@EricBalchunas) A stacked ETF IQ coming up in 20min: Robbie Mitchnick of BlackRock on $IBIT flows, coldcard ha",
+      "publishedAt": "2026-08-10T16:43:04+00:00",
+      "publishedTs": 1786380184.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Were you foolish enough to run a BIP-110 node despite my warnings that it would break? Now your node is stuck at height 961,633 and simply switching to a different client won't fix it. To get back on the real Bitcoin chain: $ bitcoin-cli invalidateblock 0000000000000000000169eb6f",
+      "link": "https://x.com/lopp/status/2086848130297839687#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Were you foolish enough to run a BIP-110 node despite my warnings that it would break? Now your node is stuck at height 961,633 and simply switching to a different client won't fix it. To get back on the real Bitcoin chain: $ bitcoin-cli invalidateblock 0000000000000000000169eb6f",
+      "publishedAt": "2026-08-10T16:12:20+00:00",
+      "publishedTs": 1786378340.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Spot Bitcoin ETFs just saw their biggest weekly inflow since April, taking in $850 million worth of BTC \ud83d\ude80 Bullish \ud83d\udc02",
+      "link": "https://x.com/BitcoinMagazine/status/2086845314594427280#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T16:01:09+00:00",
+      "publishedTs": 1786377669.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "A stacked ETF IQ coming up in 20min: Robbie Mitchnick of BlackRock on $IBIT flows, coldcard hack. Jon Maier of JPM, Eduardo Repetto on the secret behind AVUV success and May from RayJay on Photonics ETFs w / @isabelletanlee filling in for Scarlett. On Bloomberg TV at Noon EST",
       "link": "https://x.com/EricBalchunas/status/2086839700254281750#m",
@@ -78,7 +117,7 @@
       "publishedTs": 1786373079.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR",
@@ -1045,9 +1084,9 @@
     {
       "title": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -> Server -> Maintenance -> Update & verify the 2.4.2 version string in the footer. If you are ",
       "link": "https://x.com/BtcpayServer/status/2085755643659522240#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -&gt; Server -&gt; Maintenance -&gt; Update & verify the 2.4.2 version string in the footer. If",
       "publishedAt": "2026-08-07T15:51:11+00:00",
       "publishedTs": 1786117871.0,
@@ -1298,19 +1337,6 @@
       "summary": "With some very minor exceptions, the data center buildout is happening in red states (historically some purple but on a go forward basis, red). The data center question is entirely a red on red issue. It\u2019s impossible to build in blues and power is expensive, hence no one is even ",
       "publishedAt": "2026-08-06T21:02:17+00:00",
       "publishedTs": 1786050137.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Former Governor of New York Andrew Cuomo says he thinks the Senate will resolve the Clarity Act ethics issues and pass the bill \ud83d\udc40 \"We need Clarity...the world is passing us by\" Pass it \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2085465344219463713#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Former Governor of New York Andrew Cuomo says he thinks the Senate will resolve the Clarity Act ethics issues and pass the bill \ud83d\udc40 \"We need Clarity...the world is passing us by\" Pass it \ud83d\ude80 Video",
-      "publishedAt": "2026-08-06T20:37:38+00:00",
-      "publishedTs": 1786048658.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
