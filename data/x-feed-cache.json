@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-10T22:35:27Z",
+  "fetchedAt": "2026-08-10T23:33:08Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A former State Congress Representative in Mississippi is offering to buy any Bitcoin influencer with more than 3,000 followers a Bitkey wallet",
+      "link": "https://x.com/DocumentingBTC/status/2086945392839590072#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-10T22:38:49+00:00",
+      "publishedTs": 1786401529.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "We intend to make $STRC the iPhone of Digital Assets.",
       "link": "https://x.com/saylor/status/2086936384367968739#m",
@@ -1649,19 +1662,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T12:46:53+00:00",
       "publishedTs": 1785674813.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes",
-      "link": "https://x.com/DocumentingBTC/status/2083895871364608178#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes Video",
-      "publishedAt": "2026-08-02T12:41:07+00:00",
-      "publishedTs": 1785674467.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
