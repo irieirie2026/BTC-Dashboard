@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-10T09:18:12Z",
+  "fetchedAt": "2026-08-10T11:06:26Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin mining company @MARA sold a total of 23,093 $BTC($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). https://ir.mara.com/sec-filings/all-sec-filings/content/0001507605-26-000022/mara-20260630.htm",
+      "link": "https://x.com/lookonchain/status/2086742949409526141#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Bitcoin mining company @MARA sold a total of 23,093 $BTC ($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). ir.mara.com/sec-filings/all-\u2026",
+      "publishedAt": "2026-08-10T09:14:23+00:00",
+      "publishedTs": 1786353263.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\u201cBitcoin is economic freedom for generations to come.\u201d \u2014 Sir David Khalili",
       "link": "https://x.com/saylor/status/2086732532922343831#m",
@@ -27,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
+      "link": "https://x.com/Sanderandersenn/status/2086708085691703456#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
+      "publishedAt": "2026-08-10T06:55:51+00:00",
+      "publishedTs": 1786344951.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "H100 acquires 2,455.4 Bitcoin at approx. USD 62,900 per Bitcoin, increasing total holdings to 3,506 BTC. The transaction, announced in April, has now been completed: - Largest M&A transaction in the European Public Bitcoin Equity sector - World's first Bitcoin-for-Bitcoin M&A tra",
@@ -1272,19 +1298,6 @@
       "summary": "PRICES INCREASE IN ONE DAY \ud83d\udea8 Get your passes now and experience the unlimited networking, education, and celebrations Bitcoin Asia has to offer \ud83c\udded\ud83c\uddf0 \ud83c\udf9f\ufe0f \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
       "publishedAt": "2026-08-06T18:09:07+00:00",
       "publishedTs": 1786039747.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Our Q2 Earnings Call, remixed. \ud83c\udfb6",
-      "link": "https://x.com/saylor/status/2085425688287338864#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Our Q2 Earnings Call, remixed. \ud83c\udfb6 Video",
-      "publishedAt": "2026-08-06T18:00:04+00:00",
-      "publishedTs": 1786039204.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
