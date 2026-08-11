@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T03:42:26Z",
+  "fetchedAt": "2026-08-11T05:06:20Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -1093,19 +1093,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Whales keep accumulating $BTC. A newly created wallet (167YVr) received 1,346 $BTC ($87.28M) from #GalaxyDigital. https://arkm.com/explorer/address/167YVrHeroj8yuiH8ZmMFazQjn5sPjKBa7",
-      "link": "https://x.com/lookonchain/status/2085914532007072087#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whales keep accumulating $BTC . A newly created wallet (167YVr) received 1,346 $BTC ($87.28M) from #GalaxyDigital . arkm.com/explorer/address/16\u2026",
-      "publishedAt": "2026-08-08T02:22:33+00:00",
-      "publishedTs": 1786155753.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: I would actually love for someone to do this go out onto the street and ask someone to draw a pie chart of federal outlays. you give them the categories. can't do it in miami because that's cheating (people are too dumb).",
