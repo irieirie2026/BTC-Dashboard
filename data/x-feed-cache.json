@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T10:56:53Z",
+  "fetchedAt": "2026-08-11T11:45:00Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -352,6 +352,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "strcUSX is live in YieldVault - the first Solana-native STRC product with senior protection. @Strategy's STRC pays a ~12% cash dividend. strcUSX brings that stream onchain & splits it in two: - Senior: paid first, toward a ~7% target. - Junior: first-loss, with a variable ~20% ta",
+      "link": "https://x.com/solsticefi/status/2086846771268067526#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "strcUSX is live in YieldVault - the first Solana-native STRC product with senior protection. @Strategy 's STRC pays a ~12% cash dividend. strcUSX brings that stream onchain & splits it in two: - Senior: paid first, toward a ~7% target. - Junior: first-loss, with a variable ~20% t",
+      "publishedAt": "2026-08-10T16:06:56+00:00",
+      "publishedTs": 1786378016.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Spot Bitcoin ETFs just saw their biggest weekly inflow since April, taking in $850 million worth of BTC \ud83d\ude80 Bullish \ud83d\udc02",
@@ -1002,19 +1015,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Updated every 15 seconds on http://strategy.com.",
-      "link": "https://x.com/Strategy/status/2086156982822564317#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Updated every 15 seconds on strategy.com .",
-      "publishedAt": "2026-08-08T18:25:58+00:00",
-      "publishedTs": 1786213558.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "I recall the tension while working at @BitGo in 2017 when we had intra-company disputes over supporting SegWit2X... I can only imagine how much fun the employees at @ocean_mining are having today! I hope y'all can protect your company from being destroyed by delusional folks!",
