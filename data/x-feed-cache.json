@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-11T20:02:55Z",
+  "fetchedAt": "2026-08-11T21:43:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "METAPLANET IS BACK AS THE OFFICIAL SPONSOR OF BITCOIN ASIA 2026 \ud83d\ude80 Meet the masterminds behind the biggest Bitcoin treasury in Asia in just two more weeks \ud83d\udc40",
+      "link": "https://x.com/Bitcoinconfasia/status/2087282914543181912#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "METAPLANET IS BACK AS THE OFFICIAL SPONSOR OF BITCOIN ASIA 2026 \ud83d\ude80 Meet the masterminds behind the biggest Bitcoin treasury in Asia in just two more weeks \ud83d\udc40 Video",
+      "publishedAt": "2026-08-11T21:00:01+00:00",
+      "publishedTs": 1786482001.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC to unveil 'major crypto plans' as Clarity Act stalls \u2014 Bloomberg \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2087265665870712922#m",
@@ -326,6 +339,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "\ud83d\udd25 SAYLOR: \u201cWe intend to make $STRC the iPhone of Digital Assets.\u201d",
+      "link": "https://x.com/Cointelegraph/status/2086966072842813660#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-11T00:01:00+00:00",
+      "publishedTs": 1786406460.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "PANEL ANNOUNCEMENT \ud83d\udce3 This panel explores how to build and grow your sovereignty stack through strategies including second passports, insurance, tax-advantaged structures, and other tools designed to increase resilience and optionality. \ud83d\udd25 August 28 | Genesis Stage",
@@ -887,19 +913,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST 18 MORE SLEEPS UNTIL BITCOIN ASIA \ud83d\ude80 THE COUNTDOWN IS ON \u23f3",
-      "link": "https://x.com/Bitcoinconfasia/status/2086711705367638100#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-10T07:10:14+00:00",
-      "publishedTs": 1786345814.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
       "link": "https://x.com/Sanderandersenn/status/2086708085691703456#m",
       "source": "@saylor",
@@ -908,19 +921,6 @@
       "summary": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
       "publishedAt": "2026-08-10T06:55:51+00:00",
       "publishedTs": 1786344951.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "H100 acquires 2,455.4 Bitcoin at approx. USD 62,900 per Bitcoin, increasing total holdings to 3,506 BTC. The transaction, announced in April, has now been completed: - Largest M&A transaction in the European Public Bitcoin Equity sector - World's first Bitcoin-for-Bitcoin M&A tra",
-      "link": "https://x.com/H100Group/status/2086705414733693011#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "H100 acquires 2,455.4 Bitcoin at approx. USD 62,900 per Bitcoin, increasing total holdings to 3,506 BTC. The transaction, announced in April, has now been completed: - Largest M&A transaction in the European Public Bitcoin Equity sector - World's first Bitcoin-for-Bitcoin M&A tra",
-      "publishedAt": "2026-08-10T06:45:14+00:00",
-      "publishedTs": 1786344314.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
