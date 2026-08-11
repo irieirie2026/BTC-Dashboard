@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-10T23:33:08Z",
+  "fetchedAt": "2026-08-11T01:37:14Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "bahahahahahahaha haaaaaaaaaaaaaaaaaaaaaaaaa dumbest phishing attempt ever!",
+      "link": "https://x.com/lopp/status/2086966435444600922#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-11T00:02:26+00:00",
+      "publishedTs": 1786406546.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 This panel explores how to build and grow your sovereignty stack through strategies including second passports, insurance, tax-advantaged structures, and other tools designed to increase resilience and optionality. \ud83d\udd25 August 28 | Genesis Stage",
+      "link": "https://x.com/Bitcoinconfasia/status/2086956022468395144#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-10T23:21:04+00:00",
+      "publishedTs": 1786404064.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "A former State Congress Representative in Mississippi is offering to buy any Bitcoin influencer with more than 3,000 followers a Bitkey wallet",
       "link": "https://x.com/DocumentingBTC/status/2086945392839590072#m",
@@ -351,7 +377,7 @@
       "publishedTs": 1786373677.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC(+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC(+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH(+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH(+$224.97M)\ud83d\udfe2",
@@ -978,19 +1004,6 @@
       "isRetweet": false
     },
     {
-      "title": "The best entropy is found in nature. Rolling dice is boring; every wallet should ship with a QuailSeed kit!",
-      "link": "https://x.com/lopp/status/2086127914496520443#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The best entropy is found in nature. Rolling dice is boring; every wallet should ship with a QuailSeed kit! Documenting \u20bfitcoin \ud83d\udcc4 (@DocumentingBTC) This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bit",
-      "publishedAt": "2026-08-08T16:30:27+00:00",
-      "publishedTs": 1786206627.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
       "source": "@DocumentingBTC",
@@ -1015,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "I spoke with @jvisserlabs to break down why the last two weeks may be the most important stretch in bitcoin's history, along with the US-Japan yen intervention and a weakening labor market. We also discuss the AI stock rebound, physical AI and Tesla's Terafab, Google's talent exo",
-      "link": "https://x.com/APompliano/status/2086091396528660927#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "I spoke with @jvisserlabs to break down why the last two weeks may be the most important stretch in bitcoin's history, along with the US-Japan yen intervention and a weakening labor market. We also discuss the AI stock rebound, physical AI and Tesla's Terafab, Google's talent exo",
-      "publishedAt": "2026-08-08T14:05:21+00:00",
-      "publishedTs": 1786197921.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "This week's ETF buzz... https://theetfeducator.com/2026/08/08/etf-buzz-321/ (table via @EricBalchunas & @JSeyff)",
@@ -1316,19 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Donald Trump says Bitcoin \"is a good thing for our country.\" Bitcoin \"takes a lot of pressure off our dollar.\" \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2085738479791595803#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-07T14:42:59+00:00",
-      "publishedTs": 1786113779.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy.",
       "link": "https://x.com/LaDoger/status/2085730043016151305#m",
       "source": "@saylor",
@@ -1350,19 +1337,6 @@
       "summary": "",
       "publishedAt": "2026-08-07T13:51:04+00:00",
       "publishedTs": 1786110664.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $BTC(+$109.16M)\ud83d\udfe2 7D NetFlow: +7,306 $BTC(+$476.7M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +42,756 $ETH(+$82.52M)\ud83d\udfe2 7D NetFlow: +85,091 $ETH(+$164.22M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2085724779512987942#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $BTC (+$109.16M)\ud83d\udfe2 7D NetFlow: +7,306 $BTC (+$476.7M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +42,756 $ETH (+$82.52M)\ud83d\udfe2 7D NetFlow: +85,091 $ETH (+$164.22M)\ud83d\udfe2 Lookonchain (@lookonchain) August 6 Update: #Bitcoin ETFs: 1D NetFlow: +3,781 $BTC (",
-      "publishedAt": "2026-08-07T13:48:32+00:00",
-      "publishedTs": 1786110512.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
