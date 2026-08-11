@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-11T17:06:21Z",
+  "fetchedAt": "2026-08-11T18:59:45Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "C4 Security Summit! \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM Eastern \ud83d\udcbb Free Live Virtual Event Registration Required: https://cryptoconsortium.org/c4summit Hear from industry experts, with a keynote from @lopp",
+      "link": "https://x.com/LearnMoreWithC4/status/2087247375584616467#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "C4 Security Summit! \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM Eastern \ud83d\udcbb Free Live Virtual Event Registration Required: cryptoconsortium.org/c4summi\u2026 Hear from industry experts, with a keynote from @lopp",
+      "publishedAt": "2026-08-11T18:38:48+00:00",
+      "publishedTs": 1786473528.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The tree of BTC must be refreshed from time to time with the tears of delulus and tyrants.",
+      "link": "https://x.com/lopp/status/2087246282641293765#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-11T18:34:27+00:00",
+      "publishedTs": 1786473267.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 CFTC 'will proceed with digital asset rulemakings' even if the Clarity Act does not pass, Chairman Selig reportedly said \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2087242987696685516#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-11T18:21:22+00:00",
+      "publishedTs": 1786472482.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: Billionaire Tim Draper says: \u201cFirst they\u2019ll say, 'We accept Bitcoin.' Then they\u2019ll say, 'We only accept Bitcoin.' Then there will be a run on the banks. Then the world as we know it will fundamentally change forever as Bitcoin goes infinite against the US dollar.\u201d",
       "link": "https://x.com/BitcoinMagazine/status/2087211704232882640#m",
@@ -1108,45 +1147,6 @@
       "isRetweet": false
     },
     {
-      "title": "x.com/i/spaces/1jxXggWWaAvJZ",
-      "link": "https://x.com/BitcoinMagazine/status/2086175237989597688#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "nitter.net/i/spaces/1jxXggWWaAvJZ Link Twitter Space Click to view Space https://nitter.net/i/spaces/1jxXggWWaAvJZ",
-      "publishedAt": "2026-08-08T19:38:30+00:00",
-      "publishedTs": 1786217910.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It's go time! https://bip110.com",
-      "link": "https://x.com/lopp/status/2086174870656668146#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "It's go time! bip110.com",
-      "publishedAt": "2026-08-08T19:37:03+00:00",
-      "publishedTs": 1786217823.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I recall the tension while working at @BitGo in 2017 when we had intra-company disputes over supporting SegWit2X... I can only imagine how much fun the employees at @ocean_mining are having today! I hope y'all can protect your company from being destroyed by delusional folks!",
-      "link": "https://x.com/lopp/status/2086155840948421089#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-08T18:21:26+00:00",
-      "publishedTs": 1786213286.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
       "source": "@DocumentingBTC",
@@ -1405,19 +1405,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "$IBIT, $FBTC, $BITC, $ARKB, $MSBT have all seen inflows every single day (and growing each day) since the Coldcard Hack this wknd for a total of $620m. I'm not saying it's connected, we just don't know, altho long-term I can't imagine there aren't some who migrate over, but it's ",
-      "link": "https://x.com/EricBalchunas/status/2085337512982003819#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "$IBIT , $FBTC , $BITC , $ARKB , $MSBT have all seen inflows every single day (and growing each day) since the Coldcard Hack this wknd for a total of $620m. I'm not saying it's connected, we just don't know, altho long-term I can't imagine there aren't some who migrate over, but i",
-      "publishedAt": "2026-08-06T12:09:41+00:00",
-      "publishedTs": 1786018181.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
