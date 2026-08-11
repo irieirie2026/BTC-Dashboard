@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T22:39:41Z",
+  "fetchedAt": "2026-08-11T23:38:11Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -13,7 +13,7 @@
       "publishedTs": 1786486475.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "solid Q2 results and guidance. energized 500 MW in a single quarter. exceptional. $CRWV",
@@ -629,15 +629,15 @@
     {
       "title": "JUST IN: BlackRock tells Bloomberg they've \"seen consistently\" that Bitcoin ETF investors are buying and holding BTC \"long term\" on this dip \ud83d\ude80 \"That is being exhibited through this downturn.\" HODL \u270a",
       "link": "https://x.com/BitcoinMagazine/status/2086862332467020054#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
       "summary": "JUST IN: BlackRock tells Bloomberg they've \"seen consistently\" that Bitcoin ETF investors are buying and holding BTC \"long term\" on this dip \ud83d\ude80 \"That is being exhibited through this downturn.\" HODL \u270a Video",
       "publishedAt": "2026-08-10T17:08:46+00:00",
       "publishedTs": 1786381726.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil.",
@@ -869,19 +869,6 @@
       "summary": "Wrote today about $AVUV , a phenom small cap value ETF that has put down seemingly imposs returns and became the top cash-intaker among all 232 small cap ETFs over 1yr, 3yr, 5yr. To pull in $20b as an active small value fund in the Mag 7 Passive Era is remarkable feat. I don't th",
       "publishedAt": "2026-08-10T11:27:23+00:00",
       "publishedTs": 1786361243.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Roundhill has another potential smash on their hands with the new Photonics ETF $LYTE it did $76m Day One and $103m Day Two, crazy for a new launch, but esp theme launch. Price up 5% in 2days. Now whether this converts into the flowmageddon we saw with $DRAM (which is 3rd in 3mo ",
-      "link": "https://x.com/EricBalchunas/status/2086773027807637875#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Roundhill has another potential smash on their hands with the new Photonics ETF $LYTE it did $76m Day One and $103m Day Two, crazy for a new launch, but esp theme launch. Price up 5% in 2days. Now whether this converts into the flowmageddon we saw with $DRAM (which is 3rd in 3mo ",
-      "publishedAt": "2026-08-10T11:13:54+00:00",
-      "publishedTs": 1786360434.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
