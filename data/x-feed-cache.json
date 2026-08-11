@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-11T12:59:47Z",
+  "fetchedAt": "2026-08-11T14:22:57Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
+      "link": "https://x.com/EricBalchunas/status/2087176625481818584#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
+      "publishedAt": "2026-08-11T13:57:40+00:00",
+      "publishedTs": 1786456660.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BREAKING: \ud83c\uddf7\ud83c\uddfa Russia's central bank announces it approved Bitcoin for public trading on domestic exchanges, TASS reports.",
+      "link": "https://x.com/BitcoinMagazine/status/2087166866649153805#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-11T13:18:53+00:00",
+      "publishedTs": 1786454333.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Join us on August 17 at 12pm ET for our Q2 2026 Earnings Investor Q&A with @Saylor and @PhongLe, hosted by @NatBrunell. https://www.strategy.com/press/strategy-to-host-live-q-a-with-investors-featuring-michael-saylor-and-phong-le_08-11-2026",
+      "link": "https://x.com/Strategy/status/2087162917309305293#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Join us on August 17 at 12pm ET for our Q2 2026 Earnings Investor Q&amp;A with @Saylor and @PhongLe , hosted by @NatBrunell . strategy.com/press/strategy-\u2026 Link Strategy to Host Live Q&amp;A with Investors Featuring Michael Saylor and Phong Le August 11, 2026 strategy.com",
+      "publishedAt": "2026-08-11T13:03:11+00:00",
+      "publishedTs": 1786453391.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "RT @Excellion: Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
       "link": "https://x.com/saylor/status/2087157525955141899#m",
@@ -26,7 +65,7 @@
       "publishedTs": 1786451790.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Digital Money is being built on Digital Credit. $STRC",
@@ -40,6 +79,32 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "\ud83d\udd25 HISTORY: 6 years ago today, Strategy adopted Bitcoin as its primary treasury reserve asset. It started with 21,454 $BTC for $250M at ~$11,653 per Bitcoin. Today, Strategy holds 840,447 BTC, nearly 39x its initial stack.",
+      "link": "https://x.com/Cointelegraph/status/2087112231666249892#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-11T09:41:47+00:00",
+      "publishedTs": 1786441307.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Saylor calls STRC the bridge between Bitcoin & stablecoins. strcUSX puts that bridge on Solana. Every USX locked in means Solstice holds more STRC, and a healthier STRC sends @saylor back to stacking Bitcoin. Solana yield on one end, a stronger Bitcoin on the other. Full story: h",
+      "link": "https://x.com/solsticefi/status/2087103142647488809#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Saylor calls STRC the bridge between Bitcoin & stablecoins. strcUSX puts that bridge on Solana. Every USX locked in means Solstice holds more STRC, and a healthier STRC sends @saylor back to stacking Bitcoin. Solana yield on one end, a stronger Bitcoin on the other. Full story: c",
+      "publishedAt": "2026-08-11T09:05:40+00:00",
+      "publishedTs": 1786439140.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "$STRC is the bridge between Bitcoin, the world\u2019s Digital Capital, and stablecoins, the world\u2019s Digital Currency.",
@@ -796,19 +861,6 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin once again proves its resilience through Strategy sales, security threats, Senate stalls, and soft forks.",
-      "link": "https://x.com/phongle/status/2086463447332511849#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-09T14:43:45+00:00",
-      "publishedTs": 1786286625.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
       "link": "https://x.com/DocumentingBTC/status/2086442595886977154#m",
       "source": "@DocumentingBTC",
@@ -861,19 +913,6 @@
       "isRetweet": false
     },
     {
-      "title": "Doing \u20bfusiness.",
-      "link": "https://x.com/saylor/status/2086437347193975069#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-09T13:00:02+00:00",
-      "publishedTs": 1786280402.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
       "link": "https://x.com/lopp/status/2086418507386835274#m",
       "source": "@lopp",
@@ -885,19 +924,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "There is no BIP110 fork\u2026 there is only Bitcoin",
-      "link": "https://x.com/AtlasHodld/status/2086320497088971235#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-09T05:15:43+00:00",
-      "publishedTs": 1786252543.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "A Data Center Came to A Small Town. You\u2019ll Never Guess What Happened Next* *unless you guessed lots of jobs, lots of tax revenue, spillover benefits to local business like hotels and restaurants, discounts on electric bills, and grants for teachers.",
@@ -1155,19 +1181,6 @@
       "summary": "",
       "publishedAt": "2026-08-07T21:09:31+00:00",
       "publishedTs": 1786136971.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "CHART OF THE WEEK: Equity ETF flows during weeks when the S&P 500 is red. This dip buying army is made up of both degens and Vanguardians, an odd couple, but this is what the bears are up against. Good luck with that.. via @psarofagis",
-      "link": "https://x.com/EricBalchunas/status/2085828706753192365#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "CHART OF THE WEEK: Equity ETF flows during weeks when the S&amp;P 500 is red. This dip buying army is made up of both degens and Vanguardians, an odd couple, but this is what the bears are up against. Good luck with that.. via @psarofagis",
-      "publishedAt": "2026-08-07T20:41:31+00:00",
-      "publishedTs": 1786135291.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
