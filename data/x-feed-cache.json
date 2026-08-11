@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-11T15:59:46Z",
+  "fetchedAt": "2026-08-11T17:06:21Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Billionaire Tim Draper says: \u201cFirst they\u2019ll say, 'We accept Bitcoin.' Then they\u2019ll say, 'We only accept Bitcoin.' Then there will be a run on the banks. Then the world as we know it will fundamentally change forever as Bitcoin goes infinite against the US dollar.\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2087211704232882640#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-11T16:17:03+00:00",
+      "publishedTs": 1786465023.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @BitcoinMagazine: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
       "link": "https://x.com/BitcoinMagazine/status/2087203664683233399#m",
@@ -1171,19 +1184,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 Senate Majority Leader John Thune has filed for cloture on the CLARITY ACT \ud83d\udc40 The Senate is now set up for a floor vote once they return in September. \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2086064747024203977#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-08T12:19:27+00:00",
-      "publishedTs": 1786191567.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "The bitcoin ETFs just clocked their best week in flows (about $1b) since April and the 3rd best week since the good ole days were ruined by the Silent IPO last Oct. IBIT, FBTC and few others saw inflows every single day since Coldcard hack, making it hard not to see causation in ",
