@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-11T11:45:00Z",
+  "fetchedAt": "2026-08-11T12:59:47Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "RT @Excellion: Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
+      "link": "https://x.com/saylor/status/2087157525955141899#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @Excellion : Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
+      "publishedAt": "2026-08-11T12:41:46+00:00",
+      "publishedTs": 1786452106.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 White House Executive Director Patrick Witt says \"The administration remains fully committed to getting the Clarity Act across the finish line in September.\" \"Durable rules, the kind only legislation can provide, are needed now more than ever.\"",
+      "link": "https://x.com/BitcoinMagazine/status/2087156199984619606#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-11T12:36:30+00:00",
+      "publishedTs": 1786451790.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Digital Money is being built on Digital Credit. $STRC",
+      "link": "https://x.com/saylor/status/2087151260168311020#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Money is being built on Digital Credit. $STRC Solstice (@solsticefi) strcUSX is live in YieldVault - the first Solana-native STRC product with senior protection. @Strategy 's STRC pays a ~12% cash dividend. strcUSX brings that stream onchain & splits it in two: - Senior: ",
+      "publishedAt": "2026-08-11T12:16:52+00:00",
+      "publishedTs": 1786450612.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "$STRC is the bridge between Bitcoin, the world\u2019s Digital Capital, and stablecoins, the world\u2019s Digital Currency.",
       "link": "https://x.com/saylor/status/2087082696879100141#m",
@@ -848,32 +887,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @saylor: At ~0.15% of Bitcoin's hashpower, BIP-110 must mine 2,015 more blocks before its first difficulty adjustment. At today's rate, that is ~25 years. Anyone can fork Bitcoin. Without security, utility, capital, and users, a fork is irrelevant. Consensus is earned, not d",
-      "link": "https://x.com/saylor/status/2086388339989492039#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "At ~0.15% of Bitcoin's hashpower, BIP-110 must mine 2,015 more blocks before its first difficulty adjustment. At today's rate, that is ~25 years. Anyone can fork Bitcoin. Without security, utility, capital, and users, a fork is irrelevant. Consensus is earned, not declared.",
-      "publishedAt": "2026-08-09T09:45:18+00:00",
-      "publishedTs": 1786268718.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin worked exactly as designed. BIP-110 was free to fork, and the network was free not to follow. The result was decisive: about 99.85% of Bitcoin's hashpower stayed with Bitcoin. The BIP-110 branch mined only two blocks and is already more than 80 blocks behind.",
-      "link": "https://x.com/saylor/status/2086388338521497714#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-09T09:45:17+00:00",
-      "publishedTs": 1786268717.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "There is no BIP110 fork\u2026 there is only Bitcoin",
       "link": "https://x.com/AtlasHodld/status/2086320497088971235#m",
       "source": "@saylor",
@@ -1212,19 +1225,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Lummis releases statement now Clarity Act vote is delayed: \"There will be a time where I can say more, but for now, let me say this, we've come too far to quit\"\ud83d\udc40 \"I will continue working with my colleagues to get this done \u2014 this fight is far from over\" \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2085782490891854049#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-07T17:37:52+00:00",
-      "publishedTs": 1786124272.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: and this general level of idiocy is how you end up with platforms like this:",
       "link": "https://x.com/nic_carter/status/2085780881143165078#m",
       "source": "@nic_carter",
@@ -1259,19 +1259,6 @@
       "summary": "leftists will say things like \"data centers dont create real jobs\" because they hate blue collar workers, hate middle america, and don't care about the working class. Steve Everley (@saeverley) \"Data centers don't create real jobs,\" they say. Except for the hundreds of thousands ",
       "publishedAt": "2026-08-07T17:14:02+00:00",
       "publishedTs": 1786122842.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: There's now a 62% chance Bitcoin will be above $67,500 this month, according to http://Polymarket.com \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2085767353778749485#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: There's now a 62% chance Bitcoin will be above $67,500 this month, according to Polymarket.com \ud83d\ude80",
-      "publishedAt": "2026-08-07T16:37:43+00:00",
-      "publishedTs": 1786120663.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
