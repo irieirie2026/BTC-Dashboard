@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-11T07:04:20Z",
+  "fetchedAt": "2026-08-11T08:53:29Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "$STRC is the bridge between Bitcoin, the world\u2019s Digital Capital, and stablecoins, the world\u2019s Digital Currency.",
+      "link": "https://x.com/saylor/status/2087082696879100141#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "$STRC is the bridge between Bitcoin, the world\u2019s Digital Capital, and stablecoins, the world\u2019s Digital Currency. CoinDesk (@CoinDesk) Strategy wants to be the \"central bank of Bitcoin.\" On CoinDesk's Public Keys at the @NYSE , @Strategy 's @phongle makes the case for beating BTC ",
+      "publishedAt": "2026-08-11T07:44:25+00:00",
+      "publishedTs": 1786434265.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Whales keep selling $BTC. Whale bc1qdj sold 1,274 $BTC ($81.5M) through #Cumberland, #FalconX, and #GalaxyDigital 6 hours ago. https://arkm.com/explorer/address/bc1qdjykal4rt6sfwk9t32lvhmdm59fqywawclv7sp",
       "link": "https://x.com/lookonchain/status/2087043625536643516#m",
@@ -50,6 +63,19 @@
       "summary": "",
       "publishedAt": "2026-08-10T23:21:04+00:00",
       "publishedTs": 1786404064.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "In a final opinion of #Bip110's attempt to take over #Bitcoin's Codebase. I would classify any Podcast OR Conference having the following people as \"bitcoin expert\" speakers as only interested in clicks vs a serious Discussion/Education. (Like Roger Ver, Gavin Andresen, Mike Hern",
+      "link": "https://x.com/ToneVays/status/2086949154593685963#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "In a final opinion of #Bip110 's attempt to take over #Bitcoin 's Codebase. I would classify any Podcast OR Conference having the following people as \"bitcoin expert\" speakers as only interested in clicks vs a serious Discussion/Education. (Like Roger Ver, Gavin Andresen, Mike He",
+      "publishedAt": "2026-08-10T22:53:46+00:00",
+      "publishedTs": 1786402426.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1082,19 +1108,6 @@
       "isRetweet": false
     },
     {
-      "title": "With only 2.6% miner signaling, BIP-110 has failed to earn broad miner support. At block 961,632, its nodes will reject non-signaling blocks. BIP-110 will then stall or fork into irrelevance while Bitcoin continues normally. Bitcoin is working as designed.",
-      "link": "https://x.com/saylor/status/2086057411056447861#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-08T11:50:18+00:00",
-      "publishedTs": 1786189818.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "wsj.com/lifestyle/olivia-rod\u2026",
       "link": "https://x.com/AntoineGara/status/2086056682124190043#m",
       "source": "@nic_carter",
@@ -1301,19 +1314,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy.",
-      "link": "https://x.com/LaDoger/status/2085730043016151305#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth, exponentially growing ever smarter, faster, and stronger behind a wall of encrypted energy. Video",
-      "publishedAt": "2026-08-07T14:09:27+00:00",
-      "publishedTs": 1786111767.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "A team of more than 24 volunteer coders calling themselves \u201cBitcoin Red Team\u201d have been using new AI models this week to check all open-source Bitcoin software apps. They have found 1029 high critical security vulnerabilities so far.",
