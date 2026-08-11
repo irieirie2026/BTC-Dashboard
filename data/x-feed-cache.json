@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-11T05:06:20Z",
+  "fetchedAt": "2026-08-11T07:04:20Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Whales keep selling $BTC. Whale bc1qdj sold 1,274 $BTC ($81.5M) through #Cumberland, #FalconX, and #GalaxyDigital 6 hours ago. https://arkm.com/explorer/address/bc1qdjykal4rt6sfwk9t32lvhmdm59fqywawclv7sp",
+      "link": "https://x.com/lookonchain/status/2087043625536643516#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whales keep selling $BTC . Whale bc1qdj sold 1,274 $BTC ($81.5M) through #Cumberland , #FalconX , and #GalaxyDigital 6 hours ago. arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-08-11T05:09:10+00:00",
+      "publishedTs": 1786424950.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The battle between $BTC bulls and bears is heating up. Today, several gamblers opened massive $BTC positions with high leverage. 4 gamblers are short 3,895 $BTC($249.4M) in total, with liquidation prices at $64,600.83, $66,281.28, $66,305.03, and $66,545.09. 2 gamblers are long 1",
       "link": "https://x.com/lookonchain/status/2086996370960126298#m",
