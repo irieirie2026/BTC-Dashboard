@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-12T22:38:17Z",
+  "fetchedAt": "2026-08-12T23:39:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Every time I see a frontier model Pareto chart",
+      "link": "https://x.com/nic_carter/status/2087682136702611606#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Every time I see a frontier model Pareto chart Gavin Baker (@GavinSBaker) Absolute Pareto dominance for Grok and Cursor even after the OpenAI price cuts: \u2014 https://nitter.net/GavinSBaker/status/2087576902512923095#m",
+      "publishedAt": "2026-08-12T23:26:23+00:00",
+      "publishedTs": 1786577183.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "True North Episode 76: Why Strategy's Balance Sheet Became a Blackhole https://x.com/i/broadcasts/1YxNrbrkyebxw",
       "link": "https://x.com/TNorth/status/2087660014320447753#m",
@@ -1535,19 +1548,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
-      "link": "https://x.com/nic_carter/status/2085016417653461094#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-05T14:53:46+00:00",
-      "publishedTs": 1785941626.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
