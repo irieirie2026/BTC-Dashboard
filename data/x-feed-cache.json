@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-12T15:57:52Z",
+  "fetchedAt": "2026-08-12T17:00:34Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
+      "link": "https://x.com/lopp/status/2087569824343884142#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all! Jameson Lopp (@lopp) An inevitable development: people who buy houses formerly owned by wealthy bitcoiners ",
+      "publishedAt": "2026-08-12T16:00:05+00:00",
+      "publishedTs": 1786550405.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Unitree Robotics: The IPO Primer",
+      "link": "https://x.com/RoboStrategy/status/2087561451468681234#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Article Unitree Robotics: The IPO Primer One of the most important humanoid companies is about to go public. Unitree is a rare case: they have built a line of humanoids that you can buy direct at an affordable price. As a result, they have",
+      "publishedAt": "2026-08-12T15:26:49+00:00",
+      "publishedTs": 1786548409.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "The Bitcoin Blockchain Network Successfully Achieves 555,555,555 Seconds Running Online",
       "link": "https://x.com/DocumentingBTC/status/2087556794436420012#m",
@@ -835,19 +861,6 @@
       "isRetweet": false
     },
     {
-      "title": "New filing from a new issuer \u201cKICK\u201d never heard of them. AI and space theme ETFs.",
-      "link": "https://x.com/EricBalchunas/status/2086904527773474847#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-10T19:56:26+00:00",
-      "publishedTs": 1786391786.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Jordi Visser (@jvisserlabs) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here:",
       "link": "https://x.com/APompliano/status/2086897873862426647#m",
       "source": "@APompliano",
@@ -924,19 +937,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @EricBalchunas: Related:",
-      "link": "https://x.com/EricBalchunas/status/2086865719984025806#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Related: BRITISH HODL \u2764\ufe0f\u200d\ud83d\udd25\ud83d\udc02\u2764\ufe0f\u200d\ud83d\udd25 (@BritishHodl) As the ColdCard theft of people's Bitcoin started hitting people I know and love losing their entire Bitcoin stacks. I started getting one question - what the hell is the alternative here for me and if I move it to an ETF, I get taxe",
-      "publishedAt": "2026-08-10T17:22:14+00:00",
-      "publishedTs": 1786382534.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Bitcoin is the one thing in this universe you can truly own.",
@@ -1264,19 +1264,6 @@
       "isRetweet": true
     },
     {
-      "title": "Epic karma. You can't make this up.",
-      "link": "https://x.com/lopp/status/2086189495502667925#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Epic karma. You can't make this up. l0rinc (@L0RINC) Ocean killed BIP110 \u2014 https://nitter.net/L0RINC/status/2086188544738074671#m",
-      "publishedAt": "2026-08-08T20:35:09+00:00",
-      "publishedTs": 1786221309.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
       "source": "@DocumentingBTC",
@@ -1446,19 +1433,6 @@
       "isRetweet": false
     },
     {
-      "title": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -> Server -> Maintenance -> Update & verify the 2.4.2 version string in the footer. If you are ",
-      "link": "https://x.com/BtcpayServer/status/2085755643659522240#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "There is a critical vulnerability being actively exploited on BTCPay Server, which can result in the loss of funds. Please update your BTCPayServer to 2.4.2 by going to Admin Dashboard -&gt; Server -&gt; Maintenance -&gt; Update & verify the 2.4.2 version string in the footer. If",
-      "publishedAt": "2026-08-07T15:51:11+00:00",
-      "publishedTs": 1786117871.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation",
       "link": "https://x.com/DocumentingBTC/status/2085754712314306692#m",
       "source": "@DocumentingBTC",
@@ -1571,19 +1545,6 @@
       "summary": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
       "publishedAt": "2026-08-05T01:01:08+00:00",
       "publishedTs": 1785891668.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "very funny that Leo was a forced seller at the generational pico nano bottom here",
-      "link": "https://x.com/nic_carter/status/2084697511399186637#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-04T17:46:33+00:00",
-      "publishedTs": 1785865593.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
