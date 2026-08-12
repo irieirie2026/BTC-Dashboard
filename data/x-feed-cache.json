@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-12T06:12:32Z",
+  "fetchedAt": "2026-08-12T08:15:56Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Our BTC Credit model uses a 10% BTC ARR reference case, color-codes spreads by tier (Investment Grade, High Yield, Distressed), and shows BTC Floor prices below which instruments are undercollateralized. Track the impact of our capital markets actions: https://www.strategy.com/cr",
+      "link": "https://x.com/saylor/status/2087438105489862730#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Our BTC Credit model uses a 10% BTC ARR reference case, color-codes spreads by tier (Investment Grade, High Yield, Distressed), and shows BTC Floor prices below which instruments are undercollateralized. Track the impact of our capital markets actions: strategy.com/credit",
+      "publishedAt": "2026-08-12T07:16:41+00:00",
+      "publishedTs": 1786519001.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Today is the last trading day to purchase BTC PREF A and be entitled to the August dividend of SEK 1.00 per share.",
+      "link": "https://x.com/BitcoinTCAB/status/2087406653008228857#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-12T05:11:42+00:00",
+      "publishedTs": 1786511502.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Metaplanet (@Metaplanet) transferred a total of 3,881 $BTC ($247.3M) over the past 3 hours. Metaplanet bought a total of 43,000 $BTC at an average price of $96,191 and is currently sitting on a loss of $1.4B(-34%). https://arkm.com/explorer/entity/metaplanet-2",
       "link": "https://x.com/lookonchain/status/2087401246789611742#m",
@@ -939,19 +965,6 @@
       "isRetweet": false
     },
     {
-      "title": "\u201cBitcoin is economic freedom for generations to come.\u201d \u2014 Sir David Khalili",
-      "link": "https://x.com/saylor/status/2086732532922343831#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-10T08:33:00+00:00",
-      "publishedTs": 1786350780.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "H100 (@H100Group) bought 2,455.37 $BTC($154.44M) at an average price of $62,900! H100 now holds 3,506.4 $BTC ($228.4M) with an average purchase price of $78,399. https://storage.mfn.se/7768a89c-b5a3-45e0-984f-f3fce221f90a/h100-completes-acquisition-increasing-bitcoin-holdings-to-",
       "link": "https://x.com/lookonchain/status/2086724586163572856#m",
       "source": "@lookonchain",
@@ -963,19 +976,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
-      "link": "https://x.com/Sanderandersenn/status/2086708085691703456#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Today we completed the largest M&A transaction in the history of European public Bitcoin Equity. It is also the first in the world done Bitcoin for Bitcoin. H100 acquired 2,455 BTC at around 62,900 dollars per bitcoin, taking our holdings from 1,051 to 3,506 Bitcoin. No cash chan",
-      "publishedAt": "2026-08-10T06:55:51+00:00",
-      "publishedTs": 1786344951.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
