@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-12T08:15:56Z",
+  "fetchedAt": "2026-08-12T10:01:50Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "NEW: Michael @Saylor's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
+      "link": "https://x.com/CoinDesk/status/2087466492308639904#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "NEW: Michael @Saylor 's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
+      "publishedAt": "2026-08-12T09:09:29+00:00",
+      "publishedTs": 1786525769.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Our BTC Credit model uses a 10% BTC ARR reference case, color-codes spreads by tier (Investment Grade, High Yield, Distressed), and shows BTC Floor prices below which instruments are undercollateralized. Track the impact of our capital markets actions: https://www.strategy.com/cr",
       "link": "https://x.com/saylor/status/2087438105489862730#m",
@@ -960,19 +973,6 @@
       "summary": "Bitcoin mining company @MARA sold a total of 23,093 $BTC ($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). ir.mara.com/sec-filings/all-\u2026",
       "publishedAt": "2026-08-10T09:14:23+00:00",
       "publishedTs": 1786353263.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "H100 (@H100Group) bought 2,455.37 $BTC($154.44M) at an average price of $62,900! H100 now holds 3,506.4 $BTC ($228.4M) with an average purchase price of $78,399. https://storage.mfn.se/7768a89c-b5a3-45e0-984f-f3fce221f90a/h100-completes-acquisition-increasing-bitcoin-holdings-to-",
-      "link": "https://x.com/lookonchain/status/2086724586163572856#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "H100 ( @H100Group ) bought 2,455.37 $BTC ($154.44M) at an average price of $62,900! H100 now holds 3,506.4 $BTC ($228.4M) with an average purchase price of $78,399. storage.mfn.se/7768a89c-b5a3\u2026",
-      "publishedAt": "2026-08-10T08:01:25+00:00",
-      "publishedTs": 1786348885.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
