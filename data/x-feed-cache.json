@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-12T01:47:52Z",
+  "fetchedAt": "2026-08-12T04:05:58Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "MetaPlanet(@Metaplanet) transferred out 1,473 $BTC($93.82M) 1 hour ago. Hut 8(@Hut8Corp) also transferred out 493 $BTC($31.36M) 3 hours ago. https://arkm.com/explorer/entity/metaplanet-2 https://arkm.com/explorer/entity/hut-8",
+      "link": "https://x.com/lookonchain/status/2087375362196213968#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "MetaPlanet( @Metaplanet ) transferred out 1,473 $BTC ($93.82M) 1 hour ago. Hut 8( @Hut8Corp ) also transferred out 493 $BTC ($31.36M) 3 hours ago. arkm.com/explorer/entity/met\u2026 arkm.com/explorer/entity/hut\u2026",
+      "publishedAt": "2026-08-12T03:07:22+00:00",
+      "publishedTs": 1786504042.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "BTC bears keep adding to their shorts! The 4 gamblers now hold a combined short position of 5,375 $BTC ($343M). Liquidation prices: $64,101.12, $64,576.56, $66,006.80, and $66,030.04.",
+      "link": "https://x.com/lookonchain/status/2087358065989517380#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "BTC bears keep adding to their shorts! The 4 gamblers now hold a combined short position of 5,375 $BTC ($343M). Liquidation prices: $64,101.12, $64,576.56, $66,006.80, and $66,030.04. Lookonchain (@lookonchain) The battle between $BTC bulls and bears is heating up. Today, several",
+      "publishedAt": "2026-08-12T01:58:38+00:00",
+      "publishedTs": 1786499918.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years",
+      "link": "https://x.com/nic_carter/status/2087353502343258366#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years Rittenhouse Research (@RHouseResearch) CoreWeave $CRWV : We recently signed an A-100 contract that extends into 2029. This SKU was introduced in 2020. \u2014 https://nitter.net",
+      "publishedAt": "2026-08-12T01:40:30+00:00",
+      "publishedTs": 1786498830.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 ProCap Financial CEO tells FOX \"They keep printing money, Bitcoin's gonna keep going up over the long-run\" \ud83d\udc40 \"All you're betting on is the stupidity of the politicians to keep printing money. I don't know about you, that is a bet i'll take all day long.\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2087301679767015572#m",
@@ -926,19 +965,6 @@
       "isRetweet": true
     },
     {
-      "title": "Over the past 24 hours, $TUT has seen more than $44M in liquidations, far exceeding $BTC and $ETH, making it the most liquidated asset. https://www.coinglass.com/liquidations",
-      "link": "https://x.com/lookonchain/status/2086634394836709868#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Over the past 24 hours, $TUT has seen more than $44M in liquidations, far exceeding $BTC and $ETH , making it the most liquidated asset. coinglass.com/liquidations",
-      "publishedAt": "2026-08-10T02:03:02+00:00",
-      "publishedTs": 1786327382.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
       "link": "https://x.com/Nneuman/status/2086537762073727462#m",
       "source": "@lopp",
@@ -1454,19 +1480,6 @@
       "summary": "",
       "publishedAt": "2026-08-04T17:46:33+00:00",
       "publishedTs": 1785865593.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Hey idiot did it collapse yet?",
-      "link": "https://x.com/nic_carter/status/2084664084658557369#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Hey idiot did it collapse yet? Ed Zitron (@edzitron) Newsletter: Based on estimates of their burn rate and historic analyses, I hypothesize that OpenAI will collapse in the next 12-24 months unless it raises more funding than in the history of the valley and creates an entirely n",
-      "publishedAt": "2026-08-04T15:33:43+00:00",
-      "publishedTs": 1785857623.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
