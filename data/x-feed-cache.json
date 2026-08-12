@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-12T10:01:50Z",
+  "fetchedAt": "2026-08-12T11:43:56Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. https://www.ici.fr/hauts-de-france/somme-80/g",
+      "link": "https://x.com/lopp/status/2087491508739899616#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. ici.fr/hauts-de-france/somme\u2026 Link Somme : un",
+      "publishedAt": "2026-08-12T10:48:54+00:00",
+      "publishedTs": 1786531734.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "strcUSX takeover. While par on @Strategy's STRC is getting stronger, it's time to get tranched exposure to digital credit on Solana. Full story: https://www.ccn.com/news/crypto/strategy-strc-dividend-solana-defi-20-yield/",
+      "link": "https://x.com/solsticefi/status/2087488027396563271#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "strcUSX takeover. While par on @Strategy 's STRC is getting stronger, it's time to get tranched exposure to digital credit on Solana. Full story: ccn.com/news/crypto/strategy\u2026 Link Strategy\u2019s STRC Comes to Solana With DeFi Yields Targeting 20% Strategy\u2019s 12% STRC dividend reaches",
+      "publishedAt": "2026-08-12T10:35:04+00:00",
+      "publishedTs": 1786530904.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Digital Money and Digital Yield are being built on Digital Credit. $STRC",
+      "link": "https://x.com/saylor/status/2087484630131769569#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Money and Digital Yield are being built on Digital Credit. $STRC Solstice (@solsticefi) Article Stretching the bridge: how strcUSX works &quot;$STRC is the bridge between Bitcoin, the world&apos;s Digital Capital, and stablecoins, the world&apos;s Digital Currency.&quot; ",
+      "publishedAt": "2026-08-12T10:21:34+00:00",
+      "publishedTs": 1786530094.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "As $BTC rose, gambler 0xff84's 1,793 $BTC($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC($98.97M) New liq. price: $64,225.35 https://hypurrscan.io/address/0xff84dd888de8ac2ed9a4486",
+      "link": "https://x.com/lookonchain/status/2087480777823092807#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "As $BTC rose, gambler 0xff84's 1,793 $BTC ($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC ($98.97M) New liq. price: $64,225.35 hypurrscan.io/address/0xff84\u2026 Lookonchain (@lookoncha",
+      "publishedAt": "2026-08-12T10:06:15+00:00",
+      "publishedTs": 1786529175.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: Michael @Saylor's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
       "link": "https://x.com/CoinDesk/status/2087466492308639904#m",
@@ -11,6 +63,19 @@
       "summary": "NEW: Michael @Saylor 's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
       "publishedAt": "2026-08-12T09:09:29+00:00",
       "publishedTs": 1786525769.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "the market prevails. how else could, or should it be, with bearer free market money.",
+      "link": "https://x.com/adam3us/status/2087458495045984362#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-12T08:37:42+00:00",
+      "publishedTs": 1786523862.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -744,19 +809,6 @@
       "isRetweet": false
     },
     {
-      "title": "Six years ago today, Strategy made its first $BTC purchase. Thank you to our shareholders and the Bitcoin community for joining us on this journey and for your courage, clarity, and conviction. \u20bf.",
-      "link": "https://x.com/Strategy/status/2086851696538398748#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-10T16:26:30+00:00",
-      "publishedTs": 1786379190.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Were you foolish enough to run a BIP-110 node despite my warnings that it would break? Now your node is stuck at height 961,633 and simply switching to a different client won't fix it. To get back on the real Bitcoin chain: $ bitcoin-cli invalidateblock 0000000000000000000169eb6f",
       "link": "https://x.com/lopp/status/2086848130297839687#m",
       "source": "@lopp",
@@ -848,19 +900,6 @@
       "isRetweet": false
     },
     {
-      "title": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR",
-      "link": "https://x.com/phongle/status/2086806160309465181#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Our USD Reserve and Duration are now at all-time highs. In 2.5 months, we added nearly $3.8 billion and grew both more than 5X. This is the Digital Credit Capital Framework at work. $STRC $MSTR Strategy (@Strategy) Strategy increased its USD Reserve by $650M and repurchased $109M",
-      "publishedAt": "2026-08-10T13:25:34+00:00",
-      "publishedTs": 1786368334.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "I am automating investigative journalism at http://Effort.News We're breaking five stories today based on verifiable financial data which everyone missed for years. This is what I\u2019ve been working on. \ud83e\uddf5",
       "link": "https://x.com/brianchau57/status/2086803587699745170#m",
       "source": "@nic_carter",
@@ -908,32 +947,6 @@
       "summary": "Michael Saylor's @Strategy sold another 1,690 $BTC ($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). sec.gov/ix?doc=/Archives/edg\u2026",
       "publishedAt": "2026-08-10T12:09:36+00:00",
       "publishedTs": 1786363776.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @saylor: STRC's BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $64,915. https://www.strategy.com/credit",
-      "link": "https://x.com/saylor/status/2086785554008469988#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "STRC's BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $64,915. strategy.com/credit Link Credit Metrics - Strategy strategy.com",
-      "publishedAt": "2026-08-10T12:03:41+00:00",
-      "publishedTs": 1786363421.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy increased its USD Reserve by $650M and repurchased $109M of $STRC. This increased USD Duration by 143 days to 2.7 yrs and tightened STRC's BTC Credit by 10 bps. As of 8/9/26, we hold \u20bf840,447 in our BTC Reserve and $4.65B in our USD Reserve. $MSTR https://www.strategy.co",
-      "link": "https://x.com/saylor/status/2086785552355860895#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy increased its USD Reserve by $650M and repurchased $109M of $STRC . This increased USD Duration by 143 days to 2.7 yrs and tightened STRC's BTC Credit by 10 bps. As of 8/9/26, we hold \u20bf840,447 in our BTC Reserve and $4.65B in our USD Reserve. $MSTR strategy.com/press/str",
-      "publishedAt": "2026-08-10T12:03:40+00:00",
-      "publishedTs": 1786363420.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1168,19 +1181,6 @@
       "summary": "",
       "publishedAt": "2026-08-08T20:14:34+00:00",
       "publishedTs": 1786220074.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "BIP-110 nodes and non BIP-110 nodes have officially diverged chain tips. 110 nodes are stuck at height 961,631. https://bip110.orange.surf/live.html",
-      "link": "https://x.com/lopp/status/2086177865414955098#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "BIP-110 nodes and non BIP-110 nodes have officially diverged chain tips. 110 nodes are stuck at height 961,631. bip110.orange.surf/live.html Link BIP110 Situation Monitor: Live A BIP-110-enforcing node vs a regular Bitcoin node, side by side, live. bip110.orange.surf",
-      "publishedAt": "2026-08-08T19:48:57+00:00",
-      "publishedTs": 1786218537.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
