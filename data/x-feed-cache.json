@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-12T04:05:58Z",
+  "fetchedAt": "2026-08-12T06:12:32Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Metaplanet (@Metaplanet) transferred a total of 3,881 $BTC ($247.3M) over the past 3 hours. Metaplanet bought a total of 43,000 $BTC at an average price of $96,191 and is currently sitting on a loss of $1.4B(-34%). https://arkm.com/explorer/entity/metaplanet-2",
+      "link": "https://x.com/lookonchain/status/2087401246789611742#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Metaplanet ( @Metaplanet ) transferred a total of 3,881 $BTC ($247.3M) over the past 3 hours. Metaplanet bought a total of 43,000 $BTC at an average price of $96,191 and is currently sitting on a loss of $1.4B(-34%). arkm.com/explorer/entity/met\u2026",
+      "publishedAt": "2026-08-12T04:50:13+00:00",
+      "publishedTs": 1786510213.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "MetaPlanet(@Metaplanet) transferred out 1,473 $BTC($93.82M) 1 hour ago. Hut 8(@Hut8Corp) also transferred out 493 $BTC($31.36M) 3 hours ago. https://arkm.com/explorer/entity/metaplanet-2 https://arkm.com/explorer/entity/hut-8",
       "link": "https://x.com/lookonchain/status/2087375362196213968#m",
