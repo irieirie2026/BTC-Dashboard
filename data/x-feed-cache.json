@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T23:38:11Z",
+  "fetchedAt": "2026-08-12T01:47:52Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -934,19 +934,6 @@
       "summary": "Over the past 24 hours, $TUT has seen more than $44M in liquidations, far exceeding $BTC and $ETH , making it the most liquidated asset. coinglass.com/liquidations",
       "publishedAt": "2026-08-10T02:03:02+00:00",
       "publishedTs": 1786327382.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This whale sold another 1,019 $BTC($66.4M) 7 hours ago. Over the past 3 weeks, this whale has sold a total of 7,513 $BTC($486.9M).",
-      "link": "https://x.com/lookonchain/status/2086609652507423184#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "This whale sold another 1,019 $BTC ($66.4M) 7 hours ago. Over the past 3 weeks, this whale has sold a total of 7,513 $BTC ($486.9M). Lookonchain (@lookonchain) A mysterious whale (possibly a miner) has deposited 6,494 $BTC ($420.5M) to #Binance over the past 3 weeks. arkm.com/exp",
-      "publishedAt": "2026-08-10T00:24:43+00:00",
-      "publishedTs": 1786321483.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
