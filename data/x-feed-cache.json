@@ -1,19 +1,71 @@
 {
-  "fetchedAt": "2026-08-12T20:02:30Z",
+  "fetchedAt": "2026-08-12T21:42:39Z",
   "source": "nitter.net",
   "tweets": [
     {
+      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
+      "link": "https://x.com/saylor/status/2087640831578526120#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
+      "publishedAt": "2026-08-12T20:42:15+00:00",
+      "publishedTs": 1786567335.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2087639014148866331#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-12T20:35:02+00:00",
+      "publishedTs": 1786566902.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Roundhill just filed for a Samsung Group ETF, which will hold the member companies in the Samsung family, which I don't believe are currently available to US investors via ADRs.",
+      "link": "https://x.com/EricBalchunas/status/2087638539982770307#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-12T20:33:09+00:00",
+      "publishedTs": 1786566789.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "NEW: @FTI_US just got a no action letter from the SEC relating to their OnChain government money market fund. Essentially it opens the door for Franklin\u2019s registered funds (mutual funds, ETFs etc) to hold its OnChain fund despite not technically satisfying 1940 act custody rules",
       "link": "https://x.com/JSeyff/status/2087629868309659876#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "",
       "publishedAt": "2026-08-12T19:58:41+00:00",
       "publishedTs": 1786564721.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
+    },
+    {
+      "title": "LATEST: \ud83d\udcca Michael Saylor unveiled a public BTC Credit dashboard that color-codes Strategy's debt by tier and shows at what Bitcoin price each instrument becomes undercollateralized.",
+      "link": "https://x.com/CoinMarketCap/status/2087628483786584094#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-12T19:53:11+00:00",
+      "publishedTs": 1786564391.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Even at a hypothetical $21k $BTC price, every Strategy debt and preferred instrument remains above a 1.0x BTC Rating. Explore the new BTC Floor metric: http://strategy.com/credit",
@@ -681,15 +733,15 @@
     {
       "title": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
       "link": "https://x.com/EricBalchunas/status/2087176625481818584#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
       "publishedAt": "2026-08-11T13:57:40+00:00",
       "publishedTs": 1786456660.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "BREAKING: \ud83c\uddf7\ud83c\uddfa Russia's central bank announces it approved Bitcoin for public trading on domestic exchanges, TASS reports.",
@@ -726,19 +778,6 @@
       "summary": "RT @Excellion : Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
       "publishedAt": "2026-08-11T12:41:46+00:00",
       "publishedTs": 1786452106.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 White House Executive Director Patrick Witt says \"The administration remains fully committed to getting the Clarity Act across the finish line in September.\" \"Durable rules, the kind only legislation can provide, are needed now more than ever.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2087156199984619606#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-11T12:36:30+00:00",
-      "publishedTs": 1786451790.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -861,19 +900,6 @@
       "isRetweet": true
     },
     {
-      "title": "We intend to make $STRC the iPhone of Digital Assets.",
-      "link": "https://x.com/saylor/status/2086936384367968739#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We intend to make $STRC the iPhone of Digital Assets. Phong Le (@phongle) I joined @LizClaman on @FoxBusiness to discuss Strategy buying 175K Bitcoin this year to be the world's largest institutional holder of Bitcoin. We are the JPMorgan of the digital economy. Video \u2014 https://n",
-      "publishedAt": "2026-08-10T22:03:02+00:00",
-      "publishedTs": 1786399382.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\"And as ye would that men should do to you, do ye also to them likewise.\" Luke 6:31",
       "link": "https://x.com/lopp/status/2086929220559573072#m",
       "source": "@lopp",
@@ -898,32 +924,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Jordi Visser (@jvisserlabs) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here:",
-      "link": "https://x.com/APompliano/status/2086897873862426647#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Jordi Visser ( @jvisserlabs ) believes the last two weeks could be some of the most consequential in bitcoin\u2019s history. He explains here: Video",
-      "publishedAt": "2026-08-10T19:30:00+00:00",
-      "publishedTs": 1786390200.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy wants to be the \"central bank of Bitcoin.\" On CoinDesk's Public Keys at the @NYSE, @Strategy's @phongle makes the case for beating BTC with digital credit, @Bitwise's Ryan Rasmussen (@RasterlyRock) says the market is mispricing @circle, and Deus X Capital's Tim Grant on ",
-      "link": "https://x.com/CoinDesk/status/2086897125410181307#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy wants to be the \"central bank of Bitcoin.\" On CoinDesk's Public Keys at the @NYSE , @Strategy 's @phongle makes the case for beating BTC with digital credit, @Bitwise 's Ryan Rasmussen ( @RasterlyRock ) says the market is mispricing @circle , and Deus X Capital's Tim Gra",
-      "publishedAt": "2026-08-10T19:27:02+00:00",
-      "publishedTs": 1786390022.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Say hello to another nation state threat actor who thought he could fool me into hiring him!",
