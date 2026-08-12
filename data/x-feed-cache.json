@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-12T17:00:34Z",
+  "fetchedAt": "2026-08-12T18:59:16Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Goldman Sachs acquires NEOS, including $1 billion in their Bitcoin High Income ETFs \ud83e\udd2f",
+      "link": "https://x.com/BitcoinMagazine/status/2087603378914279875#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-12T18:13:25+00:00",
+      "publishedTs": 1786558405.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Bitcoin is now trading in its \"Cost of Production\" zone, typically the sign of a bear market bottom. \ud83d\udc40 HODL \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2087583891469079039#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-12T16:55:59+00:00",
+      "publishedTs": 1786553759.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Roundhill's new Neocloud ETF is up 15% on the day - volume $46m and less than week old. $LYTE and $NCLD are showing early DRAM-esque prospects.",
+      "link": "https://x.com/EricBalchunas/status/2087582747103539578#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-12T16:51:26+00:00",
+      "publishedTs": 1786553486.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
       "link": "https://x.com/lopp/status/2087569824343884142#m",
@@ -27,19 +66,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "The Bitcoin Blockchain Network Successfully Achieves 555,555,555 Seconds Running Online",
-      "link": "https://x.com/DocumentingBTC/status/2087556794436420012#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-12T15:08:19+00:00",
-      "publishedTs": 1786547299.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "#Bitcoin yearly lows: 2012 - $4 2013 - $13 2014 - $300 2015 - $190 2016 - $360 2017 - $780 2018 - $3,200 2019 - $3,400 2020 - $3,800 2021 - $28,700 2022 - $15,700 2023 - $16,600 2024 - $39,400 2025 - $76,300 2026 - $58,500 Zoom out.",
@@ -783,19 +809,6 @@
       "isRetweet": true
     },
     {
-      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 This panel explores how to build and grow your sovereignty stack through strategies including second passports, insurance, tax-advantaged structures, and other tools designed to increase resilience and optionality. \ud83d\udd25 August 28 | Genesis Stage",
-      "link": "https://x.com/Bitcoinconfasia/status/2086956022468395144#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-10T23:21:04+00:00",
-      "publishedTs": 1786404064.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "In a final opinion of #Bip110's attempt to take over #Bitcoin's Codebase. I would classify any Podcast OR Conference having the following people as \"bitcoin expert\" speakers as only interested in clicks vs a serious Discussion/Education. (Like Roger Ver, Gavin Andresen, Mike Hern",
       "link": "https://x.com/ToneVays/status/2086949154593685963#m",
       "source": "@saylor",
@@ -830,19 +843,6 @@
       "summary": "",
       "publishedAt": "2026-08-10T21:34:34+00:00",
       "publishedTs": 1786397674.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media & Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
-      "link": "https://x.com/BitcoinMagazine/status/2086925681334657035#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media &amp; Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
-      "publishedAt": "2026-08-10T21:20:30+00:00",
-      "publishedTs": 1786396830.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -898,19 +898,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Bitcoin is shifting from OGs to institutions and professionals, according to @EricBalchunas. \"The ownership of Bitcoin is changing. What happens now? We'll see.\"",
-      "link": "https://x.com/BitcoinArchive/status/2086883184109572360#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "JUST IN: Bitcoin is shifting from OGs to institutions and professionals, according to @EricBalchunas . \"The ownership of Bitcoin is changing. What happens now? We'll see.\" Video",
-      "publishedAt": "2026-08-10T18:31:38+00:00",
-      "publishedTs": 1786386698.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "this is how cutting edge mathematical research works now",
@@ -1688,6 +1675,19 @@
       "summary": "",
       "publishedAt": "2026-08-02T12:46:53+00:00",
       "publishedTs": 1785674813.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes",
+      "link": "https://x.com/DocumentingBTC/status/2083895871364608178#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes Video",
+      "publishedAt": "2026-08-02T12:41:07+00:00",
+      "publishedTs": 1785674467.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
