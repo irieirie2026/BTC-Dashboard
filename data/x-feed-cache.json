@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-12T14:55:05Z",
+  "fetchedAt": "2026-08-12T15:57:52Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The Bitcoin Blockchain Network Successfully Achieves 555,555,555 Seconds Running Online",
+      "link": "https://x.com/DocumentingBTC/status/2087556794436420012#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-12T15:08:19+00:00",
+      "publishedTs": 1786547299.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "#Bitcoin yearly lows: 2012 - $4 2013 - $13 2014 - $300 2015 - $190 2016 - $360 2017 - $780 2018 - $3,200 2019 - $3,400 2020 - $3,800 2021 - $28,700 2022 - $15,700 2023 - $16,600 2024 - $39,400 2025 - $76,300 2026 - $58,500 Zoom out.",
       "link": "https://x.com/BitcoinMagazine/status/2087551089046409365#m",
@@ -76,19 +89,6 @@
       "summary": "August 12 Update: #Bitcoin ETFs: 1D NetFlow: -265 $BTC (-$16.97M)\ud83d\udd34 7D NetFlow: +4,711 $BTC (+$301.16M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +3,823 $ETH (+$7.28M)\ud83d\udfe2 7D NetFlow: +89,742 $ETH (+$170.83M)\ud83d\udfe2",
       "publishedAt": "2026-08-12T14:03:39+00:00",
       "publishedTs": 1786543419.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin Achieves 555,555,555th Second Online",
-      "link": "https://x.com/DocumentingBTC/status/2087528133603848261#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-12T13:14:26+00:00",
-      "publishedTs": 1786540466.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -365,6 +365,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 States have historically defined money. What happens when money comes first? \ud83d\udc40 Balaji Srinivasan and Mark Yusko explore how globally neutral digital money could reshape how societies form, organize, and evolve. \u270a August 28 | Nakamoto Stage",
+      "link": "https://x.com/Bitcoinconfasia/status/2087315681670815994#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-11T23:10:13+00:00",
+      "publishedTs": 1786489813.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 ProCap Financial CEO tells FOX \"They keep printing money, Bitcoin's gonna keep going up over the long-run\" \ud83d\udc40 \"All you're betting on is the stupidity of the politicians to keep printing money. I don't know about you, that is a bet i'll take all day long.\" \ud83d\ude80",
@@ -804,19 +817,6 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Trump Media &amp; Technology disclosed a Bitcoin treasury of 14,139 BTC worth over $900 million! \ud83e\udd2f",
       "publishedAt": "2026-08-10T21:20:30+00:00",
       "publishedTs": 1786396830.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis says \"Some community banks are suggesting stablecoins are driving deposit flight. The data says otherwise.\" \ud83d\udc40 \"Killing the Clarity Act won\u2019t help community banks. It just protects the status quo they say is broken.\" Pass it in September \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2086909689527205943#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-10T20:16:57+00:00",
-      "publishedTs": 1786393017.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
