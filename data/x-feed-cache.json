@@ -1,19 +1,58 @@
 {
-  "fetchedAt": "2026-08-13T17:02:24Z",
+  "fetchedAt": "2026-08-13T19:00:24Z",
   "source": "nitter.net",
   "tweets": [
     {
+      "title": "JUST IN: JPMorgan discloses holding a $610 million position in BlackRock's Bitcoin ETF \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2087976128044528009#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T18:54:36+00:00",
+      "publishedTs": 1786647276.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "You will never be done learning about Bitcoin.",
+      "link": "https://x.com/saylor/status/2087975463729676768#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "You will never be done learning about Bitcoin. Video",
+      "publishedAt": "2026-08-13T18:51:57+00:00",
+      "publishedTs": 1786647117.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW filing for five ETFs from Silvia, @APompliano's co: 1. Anti-Money Printer ETF (bitcoin, gold, land, guns) 2. Bitcoin Treasury mNAV Discount ETF 3. Jensen Interview ETF (holds cos that Jensen Huang mentions in intvs over past 30days) 4. Elon Must ETF (holds Tesla, spaceX and 1",
+      "link": "https://x.com/EricBalchunas/status/2087960030440050807#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "NEW filing for five ETFs from Silvia, @APompliano 's co: 1. Anti-Money Printer ETF (bitcoin, gold, land, guns) 2. Bitcoin Treasury mNAV Discount ETF 3. Jensen Interview ETF (holds cos that Jensen Huang mentions in intvs over past 30days) 4. Elon Must ETF (holds Tesla, spaceX and ",
+      "publishedAt": "2026-08-13T17:50:38+00:00",
+      "publishedTs": 1786643438.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
       "link": "https://x.com/EricBalchunas/status/2087945208101040439#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
       "publishedAt": "2026-08-13T16:51:44+00:00",
       "publishedTs": 1786639904.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 CFTC announces it will host a meeting on \"Crypto's Regulatory Evolution: From Uncertainty to Clarity\" on August 20 \ud83d\udc40",
@@ -26,7 +65,7 @@
       "publishedTs": 1786638600.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-electricity TLDR it's blue state decarbonization and inflation",
@@ -378,6 +417,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
+      "link": "https://x.com/saylor/status/2087640831578526120#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
+      "publishedAt": "2026-08-12T20:42:15+00:00",
+      "publishedTs": 1786567335.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
@@ -939,19 +991,6 @@
       "isRetweet": false
     },
     {
-      "title": "Everyone is against Bitcoin before they are for Bitcoin.",
-      "link": "https://x.com/saylor/status/2087252266533175311#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Everyone is against Bitcoin before they are for Bitcoin. Video",
-      "publishedAt": "2026-08-11T18:58:14+00:00",
-      "publishedTs": 1786474694.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "C4 Security Summit! \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM Eastern \ud83d\udcbb Free Live Virtual Event Registration Required: https://cryptoconsortium.org/c4summit Hear from industry experts, with a keynote from @lopp",
       "link": "https://x.com/LearnMoreWithC4/status/2087247375584616467#m",
       "source": "@lopp",
@@ -1340,32 +1379,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "It\u2019s fork day. With negligible support from BTC miners for BIP110, it looks like the plan is a last minute Proof of Work (PoW) change to \u201cfire the miners\u201d. New PoW, new asset, new ticker. What shall we name this new shitcoin? Drop your best ideas below \ud83d\udc47",
-      "link": "https://x.com/DylanLeClair/status/2086116267035857025#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "It\u2019s fork day. With negligible support from BTC miners for BIP110, it looks like the plan is a last minute Proof of Work (PoW) change to \u201cfire the miners\u201d. New PoW, new asset, new ticker. What shall we name this new shitcoin? Drop your best ideas below \ud83d\udc47 Walker\u26a1\ufe0f (@WalkerAmerica)",
-      "publishedAt": "2026-08-08T15:44:10+00:00",
-      "publishedTs": 1786203850.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "This week's ETF buzz... https://theetfeducator.com/2026/08/08/etf-buzz-321/ (table via @EricBalchunas & @JSeyff)",
-      "link": "https://x.com/NateGeraci/status/2086083211877032000#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "This week's ETF buzz... theetfeducator.com/2026/08/0\u2026 (table via @EricBalchunas &amp; @JSeyff )",
-      "publishedAt": "2026-08-08T13:32:49+00:00",
-      "publishedTs": 1786195969.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "wsj.com/lifestyle/olivia-rod\u2026",
