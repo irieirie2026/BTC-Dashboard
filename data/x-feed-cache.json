@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-13T04:10:51Z",
+  "fetchedAt": "2026-08-13T06:14:51Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "This guy bought 1,768 $BTC ($131.91M) at $74,603 before the bull run, but missed the best time to sell. At the peak, he was sitting on $91M in unrealized profit. Now, he's down $19.7M. He now seems to be giving up, depositing 114 $BTC($7.24M) into #Kraken, likely to sell. https:/",
+      "link": "https://x.com/lookonchain/status/2087770041039425613#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "This guy bought 1,768 $BTC ($131.91M) at $74,603 before the bull run, but missed the best time to sell. At the peak, he was sitting on $91M in unrealized profit. Now, he's down $19.7M. He now seems to be giving up, depositing 114 $BTC ($7.24M) into #Kraken , likely to sell. arkm.",
+      "publishedAt": "2026-08-13T05:15:41+00:00",
+      "publishedTs": 1786598141.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Gambler 0x66f8 keeps adding to his $BTC short, which has now grown to 2,136 $BTC($136M), making him the largest on-chain $BTC bear. Liquidation price: $64,592.3 https://hypurrscan.io/address/0x66f889094739dbb7d20aa60f645acd88feba75a9#perps",
       "link": "https://x.com/lookonchain/status/2087750666110509107#m",
