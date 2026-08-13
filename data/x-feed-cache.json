@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-12T23:39:00Z",
+  "fetchedAt": "2026-08-13T01:50:13Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin Achieves 555,555,555 Seconds Online",
+      "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-12T23:45:17+00:00",
+      "publishedTs": 1786578317.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Every time I see a frontier model Pareto chart",
       "link": "https://x.com/nic_carter/status/2087682136702611606#m",
@@ -1056,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "AI is offense, bitcoin is defense. Bitcoin is the best defense against money printer and now Silvia\u2019s AI is the best AI product at handling tax-related topics. I enjoyed explaining to @Varneyco this morning. Check out: http://www.cfosilvia.com",
-      "link": "https://x.com/APompliano/status/2086828572866474177#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "AI is offense, bitcoin is defense. Bitcoin is the best defense against money printer and now Silvia\u2019s AI is the best AI product at handling tax-related topics. I enjoyed explaining to @Varneyco this morning. Check out: cfosilvia.com Video",
-      "publishedAt": "2026-08-10T14:54:37+00:00",
-      "publishedTs": 1786373677.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC(+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC(+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH(+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH(+$224.97M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2086826583105695813#m",
       "source": "@lookonchain",
@@ -1116,19 +1116,6 @@
       "summary": "Michael Saylor's @Strategy sold another 1,690 $BTC ($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). sec.gov/ix?doc=/Archives/edg\u2026",
       "publishedAt": "2026-08-10T12:09:36+00:00",
       "publishedTs": 1786363776.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin mining company @MARA sold a total of 23,093 $BTC($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). https://ir.mara.com/sec-filings/all-sec-filings/content/0001507605-26-000022/mara-20260630.htm",
-      "link": "https://x.com/lookonchain/status/2086742949409526141#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Bitcoin mining company @MARA sold a total of 23,093 $BTC ($1.6B) in the first half of 2026 at an average price of $70,631. MARA still holds 35,577 $BTC ($2.3B). ir.mara.com/sec-filings/all-\u2026",
-      "publishedAt": "2026-08-10T09:14:23+00:00",
-      "publishedTs": 1786353263.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1701,19 +1688,6 @@
       "summary": "",
       "publishedAt": "2026-08-02T12:46:53+00:00",
       "publishedTs": 1785674813.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes",
-      "link": "https://x.com/DocumentingBTC/status/2083895871364608178#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Helpful video explaining how to create a simple 12 word bitcoin wallet seed using Seedsigner and dice. Its filmed in real time so you can see the entire process and how long it takes Video",
-      "publishedAt": "2026-08-02T12:41:07+00:00",
-      "publishedTs": 1785674467.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
