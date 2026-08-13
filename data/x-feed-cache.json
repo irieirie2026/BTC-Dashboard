@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-13T01:50:13Z",
+  "fetchedAt": "2026-08-13T04:10:51Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Gambler 0x66f8 keeps adding to his $BTC short, which has now grown to 2,136 $BTC($136M), making him the largest on-chain $BTC bear. Liquidation price: $64,592.3 https://hypurrscan.io/address/0x66f889094739dbb7d20aa60f645acd88feba75a9#perps",
+      "link": "https://x.com/lookonchain/status/2087750666110509107#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Gambler 0x66f8 keeps adding to his $BTC short, which has now grown to 2,136 $BTC ($136M), making him the largest on-chain $BTC bear. Liquidation price: $64,592.3 hypurrscan.io/address/0x66f8\u2026",
+      "publishedAt": "2026-08-13T03:58:41+00:00",
+      "publishedTs": 1786593521.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Another gambler spotted! Someone created a new wallet, deposited $153K into Hyperliquid, and opened a 40x long on 97.92 $BTC($6.22M). Liquidation price: $62,825.14. https://hypurrscan.io/address/0x14699342d2ae17449f73ea679c77474afd49401e#perps",
+      "link": "https://x.com/lookonchain/status/2087739036681302383#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Another gambler spotted! Someone created a new wallet, deposited $153K into Hyperliquid, and opened a 40x long on 97.92 $BTC ($6.22M). Liquidation price: $62,825.14. hypurrscan.io/address/0x1469\u2026",
+      "publishedAt": "2026-08-13T03:12:29+00:00",
+      "publishedTs": 1786590749.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The Paxos-linked whale sold another 800 $BTC($50.72M) through Wintermute 8 hours ago. Over the past 2 months, the whale has sold a total of 2,500 $BTC ($154M). https://arkm.com/explorer/address/bc1pdwyk4jvgp4js2jdxty842tzrmdu6ugvw7wqxctsqsnhneexscwcs2ucvfx",
+      "link": "https://x.com/lookonchain/status/2087723797491351935#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The Paxos-linked whale sold another 800 $BTC ($50.72M) through Wintermute 8 hours ago. Over the past 2 months, the whale has sold a total of 2,500 $BTC ($154M). arkm.com/explorer/address/bc\u2026",
+      "publishedAt": "2026-08-13T02:11:56+00:00",
+      "publishedTs": 1786587116.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bitcoin Achieves 555,555,555 Seconds Online",
       "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
@@ -1056,32 +1095,6 @@
       "isRetweet": false
     },
     {
-      "title": "August 3\u2013August 9, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Stablecoin supply grew by $931.4M last week, DEX spot volume fell and perp volume fell, while public companies shed 66 BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market cap increased by $931.4M. \ud83d\udfe2 Spot & Perps Trading",
-      "link": "https://x.com/lookonchain/status/2086833080137069008#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 3\u2013August 9, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Stablecoin supply grew by $931.4M last week, DEX spot volume fell and perp volume fell, while public companies shed 66 BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market cap increased by $931.4M. \ud83d\udfe2 Spot & Perps Trading",
-      "publishedAt": "2026-08-10T15:12:32+00:00",
-      "publishedTs": 1786374752.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC(+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC(+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH(+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH(+$224.97M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2086826583105695813#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 10 Update: #Bitcoin ETFs: 1D NetFlow: +1,731 $BTC (+$111.94M)\ud83d\udfe2 7D NetFlow: +12,354 $BTC (+$798.68M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,914 $ETH (+$56.78M)\ud83d\udfe2 7D NetFlow: +118,521 $ETH (+$224.97M)\ud83d\udfe2 Lookonchain (@lookonchain) August 7 Update: #Bitcoin ETFs: 1D NetFlow: +1,673 $B",
-      "publishedAt": "2026-08-10T14:46:43+00:00",
-      "publishedTs": 1786373203.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I am automating investigative journalism at http://Effort.News We're breaking five stories today based on verifiable financial data which everyone missed for years. This is what I\u2019ve been working on. \ud83e\uddf5",
       "link": "https://x.com/brianchau57/status/2086803587699745170#m",
       "source": "@nic_carter",
@@ -1103,19 +1116,6 @@
       "summary": "",
       "publishedAt": "2026-08-10T12:36:00+00:00",
       "publishedTs": 1786365360.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Michael Saylor's @Strategy sold another 1,690 $BTC($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). https://www.sec.gov/ix?doc=/Archives/edgar/data/0001050446/000119312526341297/mstr-20260810.htm",
-      "link": "https://x.com/lookonchain/status/2086787041866793161#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Michael Saylor's @Strategy sold another 1,690 $BTC ($108.6M) last week! Over the past 6 weeks, #Strategy has sold a total of 6,916 $BTC ($429.35M). sec.gov/ix?doc=/Archives/edg\u2026",
-      "publishedAt": "2026-08-10T12:09:36+00:00",
-      "publishedTs": 1786363776.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
