@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-13T22:39:13Z",
+  "fetchedAt": "2026-08-13T23:39:04Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
+      "link": "https://x.com/nic_carter/status/2088044792873615527#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
+      "publishedAt": "2026-08-13T23:27:27+00:00",
+      "publishedTs": 1786663647.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "2018-era Tether Truthers just fell to their knees in a Walmart",
+      "link": "https://x.com/nic_carter/status/2088033783043739775#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "2018-era Tether Truthers just fell to their knees in a Walmart Paolo Ardoino \ud83e\udd16 (@paoloardoino) An incredible day \u2764\ufe0f Tether has its financial audit by a big-four: KPMG US. \u2014 https://nitter.net/paoloardoino/status/2087951005212123228#m",
+      "publishedAt": "2026-08-13T22:43:42+00:00",
+      "publishedTs": 1786661022.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: $200 billion VanEck says Bitcoin is showing signs of a bottom and \"may warrant beginning to scale in\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2088013391226925130#m",
@@ -14,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "PANEL ANNOUNCEMENT \ud83c\udded\ud83c\uddf0 The Coldcard exploit sparked a major conversation around #Bitcoin security. Now, it\u2019s time to unpack what happened, what comes next, and why Bitcoin emerges even stronger. \u270a August 27 | Nakamoto Stage",
+      "link": "https://x.com/Bitcoinconfasia/status/2088012182705328587#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T21:17:52+00:00",
+      "publishedTs": 1786655872.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "This chart of tech ETFs' monthly volume is nuts. This is one of the big reasons overall ETF volume on pace to crush old record, despite market being up most of year. Some areas are over-contributing in big way. Tech ETFs normally make up 4-5% of total volume. This year it's 10%.",
@@ -809,19 +848,6 @@
       "isRetweet": false
     },
     {
-      "title": "Excited to grow our coverage and community to the world of superintelligence. More to come soon! In the meantime, mark your calendars- April 22-23, 2027 in SF https://www.i27.ai/manifesto",
-      "link": "https://x.com/BranBTC/status/2087519897379053807#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Excited to grow our coverage and community to the world of superintelligence. More to come soon! In the meantime, mark your calendars- April 22-23, 2027 in SF i27.ai/manifesto Link i27 \u2014 Manifesto Intelligence 2027 \u2014 the first gathering of the Agency Maximalist movement. i27.ai",
-      "publishedAt": "2026-08-12T12:41:42+00:00",
-      "publishedTs": 1786538502.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Our ETF of the Month for July is..(drum roll).. $USE the little known active Oil ETF that has seen pop in return and volume thanks to serving as a way to play the on again off again Iran war oil spike, retreat loop we are stuck in. Nice fine non-obv find from @SirYappityyapp",
       "link": "https://x.com/EricBalchunas/status/2087517800210346220#m",
       "source": "@ericbalchunas",
@@ -1511,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: leftists will say things like \"data centers dont create real jobs\" because they hate blue collar workers, hate middle america, and don't care about the working class.",
-      "link": "https://x.com/nic_carter/status/2085776492533833960#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "leftists will say things like \"data centers dont create real jobs\" because they hate blue collar workers, hate middle america, and don't care about the working class. Steve Everley (@saeverley) \"Data centers don't create real jobs,\" they say. Except for the hundreds of thousands ",
-      "publishedAt": "2026-08-07T17:14:02+00:00",
-      "publishedTs": 1786122842.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation",
       "link": "https://x.com/DocumentingBTC/status/2085754712314306692#m",
       "source": "@DocumentingBTC",
@@ -1558,32 +1571,6 @@
       "summary": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year Video",
       "publishedAt": "2026-08-07T10:41:14+00:00",
       "publishedTs": 1786099274.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: if you look at it, the best predictor of whether you pay a little or a lot for electricity is NOT whether there are datacenters near you, but... whether your state voted for Trump or Harris. proof: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-ele",
-      "link": "https://x.com/nic_carter/status/2085474055524683810#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "if you look at it, the best predictor of whether you pay a little or a lot for electricity is NOT whether there are datacenters near you, but... whether your state voted for Trump or Harris. proof: murmurationstwo.substack.com\u2026",
-      "publishedAt": "2026-08-06T21:12:15+00:00",
-      "publishedTs": 1786050735.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "With some very minor exceptions, the data center buildout is happening in red states (historically some purple but on a go forward basis, red). The data center question is entirely a red on red issue. It\u2019s impossible to build in blues and power is expensive, hence no one is even ",
-      "link": "https://x.com/nic_carter/status/2085471547205292463#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "With some very minor exceptions, the data center buildout is happening in red states (historically some purple but on a go forward basis, red). The data center question is entirely a red on red issue. It\u2019s impossible to build in blues and power is expensive, hence no one is even ",
-      "publishedAt": "2026-08-06T21:02:17+00:00",
-      "publishedTs": 1786050137.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
