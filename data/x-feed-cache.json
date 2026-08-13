@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-08-13T11:43:58Z",
+  "fetchedAt": "2026-08-13T13:06:04Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Agentic coding is a leap toward a Star Trek future in which you can simply say \"Computer, do ___\" and it executes an arbitrarily complex task. We just need to make it a few orders of magnitude faster and insert tons of safeguards.",
+      "link": "https://x.com/lopp/status/2087883656341635393#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-13T12:47:09+00:00",
+      "publishedTs": 1786625229.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Single Stock Ecosystem ETFs dropping today incl for private cos",
+      "link": "https://x.com/EricBalchunas/status/2087875824699527539#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Single Stock Ecosystem ETFs dropping today incl for private cos James Seyffart (@JSeyff) NEW: Today we have ETFs from @HarborCapital launching. They'll be actively managed funds that specifically target each firms \"ecosystem\" of companies and include Anthropic, Google Deepmind, M",
+      "publishedAt": "2026-08-13T12:16:02+00:00",
+      "publishedTs": 1786623362.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Digital Capital is a bearer asset. Digital Credit, Digital Money, and Digital Currency are created and managed by Digital Finance companies. Their ownership layer is Digital Equity. Together they form the Digital Finance stack.",
+      "link": "https://x.com/saylor/status/2087872420627583417#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Capital is a bearer asset. Digital Credit, Digital Money, and Digital Currency are created and managed by Digital Finance companies. Their ownership layer is Digital Equity. Together they form the Digital Finance stack.",
+      "publishedAt": "2026-08-13T12:02:30+00:00",
+      "publishedTs": 1786622550.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: $STRC is Digital Credit: semi-stable, high fixed income, Store of Value. Digital Money combines the technology of Digital Currency with the economics of Digital Capital: stability, income, transactional utility, and a Store of Value.",
+      "link": "https://x.com/saylor/status/2087872418245124190#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "$STRC is Digital Credit: semi-stable, high fixed income, Store of Value. Digital Money combines the technology of Digital Currency with the economics of Digital Capital: stability, income, transactional utility, and a Store of Value.",
+      "publishedAt": "2026-08-13T12:02:29+00:00",
+      "publishedTs": 1786622549.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital Assets form a monetary spectrum: $BTC = Digital Capital $STRC = Digital Credit SR-strcUSX = Digital Money $USDT = Digital Currency From left to right, volatility and return potential fall while stability and transactional utility rise.",
+      "link": "https://x.com/saylor/status/2087872413631459445#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-13T12:02:28+00:00",
+      "publishedTs": 1786622548.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: Today we have ETFs from @HarborCapital launching. They'll be actively managed funds that specifically target each firms \"ecosystem\" of companies and include Anthropic, Google Deepmind, Meta, OpenAI & SpaceXAI. $ANTW, $DEPW, $MTAW, $OAIW, $XAIW These could become big. 59 bps",
+      "link": "https://x.com/JSeyff/status/2087867511983280418#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "NEW: Today we have ETFs from @HarborCapital launching. They'll be actively managed funds that specifically target each firms \"ecosystem\" of companies and include Anthropic, Google Deepmind, Meta, OpenAI &amp; SpaceXAI. $ANTW , $DEPW , $MTAW , $OAIW , $XAIW These could become big.",
+      "publishedAt": "2026-08-13T11:43:00+00:00",
+      "publishedTs": 1786621380.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Digital Credit is going global. \ud83c\udde7\ud83c\uddf7 DIGY11 brings $STRC and Digital Credit to Brazil through a B3-listed ETF with monthly BRL distributions, daily liquidity, and FX hedging. The future of credit is digital.",
       "link": "https://x.com/saylor/status/2087836473726767456#m",
@@ -94,19 +172,6 @@
       "isRetweet": false
     },
     {
-      "title": "Every time I see a frontier model Pareto chart",
-      "link": "https://x.com/nic_carter/status/2087682136702611606#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Every time I see a frontier model Pareto chart Gavin Baker (@GavinSBaker) Absolute Pareto dominance for Grok and Cursor even after the OpenAI price cuts: \u2014 https://nitter.net/GavinSBaker/status/2087576902512923095#m",
-      "publishedAt": "2026-08-12T23:26:23+00:00",
-      "publishedTs": 1786577183.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "True North Episode 76: Why Strategy's Balance Sheet Became a Blackhole https://x.com/i/broadcasts/1YxNrbrkyebxw",
       "link": "https://x.com/TNorth/status/2087660014320447753#m",
       "source": "@saylor",
@@ -144,19 +209,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
-      "link": "https://x.com/saylor/status/2087640831578526120#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
-      "publishedAt": "2026-08-12T20:42:15+00:00",
-      "publishedTs": 1786567335.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
@@ -887,58 +939,6 @@
       "isRetweet": true
     },
     {
-      "title": "Join us on August 17 at 12pm ET for our Q2 2026 Earnings Investor Q&A with @Saylor and @PhongLe, hosted by @NatBrunell. https://www.strategy.com/press/strategy-to-host-live-q-a-with-investors-featuring-michael-saylor-and-phong-le_08-11-2026",
-      "link": "https://x.com/Strategy/status/2087162917309305293#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Join us on August 17 at 12pm ET for our Q2 2026 Earnings Investor Q&amp;A with @Saylor and @PhongLe , hosted by @NatBrunell . strategy.com/press/strategy-\u2026 Link Strategy to Host Live Q&amp;A with Investors Featuring Michael Saylor and Phong Le August 11, 2026 strategy.com",
-      "publishedAt": "2026-08-11T13:03:11+00:00",
-      "publishedTs": 1786453391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "RT @Excellion: Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
-      "link": "https://x.com/saylor/status/2087157525955141899#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @Excellion : Many things in this post are incorrect, and it matters that we correct them, because this version of the history is exactly\u2026",
-      "publishedAt": "2026-08-11T12:41:46+00:00",
-      "publishedTs": 1786452106.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Digital Money is being built on Digital Credit. $STRC",
-      "link": "https://x.com/saylor/status/2087151260168311020#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Money is being built on Digital Credit. $STRC Solstice (@solsticefi) strcUSX is live in YieldVault - the first Solana-native STRC product with senior protection. @Strategy 's STRC pays a ~12% cash dividend. strcUSX brings that stream onchain & splits it in two: - Senior: ",
-      "publishedAt": "2026-08-11T12:16:52+00:00",
-      "publishedTs": 1786450612.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\ud83d\udd25 HISTORY: 6 years ago today, Strategy adopted Bitcoin as its primary treasury reserve asset. It started with 21,454 $BTC for $250M at ~$11,653 per Bitcoin. Today, Strategy holds 840,447 BTC, nearly 39x its initial stack.",
-      "link": "https://x.com/Cointelegraph/status/2087112231666249892#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-11T09:41:47+00:00",
-      "publishedTs": 1786441307.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Saylor calls STRC the bridge between Bitcoin & stablecoins. strcUSX puts that bridge on Solana. Every USX locked in means Solstice holds more STRC, and a healthier STRC sends @saylor back to stacking Bitcoin. Solana yield on one end, a stronger Bitcoin on the other. Full story: h",
       "link": "https://x.com/solsticefi/status/2087103142647488809#m",
       "source": "@saylor",
@@ -1277,19 +1277,6 @@
       "isRetweet": true
     },
     {
-      "title": "Tell Luke.",
-      "link": "https://x.com/sr_gi/status/2086191946691678211#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-08T20:44:54+00:00",
-      "publishedTs": 1786221894.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
       "source": "@DocumentingBTC",
@@ -1535,6 +1522,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
+      "link": "https://x.com/nic_carter/status/2085016417653461094#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-05T14:53:46+00:00",
+      "publishedTs": 1785941626.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
