@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-08-13T13:06:04Z",
+  "fetchedAt": "2026-08-13T14:55:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "You can live on Bitcoin. You can also build on it. Crude oil is valuable, but civilization gets more utility by refining it into gasoline, jet fuel, plastics, lubricants, and asphalt. Bitcoin is Digital Capital. Innovation turns capital into credit, money, and currency.",
+      "link": "https://x.com/saylor/status/2087912774634541119#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-13T14:42:51+00:00",
+      "publishedTs": 1786632171.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @nic_carter: The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning ta",
+      "link": "https://x.com/nic_carter/status/2087910684394709133#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning tap water. The epide",
+      "publishedAt": "2026-08-13T14:34:33+00:00",
+      "publishedTs": 1786631673.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
+      "link": "https://x.com/nic_carter/status/2087908633698787576#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
+      "publishedAt": "2026-08-13T14:26:24+00:00",
+      "publishedTs": 1786631184.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japan public company Metaplanet to issue Bitcoin \"BitBonds\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2087900664919687380#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T13:54:44+00:00",
+      "publishedTs": 1786629284.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Do you think bitcoin self custody is too risky? Truly I tell you, third party custody is just self custody with extra layers of risk.",
+      "link": "https://x.com/lopp/status/2087892465474732284#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-13T13:22:09+00:00",
+      "publishedTs": 1786627329.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Agree. Online gambling, bitcoin and socialist politicians are to a degree just different solutions to same problem: lack of affordability (for ppl who don't already own a crap ton of stocks or other assets) due to the silent tax of inflation which is the hidden cost of govts' goi",
+      "link": "https://x.com/EricBalchunas/status/2087890462031954423#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Agree. Online gambling, bitcoin and socialist politicians are to a degree just different solutions to same problem: lack of affordability (for ppl who don't already own a crap ton of stocks or other assets) due to the silent tax of inflation which is the hidden cost of govts' goi",
+      "publishedAt": "2026-08-13T13:14:11+00:00",
+      "publishedTs": 1786626851.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Agentic coding is a leap toward a Star Trek future in which you can simply say \"Computer, do ___\" and it executes an arbitrarily complex task. We just need to make it a few orders of magnitude faster and insert tons of safeguards.",
       "link": "https://x.com/lopp/status/2087883656341635393#m",
@@ -159,6 +237,19 @@
       "isRetweet": false
     },
     {
+      "title": "SECURE YOUR BITCOIN \u203c\ufe0f Join Specter for a hands-on cold storage walkthrough covering the fundamentals of self-custody from choosing the right setup to protecting your keys. \ud83d\udd10 August 28 | Open Source Hub",
+      "link": "https://x.com/Bitcoinconfasia/status/2087708266138620067#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T01:10:13+00:00",
+      "publishedTs": 1786583413.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Bitcoin Achieves 555,555,555 Seconds Online",
       "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
       "source": "@DocumentingBTC",
@@ -209,6 +300,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
+      "link": "https://x.com/saylor/status/2087640831578526120#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
+      "publishedAt": "2026-08-12T20:42:15+00:00",
+      "publishedTs": 1786567335.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
@@ -861,19 +965,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
-      "link": "https://x.com/BitcoinMagazine/status/2087203664683233399#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: saltlending.com/bitcoin-loan\u2026",
-      "publishedAt": "2026-08-11T15:45:06+00:00",
-      "publishedTs": 1786463106.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "August 11 Update: #Bitcoin ETFs: 1D NetFlow: -2,209 $BTC(-$141.23M)\ud83d\udd34 7D NetFlow: +8,545 $BTC(+$546.45M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -14,499 $ETH(-$27.22M)\ud83d\udd34 7D NetFlow: +110,579 $ETH(+$207.62M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2087192167987212306#m",
       "source": "@lookonchain",
@@ -882,19 +973,6 @@
       "summary": "August 11 Update: #Bitcoin ETFs: 1D NetFlow: -2,209 $BTC (-$141.23M)\ud83d\udd34 7D NetFlow: +8,545 $BTC (+$546.45M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -14,499 $ETH (-$27.22M)\ud83d\udd34 7D NetFlow: +110,579 $ETH (+$207.62M)\ud83d\udfe2",
       "publishedAt": "2026-08-11T14:59:25+00:00",
       "publishedTs": 1786460365.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 SEC to consider new rules for certain \"crypto asset\" investment contracts on Friday \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2087191141904966125#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-11T14:55:21+00:00",
-      "publishedTs": 1786460121.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -913,19 +991,6 @@
       "isRetweet": false
     },
     {
-      "title": "\"Buried in Collateral\" Check out @hillery_dan\u2019s latest research report on the market forces driving the STRC recovery\u2014and why STRF is a useful reference point for understanding preferred securities. STRK buybacks next? Read more below \ud83d\udd3d",
-      "link": "https://x.com/UTXOmgmt/status/2087178837503136022#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "\"Buried in Collateral\" Check out @hillery_dan \u2019s latest research report on the market forces driving the STRC recovery\u2014and why STRF is a useful reference point for understanding preferred securities. STRK buybacks next? Read more below \ud83d\udd3d",
-      "publishedAt": "2026-08-11T14:06:27+00:00",
-      "publishedTs": 1786457187.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
       "link": "https://x.com/EricBalchunas/status/2087176625481818584#m",
       "source": "@JSeyff",
@@ -934,19 +999,6 @@
       "summary": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
       "publishedAt": "2026-08-11T13:57:40+00:00",
       "publishedTs": 1786456660.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Saylor calls STRC the bridge between Bitcoin & stablecoins. strcUSX puts that bridge on Solana. Every USX locked in means Solstice holds more STRC, and a healthier STRC sends @saylor back to stacking Bitcoin. Solana yield on one end, a stronger Bitcoin on the other. Full story: h",
-      "link": "https://x.com/solsticefi/status/2087103142647488809#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Saylor calls STRC the bridge between Bitcoin & stablecoins. strcUSX puts that bridge on Solana. Every USX locked in means Solstice holds more STRC, and a healthier STRC sends @saylor back to stacking Bitcoin. Solana yield on one end, a stronger Bitcoin on the other. Full story: c",
-      "publishedAt": "2026-08-11T09:05:40+00:00",
-      "publishedTs": 1786439140.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1264,19 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "A simple explainer of what just happened RIP BIP110 \u2620\ufe0f",
-      "link": "https://x.com/OrangeSurfBTC/status/2086205758727672251#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-08T21:39:47+00:00",
-      "publishedTs": 1786225187.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
       "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
       "source": "@DocumentingBTC",
@@ -1506,32 +1545,6 @@
       "summary": "",
       "publishedAt": "2026-08-06T13:24:11+00:00",
       "publishedTs": 1786022651.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
-      "link": "https://x.com/tonylfeng/status/2085131179678691537#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I am a mathematician but I avoided commenting on this because the problems are (far) outside my domain. Even if I sat down to read the technical details (which I have not), it would be hard to appreciate the context of prior work, etc. But I've gotten enough sense of things throu",
-      "publishedAt": "2026-08-05T22:29:47+00:00",
-      "publishedTs": 1785968987.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Coffee shops are going to HAVE to come up with a genre other than jazz lounge covers of classic rock songs with a breathy female vocalist . If I hear another bossa nova cover of the police or pink floyd",
-      "link": "https://x.com/nic_carter/status/2085016417653461094#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-05T14:53:46+00:00",
-      "publishedTs": 1785941626.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
