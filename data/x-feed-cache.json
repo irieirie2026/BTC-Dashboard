@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-13T21:42:35Z",
+  "fetchedAt": "2026-08-13T22:39:13Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -170,6 +170,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Chinese AI Beats Restricted OpenAI and Anthropic Cybersecurity Models, Bitcoin Industry Warns https://bitcoinmagazine.com/business/chinese-ai-beats-restricted-openai-and-anthropic-cybersecurity-models-bitcoin-industry-warns via @bitcoinmagazine @callebtc @Rob1Ham",
+      "link": "https://x.com/JuanSGalt/status/2087937192496627812#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Chinese AI Beats Restricted OpenAI and Anthropic Cybersecurity Models, Bitcoin Industry Warns bitcoinmagazine.com/business\u2026 via @bitcoinmagazine @callebtc @Rob1Ham Link \u201cIt Absolutely Guts Me\u201d: Patriotic Developers Forced To Chinese AI To Protect Bitcoin Rob Hamilton, Francis Pou",
+      "publishedAt": "2026-08-13T16:19:53+00:00",
+      "publishedTs": 1786637993.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-electricity TLDR it's blue state decarbonization and inflation",
@@ -523,6 +536,19 @@
       "isRetweet": true
     },
     {
+      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
+      "link": "https://x.com/saylor/status/2087640831578526120#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
+      "publishedAt": "2026-08-12T20:42:15+00:00",
+      "publishedTs": 1786567335.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2087639014148866331#m",
       "source": "@BitcoinMagazine",
@@ -830,19 +856,6 @@
       "summary": "Goldman on an ETF firm buying spree. Eric Balchunas (@EricBalchunas) SEMI-SHOCK: Goldman is acquiring Neos ETFs for $2.3b. Huge coup for Neos who is only few yrs old but got big FAST, $32b, mostly in covered call monthly income ETFs. GS clearly sees big future in boomer candy, af",
       "publishedAt": "2026-08-12T12:17:04+00:00",
       "publishedTs": 1786537024.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US regulator OCC approves Bitcoin and crypto firms to become national banks. \"America and the OCC are once again open for business.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2087512671209869538#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-12T12:12:59+00:00",
-      "publishedTs": 1786536779.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
