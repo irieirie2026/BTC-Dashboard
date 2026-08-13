@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-13T20:40:10Z",
+  "fetchedAt": "2026-08-13T21:42:35Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: $200 billion VanEck says Bitcoin is showing signs of a bottom and \"may warrant beginning to scale in\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2088013391226925130#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T21:22:40+00:00",
+      "publishedTs": 1786656160.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This chart of tech ETFs' monthly volume is nuts. This is one of the big reasons overall ETF volume on pace to crush old record, despite market being up most of year. Some areas are over-contributing in big way. Tech ETFs normally make up 4-5% of total volume. This year it's 10%.",
       "link": "https://x.com/EricBalchunas/status/2087998385550680331#m",
@@ -66,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "How to Buy a Hardware Wallet Privately",
+      "link": "https://x.com/bc1gui/status/2087986055890809087#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Article How to Buy a Hardware Wallet Privately Trezor\u2019s latest customer-data leak is a good reason to rethink how we buy hardware wallets. We have seen customer information leak from this industry before, and I think the safest assumption is that",
+      "publishedAt": "2026-08-13T19:34:03+00:00",
+      "publishedTs": 1786649643.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "how it started vs how it's going",
@@ -497,19 +523,6 @@
       "isRetweet": true
     },
     {
-      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
-      "link": "https://x.com/saylor/status/2087640831578526120#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
-      "publishedAt": "2026-08-12T20:42:15+00:00",
-      "publishedTs": 1786567335.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2087639014148866331#m",
       "source": "@BitcoinMagazine",
@@ -599,6 +612,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats, @HRF, @MaelstromFund, @btrustteam, and @cakewallet for making the work possible. Start here: https://crates.io/crates/payjoin https://github.com/payjoin/rust-payjoin/tree/master/payjoin-cli#quick-start",
+      "link": "https://x.com/payjoindevkit/status/2087589799452631546#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats , @HRF , @MaelstromFund , @btrustteam , and @cakewallet for making the work possible. Start here: crates.io/crates/payjoin github.com/payjoin/rust-payj\u2026",
+      "publishedAt": "2026-08-12T17:19:28+00:00",
+      "publishedTs": 1786555168.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: Bitcoin is now trading in its \"Cost of Production\" zone, typically the sign of a bear market bottom. \ud83d\udc40 HODL \ud83d\ude80",
@@ -1337,19 +1363,6 @@
       "summary": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped Video",
       "publishedAt": "2026-08-09T13:11:10+00:00",
       "publishedTs": 1786281070.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB! \ud83d\ude02",
-      "link": "https://x.com/lopp/status/2086418507386835274#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Well, it took 10 months, but @LukeDashjr and @GrassFedBitcoin finally answered the question I posed to them at @LuganoPlanB ! \ud83d\ude02 Video",
-      "publishedAt": "2026-08-09T11:45:10+00:00",
-      "publishedTs": 1786275910.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
