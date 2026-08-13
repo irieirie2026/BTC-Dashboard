@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-13T14:55:38Z",
+  "fetchedAt": "2026-08-13T15:58:20Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-electricity TLDR it's blue state decarbonization and inflation",
+      "link": "https://x.com/nic_carter/status/2087922558377107726#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: murmurationstwo.substack.com\u2026 TLDR it's blue state decarbonization and inflation",
+      "publishedAt": "2026-08-13T15:21:44+00:00",
+      "publishedTs": 1786634504.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN:\ud83c\udde8\ud83c\udded Switzerland's largest bank UBS discloses owning $83.2 million of BlackRock's Bitcoin ETF \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2087922142780207377#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-13T15:20:05+00:00",
+      "publishedTs": 1786634405.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "August 13 Update: #Bitcoin ETFs: 1D NetFlow: -1,132 $BTC(-$72.24M)\ud83d\udd34 7D NetFlow: -202 $BTC(-$12.89M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +3,947 $ETH(+$7.47M)\ud83d\udfe2 7D NetFlow: +65,941 $ETH(+$124.71M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2087914470324744312#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 13 Update: #Bitcoin ETFs: 1D NetFlow: -1,132 $BTC (-$72.24M)\ud83d\udd34 7D NetFlow: -202 $BTC (-$12.89M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +3,947 $ETH (+$7.47M)\ud83d\udfe2 7D NetFlow: +65,941 $ETH (+$124.71M)\ud83d\udfe2",
+      "publishedAt": "2026-08-13T14:49:35+00:00",
+      "publishedTs": 1786632575.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "You can live on Bitcoin. You can also build on it. Crude oil is valuable, but civilization gets more utility by refining it into gasoline, jet fuel, plastics, lubricants, and asphalt. Bitcoin is Digital Capital. Innovation turns capital into credit, money, and currency.",
       "link": "https://x.com/saylor/status/2087912774634541119#m",
@@ -300,19 +339,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
-      "link": "https://x.com/saylor/status/2087640831578526120#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
-      "publishedAt": "2026-08-12T20:42:15+00:00",
-      "publishedTs": 1786567335.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
@@ -1532,19 +1558,6 @@
       "summary": "With some very minor exceptions, the data center buildout is happening in red states (historically some purple but on a go forward basis, red). The data center question is entirely a red on red issue. It\u2019s impossible to build in blues and power is expensive, hence no one is even ",
       "publishedAt": "2026-08-06T21:02:17+00:00",
       "publishedTs": 1786050137.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "now that nikita is gone, does anyone want to fix the bug where i (and others) get 3k new random followers a day for no reason? i want my follower count to reflect what I actually earned rather than this bot subsidy",
-      "link": "https://x.com/nic_carter/status/2085356263156633974#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-06T13:24:11+00:00",
-      "publishedTs": 1786022651.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
