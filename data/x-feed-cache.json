@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-14T21:22:59Z",
+  "fetchedAt": "2026-08-14T22:20:24Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Billionaire Paul Tudor Jones' $106 billion Investment Corporation reports owning $22.9 million of BlackRock's spot Bitcoin ETF \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2088382677200306521#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T21:50:05+00:00",
+      "publishedTs": 1786744205.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: $326 billion Edleman Financial discloses owning $34 million in Bitcoin ETFs \ud83d\udca5",
       "link": "https://x.com/BitcoinMagazine/status/2088358773005963567#m",
@@ -13,7 +26,7 @@
       "publishedTs": 1786738505.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Bull market things",
