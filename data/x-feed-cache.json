@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-13T23:39:04Z",
+  "fetchedAt": "2026-08-14T01:47:56Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The largest on-chain $BTC bear, 0x66f8, has closed his 2,136 $BTC($136M) short, making a $1.65M profit. He then flipped long, opening a 40x long on 200.82 $BTC($12.74M).",
+      "link": "https://x.com/lookonchain/status/2088063396784865498#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The largest on-chain $BTC bear, 0x66f8, has closed his 2,136 $BTC ($136M) short, making a $1.65M profit. He then flipped long, opening a 40x long on 200.82 $BTC ($12.74M). Lookonchain (@lookonchain) Gambler 0x66f8 keeps adding to his $BTC short, which has now grown to 2,136 $BTC ",
+      "publishedAt": "2026-08-14T00:41:22+00:00",
+      "publishedTs": 1786668082.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
       "link": "https://x.com/nic_carter/status/2088044792873615527#m",
@@ -1145,19 +1158,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Whales keep selling $BTC. Whale bc1qdj sold 1,274 $BTC ($81.5M) through #Cumberland, #FalconX, and #GalaxyDigital 6 hours ago. https://arkm.com/explorer/address/bc1qdjykal4rt6sfwk9t32lvhmdm59fqywawclv7sp",
-      "link": "https://x.com/lookonchain/status/2087043625536643516#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whales keep selling $BTC . Whale bc1qdj sold 1,274 $BTC ($81.5M) through #Cumberland , #FalconX , and #GalaxyDigital 6 hours ago. arkm.com/explorer/address/bc\u2026",
-      "publishedAt": "2026-08-11T05:09:10+00:00",
-      "publishedTs": 1786424950.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "bahahahahahahaha haaaaaaaaaaaaaaaaaaaaaaaaa dumbest phishing attempt ever!",
