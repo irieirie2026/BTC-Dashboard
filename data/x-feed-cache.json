@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-14T22:20:24Z",
+  "fetchedAt": "2026-08-14T23:19:54Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @EricBalchunas: Just out today, feels related:",
+      "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Just out today, feels related: Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a ",
+      "publishedAt": "2026-08-14T22:43:06+00:00",
+      "publishedTs": 1786747386.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "link": "https://x.com/EricBalchunas/status/2088394803033846027#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "publishedAt": "2026-08-14T22:38:16+00:00",
+      "publishedTs": 1786747096.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
+      "link": "https://x.com/JSeyff/status/2088388613968900257#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next? Todd Sohn (@Todd_Sohn) Someone told me to hold my beer \u2014 https://nitter.net/Todd_Sohn/status/2088383768545337607#m",
+      "publishedAt": "2026-08-14T22:13:40+00:00",
+      "publishedTs": 1786745620.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: Billionaire Paul Tudor Jones' $106 billion Investment Corporation reports owning $22.9 million of BlackRock's spot Bitcoin ETF \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2088382677200306521#m",
@@ -11,6 +50,19 @@
       "summary": "",
       "publishedAt": "2026-08-14T21:50:05+00:00",
       "publishedTs": 1786744205.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 #Bitcoin changes more than your money. It changes how you see the world. \ud83c\udf0e Anja Dragovic, Adam Hudson, Jake Explains & Randi Hipper take the stage at Bitcoin Asia to talk freedom, sovereignty, and thinking from first principles. \ud83d\udd25 August 27 | Nakamoto Stage",
+      "link": "https://x.com/Bitcoinconfasia/status/2088370401894146335#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T21:01:18+00:00",
+      "publishedTs": 1786741278.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -861,19 +913,6 @@
       "isRetweet": false
     },
     {
-      "title": "SECURE YOUR BITCOIN \u203c\ufe0f Join Specter for a hands-on cold storage walkthrough covering the fundamentals of self-custody from choosing the right setup to protecting your keys. \ud83d\udd10 August 28 | Open Source Hub",
-      "link": "https://x.com/Bitcoinconfasia/status/2087708266138620067#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-13T01:10:13+00:00",
-      "publishedTs": 1786583413.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Bitcoin Achieves 555,555,555 Seconds Online",
       "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
       "source": "@DocumentingBTC",
@@ -989,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Roundhill's new Neocloud ETF is up 15% on the day - volume $46m and less than week old. $LYTE and $NCLD are showing early DRAM-esque prospects.",
-      "link": "https://x.com/EricBalchunas/status/2087582747103539578#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T16:51:26+00:00",
-      "publishedTs": 1786553486.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
@@ -1158,19 +1184,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
-      "link": "https://x.com/EricBalchunas/status/2087176625481818584#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Good extra info on the \"in-kind conversions\" of bitcoin for ETF shares. Yes, you don't realize gains but you do carry your basis, so it's merely deferral, not dodge. And yes, it works the other way: ETF for btc. And yes, it is something that works w Grantor Trust, not open end fu",
-      "publishedAt": "2026-08-11T13:57:40+00:00",
-      "publishedTs": 1786456660.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "bahahahahahahaha haaaaaaaaaaaaaaaaaaaaaaaaa dumbest phishing attempt ever!",
