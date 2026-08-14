@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-14T15:50:00Z",
+  "fetchedAt": "2026-08-14T16:50:28Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\udde6\ud83c\uddea UAE sovereign wealth funds Mubadala and Abu Dhabi Investment Council report owning a combined $763.7 million of BlackRocks Bitcoin ETF \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2088298762426843184#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T16:16:38+00:00",
+      "publishedTs": 1786724198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
       "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
@@ -37,6 +50,19 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47 Video",
       "publishedAt": "2026-08-14T14:59:18+00:00",
       "publishedTs": 1786719558.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A NEW WAY TO ACCESS THE DIGITAL ASSET WORLD Beyond Bitcoin, ETFs and traditional equities, a more sophisticated capital markets infrastructure is emerging around the digital economy. B2V Preferencial was designed to access this evolution through three core pillars: quality collat",
+      "link": "https://x.com/B2VCrypto/status/2088272501004525602#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "A NEW WAY TO ACCESS THE DIGITAL ASSET WORLD Beyond Bitcoin, ETFs and traditional equities, a more sophisticated capital markets infrastructure is emerging around the digital economy. B2V Preferencial was designed to access this evolution through three core pillars: quality collat",
+      "publishedAt": "2026-08-14T14:32:17+00:00",
+      "publishedTs": 1786717937.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -809,19 +835,6 @@
       "isRetweet": true
     },
     {
-      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
-      "link": "https://x.com/saylor/status/2087640831578526120#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
-      "publishedAt": "2026-08-12T20:42:15+00:00",
-      "publishedTs": 1786567335.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2087639014148866331#m",
       "source": "@BitcoinMagazine",
@@ -1054,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "the market prevails. how else could, or should it be, with bearer free market money.",
-      "link": "https://x.com/adam3us/status/2087458495045984362#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-12T08:37:42+00:00",
-      "publishedTs": 1786523862.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years",
