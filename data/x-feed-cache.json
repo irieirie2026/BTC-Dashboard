@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-14T14:49:21Z",
+  "fetchedAt": "2026-08-14T15:50:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
+      "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Listen here or on spotify etc.. piped.video/watch?v=Shhv4Er_\u2026 Link 351 Conversions: Smart Tax Alpha Strategy or Loophole in the Code? |... ETFs are already famous for their tax efficiency, but a growing cor... youtube.com",
+      "publishedAt": "2026-08-14T15:20:37+00:00",
+      "publishedTs": 1786720837.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "*new* Trillions on 351 Conversion ETFs, which are custom built funds that allow investors to swap concentrated stock positions into diversified portfolios in order to defer paying gains taxes, and they are growing like crazy. We dissect it all with @zachmider @denitsa_tsekova",
+      "link": "https://x.com/EricBalchunas/status/2088284525386207656#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-14T15:20:03+00:00",
+      "publishedTs": 1786720803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47",
+      "link": "https://x.com/BitcoinMagazine/status/2088279301347033413#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47 Video",
+      "publishedAt": "2026-08-14T14:59:18+00:00",
+      "publishedTs": 1786719558.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "What does the CLARITY Act actually do for Bitcoin? I went digging in the actual text. A few things in here aren't being talked about. My latest for @BitcoinMagazine \ud83d\udc47 https://bitcoinmagazine.com/takes/what-the-clarity-act-actually-does-for-bitcoin",
       "link": "https://x.com/isaiahdaustin/status/2088271393255301413#m",
@@ -887,19 +926,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Bitcoin is now trading in its \"Cost of Production\" zone, typically the sign of a bear market bottom. \ud83d\udc40 HODL \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2087583891469079039#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-12T16:55:59+00:00",
-      "publishedTs": 1786553759.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Roundhill's new Neocloud ETF is up 15% on the day - volume $46m and less than week old. $LYTE and $NCLD are showing early DRAM-esque prospects.",
       "link": "https://x.com/EricBalchunas/status/2087582747103539578#m",
       "source": "@ericbalchunas",
@@ -952,19 +978,6 @@
       "isRetweet": true
     },
     {
-      "title": "Goldman will get $BTCI in the Neos deal, which is a $1b bitcoin premium income ETF, yields 27% and captures most but not all of bitcoins run-ups. Nowww I get why GS never launched the btc covered call product they filed months ago. Better to leap frog BlackRock\u2019s $BITA vs me too",
-      "link": "https://x.com/EricBalchunas/status/2087543284746813639#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T14:14:38+00:00",
-      "publishedTs": 1786544078.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "August 12 Update: #Bitcoin ETFs: 1D NetFlow: -265 $BTC(-$16.97M)\ud83d\udd34 7D NetFlow: +4,711 $BTC(+$301.16M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +3,823 $ETH(+$7.28M)\ud83d\udfe2 7D NetFlow: +89,742 $ETH(+$170.83M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2087540519526412569#m",
       "source": "@lookonchain",
@@ -973,19 +986,6 @@
       "summary": "August 12 Update: #Bitcoin ETFs: 1D NetFlow: -265 $BTC (-$16.97M)\ud83d\udd34 7D NetFlow: +4,711 $BTC (+$301.16M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +3,823 $ETH (+$7.28M)\ud83d\udfe2 7D NetFlow: +89,742 $ETH (+$170.83M)\ud83d\udfe2",
       "publishedAt": "2026-08-12T14:03:39+00:00",
       "publishedTs": 1786543419.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "South Korea is going to require retail traders to undergo mock trading exercises in order to get access to 2x single stock ETFs. This is the latest addition to the Degen School curriculum, which is now 3hrs long via @YKreports",
-      "link": "https://x.com/EricBalchunas/status/2087522879780856143#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T12:53:33+00:00",
-      "publishedTs": 1786539213.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1080,19 +1080,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 States have historically defined money. What happens when money comes first? \ud83d\udc40 Balaji Srinivasan and Mark Yusko explore how globally neutral digital money could reshape how societies form, organize, and evolve. \u270a August 28 | Nakamoto Stage",
-      "link": "https://x.com/Bitcoinconfasia/status/2087315681670815994#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-11T23:10:13+00:00",
-      "publishedTs": 1786489813.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "solid Q2 results and guidance. energized 500 MW in a single quarter. exceptional. $CRWV",
