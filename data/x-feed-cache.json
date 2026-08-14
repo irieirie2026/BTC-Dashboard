@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-08-14T11:03:18Z",
+  "fetchedAt": "2026-08-14T13:02:11Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddee\ud83c\uddf1 Israel's largest bank is entering Bitcoin. Bank Leumi will allow customers to buy, hold and sell Bitcoin directly through its banking app. The service is expected to launch in early 2027. \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2088239261640278296#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T12:20:12+00:00",
+      "publishedTs": 1786710012.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The Big Three's (BlackRock, Vgrd, State Street) share of ETF inflows is going down, was 80% at peak 6yrs ago, today it's 'only' 55%. This is due to the number of issuers exploding there's just so much more competition incl monster-size legacy MF cos. that said 55% of $2T is a LOT",
+      "link": "https://x.com/EricBalchunas/status/2088236648341372998#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "The Big Three's (BlackRock, Vgrd, State Street) share of ETF inflows is going down, was 80% at peak 6yrs ago, today it's 'only' 55%. This is due to the number of issuers exploding there's just so much more competition incl monster-size legacy MF cos. that said 55% of $2T is a LOT",
+      "publishedAt": "2026-08-14T12:09:49+00:00",
+      "publishedTs": 1786709389.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital assets are assets. Index providers should measure markets, not decide which assets companies are allowed to own. MSCI\u2019s proposal puts it out of step with regulators, markets, and its own customers. Bitcoin doesn\u2019t need MSCI. Neither does Strategy. $BTC $MSTR",
+      "link": "https://x.com/Strategy/status/2088234192844870091#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-14T12:00:03+00:00",
+      "publishedTs": 1786708803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "THE FLOW SHOW: ETFs have taken in over $100b for 14 consecutive months which is freakin' insane to anyone who has been covering them for a while. You can see from this chart a $100b month literally only happened ONCE prior to about 2.5yrs ago. NEW NORMAL. via @psarofagis",
+      "link": "https://x.com/EricBalchunas/status/2088233756071002404#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-14T11:58:19+00:00",
+      "publishedTs": 1786708699.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac https://frenchbreaches.com/",
+      "link": "https://x.com/lopp/status/2088228346270237117#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac frenchbreaches.com/alertes/d\u2026 Link ",
+      "publishedAt": "2026-08-14T11:36:49+00:00",
+      "publishedTs": 1786707409.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet.",
+      "link": "https://x.com/nic_carter/status/2088226292072083919#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet. Matt Burtell (@MattBurtell) Dario Amodei\u2019s wife badgered Jeffery Epstein to invest in her porn company three years after he plead guilty to so",
+      "publishedAt": "2026-08-14T11:28:40+00:00",
+      "publishedTs": 1786706920.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @saylor: Capital competes for wealth. Credit competes for income. Money competes for savings. Currency competes for payments. Digital Assets are not one market. They are a new architecture competing across the financial system.",
       "link": "https://x.com/saylor/status/2088215622723264996#m",
@@ -848,19 +926,6 @@
       "isRetweet": true
     },
     {
-      "title": "The team @NEOSInvestments is very impressive. I love seeing people secure the bag after building something unique and valuable.",
-      "link": "https://x.com/APompliano/status/2087548177159196749#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "The team @NEOSInvestments is very impressive. I love seeing people secure the bag after building something unique and valuable. Eric Balchunas (@EricBalchunas) SEMI-SHOCK: Goldman is acquiring Neos ETFs for $2.3b. Huge coup for Neos who is only few yrs old but got big FAST, $32b,",
-      "publishedAt": "2026-08-12T14:34:04+00:00",
-      "publishedTs": 1786545244.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Goldman will get $BTCI in the Neos deal, which is a $1b bitcoin premium income ETF, yields 27% and captures most but not all of bitcoins run-ups. Nowww I get why GS never launched the btc covered call product they filed months ago. Better to leap frog BlackRock\u2019s $BITA vs me too",
       "link": "https://x.com/EricBalchunas/status/2087543284746813639#m",
       "source": "@ericbalchunas",
@@ -887,19 +952,6 @@
       "isRetweet": false
     },
     {
-      "title": "i27 comes to San Francisco, April 22\u201323, 2027. Two days at the Palace of Fine Arts for the builders, investors, and institutions shaping the AI economy.",
-      "link": "https://x.com/i27conf/status/2087526794870063181#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-12T13:09:06+00:00",
-      "publishedTs": 1786540146.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "South Korea is going to require retail traders to undergo mock trading exercises in order to get access to 2x single stock ETFs. This is the latest addition to the Degen School curriculum, which is now 3hrs long via @YKreports",
       "link": "https://x.com/EricBalchunas/status/2087522879780856143#m",
       "source": "@ericbalchunas",
@@ -908,32 +960,6 @@
       "summary": "",
       "publishedAt": "2026-08-12T12:53:33+00:00",
       "publishedTs": 1786539213.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Our ETF of the Month for July is..(drum roll).. $USE the little known active Oil ETF that has seen pop in return and volume thanks to serving as a way to play the on again off again Iran war oil spike, retreat loop we are stuck in. Nice fine non-obv find from @SirYappityyapp",
-      "link": "https://x.com/EricBalchunas/status/2087517800210346220#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T12:33:22+00:00",
-      "publishedTs": 1786538002.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Here's the full article on it, Scoop via @sridinats @_ToddGillespie https://www.bloomberg.com/news/articles/2026-08-12/goldman-sachs-to-acquire-etf-provider-neos-in-2-3-billion-deal?srnd=undefined",
-      "link": "https://x.com/EricBalchunas/status/2087514810393002007#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Here's the full article on it, Scoop via @sridinats @_ToddGillespie bloomberg.com/news/articles/\u2026 Link Goldman Sachs to Acquire ETF Provider Neos in $2.3 Billion Deal Goldman Sachs Group Inc. will pay as much as $2.25 billion to buy Neos Investments, expanding its asset manager\u2019s",
-      "publishedAt": "2026-08-12T12:21:29+00:00",
-      "publishedTs": 1786537289.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -952,20 +978,7 @@
       "isRetweet": false
     },
     {
-      "title": "SEMI-SHOCK: Goldman is acquiring Neos ETFs for $2.3b. Huge coup for Neos who is only few yrs old but got big FAST, $32b, mostly in covered call monthly income ETFs. GS clearly sees big future in boomer candy, after buying Neos (covered call) and Innovator (buffers) back to back.",
-      "link": "https://x.com/EricBalchunas/status/2087511205493522621#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T12:07:10+00:00",
-      "publishedTs": 1786536430.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Pinned: An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. https://www.ici.fr/hauts-de-france/so",
+      "title": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. https://www.ici.fr/hauts-de-france/somme-80/g",
       "link": "https://x.com/lopp/status/2087491508739899616#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -1017,19 +1030,6 @@
       "isRetweet": false
     },
     {
-      "title": "NEW: Michael @Saylor's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
-      "link": "https://x.com/CoinDesk/status/2087466492308639904#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "NEW: Michael @Saylor 's @Strategy launches a public $BTC Credit model showing credit spreads, undercollateralization risks and $BTC floor prices across its $53.5B in reserves and $21.95B in debt and preferred stock.",
-      "publishedAt": "2026-08-12T09:09:29+00:00",
-      "publishedTs": 1786525769.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "the market prevails. how else could, or should it be, with bearer free market money.",
       "link": "https://x.com/adam3us/status/2087458495045984362#m",
       "source": "@saylor",
@@ -1051,19 +1051,6 @@
       "summary": "Metaplanet ( @Metaplanet ) transferred a total of 3,881 $BTC ($247.3M) over the past 3 hours. Metaplanet bought a total of 43,000 $BTC at an average price of $96,191 and is currently sitting on a loss of $1.4B(-34%). arkm.com/explorer/entity/met\u2026",
       "publishedAt": "2026-08-12T04:50:13+00:00",
       "publishedTs": 1786510213.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "MetaPlanet(@Metaplanet) transferred out 1,473 $BTC($93.82M) 1 hour ago. Hut 8(@Hut8Corp) also transferred out 493 $BTC($31.36M) 3 hours ago. https://arkm.com/explorer/entity/metaplanet-2 https://arkm.com/explorer/entity/hut-8",
-      "link": "https://x.com/lookonchain/status/2087375362196213968#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "MetaPlanet( @Metaplanet ) transferred out 1,473 $BTC ($93.82M) 1 hour ago. Hut 8( @Hut8Corp ) also transferred out 493 $BTC ($31.36M) 3 hours ago. arkm.com/explorer/entity/met\u2026 arkm.com/explorer/entity/hut\u2026",
-      "publishedAt": "2026-08-12T03:07:22+00:00",
-      "publishedTs": 1786504042.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1340,19 +1327,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
-      "link": "https://x.com/Rob1Ham/status/2086464831360549034#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Yesterday I began fully integrating the @OpenAI trust cyber program into my Bitcoin Red Team efforts. This morning I woke up to see this. I am now being blocked from doing additional analysis on a codebase which I've already responsibly disclosed to, and have received confirmatio",
-      "publishedAt": "2026-08-09T14:49:15+00:00",
-      "publishedTs": 1786286955.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
