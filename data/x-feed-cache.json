@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-14T16:50:28Z",
+  "fetchedAt": "2026-08-14T17:51:15Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Gemini discloses adding 1,689 BTC Bitcoin to their treasury, now totaling 5,528 BTC! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2088321821753884934#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T17:48:16+00:00",
+      "publishedTs": 1786729696.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Spread Bitcoin with love. \ud83e\udde1",
+      "link": "https://x.com/saylor/status/2088307832290509049#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Spread Bitcoin with love. \ud83e\udde1 Video",
+      "publishedAt": "2026-08-14T16:52:40+00:00",
+      "publishedTs": 1786726360.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\udde6\ud83c\uddea UAE sovereign wealth funds Mubadala and Abu Dhabi Investment Council report owning a combined $763.7 million of BlackRocks Bitcoin ETF \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2088298762426843184#m",
@@ -835,6 +861,19 @@
       "isRetweet": true
     },
     {
+      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
+      "link": "https://x.com/saylor/status/2087640831578526120#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
+      "publishedAt": "2026-08-12T20:42:15+00:00",
+      "publishedTs": 1786567335.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: The number of Bitcoin holders continue to rise, according to Grayscale \ud83d\ude80 \"We believe that adoption will be driven by more demand for scarce assets, greater adoption of blockchain technology, and generational change in portfolio construction.\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2087639014148866331#m",
       "source": "@BitcoinMagazine",
@@ -908,19 +947,6 @@
       "summary": "Bitcoin is for everyone. Video",
       "publishedAt": "2026-08-12T19:41:23+00:00",
       "publishedTs": 1786563683.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Goldman Sachs acquires NEOS, including $1 billion in their Bitcoin High Income ETFs \ud83e\udd2f",
-      "link": "https://x.com/BitcoinMagazine/status/2087603378914279875#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-12T18:13:25+00:00",
-      "publishedTs": 1786558405.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1041,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Digital Money and Digital Yield are being built on Digital Credit. $STRC",
-      "link": "https://x.com/saylor/status/2087484630131769569#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Money and Digital Yield are being built on Digital Credit. $STRC Solstice (@solsticefi) Article Stretching the bridge: how strcUSX works &quot;$STRC is the bridge between Bitcoin, the world&apos;s Digital Capital, and stablecoins, the world&apos;s Digital Currency.&quot; ",
-      "publishedAt": "2026-08-12T10:21:34+00:00",
-      "publishedTs": 1786530094.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "As $BTC rose, gambler 0xff84's 1,793 $BTC($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC($98.97M) New liq. price: $64,225.35 https://hypurrscan.io/address/0xff84dd888de8ac2ed9a4486",
@@ -1220,19 +1233,6 @@
       "summary": "Today, Bitcoin Policy Institute and a broad coalition from across the digital-asset ecosystem are publishing an open letter calling on the world\u2019s leading AI labs to provide qualified open-source defenders with trusted access to frontier AI models. The past several weeks have mad",
       "publishedAt": "2026-08-10T17:48:54+00:00",
       "publishedTs": 1786384134.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil.",
-      "link": "https://x.com/EricBalchunas/status/2086855864955048157#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Interesting: Robbie Mitchnick said on show just now that bitcoiners can do in-kind exchanges of btc for IBIT for $1mil minimum now. It used to be $25mil. Eric Balchunas (@EricBalchunas) A stacked ETF IQ coming up in 20min: Robbie Mitchnick of BlackRock on $IBIT flows, coldcard ha",
-      "publishedAt": "2026-08-10T16:43:04+00:00",
-      "publishedTs": 1786380184.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
