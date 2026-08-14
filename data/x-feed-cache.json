@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-14T20:28:53Z",
+  "fetchedAt": "2026-08-14T21:22:59Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -13,7 +13,7 @@
       "publishedTs": 1786738505.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "Bull market things",
@@ -882,19 +882,6 @@
       "summary": "True North Episode 76: Why Strategy's Balance Sheet Became a Blackhole nitter.net/i/broadcasts/1YxNrbrky\u2026 Link True North True North Episode 76: Why Strategy&apos;s Balance Sheet Became a Blackhole https://nitter.net/i/broadcasts/1YxNrbrkyebxw",
       "publishedAt": "2026-08-12T21:58:28+00:00",
       "publishedTs": 1786571908.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 The digital world is moving fast. Where does #Bitcoin fit? \ud83d\udc40 Join Sunny Ng, Michael Wu, Cynthia Wu & Gracy Chen as they explore Bitcoin\u2019s role at the crossroads of AI, finance, tokenization, and emerging tech. \ud83d\ude80 August 27 | Nakamoto Stage",
-      "link": "https://x.com/Bitcoinconfasia/status/2087647220707254782#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "PANEL ANNOUNCEMENT \ud83d\udce3 The digital world is moving fast. Where does #Bitcoin fit? \ud83d\udc40 Join Sunny Ng, Michael Wu, Cynthia Wu &amp; Gracy Chen as they explore Bitcoin\u2019s role at the crossroads of AI, finance, tokenization, and emerging tech. \ud83d\ude80 August 27 | Nakamoto Stage",
-      "publishedAt": "2026-08-12T21:07:38+00:00",
-      "publishedTs": 1786568858.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
