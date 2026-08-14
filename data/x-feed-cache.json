@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-14T08:14:00Z",
+  "fetchedAt": "2026-08-14T09:59:05Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: https://cryptoslate.com/strategy-sold-100m-to-defend-strcs-100-stock-price-as-defi-packages-the-risk-into-a-7-safer-trade/",
+      "link": "https://x.com/solsticefi/status/2088183531214422398#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: cryptoslate.com/strategy-sol\u2026 Link Strategy sold $100M to defend STRC&apos;s $100 stock price as DeFi packages the risk into a 7% \u2018safer\u2019... ",
+      "publishedAt": "2026-08-14T08:38:45+00:00",
+      "publishedTs": 1786696725.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Gambler 0xff84 keeps adding to his $BTC short and now holds a 2,000 $BTC($125.37M) short, with an unrealized profit of $1.79M. He is now the largest on-chain $BTC bear. Liquidation price: $63,528.92 https://hypurrscan.io/address/0xff84dd888de8ac2ed9a44860dc44e57025d68f1d#perps",
+      "link": "https://x.com/lookonchain/status/2088182989499056232#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Gambler 0xff84 keeps adding to his $BTC short and now holds a 2,000 $BTC ($125.37M) short, with an unrealized profit of $1.79M. He is now the largest on-chain $BTC bear. Liquidation price: $63,528.92 hypurrscan.io/address/0xff84\u2026",
+      "publishedAt": "2026-08-14T08:36:35+00:00",
+      "publishedTs": 1786696595.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Whale 19pFLW bought another 300 $BTC($19.03M) 5 hours ago. The whale now holds 1,120 $BTC ($70.43M), with an average purchase price of $69,294. https://arkm.com/explorer/address/19pFLWW3CwjZujRWpVEMdguBMZEqPuj5nA",
+      "link": "https://x.com/lookonchain/status/2088179161647157436#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Whale 19pFLW bought another 300 $BTC ($19.03M) 5 hours ago. The whale now holds 1,120 $BTC ($70.43M), with an average purchase price of $69,294. arkm.com/explorer/address/19\u2026",
+      "publishedAt": "2026-08-14T08:21:23+00:00",
+      "publishedTs": 1786695683.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The largest on-chain $BTC bear, 0x66f8, has closed his 2,136 $BTC($136M) short, making a $1.65M profit. He then flipped long, opening a 40x long on 200.82 $BTC($12.74M).",
       "link": "https://x.com/lookonchain/status/2088063396784865498#m",
@@ -1043,19 +1082,6 @@
       "isRetweet": false
     },
     {
-      "title": "BTC bears keep adding to their shorts! The 4 gamblers now hold a combined short position of 5,375 $BTC ($343M). Liquidation prices: $64,101.12, $64,576.56, $66,006.80, and $66,030.04.",
-      "link": "https://x.com/lookonchain/status/2087358065989517380#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "BTC bears keep adding to their shorts! The 4 gamblers now hold a combined short position of 5,375 $BTC ($343M). Liquidation prices: $64,101.12, $64,576.56, $66,006.80, and $66,030.04. Lookonchain (@lookonchain) The battle between $BTC bulls and bears is heating up. Today, several",
-      "publishedAt": "2026-08-12T01:58:38+00:00",
-      "publishedTs": 1786499918.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years",
       "link": "https://x.com/nic_carter/status/2087353502343258366#m",
       "source": "@nic_carter",
@@ -1121,19 +1147,6 @@
       "isRetweet": false
     },
     {
-      "title": "August 11 Update: #Bitcoin ETFs: 1D NetFlow: -2,209 $BTC(-$141.23M)\ud83d\udd34 7D NetFlow: +8,545 $BTC(+$546.45M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -14,499 $ETH(-$27.22M)\ud83d\udd34 7D NetFlow: +110,579 $ETH(+$207.62M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2087192167987212306#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 11 Update: #Bitcoin ETFs: 1D NetFlow: -2,209 $BTC (-$141.23M)\ud83d\udd34 7D NetFlow: +8,545 $BTC (+$546.45M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -14,499 $ETH (-$27.22M)\ud83d\udd34 7D NetFlow: +110,579 $ETH (+$207.62M)\ud83d\udfe2",
-      "publishedAt": "2026-08-11T14:59:25+00:00",
-      "publishedTs": 1786460365.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "At @CasaHODL we have been running automated security audits across our code for several months with frontier LLMs. In this post I explain how our pentest harness works at a high level. https://blog.casa.io/how-built-reliable-ai-pentest/",
       "link": "https://x.com/lopp/status/2087188724756942965#m",
       "source": "@lopp",
@@ -1171,19 +1184,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "\ud83d\udd25 SAYLOR: \u201cWe intend to make $STRC the iPhone of Digital Assets.\u201d",
-      "link": "https://x.com/Cointelegraph/status/2086966072842813660#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-11T00:01:00+00:00",
-      "publishedTs": 1786406460.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "\"And as ye would that men should do to you, do ye also to them likewise.\" Luke 6:31",
