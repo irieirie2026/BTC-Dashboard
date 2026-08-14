@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-14T17:51:15Z",
+  "fetchedAt": "2026-08-14T18:51:21Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: https://www.saylor.org",
+      "link": "https://x.com/saylordotorg/status/2088326119506276676#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: saylor.org",
+      "publishedAt": "2026-08-14T18:05:20+00:00",
+      "publishedTs": 1786730720.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: Gemini discloses adding 1,689 BTC Bitcoin to their treasury, now totaling 5,528 BTC! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2088321821753884934#m",
@@ -1054,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "strcUSX takeover. While par on @Strategy's STRC is getting stronger, it's time to get tranched exposure to digital credit on Solana. Full story: https://www.ccn.com/news/crypto/strategy-strc-dividend-solana-defi-20-yield/",
-      "link": "https://x.com/solsticefi/status/2087488027396563271#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "strcUSX takeover. While par on @Strategy 's STRC is getting stronger, it's time to get tranched exposure to digital credit on Solana. Full story: ccn.com/news/crypto/strategy\u2026 Link Strategy\u2019s STRC Comes to Solana With DeFi Yields Targeting 20% Strategy\u2019s 12% STRC dividend reaches",
-      "publishedAt": "2026-08-12T10:35:04+00:00",
-      "publishedTs": 1786530904.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "As $BTC rose, gambler 0xff84's 1,793 $BTC($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC($98.97M) New liq. price: $64,225.35 https://hypurrscan.io/address/0xff84dd888de8ac2ed9a4486",
