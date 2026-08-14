@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-14T09:59:05Z",
+  "fetchedAt": "2026-08-14T11:03:18Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @saylor: Capital competes for wealth. Credit competes for income. Money competes for savings. Currency competes for payments. Digital Assets are not one market. They are a new architecture competing across the financial system.",
+      "link": "https://x.com/saylor/status/2088215622723264996#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Capital competes for wealth. Credit competes for income. Money competes for savings. Currency competes for payments. Digital Assets are not one market. They are a new architecture competing across the financial system.",
+      "publishedAt": "2026-08-14T10:46:16+00:00",
+      "publishedTs": 1786704376.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital Assets compete in four markets: Digital Capital ($BTC) for wealth vs stocks, real estate, gold & art. Digital Credit ($STRC) for income vs bonds & private credit. Digital Money for savings vs money market funds & T-bills. Digital Currency for payments vs cash & deposits.",
+      "link": "https://x.com/saylor/status/2088215614724727219#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Assets compete in four markets: Digital Capital ($BTC) for wealth vs stocks, real estate, gold &amp; art. Digital Credit ($STRC) for income vs bonds &amp; private credit. Digital Money for savings vs money market funds &amp; T-bills. Digital Currency for payments vs cash ",
+      "publishedAt": "2026-08-14T10:46:14+00:00",
+      "publishedTs": 1786704374.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: https://cryptoslate.com/strategy-sold-100m-to-defend-strcs-100-stock-price-as-defi-packages-the-risk-into-a-7-safer-trade/",
       "link": "https://x.com/solsticefi/status/2088183531214422398#m",
@@ -835,19 +861,6 @@
       "isRetweet": false
     },
     {
-      "title": "This conversation with NBA Champion @TThompson was very impressive. He has strong views on bitcoin, AI, SpaceX, prediction markets, financial literacy, and how analytics are reshaping sports. Feedback has been stronger than usual, so give it a listen or watch. YouTube: https://ww",
-      "link": "https://x.com/APompliano/status/2087545481618465104#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "This conversation with NBA Champion @TThompson was very impressive. He has strong views on bitcoin, AI, SpaceX, prediction markets, financial literacy, and how analytics are reshaping sports. Feedback has been stronger than usual, so give it a listen or watch. YouTube: piped.vide",
-      "publishedAt": "2026-08-12T14:23:22+00:00",
-      "publishedTs": 1786544602.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Goldman will get $BTCI in the Neos deal, which is a $1b bitcoin premium income ETF, yields 27% and captures most but not all of bitcoins run-ups. Nowww I get why GS never launched the btc covered call product they filed months ago. Better to leap frog BlackRock\u2019s $BITA vs me too",
       "link": "https://x.com/EricBalchunas/status/2087543284746813639#m",
       "source": "@ericbalchunas",
@@ -1025,32 +1038,6 @@
       "summary": "",
       "publishedAt": "2026-08-12T08:37:42+00:00",
       "publishedTs": 1786523862.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Our BTC Credit model uses a 10% BTC ARR reference case, color-codes spreads by tier (Investment Grade, High Yield, Distressed), and shows BTC Floor prices below which instruments are undercollateralized. Track the impact of our capital markets actions: https://www.strategy.com/cr",
-      "link": "https://x.com/saylor/status/2087438105489862730#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Our BTC Credit model uses a 10% BTC ARR reference case, color-codes spreads by tier (Investment Grade, High Yield, Distressed), and shows BTC Floor prices below which instruments are undercollateralized. Track the impact of our capital markets actions: strategy.com/credit",
-      "publishedAt": "2026-08-12T07:16:41+00:00",
-      "publishedTs": 1786519001.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Today is the last trading day to purchase BTC PREF A and be entitled to the August dividend of SEK 1.00 per share.",
-      "link": "https://x.com/BitcoinTCAB/status/2087406653008228857#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-12T05:11:42+00:00",
-      "publishedTs": 1786511502.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
