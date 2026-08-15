@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T21:19:25Z",
+  "fetchedAt": "2026-08-15T22:18:36Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: https://www.cfosilvia.com",
+      "link": "https://x.com/APompliano/status/2088739456014491855#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: cfosilvia.com",
+      "publishedAt": "2026-08-15T21:27:47+00:00",
+      "publishedTs": 1786829267.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
       "link": "https://x.com/DocumentingBTC/status/2088711245436207204#m",
