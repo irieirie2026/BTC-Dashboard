@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-15T11:18:25Z",
+  "fetchedAt": "2026-08-15T12:33:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "What Is Money?",
+      "link": "https://x.com/saylor/status/2088600395257934028#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Article What Is Money? Money Is Energy In What Is Money? The Saylor Series, Robert Breedlove and I begin with a simple question and follow it through the history of civilization, technology, economics, and Bitcoin. The",
+      "publishedAt": "2026-08-15T12:15:13+00:00",
+      "publishedTs": 1786796113.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting yourself up for failure.",
+      "link": "https://x.com/lopp/status/2088589999704817959#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-15T11:33:54+00:00",
+      "publishedTs": 1786793634.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "We\u2019ve upgraded the $STRC, $STRD, $STRK & $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield & 1Y Sharpe. New tools to evaluate income, credit quality, downside protection & risk-adjusted returns. Explore at https://strategy.com.",
       "link": "https://x.com/saylor/status/2088531228718764347#m",
@@ -978,19 +1004,6 @@
       "isRetweet": true
     },
     {
-      "title": "RT @coinjoined: Suitcoiners 1:0 Shitcoiners",
-      "link": "https://x.com/saylor/status/2087640831578526120#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "RT @coinjoined : Suitcoiners 1:0 Shitcoiners Video",
-      "publishedAt": "2026-08-12T20:42:15+00:00",
-      "publishedTs": 1786567335.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Roundhill just filed for a Samsung Group ETF, which will hold the member companies in the Samsung family, which I don't believe are currently available to US investors via ADRs.",
       "link": "https://x.com/EricBalchunas/status/2087638539982770307#m",
       "source": "@ericbalchunas",
@@ -1324,19 +1337,6 @@
       "summary": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. lopp.net/bitcoin-informati",
       "publishedAt": "2026-08-09T19:03:00+00:00",
       "publishedTs": 1786302180.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives to suppo",
-      "link": "https://x.com/lopp/status/2086512275012075811#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I won't be \"welcoming back\" or unblocking any BIP-110 supporters. They proved themselves to be susceptible to delusional propaganda from folks emanating reality distortion fields. In many cases they spewed vitriol and harassed the very people who have devoted their lives to suppo",
-      "publishedAt": "2026-08-09T17:57:46+00:00",
-      "publishedTs": 1786298266.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
