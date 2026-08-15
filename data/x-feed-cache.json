@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T01:07:49Z",
+  "fetchedAt": "2026-08-15T02:49:49Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn",
+      "link": "https://x.com/sumitroy2/status/2088433007569055867#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn Video",
+      "publishedAt": "2026-08-15T01:10:04+00:00",
+      "publishedTs": 1786756204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "R to @EricBalchunas: Just out today, feels related:",
       "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
@@ -1103,19 +1116,6 @@
       "summary": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. ici.fr/hauts-de-france/somme\u2026 Link Somme : un",
       "publishedAt": "2026-08-12T10:48:54+00:00",
       "publishedTs": 1786531734.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "As $BTC rose, gambler 0xff84's 1,793 $BTC($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC($98.97M) New liq. price: $64,225.35 https://hypurrscan.io/address/0xff84dd888de8ac2ed9a4486",
-      "link": "https://x.com/lookonchain/status/2087480777823092807#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "As $BTC rose, gambler 0xff84's 1,793 $BTC ($114.4M) short came very close to liquidation. The gambler closed part of the position early and avoided liquidation. Current position: 1,543 $BTC ($98.97M) New liq. price: $64,225.35 hypurrscan.io/address/0xff84\u2026 Lookonchain (@lookoncha",
-      "publishedAt": "2026-08-12T10:06:15+00:00",
-      "publishedTs": 1786529175.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
