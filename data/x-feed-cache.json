@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-15T16:21:32Z",
+  "fetchedAt": "2026-08-15T17:18:54Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
+      "link": "https://x.com/DocumentingBTC/status/2088668702375919740#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-15T16:46:38+00:00",
+      "publishedTs": 1786812398.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A bitcoin wallet seed phrase can be hidden in your backyard garden with twelve dirt beds, all planted in a chosen order, each one standing for a word. A thief could walk through the middle of a family\u2019s fortune and only admire the flowers.",
+      "link": "https://x.com/DocumentingBTC/status/2088668103726993613#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-15T16:44:16+00:00",
+      "publishedTs": 1786812256.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "To understand Bitcoin, first understand money. Money is energy. Bitcoin is digital monetary energy.",
+      "link": "https://x.com/saylor/status/2088662012247126149#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "To understand Bitcoin, first understand money. Money is energy. Bitcoin is digital monetary energy. Michael Saylor (@saylor) Article What Is Money? Money Is Energy In What Is Money? The Saylor Series, Robert Breedlove and I begin with a simple question and follow it through the h",
+      "publishedAt": "2026-08-15T16:20:03+00:00",
+      "publishedTs": 1786810803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "It's happening again, isn't it \ud83d\ude44",
       "link": "https://x.com/BitcoinMagazine/status/2088656150757532018#m",
@@ -1043,19 +1082,6 @@
       "isRetweet": false
     },
     {
-      "title": "True North Episode 76: Why Strategy's Balance Sheet Became a Blackhole https://x.com/i/broadcasts/1YxNrbrkyebxw",
-      "link": "https://x.com/TNorth/status/2087660014320447753#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "True North Episode 76: Why Strategy's Balance Sheet Became a Blackhole nitter.net/i/broadcasts/1YxNrbrky\u2026",
-      "publishedAt": "2026-08-12T21:58:28+00:00",
-      "publishedTs": 1786571908.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "NEW: @FTI_US just got a no action letter from the SEC relating to their OnChain government money market fund. Essentially it opens the door for Franklin\u2019s registered funds (mutual funds, ETFs etc) to hold its OnChain fund despite not technically satisfying 1940 act custody rules",
       "link": "https://x.com/JSeyff/status/2087629868309659876#m",
       "source": "@JSeyff",
@@ -1649,32 +1675,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T02:52:01+00:00",
       "publishedTs": 1785725521.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The last 24 hours of Bitcoin posts on \ud835\udd4f discussing the hack of ColdCard wallets has been the largest open source technical support initiative ever undertaken by an organic community of educators, organizers, developers, and ordinary well-meaning people in history.",
-      "link": "https://x.com/DocumentingBTC/status/2083995630284701996#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-02T19:17:31+00:00",
-      "publishedTs": 1785698251.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This CEO just challenged Anthropic to hack the 100 bitcoin in his wallet address, worth $6 million.",
-      "link": "https://x.com/DocumentingBTC/status/2083897321901732209#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-02T12:46:53+00:00",
-      "publishedTs": 1785674813.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
