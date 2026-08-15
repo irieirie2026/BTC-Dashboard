@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T05:22:26Z",
+  "fetchedAt": "2026-08-15T06:35:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "RT @Excellion: Damn, @saylor\u2019s Cantonese is better than mine.",
+      "link": "https://x.com/saylor/status/2088510841322652066#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @Excellion : Damn, @saylor \u2019s Cantonese is better than mine. Video",
+      "publishedAt": "2026-08-15T06:19:21+00:00",
+      "publishedTs": 1786774761.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn",
       "link": "https://x.com/sumitroy2/status/2088433007569055867#m",
@@ -1015,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Bitcoin is for everyone.",
-      "link": "https://x.com/saylor/status/2087625514999578716#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is for everyone. Video",
-      "publishedAt": "2026-08-12T19:41:23+00:00",
-      "publishedTs": 1786563683.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats, @HRF, @MaelstromFund, @btrustteam, and @cakewallet for making the work possible. Start here: https://crates.io/crates/payjoin https://github.com/payjoin/rust-payjoin/tree/master/payjoin-cli#quick-start",
