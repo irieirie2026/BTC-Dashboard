@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T12:33:38Z",
+  "fetchedAt": "2026-08-15T13:28:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
+      "link": "https://x.com/nic_carter/status/2088617751736643647#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
+      "publishedAt": "2026-08-15T13:24:11+00:00",
+      "publishedTs": 1786800251.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "What Is Money?",
       "link": "https://x.com/saylor/status/2088600395257934028#m",
@@ -14,6 +27,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Michael Saylor\u2019s Next Move: What You Need To Know",
+      "link": "https://x.com/MSTR_Today/status/2088593707301834893#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Michael Saylor\u2019s Next Move: What You Need To Know Video",
+      "publishedAt": "2026-08-15T11:48:38+00:00",
+      "publishedTs": 1786794518.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting yourself up for failure.",
@@ -1025,19 +1051,6 @@
       "summary": "",
       "publishedAt": "2026-08-12T19:58:41+00:00",
       "publishedTs": 1786564721.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "LATEST: \ud83d\udcca Michael Saylor unveiled a public BTC Credit dashboard that color-codes Strategy's debt by tier and shows at what Bitcoin price each instrument becomes undercollateralized.",
-      "link": "https://x.com/CoinMarketCap/status/2087628483786584094#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-12T19:53:11+00:00",
-      "publishedTs": 1786564391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
