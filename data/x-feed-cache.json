@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T22:18:36Z",
+  "fetchedAt": "2026-08-15T23:18:28Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss.",
+      "link": "https://x.com/lopp/status/2088762228707037524#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss. NewYork HODL (@newyorkhodl) Is ",
+      "publishedAt": "2026-08-15T22:58:17+00:00",
+      "publishedTs": 1786834697.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: https://www.cfosilvia.com",
       "link": "https://x.com/APompliano/status/2088739456014491855#m",
@@ -1353,19 +1366,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
-      "link": "https://x.com/Nneuman/status/2086537762073727462#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The onchain metrics around the Coldcard incident reinforce how important self custody is to the resilience of Bitcoin as an asset class. In the couple of days around the hack: - 2.1k BTC was stolen - 22k moved to exchanges - 233k moved out of long term holder wallets in on chain ",
-      "publishedAt": "2026-08-09T19:39:03+00:00",
-      "publishedTs": 1786304343.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
