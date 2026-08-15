@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-15T15:18:08Z",
+  "fetchedAt": "2026-08-15T16:21:32Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "It's happening again, isn't it \ud83d\ude44",
+      "link": "https://x.com/BitcoinMagazine/status/2088656150757532018#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-15T15:56:46+00:00",
+      "publishedTs": 1786809406.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "You'll never see me crash out over BIP-361 \ud83d\ude43",
+      "link": "https://x.com/lopp/status/2088652648702411135#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "You'll never see me crash out over BIP-361 \ud83d\ude43 Jameson Lopp (@lopp) It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting ",
+      "publishedAt": "2026-08-15T15:42:51+00:00",
+      "publishedTs": 1786808571.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @nic_carter: Vance is absolutely right that the dollars strength and our reserve status has contributed to deindustrialization and the hollowing out of middle America, which he famously represents politically - that\u2019s his entire political story and heritage. The dollar reser",
       "link": "https://x.com/nic_carter/status/2088619169809846767#m",
@@ -107,6 +133,19 @@
       "isRetweet": true
     },
     {
+      "title": "What is it really like to be a Bitcoin Asia attendee? \ud83d\ude80 Let us show you \ud83d\udc47",
+      "link": "https://x.com/Bitcoinconfasia/status/2088430474288886080#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "What is it really like to be a Bitcoin Asia attendee? \ud83d\ude80 Let us show you \ud83d\udc47 Video",
+      "publishedAt": "2026-08-15T01:00:00+00:00",
+      "publishedTs": 1786755600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "R to @EricBalchunas: Just out today, feels related:",
       "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
       "source": "@ericbalchunas",
@@ -156,7 +195,7 @@
       "publishedTs": 1786744205.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "PANEL ANNOUNCEMENT \ud83d\udce3 #Bitcoin changes more than your money. It changes how you see the world. \ud83c\udf0e Anja Dragovic, Adam Hudson, Jake Explains & Randi Hipper take the stage at Bitcoin Asia to talk freedom, sovereignty, and thinking from first principles. \ud83d\udd25 August 27 | Nakamoto Stage",
@@ -744,19 +783,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN:\ud83c\udde8\ud83c\udded Switzerland's largest bank UBS discloses owning $83.2 million of BlackRock's Bitcoin ETF \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2087922142780207377#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-13T15:20:05+00:00",
-      "publishedTs": 1786634405.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "August 13 Update: #Bitcoin ETFs: 1D NetFlow: -1,132 $BTC(-$72.24M)\ud83d\udd34 7D NetFlow: -202 $BTC(-$12.89M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +3,947 $ETH(+$7.47M)\ud83d\udfe2 7D NetFlow: +65,941 $ETH(+$124.71M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2087914470324744312#m",
       "source": "@lookonchain",
@@ -856,19 +882,6 @@
       "summary": "",
       "publishedAt": "2026-08-13T12:47:09+00:00",
       "publishedTs": 1786625229.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Single Stock Ecosystem ETFs dropping today incl for private cos",
-      "link": "https://x.com/EricBalchunas/status/2087875824699527539#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Single Stock Ecosystem ETFs dropping today incl for private cos James Seyffart (@JSeyff) NEW: Today we have ETFs from @HarborCapital launching. They'll be actively managed funds that specifically target each firms \"ecosystem\" of companies and include Anthropic, Google Deepmind, M",
-      "publishedAt": "2026-08-13T12:16:02+00:00",
-      "publishedTs": 1786623362.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1041,19 +1054,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Roundhill just filed for a Samsung Group ETF, which will hold the member companies in the Samsung family, which I don't believe are currently available to US investors via ADRs.",
-      "link": "https://x.com/EricBalchunas/status/2087638539982770307#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-12T20:33:09+00:00",
-      "publishedTs": 1786566789.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "NEW: @FTI_US just got a no action letter from the SEC relating to their OnChain government money market fund. Essentially it opens the door for Franklin\u2019s registered funds (mutual funds, ETFs etc) to hold its OnChain fund despite not technically satisfying 1940 act custody rules",
@@ -1340,19 +1340,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. https://www.lopp.net/bitco",
-      "link": "https://x.com/lopp/status/2086528690356453650#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "For future reference, when newbies find out about Bitcoin's spam / arbitrary data debate and want to better understand it, you need not spend your time rehashing it. Just send them to the resources I've posted here. Feel free to suggest any I've missed. lopp.net/bitcoin-informati",
-      "publishedAt": "2026-08-09T19:03:00+00:00",
-      "publishedTs": 1786302180.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
