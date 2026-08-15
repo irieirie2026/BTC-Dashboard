@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-15T20:20:02Z",
+  "fetchedAt": "2026-08-15T21:19:25Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -1077,19 +1077,6 @@
       "summary": "",
       "publishedAt": "2026-08-12T23:45:17+00:00",
       "publishedTs": 1786578317.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: @FTI_US just got a no action letter from the SEC relating to their OnChain government money market fund. Essentially it opens the door for Franklin\u2019s registered funds (mutual funds, ETFs etc) to hold its OnChain fund despite not technically satisfying 1940 act custody rules",
-      "link": "https://x.com/JSeyff/status/2087629868309659876#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "",
-      "publishedAt": "2026-08-12T19:58:41+00:00",
-      "publishedTs": 1786564721.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
