@@ -1,16 +1,16 @@
 {
-  "fetchedAt": "2026-08-15T19:20:11Z",
+  "fetchedAt": "2026-08-15T20:20:02Z",
   "source": "nitter.net",
   "tweets": [
     {
       "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
-      "link": "https://x.com/DocumentingBTC/status/2088668702375919740#m",
+      "link": "https://x.com/DocumentingBTC/status/2088711245436207204#m",
       "source": "@DocumentingBTC",
       "authorName": "Documenting Bitcoin",
       "authorRole": "BTC history & culture",
       "summary": "",
-      "publishedAt": "2026-08-15T16:46:38+00:00",
-      "publishedTs": 1786812398.0,
+      "publishedAt": "2026-08-15T19:35:41+00:00",
+      "publishedTs": 1786822541.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
