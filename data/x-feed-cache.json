@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-15T07:28:48Z",
+  "fetchedAt": "2026-08-15T08:25:50Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "We\u2019ve upgraded the $STRC, $STRD, $STRK & $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield & 1Y Sharpe. New tools to evaluate income, credit quality, downside protection & risk-adjusted returns. Explore at https://strategy.com.",
+      "link": "https://x.com/saylor/status/2088531228718764347#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We\u2019ve upgraded the $STRC , $STRD , $STRK &amp; $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield &amp; 1Y Sharpe. New tools to evaluate income, credit quality, downside protection &amp; risk-adjusted returns. Explore at strategy.com .",
+      "publishedAt": "2026-08-15T07:40:22+00:00",
+      "publishedTs": 1786779622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "RT @Excellion: Damn, @saylor\u2019s Cantonese is better than mine.",
       "link": "https://x.com/saylor/status/2088510841322652066#m",
@@ -1012,19 +1025,6 @@
       "summary": "",
       "publishedAt": "2026-08-12T19:53:11+00:00",
       "publishedTs": 1786564391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Even at a hypothetical $21k $BTC price, every Strategy debt and preferred instrument remains above a 1.0x BTC Rating. Explore the new BTC Floor metric: http://strategy.com/credit",
-      "link": "https://x.com/Strategy/status/2087626045436367070#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Even at a hypothetical $21k $BTC price, every Strategy debt and preferred instrument remains above a 1.0x BTC Rating. Explore the new BTC Floor metric: strategy.com/credit",
-      "publishedAt": "2026-08-12T19:43:30+00:00",
-      "publishedTs": 1786563810.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
