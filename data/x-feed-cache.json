@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-16T16:22:11Z",
+  "fetchedAt": "2026-08-16T17:17:23Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin is the only game in the casino where we can all win.",
+      "link": "https://x.com/saylor/status/2089024403619127652#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bitcoin is the only game in the casino where we can all win. Video",
+      "publishedAt": "2026-08-16T16:20:04+00:00",
+      "publishedTs": 1786897204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Image",
       "link": "https://x.com/nic_carter/status/2089010915723096397#m",
