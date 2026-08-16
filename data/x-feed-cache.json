@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-16T14:20:38Z",
+  "fetchedAt": "2026-08-16T15:19:18Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cThe mission is simple: take this thing to the moon. \ud83d\ude80\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2089005318520926619#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-16T15:04:14+00:00",
+      "publishedTs": 1786892654.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
+      "link": "https://x.com/DocumentingBTC/status/2089000546271187209#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T14:45:16+00:00",
+      "publishedTs": 1786891516.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
       "link": "https://x.com/APompliano/status/2088971220184092727#m",
@@ -1043,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "BITCOINERS LET'S CELEBRATE \ud83c\udf89 We are bringing the biggest Bitcoin networking party in Asia to Hong Kong \ud83c\udded\ud83c\uddf0 \ud83d\uddd3\ufe0f August 28 at 7:30pm \ud83d\udccd Dragon-i \ud83e\udef5 Be there",
-      "link": "https://x.com/Bitcoinconfasia/status/2087811424663843189#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BITCOINERS LET'S CELEBRATE \ud83c\udf89 We are bringing the biggest Bitcoin networking party in Asia to Hong Kong \ud83c\udded\ud83c\uddf0 \ud83d\uddd3\ufe0f August 28 at 7:30pm \ud83d\udccd Dragon-i \ud83e\udef5 Be there Video",
-      "publishedAt": "2026-08-13T08:00:07+00:00",
-      "publishedTs": 1786608007.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "This guy bought 1,768 $BTC ($131.91M) at $74,603 before the bull run, but missed the best time to sell. At the peak, he was sitting on $91M in unrealized profit. Now, he's down $19.7M. He now seems to be giving up, depositing 114 $BTC($7.24M) into #Kraken, likely to sell. https:/",
       "link": "https://x.com/lookonchain/status/2087770041039425613#m",
       "source": "@lookonchain",
@@ -1649,19 +1662,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T12:10:59+00:00",
       "publishedTs": 1785759059.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted their philosophy on securing Bitcoin software code with the quote, \u201cThe serialization format we have is as dead simple and flat as possible. There is no extra freedom in the way the input stream is formed.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2084110008363417793#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T02:52:01+00:00",
-      "publishedTs": 1785725521.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
