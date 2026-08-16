@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-16T18:25:51Z",
+  "fetchedAt": "2026-08-16T19:19:48Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto argued that Bitcoin mining could replace household heaters because mining \u201cis basically free anywhere that has electric heat, since your computer\u2019s heat is offsetting your baseboard electric heating\u201d.",
+      "link": "https://x.com/DocumentingBTC/status/2089055961428189688#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T18:25:28+00:00",
+      "publishedTs": 1786904728.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Artificial intelligence can copy a million content creators work in one second. Bitcoin can pay all million of them in the same second. Each answer could carry a citation of the work it used, and each response could receive a tiny share when that answer earns the algorithm money.",
+      "link": "https://x.com/DocumentingBTC/status/2089054934637428775#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T18:21:23+00:00",
+      "publishedTs": 1786904483.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bitcoin is the only game in the casino where we can all win.",
       "link": "https://x.com/saylor/status/2089024403619127652#m",
@@ -1623,32 +1649,6 @@
       "summary": "",
       "publishedAt": "2026-08-03T13:49:04+00:00",
       "publishedTs": 1785764944.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Decades from now, they will not marvel that the bitcoin price went up. They will marvel that it stayed alive, through panic, through ridicule, through wallet hacks, the loss of founders, one block after another, without a single day\u2019s pause.",
-      "link": "https://x.com/DocumentingBTC/status/2084273128406945865#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T13:40:12+00:00",
-      "publishedTs": 1785764412.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This CEO just spent $10,000 today on AI models and found more vulnerabilities in Bitcoin apps",
-      "link": "https://x.com/DocumentingBTC/status/2084250678138962106#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T12:10:59+00:00",
-      "publishedTs": 1785759059.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
