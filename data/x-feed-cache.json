@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-16T06:36:31Z",
+  "fetchedAt": "2026-08-16T07:29:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Over the past year, $BTC fell 47%. Our Digital Credit instruments ranged from -27% to +9%, with $STRC up 9%. Financial engineering can transform volatile Digital Capital into instruments designed for income, stability, and reduced downside risk.",
+      "link": "https://x.com/saylor/status/2088887563272474948#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-16T07:16:19+00:00",
+      "publishedTs": 1786864579.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss.",
       "link": "https://x.com/lopp/status/2088762228707037524#m",
@@ -1067,19 +1080,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "In case you missed the solar eclipse today:",
-      "link": "https://x.com/camilacampton/status/2087733580365549601#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "In case you missed the solar eclipse today: Video",
-      "publishedAt": "2026-08-13T02:50:48+00:00",
-      "publishedTs": 1786589448.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The Paxos-linked whale sold another 800 $BTC($50.72M) through Wintermute 8 hours ago. Over the past 2 months, the whale has sold a total of 2,500 $BTC ($154M). https://arkm.com/explorer/address/bc1pdwyk4jvgp4js2jdxty842tzrmdu6ugvw7wqxctsqsnhneexscwcs2ucvfx",
