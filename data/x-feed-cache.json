@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-16T15:19:18Z",
+  "fetchedAt": "2026-08-16T16:22:11Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Image",
+      "link": "https://x.com/nic_carter/status/2089010915723096397#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "WIRED (@WIRED) Mini human brains are being grown in labs all over the world. Soon, they could outthink neural networks. wired.com/story/organoids-la\u2026 Link AI Is Dead. Organoids Are Alive Mini human brains are being grown in labs all over the world. Soon, they could outthink neura",
+      "publishedAt": "2026-08-16T15:26:28+00:00",
+      "publishedTs": 1786893988.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cThe mission is simple: take this thing to the moon. \ud83d\ude80\u201d",
       "link": "https://x.com/BitcoinMagazine/status/2089005318520926619#m",
@@ -14,6 +27,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Tomorrow @Saylor & @PhongLe are going live with @NatBrunell for a Strategy Investor Q&A. Tune in at 12pm ET. https://x.com/i/broadcasts/1MKgNbbVkkqxL",
+      "link": "https://x.com/Strategy/status/2089003749087813961#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Tomorrow @Saylor &amp; @PhongLe are going live with @NatBrunell for a Strategy Investor Q&amp;A. Tune in at 12pm ET. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
+      "publishedAt": "2026-08-16T14:58:00+00:00",
+      "publishedTs": 1786892280.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
@@ -40,6 +66,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d",
+      "link": "https://x.com/NeerajKA/status/2088965661439492325#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d WIRED (@WIRED) Mini human brains are being grown in labs all over the wo",
+      "publishedAt": "2026-08-16T12:26:39+00:00",
+      "publishedTs": 1786883199.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Bull Market vs Bear Market",
@@ -863,15 +902,15 @@
     {
       "title": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
       "link": "https://x.com/EricBalchunas/status/2087945208101040439#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
       "publishedAt": "2026-08-13T16:51:44+00:00",
       "publishedTs": 1786639904.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 CFTC announces it will host a meeting on \"Crypto's Regulatory Evolution: From Uncertainty to Clarity\" on August 20 \ud83d\udc40",
@@ -1051,19 +1090,6 @@
       "summary": "NEW: Today we have ETFs from @HarborCapital launching. They'll be actively managed funds that specifically target each firms \"ecosystem\" of companies and include Anthropic, Google Deepmind, Meta, OpenAI &amp; SpaceXAI. $ANTW , $DEPW , $MTAW , $OAIW , $XAIW These could become big.",
       "publishedAt": "2026-08-13T11:43:00+00:00",
       "publishedTs": 1786621380.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Digital Credit is going global. \ud83c\udde7\ud83c\uddf7 DIGY11 brings $STRC and Digital Credit to Brazil through a B3-listed ETF with monthly BRL distributions, daily liquidity, and FX hedging. The future of credit is digital.",
-      "link": "https://x.com/saylor/status/2087836473726767456#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Credit is going global. \ud83c\udde7\ud83c\uddf7 DIGY11 brings $STRC and Digital Credit to Brazil through a B3-listed ETF with monthly BRL distributions, daily liquidity, and FX hedging. The future of credit is digital. OranjeBTC (@ORANJEBTC) OranjeBTC lan\u00e7a DIGY11, primeiro ETF de a\u00e7\u00f5es prefe",
-      "publishedAt": "2026-08-13T09:39:40+00:00",
-      "publishedTs": 1786613980.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1457,58 +1483,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: I would actually love for someone to do this go out onto the street and ask someone to draw a pie chart of federal outlays. you give them the categories. can't do it in miami because that's cheating (people are too dumb).",
-      "link": "https://x.com/nic_carter/status/2085883448472768792#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I would actually love for someone to do this go out onto the street and ask someone to draw a pie chart of federal outlays. you give them the categories. can't do it in miami because that's cheating (people are too dumb).",
-      "publishedAt": "2026-08-08T00:19:02+00:00",
-      "publishedTs": 1786148342.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "so nikita left and they instantly fixed monetization? huh",
-      "link": "https://x.com/nic_carter/status/2085854292888396242#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-07T22:23:11+00:00",
-      "publishedTs": 1786141391.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: and this general level of idiocy is how you end up with platforms like this:",
-      "link": "https://x.com/nic_carter/status/2085780881143165078#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "and this general level of idiocy is how you end up with platforms like this: Ro Khanna (@RoKhanna) Medicare for All No Aid to Israel Healthcare over War That is what Democratic voters are saying. \u2014 https://nitter.net/RoKhanna/status/2085732688682451250#m",
-      "publishedAt": "2026-08-07T17:31:28+00:00",
-      "publishedTs": 1786123888.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "if you ask the average person on the street to draw a pie chart breaking down the federal budget they would have absolutely no idea. they'd put defense spending at 70%, healthcare at 5% and aid to israel at 20%.",
-      "link": "https://x.com/nic_carter/status/2085780778466570461#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-07T17:31:04+00:00",
-      "publishedTs": 1786123864.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation",
