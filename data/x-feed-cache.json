@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-15T23:18:28Z",
+  "fetchedAt": "2026-08-16T01:11:36Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -26,7 +26,7 @@
       "publishedTs": 1786829267.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
@@ -1158,19 +1158,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "August 12 Update: #Bitcoin ETFs: 1D NetFlow: -265 $BTC(-$16.97M)\ud83d\udd34 7D NetFlow: +4,711 $BTC(+$301.16M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +3,823 $ETH(+$7.28M)\ud83d\udfe2 7D NetFlow: +89,742 $ETH(+$170.83M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2087540519526412569#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 12 Update: #Bitcoin ETFs: 1D NetFlow: -265 $BTC (-$16.97M)\ud83d\udd34 7D NetFlow: +4,711 $BTC (+$301.16M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +3,823 $ETH (+$7.28M)\ud83d\udfe2 7D NetFlow: +89,742 $ETH (+$170.83M)\ud83d\udfe2",
-      "publishedAt": "2026-08-12T14:03:39+00:00",
-      "publishedTs": 1786543419.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. https://www.ici.fr/hauts-de-france/somme-80/g",
