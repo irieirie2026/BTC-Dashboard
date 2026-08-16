@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-16T19:19:48Z",
+  "fetchedAt": "2026-08-16T20:19:41Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -40,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Digital Credit Weekly (Vol. 6): A Dump In Correlation",
+      "link": "https://x.com/apyx_fi/status/2089011907730739546#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Article Digital Credit Weekly (Vol. 6): A Dump In Correlation This was the week digital credit faced its biggest stress test since June&apos;s slump. Bitcoin fell 3.2% during the trading week, while over the same period MSTR dropped 7.0%, and ASST slipped 1.4%.",
+      "publishedAt": "2026-08-16T15:30:25+00:00",
+      "publishedTs": 1786894225.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Image",
