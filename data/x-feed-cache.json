@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-16T11:18:05Z",
+  "fetchedAt": "2026-08-16T12:34:53Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bull Market vs Bear Market",
+      "link": "https://x.com/lopp/status/2088961170279477346#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-16T12:08:48+00:00",
+      "publishedTs": 1786882128.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Over the past year, $BTC fell 47%. Our Digital Credit instruments ranged from -27% to +9%, with $STRC up 9%. Financial engineering can transform volatile Digital Capital into instruments designed for income, stability, and reduced downside risk.",
       "link": "https://x.com/saylor/status/2088887563272474948#m",
@@ -1340,19 +1353,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Getting notified of data breaches is rather upsetting unless you're a cypherpunk who signs up for services under pseudonyms. Then it's just amusing!",
-      "link": "https://x.com/lopp/status/2086793686562558298#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-10T12:36:00+00:00",
-      "publishedTs": 1786365360.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
