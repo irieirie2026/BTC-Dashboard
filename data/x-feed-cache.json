@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-17T19:26:13Z",
+  "fetchedAt": "2026-08-17T20:24:12Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: Wall Street giant Jane Street dropped a bombshell SEC filing: They disclosed owning over $990 million in Bitcoin ETFs \ud83e\udd2f",
+      "link": "https://x.com/BitcoinMagazine/status/2089436465402933598#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T19:37:27+00:00",
+      "publishedTs": 1786995447.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "How to think about the robotics market",
       "link": "https://x.com/intern/status/2089418795353796754#m",
@@ -26,7 +39,20 @@
       "publishedTs": 1786989751.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
+    },
+    {
+      "title": "If God designed money, what would it look like?",
+      "link": "https://x.com/saylor/status/2089401982335303747#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "If God designed money, what would it look like? Video",
+      "publishedAt": "2026-08-17T17:20:26+00:00",
+      "publishedTs": 1786987226.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: More biomass does not produce more greatness, as is obviously evident from the world today.",
@@ -133,6 +159,19 @@
       "isRetweet": false
     },
     {
+      "title": "In 1 hour, join @Saylor, @PhongLe & @NatBrunell for a LIVE Q&A on X and YouTube. We\u2019ll be taking questions both in advance and live. https://x.com/i/broadcasts/1MKgNbbVkkqxL?s=20",
+      "link": "https://x.com/Strategy/status/2089366724017541439#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "In 1 hour, join @Saylor , @PhongLe &amp; @NatBrunell for a LIVE Q&amp;A on X and YouTube. We\u2019ll be taking questions both in advance and live. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
+      "publishedAt": "2026-08-17T15:00:20+00:00",
+      "publishedTs": 1786978820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well?",
       "link": "https://x.com/fairplaygov/status/2089362769464168479#m",
       "source": "@ericbalchunas",
@@ -237,6 +276,32 @@
       "isRetweet": false
     },
     {
+      "title": "Strategy added $150M to its USD Reserve and repurchased $132M of $STRC, extending USD Duration to 2.8 yrs (+41 days) and tightening STRC BTC Credit to 114 bps (-4 bps). As of 8/16/26: \u20bf840,447 BTC Reserve; $4.8B USD Reserve. $MSTR https://www.strategy.com/press/strategy-increases",
+      "link": "https://x.com/saylor/status/2089322293822468601#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy added $150M to its USD Reserve and repurchased $132M of $STRC , extending USD Duration to 2.8 yrs (+41 days) and tightening STRC BTC Credit to 114 bps (-4 bps). As of 8/16/26: \u20bf840,447 BTC Reserve; $4.8B USD Reserve. $MSTR strategy.com/press/strategy-\u2026 Link Strategy Incr",
+      "publishedAt": "2026-08-17T12:03:47+00:00",
+      "publishedTs": 1786968227.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: STRC\u2019s BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $62,893. https://www.strategy.com/credit",
+      "link": "https://x.com/saylor/status/2089322295667867775#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "STRC\u2019s BTC Credit is calculated using our Credit model with assumed inputs of 10% BTC ARR, 40% BTC Vol, and a BTC price of $62,893. strategy.com/credit Link Credit Metrics - Strategy strategy.com",
+      "publishedAt": "2026-08-17T12:03:47+00:00",
+      "publishedTs": 1786968227.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "CAPTCHA tests ask the wrong question. The internet never needs to know whether you are human, but whether this action matters enough for you to pay a small cost. An artificial intelligence bot that pays bitcoin may be more valuable than a human who abuses the service.",
       "link": "https://x.com/DocumentingBTC/status/2089322092734885903#m",
       "source": "@DocumentingBTC",
@@ -315,6 +380,32 @@
       "isRetweet": false
     },
     {
+      "title": "Bitcoin is the only game in the casino where we can all win.",
+      "link": "https://x.com/saylor/status/2089024403619127652#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bitcoin is the only game in the casino where we can all win. Video",
+      "publishedAt": "2026-08-16T16:20:04+00:00",
+      "publishedTs": 1786897204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital Credit Weekly (Vol. 6): A Dump In Correlation",
+      "link": "https://x.com/apyx_fi/status/2089011907730739546#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Article Digital Credit Weekly (Vol. 6): A Dump In Correlation This was the week digital credit faced its biggest stress test since June&apos;s slump. Bitcoin fell 3.2% during the trading week, while over the same period MSTR dropped 7.0%, and ASST slipped 1.4%.",
+      "publishedAt": "2026-08-16T15:30:25+00:00",
+      "publishedTs": 1786894225.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Image",
       "link": "https://x.com/nic_carter/status/2089010915723096397#m",
       "source": "@nic_carter",
@@ -339,6 +430,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Tomorrow @Saylor & @PhongLe are going live with @NatBrunell for a Strategy Investor Q&A. Tune in at 12pm ET. https://x.com/i/broadcasts/1MKgNbbVkkqxL",
+      "link": "https://x.com/Strategy/status/2089003749087813961#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Tomorrow @Saylor &amp; @PhongLe are going live with @NatBrunell for a Strategy Investor Q&amp;A. Tune in at 12pm ET. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
+      "publishedAt": "2026-08-16T14:58:00+00:00",
+      "publishedTs": 1786892280.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
@@ -388,6 +492,19 @@
       "summary": "",
       "publishedAt": "2026-08-16T12:08:48+00:00",
       "publishedTs": 1786882128.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Over the past year, $BTC fell 47%. Our Digital Credit instruments ranged from -27% to +9%, with $STRC up 9%. Financial engineering can transform volatile Digital Capital into instruments designed for income, stability, and reduced downside risk.",
+      "link": "https://x.com/saylor/status/2088887563272474948#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-16T07:16:19+00:00",
+      "publishedTs": 1786864579.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -445,6 +562,19 @@
       "isRetweet": false
     },
     {
+      "title": "To understand Bitcoin, first understand money. Money is energy. Bitcoin is digital monetary energy.",
+      "link": "https://x.com/saylor/status/2088662012247126149#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "To understand Bitcoin, first understand money. Money is energy. Bitcoin is digital monetary energy. Michael Saylor (@saylor) Article What Is Money? Money Is Energy In What Is Money? The Saylor Series, Robert Breedlove and I begin with a simple question and follow it through the h",
+      "publishedAt": "2026-08-15T16:20:03+00:00",
+      "publishedTs": 1786810803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "It's happening again, isn't it \ud83d\ude44",
       "link": "https://x.com/BitcoinMagazine/status/2088656150757532018#m",
       "source": "@BitcoinMagazine",
@@ -497,6 +627,32 @@
       "isRetweet": false
     },
     {
+      "title": "What Is Money?",
+      "link": "https://x.com/saylor/status/2088600395257934028#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Article What Is Money? Money Is Energy In What Is Money? The Saylor Series, Robert Breedlove and I begin with a simple question and follow it through the history of civilization, technology, economics, and Bitcoin. The",
+      "publishedAt": "2026-08-15T12:15:13+00:00",
+      "publishedTs": 1786796113.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Michael Saylor\u2019s Next Move: What You Need To Know",
+      "link": "https://x.com/MSTR_Today/status/2088593707301834893#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Michael Saylor\u2019s Next Move: What You Need To Know Video",
+      "publishedAt": "2026-08-15T11:48:38+00:00",
+      "publishedTs": 1786794518.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting yourself up for failure.",
       "link": "https://x.com/lopp/status/2088589999704817959#m",
       "source": "@lopp",
@@ -505,6 +661,32 @@
       "summary": "",
       "publishedAt": "2026-08-15T11:33:54+00:00",
       "publishedTs": 1786793634.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We\u2019ve upgraded the $STRC, $STRD, $STRK & $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield & 1Y Sharpe. New tools to evaluate income, credit quality, downside protection & risk-adjusted returns. Explore at https://strategy.com.",
+      "link": "https://x.com/saylor/status/2088531228718764347#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We\u2019ve upgraded the $STRC , $STRD , $STRK &amp; $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield &amp; 1Y Sharpe. New tools to evaluate income, credit quality, downside protection &amp; risk-adjusted returns. Explore at strategy.com .",
+      "publishedAt": "2026-08-15T07:40:22+00:00",
+      "publishedTs": 1786779622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "RT @Excellion: Damn, @saylor\u2019s Cantonese is better than mine.",
+      "link": "https://x.com/saylor/status/2088510841322652066#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RT @Excellion : Damn, @saylor \u2019s Cantonese is better than mine. Video",
+      "publishedAt": "2026-08-15T06:19:21+00:00",
+      "publishedTs": 1786774761.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -640,6 +822,19 @@
       "isRetweet": false
     },
     {
+      "title": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: https://www.saylor.org",
+      "link": "https://x.com/saylordotorg/status/2088326119506276676#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: saylor.org",
+      "publishedAt": "2026-08-14T18:05:20+00:00",
+      "publishedTs": 1786730720.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "JUST IN: Gemini discloses adding 1,689 BTC Bitcoin to their treasury, now totaling 5,528 BTC! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2088321821753884934#m",
       "source": "@BitcoinMagazine",
@@ -648,6 +843,19 @@
       "summary": "",
       "publishedAt": "2026-08-14T17:48:16+00:00",
       "publishedTs": 1786729696.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Spread Bitcoin with love. \ud83e\udde1",
+      "link": "https://x.com/saylor/status/2088307832290509049#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Spread Bitcoin with love. \ud83e\udde1 Video",
+      "publishedAt": "2026-08-14T16:52:40+00:00",
+      "publishedTs": 1786726360.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -703,6 +911,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "A NEW WAY TO ACCESS THE DIGITAL ASSET WORLD Beyond Bitcoin, ETFs and traditional equities, a more sophisticated capital markets infrastructure is emerging around the digital economy. B2V Preferencial was designed to access this evolution through three core pillars: quality collat",
+      "link": "https://x.com/B2VCrypto/status/2088272501004525602#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "A NEW WAY TO ACCESS THE DIGITAL ASSET WORLD Beyond Bitcoin, ETFs and traditional equities, a more sophisticated capital markets infrastructure is emerging around the digital economy. B2V Preferencial was designed to access this evolution through three core pillars: quality collat",
+      "publishedAt": "2026-08-14T14:32:17+00:00",
+      "publishedTs": 1786717937.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "What does the CLARITY Act actually do for Bitcoin? I went digging in the actual text. A few things in here aren't being talked about. My latest for @BitcoinMagazine \ud83d\udc47 https://bitcoinmagazine.com/takes/what-the-clarity-act-actually-does-for-bitcoin",
@@ -770,6 +991,19 @@
       "isRetweet": false
     },
     {
+      "title": "Digital assets are assets. Index providers should measure markets, not decide which assets companies are allowed to own. MSCI\u2019s proposal puts it out of step with regulators, markets, and its own customers. Bitcoin doesn\u2019t need MSCI. Neither does Strategy. $BTC $MSTR",
+      "link": "https://x.com/Strategy/status/2088234192844870091#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-14T12:00:03+00:00",
+      "publishedTs": 1786708803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "THE FLOW SHOW: ETFs have taken in over $100b for 14 consecutive months which is freakin' insane to anyone who has been covering them for a while. You can see from this chart a $100b month literally only happened ONCE prior to about 2.5yrs ago. NEW NORMAL. via @psarofagis",
       "link": "https://x.com/EricBalchunas/status/2088233756071002404#m",
       "source": "@ericbalchunas",
@@ -807,6 +1041,45 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "R to @saylor: Capital competes for wealth. Credit competes for income. Money competes for savings. Currency competes for payments. Digital Assets are not one market. They are a new architecture competing across the financial system.",
+      "link": "https://x.com/saylor/status/2088215622723264996#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Capital competes for wealth. Credit competes for income. Money competes for savings. Currency competes for payments. Digital Assets are not one market. They are a new architecture competing across the financial system.",
+      "publishedAt": "2026-08-14T10:46:16+00:00",
+      "publishedTs": 1786704376.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital Assets compete in four markets: Digital Capital ($BTC) for wealth vs stocks, real estate, gold & art. Digital Credit ($STRC) for income vs bonds & private credit. Digital Money for savings vs money market funds & T-bills. Digital Currency for payments vs cash & deposits.",
+      "link": "https://x.com/saylor/status/2088215614724727219#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Assets compete in four markets: Digital Capital ($BTC) for wealth vs stocks, real estate, gold &amp; art. Digital Credit ($STRC) for income vs bonds &amp; private credit. Digital Money for savings vs money market funds &amp; T-bills. Digital Currency for payments vs cash ",
+      "publishedAt": "2026-08-14T10:46:14+00:00",
+      "publishedTs": 1786704374.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: https://cryptoslate.com/strategy-sold-100m-to-defend-strcs-100-stock-price-as-defi-packages-the-risk-into-a-7-safer-trade/",
+      "link": "https://x.com/solsticefi/status/2088183531214422398#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: cryptoslate.com/strategy-sol\u2026 Link Strategy sold $100M to defend STRC&apos;s $100 stock price as DeFi packages the risk into a 7% \u2018safer\u2019... ",
+      "publishedAt": "2026-08-14T08:38:45+00:00",
+      "publishedTs": 1786696725.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
