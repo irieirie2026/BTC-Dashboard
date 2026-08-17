@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-17T20:24:12Z",
+  "fetchedAt": "2026-08-17T21:23:36Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @BitcoinMagazine: THE WHALE PASS ITINERARY IS LIVE \ud83d\udc0b Which event are you most excited for? \ud83d\udc40 Click below to learn more, and secure your Whale Pass \ud83d\udc47 https://asia.b.tc/whale-pass",
+      "link": "https://x.com/BitcoinMagazine/status/2089448111022207402#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "THE WHALE PASS ITINERARY IS LIVE \ud83d\udc0b Which event are you most excited for? \ud83d\udc40 Click below to learn more, and secure your Whale Pass \ud83d\udc47 asia.b.tc/whale-pass",
+      "publishedAt": "2026-08-17T20:23:44+00:00",
+      "publishedTs": 1786998224.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "$STRC's semi-monthly dividend of $0.50 per share was paid today. $STRC's next semi-monthly dividend payment will occur on August 31.",
+      "link": "https://x.com/Strategy/status/2089443208191156691#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "$STRC 's semi-monthly dividend of $0.50 per share was paid today. $STRC 's next semi-monthly dividend payment will occur on August 31.",
+      "publishedAt": "2026-08-17T20:04:15+00:00",
+      "publishedTs": 1786997055.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: Wall Street giant Jane Street dropped a bombshell SEC filing: They disclosed owning over $990 million in Bitcoin ETFs \ud83e\udd2f",
       "link": "https://x.com/BitcoinMagazine/status/2089436465402933598#m",
@@ -1069,19 +1095,6 @@
       "isRetweet": false
     },
     {
-      "title": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: https://cryptoslate.com/strategy-sold-100m-to-defend-strcs-100-stock-price-as-defi-packages-the-risk-into-a-7-safer-trade/",
-      "link": "https://x.com/solsticefi/status/2088183531214422398#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Money, but make it Solana. Our COO @defidavo explains how we built strcUSX as two seats: one protected, one ambitious. Full story: cryptoslate.com/strategy-sol\u2026 Link Strategy sold $100M to defend STRC&apos;s $100 stock price as DeFi packages the risk into a 7% \u2018safer\u2019... ",
-      "publishedAt": "2026-08-14T08:38:45+00:00",
-      "publishedTs": 1786696725.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
       "link": "https://x.com/nic_carter/status/2088044792873615527#m",
       "source": "@nic_carter",
@@ -1106,19 +1119,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "PANEL ANNOUNCEMENT \ud83c\udded\ud83c\uddf0 The Coldcard exploit sparked a major conversation around #Bitcoin security. Now, it\u2019s time to unpack what happened, what comes next, and why Bitcoin emerges even stronger. \u270a August 27 | Nakamoto Stage",
-      "link": "https://x.com/Bitcoinconfasia/status/2088012182705328587#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-13T21:17:52+00:00",
-      "publishedTs": 1786655872.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "people who become ponzi schemers are so interesting to me. clearly, even moderately talented people can raise hundreds of millions or billions of $ in ponzis. but of course there's no way out \u2013 no way to land the plane. the only \"successful\" outcome is taking some of the assets b",
