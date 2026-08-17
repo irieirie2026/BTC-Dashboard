@@ -1,33 +1,7 @@
 {
-  "fetchedAt": "2026-08-17T07:51:28Z",
+  "fetchedAt": "2026-08-17T08:40:31Z",
   "source": "nitter.net",
   "tweets": [
-    {
-      "title": "On this day in history, 16 years ago, Satoshi Nakamoto argued that Bitcoin mining could replace household heaters because mining \u201cis basically free anywhere that has electric heat, since your computer\u2019s heat is offsetting your baseboard electric heating\u201d.",
-      "link": "https://x.com/DocumentingBTC/status/2089055961428189688#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-16T18:25:28+00:00",
-      "publishedTs": 1786904728.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Artificial intelligence can copy a million content creators work in one second. Bitcoin can pay all million of them in the same second. Each answer could carry a citation of the work it used, and each response could receive a tiny share when that answer earns the algorithm money.",
-      "link": "https://x.com/DocumentingBTC/status/2089054934637428775#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-16T18:21:23+00:00",
-      "publishedTs": 1786904483.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
     {
       "title": "Bitcoin is the only game in the casino where we can all win.",
       "link": "https://x.com/saylor/status/2089024403619127652#m",
@@ -92,19 +66,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
-      "link": "https://x.com/DocumentingBTC/status/2089000546271187209#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-16T14:45:16+00:00",
-      "publishedTs": 1786891516.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
@@ -183,32 +144,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
-      "link": "https://x.com/DocumentingBTC/status/2088711245436207204#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-15T19:35:41+00:00",
-      "publishedTs": 1786822541.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A bitcoin wallet seed phrase can be hidden in your backyard garden with twelve dirt beds, all planted in a chosen order, each one standing for a word. A thief could walk through the middle of a family\u2019s fortune and only admire the flowers.",
-      "link": "https://x.com/DocumentingBTC/status/2088668103726993613#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-15T16:44:16+00:00",
-      "publishedTs": 1786812256.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "To understand Bitcoin, first understand money. Money is energy. Bitcoin is digital monetary energy.",
@@ -1121,19 +1056,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin Achieves 555,555,555 Seconds Online",
-      "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-12T23:45:17+00:00",
-      "publishedTs": 1786578317.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats, @HRF, @MaelstromFund, @btrustteam, and @cakewallet for making the work possible. Start here: https://crates.io/crates/payjoin https://github.com/payjoin/rust-payjoin/tree/master/payjoin-cli#quick-start",
       "link": "https://x.com/payjoindevkit/status/2087589799452631546#m",
       "source": "@CryptoHayes",
@@ -1342,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 58% Loading\u2026Please HODL Current Block: 961,892 Halving Block: 1,050,000 Blocks Remaining: 88,108 Days Remaining: ~612",
-      "link": "https://x.com/DocumentingBTC/status/2086839647989080354#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-10T15:38:38+00:00",
-      "publishedTs": 1786376318.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I am automating investigative journalism at http://Effort.News We're breaking five stories today based on verifiable financial data which everyone missed for years. This is what I\u2019ve been working on. \ud83e\uddf5",
       "link": "https://x.com/brianchau57/status/2086803587699745170#m",
       "source": "@nic_carter",
@@ -1366,45 +1275,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
-      "link": "https://x.com/DocumentingBTC/status/2086442595886977154#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one Video",
-      "publishedAt": "2026-08-09T13:20:53+00:00",
-      "publishedTs": 1786281653.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin users are now shooting their ColdCard wallets after a hack found them to be insecure",
-      "link": "https://x.com/DocumentingBTC/status/2086440636987703354#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-09T13:13:06+00:00",
-      "publishedTs": 1786281186.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped",
-      "link": "https://x.com/DocumentingBTC/status/2086440149689258294#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped Video",
-      "publishedAt": "2026-08-09T13:11:10+00:00",
-      "publishedTs": 1786281070.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "A Data Center Came to A Small Town. You\u2019ll Never Guess What Happened Next* *unless you guessed lots of jobs, lots of tax revenue, spillover benefits to local business like hotels and restaurants, discounts on electric bills, and grants for teachers.",
@@ -1433,19 +1303,6 @@
       "isRetweet": false
     },
     {
-      "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
-      "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required Video",
-      "publishedAt": "2026-08-08T16:23:27+00:00",
-      "publishedTs": 1786206207.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "wsj.com/lifestyle/olivia-rod\u2026",
       "link": "https://x.com/AntoineGara/status/2086056682124190043#m",
       "source": "@nic_carter",
@@ -1459,45 +1316,6 @@
       "isRetweet": true
     },
     {
-      "title": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation",
-      "link": "https://x.com/DocumentingBTC/status/2085754712314306692#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "This developer uses the radioactive isotope decay of alpha particles and gamma rays from a smoke detector to produce pure random numbers for a secure bitcoin wallet private key generation Video",
-      "publishedAt": "2026-08-07T15:47:29+00:00",
-      "publishedTs": 1786117649.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A team of more than 24 volunteer coders calling themselves \u201cBitcoin Red Team\u201d have been using new AI models this week to check all open-source Bitcoin software apps. They have found 1029 high critical security vulnerabilities so far.",
-      "link": "https://x.com/DocumentingBTC/status/2085725415537049738#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-07T13:51:04+00:00",
-      "publishedTs": 1786110664.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year",
-      "link": "https://x.com/DocumentingBTC/status/2085677641223250298#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Michael Saylor made $15,000,000,000 using ChatGPT and bitcoin for his company last year Video",
-      "publishedAt": "2026-08-07T10:41:14+00:00",
-      "publishedTs": 1786099274.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
       "link": "https://x.com/CryptoHayes/status/2084806878413099165#m",
       "source": "@CryptoHayes",
@@ -1506,84 +1324,6 @@
       "summary": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
       "publishedAt": "2026-08-05T01:01:08+00:00",
       "publishedTs": 1785891668.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Incredible video explaining the Bitcoin wallet hack",
-      "link": "https://x.com/DocumentingBTC/status/2084347267067113825#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Incredible video explaining the Bitcoin wallet hack Video",
-      "publishedAt": "2026-08-03T18:34:48+00:00",
-      "publishedTs": 1785782088.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Jim Cramer says, \u201cI\u2019m going to sell my bitcoin\u201d \ud83e\udd23",
-      "link": "https://x.com/DocumentingBTC/status/2084338863963607375#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Jim Cramer says, \u201cI\u2019m going to sell my bitcoin\u201d \ud83e\udd23 Video",
-      "publishedAt": "2026-08-03T18:01:24+00:00",
-      "publishedTs": 1785780084.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 16 years ago, Satoshi. Nakamoto wrote what would happen if governments split the Bitcoin network off from each other, \u201cIt could tell if it's not hearing the hum of the world anymore\u2026your transactions can get into the other chain at any time later.\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2084309049122681045#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T16:02:56+00:00",
-      "publishedTs": 1785772976.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Entropy is the asset. Words are the interface. Mathematics is the guarantee. Master three nouns and you have mastered the deepest security ever offered to an individual, a Bitcoin wallet.",
-      "link": "https://x.com/DocumentingBTC/status/2084284876220490072#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T14:26:53+00:00",
-      "publishedTs": 1785767213.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Nobody on earth has more than 17 years of experience securing a Bitcoin wallet. The world\u2019s greatest living expert in self-custody hardware and software is, by the standard of every other craft, a beginner. You are closer to the front of this line in history than you think.",
-      "link": "https://x.com/DocumentingBTC/status/2084278150247121314#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T14:00:09+00:00",
-      "publishedTs": 1785765609.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Every great inheritance of civilization began as a dangerous skill, fire burned its first keepers, sails drowned their first sailors, flight fell from the sky. Mastery is how we pay. Hacks of Bitcoin wallets are this century\u2019s payment, and the gift is absolute property, forever.",
-      "link": "https://x.com/DocumentingBTC/status/2084275360510710116#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-03T13:49:04+00:00",
-      "publishedTs": 1785764944.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1883,6 +1623,45 @@
       "summary": "",
       "publishedAt": "2025-10-23T15:09:17+00:00",
       "publishedTs": 1761232157.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
+      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
+      "publishedAt": "2019-12-14T01:56:31+00:00",
+      "publishedTs": 1576288591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
+      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
+      "publishedAt": "2019-12-14T00:35:14+00:00",
+      "publishedTs": 1576283714.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
+      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "",
+      "publishedAt": "2019-06-29T16:44:44+00:00",
+      "publishedTs": 1561826684.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
