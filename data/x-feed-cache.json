@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-18T13:40:04Z",
+  "fetchedAt": "2026-08-18T14:31:27Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time.",
+      "link": "https://x.com/Rob1Ham/status/2089717836855873774#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time. Alex",
+      "publishedAt": "2026-08-18T14:15:32+00:00",
+      "publishedTs": 1787062532.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "August 18 Update: #Bitcoin ETFs: 1D NetFlow: +4,436 $BTC(+$284.05M)\ud83d\udfe2 7D NetFlow: +13 $BTC(+$819.51K)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +16,091 $ETH(+$30.46M)\ud83d\udfe2 7D NetFlow: +27,042 $ETH(+$51.19M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2089715812395618384#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 18 Update: #Bitcoin ETFs: 1D NetFlow: +4,436 $BTC (+$284.05M)\ud83d\udfe2 7D NetFlow: +13 $BTC (+$819.51K)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +16,091 $ETH (+$30.46M)\ud83d\udfe2 7D NetFlow: +27,042 $ETH (+$51.19M)\ud83d\udfe2",
+      "publishedAt": "2026-08-18T14:07:29+00:00",
+      "publishedTs": 1787062049.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "On this day in history, 18 years ago, Satoshi Nakamoto registered https://Bitcoin.org for the first time.",
       "link": "https://x.com/DocumentingBTC/status/2089706203077058794#m",
@@ -26,7 +52,7 @@
       "publishedTs": 1787059423.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "This developer created \u201cthe world\u2019s worst lottery\u201d. Anyone can use their GPU to find a bitcoin prize hidden among 1,180,000,000,000,000,000,000 mathematical possibilities. Your single graphics card would likely need to run about 430,000 years",
@@ -120,6 +146,19 @@
       "isRetweet": false
     },
     {
+      "title": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
+      "link": "https://x.com/VistaSharesX/status/2089688013106204770#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
+      "publishedAt": "2026-08-18T12:17:01+00:00",
+      "publishedTs": 1787055421.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "The Physics of Money Every monetary instrument has a natural frequency \u2014 the time you need to hold it to use it as money. Digital Capital: ~4 years Digital Credit: ~4 months Digital Money: ~4 days Digital Currency: ~4 hours",
       "link": "https://x.com/saylor/status/2089652470083363100#m",
       "source": "@saylor",
@@ -183,19 +222,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld https://www.bloomberg.com/news/videos/2026-02-19/etf-drilldown-frdm-video",
-      "link": "https://x.com/Perth_Tolle/status/2089493916634464421#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld bloomberg.com/news/videos/20\u2026 Link Watch ETF Drilldown: FRDM - Bloomberg ETFs focused on emerging-market assets saw a 17th consecutive week of inflows, with investors positioning ",
-      "publishedAt": "2026-08-17T23:25:45+00:00",
-      "publishedTs": 1787009145.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Its Core Weave and everyone else $CRWV",
@@ -395,15 +421,15 @@
     {
       "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
       "link": "https://x.com/JSeyff/status/2089376291854143826#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn . We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH &amp; talking white labels w/ @TeucriumETFs",
       "publishedAt": "2026-08-17T15:38:21+00:00",
       "publishedTs": 1786981101.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Ask where bitcoin is and every answer fails. Ask when it is and the answer is block 962,907. Bitcoin is the first thing that exists in time, not space.",
@@ -440,19 +466,6 @@
       "summary": "In 1 hour, join @Saylor , @PhongLe &amp; @NatBrunell for a LIVE Q&amp;A on X and YouTube. We\u2019ll be taking questions both in advance and live. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
       "publishedAt": "2026-08-17T15:00:20+00:00",
       "publishedTs": 1786978820.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well?",
-      "link": "https://x.com/fairplaygov/status/2089362769464168479#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well? Video Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performanc",
-      "publishedAt": "2026-08-17T14:44:37+00:00",
-      "publishedTs": 1786977877.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -978,32 +991,6 @@
       "isRetweet": true
     },
     {
-      "title": "R to @EricBalchunas: Just out today, feels related:",
-      "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Just out today, feels related: Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a ",
-      "publishedAt": "2026-08-14T22:43:06+00:00",
-      "publishedTs": 1786747386.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
-      "link": "https://x.com/EricBalchunas/status/2088394803033846027#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
-      "publishedAt": "2026-08-14T22:38:16+00:00",
-      "publishedTs": 1786747096.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
       "link": "https://x.com/JSeyff/status/2088388613968900257#m",
       "source": "@JSeyff",
@@ -1095,19 +1082,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Gemini discloses adding 1,689 BTC Bitcoin to their treasury, now totaling 5,528 BTC! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2088321821753884934#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-14T17:48:16+00:00",
-      "publishedTs": 1786729696.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Spread Bitcoin with love. \ud83e\udde1",
       "link": "https://x.com/saylor/status/2088307832290509049#m",
       "source": "@saylor",
@@ -1129,32 +1103,6 @@
       "summary": "",
       "publishedAt": "2026-08-14T16:16:38+00:00",
       "publishedTs": 1786724198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
-      "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Listen here or on spotify etc.. piped.video/watch?v=Shhv4Er_\u2026 Link 351 Conversions: Smart Tax Alpha Strategy or Loophole in the Code? |... ETFs are already famous for their tax efficiency, but a growing cor... youtube.com",
-      "publishedAt": "2026-08-14T15:20:37+00:00",
-      "publishedTs": 1786720837.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "*new* Trillions on 351 Conversion ETFs, which are custom built funds that allow investors to swap concentrated stock positions into diversified portfolios in order to defer paying gains taxes, and they are growing like crazy. We dissect it all with @zachmider @denitsa_tsekova",
-      "link": "https://x.com/EricBalchunas/status/2088284525386207656#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-14T15:20:03+00:00",
-      "publishedTs": 1786720803.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1480,19 +1428,6 @@
       "summary": "At @CasaHODL we have been running automated security audits across our code for several months with frontier LLMs. In this post I explain how our pentest harness works at a high level. blog.casa.io/how-built-relia\u2026 Link How We Built a Reliable AI Pentester How Casa has automated ",
       "publishedAt": "2026-08-11T14:45:44+00:00",
       "publishedTs": 1786459544.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "bahahahahahahaha haaaaaaaaaaaaaaaaaaaaaaaaa dumbest phishing attempt ever!",
-      "link": "https://x.com/lopp/status/2086966435444600922#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-11T00:02:26+00:00",
-      "publishedTs": 1786406546.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1873,6 +1808,45 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
+      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
+      "publishedAt": "2019-12-14T01:56:31+00:00",
+      "publishedTs": 1576288591.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
+      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
+      "publishedAt": "2019-12-14T00:35:14+00:00",
+      "publishedTs": 1576283714.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
+      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
+      "source": "@BitcoinArchives",
+      "authorName": "Bitcoin Archives",
+      "authorRole": "Historical BTC content",
+      "summary": "",
+      "publishedAt": "2019-06-29T16:44:44+00:00",
+      "publishedTs": 1561826684.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     }
   ]
 }
