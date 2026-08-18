@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-18T17:25:12Z",
+  "fetchedAt": "2026-08-18T18:35:09Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 The White House to host a crypto summit tomorrow with crypto industry leaders \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2089776170120188099#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-18T18:07:19+00:00",
+      "publishedTs": 1787076439.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Even during the slow summer months, market interest in digital capital, equity, and credit remains high. $BTC $MSTR $STRC",
+      "link": "https://x.com/phongle/status/2089772744267210998#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-18T17:53:42+00:00",
+      "publishedTs": 1787075622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Preppers shouldn't neglect cyber prepping in addition to analog survival skills & resources. I myself load hard drives with a wikipedia archive and educational media. We're at the point now that you should probably also throw in the most powerful open LLMs you can grab.",
       "link": "https://x.com/lopp/status/2089760832242487596#m",
@@ -53,32 +79,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: It\u2019s the exact same debate we had around Bitcoin mining The degrowth left has ALREADY DECIDED that using scarce resources for AI is illegitimate Any resources employed, no matter what the benefit, no matter how efficiently used, are illegitimate to them You cann",
-      "link": "https://x.com/nic_carter/status/2089737751906472149#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s the exact same debate we had around Bitcoin mining The degrowth left has ALREADY DECIDED that using scarce resources for AI is illegitimate Any resources employed, no matter what the benefit, no matter how efficiently used, are illegitimate to them You cannot reason with the",
-      "publishedAt": "2026-08-18T15:34:40+00:00",
-      "publishedTs": 1787067280.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s impossible to please the degrowth left If datacenters draw power from the grid, they\u2019re \u201cdriving up prices\u201d for ratepayers If datacenters go off grid / behind the meter, they\u2019re \u201cusing scarce turbines that could otherwise be providing power to the grid\u201d You can\u2019t reason with",
-      "link": "https://x.com/nic_carter/status/2089736913511239887#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s impossible to please the degrowth left If datacenters draw power from the grid, they\u2019re \u201cdriving up prices\u201d for ratepayers If datacenters go off grid / behind the meter, they\u2019re \u201cusing scarce turbines that could otherwise be providing power to the grid\u201d You can\u2019t reason with",
-      "publishedAt": "2026-08-18T15:31:20+00:00",
-      "publishedTs": 1787067080.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ($23.36M) liquidated. Current position: 1,440 $BTC($93.3M) New liquidation price: $65,041.72 https://hypurrscan.io/address/0x8c96e5a2d770f9f2c9d2464ce4e741df0b2bca57#per",
@@ -263,6 +263,19 @@
       "isRetweet": false
     },
     {
+      "title": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
+      "link": "https://x.com/VistaSharesX/status/2089688013106204770#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
+      "publishedAt": "2026-08-18T12:17:01+00:00",
+      "publishedTs": 1787055421.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "The Physics of Money Every monetary instrument has a natural frequency \u2014 the time you need to hold it to use it as money. Digital Capital: ~4 years Digital Credit: ~4 months Digital Money: ~4 days Digital Currency: ~4 hours",
       "link": "https://x.com/saylor/status/2089652470083363100#m",
       "source": "@saylor",
@@ -341,17 +354,17 @@
       "isRetweet": false
     },
     {
-      "title": "Its Core Weave and everyone else $CRWV",
-      "link": "https://x.com/nic_carter/status/2089486469069148233#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Its Core Weave and everyone else $CRWV a16z (@a16z) Right place, right time: many neoclouds spent years mining crypto, then AI showed up and turned their power rights, data centers, and GPUs into some of the hottest assets in tech. 25 quarters in, CoreWeave is pulling in more qua",
-      "publishedAt": "2026-08-17T22:56:09+00:00",
-      "publishedTs": 1787007369.0,
+      "title": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld https://www.bloomberg.com/news/videos/2026-02-19/etf-drilldown-frdm-video",
+      "link": "https://x.com/Perth_Tolle/status/2089493916634464421#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld bloomberg.com/news/videos/20\u2026 Link Watch ETF Drilldown: FRDM - Bloomberg ETFs focused on emerging-market assets saw a 17th consecutive week of inflows, with investors positioning ",
+      "publishedAt": "2026-08-17T23:25:45+00:00",
+      "publishedTs": 1787009145.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "It's never too late to get into Bitcoin \ud83d\ude4c",
@@ -432,19 +445,6 @@
       "isRetweet": false
     },
     {
-      "title": "How to think about the robotics market",
-      "link": "https://x.com/intern/status/2089418795353796754#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Article How to think about the robotics market The robotics industry is at a key inflection point. Many people have little idea what is happening or how big this market could become. I will lay out the thesis and likely outcomes so people can",
-      "publishedAt": "2026-08-17T18:27:14+00:00",
-      "publishedTs": 1786991234.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Harvard University reports owning $101.3M in BlackRocks Bitcoin ETF \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2089412571853959545#m",
       "source": "@BitcoinMagazine",
@@ -466,32 +466,6 @@
       "summary": "If God designed money, what would it look like? Video",
       "publishedAt": "2026-08-17T17:20:26+00:00",
       "publishedTs": 1786987226.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: More biomass does not produce more greatness, as is obviously evident from the world today.",
-      "link": "https://x.com/nic_carter/status/2089389550724420071#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "More biomass does not produce more greatness, as is obviously evident from the world today.",
-      "publishedAt": "2026-08-17T16:31:02+00:00",
-      "publishedTs": 1786984262.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Obviously and trivially debunked by having the most basic awareness of history Genius is formed in highly concentrated areas in space and time when cultural and institutional conditions are right, it\u2019s not a uniformly distributed process - Athens 400 BC - Florence 1500 - Edinburg",
-      "link": "https://x.com/nic_carter/status/2089389222499160506#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Obviously and trivially debunked by having the most basic awareness of history Genius is formed in highly concentrated areas in space and time when cultural and institutional conditions are right, it\u2019s not a uniformly distributed process - Athens 400 BC - Florence 1500 - Edinburg",
-      "publishedAt": "2026-08-17T16:29:44+00:00",
-      "publishedTs": 1786984184.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -536,6 +510,19 @@
       "isRetweet": false
     },
     {
+      "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
+      "link": "https://x.com/JSeyff/status/2089376291854143826#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn . We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH &amp; talking white labels w/ @TeucriumETFs",
+      "publishedAt": "2026-08-17T15:38:21+00:00",
+      "publishedTs": 1786981101.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Ask where bitcoin is and every answer fails. Ask when it is and the answer is block 962,907. Bitcoin is the first thing that exists in time, not space.",
       "link": "https://x.com/DocumentingBTC/status/2089375728773091697#m",
       "source": "@DocumentingBTC",
@@ -570,6 +557,19 @@
       "summary": "In 1 hour, join @Saylor , @PhongLe &amp; @NatBrunell for a LIVE Q&amp;A on X and YouTube. We\u2019ll be taking questions both in advance and live. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
       "publishedAt": "2026-08-17T15:00:20+00:00",
       "publishedTs": 1786978820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well?",
+      "link": "https://x.com/fairplaygov/status/2089362769464168479#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well? Video Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performanc",
+      "publishedAt": "2026-08-17T14:44:37+00:00",
+      "publishedTs": 1786977877.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -692,32 +692,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: I am a [hedge fund manager / political operative] and I believe [AI / crypto / stablecoins / shale] will collapse and require a future taxpayer bailout because I need to couch my [dislike / anger at having missed the trade opportunity] in populist political lang",
-      "link": "https://x.com/nic_carter/status/2089312456149512301#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I am a [hedge fund manager / political operative] and I believe [AI / crypto / stablecoins / shale] will collapse and require a future taxpayer bailout because I need to couch my [dislike / anger at having missed the trade opportunity] in populist political language rather than [",
-      "publishedAt": "2026-08-17T11:24:41+00:00",
-      "publishedTs": 1786965881.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "My least favorite genre of financial commentary is people complaining about hypothetical future bailouts for industries they either politically oppose or missed going long on",
-      "link": "https://x.com/nic_carter/status/2089311083077001706#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-17T11:19:14+00:00",
-      "publishedTs": 1786965554.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "NEW WHALE DEEP SESSION \ud83d\udc0b Join Balaji Srinivasan for an intimate Q&A on network states, Bitcoin, and the ideas shaping what comes next. \ud83d\udd25 August 28 | The Deep | Whale pass required",
       "link": "https://x.com/Bitcoinconfasia/status/2089126365480005929#m",
       "source": "@BitcoinMagazine",
@@ -783,19 +757,6 @@
       "isRetweet": true
     },
     {
-      "title": "Image",
-      "link": "https://x.com/nic_carter/status/2089010915723096397#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "WIRED (@WIRED) Mini human brains are being grown in labs all over the world. Soon, they could outthink neural networks. wired.com/story/organoids-la\u2026 Link AI Is Dead. Organoids Are Alive Mini human brains are being grown in labs all over the world. Soon, they could outthink neura",
-      "publishedAt": "2026-08-16T15:26:28+00:00",
-      "publishedTs": 1786893988.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cThe mission is simple: take this thing to the moon. \ud83d\ude80\u201d",
       "link": "https://x.com/BitcoinMagazine/status/2089005318520926619#m",
       "source": "@BitcoinMagazine",
@@ -846,19 +807,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d",
-      "link": "https://x.com/NeerajKA/status/2088965661439492325#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d WIRED (@WIRED) Mini human brains are being grown in labs all over the wo",
-      "publishedAt": "2026-08-16T12:26:39+00:00",
-      "publishedTs": 1786883199.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Bull Market vs Bear Market",
@@ -978,32 +926,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: Vance is absolutely right that the dollars strength and our reserve status has contributed to deindustrialization and the hollowing out of middle America, which he famously represents politically - that\u2019s his entire political story and heritage. The dollar reser",
-      "link": "https://x.com/nic_carter/status/2088619169809846767#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Vance is absolutely right that the dollars strength and our reserve status has contributed to deindustrialization and the hollowing out of middle America, which he famously represents politically - that\u2019s his entire political story and heritage. The dollar reserve means the US pr",
-      "publishedAt": "2026-08-15T13:29:49+00:00",
-      "publishedTs": 1786800589.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
-      "link": "https://x.com/nic_carter/status/2088617751736643647#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
-      "publishedAt": "2026-08-15T13:24:11+00:00",
-      "publishedTs": 1786800251.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "What Is Money?",
       "link": "https://x.com/saylor/status/2088600395257934028#m",
       "source": "@saylor",
@@ -1069,6 +991,19 @@
       "isRetweet": false
     },
     {
+      "title": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn",
+      "link": "https://x.com/sumitroy2/status/2088433007569055867#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn Video",
+      "publishedAt": "2026-08-15T01:10:04+00:00",
+      "publishedTs": 1786756204.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "What is it really like to be a Bitcoin Asia attendee? \ud83d\ude80 Let us show you \ud83d\udc47",
       "link": "https://x.com/Bitcoinconfasia/status/2088430474288886080#m",
       "source": "@BitcoinMagazine",
@@ -1082,14 +1017,40 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Billionaire Paul Tudor Jones' $106 billion Investment Corporation reports owning $22.9 million of BlackRock's spot Bitcoin ETF \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2088382677200306521#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-14T21:50:05+00:00",
-      "publishedTs": 1786744205.0,
+      "title": "R to @EricBalchunas: Just out today, feels related:",
+      "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Just out today, feels related: Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a ",
+      "publishedAt": "2026-08-14T22:43:06+00:00",
+      "publishedTs": 1786747386.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "link": "https://x.com/EricBalchunas/status/2088394803033846027#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "publishedAt": "2026-08-14T22:38:16+00:00",
+      "publishedTs": 1786747096.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
+      "link": "https://x.com/JSeyff/status/2088388613968900257#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next? Todd Sohn (@Todd_Sohn) Someone told me to hold my beer \u2014 https://nitter.net/Todd_Sohn/status/2088383768545337607#m",
+      "publishedAt": "2026-08-14T22:13:40+00:00",
+      "publishedTs": 1786745620.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1108,27 +1069,40 @@
       "isRetweet": true
     },
     {
-      "title": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: https://www.saylor.org",
-      "link": "https://x.com/saylordotorg/status/2088326119506276676#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: saylor.org",
-      "publishedAt": "2026-08-14T18:05:20+00:00",
-      "publishedTs": 1786730720.0,
+      "title": "Bull market things",
+      "link": "https://x.com/JSeyff/status/2088350690569531878#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Bull market things Todd Sohn (@Todd_Sohn) Let's recap the week in new ETF registrations: -AI Secret Ingredients -Jensen Huang Interviews -Human Enhancement -Bulldogs (woof woof!) -Magnificent Six -Anti-Money Printers -2x Triple Threat Memory -Space Data Centers Let the good times",
+      "publishedAt": "2026-08-14T19:42:58+00:00",
+      "publishedTs": 1786736578.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: this is really quite something",
-      "link": "https://x.com/nic_carter/status/2088256795424801210#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "this is really quite something",
-      "publishedAt": "2026-08-14T13:29:52+00:00",
-      "publishedTs": 1786714192.0,
+      "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
+      "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Listen here or on spotify etc.. piped.video/watch?v=Shhv4Er_\u2026 Link 351 Conversions: Smart Tax Alpha Strategy or Loophole in the Code? |... ETFs are already famous for their tax efficiency, but a growing cor... youtube.com",
+      "publishedAt": "2026-08-14T15:20:37+00:00",
+      "publishedTs": 1786720837.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "*new* Trillions on 351 Conversion ETFs, which are custom built funds that allow investors to swap concentrated stock positions into diversified portfolios in order to defer paying gains taxes, and they are growing like crazy. We dissect it all with @zachmider @denitsa_tsekova",
+      "link": "https://x.com/EricBalchunas/status/2088284525386207656#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-14T15:20:03+00:00",
+      "publishedTs": 1786720803.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1142,58 +1116,6 @@
       "summary": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac frenchbreaches.com/alertes/d\u2026 Link ",
       "publishedAt": "2026-08-14T11:36:49+00:00",
       "publishedTs": 1786707409.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet.",
-      "link": "https://x.com/nic_carter/status/2088226292072083919#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet. Matt Burtell (@MattBurtell) Dario Amodei\u2019s wife badgered Jeffery Epstein to invest in her porn company three years after he plead guilty to so",
-      "publishedAt": "2026-08-14T11:28:40+00:00",
-      "publishedTs": 1786706920.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
-      "link": "https://x.com/nic_carter/status/2088044792873615527#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "has anyone done or thought of doing anything like take the very best frontier LLM. put it in a radiation tolerant computer in high earth or lunar orbit powered by solar arrays. give it a simple persistent beacon so it pings earth for the next thousand years. how to rebuild civili",
-      "publishedAt": "2026-08-13T23:27:27+00:00",
-      "publishedTs": 1786663647.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "2018-era Tether Truthers just fell to their knees in a Walmart",
-      "link": "https://x.com/nic_carter/status/2088033783043739775#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "2018-era Tether Truthers just fell to their knees in a Walmart Paolo Ardoino \ud83e\udd16 (@paoloardoino) An incredible day \u2764\ufe0f Tether has its financial audit by a big-four: KPMG US. \u2014 https://nitter.net/paoloardoino/status/2087951005212123228#m",
-      "publishedAt": "2026-08-13T22:43:42+00:00",
-      "publishedTs": 1786661022.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "people who become ponzi schemers are so interesting to me. clearly, even moderately talented people can raise hundreds of millions or billions of $ in ponzis. but of course there's no way out \u2013 no way to land the plane. the only \"successful\" outcome is taking some of the assets b",
-      "link": "https://x.com/nic_carter/status/2087997598342742416#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "people who become ponzi schemers are so interesting to me. clearly, even moderately talented people can raise hundreds of millions or billions of $ in ponzis. but of course there's no way out \u2013 no way to land the plane. the only \"successful\" outcome is taking some of the assets b",
-      "publishedAt": "2026-08-13T20:19:55+00:00",
-      "publishedTs": 1786652395.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1225,43 +1147,30 @@
       "isRetweet": false
     },
     {
-      "title": "R to @nic_carter: source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-electricity TLDR it's blue state decarbonization and inflation",
-      "link": "https://x.com/nic_carter/status/2087922558377107726#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: murmurationstwo.substack.com\u2026 TLDR it's blue state decarbonization and inflation",
-      "publishedAt": "2026-08-13T15:21:44+00:00",
-      "publishedTs": 1786634504.0,
+      "title": "NEW filing for five ETFs from Silvia, @APompliano's co: 1. Anti-Money Printer ETF (bitcoin, gold, land, guns) 2. Bitcoin Treasury mNAV Discount ETF 3. Jensen Interview ETF (holds cos that Jensen Huang mentions in intvs over past 30days) 4. Elon Must ETF (holds Tesla, spaceX and 1",
+      "link": "https://x.com/EricBalchunas/status/2087960030440050807#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "NEW filing for five ETFs from Silvia, @APompliano 's co: 1. Anti-Money Printer ETF (bitcoin, gold, land, guns) 2. Bitcoin Treasury mNAV Discount ETF 3. Jensen Interview ETF (holds cos that Jensen Huang mentions in intvs over past 30days) 4. Elon Must ETF (holds Tesla, spaceX and ",
+      "publishedAt": "2026-08-13T17:50:38+00:00",
+      "publishedTs": 1786643438.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
-      "title": "R to @nic_carter: The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning ta",
-      "link": "https://x.com/nic_carter/status/2087910684394709133#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning tap water. The epide",
-      "publishedAt": "2026-08-13T14:34:33+00:00",
-      "publishedTs": 1786631673.0,
+      "title": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
+      "link": "https://x.com/EricBalchunas/status/2087945208101040439#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "ETFs are on pace to blow away last year's records by over 30% in each of the three main categories of flows, volume and launches. What's behind it? Simply put: ETFs offer something for everyone. From the most degenerate degen to the most puritan Boglehead, ppl are finding satisfy",
+      "publishedAt": "2026-08-13T16:51:44+00:00",
+      "publishedTs": 1786639904.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
-      "link": "https://x.com/nic_carter/status/2087908633698787576#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
-      "publishedAt": "2026-08-13T14:26:24+00:00",
-      "publishedTs": 1786631184.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "Do you think bitcoin self custody is too risky? Truly I tell you, third party custody is just self custody with extra layers of risk.",
@@ -1743,45 +1652,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     }
   ]
 }
