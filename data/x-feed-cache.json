@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-18T09:30:53Z",
+  "fetchedAt": "2026-08-18T10:25:48Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "The Physics of Money Every monetary instrument has a natural frequency \u2014 the time you need to hold it to use it as money. Digital Capital: ~4 years Digital Credit: ~4 months Digital Money: ~4 days Digital Currency: ~4 hours",
+      "link": "https://x.com/saylor/status/2089652470083363100#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-18T09:55:47+00:00",
+      "publishedTs": 1787046947.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Riot Platforms(@RiotPlatforms) keeps selling $BTC. In the first half of 2026, Riot Platforms sold a total of 9,665 $BTC ($732.46M) at an average price of $75,785. https://arkm.com/explorer/entity/riot-platforms https://www.sec.gov/ix?doc=/Archives/edgar/data/0001167419/0001104659",
       "link": "https://x.com/lookonchain/status/2089531746836693162#m",
@@ -42,6 +55,19 @@
       "isRetweet": false
     },
     {
+      "title": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld https://www.bloomberg.com/news/videos/2026-02-19/etf-drilldown-frdm-video",
+      "link": "https://x.com/Perth_Tolle/status/2089493916634464421#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld bloomberg.com/news/videos/20\u2026 Link Watch ETF Drilldown: FRDM - Bloomberg ETFs focused on emerging-market assets saw a 17th consecutive week of inflows, with investors positioning ",
+      "publishedAt": "2026-08-17T23:25:45+00:00",
+      "publishedTs": 1787009145.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Its Core Weave and everyone else $CRWV",
       "link": "https://x.com/nic_carter/status/2089486469069148233#m",
       "source": "@nic_carter",
@@ -50,6 +76,45 @@
       "summary": "Its Core Weave and everyone else $CRWV a16z (@a16z) Right place, right time: many neoclouds spent years mining crypto, then AI showed up and turned their power rights, data centers, and GPUs into some of the hottest assets in tech. 25 quarters in, CoreWeave is pulling in more qua",
       "publishedAt": "2026-08-17T22:56:09+00:00",
       "publishedTs": 1787007369.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It's never too late to get into Bitcoin \ud83d\ude4c",
+      "link": "https://x.com/BitcoinMagazine/status/2089467798263070803#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T21:41:58+00:00",
+      "publishedTs": 1787002918.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "10 DAYS UNTIL BITCOIN ASIA \u203c\ufe0f 125+ COUNTRIES, 150+ SPEAKERS, AND THOUSANDS OF ATTENDEES ARE ABOUT TO TAKE OVER HONG KONG \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2089457361576411179#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T21:00:29+00:00",
+      "publishedTs": 1787000429.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @BitcoinMagazine: THE WHALE PASS ITINERARY IS LIVE \ud83d\udc0b Which event are you most excited for? \ud83d\udc40 Click below to learn more, and secure your Whale Pass \ud83d\udc47 https://asia.b.tc/whale-pass",
+      "link": "https://x.com/BitcoinMagazine/status/2089448111022207402#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "THE WHALE PASS ITINERARY IS LIVE \ud83d\udc0b Which event are you most excited for? \ud83d\udc40 Click below to learn more, and secure your Whale Pass \ud83d\udc47 asia.b.tc/whale-pass",
+      "publishedAt": "2026-08-17T20:23:44+00:00",
+      "publishedTs": 1786998224.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -81,6 +146,19 @@
       "isRetweet": true
     },
     {
+      "title": "JUST IN: Wall Street giant Jane Street dropped a bombshell SEC filing: They disclosed owning over $990 million in Bitcoin ETFs \ud83e\udd2f",
+      "link": "https://x.com/BitcoinMagazine/status/2089436465402933598#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T19:37:27+00:00",
+      "publishedTs": 1786995447.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "How to think about the robotics market",
       "link": "https://x.com/intern/status/2089418795353796754#m",
       "source": "@nic_carter",
@@ -92,6 +170,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "NEW: \ud83c\uddfa\ud83c\uddf8 Harvard University reports owning $101.3M in BlackRocks Bitcoin ETF \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2089412571853959545#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T18:02:31+00:00",
+      "publishedTs": 1786989751.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "If God designed money, what would it look like?",
@@ -133,6 +224,19 @@
       "isRetweet": false
     },
     {
+      "title": "LIVE: Strategy ($MSTR) Q&A feat. Michael Saylor & Phong Le https://x.com/i/broadcasts/1AKEmvXleMZKL",
+      "link": "https://x.com/BitcoinMagazine/status/2089382872801013765#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "LIVE: Strategy ($MSTR) Q&amp;A feat. Michael Saylor &amp; Phong Le nitter.net/i/broadcasts/1AKEmvXle\u2026 Link Bitcoin Magazine LIVE: Strategy ($MSTR) Investor Q&amp;A feat. Michael Saylor &amp; Phong Le https://nitter.net/i/broadcasts/1AKEmvXleMZKL",
+      "publishedAt": "2026-08-17T16:04:30+00:00",
+      "publishedTs": 1786982670.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "R.I.P 110",
       "link": "https://x.com/coinjoined/status/2089377488593932365#m",
       "source": "@lopp",
@@ -146,17 +250,30 @@
       "isRetweet": true
     },
     {
+      "title": "R to @BitcoinMagazine: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
+      "link": "https://x.com/BitcoinMagazine/status/2089376329875493115#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: saltlending.com/bitcoin-loan\u2026",
+      "publishedAt": "2026-08-17T15:38:30+00:00",
+      "publishedTs": 1786981110.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
       "link": "https://x.com/JSeyff/status/2089376291854143826#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn . We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH &amp; talking white labels w/ @TeucriumETFs",
       "publishedAt": "2026-08-17T15:38:21+00:00",
       "publishedTs": 1786981101.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "Ask where bitcoin is and every answer fails. Ask when it is and the answer is block 962,907. Bitcoin is the first thing that exists in time, not space.",
@@ -193,6 +310,19 @@
       "summary": "In 1 hour, join @Saylor , @PhongLe &amp; @NatBrunell for a LIVE Q&amp;A on X and YouTube. We\u2019ll be taking questions both in advance and live. nitter.net/i/broadcasts/1MKgNbbVk\u2026 Link Strategy Q2 2026 Earnings: Investor Q&amp;A https://nitter.net/i/broadcasts/1MKgNbbVkkqxL",
       "publishedAt": "2026-08-17T15:00:20+00:00",
       "publishedTs": 1786978820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well?",
+      "link": "https://x.com/fairplaygov/status/2089362769464168479#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well? Video Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performanc",
+      "publishedAt": "2026-08-17T14:44:37+00:00",
+      "publishedTs": 1786977877.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -250,6 +380,19 @@
       "isRetweet": false
     },
     {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Treasury Secretary Scott Bessent says the \"Treasury is moving quickly to implement\" the GENIUS Act \ud83d\udc40 \"Beginning on January 18, 2027, the expected effective date of the GENIUS Act,\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2089337014889927032#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T13:02:17+00:00",
+      "publishedTs": 1786971737.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Nothing needs to happen next for Bitcoin. No milestone is pending, no upgrade awaited, no rules changed, no decision due. Bitcoin is complete, the way a mathematical proof is complete.",
       "link": "https://x.com/DocumentingBTC/status/2089334618767925402#m",
       "source": "@DocumentingBTC",
@@ -258,6 +401,19 @@
       "summary": "",
       "publishedAt": "2026-08-17T12:52:45+00:00",
       "publishedTs": 1786971165.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive purchases 79 Bitcoin for $5 million! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2089324949240476090#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-17T12:14:20+00:00",
+      "publishedTs": 1786968860.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -313,6 +469,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "NEW WHALE DEEP SESSION \ud83d\udc0b Join Balaji Srinivasan for an intimate Q&A on network states, Bitcoin, and the ideas shaping what comes next. \ud83d\udd25 August 28 | The Deep | Whale pass required",
+      "link": "https://x.com/Bitcoinconfasia/status/2089126365480005929#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "NEW WHALE DEEP SESSION \ud83d\udc0b Join Balaji Srinivasan for an intimate Q&amp;A on network states, Bitcoin, and the ideas shaping what comes next. \ud83d\udd25 August 28 | The Deep | Whale pass required",
+      "publishedAt": "2026-08-16T23:05:14+00:00",
+      "publishedTs": 1786921514.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto argued that Bitcoin mining could replace household heaters because mining \u201cis basically free anywhere that has electric heat, since your computer\u2019s heat is offsetting your baseboard electric heating\u201d.",
@@ -375,6 +544,19 @@
       "summary": "WIRED (@WIRED) Mini human brains are being grown in labs all over the world. Soon, they could outthink neural networks. wired.com/story/organoids-la\u2026 Link AI Is Dead. Organoids Are Alive Mini human brains are being grown in labs all over the world. Soon, they could outthink neura",
       "publishedAt": "2026-08-16T15:26:28+00:00",
       "publishedTs": 1786893988.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cThe mission is simple: take this thing to the moon. \ud83d\ude80\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2089005318520926619#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-16T15:04:14+00:00",
+      "publishedTs": 1786892654.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -523,6 +705,19 @@
       "isRetweet": false
     },
     {
+      "title": "It's happening again, isn't it \ud83d\ude44",
+      "link": "https://x.com/BitcoinMagazine/status/2088656150757532018#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-15T15:56:46+00:00",
+      "publishedTs": 1786809406.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "You'll never see me crash out over BIP-361 \ud83d\ude43",
       "link": "https://x.com/lopp/status/2088652648702411135#m",
       "source": "@lopp",
@@ -640,6 +835,45 @@
       "isRetweet": true
     },
     {
+      "title": "What is it really like to be a Bitcoin Asia attendee? \ud83d\ude80 Let us show you \ud83d\udc47",
+      "link": "https://x.com/Bitcoinconfasia/status/2088430474288886080#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "What is it really like to be a Bitcoin Asia attendee? \ud83d\ude80 Let us show you \ud83d\udc47 Video",
+      "publishedAt": "2026-08-15T01:00:00+00:00",
+      "publishedTs": 1786755600.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @EricBalchunas: Just out today, feels related:",
+      "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Just out today, feels related: Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a ",
+      "publishedAt": "2026-08-14T22:43:06+00:00",
+      "publishedTs": 1786747386.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "link": "https://x.com/EricBalchunas/status/2088394803033846027#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
+      "publishedAt": "2026-08-14T22:38:16+00:00",
+      "publishedTs": 1786747096.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
       "link": "https://x.com/JSeyff/status/2088388613968900257#m",
       "source": "@JSeyff",
@@ -648,6 +882,45 @@
       "summary": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next? Todd Sohn (@Todd_Sohn) Someone told me to hold my beer \u2014 https://nitter.net/Todd_Sohn/status/2088383768545337607#m",
       "publishedAt": "2026-08-14T22:13:40+00:00",
       "publishedTs": 1786745620.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Billionaire Paul Tudor Jones' $106 billion Investment Corporation reports owning $22.9 million of BlackRock's spot Bitcoin ETF \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2088382677200306521#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T21:50:05+00:00",
+      "publishedTs": 1786744205.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 #Bitcoin changes more than your money. It changes how you see the world. \ud83c\udf0e Anja Dragovic, Adam Hudson, Jake Explains & Randi Hipper take the stage at Bitcoin Asia to talk freedom, sovereignty, and thinking from first principles. \ud83d\udd25 August 27 | Nakamoto Stage",
+      "link": "https://x.com/Bitcoinconfasia/status/2088370401894146335#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T21:01:18+00:00",
+      "publishedTs": 1786741278.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: $326 billion Edleman Financial discloses owning $34 million in Bitcoin ETFs \ud83d\udca5",
+      "link": "https://x.com/BitcoinMagazine/status/2088358773005963567#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T20:15:05+00:00",
+      "publishedTs": 1786738505.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -666,6 +939,19 @@
       "isRetweet": false
     },
     {
+      "title": "R to @BitcoinMagazine: MARK YOUR CALENDARS FOR BITCOIN ASIA WHALE NIGHT- AN EVENING OF FIRE & FORTUNE \ud83d\udd25 \ud83d\udccdAugust 27 at Cloud 39 \u2764\ufe0f\u200d\ud83d\udd25Dress to impress in red \ud83c\udf9f\ufe0fWhale pass required LEARN MORE \ud83d\udc47 https://bitcoin-asia-2026-h5kouh32d-btc-media.vercel.app/whale-pass",
+      "link": "https://x.com/BitcoinMagazine/status/2088337256968773640#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "MARK YOUR CALENDARS FOR BITCOIN ASIA WHALE NIGHT- AN EVENING OF FIRE &amp; FORTUNE \ud83d\udd25 \ud83d\udccdAugust 27 at Cloud 39 \u2764\ufe0f\u200d\ud83d\udd25Dress to impress in red \ud83c\udf9f\ufe0fWhale pass required LEARN MORE \ud83d\udc47 bitcoin-asia-2026-h5kouh32d-\u2026",
+      "publishedAt": "2026-08-14T18:49:36+00:00",
+      "publishedTs": 1786733376.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "We are very proud of this recent MBA graduate who recently completed his tuition-free degree with us. \ud83c\udf89 Well done Bhagyaraj!\ud83d\udc4f\ud83d\udc4f\ud83d\udc4f Learn more about our programs here: https://www.saylor.org",
       "link": "https://x.com/saylordotorg/status/2088326119506276676#m",
       "source": "@saylor",
@@ -679,6 +965,19 @@
       "isRetweet": true
     },
     {
+      "title": "JUST IN: Gemini discloses adding 1,689 BTC Bitcoin to their treasury, now totaling 5,528 BTC! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2088321821753884934#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T17:48:16+00:00",
+      "publishedTs": 1786729696.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Spread Bitcoin with love. \ud83e\udde1",
       "link": "https://x.com/saylor/status/2088307832290509049#m",
       "source": "@saylor",
@@ -687,6 +986,58 @@
       "summary": "Spread Bitcoin with love. \ud83e\udde1 Video",
       "publishedAt": "2026-08-14T16:52:40+00:00",
       "publishedTs": 1786726360.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\udde6\ud83c\uddea UAE sovereign wealth funds Mubadala and Abu Dhabi Investment Council report owning a combined $763.7 million of BlackRocks Bitcoin ETF \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2088298762426843184#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-14T16:16:38+00:00",
+      "publishedTs": 1786724198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
+      "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Listen here or on spotify etc.. piped.video/watch?v=Shhv4Er_\u2026 Link 351 Conversions: Smart Tax Alpha Strategy or Loophole in the Code? |... ETFs are already famous for their tax efficiency, but a growing cor... youtube.com",
+      "publishedAt": "2026-08-14T15:20:37+00:00",
+      "publishedTs": 1786720837.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "*new* Trillions on 351 Conversion ETFs, which are custom built funds that allow investors to swap concentrated stock positions into diversified portfolios in order to defer paying gains taxes, and they are growing like crazy. We dissect it all with @zachmider @denitsa_tsekova",
+      "link": "https://x.com/EricBalchunas/status/2088284525386207656#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-14T15:20:03+00:00",
+      "publishedTs": 1786720803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47",
+      "link": "https://x.com/BitcoinMagazine/status/2088279301347033413#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47 Video",
+      "publishedAt": "2026-08-14T14:59:18+00:00",
+      "publishedTs": 1786719558.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -716,19 +1067,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Digital assets are assets. Index providers should measure markets, not decide which assets companies are allowed to own. MSCI\u2019s proposal puts it out of step with regulators, markets, and its own customers. Bitcoin doesn\u2019t need MSCI. Neither does Strategy. $BTC $MSTR",
-      "link": "https://x.com/Strategy/status/2088234192844870091#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-14T12:00:03+00:00",
-      "publishedTs": 1786708803.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac https://frenchbreaches.com/alertes/",
@@ -1522,45 +1860,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     }
   ]
 }
