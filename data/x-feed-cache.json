@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-18T02:53:42Z",
+  "fetchedAt": "2026-08-18T03:42:04Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -40,19 +40,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld https://www.bloomberg.com/news/videos/2026-02-19/etf-drilldown-frdm-video",
-      "link": "https://x.com/Perth_Tolle/status/2089493916634464421#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld bloomberg.com/news/videos/20\u2026 Link Watch ETF Drilldown: FRDM - Bloomberg ETFs focused on emerging-market assets saw a 17th consecutive week of inflows, with investors positioning ",
-      "publishedAt": "2026-08-17T23:25:45+00:00",
-      "publishedTs": 1787009145.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Its Core Weave and everyone else $CRWV",
@@ -211,6 +198,19 @@
       "isRetweet": false
     },
     {
+      "title": "R.I.P 110",
+      "link": "https://x.com/coinjoined/status/2089377488593932365#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "R.I.P 110 Video Jameson Lopp (@lopp) Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. blog.lopp.net/bip-110-post-m\u2026 Link BIP-110 Post Mortem A comprehensiv",
+      "publishedAt": "2026-08-17T15:43:06+00:00",
+      "publishedTs": 1786981386.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "R to @BitcoinMagazine: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
       "link": "https://x.com/BitcoinMagazine/status/2089376329875493115#m",
       "source": "@BitcoinMagazine",
@@ -226,15 +226,15 @@
     {
       "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
       "link": "https://x.com/JSeyff/status/2089376291854143826#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn . We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH &amp; talking white labels w/ @TeucriumETFs",
       "publishedAt": "2026-08-17T15:38:21+00:00",
       "publishedTs": 1786981101.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Ask where bitcoin is and every answer fails. Ask when it is and the answer is block 962,907. Bitcoin is the first thing that exists in time, not space.",
@@ -276,19 +276,6 @@
       "isRetweet": true
     },
     {
-      "title": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well?",
-      "link": "https://x.com/fairplaygov/status/2089362769464168479#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "CME has set a tentative launch date of Sept. 28 for NHL team futures (on which these ETFs are based). Bonus: CME NASCAR futures could be a thing next year as well? Video Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performanc",
-      "publishedAt": "2026-08-17T14:44:37+00:00",
-      "publishedTs": 1786977877.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Aug 10\u2013Aug 16, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Stablecoin supply grew by $40.88M last week, DEX spot volume fell and perp volume fell, while public companies shed 2,501 BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market cap increased by $40.88M. \ud83d\udfe2 Spot & Perps Trading ",
       "link": "https://x.com/lookonchain/status/2089358514213036234#m",
       "source": "@lookonchain",
@@ -310,6 +297,19 @@
       "summary": "August 17 Update: #Bitcoin ETFs: 1D NetFlow: -1,010 $BTC (-$64.25M)\ud83d\udd34 7D NetFlow: -6,631 $BTC (-$421.76M)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: +3,457 $ETH (+$6.58M)\ud83d\udfe2 7D NetFlow: -3,549 $ETH (-$6.75M)\ud83d\udd34",
       "publishedAt": "2026-08-17T14:24:11+00:00",
       "publishedTs": 1786976651.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. https://blog.lopp.net/bip-110-post-mortem/",
+      "link": "https://x.com/lopp/status/2089344628956844410#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. blog.lopp.net/bip-110-post-m\u2026 Link BIP-110 Post Mortem A comprehensive review of the spam debates and BIP-",
+      "publishedAt": "2026-08-17T13:32:32+00:00",
+      "publishedTs": 1786973552.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -536,19 +536,6 @@
       "isRetweet": false
     },
     {
-      "title": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
-      "link": "https://x.com/APompliano/status/2088971220184092727#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
-      "publishedAt": "2026-08-16T12:48:44+00:00",
-      "publishedTs": 1786884524.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d",
       "link": "https://x.com/NeerajKA/status/2088965661439492325#m",
       "source": "@nic_carter",
@@ -560,6 +547,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "Bull Market vs Bear Market",
+      "link": "https://x.com/lopp/status/2088961170279477346#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-16T12:08:48+00:00",
+      "publishedTs": 1786882128.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Over the past year, $BTC fell 47%. Our Digital Credit instruments ranged from -27% to +9%, with $STRC up 9%. Financial engineering can transform volatile Digital Capital into instruments designed for income, stability, and reduced downside risk.",
@@ -575,17 +575,17 @@
       "isRetweet": false
     },
     {
-      "title": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: https://www.cfosilvia.com",
-      "link": "https://x.com/APompliano/status/2088739456014491855#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: cfosilvia.com",
-      "publishedAt": "2026-08-15T21:27:47+00:00",
-      "publishedTs": 1786829267.0,
+      "title": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss.",
+      "link": "https://x.com/lopp/status/2088762228707037524#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss. NewYork HODL (@newyorkhodl) Is ",
+      "publishedAt": "2026-08-15T22:58:17+00:00",
+      "publishedTs": 1786834697.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
@@ -635,6 +635,19 @@
       "summary": "",
       "publishedAt": "2026-08-15T15:56:46+00:00",
       "publishedTs": 1786809406.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "You'll never see me crash out over BIP-361 \ud83d\ude43",
+      "link": "https://x.com/lopp/status/2088652648702411135#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "You'll never see me crash out over BIP-361 \ud83d\ude43 Jameson Lopp (@lopp) It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting ",
+      "publishedAt": "2026-08-15T15:42:51+00:00",
+      "publishedTs": 1786808571.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -692,6 +705,19 @@
       "isRetweet": true
     },
     {
+      "title": "It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting yourself up for failure.",
+      "link": "https://x.com/lopp/status/2088589999704817959#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-15T11:33:54+00:00",
+      "publishedTs": 1786793634.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "We\u2019ve upgraded the $STRC, $STRD, $STRK & $STRF dashboards with BTC Rating, BTC Floor, BTC Floor ARR, Tax-Equivalent Effective Yield & 1Y Sharpe. New tools to evaluate income, credit quality, downside protection & risk-adjusted returns. Explore at https://strategy.com.",
       "link": "https://x.com/saylor/status/2088531228718764347#m",
       "source": "@saylor",
@@ -742,32 +768,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @EricBalchunas: Just out today, feels related:",
-      "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Just out today, feels related: Eric Balchunas (@EricBalchunas) New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a ",
-      "publishedAt": "2026-08-14T22:43:06+00:00",
-      "publishedTs": 1786747386.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
-      "link": "https://x.com/EricBalchunas/status/2088394803033846027#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
-      "publishedAt": "2026-08-14T22:38:16+00:00",
-      "publishedTs": 1786747096.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
@@ -900,32 +900,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Listen here or on spotify etc.. https://www.youtube.com/watch?v=Shhv4Er_pAM",
-      "link": "https://x.com/EricBalchunas/status/2088284666570621287#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Listen here or on spotify etc.. piped.video/watch?v=Shhv4Er_\u2026 Link 351 Conversions: Smart Tax Alpha Strategy or Loophole in the Code? |... ETFs are already famous for their tax efficiency, but a growing cor... youtube.com",
-      "publishedAt": "2026-08-14T15:20:37+00:00",
-      "publishedTs": 1786720837.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "*new* Trillions on 351 Conversion ETFs, which are custom built funds that allow investors to swap concentrated stock positions into diversified portfolios in order to defer paying gains taxes, and they are growing like crazy. We dissect it all with @zachmider @denitsa_tsekova",
-      "link": "https://x.com/EricBalchunas/status/2088284525386207656#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-14T15:20:03+00:00",
-      "publishedTs": 1786720803.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Citi CEO Jane Fraser says she wants the CLARITY Act to become law. \u201cWe would like to see a good bill go through.\u201d Watch \ud83d\udc47",
       "link": "https://x.com/BitcoinMagazine/status/2088279301347033413#m",
       "source": "@BitcoinMagazine",
@@ -976,6 +950,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac https://frenchbreaches.com/alertes/",
+      "link": "https://x.com/lopp/status/2088228346270237117#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac frenchbreaches.com/alertes/d\u2026 Link ",
+      "publishedAt": "2026-08-14T11:36:49+00:00",
+      "publishedTs": 1786707409.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet.",
@@ -1056,6 +1043,32 @@
       "isRetweet": false
     },
     {
+      "title": "How to Buy a Hardware Wallet Privately",
+      "link": "https://x.com/bc1gui/status/2087986055890809087#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Article How to Buy a Hardware Wallet Privately Trezor\u2019s latest customer-data leak is a good reason to rethink how we buy hardware wallets. We have seen customer information leak from this industry before, and I think the safest assumption is that",
+      "publishedAt": "2026-08-13T19:34:03+00:00",
+      "publishedTs": 1786649643.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "how it started vs how it's going",
+      "link": "https://x.com/lopp/status/2087979914716659733#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-13T19:09:39+00:00",
+      "publishedTs": 1786648179.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "NEW filing for five ETFs from Silvia, @APompliano's co: 1. Anti-Money Printer ETF (bitcoin, gold, land, guns) 2. Bitcoin Treasury mNAV Discount ETF 3. Jensen Interview ETF (holds cos that Jensen Huang mentions in intvs over past 30days) 4. Elon Must ETF (holds Tesla, spaceX and 1",
       "link": "https://x.com/EricBalchunas/status/2087960030440050807#m",
       "source": "@JSeyff",
@@ -1121,6 +1134,32 @@
       "isRetweet": false
     },
     {
+      "title": "Do you think bitcoin self custody is too risky? Truly I tell you, third party custody is just self custody with extra layers of risk.",
+      "link": "https://x.com/lopp/status/2087892465474732284#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-13T13:22:09+00:00",
+      "publishedTs": 1786627329.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Agentic coding is a leap toward a Star Trek future in which you can simply say \"Computer, do ___\" and it executes an arbitrarily complex task. We just need to make it a few orders of magnitude faster and insert tons of safeguards.",
+      "link": "https://x.com/lopp/status/2087883656341635393#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-13T12:47:09+00:00",
+      "publishedTs": 1786625229.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bitcoin Achieves 555,555,555 Seconds Online",
       "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
       "source": "@DocumentingBTC",
@@ -1147,6 +1186,19 @@
       "isRetweet": true
     },
     {
+      "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
+      "link": "https://x.com/lopp/status/2087569824343884142#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all! Jameson Lopp (@lopp) An inevitable development: people who buy houses formerly owned by wealthy bitcoiners ",
+      "publishedAt": "2026-08-12T16:00:05+00:00",
+      "publishedTs": 1786550405.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Unitree Robotics: The IPO Primer",
       "link": "https://x.com/RoboStrategy/status/2087561451468681234#m",
       "source": "@nic_carter",
@@ -1160,6 +1212,32 @@
       "isRetweet": true
     },
     {
+      "title": "We\u2019re excited to have @lopp from @CasaHODL, part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: https://cryptoconsortium.org/c4-security-summit",
+      "link": "https://x.com/LearnMoreWithC4/status/2087550276538450332#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "We\u2019re excited to have @lopp from @CasaHODL , part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: cryptoconsortium.org/c4-secu\u2026",
+      "publishedAt": "2026-08-12T14:42:25+00:00",
+      "publishedTs": 1786545745.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. https://www.ici.fr/hauts-de-france/somme-80/g",
+      "link": "https://x.com/lopp/status/2087491508739899616#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. ici.fr/hauts-de-france/somme\u2026 Link Somme : un",
+      "publishedAt": "2026-08-12T10:48:54+00:00",
+      "publishedTs": 1786531734.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years",
       "link": "https://x.com/nic_carter/status/2087353502343258366#m",
       "source": "@nic_carter",
@@ -1168,6 +1246,84 @@
       "summary": "Remember when the doomers and bubble callers were absolutely adamant GPUs had to be depreciated over 3 years Rittenhouse Research (@RHouseResearch) CoreWeave $CRWV : We recently signed an A-100 contract that extends into 2029. This SKU was introduced in 2020. \u2014 https://nitter.net",
       "publishedAt": "2026-08-12T01:40:30+00:00",
       "publishedTs": 1786498830.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "C4 Security Summit! \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM Eastern \ud83d\udcbb Free Live Virtual Event Registration Required: https://cryptoconsortium.org/c4summit Hear from industry experts, with a keynote from @lopp",
+      "link": "https://x.com/LearnMoreWithC4/status/2087247375584616467#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "C4 Security Summit! \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM Eastern \ud83d\udcbb Free Live Virtual Event Registration Required: cryptoconsortium.org/c4summi\u2026 Hear from industry experts, with a keynote from @lopp",
+      "publishedAt": "2026-08-11T18:38:48+00:00",
+      "publishedTs": 1786473528.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The tree of BTC must be refreshed from time to time with the tears of delulus and tyrants.",
+      "link": "https://x.com/lopp/status/2087246282641293765#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-11T18:34:27+00:00",
+      "publishedTs": 1786473267.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "At @CasaHODL we have been running automated security audits across our code for several months with frontier LLMs. In this post I explain how our pentest harness works at a high level. https://blog.casa.io/how-built-reliable-ai-pentest/",
+      "link": "https://x.com/lopp/status/2087188724756942965#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "At @CasaHODL we have been running automated security audits across our code for several months with frontier LLMs. In this post I explain how our pentest harness works at a high level. blog.casa.io/how-built-relia\u2026 Link How We Built a Reliable AI Pentester How Casa has automated ",
+      "publishedAt": "2026-08-11T14:45:44+00:00",
+      "publishedTs": 1786459544.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "bahahahahahahaha haaaaaaaaaaaaaaaaaaaaaaaaa dumbest phishing attempt ever!",
+      "link": "https://x.com/lopp/status/2086966435444600922#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-11T00:02:26+00:00",
+      "publishedTs": 1786406546.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\"And as ye would that men should do to you, do ye also to them likewise.\" Luke 6:31",
+      "link": "https://x.com/lopp/status/2086929220559573072#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T21:34:34+00:00",
+      "publishedTs": 1786397674.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin's immune system is purging itself of cancerous cells.",
+      "link": "https://x.com/lopp/status/2086909325038006491#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-10T20:15:30+00:00",
+      "publishedTs": 1786392930.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
