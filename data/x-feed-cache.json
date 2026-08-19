@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-19T22:22:25Z",
+  "fetchedAt": "2026-08-19T23:20:38Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Money printer goes brrrrrrrrr",
+      "link": "https://x.com/lopp/status/2090207172596519081#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-19T22:39:58+00:00",
+      "publishedTs": 1787179198.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A bitcoin company CEO made a crypto speech today at the White House next to President Trump",
+      "link": "https://x.com/DocumentingBTC/status/2090203874317459888#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "A bitcoin company CEO made a crypto speech today at the White House next to President Trump Video",
+      "publishedAt": "2026-08-19T22:26:52+00:00",
+      "publishedTs": 1787178412.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On a livestream yesterday, Michael Saylor answered hard questions from his investors",
+      "link": "https://x.com/DocumentingBTC/status/2090200606023483446#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "On a livestream yesterday, Michael Saylor answered hard questions from his investors Video",
+      "publishedAt": "2026-08-19T22:13:53+00:00",
+      "publishedTs": 1787177633.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "True North Episode 77: We're So (Buy)Back https://x.com/i/broadcasts/1NxaroDwpXEKj",
       "link": "https://x.com/TNorth/status/2090197131743334616#m",
@@ -16,14 +55,14 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Bitcoin surges to $70,000 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090194066608673215#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T21:47:54+00:00",
-      "publishedTs": 1787176074.0,
+      "title": "I sat with @JohnPompliano to discuss the state of bitcoin, why the price has stabilized, and what it will take to spark the next bull run. We also break down the exploding cost of AI adoption inside businesses, the national debt problem no President seems willing to fix, and wher",
+      "link": "https://x.com/APompliano/status/2090189366291493064#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I sat with @JohnPompliano to discuss the state of bitcoin, why the price has stabilized, and what it will take to spark the next bull run. We also break down the exploding cost of AI adoption inside businesses, the national debt problem no President seems willing to fix, and wher",
+      "publishedAt": "2026-08-19T21:29:13+00:00",
+      "publishedTs": 1787174953.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -40,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "My guest on the Karol Markowicz Show today is @nic_carter! We talk moving from journalism to venture capital, what AI will mean for personal relationships, why red states will continue to dominate, and so much more. Listen anywhere you get podcasts: https://omny.fm/shows/the-karo",
+      "link": "https://x.com/karol/status/2090182832802894180#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "My guest on the Karol Markowicz Show today is @nic_carter ! We talk moving from journalism to venture capital, what AI will mean for personal relationships, why red states will continue to dominate, and so much more. Listen anywhere you get podcasts: omny.fm/shows/the-karol-mark\u2026",
+      "publishedAt": "2026-08-19T21:03:15+00:00",
+      "publishedTs": 1787173395.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "President Trump says, \u201cIf you came in with recommendations, I would certainly listen\u201d to accumulating a sizable amount of bitcoin",
@@ -94,19 +146,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Trump says \"We need Congress to take the next step by passing The Clarity Act.\" \"And this landmark structure legislation is very, very powerful structure which will keep us ahead of China, keep us ahead of everyone else.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2090158993842872335#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Trump says \"We need Congress to take the next step by passing The Clarity Act.\" \"And this landmark structure legislation is very, very powerful structure which will keep us ahead of China, keep us ahead of everyone else.\" Video",
-      "publishedAt": "2026-08-19T19:28:32+00:00",
-      "publishedTs": 1787167712.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin has no way to recognize an \u201cimportant\u201d person. A block follows the rules or it does not.",
       "link": "https://x.com/DocumentingBTC/status/2090141036714631313#m",
       "source": "@DocumentingBTC",
@@ -115,32 +154,6 @@
       "summary": "",
       "publishedAt": "2026-08-19T18:17:10+00:00",
       "publishedTs": 1787163430.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Bitcoin seller exhaustion reaches a 10 year low as Bitcoin pumps above $68,000 \ud83d\udc40 Bullish \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090133870385525169#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T17:48:42+00:00",
-      "publishedTs": 1787161722.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "What a violent move upward that was violently rejected by the 200-day average (for now?)",
-      "link": "https://x.com/JSeyff/status/2090126269090328934#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "What a violent move upward that was violently rejected by the 200-day average (for now?) Byzantine General (@ByzGeneral) Uhhhhhh........... This might be the single biggest daily shorts liquidation event in bitcoin's history \ud83d\ude33 \u2014 https://nitter.net/ByzGeneral/status/20901042063130",
-      "publishedAt": "2026-08-19T17:18:29+00:00",
-      "publishedTs": 1787159909.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -185,19 +198,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: There's now a 76% chance Bitcoin will be above $70,000 this month, according to Polymarket\u2060.com \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090115973185462417#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T16:37:35+00:00",
-      "publishedTs": 1787157455.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: This thing is an absolutely nightmare It\u2019s not even fraud, it\u2019s worse Industrial scale shoveling of taxpayer cash into places it doesn\u2019t belong, with no oversight or controls by design",
       "link": "https://x.com/nic_carter/status/2090112363576062381#m",
       "source": "@nic_carter",
@@ -237,40 +237,14 @@
       "isRetweet": true
     },
     {
-      "title": "BREAKING: Bitcoin pumps above $69,000! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090098535551119853#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T15:28:17+00:00",
-      "publishedTs": 1787153297.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: $67,207 Bitcoin! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090097671990091878#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T15:24:51+00:00",
-      "publishedTs": 1787153091.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Bitcoin pumps to $66,000 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090091785724784655#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T15:01:28+00:00",
-      "publishedTs": 1787151688.0,
+      "title": "In just the past hour, $1.13B in shorts were liquidated! 0x8c96 had his entire 1,800 $BTC($117M) short liquidated today. 0x431f was completely wiped out, with 677 $BTC ($44M) liquidated. 0x004e was completely wiped out, with 500 $BTC ($33M) liquidated. https://hypurrscan.io/addre",
+      "link": "https://x.com/lookonchain/status/2090103868197925371#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "In just the past hour, $1.13B in shorts were liquidated! 0x8c96 had his entire 1,800 $BTC ($117M) short liquidated today. 0x431f was completely wiped out, with 677 $BTC ($44M) liquidated. 0x004e was completely wiped out, with 500 $BTC ($33M) liquidated. hypurrscan.io/address/0x8c",
+      "publishedAt": "2026-08-19T15:49:29+00:00",
+      "publishedTs": 1787154569.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -287,6 +261,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "August 19 Update: #Bitcoin ETFs: 1D NetFlow: +3,134 $BTC(+$204.36M)\ud83d\udfe2 7D NetFlow: +3,413 $BTC(+$222.5M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +34,698 $ETH(+$67.17M)\ud83d\udfe2 7D NetFlow: +57,917 $ETH(+$112.12M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2090089164087972076#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 19 Update: #Bitcoin ETFs: 1D NetFlow: +3,134 $BTC (+$204.36M)\ud83d\udfe2 7D NetFlow: +3,413 $BTC (+$222.5M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +34,698 $ETH (+$67.17M)\ud83d\udfe2 7D NetFlow: +57,917 $ETH (+$112.12M)\ud83d\udfe2",
+      "publishedAt": "2026-08-19T14:51:03+00:00",
+      "publishedTs": 1787151063.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Top non-index buyers: Goldman Sachs $407M, Capital International $346M, Jane Street Capital $247M, HRT Financial $137M, Wells Fargo Securities $132M, Susquehanna International Group $124M, Capula Investment Management $100M.",
@@ -315,14 +302,14 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 President Trump to host crypto officials at the White House today, according the President's official schedule. White House crypto advisor Patrick Witt and SEC Chair Paul Atkins are also expected to attend, Reuters reports \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2090070706675470369#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T13:37:42+00:00",
-      "publishedTs": 1787146662.0,
+      "title": "Gambler 0x8c96 was partially liquidated for 288 $BTC($18.74M) again. Current position: 1,152 $BTC($74.7M) New liquidation price: $65,232.47",
+      "link": "https://x.com/lookonchain/status/2090070917804388558#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Gambler 0x8c96 was partially liquidated for 288 $BTC ($18.74M) again. Current position: 1,152 $BTC ($74.7M) New liquidation price: $65,232.47 Lookonchain (@lookonchain) BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ",
+      "publishedAt": "2026-08-19T13:38:33+00:00",
+      "publishedTs": 1787146713.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -352,19 +339,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: Fidelity Digital Assets says \"BTC volatility is now lower than ~98.5% of all days in its history.\" \ud83d\udc40 \"Think of it like a coiled spring: The longer volatility remains compressed, the greater potential for a meaningful move once it breaks.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090054174511608026#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T12:32:01+00:00",
-      "publishedTs": 1787142721.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "i woke up at 3 am and couldn't sleep thinking about how completely bananas California's IHSS is from top to bottom. longer writeup coming soon",
@@ -419,19 +393,6 @@
       "isRetweet": false
     },
     {
-      "title": "EXPERIENCE THE WHALE PASS \ud83d\ude80 Get access to: \u2705 The Deep VIP lounge \u2705 Whale night & exclusive parties \u2705 High profile networking \u2705 Whale only content sessions ... and so much more \ud83d\udc40",
-      "link": "https://x.com/Bitcoinconfasia/status/2089975684202401892#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "EXPERIENCE THE WHALE PASS \ud83d\ude80 Get access to: \u2705 The Deep VIP lounge \u2705 Whale night &amp; exclusive parties \u2705 High profile networking \u2705 Whale only content sessions ... and so much more \ud83d\udc40 Video",
-      "publishedAt": "2026-08-19T07:20:07+00:00",
-      "publishedTs": 1787124007.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a m",
       "link": "https://x.com/nic_carter/status/2089932957029109887#m",
       "source": "@nic_carter",
@@ -456,19 +417,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "HEAD OF MINING AT CYPHERPUNK KEVIN ZHANG TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"Maybe going to the moon was too conservative. We should aim for Mars. It\u2019s more orange anyway.\" \ud83d\ude80",
-      "link": "https://x.com/Bitcoinconfasia/status/2089895253583003860#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-19T02:00:31+00:00",
-      "publishedTs": 1787104831.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "On this day in history, 18 years ago, Satoshi Nakamoto created the first website about Bitcoin",
@@ -497,32 +445,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: About 43,000 Bitcoin worth $2.7 billion has been bought over the past 60 days by large holders, Bloomberg reports. \ud83d\udc40 Bullish \ud83d\udc02",
-      "link": "https://x.com/BitcoinMagazine/status/2089821498106122507#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-18T21:07:26+00:00",
-      "publishedTs": 1787087246.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "FIRESIDE ANNOUNCEMENT \ud83d\udce3 #Bitcoin has grown into a global force influencing markets, institutions, and nations. But what comes next? \ud83d\udc40 CZ joins Kevin Follonier to explore how global adoption, geopolitics, and AI could shape the next chapter. \ud83d\udc4f Aug 27 | 3 PM | Nakamoto Stage",
-      "link": "https://x.com/Bitcoinconfasia/status/2089820530782376186#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-18T21:03:36+00:00",
-      "publishedTs": 1787087016.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "every blue state governor will instantly roll over to the conspiracy/degrowth crowd. too easy. as I keep saying, data centers on a go-forward basis will just be a red state thing. red state politicians shouldn't let insane degrowth leftists poison the well.",
       "link": "https://x.com/nic_carter/status/2089816449246240859#m",
       "source": "@nic_carter",
@@ -531,32 +453,6 @@
       "summary": "every blue state governor will instantly roll over to the conspiracy/degrowth crowd. too easy. as I keep saying, data centers on a go-forward basis will just be a red state thing. red state politicians shouldn't let insane degrowth leftists poison the well. Governor Josh Shapiro ",
       "publishedAt": "2026-08-18T20:47:23+00:00",
       "publishedTs": 1787086043.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman says \"As the Crypto Capital of the World, the U.S. must and will lead.\" \"With our new proposal, the SEC is taking the most historic step yet to modernize federal securities regulations for crypto assets.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2089804924620062948#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman says \"As the Crypto Capital of the World, the U.S. must and will lead.\" \"With our new proposal, the SEC is taking the most historic step yet to modernize federal securities regulations for crypto assets.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-18T20:01:35+00:00",
-      "publishedTs": 1787083295.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinMagazine: BITCOIN ASIA PRICES INCREASE IN 3 DAYS \ud83d\ude80 Get your passes TODAY at the lower price and save before door prices\ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2089804341746012370#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BITCOIN ASIA PRICES INCREASE IN 3 DAYS \ud83d\ude80 Get your passes TODAY at the lower price and save before door prices\ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
-      "publishedAt": "2026-08-18T19:59:16+00:00",
-      "publishedTs": 1787083156.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -575,32 +471,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Bitcoin as 'Digital Real Estate' \ud83c\udfe1 Explore how Bitcoin can be understood as digital real estate, combining absolute scarcity, global portability, and a growing economic network to create a new framework for storing and transferring value. Read now \ud83d\udc49 https:/",
-      "link": "https://x.com/BitcoinMagazine/status/2089795377885049246#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Bitcoin as 'Digital Real Estate' \ud83c\udfe1 Explore how Bitcoin can be understood as digital real estate, combining absolute scarcity, global portability, and a growing economic network to create a new framework for storing and transferring value. Read now \ud83d\udc49 bitcoinmagazine.com/bitcoin-\u2026",
-      "publishedAt": "2026-08-18T19:23:39+00:00",
-      "publishedTs": 1787081019.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC proposes new \"Regulation Crypto Assets\" rules to create a framework for investment contracts involving crypto assets \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2089787721682182381#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-18T18:53:13+00:00",
-      "publishedTs": 1787079193.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "12 of the Top 15 institutional shareholders of $MSTR added to their positions in Q2 2026. Combined holdings increased $1.2B.",
       "link": "https://x.com/Strategy/status/2089784456475287712#m",
       "source": "@saylor",
@@ -609,19 +479,6 @@
       "summary": "",
       "publishedAt": "2026-08-18T18:40:15+00:00",
       "publishedTs": 1787078415.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "We're launching BMTV Announcement coming Thursday \ud83d\udc40",
-      "link": "https://x.com/watchbmtv/status/2089782972027162895#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "We're launching BMTV Announcement coming Thursday \ud83d\udc40 Video",
-      "publishedAt": "2026-08-18T18:34:21+00:00",
-      "publishedTs": 1787078061.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -666,19 +523,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\udde8\ud83c\uddf3 Publicly traded Chinese company Zhibao Technology creates treasury Bitcoin reserve of 2,380 BTC \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2089745898121162975#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-18T16:07:02+00:00",
-      "publishedTs": 1787069222.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "R to @nic_carter: It\u2019s the exact same debate we had around Bitcoin mining The degrowth left has ALREADY DECIDED that using scarce resources for AI is illegitimate Any resources employed, no matter what the benefit, no matter how efficiently used, are illegitimate to them You cann",
       "link": "https://x.com/nic_carter/status/2089737751906472149#m",
       "source": "@nic_carter",
@@ -705,6 +549,32 @@
       "isRetweet": false
     },
     {
+      "title": "BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ($23.36M) liquidated. Current position: 1,440 $BTC($93.3M) New liquidation price: $65,041.72 https://hypurrscan.io/address/0x8c96e5a2d770f9f2c9d2464ce4e741df0b2bca57#per",
+      "link": "https://x.com/lookonchain/status/2089723886959202753#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ($23.36M) liquidated. Current position: 1,440 $BTC ($93.3M) New liquidation price: $65,041.72 hypurrscan.io/address/0x8c96\u2026",
+      "publishedAt": "2026-08-18T14:39:34+00:00",
+      "publishedTs": 1787063974.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The Royal Government of Bhutan keeps selling $BTC. It transferred another 300 $BTC($19.28M) to a new wallet 2 hours ago. https://arkm.com/explorer/entity/druk-holding-investments",
+      "link": "https://x.com/lookonchain/status/2089720101432164726#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The Royal Government of Bhutan keeps selling $BTC . It transferred another 300 $BTC ($19.28M) to a new wallet 2 hours ago. arkm.com/explorer/entity/dru\u2026",
+      "publishedAt": "2026-08-18T14:24:31+00:00",
+      "publishedTs": 1787063071.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time.",
       "link": "https://x.com/Rob1Ham/status/2089717836855873774#m",
       "source": "@lopp",
@@ -716,6 +586,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "August 18 Update: #Bitcoin ETFs: 1D NetFlow: +4,436 $BTC(+$284.05M)\ud83d\udfe2 7D NetFlow: +13 $BTC(+$819.51K)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +16,091 $ETH(+$30.46M)\ud83d\udfe2 7D NetFlow: +27,042 $ETH(+$51.19M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2089715812395618384#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 18 Update: #Bitcoin ETFs: 1D NetFlow: +4,436 $BTC (+$284.05M)\ud83d\udfe2 7D NetFlow: +13 $BTC (+$819.51K)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +16,091 $ETH (+$30.46M)\ud83d\udfe2 7D NetFlow: +27,042 $ETH (+$51.19M)\ud83d\udfe2",
+      "publishedAt": "2026-08-18T14:07:29+00:00",
+      "publishedTs": 1787062049.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Welcome Back to The Hurdle Rate Episode 70: Digital Credit Is The Product In this week\u2019s Hurdle Rate, the crew reacts to Strategy\u2019s $MSTR latest investor Q&A and breaks down why the company is prioritizing $STRC, building cash reserves, and treating Bitcoin $BTC as flexible capit",
@@ -809,19 +692,6 @@
       "isRetweet": true
     },
     {
-      "title": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
-      "link": "https://x.com/VistaSharesX/status/2089688013106204770#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Great to join @scarletfu and @JSeyff on Bloomberg's ETF IQ to talk about OMAH. One theme from the conversation: over the past year, OMAH has outpaced Berkshire Hathaway's own shares while paying monthly income, in a stretch when Berkshire stock was roughly flat to down. The desig",
-      "publishedAt": "2026-08-18T12:17:01+00:00",
-      "publishedTs": 1787055421.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The Physics of Money Every monetary instrument has a natural frequency \u2014 the time you need to hold it to use it as money. Digital Capital: ~4 years Digital Credit: ~4 months Digital Money: ~4 days Digital Currency: ~4 hours",
       "link": "https://x.com/saylor/status/2089652470083363100#m",
       "source": "@saylor",
@@ -846,6 +716,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "Riot Platforms(@RiotPlatforms) keeps selling $BTC. In the first half of 2026, Riot Platforms sold a total of 9,665 $BTC ($732.46M) at an average price of $75,785. https://arkm.com/explorer/entity/riot-platforms https://www.sec.gov/ix?doc=/Archives/edgar/data/0001167419/0001104659",
+      "link": "https://x.com/lookonchain/status/2089531746836693162#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Riot Platforms( @RiotPlatforms ) keeps selling $BTC . In the first half of 2026, Riot Platforms sold a total of 9,665 $BTC ($732.46M) at an average price of $75,785. arkm.com/explorer/entity/rio\u2026 sec.gov/ix?doc=/Archives/edg\u2026",
+      "publishedAt": "2026-08-18T01:56:04+00:00",
+      "publishedTs": 1787018164.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "This is a delightfully thorough postmortem of BIP-110, and the silly & obviously-broken lines of thinking its supporters espoused. Complete with tons of receipts:",
@@ -1186,32 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
-      "link": "https://x.com/DocumentingBTC/status/2088711245436207204#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-15T19:35:41+00:00",
-      "publishedTs": 1786822541.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A bitcoin wallet seed phrase can be hidden in your backyard garden with twelve dirt beds, all planted in a chosen order, each one standing for a word. A thief could walk through the middle of a family\u2019s fortune and only admire the flowers.",
-      "link": "https://x.com/DocumentingBTC/status/2088668103726993613#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-15T16:44:16+00:00",
-      "publishedTs": 1786812256.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "You'll never see me crash out over BIP-361 \ud83d\ude43",
       "link": "https://x.com/lopp/status/2088652648702411135#m",
       "source": "@lopp",
@@ -1264,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn",
-      "link": "https://x.com/sumitroy2/status/2088433007569055867#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Pretty soon you\u2019ll be able to buy an ETF that goes up every time your favorite hockey team scores. h/t @JSeyff @Todd_Sohn Video",
-      "publishedAt": "2026-08-15T01:10:04+00:00",
-      "publishedTs": 1786756204.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @EricBalchunas: Just out today, feels related:",
       "link": "https://x.com/EricBalchunas/status/2088396020358987965#m",
       "source": "@ericbalchunas",
@@ -1298,32 +1142,6 @@
       "summary": "New filing for NHL hockey ETFs from VolShares, which will track the performance of 32 dif teams (eg the Boston Bruins ETF) which will be based on how the team does (eg wins, losses in reg season and playoffs) using a special team index calc that has futures contract on it. Wow. G",
       "publishedAt": "2026-08-14T22:38:16+00:00",
       "publishedTs": 1786747096.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next?",
-      "link": "https://x.com/JSeyff/status/2088388613968900257#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "WOW: Volatility shares @VolShares just filed an ETF for every NHL team... have to assume they are gonna file for NFL and MLB teams next? Todd Sohn (@Todd_Sohn) Someone told me to hold my beer \u2014 https://nitter.net/Todd_Sohn/status/2088383768545337607#m",
-      "publishedAt": "2026-08-14T22:13:40+00:00",
-      "publishedTs": 1786745620.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bull market things",
-      "link": "https://x.com/JSeyff/status/2088350690569531878#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Bull market things Todd Sohn (@Todd_Sohn) Let's recap the week in new ETF registrations: -AI Secret Ingredients -Jensen Huang Interviews -Human Enhancement -Bulldogs (woof woof!) -Magnificent Six -Anti-Money Printers -2x Triple Threat Memory -Space Data Centers Let the good times",
-      "publishedAt": "2026-08-14T19:42:58+00:00",
-      "publishedTs": 1786736578.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1394,6 +1212,19 @@
       "isRetweet": false
     },
     {
+      "title": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats, @HRF, @MaelstromFund, @btrustteam, and @cakewallet for making the work possible. Start here: https://crates.io/crates/payjoin https://github.com/payjoin/rust-payjoin/tree/master/payjoin-cli#quick-start",
+      "link": "https://x.com/payjoindevkit/status/2087589799452631546#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats , @HRF , @MaelstromFund , @btrustteam , and @cakewallet for making the work possible. Start here: crates.io/crates/payjoin github.com/payjoin/rust-payj\u2026",
+      "publishedAt": "2026-08-12T17:19:28+00:00",
+      "publishedTs": 1786555168.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
       "link": "https://x.com/lopp/status/2087569824343884142#m",
       "source": "@lopp",
@@ -1407,14 +1238,27 @@
       "isRetweet": false
     },
     {
-      "title": "We\u2019re excited to have @lopp from @CasaHODL, part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: https://cryptoconsortium.org/c4-security-summit",
-      "link": "https://x.com/LearnMoreWithC4/status/2087550276538450332#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "We\u2019re excited to have @lopp from @CasaHODL , part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: cryptoconsortium.org/c4-secu\u2026",
-      "publishedAt": "2026-08-12T14:42:25+00:00",
-      "publishedTs": 1786545745.0,
+      "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
+      "link": "https://x.com/CryptoHayes/status/2084806878413099165#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
+      "publishedAt": "2026-08-05T01:01:08+00:00",
+      "publishedTs": 1785891668.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Maelstrom is pleased to announce that Tadge Dryja (https://github.com/adiabat/) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
+      "link": "https://x.com/MaelstromFund/status/2077048928378470901#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "Maelstrom is pleased to announce that Tadge Dryja ( github.com/adiabat/ ) is the 6th recipient of the Maelstrom Bitcoin Grant Program",
+      "publishedAt": "2026-07-14T15:13:48+00:00",
+      "publishedTs": 1784042028.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
