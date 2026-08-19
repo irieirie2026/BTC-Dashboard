@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-19T17:24:36Z",
+  "fetchedAt": "2026-08-19T18:32:39Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "Bitcoin has no way to recognize an \u201cimportant\u201d person. A block follows the rules or it does not.",
+      "link": "https://x.com/DocumentingBTC/status/2090141036714631313#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-19T18:17:10+00:00",
+      "publishedTs": 1787163430.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Bitcoin seller exhaustion reaches a 10 year low as Bitcoin pumps above $68,000 \ud83d\udc40 Bullish \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2090133870385525169#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-19T17:48:42+00:00",
+      "publishedTs": 1787161722.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "What a violent move upward that was violently rejected by the 200-day average (for now?)",
       "link": "https://x.com/JSeyff/status/2090126269090328934#m",
@@ -68,6 +94,19 @@
       "isRetweet": false
     },
     {
+      "title": "R to @nic_carter: This thing is an absolutely nightmare It\u2019s not even fraud, it\u2019s worse Industrial scale shoveling of taxpayer cash into places it doesn\u2019t belong, with no oversight or controls by design",
+      "link": "https://x.com/nic_carter/status/2090112363576062381#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "This thing is an absolutely nightmare It\u2019s not even fraud, it\u2019s worse Industrial scale shoveling of taxpayer cash into places it doesn\u2019t belong, with no oversight or controls by design",
+      "publishedAt": "2026-08-19T16:23:14+00:00",
+      "publishedTs": 1787156594.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bitcoin is classified information.",
       "link": "https://x.com/saylor/status/2090109106791092320#m",
       "source": "@saylor",
@@ -79,6 +118,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "\ud83d\udea8NEW: On stage at @SALTConference in Wyoming, @USComptroller says digital asset chartering activity has increased eightfold since the Biden administration, calling the previous administration\u2019s effort to eliminate risk \u201cextremely shortsighted.\u201d He says the OCC expects to finalize",
+      "link": "https://x.com/EleanorTerrett/status/2090108776103968963#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "\ud83d\udea8NEW: On stage at @SALTConference in Wyoming, @USComptroller says digital asset chartering activity has increased eightfold since the Biden administration, calling the previous administration\u2019s effort to eliminate risk \u201cextremely shortsighted.\u201d He says the OCC expects to finalize",
+      "publishedAt": "2026-08-19T16:08:59+00:00",
+      "publishedTs": 1787155739.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "In just the past hour, $1.13B in shorts were liquidated! 0x8c96 had his entire 1,800 $BTC($117M) short liquidated today. 0x431f was completely wiped out, with 677 $BTC ($44M) liquidated. 0x004e was completely wiped out, with 500 $BTC ($33M) liquidated. https://hypurrscan.io/addre",
@@ -250,14 +302,27 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: BEHIND THE CURTAIN: FORMER @citrea_xyz DEVELOPER @otaliptus BREAKS SILENCE ABOUT ROLE IN OP_RETURN WAR IN TELL-ALL INTERVIEW WITH @TheGuySwann",
-      "link": "https://x.com/lopp/status/2090033498883035230#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "BEHIND THE CURTAIN: FORMER @citrea_xyz DEVELOPER @otaliptus BREAKS SILENCE ABOUT ROLE IN OP_RETURN WAR IN TELL-ALL INTERVIEW WITH @TheGuySwann Video",
-      "publishedAt": "2026-08-19T11:09:51+00:00",
-      "publishedTs": 1787137791.0,
+      "title": "i woke up at 3 am and couldn't sleep thinking about how completely bananas California's IHSS is from top to bottom. longer writeup coming soon",
+      "link": "https://x.com/nic_carter/status/2090048729810174220#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "i woke up at 3 am and couldn't sleep thinking about how completely bananas California's IHSS is from top to bottom. longer writeup coming soon nic carter (@nic_carter) What people don\u2019t understand is that NY and CA have industrialized \u201ccarefare\u201d - effectively Medicaid funded welf",
+      "publishedAt": "2026-08-19T12:10:23+00:00",
+      "publishedTs": 1787141423.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I think a non-negligible component of the data center backlash comes from people having imagined that the internet was a weightless thing that lived in \"the cloud\" They are now learning that the internet requires physical infrastructure, cooling, and power, and they are upset abo",
+      "link": "https://x.com/nic_carter/status/2090019974270128317#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I think a non-negligible component of the data center backlash comes from people having imagined that the internet was a weightless thing that lived in \"the cloud\" They are now learning that the internet requires physical infrastructure, cooling, and power, and they are upset abo",
+      "publishedAt": "2026-08-19T10:16:07+00:00",
+      "publishedTs": 1787134567.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -287,6 +352,32 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "R to @nic_carter: There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a m",
+      "link": "https://x.com/nic_carter/status/2089932957029109887#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a majority of which i",
+      "publishedAt": "2026-08-19T04:30:20+00:00",
+      "publishedTs": 1787113820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "What people don\u2019t understand is that NY and CA have industrialized \u201ccarefare\u201d - effectively Medicaid funded welfare. It\u2019s all ultimately paid for by the federal taxpayer, since these states will go bk and will have to be bailed out. The program is a way to pay affinity client gro",
+      "link": "https://x.com/nic_carter/status/2089930914885456180#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "What people don\u2019t understand is that NY and CA have industrialized \u201ccarefare\u201d - effectively Medicaid funded welfare. It\u2019s all ultimately paid for by the federal taxpayer, since these states will go bk and will have to be bailed out. The program is a way to pay affinity client gro",
+      "publishedAt": "2026-08-19T04:22:13+00:00",
+      "publishedTs": 1787113333.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "HEAD OF MINING AT CYPHERPUNK KEVIN ZHANG TO SPEAK AT BITCOIN ASIA 2026 \ud83c\udded\ud83c\uddf0 \"Maybe going to the moon was too conservative. We should aim for Mars. It\u2019s more orange anyway.\" \ud83d\ude80",
@@ -352,6 +443,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "every blue state governor will instantly roll over to the conspiracy/degrowth crowd. too easy. as I keep saying, data centers on a go-forward basis will just be a red state thing. red state politicians shouldn't let insane degrowth leftists poison the well.",
+      "link": "https://x.com/nic_carter/status/2089816449246240859#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "every blue state governor will instantly roll over to the conspiracy/degrowth crowd. too easy. as I keep saying, data centers on a go-forward basis will just be a red state thing. red state politicians shouldn't let insane degrowth leftists poison the well. Governor Josh Shapiro ",
+      "publishedAt": "2026-08-18T20:47:23+00:00",
+      "publishedTs": 1787086043.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman says \"As the Crypto Capital of the World, the U.S. must and will lead.\" \"With our new proposal, the SEC is taking the most historic step yet to modernize federal securities regulations for crypto assets.\" \ud83d\udc4f",
@@ -471,32 +575,6 @@
       "isRetweet": true
     },
     {
-      "title": "Preppers shouldn't neglect cyber prepping in addition to analog survival skills & resources. I myself load hard drives with a wikipedia archive and educational media. We're at the point now that you should probably also throw in the most powerful open LLMs you can grab.",
-      "link": "https://x.com/lopp/status/2089760832242487596#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Preppers shouldn't neglect cyber prepping in addition to analog survival skills &amp; resources. I myself load hard drives with a wikipedia archive and educational media. We're at the point now that you should probably also throw in the most powerful open LLMs you can grab.",
-      "publishedAt": "2026-08-18T17:06:22+00:00",
-      "publishedTs": 1787072782.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bring your own hardware. Multi-vendor multisig with your Ledger.",
-      "link": "https://x.com/CasaHODL/status/2089753590122623295#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Bring your own hardware. Multi-vendor multisig with your Ledger. Hpayne (@hpayne_writer) How to get started with multi-vendor multisig using the Ledger hardware wallet you have in the drawer at home with @CasaHODL . Video \u2014 https://nitter.net/hpayne_writer/status/2089753087947014",
-      "publishedAt": "2026-08-18T16:37:36+00:00",
-      "publishedTs": 1787071056.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "JUST IN: \ud83c\udde8\ud83c\uddf3 Publicly traded Chinese company Zhibao Technology creates treasury Bitcoin reserve of 2,380 BTC \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2089745898121162975#m",
       "source": "@BitcoinMagazine",
@@ -523,6 +601,32 @@
       "isRetweet": true
     },
     {
+      "title": "R to @nic_carter: It\u2019s the exact same debate we had around Bitcoin mining The degrowth left has ALREADY DECIDED that using scarce resources for AI is illegitimate Any resources employed, no matter what the benefit, no matter how efficiently used, are illegitimate to them You cann",
+      "link": "https://x.com/nic_carter/status/2089737751906472149#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s the exact same debate we had around Bitcoin mining The degrowth left has ALREADY DECIDED that using scarce resources for AI is illegitimate Any resources employed, no matter what the benefit, no matter how efficiently used, are illegitimate to them You cannot reason with the",
+      "publishedAt": "2026-08-18T15:34:40+00:00",
+      "publishedTs": 1787067280.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It\u2019s impossible to please the degrowth left If datacenters draw power from the grid, they\u2019re \u201cdriving up prices\u201d for ratepayers If datacenters go off grid / behind the meter, they\u2019re \u201cusing scarce turbines that could otherwise be providing power to the grid\u201d You can\u2019t reason with",
+      "link": "https://x.com/nic_carter/status/2089736913511239887#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s impossible to please the degrowth left If datacenters draw power from the grid, they\u2019re \u201cdriving up prices\u201d for ratepayers If datacenters go off grid / behind the meter, they\u2019re \u201cusing scarce turbines that could otherwise be providing power to the grid\u201d You can\u2019t reason with",
+      "publishedAt": "2026-08-18T15:31:20+00:00",
+      "publishedTs": 1787067080.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ($23.36M) liquidated. Current position: 1,440 $BTC($93.3M) New liquidation price: $65,041.72 https://hypurrscan.io/address/0x8c96e5a2d770f9f2c9d2464ce4e741df0b2bca57#per",
       "link": "https://x.com/lookonchain/status/2089723886959202753#m",
       "source": "@lookonchain",
@@ -531,19 +635,6 @@
       "summary": "BTC just broke above $65,000. Gambler 0x8c96's 1,800 $BT ($117M) short was partially liquidated, with 360 $BTC ($23.36M) liquidated. Current position: 1,440 $BTC ($93.3M) New liquidation price: $65,041.72 hypurrscan.io/address/0x8c96\u2026",
       "publishedAt": "2026-08-18T14:39:34+00:00",
       "publishedTs": 1787063974.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: $65,000 Bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2089721842340659405#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-18T14:31:27+00:00",
-      "publishedTs": 1787063487.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -560,19 +651,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time.",
-      "link": "https://x.com/Rob1Ham/status/2089717836855873774#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time. Alex",
-      "publishedAt": "2026-08-18T14:15:32+00:00",
-      "publishedTs": 1787062532.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "August 18 Update: #Bitcoin ETFs: 1D NetFlow: +4,436 $BTC(+$284.05M)\ud83d\udfe2 7D NetFlow: +13 $BTC(+$819.51K)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +16,091 $ETH(+$30.46M)\ud83d\udfe2 7D NetFlow: +27,042 $ETH(+$51.19M)\ud83d\udfe2",
@@ -653,19 +731,6 @@
       "isRetweet": true
     },
     {
-      "title": "A new 3D audiovisual guided tour of Bitcoin as a system just launched at https://visualizebitcoin.org/",
-      "link": "https://x.com/lopp/status/2089691279299133581#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "A new 3D audiovisual guided tour of Bitcoin as a system just launched at visualizebitcoin.org/",
-      "publishedAt": "2026-08-18T12:30:00+00:00",
-      "publishedTs": 1787056200.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\"Fix the credit, fix the equity.\" @Saylor and @PhongLe sat down with me for Strategy's live investor Q&A. No question off limits. 00:00 Trailer and welcome 2:44 Is Bitcoin money? 10:41 Bringing traditional finance capital into Bitcoin 14:19 A shareholder asks about the drawdown 1",
       "link": "https://x.com/natbrunell/status/2089689097816183073#m",
       "source": "@saylor",
@@ -705,19 +770,6 @@
       "isRetweet": false
     },
     {
-      "title": "most ppl simply do not realize that before fb the internet was almost entirely anonymous. there was very little personal branding, in fact if you went into chat rooms or forums, you had no idea who was who. not only that but ppl were afraid to put in credit cards on the internet ",
-      "link": "https://x.com/signulll/status/2089548760493814163#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "most ppl simply do not realize that before fb the internet was almost entirely anonymous. there was very little personal branding, in fact if you went into chat rooms or forums, you had no idea who was who. not only that but ppl were afraid to put in credit cards on the internet ",
-      "publishedAt": "2026-08-18T03:03:41+00:00",
-      "publishedTs": 1787022221.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Riot Platforms(@RiotPlatforms) keeps selling $BTC. In the first half of 2026, Riot Platforms sold a total of 9,665 $BTC ($732.46M) at an average price of $75,785. https://arkm.com/explorer/entity/riot-platforms https://www.sec.gov/ix?doc=/Archives/edgar/data/0001167419/0001104659",
       "link": "https://x.com/lookonchain/status/2089531746836693162#m",
       "source": "@lookonchain",
@@ -729,19 +781,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "This is a delightfully thorough postmortem of BIP-110, and the silly & obviously-broken lines of thinking its supporters espoused. Complete with tons of receipts:",
-      "link": "https://x.com/robustus/status/2089528358874890308#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This is a delightfully thorough postmortem of BIP-110, and the silly &amp; obviously-broken lines of thinking its supporters espoused. Complete with tons of receipts: Jameson Lopp (@lopp) Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 sca",
-      "publishedAt": "2026-08-18T01:42:36+00:00",
-      "publishedTs": 1787017356.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Bitcoin never scales. Bitcoin made everyone else scale around it with exchanges growing, apps developing, payment network layers forming, financial instruments approving, nations adapting, banks hodling, and the blockchain never needed more than four megabytes per ten minutes.",
@@ -770,6 +809,19 @@
       "isRetweet": true
     },
     {
+      "title": "Its Core Weave and everyone else $CRWV",
+      "link": "https://x.com/nic_carter/status/2089486469069148233#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Its Core Weave and everyone else $CRWV a16z (@a16z) Right place, right time: many neoclouds spent years mining crypto, then AI showed up and turned their power rights, data centers, and GPUs into some of the hottest assets in tech. 25 quarters in, CoreWeave is pulling in more qua",
+      "publishedAt": "2026-08-17T22:56:09+00:00",
+      "publishedTs": 1787007369.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "$STRC's semi-monthly dividend of $0.50 per share was paid today. $STRC's next semi-monthly dividend payment will occur on August 31.",
       "link": "https://x.com/Strategy/status/2089443208191156691#m",
       "source": "@saylor",
@@ -796,6 +848,19 @@
       "isRetweet": true
     },
     {
+      "title": "How to think about the robotics market",
+      "link": "https://x.com/intern/status/2089418795353796754#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Article How to think about the robotics market The robotics industry is at a key inflection point. Many people have little idea what is happening or how big this market could become. I will lay out the thesis and likely outcomes so people can",
+      "publishedAt": "2026-08-17T18:27:14+00:00",
+      "publishedTs": 1786991234.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "If God designed money, what would it look like?",
       "link": "https://x.com/saylor/status/2089401982335303747#m",
       "source": "@saylor",
@@ -809,17 +874,30 @@
       "isRetweet": false
     },
     {
-      "title": "R.I.P 110",
-      "link": "https://x.com/coinjoined/status/2089377488593932365#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "R.I.P 110 Video Jameson Lopp (@lopp) Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. blog.lopp.net/bip-110-post-m\u2026 Link BIP-110 Post Mortem A comprehensiv",
-      "publishedAt": "2026-08-17T15:43:06+00:00",
-      "publishedTs": 1786981386.0,
+      "title": "R to @nic_carter: More biomass does not produce more greatness, as is obviously evident from the world today.",
+      "link": "https://x.com/nic_carter/status/2089389550724420071#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "More biomass does not produce more greatness, as is obviously evident from the world today.",
+      "publishedAt": "2026-08-17T16:31:02+00:00",
+      "publishedTs": 1786984262.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
+    },
+    {
+      "title": "Obviously and trivially debunked by having the most basic awareness of history Genius is formed in highly concentrated areas in space and time when cultural and institutional conditions are right, it\u2019s not a uniformly distributed process - Athens 400 BC - Florence 1500 - Edinburg",
+      "link": "https://x.com/nic_carter/status/2089389222499160506#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Obviously and trivially debunked by having the most basic awareness of history Genius is formed in highly concentrated areas in space and time when cultural and institutional conditions are right, it\u2019s not a uniformly distributed process - Athens 400 BC - Florence 1500 - Edinburg",
+      "publishedAt": "2026-08-17T16:29:44+00:00",
+      "publishedTs": 1786984184.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
@@ -887,19 +965,6 @@
       "isRetweet": true
     },
     {
-      "title": "Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. https://blog.lopp.net/bip-110-post-mortem/",
-      "link": "https://x.com/lopp/status/2089344628956844410#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. blog.lopp.net/bip-110-post-m\u2026 Link BIP-110 Post Mortem A comprehensive review of the spam debates and BIP-",
-      "publishedAt": "2026-08-17T13:32:32+00:00",
-      "publishedTs": 1786973552.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin\u2019s competitors added features. Bitcoin added years. Only one of those can\u2019t be copied by a fork, funded by a venture round, or shipped in a code update. Age is the one moat that compounds while everyone argues about what to do next.",
       "link": "https://x.com/DocumentingBTC/status/2089344221207498760#m",
       "source": "@DocumentingBTC",
@@ -921,6 +986,32 @@
       "summary": "",
       "publishedAt": "2026-08-17T12:52:45+00:00",
       "publishedTs": 1786971165.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @nic_carter: I am a [hedge fund manager / political operative] and I believe [AI / crypto / stablecoins / shale] will collapse and require a future taxpayer bailout because I need to couch my [dislike / anger at having missed the trade opportunity] in populist political lang",
+      "link": "https://x.com/nic_carter/status/2089312456149512301#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I am a [hedge fund manager / political operative] and I believe [AI / crypto / stablecoins / shale] will collapse and require a future taxpayer bailout because I need to couch my [dislike / anger at having missed the trade opportunity] in populist political language rather than [",
+      "publishedAt": "2026-08-17T11:24:41+00:00",
+      "publishedTs": 1786965881.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "My least favorite genre of financial commentary is people complaining about hypothetical future bailouts for industries they either politically oppose or missed going long on",
+      "link": "https://x.com/nic_carter/status/2089311083077001706#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-17T11:19:14+00:00",
+      "publishedTs": 1786965554.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -952,6 +1043,19 @@
       "isRetweet": false
     },
     {
+      "title": "Image",
+      "link": "https://x.com/nic_carter/status/2089010915723096397#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "WIRED (@WIRED) Mini human brains are being grown in labs all over the world. Soon, they could outthink neural networks. wired.com/story/organoids-la\u2026 Link AI Is Dead. Organoids Are Alive Mini human brains are being grown in labs all over the world. Soon, they could outthink neura",
+      "publishedAt": "2026-08-16T15:26:28+00:00",
+      "publishedTs": 1786893988.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
       "link": "https://x.com/DocumentingBTC/status/2089000546271187209#m",
       "source": "@DocumentingBTC",
@@ -965,30 +1069,17 @@
       "isRetweet": false
     },
     {
-      "title": "Bull Market vs Bear Market",
-      "link": "https://x.com/lopp/status/2088961170279477346#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-16T12:08:48+00:00",
-      "publishedTs": 1786882128.0,
+      "title": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d",
+      "link": "https://x.com/NeerajKA/status/2088965661439492325#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d WIRED (@WIRED) Mini human brains are being grown in labs all over the wo",
+      "publishedAt": "2026-08-16T12:26:39+00:00",
+      "publishedTs": 1786883199.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss.",
-      "link": "https://x.com/lopp/status/2088762228707037524#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss. NewYork HODL (@newyorkhodl) Is ",
-      "publishedAt": "2026-08-15T22:58:17+00:00",
-      "publishedTs": 1786834697.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
@@ -1017,27 +1108,27 @@
       "isRetweet": false
     },
     {
-      "title": "You'll never see me crash out over BIP-361 \ud83d\ude43",
-      "link": "https://x.com/lopp/status/2088652648702411135#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "You'll never see me crash out over BIP-361 \ud83d\ude43 Jameson Lopp (@lopp) It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting ",
-      "publishedAt": "2026-08-15T15:42:51+00:00",
-      "publishedTs": 1786808571.0,
+      "title": "R to @nic_carter: Vance is absolutely right that the dollars strength and our reserve status has contributed to deindustrialization and the hollowing out of middle America, which he famously represents politically - that\u2019s his entire political story and heritage. The dollar reser",
+      "link": "https://x.com/nic_carter/status/2088619169809846767#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Vance is absolutely right that the dollars strength and our reserve status has contributed to deindustrialization and the hollowing out of middle America, which he famously represents politically - that\u2019s his entire political story and heritage. The dollar reserve means the US pr",
+      "publishedAt": "2026-08-15T13:29:49+00:00",
+      "publishedTs": 1786800589.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
     },
     {
-      "title": "It's good to have aspirations for improving Bitcoin; the protocol is far from perfect. But if you ever twist your brain into a knot to the point that you decide Bitcoin MUST change in a certain way, you're setting yourself up for failure.",
-      "link": "https://x.com/lopp/status/2088589999704817959#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-15T11:33:54+00:00",
-      "publishedTs": 1786793634.0,
+      "title": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
+      "link": "https://x.com/nic_carter/status/2088617751736643647#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "It\u2019s funny that people are reacting with shock and horror and exposing themselves as economic illiterates who have never encountered the argument. Read anything by Miran, Pettis, or Alden. Look up the Triffin Dilemma and dollar Dutch disease. Is there a real debate to be had here",
+      "publishedAt": "2026-08-15T13:24:11+00:00",
+      "publishedTs": 1786800251.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1134,66 +1225,27 @@
       "isRetweet": false
     },
     {
-      "title": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac https://frenchbreaches.com/alertes/",
-      "link": "https://x.com/lopp/status/2088228346270237117#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "More bad news for Bitcoiners living in the leading country for wrench attacks. The French tax authority has been hacked and 678K records leaked. 26,805 people with income over 100K\u20ac 386 people with income over 1M\u20ac 8 people with income over 10M\u20ac frenchbreaches.com/alertes/d\u2026 Link ",
-      "publishedAt": "2026-08-14T11:36:49+00:00",
-      "publishedTs": 1786707409.0,
+      "title": "R to @nic_carter: this is really quite something",
+      "link": "https://x.com/nic_carter/status/2088256795424801210#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this is really quite something",
+      "publishedAt": "2026-08-14T13:29:52+00:00",
+      "publishedTs": 1786714192.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
     },
     {
-      "title": "How to Buy a Hardware Wallet Privately",
-      "link": "https://x.com/bc1gui/status/2087986055890809087#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Article How to Buy a Hardware Wallet Privately Trezor\u2019s latest customer-data leak is a good reason to rethink how we buy hardware wallets. We have seen customer information leak from this industry before, and I think the safest assumption is that",
-      "publishedAt": "2026-08-13T19:34:03+00:00",
-      "publishedTs": 1786649643.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "how it started vs how it's going",
-      "link": "https://x.com/lopp/status/2087979914716659733#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-13T19:09:39+00:00",
-      "publishedTs": 1786648179.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Do you think bitcoin self custody is too risky? Truly I tell you, third party custody is just self custody with extra layers of risk.",
-      "link": "https://x.com/lopp/status/2087892465474732284#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-13T13:22:09+00:00",
-      "publishedTs": 1786627329.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Agentic coding is a leap toward a Star Trek future in which you can simply say \"Computer, do ___\" and it executes an arbitrarily complex task. We just need to make it a few orders of magnitude faster and insert tons of safeguards.",
-      "link": "https://x.com/lopp/status/2087883656341635393#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-13T12:47:09+00:00",
-      "publishedTs": 1786625229.0,
+      "title": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet.",
+      "link": "https://x.com/nic_carter/status/2088226292072083919#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Remember, if Anthropic wins and closed source wins, these are the people that will get to write the morality rules for the entire planet. Matt Burtell (@MattBurtell) Dario Amodei\u2019s wife badgered Jeffery Epstein to invest in her porn company three years after he plead guilty to so",
+      "publishedAt": "2026-08-14T11:28:40+00:00",
+      "publishedTs": 1786706920.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1223,45 +1275,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all!",
-      "link": "https://x.com/lopp/status/2087569824343884142#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I should probably mention that anyone dumb enough to show up at my old doxxed address in Durham, NC is going to be very disappointed and possibly shot. It is NC, after all! Jameson Lopp (@lopp) An inevitable development: people who buy houses formerly owned by wealthy bitcoiners ",
-      "publishedAt": "2026-08-12T16:00:05+00:00",
-      "publishedTs": 1786550405.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We\u2019re excited to have @lopp from @CasaHODL, part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: https://cryptoconsortium.org/c4-security-summit",
-      "link": "https://x.com/LearnMoreWithC4/status/2087550276538450332#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "We\u2019re excited to have @lopp from @CasaHODL , part of our CCSS committee, deliver the keynote, Why Cryptocurrency Security Matters, at the C4 Security Summit. \ud83d\udcc5 August 19, 2026 \ud83d\udd58 9:00 AM\u201312:00 PM ET \ud83d\udcbb Free live virtual event Register: cryptoconsortium.org/c4-secu\u2026",
-      "publishedAt": "2026-08-12T14:42:25+00:00",
-      "publishedTs": 1786545745.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 58% Loading\u2026Please HODL Current Block: 961,892 Halving Block: 1,050,000 Blocks Remaining: 88,108 Days Remaining: ~612",
-      "link": "https://x.com/DocumentingBTC/status/2086839647989080354#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-10T15:38:38+00:00",
-      "publishedTs": 1786376318.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "\"Situationship\" is my $BTC bull porn essay on how the AI bubble will burst, and why the money printer will go hyper brrrr and take us back to a rip roaring bull market. \"The question of internal framing is the key variable that determines whether AI is a bubble. But before we und",
