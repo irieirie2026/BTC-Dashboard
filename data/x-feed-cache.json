@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T04:34:45Z",
+  "fetchedAt": "2026-08-19T05:28:04Z",
   "source": "nitter.net",
   "tweets": [
     {
@@ -1938,45 +1938,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @BitcoinArchives: Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman, @nimrodlehavi, @davidwachsman & Raghav Chawla @Bitcoin2019 #bitcoin2019 https://youtu.be/gPqJxFXHLFc",
-      "link": "https://x.com/BitcoinArchives/status/1205667853166350341#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Evolving Traditional Finance: Onboarding the Next Generation of BTC w/ @alexadelman , @nimrodlehavi , @davidwachsman &amp; Raghav Chawla @Bitcoin2019 #bitcoin2019 piped.video/gPqJxFXHLFc",
-      "publishedAt": "2019-12-14T01:56:31+00:00",
-      "publishedTs": 1576288591.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinArchives: Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 https://youtu.be/WpvYOw9OR0Y",
-      "link": "https://x.com/BitcoinArchives/status/1205647398070112256#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "Macro Tailwinds of BTC w/ @BMBernstein @Bitcoin2019conf #bitcoin2019 piped.video/WpvYOw9OR0Y",
-      "publishedAt": "2019-12-14T00:35:14+00:00",
-      "publishedTs": 1576283714.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THREAD Talks from @bitcoin2019conf #bitcoin2019",
-      "link": "https://x.com/BitcoinArchives/status/1145010218901876737#m",
-      "source": "@BitcoinArchives",
-      "authorName": "Bitcoin Archives",
-      "authorRole": "Historical BTC content",
-      "summary": "",
-      "publishedAt": "2019-06-29T16:44:44+00:00",
-      "publishedTs": 1561826684.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     }
   ]
 }
