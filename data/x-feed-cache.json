@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-19T03:45:00Z",
+  "fetchedAt": "2026-08-19T04:34:45Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "R to @nic_carter: There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a m",
+      "link": "https://x.com/nic_carter/status/2089932957029109887#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a majority of which i",
+      "publishedAt": "2026-08-19T04:30:20+00:00",
+      "publishedTs": 1787113820.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "What people don\u2019t understand is that NY and CA have industrialized \u201ccarefare\u201d - effectively Medicaid funded welfare. It\u2019s all ultimately paid for by the federal taxpayer, since these states will go bk and will have to be bailed out. The program is a way to pay affinity client gro",
+      "link": "https://x.com/nic_carter/status/2089930914885456180#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "What people don\u2019t understand is that NY and CA have industrialized \u201ccarefare\u201d - effectively Medicaid funded welfare. It\u2019s all ultimately paid for by the federal taxpayer, since these states will go bk and will have to be bailed out. The program is a way to pay affinity client gro",
+      "publishedAt": "2026-08-19T04:22:13+00:00",
+      "publishedTs": 1787113333.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "On this day in history, 18 years ago, Satoshi Nakamoto created the first website about Bitcoin",
       "link": "https://x.com/DocumentingBTC/status/2089852784422117642#m",
@@ -1431,45 +1457,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "R to @nic_carter: source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: https://murmurationstwo.substack.com/p/ai-is-not-hiking-your-electricity TLDR it's blue state decarbonization and inflation",
-      "link": "https://x.com/nic_carter/status/2087922558377107726#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "source on DCs NOT being responsible for PRIOR electricity price hikes that people are complaining about: murmurationstwo.substack.com\u2026 TLDR it's blue state decarbonization and inflation",
-      "publishedAt": "2026-08-13T15:21:44+00:00",
-      "publishedTs": 1786634504.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @nic_carter: The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning ta",
-      "link": "https://x.com/nic_carter/status/2087910684394709133#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "The thing is, the people who believe outright lies on datacenters cannot actually be convinced. They operate on TikTok word of mouth hearsay - a tiktoker claiming she can\u2019t sleep because of a datacenter \u201cin her neighborhood\u201d making too much noise or poisoning tap water. The epide",
-      "publishedAt": "2026-08-13T14:34:33+00:00",
-      "publishedTs": 1786631673.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
-      "link": "https://x.com/nic_carter/status/2087908633698787576#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "It\u2019s really interesting that there\u2019s basically a bipartisan consensus based on complete and trivially debunkable falsities, namely that - datacenters consume meaningful amounts of water (they don\u2019t) - datacenters are responsible for power prices increases over the last decade (th",
-      "publishedAt": "2026-08-13T14:26:24+00:00",
-      "publishedTs": 1786631184.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Do you think bitcoin self custody is too risky? Truly I tell you, third party custody is just self custody with extra layers of risk.",
