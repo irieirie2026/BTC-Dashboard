@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-19T02:55:36Z",
+  "fetchedAt": "2026-08-19T03:45:00Z",
   "source": "nitter.net",
   "tweets": [
+    {
+      "title": "On this day in history, 18 years ago, Satoshi Nakamoto created the first website about Bitcoin",
+      "link": "https://x.com/DocumentingBTC/status/2089852784422117642#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-18T23:11:46+00:00",
+      "publishedTs": 1787094706.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: About 43,000 Bitcoin worth $2.7 billion has been bought over the past 60 days by large holders, Bloomberg reports. \ud83d\udc40 Bullish \ud83d\udc02",
       "link": "https://x.com/BitcoinMagazine/status/2089821498106122507#m",
@@ -328,6 +341,45 @@
       "isRetweet": false
     },
     {
+      "title": "This developer created \u201cthe world\u2019s worst lottery\u201d. Anyone can use their GPU to find a bitcoin prize hidden among 1,180,000,000,000,000,000,000 mathematical possibilities. Your single graphics card would likely need to run about 430,000 years",
+      "link": "https://x.com/DocumentingBTC/status/2089696957677596711#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This developer created \u201cthe world\u2019s worst lottery\u201d. Anyone can use their GPU to find a bitcoin prize hidden among 1,180,000,000,000,000,000,000 mathematical possibilities. Your single graphics card would likely need to run about 430,000 years Video",
+      "publishedAt": "2026-08-18T12:52:34+00:00",
+      "publishedTs": 1787057554.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This small town in South Africa is adopting bitcoin",
+      "link": "https://x.com/DocumentingBTC/status/2089695800146133365#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This small town in South Africa is adopting bitcoin Video",
+      "publishedAt": "2026-08-18T12:47:58+00:00",
+      "publishedTs": 1787057278.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The most important things built on Bitcoin may not resemble finance at all, just as the most important things built with electricity did not resemble candles.",
+      "link": "https://x.com/DocumentingBTC/status/2089692543877341203#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-18T12:35:01+00:00",
+      "publishedTs": 1787056501.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Since April, a small team inside Metaplanet has been working on something we could not talk about. Today it is public. Metaplanet is taking a controlling stake in Super League Enterprise (Nasdaq: SLE). At closing it will be renamed Superplanet, our U.S. Bitcoin treasury platform,",
       "link": "https://x.com/gerovich/status/2089691997150069140#m",
       "source": "@saylor",
@@ -453,6 +505,19 @@
       "summary": "Gambler 0xff84 just won't take profit. As $BTC rose, even though he closed part of his position early, he still couldn't avoid liquidation and got 288 $BTC ($18.55M) liquidated. He still holds a 512 $BTC ($33M) short. New liquidation price: $64,665.18 Lookonchain (@lookonchain) G",
       "publishedAt": "2026-08-18T00:41:41+00:00",
       "publishedTs": 1787013701.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin never scales. Bitcoin made everyone else scale around it with exchanges growing, apps developing, payment network layers forming, financial instruments approving, nations adapting, banks hodling, and the blockchain never needed more than four megabytes per ten minutes.",
+      "link": "https://x.com/DocumentingBTC/status/2089495900473229479#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-17T23:33:38+00:00",
+      "publishedTs": 1787009618.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -679,6 +744,32 @@
       "isRetweet": true
     },
     {
+      "title": "Ask where bitcoin is and every answer fails. Ask when it is and the answer is block 962,907. Bitcoin is the first thing that exists in time, not space.",
+      "link": "https://x.com/DocumentingBTC/status/2089375728773091697#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-17T15:36:07+00:00",
+      "publishedTs": 1786980967.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The hash of the latest Bitcoin block is unknowable by everyone one second before it exists and will be forever unforgettable onchain one second after.",
+      "link": "https://x.com/DocumentingBTC/status/2089367567596982762#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-17T15:03:41+00:00",
+      "publishedTs": 1786979021.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "In 1 hour, join @Saylor, @PhongLe & @NatBrunell for a LIVE Q&A on X and YouTube. We\u2019ll be taking questions both in advance and live. https://x.com/i/broadcasts/1MKgNbbVkkqxL?s=20",
       "link": "https://x.com/Strategy/status/2089366724017541439#m",
       "source": "@saylor",
@@ -744,6 +835,19 @@
       "isRetweet": false
     },
     {
+      "title": "Bitcoin\u2019s competitors added features. Bitcoin added years. Only one of those can\u2019t be copied by a fork, funded by a venture round, or shipped in a code update. Age is the one moat that compounds while everyone argues about what to do next.",
+      "link": "https://x.com/DocumentingBTC/status/2089344221207498760#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-17T13:30:55+00:00",
+      "publishedTs": 1786973455.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Treasury Secretary Scott Bessent says the \"Treasury is moving quickly to implement\" the GENIUS Act \ud83d\udc40 \"Beginning on January 18, 2027, the expected effective date of the GENIUS Act,\" \ud83d\udc40",
       "link": "https://x.com/BitcoinMagazine/status/2089337014889927032#m",
       "source": "@BitcoinMagazine",
@@ -752,6 +856,19 @@
       "summary": "",
       "publishedAt": "2026-08-17T13:02:17+00:00",
       "publishedTs": 1786971737.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Nothing needs to happen next for Bitcoin. No milestone is pending, no upgrade awaited, no rules changed, no decision due. Bitcoin is complete, the way a mathematical proof is complete.",
+      "link": "https://x.com/DocumentingBTC/status/2089334618767925402#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-17T12:52:45+00:00",
+      "publishedTs": 1786971165.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -822,6 +939,32 @@
       "isRetweet": false
     },
     {
+      "title": "On this day in history, 16 years ago, Satoshi Nakamoto argued that Bitcoin mining could replace household heaters because mining \u201cis basically free anywhere that has electric heat, since your computer\u2019s heat is offsetting your baseboard electric heating\u201d.",
+      "link": "https://x.com/DocumentingBTC/status/2089055961428189688#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T18:25:28+00:00",
+      "publishedTs": 1786904728.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Artificial intelligence can copy a million content creators work in one second. Bitcoin can pay all million of them in the same second. Each answer could carry a citation of the work it used, and each response could receive a tiny share when that answer earns the algorithm money.",
+      "link": "https://x.com/DocumentingBTC/status/2089054934637428775#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T18:21:23+00:00",
+      "publishedTs": 1786904483.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bitcoin is the only game in the casino where we can all win.",
       "link": "https://x.com/saylor/status/2089024403619127652#m",
       "source": "@saylor",
@@ -874,6 +1017,32 @@
       "isRetweet": true
     },
     {
+      "title": "Every Bitcoin transaction fee is the only true global auction for the scarcest real estate in existence: space in the next block. Four megabytes, every ten minutes. The only land that is manufactured fresh six times an hour and sells out every time.",
+      "link": "https://x.com/DocumentingBTC/status/2089000546271187209#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-16T14:45:16+00:00",
+      "publishedTs": 1786891516.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
+      "link": "https://x.com/APompliano/status/2088971220184092727#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "This week @jvisserlabs breaks down why the AI trade already bottomed, how bitcoin fits into the future of markets, and why companies like $FIGR are outgrowing legacy banks like JPMorgan. We also discuss inflation, the AI IPO wave with Anthropic and OpenAI, and how AI is reshaping",
+      "publishedAt": "2026-08-16T12:48:44+00:00",
+      "publishedTs": 1786884524.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Town residents living up to 10 miles away from the data center report dreams of waking up terrified in total blackness, with one comparing it to \u201cthe psychic scream of thousands of infinitely trapped minds.\u201d",
       "link": "https://x.com/NeerajKA/status/2088965661439492325#m",
       "source": "@nic_carter",
@@ -921,6 +1090,45 @@
       "summary": "Diversify your keys, not your coins. Spread coins across multiple single sig wallets: \u2b07\ufe0f chance of catastrophic loss, \u2b06\ufe0f chance of partial loss. Spread 1 wallet across multiple vendor keys: \u2b07\ufe0f chance of catastrophic loss, \u2b07\ufe0f chance of partial loss. NewYork HODL (@newyorkhodl) Is ",
       "publishedAt": "2026-08-15T22:58:17+00:00",
       "publishedTs": 1786834697.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: https://www.cfosilvia.com",
+      "link": "https://x.com/APompliano/status/2088739456014491855#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "If you have significant capital gains from AI stocks or bitcoin, you should be thinking about how to strategically reduce your taxes on those gains. @cfosilvia is the best AI product on the market when it comes to tax-related topics. Try it free: cfosilvia.com",
+      "publishedAt": "2026-08-15T21:27:47+00:00",
+      "publishedTs": 1786829267.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "A carrier pigeon can deliver a valid bitcoin transaction, three hundred bytes on a strip of paper, strapped to a leg. The global network will accept it without ever asking how it was sent.",
+      "link": "https://x.com/DocumentingBTC/status/2088711245436207204#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-15T19:35:41+00:00",
+      "publishedTs": 1786822541.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A bitcoin wallet seed phrase can be hidden in your backyard garden with twelve dirt beds, all planted in a chosen order, each one standing for a word. A thief could walk through the middle of a family\u2019s fortune and only admire the flowers.",
+      "link": "https://x.com/DocumentingBTC/status/2088668103726993613#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-15T16:44:16+00:00",
+      "publishedTs": 1786812256.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1290,6 +1498,19 @@
       "isRetweet": false
     },
     {
+      "title": "Bitcoin Achieves 555,555,555 Seconds Online",
+      "link": "https://x.com/DocumentingBTC/status/2087686894209454561#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-12T23:45:17+00:00",
+      "publishedTs": 1786578317.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Thanks to dozens of individual contributors and to @spiral_xyz , @OpenSats, @HRF, @MaelstromFund, @btrustteam, and @cakewallet for making the work possible. Start here: https://crates.io/crates/payjoin https://github.com/payjoin/rust-payjoin/tree/master/payjoin-cli#quick-start",
       "link": "https://x.com/payjoindevkit/status/2087589799452631546#m",
       "source": "@CryptoHayes",
@@ -1337,6 +1558,71 @@
       "summary": "An inevitable development: people who buy houses formerly owned by wealthy bitcoiners are in physical danger. One couple in France who have no crypto were wrench attacked 3 times in one month because their address is in data breaches. ici.fr/hauts-de-france/somme\u2026 Link Somme : un",
       "publishedAt": "2026-08-12T10:48:54+00:00",
       "publishedTs": 1786531734.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 58% Loading\u2026Please HODL Current Block: 961,892 Halving Block: 1,050,000 Blocks Remaining: 88,108 Days Remaining: ~612",
+      "link": "https://x.com/DocumentingBTC/status/2086839647989080354#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-10T15:38:38+00:00",
+      "publishedTs": 1786376318.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one",
+      "link": "https://x.com/DocumentingBTC/status/2086442595886977154#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Some people say creating a secure bitcoin wallet is difficult. Here\u2019s a 9 year old girl building one Video",
+      "publishedAt": "2026-08-09T13:20:53+00:00",
+      "publishedTs": 1786281653.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin users are now shooting their ColdCard wallets after a hack found them to be insecure",
+      "link": "https://x.com/DocumentingBTC/status/2086440636987703354#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-09T13:13:06+00:00",
+      "publishedTs": 1786281186.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped",
+      "link": "https://x.com/DocumentingBTC/status/2086440149689258294#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This developer sent bitcoin to a compromised Coldcard mk3 to see how fast the funds are wiped Video",
+      "publishedAt": "2026-08-09T13:11:10+00:00",
+      "publishedTs": 1786281070.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required",
+      "link": "https://x.com/DocumentingBTC/status/2086126151991214087#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "This developer uses the unique biological patterns mapped from a quail bird eggshell to produce pure random numbers for a secure bitcoin wallet private key generation. The tool is an open source HTML file that works with no internet required Video",
+      "publishedAt": "2026-08-08T16:23:27+00:00",
+      "publishedTs": 1786206207.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
