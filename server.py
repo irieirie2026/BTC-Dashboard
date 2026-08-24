@@ -77,12 +77,17 @@ BROWSER_UA = (
 )
 
 NITTER_MIRRORS = [
+    "https://nitter.perennialte.ch",
+    "https://nt.vern.cc",
     "https://nitter.net",
+    "https://xcancel.com",
 ]
 X_RSS_USER_AGENT = "Feedly/1.0 (+https://github.com/irieirie2026/BTC-Dashboard)"
+X_RSS_TIMEOUT = 10
 X_FEED_STALE_TTL = 86400  # 24 hours
 X_FEED_CACHE_PATH = ROOT / "data" / "x-feed-cache.json"
 NITTER_MIRROR_HOSTS = (
+    "nitter.perennialte.ch",
     "nitter.net",
     "xcancel.com",
     "rss.xcancel.com",
@@ -2387,7 +2392,7 @@ def fetch_x_rss_xml(url):
             "Accept": "application/rss+xml, application/xml, text/xml, */*",
         },
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=X_RSS_TIMEOUT) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
@@ -2397,6 +2402,8 @@ def _normalize_mirror_url(link):
     normalized = link.replace("twitter.com", "x.com")
     for host in NITTER_MIRROR_HOSTS:
         normalized = normalized.replace(host, "x.com")
+    if normalized.startswith("http://x.com"):
+        normalized = "https://" + normalized[len("http://") :]
     return normalized
 
 
@@ -2452,8 +2459,8 @@ def _parse_nitter_feed(xml_text, author):
     return tweets
 
 
-def _fetch_author_tweets(author):
-    for mirror in NITTER_MIRRORS:
+def _fetch_author_tweets(author, mirrors=None):
+    for mirror in mirrors or NITTER_MIRRORS:
         url = f"{mirror.rstrip('/')}/{author['handle']}/rss"
         try:
             xml_text = fetch_x_rss_xml(url)
@@ -2465,14 +2472,48 @@ def _fetch_author_tweets(author):
     return [], None
 
 
-def _fetch_x_tweets_live():
+def _working_nitter_mirrors(verbose=False):
+    """Probe RSS once and return mirrors that currently yield real tweet items."""
+    probe_author = X_AUTHORS[0]
+    working = []
+    for mirror in NITTER_MIRRORS:
+        url = f"{mirror.rstrip('/')}/{probe_author['handle']}/rss"
+        try:
+            xml_text = fetch_x_rss_xml(url)
+            tweets = _parse_nitter_feed(xml_text, probe_author)
+            if tweets:
+                working.append(mirror)
+                if verbose:
+                    print(
+                        f"X feed mirror OK: {mirror} "
+                        f"({len(tweets)} tweets for @{probe_author['handle']})"
+                    )
+            elif verbose:
+                print(f"X feed mirror empty/stub: {mirror}")
+        except Exception as exc:
+            if verbose:
+                print(f"X feed mirror fail: {mirror} ({exc})")
+    return working
+
+
+def _fetch_x_tweets_live(verbose=False):
     seen = set()
     tweets = []
     mirror_used = None
+    mirrors = _working_nitter_mirrors(verbose=verbose)
+    if not mirrors:
+        if verbose:
+            print("X feed: no Nitter RSS mirror returned tweets.")
+        return [], None
+
     for index, author in enumerate(X_AUTHORS):
-        author_tweets, mirror = _fetch_author_tweets(author)
+        author_tweets, mirror = _fetch_author_tweets(author, mirrors)
         if mirror and not mirror_used:
             mirror_used = mirror
+            if verbose:
+                print(f"X feed: fetching authors via {mirror}")
+        elif verbose and not author_tweets:
+            print(f"X feed: no tweets for @{author['handle']}")
         for tweet in author_tweets:
             if not author.get("btcFocused") and not _is_bitcoin_article(tweet):
                 continue

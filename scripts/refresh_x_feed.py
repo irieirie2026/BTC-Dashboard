@@ -11,9 +11,15 @@ from server import write_x_feed_cache, _fetch_x_tweets_live, X_FEED_CACHE_PATH  
 
 
 def main():
-    print(f"Fetching live X feed from Nitter mirrors...")
-    tweets, mirror_host = _fetch_x_tweets_live()
+    print("Fetching live X feed from Nitter mirrors...")
+    tweets, mirror_host = _fetch_x_tweets_live(verbose=True)
     if not tweets:
+        if X_FEED_CACHE_PATH.exists():
+            print(
+                "WARNING: No tweets fetched from any mirror; keeping existing cache.",
+                file=sys.stderr,
+            )
+            return 0
         print("ERROR: No tweets fetched from any mirror.", file=sys.stderr)
         return 1
 
