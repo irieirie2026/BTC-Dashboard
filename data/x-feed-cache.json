@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-24T06:06:57Z",
+  "fetchedAt": "2026-08-24T06:54:30Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Over the past 30 minutes, #Ceffu deposited 136.54M $USDC into #Binance, then withdrew 1,524 $BTC ($117.89M) and 59,484 $ETH ($145.92M) from #Binance. https://arkm.com/explorer/address/12993NM9fV8dSSQgbWDZSBVgqtPw4DaAXS https://arkm.com/explorer/address/0xed9B63d1D4EFA9AE415854486",
+      "link": "https://x.com/lookonchain/status/2091779480989872452#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Over the past 30 minutes, #Ceffu deposited 136.54M $USDC into #Binance , then withdrew 1,524 $BTC ($117.89M) and 59,484 $ETH ($145.92M) from #Binance . arkm.com/explorer/address/12\u2026 arkm.com/explorer/address/0x\u2026 arkm.com/explorer/entity/cef\u2026",
+      "publishedAt": "2026-08-24T06:47:46+00:00",
+      "publishedTs": 1787554066.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This bear is back for his 15th short! Over the past 5 days, he has shorted $BTC and $ETH 14 times, losing every single time for a total loss of $4.56M. Now he's opened a 40x short on 300 $BTC ($23.13M). Can he finally win one? Wallet: 0x004edcd40360e293e4cf260d2ebdf8c7076c1bb8",
       "link": "https://x.com/lookonchain/status/2091749547643113785#m",
@@ -796,19 +809,6 @@
       "isRetweet": true
     },
     {
-      "title": "BlackRock bought 11,098 $BTC($852M) and 132,769 $ETH ($316M) in the past 2 days. https://arkm.com/explorer/entity/blackrock",
-      "link": "https://x.com/lookonchain/status/2090803349281222918#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "BlackRock bought 11,098 $BTC ($852M) and 132,769 $ETH ($316M) in the past 2 days. arkm.com/explorer/entity/bla\u2026",
-      "publishedAt": "2026-08-21T14:08:58+00:00",
-      "publishedTs": 1787321338.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The Need for \u20bfitcoin.",
       "link": "https://x.com/saylor/status/2090799524612612282#m",
       "source": "@saylor",
@@ -817,19 +817,6 @@
       "summary": "The Need for \u20bfitcoin. Video",
       "publishedAt": "2026-08-21T13:53:46+00:00",
       "publishedTs": 1787320426.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "August 21 Update: #Bitcoin ETFs: 1D NetFlow: +8,879 $BTC(+$684.18M)\ud83d\udfe2 7D NetFlow: +22,043 $BTC(+$1.7B)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +86,701 $ETH(+$207.03M)\ud83d\udfe2 7D NetFlow: +219,254 $ETH(+$523.54M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2090797831796011355#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "August 21 Update: #Bitcoin ETFs: 1D NetFlow: +8,879 $BTC (+$684.18M)\ud83d\udfe2 7D NetFlow: +22,043 $BTC (+$1.7B)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +86,701 $ETH (+$207.03M)\ud83d\udfe2 7D NetFlow: +219,254 $ETH (+$523.54M)\ud83d\udfe2",
-      "publishedAt": "2026-08-21T13:47:02+00:00",
-      "publishedTs": 1787320022.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
