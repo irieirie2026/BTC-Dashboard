@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-24T06:54:30Z",
+  "fetchedAt": "2026-08-24T07:56:42Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Think like a \u20bfillionaire.",
+      "link": "https://x.com/saylor/status/2091783503759224868#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Think like a \u20bfillionaire. Video",
+      "publishedAt": "2026-08-24T07:03:45+00:00",
+      "publishedTs": 1787555025.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Over the past 30 minutes, #Ceffu deposited 136.54M $USDC into #Binance, then withdrew 1,524 $BTC ($117.89M) and 59,484 $ETH ($145.92M) from #Binance. https://arkm.com/explorer/address/12993NM9fV8dSSQgbWDZSBVgqtPw4DaAXS https://arkm.com/explorer/address/0xed9B63d1D4EFA9AE415854486",
       "link": "https://x.com/lookonchain/status/2091779480989872452#m",
@@ -1376,19 +1389,6 @@
       "summary": "\ud83d\udea8NEW: On stage at @SALTConference in Wyoming, @USComptroller says digital asset chartering activity has increased eightfold since the Biden administration, calling the previous administration\u2019s effort to eliminate risk \u201cextremely shortsighted.\u201d He says the OCC expects to finalize",
       "publishedAt": "2026-08-19T16:08:59+00:00",
       "publishedTs": 1787155739.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Bitcoin is engineered to outperform. bitcoin:native",
-      "link": "https://x.com/LaDoger/status/2090089483089621376#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is engineered to outperform. bitcoin:native Video",
-      "publishedAt": "2026-08-19T14:52:19+00:00",
-      "publishedTs": 1787151139.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
