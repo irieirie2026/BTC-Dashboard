@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-24T10:35:39Z",
+  "fetchedAt": "2026-08-24T11:26:07Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Roundhill joined VolShares in filing for 32 Hockey Team ETFs.. which are linked to CME futures. Roundhill must see some potential, altho NHL is arguably weakest of the Big Four sports, no? My guess is NFL would be the best test as to whether these products have a real market.",
+      "link": "https://x.com/EricBalchunas/status/2091846528935620991#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Roundhill joined VolShares in filing for 32 Hockey Team ETFs.. which are linked to CME futures. Roundhill must see some potential, altho NHL is arguably weakest of the Big Four sports, no? My guess is NFL would be the best test as to whether these products have a real market. Tod",
+      "publishedAt": "2026-08-24T11:14:11+00:00",
+      "publishedTs": 1787570051.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin ETFs took just about $2b last week- their best week since the Good Ol Days of Oct 2025 as price went from $64k to $77k in a New York minute (that counts as God candle yeah?). Anyway, this is one of the benefits of a commodity in a constant state of supply shock.",
+      "link": "https://x.com/EricBalchunas/status/2091845486906933393#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-08-24T11:10:03+00:00",
+      "publishedTs": 1787569803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Think like a \u20bfillionaire.",
       "link": "https://x.com/saylor/status/2091783503759224868#m",
@@ -1563,19 +1589,6 @@
       "isRetweet": true
     },
     {
-      "title": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld https://www.bloomberg.com/news/videos/2026-02-19/etf-drilldown-frdm-video",
-      "link": "https://x.com/Perth_Tolle/status/2089493916634464421#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "ETF Drilldown: FRDM @BloombergTV #ETFIQ Thanks for having me on @EricBalchunas @scarletfu @kgreifeld bloomberg.com/news/videos/20\u2026",
-      "publishedAt": "2026-08-17T23:25:45+00:00",
-      "publishedTs": 1787009145.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R.I.P 110",
       "link": "https://x.com/coinjoined/status/2089377488593932365#m",
       "source": "@lopp",
@@ -1591,15 +1604,15 @@
     {
       "title": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn. We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH & talking white labels w/ @TeucriumETFs",
       "link": "https://x.com/JSeyff/status/2089376291854143826#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "From 12-1 I\u2019m subbing in for @EricBalchunas on BBG\u2019s ETFIQ. @scarletfu and I will be talking to @Todd_Sohn . We\u2019ll be looking at $FFF \u2014 founders ETF. @neil_sipes4 will be on to talk about the Goldman NEOS deal. We\u2019ll be looking at $OMAH &amp; talking white labels w/ @TeucriumETFs",
       "publishedAt": "2026-08-17T15:38:21+00:00",
       "publishedTs": 1786981101.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 scaling debates, and numerous receipts to hold folks accountable for their mistakes. https://blog.lopp.net/bip-110-post-mortem/",
