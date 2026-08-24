@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-24T16:35:04Z",
+  "fetchedAt": "2026-08-24T17:29:10Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Ionic Digital increased their treasury by 21 Bitcoin, now totaling 2,882 BTC worth $168 million! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2091932807203348970#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-24T16:57:02+00:00",
+      "publishedTs": 1787590622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Here is the first big step toward Monad's post-quantum roadmap: a mechanism for allowing signature scheme upgrades without changing the public address. Users will be able to switch to a quantum-resistant scheme without disrupting address books, DeFi positions, etc. We think this ",
+      "link": "https://x.com/keoneHD/status/2091927322152583617#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Here is the first big step toward Monad's post-quantum roadmap: a mechanism for allowing signature scheme upgrades without changing the public address. Users will be able to switch to a quantum-resistant scheme without disrupting address books, DeFi positions, etc. We think this ",
+      "publishedAt": "2026-08-24T16:35:14+00:00",
+      "publishedTs": 1787589314.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The network is not abandoning its principles. It is transcending its prejudices. Bitcoin is for everyone. Read or download The Bitcoin Reformation: https://www.michael.com/the-bitcoin-reformation",
+      "link": "https://x.com/saylor/status/2091926158682038633#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "The network is not abandoning its principles. It is transcending its prejudices. Bitcoin is for everyone. Read or download The Bitcoin Reformation: michael.com/the-bitcoin-refo\u2026",
+      "publishedAt": "2026-08-24T16:30:36+00:00",
+      "publishedTs": 1787589036.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "x.com/i/article/209191528085\u2026",
       "link": "https://x.com/saylor/status/2091923153542840808#m",
@@ -131,6 +170,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "lets's goooo",
+      "link": "https://x.com/mattkita/status/2091889068661486028#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "lets's goooo Eric Balchunas (@EricBalchunas) Excited to announce that @JSeyff and I have a new book coming out this fall called \"Both Sides of the Coin\" which is available for pre-order now. We thought it was time for a fresh look at bitcoin/crypto post-ETF and sought to write a ",
+      "publishedAt": "2026-08-24T14:03:14+00:00",
+      "publishedTs": 1787580194.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "every poll says the same thing americans dislike data centers for either completely contrived reasons like water usage or general reflexive NIMBYism which would apply to any industrial technology. no one's making sophisticated critiques based on job displacement concerns",
@@ -913,19 +965,6 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin just had its largest week in history. @jvisserlabs and I discuss what happened, why the rally should be sustainable, and what to expect from bitcoin going forward. We also break down the collision of AI and crypto, why bitcoin is the purest AI trade, Stripe and Ramp's bat",
-      "link": "https://x.com/APompliano/status/2091152331337281955#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Bitcoin just had its largest week in history. @jvisserlabs and I discuss what happened, why the rally should be sustainable, and what to expect from bitcoin going forward. We also break down the collision of AI and crypto, why bitcoin is the purest AI trade, Stripe and Ramp's bat",
-      "publishedAt": "2026-08-22T13:15:42+00:00",
-      "publishedTs": 1787404542.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Share the \u20bfounty.",
       "link": "https://x.com/saylor/status/2091122447865016516#m",
       "source": "@saylor",
@@ -1134,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Billionaire Ray Dalio suggests diversifying into gold, bonds, \"and a bit of Bitcoin.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2090864783490760889#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-21T18:13:05+00:00",
-      "publishedTs": 1787335985.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Some say correlation is not causation. Others say the most entertaining outcome is the most likely.",
       "link": "https://x.com/lopp/status/2090807111684915656#m",
       "source": "@lopp",
@@ -1342,19 +1368,6 @@
       "isRetweet": true
     },
     {
-      "title": "Arthur Hayes says $ETH is his largest position outside bitcoin:native \"ETH is some of the most hated large cap shitcoin out there, the number two largest coin by market cap that has not eclipsed its 2021 all time high\" \"From a risk reward perspective, at least the way I manage th",
-      "link": "https://x.com/laurashin/status/2090527513441345724#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "Arthur Hayes says $ETH is his largest position outside bitcoin:native \"ETH is some of the most hated large cap shitcoin out there, the number two largest coin by market cap that has not eclipsed its 2021 all time high\" \"From a risk reward perspective, at least the way I manage th",
-      "publishedAt": "2026-08-20T19:52:53+00:00",
-      "publishedTs": 1787255573.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "@Strategy Q&A Recap, Most Important Notes: More than 99% of global capital still sits outside the Bitcoin network (fiat, Treasuries, money-market funds, ETFs and equities). Strategy is building products that can attract that capital without requiring every investor to own volatil",
       "link": "https://x.com/hillery_dan/status/2090514118797152736#m",
       "source": "@saylor",
@@ -1459,19 +1472,6 @@
       "isRetweet": false
     },
     {
-      "title": "Ya\u2019ll sold?!",
-      "link": "https://x.com/AlexesNakamoto/status/2090377234221535569#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Ya\u2019ll sold?! Video",
-      "publishedAt": "2026-08-20T09:55:44+00:00",
-      "publishedTs": 1787219744.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The anti-data center stuff is insane and clear evidence that we have entered a post-truth era where many people can be convinced, often by malicious actors, to abandon reality and allow conspiracies/falsehoods to drive policy preferences.",
       "link": "https://x.com/AGHamilton29/status/2090244319496069372#m",
       "source": "@nic_carter",
@@ -1571,19 +1571,6 @@
       "summary": "What a violent move upward that was violently rejected by the 200-day average (for now?) Byzantine General (@ByzGeneral) Uhhhhhh........... This might be the single biggest daily shorts liquidation event in bitcoin's history \ud83d\ude33 \u2014 http://nitter.perennialte.ch/ByzGeneral/status/2090",
       "publishedAt": "2026-08-19T17:18:29+00:00",
       "publishedTs": 1787159909.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This thing is an absolutely nightmare It\u2019s not even fraud, it\u2019s worse Industrial scale shoveling of taxpayer cash into places it doesn\u2019t belong, with no oversight or controls by design",
-      "link": "https://x.com/nic_carter/status/2090112363576062381#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-19T16:23:14+00:00",
-      "publishedTs": 1787156594.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
