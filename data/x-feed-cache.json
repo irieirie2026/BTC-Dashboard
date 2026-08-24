@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-24T15:37:30Z",
+  "fetchedAt": "2026-08-24T16:35:04Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "x.com/i/article/209191528085\u2026",
+      "link": "https://x.com/saylor/status/2091923153542840808#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-24T16:18:40+00:00",
+      "publishedTs": 1787588320.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-august-2026",
+      "link": "https://x.com/BitcoinMagazine/status/2091920276271300672#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Market here: polymarket.com/event/what-pr\u2026",
+      "publishedAt": "2026-08-24T16:07:14+00:00",
+      "publishedTs": 1787587634.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: There's now a 53% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060 \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2091917601681076297#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-24T15:56:36+00:00",
+      "publishedTs": 1787586996.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "ETF IQ today we have exclusive intv w/ Goldman and NEOS together to discuss the recent acquisition. Also talking to Wellington about their privates interval fund w/ Blackstone/Vgrd. Also a Drill Down into the Texas ETF $TXS and @psarofagis on the proposed NHL Team ETFs (which I'm",
       "link": "https://x.com/EricBalchunas/status/2091908503807898098#m",
@@ -89,19 +128,6 @@
       "summary": "",
       "publishedAt": "2026-08-24T14:23:58+00:00",
       "publishedTs": 1787581438.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Iconic Digital increased their treasury by 21 Bitcoin, now totaling 2,882 BTC worth $168 million! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091891760645439535#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T14:13:55+00:00",
-      "publishedTs": 1787580835.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1121,19 +1147,6 @@
       "isRetweet": false
     },
     {
-      "title": "BITCOIN ASIA IS HAPPENING NEXT WEEK \ud83d\ude80 Get your passes now to the BIGGEST Bitcoin event in Asia \ud83c\udded\ud83c\uddf0 10% off here \ud83d\udc47 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2090857009293783527#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BITCOIN ASIA IS HAPPENING NEXT WEEK \ud83d\ude80 Get your passes now to the BIGGEST Bitcoin event in Asia \ud83c\udded\ud83c\uddf0 10% off here \ud83d\udc47 tickets.b.tc/event/bitcoin-a\u2026 Video",
-      "publishedAt": "2026-08-21T17:42:11+00:00",
-      "publishedTs": 1787334131.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Some say correlation is not causation. Others say the most entertaining outcome is the most likely.",
       "link": "https://x.com/lopp/status/2090807111684915656#m",
       "source": "@lopp",
@@ -1223,19 +1236,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "\ud83d\udea8ETH IS THE MOST HATED MEGA-CAP RIGHT NOW! @cryptomanran asked @CryptoHayes on Crypto Insider why he\u2019s all-in on Ethereum: He\u2019s already structurally long plenty of $BTC. For the trading slice of the portfolio, $ETH is the bet. It\u2019s the most hated mega-cap crypto, still hasn\u2019t bro",
-      "link": "https://x.com/crypto_banter/status/2090695182706495706#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "\ud83d\udea8ETH IS THE MOST HATED MEGA-CAP RIGHT NOW! @cryptomanran asked @CryptoHayes on Crypto Insider why he\u2019s all-in on Ethereum: He\u2019s already structurally long plenty of $BTC . For the trading slice of the portfolio, $ETH is the bet. It\u2019s the most hated mega-cap crypto, still hasn\u2019t br",
-      "publishedAt": "2026-08-21T06:59:09+00:00",
-      "publishedTs": 1787295549.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Average Bitcoin hodler morning routine.\ud83c\udf1e",
@@ -1470,19 +1470,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "8 \u20bfillion to serve.",
-      "link": "https://x.com/saylor/status/2090354214568333559#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "8 \u20bfillion to serve. Video",
-      "publishedAt": "2026-08-20T08:24:16+00:00",
-      "publishedTs": 1787214256.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "The anti-data center stuff is insane and clear evidence that we have entered a post-truth era where many people can be convinced, often by malicious actors, to abandon reality and allow conspiracies/falsehoods to drive policy preferences.",
