@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-24T17:29:10Z",
+  "fetchedAt": "2026-08-24T18:37:37Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: Bitcoin ETF assets climbed 25.4% to $96.1 billion from $76.6 billion in value last week, Decrypt reports \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2091948826978291820#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-24T18:00:41+00:00",
+      "publishedTs": 1787594441.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Ionic Digital increased their treasury by 21 Bitcoin, now totaling 2,882 BTC worth $168 million! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2091932807203348970#m",
@@ -1155,19 +1168,6 @@
       "summary": "JUST IN: $3.8 billion Pantera Capital tells CNBC the Bitcoin price is starting to \u201creverse\u201d to the upside \ud83d\udc40 \"There's smart money now coming in, and there's real fundamentals to support the rebound in prices.\u201d \ud83d\ude80 Video",
       "publishedAt": "2026-08-21T20:22:50+00:00",
       "publishedTs": 1787343770.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u267e / 21 million Bitcoin",
-      "link": "https://x.com/BitcoinMagazine/status/2090881763148959886#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-21T19:20:33+00:00",
-      "publishedTs": 1787340033.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
