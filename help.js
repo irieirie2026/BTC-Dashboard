@@ -2552,7 +2552,7 @@ const METRIC_HELP = {
   },
   "vol-section": {
     title: "Volatility",
-    body: "ARCH/GARCH family estimation on BTC log returns (√365 annualization). Compare models by AIC/BIC, inspect conditional vol, forecasts, news-impact curves, and desk risk metrics. Prefer <code>pip install arch</code> for full model coverage; otherwise a NumPy GARCH(1,1) fallback is used.",
+    body: "ARCH/GARCH family estimation on BTC log returns (√365 annualization). <strong>Model selection produces a volatility forecast</strong> (conditional σ path + term RV), not a Deribit order. Suggested trades are a second mapping: term RV vs live ATM IV, using only listed contracts. Prefer <code>pip install arch</code>; otherwise a NumPy GARCH(1,1) fallback is used.",
   },
   "ts-section": {
     title: "Time Series",
@@ -2777,12 +2777,20 @@ const METRIC_HELP = {
     body: "Model-implied expected volatility given information up to the last sample day — not a trailing historical window. Annualized with √365 for crypto. For the selected model, the chart’s last point is the same quantity as that model’s table “Cond. vol” cell (last fitted σ × √365).",
   },
   "vol-fcast": {
-    title: "Volatility forecast",
-    body: "Multi-step-ahead annualized conditional volatility from the selected/best model (1d / 7d / 30d).",
+    title: "Term RV (option mark)",
+    body: "Option-horizon realized-vol forecast: √(mean of the next 7 or 30 daily variance forecasts) × √365. This is what you compare to Deribit ATM IV. The 1d figure is the day-ahead path vol (E[σ tomorrow]), which is <em>not</em> the same as a 7-day option’s average vol.",
   },
   "vol-best": {
-    title: "Best model (AIC)",
-    body: "Lowest Akaike Information Criterion among successfully estimated models. BIC is also highlighted in the table when it disagrees.",
+    title: "Mark model (QLIKE)",
+    body: "The model used as the physical RV mark for tickets and KPIs: lowest expanding-window OOS QLIKE on <strong>term</strong> h-day variance (same quantity compared to Deribit IV). AIC/BIC remain table badges only and exclude HAR.",
+  },
+  "vol-dvol": {
+    title: "DVOL / ATM IV",
+    body: "Live Deribit DVOL when the index feed is available, otherwise nearest-weekly ATM mark IV from the option book. Not the GARCH forecast.",
+  },
+  "vol-ivgap": {
+    title: "IV − term RV",
+    body: "Live ATM mark IV minus the mark model’s term RV at 7d and 30d. Positive = options rich vs the model (short-vol gate). Negative = options cheap (long-vol gate). Cond. vol is yesterday’s close; IV is the live book.",
   },
   "vol-persist": {
     title: "Persistence & half-life",
@@ -2846,7 +2854,7 @@ const METRIC_HELP = {
   },
   "vol-col-status": {
     title: "Status",
-    body: "<strong>ok</strong> = full estimate · <strong>fallback</strong> = simpler estimator substituted · <strong>failed</strong> = optimization or library error.",
+    body: "<strong>ok</strong> = the intended estimator ran (including HAR-RV OLS on Parkinson RV, which does not use <code>arch</code>) · <strong>fallback</strong> = a GARCH(1,1) substitute because <code>arch</code> was missing · <strong>failed</strong> = optimization or library error.",
   },
   "vol-col-rank": {
     title: "Rank",
@@ -2926,7 +2934,7 @@ const METRIC_HELP = {
   },
   "vol-dist": {
     title: "Error distribution",
-    body: "Assumed distribution of standardized residuals in the GARCH likelihood: Student-t (fatter tails, default for BTC), Normal, GED, or skewed-t. Affects fit and VaR/ES under the model, not the RV path shape alone.",
+    body: "Assumed distribution of standardized residuals in the GARCH likelihood. Desk default is <strong>Student-t</strong> (fat tails). Normal understates crash days; GED is similar to t; skewed-t adds return skew (use as a robustness check — EGARCH/GJR already capture crash asymmetry in variance).",
   },
   "vol-run-all": {
     title: "Run selected · Run all · Export",
@@ -2934,11 +2942,15 @@ const METRIC_HELP = {
   },
   "vol-model-picker": {
     title: "Models to estimate",
-    body: "Multi-select catalog of ARCH/GARCH candidates. Only checked models are estimated when you press Run selected — prefs (models + distribution + range) persist in <code>localStorage</code>. Defaults: <strong>10Y</strong> range and <strong>Student-t</strong> distribution. Presets: All, Defaults, Core, Asymmetric, None. Tags: <strong>arch</strong> needs the Python package; <strong>lite</strong> runs without it (EWMA/HAR or GARCH fallback).",
+    body: "Multi-select catalog of ARCH/GARCH candidates. Only checked models are estimated when you press Run selected — prefs (models + distribution + range) persist in <code>localStorage</code>. Desk defaults: <strong>5Y</strong> range and <strong>Student-t</strong> errors. Presets: All, Defaults, Core, Asymmetric, None. Tags: <strong>arch</strong> needs the Python package; <strong>lite</strong> runs without it (EWMA/HAR or GARCH fallback).",
   },
   "vol-range": {
     title: "Sample range",
-    body: "How many calendar days of BTC history to estimate on. Default is <strong>10Y</strong> (3650 days) with Student-t errors. Longer samples stabilize long-run vol but may mix regimes; shorter samples track the current cluster more tightly.",
+    body: "How many calendar days of BTC history to estimate on. Desk default is <strong>5Y</strong> (1825 days): enough for stable GARCH and QLIKE, still inside the post-2020/ETF vol regime. 10Y/All mix older illiquid crashes into today’s DVOL world; 1–2Y is too short for tails and OOS.",
+  },
+  "vol-est-why": {
+    title: "Why 5Y + Student-t",
+    body: "Recommended estimation setup for Deribit RV marks. 5Y balances sample size against structural breaks; Student-t matches fat tails without extra skew parameters. Change only with a reason and compare to this baseline.",
   },
   "vol-chart-cond": {
     title: "Conditional volatility chart",
@@ -2946,7 +2958,7 @@ const METRIC_HELP = {
   },
   "vol-chart-forecast": {
     title: "Multi-step forecast",
-    body: "Annualized conditional vol path for horizons 1…30 days from the selected model. Use 7d/30d anchors when comparing to Deribit weeklies/monthlies.",
+    body: "Cyan: annualized vol <em>on</em> day h. Gold: term RV from day 1 through h (the option mark). Tickets and the KPI use the gold line at 7d/30d.",
   },
   "vol-chart-nic": {
     title: "News impact curve",
@@ -2978,7 +2990,7 @@ const METRIC_HELP = {
   },
   "vol-plan-section": {
     title: "Deribit position &amp; trade plan",
-    body: "Rule-based stance from the suite mark model, junior primer, click rules, ranked example tickets with theo BS stats/payoffs, emergency dry-run buttons, and a summary table. Educational — not a live order ticket.",
+    body: "Own panel under the KPIs. Maps term RV to live ATM IV, snaps legs to listed Deribit names. Default list is Core structures; enable Show advanced for diagonals/ratios. Premiums are a USD-linear BS proxy — Deribit BTC options are inverse. Log dry-run does not send orders.",
   },
   "vol-plan-primer": {
     title: "Read this first (junior)",
@@ -2994,15 +3006,23 @@ const METRIC_HELP = {
   },
   "vol-plan-tickets": {
     title: "Example Deribit tickets",
-    body: "Ranked multi-leg sketches with real sample spot, Friday expiries, BS premiums/greeks, payoff chart, and emergency actions. Short-vol tickets assume rich IV vs model for the entry thesis. Always re-check live mids.",
+    body: "Ranked multi-leg sketches snapped to the live Deribit instrument list (correct expiry codes such as 4SEP26, not 04SEP26, and listed strikes). Book column = listed vs missing. Pricing uses live ATM mark IV when available. Always re-check bid/ask and OI on Deribit.",
   },
   "vol-plan-summary": {
     title: "Ranked summary table",
-    body: "All suggested tickets sorted by composite score (42% attractiveness + 58% success). Win zone is the theo expiry grid share with P&amp;L &gt; 0 — not a live probability of profit.",
+    body: "Tickets sorted by composite (42% attract + 58% process). Win-zone is the share of a uniform spot grid with theo P&amp;L &gt; 0 — not a live probability of profit.",
+  },
+  "vol-model-product": {
+    title: "What model selection produces",
+    body: "Inputs: BTC log returns + distribution. Output: a volatility forecast path. Term RV averages that path over 7d/30d for option comparison. Trades are not the model output — they are a mapping of term RV vs live IV onto listed Deribit contracts.",
+  },
+  "vol-plan-sensitivity": {
+    title: "Forecast-error sensitivity",
+    body: "Recomputes long/short/neutral stance if term RV is shocked ±5 and ±10 vol points (live IV held fixed). A stance flip means the suggestion is not robust to plausible forecast error.",
   },
   "vol-ticket-score": {
     title: "Desk rank &amp; scores",
-    body: "<strong>Attract</strong> = edge / R:R / structure fit. <strong>Success</strong> = win-zone, defined risk, delta neutrality, simplicity. <strong>Composite</strong> ranks the list. Grade A–D is a coarse band on composite.",
+    body: "<strong>Attract</strong> = edge / R:R / structure fit. <strong>Win-zone</strong> = share of a uniform spot grid with theo P&amp;L &gt; 0 (not a live win rate). <strong>Composite</strong> ranks the list.",
   },
   "vol-ticket-stats": {
     title: "Ticket theo stats",
@@ -3014,7 +3034,7 @@ const METRIC_HELP = {
   },
   "vol-ticket-premium": {
     title: "Net premium",
-    body: "Sum of signed BS leg prices in USD per structure (credit received or debit paid). Not a live Deribit mid.",
+    body: "Sum of signed Black–Scholes prices as a USD-linear proxy (credit or debit). Deribit BTC options are inverse (BTC). This will not match the Deribit UI.",
   },
   "vol-ticket-maxprofit": {
     title: "Max profit (expiry)",
@@ -3034,15 +3054,15 @@ const METRIC_HELP = {
   },
   "vol-ticket-sigma1": {
     title: "±1σ expiry P&amp;L",
-    body: "Theo expiry P&amp;L if spot finishes one model daily-σ move below/above spot (using ticket IV).",
+    body: "Theo expiry P&amp;L if spot finishes one <em>horizon</em> σ away: S × IV × √T (T = years to expiry). Not a 1-day move.",
   },
   "vol-ticket-sigma2": {
     title: "±2σ expiry P&amp;L",
-    body: "Same as ±1σ but at two daily standard deviations — stress moves for emergency planning.",
+    body: "Same as ±1σ at two horizon standard deviations — expiry stress, not the intraday stop band.",
   },
   "vol-ticket-bands": {
-    title: "1σ / 2σ spot bands",
-    body: "Spot intervals around the sample spot using daily σ = IV/√365. Used in emergency “leave the band” rules.",
+    title: "Intraday 1σ / 2σ (stops)",
+    body: "Spot intervals using daily σ = IV/√365. Used in emergency “leave the band in a single session” rules — different from expiry ±1σ.",
   },
   "vol-ticket-dte": {
     title: "DTE / T",
@@ -3050,7 +3070,11 @@ const METRIC_HELP = {
   },
   "vol-ticket-payoff": {
     title: "Payoff chart",
-    body: "Expiry P&amp;L (USD) vs spot. Teal path = structure; dashed line = sample spot; yellow dots = breakevens. Approximation for multi-expiry books.",
+    body: "P&amp;L vs spot at the <strong>nearest expiry</strong>. Single-expiry books use intrinsic. Calendars/diagonals mark the back month with remaining Black–Scholes value (it has not expired). A long calendar should peak near ATM (pin) and lose on a large trend — if the line is flat at −debit, the chart is wrong.",
+  },
+  "vol-ticket-wlgrid": {
+    title: "Win / lose zone grid",
+    body: "Same theo P&amp;L as the payoff chart, sampled on a ±28% spot grid at the analysis horizon (front expiry for calendars). Green = WIN (P&amp;L &gt; 0), red = LOSE, grey = even. The strip is the full scan; the table lists now, ±10/20%, ±1σ/±2σ horizon moves, breakevens, and pin/worst. Not a live probability of profit.",
   },
   "vol-ticket-emergency": {
     title: "Emergency actions",
@@ -3077,16 +3101,16 @@ const METRIC_HELP = {
     body: "0–100 score for edge and structure appeal (R:R, credit vs max loss, bias fit).",
   },
   "vol-sum-success": {
-    title: "Chance of success",
-    body: "0–100 score from theo win-zone, defined risk, delta neutrality, and operational simplicity — not a live POP.",
+    title: "Win-zone (grid)",
+    body: "Share of a uniform spot grid with theo P&amp;L &gt; 0 at the analysis horizon. Not a live probability of profit.",
   },
   "vol-sum-score": {
     title: "Composite score",
-    body: "0.42 × Attract + 0.58 × Success. Sorts the ticket list.",
+    body: "0.42 × Attract + 0.58 × process (defined risk, delta, simplicity, grid win-zone). Sorts the ticket list.",
   },
   "vol-sum-winzone": {
     title: "Win zone",
-    body: "Share of the theo expiry spot grid with P&amp;L &gt; 0 under ticket IV.",
+    body: "Share of a uniform ±28% spot grid with theo P&amp;L &gt; 0 at the analysis horizon, plus a green/red strip of those same cells (left = down, right = up, cyan = spot). Not a live probability of profit. Open the ticket for the full win/lose table.",
   },
   "vol-sum-premium": {
     title: "Premium",

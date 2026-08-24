@@ -831,11 +831,39 @@ def get_options_chain_payload(*, refresh=False):
             "strikes": strikes,
         })
 
+    dvol = None
+    dvol_as_of = None
+    try:
+        end_ts = now_ms
+        start_ts = now_ms - 6 * 3600 * 1000
+        vd = _fetch_json_url(
+            f"{DERIBIT_API}/get_volatility_index_data"
+            f"?currency=BTC&resolution=3600&start_timestamp={start_ts}&end_timestamp={end_ts}"
+        )
+        rows = (vd.get("result") or {}).get("data") or vd.get("result") or []
+        # Each row is typically [timestamp, open, high, low, close]
+        last = None
+        if isinstance(rows, list) and rows:
+            last = rows[-1]
+        if isinstance(last, (list, tuple)) and len(last) >= 5:
+            close = float(last[4])
+            # Deribit DVOL is in percent (e.g. 48.2)
+            dvol = close / 100.0 if close > 3 else close
+            dvol_as_of = int(last[0])
+        elif isinstance(last, dict) and last.get("close") is not None:
+            close = float(last["close"])
+            dvol = close / 100.0 if close > 3 else close
+            dvol_as_of = int(last.get("timestamp") or now_ms)
+    except Exception:
+        dvol = None
+
     data = {
         "indexPrice": index_price,
         "fetchedAt": now_ms,
         "expirations": expirations,
         "quotesByInstrument": quotes_by_instrument,
+        "dvol": dvol,
+        "dvolAsOf": dvol_as_of,
     }
     _cset(cache_key, data, ttl)
     return data

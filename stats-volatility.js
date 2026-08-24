@@ -5,7 +5,10 @@
 
 const VOL_API = "/api/stats/volatility";
 const VOL_ANN = 365;
-const VOL_PREFS_KEY = "vol-suite-prefs-v3";
+const VOL_PREFS_KEY = "vol-suite-prefs-v4";
+/** Desk defaults: 5Y sample + Student-t innovations (see #vol-est-why). */
+const VOL_DESK_DAYS = "1825";
+const VOL_DESK_DIST = "t";
 
 let volSuite = null;
 let volSelectedId = null;
@@ -17,8 +20,8 @@ const volEl = (id) => document.getElementById(id);
 
 function volDefaultPrefs() {
   return {
-    days: "3650", // 10Y
-    dist: "t", // Student-t
+    days: VOL_DESK_DAYS,
+    dist: VOL_DESK_DIST,
     /** null = use catalog defaultOn flags */
     models: null,
   };
@@ -30,8 +33,8 @@ function volLoadPrefs() {
     if (!raw) return volDefaultPrefs();
     const p = JSON.parse(raw);
     return {
-      days: String(p.days || "3650"),
-      dist: String(p.dist || "t").toLowerCase(),
+      days: String(p.days || VOL_DESK_DAYS),
+      dist: String(p.dist || VOL_DESK_DIST).toLowerCase(),
       models: Array.isArray(p.models) ? p.models.map(String) : null,
     };
   } catch {
@@ -200,8 +203,8 @@ function volEscape(s) {
  * @param {{ allModels?: boolean }} opts if allModels, estimate full catalog for current range/dist
  */
 async function volFetchSuite(force = false, opts = {}) {
-  const days = volEl("vol-range")?.value || "3650";
-  const dist = volEl("vol-dist")?.value || "t";
+  const days = volEl("vol-range")?.value || VOL_DESK_DAYS;
+  const dist = volEl("vol-dist")?.value || VOL_DESK_DIST;
   let models;
   if (opts.allModels) {
     models = volCatalog.length
@@ -242,17 +245,29 @@ function volSetKpis(suite) {
     const n = volEl(id);
     if (n) n.textContent = text;
   };
+  const markName = s.markModelName || s.bestForecastModelName || s.bestModelName;
   set("vol-kpi-cond", volFmtPct(s.currentCondVolAnn, 1));
   set(
     "vol-kpi-cond-sub",
-    s.bestModelName ? `${s.bestModelName} · latest` : "Best model · latest",
+    markName ? `${markName} · last daily close` : "QLIKE mark · last close",
   );
+  const t7 =
+    s.forecastTerm7d != null ? volFmtPct(s.forecastTerm7d, 1) : volFmtPct(s.forecast7d, 1);
+  const t30 =
+    s.forecastTerm30d != null ? volFmtPct(s.forecastTerm30d, 1) : volFmtPct(s.forecast30d, 1);
   const f1 = s.forecast1d != null ? volFmtPct(s.forecast1d, 1) : "—";
-  const f7 = s.forecast7d != null ? volFmtPct(s.forecast7d, 1) : "—";
-  const f30 = s.forecast30d != null ? volFmtPct(s.forecast30d, 1) : "—";
-  set("vol-kpi-fcast", `${f1} / ${f7} / ${f30}`);
-  set("vol-kpi-best", s.bestModelName || "—");
-  set("vol-kpi-best-sub", s.bestModelId ? `id: ${s.bestModelId}` : "by AIC");
+  set("vol-kpi-fcast", `${t7} / ${t30}`);
+  const fcastSub = volEl("vol-kpi-fcast")?.parentElement?.querySelector(".deriv-hero-sub");
+  if (fcastSub) {
+    fcastSub.textContent = `Option mark · day-1 path ${f1}`;
+  }
+  set("vol-kpi-best", markName || "—");
+  set(
+    "vol-kpi-best-sub",
+    s.bestForecastModelId || s.markModelId
+      ? `QLIKE · ${s.bestForecastModelId || s.markModelId}`
+      : "OOS forecast leader",
+  );
   const pers =
     s.persistence != null ? Number(s.persistence).toFixed(3) : "—";
   const hl =
@@ -262,6 +277,54 @@ function volSetKpis(suite) {
   set("vol-kpi-persist", `${pers} · ${hl}`);
   set("vol-kpi-unc", volFmtPct(s.unconditionalVolAnn, 1));
   set("vol-kpi-regime", s.regime || "—");
+}
+
+function volSetLiveIvKpis(suite, chain) {
+  const s = suite?.summary || {};
+  const set = (id, text) => {
+    const n = volEl(id);
+    if (n) n.textContent = text;
+  };
+  const asof = volEl("vol-kpi-asof");
+  const mark = (suite.models || []).find((m) => m.id === (s.markModelId || suite.bestByQlike));
+  const { term7, term30 } = volMarkTermRv(mark || {}, s);
+  const spot = chain?.indexPrice != null ? Number(chain.indexPrice) : volSuiteSpot(suite);
+  const wExp = volPickListedExpiry(chain, { minDte: 3, maxDte: 12 });
+  const mExp = volPickMonthlyExpiry(chain);
+  const liveW = wExp && spot ? volAtmIvFromExp(wExp, spot) : null;
+  const liveM = mExp && spot ? volAtmIvFromExp(mExp, spot) : null;
+  const dvol = chain?.dvol != null && Number.isFinite(Number(chain.dvol)) ? Number(chain.dvol) : null;
+  const atm7 = liveW?.iv ?? null;
+  const atm30 = liveM?.iv ?? null;
+  const ivShow = dvol != null ? dvol : atm7;
+  set("vol-kpi-dvol", ivShow != null ? volFmtPct(ivShow, 1) : "—");
+  set(
+    "vol-kpi-dvol-sub",
+    dvol != null
+      ? `DVOL${atm7 != null ? ` · ATM 7d ${volFmtPct(atm7, 1)}` : ""}`
+      : atm7 != null
+        ? `ATM 7d (no DVOL)`
+        : "Run to load book",
+  );
+  const g7 = atm7 != null && term7 != null ? atm7 - term7 : null;
+  const g30 = atm30 != null && term30 != null ? atm30 - term30 : null;
+  const gapTxt =
+    g7 != null || g30 != null
+      ? `${g7 != null ? volFmtPct(g7, 1) : "—"} / ${g30 != null ? volFmtPct(g30, 1) : "—"}`
+      : "—";
+  set("vol-kpi-ivgap", gapTxt);
+  set("vol-kpi-ivgap-sub", g7 != null || g30 != null ? "positive = IV rich vs model" : "7d / 30d gap");
+  const suiteAsOf = suite?.asOf ? String(suite.asOf).replace("T", " ").slice(0, 16) + " UTC" : "—";
+  const chainAsOf = chain?.fetchedAt
+    ? new Date(chain.fetchedAt).toISOString().replace("T", " ").slice(0, 16) + " UTC"
+    : "—";
+  if (asof) {
+    asof.textContent =
+      `RV / GARCH as of ${suiteAsOf}${suite.fromCache ? " (cached)" : ""} · ` +
+      `Deribit book ${chainAsOf} · index ${
+        spot != null ? `$${Number(spot).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "—"
+      }. Cond. vol is last daily close; IV is live.`;
+  }
 }
 
 function volRenderTable(suite) {
@@ -296,7 +359,7 @@ function volRenderTable(suite) {
               : "";
       const status =
         m.status === "ok"
-          ? m.warning
+          ? m.fallbackFrom
             ? "fallback"
             : "ok"
           : "failed";
@@ -354,7 +417,9 @@ function volRenderTable(suite) {
             : "—"
         }</td>
         <td class="mono vol-td-num">${volFmtPct(m.currentCondVolAnn, 1)}</td>
-        <td class="vol-td-text"><span class="vol-status vol-status--${status}">${volEscape(status)}</span></td>
+        <td class="vol-td-text"><span class="vol-status vol-status--${status}"${
+          m.rvNote && status === "ok" ? ` title="${volEscape(m.rvNote)}"` : ""
+        }>${volEscape(status)}</span></td>
         <td class="vol-td-text vol-td-deribit">${deribitHtml}</td>
         <td class="vol-td-rank">${rankHtml}</td>
       </tr>`;
@@ -386,7 +451,7 @@ function volBuildRunCommentary(suite) {
   const models = suite.models || [];
   const ok = models.filter((m) => m.status === "ok");
   const failed = models.filter((m) => m.status === "failed");
-  const fallback = ok.filter((m) => m.warning);
+  const fallback = ok.filter((m) => m.fallbackFrom);
   const s = suite.summary || {};
   const lines = [];
 
@@ -402,6 +467,15 @@ function volBuildRunCommentary(suite) {
       `Engine: <strong>${suite.archAvailable ? "arch (full suite)" : "NumPy fallback"}</strong>` +
       `${suite.fromCache ? " · served from cache" : " · freshly estimated"}.`,
   );
+  const usedDays = String(suite.daysRequested || volEl("vol-range")?.value || "");
+  const usedDist = String(suite.distribution || "").toLowerCase();
+  if (usedDays !== VOL_DESK_DAYS || usedDist !== VOL_DESK_DIST) {
+    lines.push(
+      `Desk default is <strong>5Y + Student-t</strong> (see the note under Range / Distribution). ` +
+        `This run used <strong>${usedDays === "3650" ? "10Y" : usedDays === "1825" ? "5Y" : usedDays === "1095" ? "3Y" : usedDays === "730" ? "2Y" : usedDays === "365" ? "1Y" : usedDays === "5000" ? "All" : usedDays + "d"}</strong>` +
+        ` and <strong>${volEscape(usedDist || "—")}</strong> — compare QLIKE/term RV against a 5Y-t pass before sizing.`,
+    );
+  }
 
   lines.push(
     `<strong>${ok.length}</strong> of <strong>${models.length}</strong> specifications converged` +
@@ -526,6 +600,218 @@ function volSuiteSpot(suite) {
   return null;
 }
 
+/** Live Deribit option chain from /api/options/chain (same book as Options Strategy). */
+let volDeribitChain = null;
+/** Ranked tickets for the click-to-expand summary table. */
+let volPlanTickets = [];
+let volPlanTicketSel = "1";
+
+async function volLoadDeribitChain() {
+  try {
+    const res = await fetch("/api/options/chain", { cache: "no-store" });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Deribit chain ${res.status}`);
+    volDeribitChain = data;
+    return data;
+  } catch (err) {
+    console.warn("[vol] Deribit chain", err);
+    volDeribitChain = null;
+    return null;
+  }
+}
+
+/** Option-horizon term RV from a path of annualized day-ahead vols. */
+function volTermFromPath(forecastAnn, h) {
+  const path = (forecastAnn || []).map(Number).filter((x) => Number.isFinite(x) && x > 0);
+  if (!path.length || !(h >= 1)) return null;
+  const n = Math.min(Math.floor(h), path.length);
+  let acc = 0;
+  for (let i = 0; i < n; i++) acc += (path[i] / Math.sqrt(VOL_ANN)) ** 2;
+  return Math.sqrt(acc / n) * Math.sqrt(VOL_ANN);
+}
+
+function volExpiryCodeFromMs(ms) {
+  return volFmtDeribitExpiry(new Date(ms));
+}
+
+function volPickListedExpiry(chain, { minDte = 3, maxDte = 12, preferFriday = true } = {}) {
+  const exps = chain?.expirations || [];
+  const now = Date.now();
+  const scored = [];
+  for (const e of exps) {
+    const dte =
+      e.daysToExpiration != null
+        ? Number(e.daysToExpiration)
+        : (Number(e.expirationTimestamp) - now) / 86_400_000;
+    if (!(dte >= minDte) || dte > maxDte) continue;
+    if (!(e.strikes || []).length) continue;
+    const day = new Date(e.expirationTimestamp).getUTCDay();
+    scored.push({ e, dte, isFri: day === 5 });
+  }
+  if (!scored.length) return null;
+  const fri = preferFriday ? scored.filter((x) => x.isFri) : scored;
+  const pool = fri.length ? fri : scored;
+  pool.sort((a, b) => a.dte - b.dte);
+  return pool[0].e;
+}
+
+function volPickExpiryBand(chain, minDte, maxDte) {
+  const exps = chain?.expirations || [];
+  const now = Date.now();
+  const scored = [];
+  for (const e of exps) {
+    const dte =
+      e.daysToExpiration != null
+        ? Number(e.daysToExpiration)
+        : (Number(e.expirationTimestamp) - now) / 86_400_000;
+    if (!(dte >= minDte) || dte > maxDte) continue;
+    if (!(e.strikes || []).length) continue;
+    const day = new Date(e.expirationTimestamp).getUTCDay();
+    scored.push({ e, dte, isFri: day === 5 });
+  }
+  if (!scored.length) return null;
+  const fri = scored.filter((x) => x.isFri);
+  const pool = fri.length ? fri : scored;
+  pool.sort((a, b) => a.dte - b.dte);
+  return pool[pool.length - 1].e;
+}
+
+function volCycleFromSuite(suite) {
+  const H4 = Date.UTC(2024, 3, 20);
+  const nextH = Date.UTC(2028, 3, 20);
+  const now = Date.now();
+  const daysSinceH = Math.round((now - H4) / 86_400_000);
+  const daysToNext = Math.round((nextH - now) / 86_400_000);
+  const closes = suite?.series?.close || [];
+  const dates = suite?.series?.dates || [];
+  let peak = 0;
+  let peakI = 0;
+  closes.forEach((c, i) => {
+    const n = Number(c);
+    if (n > peak) {
+      peak = n;
+      peakI = i;
+    }
+  });
+  const last = volSuiteSpot(suite);
+  const dd = peak > 0 && last > 0 ? ((peak - last) / peak) * 100 : null;
+  let daysSincePeak = null;
+  if (dates[peakI]) {
+    const t = Date.parse(String(dates[peakI]).slice(0, 10));
+    if (Number.isFinite(t)) daysSincePeak = Math.max(0, Math.round((now - t) / 86_400_000));
+  }
+  const vc = typeof window !== "undefined" ? window.vcRef : null;
+  if (vc?.cycleAthPrice && vc.currentPrice) {
+    const vcDd = ((Number(vc.cycleAthPrice) - Number(vc.currentPrice)) / Number(vc.cycleAthPrice)) * 100;
+    if (Number.isFinite(vcDd)) {
+      dd = vcDd;
+      peak = Number(vc.cycleAthPrice);
+      last = Number(vc.currentPrice);
+      if (vc.cycleAthDate) {
+        const t = Date.parse(String(vc.cycleAthDate).slice(0, 10));
+        if (Number.isFinite(t)) daysSincePeak = Math.max(0, Math.round((now - t) / 86_400_000));
+      }
+    }
+  }
+  let regime = "late_cycle";
+  let blurb =
+    `${daysSinceH}d after the Apr 2024 halvings, ~${daysToNext}d to the ~Apr 2028 estimate. ` +
+    `Past the typical first-year markup window — own some long-dated crash convexity; do not sell LEAPS vol.`;
+  if (dd != null && dd < 12 && daysSincePeak != null && daysSincePeak < 60) {
+    regime = "late_distribution";
+    blurb =
+      `Only ~${dd.toFixed(0)}% off the 5Y sample high (${daysSincePeak}d). Distribution may still be resolving — ` +
+      `prefer defined risk and longer-dated puts over selling far-dated premium.`;
+  } else if (dd != null && dd >= 35) {
+    regime = "markdown";
+    blurb =
+      `Spot is ~${dd.toFixed(0)}% below the 5Y sample high. That is markdown-shaped vs prior cycles — ` +
+      `LEAPS put convexity and debit put spreads over selling long-dated vol.`;
+  } else if (daysSinceH < 400) {
+    regime = "markup";
+    blurb =
+      `${daysSinceH}d post-halving is still an early-to-mid markup analogue — longer-dated call convexity ` +
+      `has historically been the cycle-congruent expression.`;
+  } else if (dd != null && dd >= 18) {
+    regime = "markdown";
+    blurb =
+      `~${dd.toFixed(0)}% off the sample peak and ${daysSinceH}d after H4. Treat as late-cycle/markdown for tenor choice: ` +
+      `quarterly/LEAPS puts and calendars, not short LEAPS iron condors.`;
+  }
+  return {
+    daysSinceH,
+    daysToNext,
+    dd,
+    daysSincePeak,
+    peak,
+    last,
+    regime,
+    blurb,
+  };
+}
+
+function volPickMonthlyExpiry(chain) {
+  const exps = chain?.expirations || [];
+  const now = Date.now();
+  const cands = [];
+  for (const e of exps) {
+    const d = new Date(e.expirationTimestamp);
+    if (d.getUTCDay() !== 5) continue;
+    const dte =
+      e.daysToExpiration != null
+        ? Number(e.daysToExpiration)
+        : (Number(e.expirationTimestamp) - now) / 86_400_000;
+    if (dte < 18 || dte > 55) continue;
+    const nextWeek = new Date(e.expirationTimestamp + 7 * 86_400_000);
+    const lastOfMonth = nextWeek.getUTCMonth() !== d.getUTCMonth();
+    cands.push({ e, dte, lastOfMonth });
+  }
+  const last = cands.filter((x) => x.lastOfMonth);
+  const pool = last.length ? last : cands;
+  if (!pool.length) return volPickListedExpiry(chain, { minDte: 20, maxDte: 50 });
+  pool.sort((a, b) => a.dte - b.dte);
+  return pool[0].e;
+}
+
+function volNearestStrikeRow(exp, target, needBoth = false) {
+  const rows = exp?.strikes || [];
+  let best = null;
+  let bestDist = Infinity;
+  for (const row of rows) {
+    if (needBoth && !(row.call && row.put)) continue;
+    if (!row.call && !row.put) continue;
+    const dist = Math.abs(Number(row.strike) - Number(target));
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = row;
+    }
+  }
+  if (!best && needBoth) return volNearestStrikeRow(exp, target, false);
+  return best;
+}
+
+function volLiveInstrumentName(exp, strike, isCall) {
+  const code = volExpiryCodeFromMs(exp.expirationTimestamp);
+  const k = Number(strike);
+  const strikeStr = Number.isInteger(k) ? String(k) : String(Math.round(k));
+  return `BTC-${code}-${strikeStr}-${isCall ? "C" : "P"}`;
+}
+
+function volAtmIvFromExp(exp, indexPx) {
+  const row = volNearestStrikeRow(exp, indexPx, true);
+  const q = row?.call || row?.put;
+  const iv = q?.iv != null ? Number(q.iv) : null;
+  if (iv != null && Number.isFinite(iv) && iv > 0) {
+    return { iv: iv > 3 ? iv / 100 : iv, strike: Number(row.strike), quote: q, row };
+  }
+  return null;
+}
+
+function volQuoteName(chain, name) {
+  if (!name || !chain) return null;
+  return chain.quotesByInstrument?.[name] || null;
+}
+
 /** Round BTC option strike to liquid Deribit-style grid. */
 function volRoundStrike(spot, step) {
   const s = Number(spot);
@@ -547,9 +833,9 @@ function volDeribitFriday(minDays = 5, fromMs = Date.now()) {
 function volFmtDeribitExpiry(date) {
   const d = date instanceof Date ? date : new Date(date);
   const mon = d.toLocaleString("en-US", { month: "short", timeZone: "UTC" });
-  const day = String(d.getUTCDate()).padStart(2, "0");
+  // Deribit does NOT zero-pad the day: 4SEP26 exists, 04SEP26 does not.
+  const day = String(d.getUTCDate());
   const yy = String(d.getUTCFullYear()).slice(-2);
-  // e.g. 28MAR25 — Deribit instrument root style
   return `${day}${mon.toUpperCase()}${yy}`;
 }
 
@@ -567,6 +853,37 @@ function volFmtExpiryLabel(date) {
 function volDte(date, fromMs = Date.now()) {
   const ms = (date instanceof Date ? date.getTime() : date) - fromMs;
   return Math.max(0, Math.round(ms / 86_400_000));
+}
+
+const VOL_MON_IDX = {
+  JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
+  JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11,
+};
+
+/** Parse Deribit date token (4SEP26 / 28AUG26) or instrument BTC-4SEP26-77000-C → UTC ms. */
+function volExpiryMsFromCode(code) {
+  let token = String(code || "").trim().toUpperCase();
+  if (token.startsWith("BTC-")) {
+    const parts = token.split("-");
+    if (parts.length >= 2) token = parts[1];
+  }
+  if (token.includes("/")) return null;
+  const m = token.match(/^(\d{1,2})([A-Z]{3})(\d{2})$/);
+  if (!m) return null;
+  const day = parseInt(m[1], 10);
+  const mon = VOL_MON_IDX[m[2]];
+  const year = 2000 + parseInt(m[3], 10);
+  if (mon == null || !(day >= 1 && day <= 31)) return null;
+  return Date.UTC(year, mon, day, 8, 0, 0);
+}
+
+/** Calendar days to a leg’s own expiry — instrument name first, then expiryCode, then dte. */
+function volLegDteDays(L, fallbackDte, fromMs = Date.now()) {
+  const ms = volExpiryMsFromCode(L?.instrument) || volExpiryMsFromCode(L?.expiryCode);
+  if (ms != null) return (ms - fromMs) / 86_400_000;
+  if (L?.dte != null && Number.isFinite(Number(L.dte))) return Number(L.dte);
+  const fb = Number(fallbackDte);
+  return Number.isFinite(fb) ? fb : 0;
 }
 
 function volFmtUsd(n, d = 0) {
@@ -668,15 +985,17 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
   let vega = 0;
   let theta = 0;
   const pricedLegs = [];
-  let minDte = Infinity;
+  const tenorDays = optLegs.map((L) => volLegDteDays(L, dte));
+  let minDte = Math.min(...tenorDays);
+  if (!Number.isFinite(minDte)) minDte = Number(dte) || 7;
 
-  for (const L of optLegs) {
+  for (let li = 0; li < optLegs.length; li++) {
+    const L = optLegs[li];
     const isCall = L.type === "Call";
     const sign = L.side === "BUY" ? 1 : -1;
     const q = Number(L.qty) || 1;
-    const legDte = L.dte != null ? Number(L.dte) : dte;
+    const legDte = tenorDays[li];
     const T = Math.max((Number(legDte) || 1) / 365, 1 / 365);
-    minDte = Math.min(minDte, legDte || dte);
     // Front-week legs use front IV when provided (calendars)
     const sig = L.useFrontIv ? ivFront : iv;
     const px = volBsPrice(S0, L.strike, T, sig, isCall);
@@ -694,11 +1013,29 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
       delta: sign * q * g.delta,
       tYears: T,
       ivUsed: sig,
+      legDte,
     });
   }
 
-  // Expiry-style P&L vs spot: value shorts/longs at intrinsic of their own expiry
-  // (approximation: all settle at same S; multi-expiry uses each leg's intrinsic).
+  // P&L at the *nearest* expiry: expired legs → intrinsic; longer-dated legs stay
+  // marked with Black–Scholes remaining time (calendars / diagonals).
+  const markLegAtHorizon = (L, S) => {
+    const isCall = L.type === "Call";
+    const legDte = volLegDteDays(L, dte);
+    const remainingDays = legDte - minDte;
+    if (!(remainingDays > 0.51)) {
+      return volIntrinsic(S, L.strike, isCall);
+    }
+    const sig = L.useFrontIv ? ivFront : iv;
+    return volBsPrice(S, L.strike, remainingDays / 365, sig, isCall);
+  };
+  const markLegIntrinsic = (L, S) => {
+    const isCall = L.type === "Call";
+    const sign = L.side === "BUY" ? 1 : -1;
+    const q = Number(L.qty) || 1;
+    return sign * q * volIntrinsic(S, L.strike, isCall);
+  };
+
   const lo = S0 * 0.72;
   const hi = S0 * 1.28;
   const n = 81;
@@ -710,13 +1047,14 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
   for (let i = 0; i < n; i++) {
     const S = lo + ((hi - lo) * i) / (n - 1);
     let pnl = netPremium; // start from premium cash
+    let ghost = netPremium;
     for (const L of optLegs) {
-      const isCall = L.type === "Call";
       const sign = L.side === "BUY" ? 1 : -1;
       const q = Number(L.qty) || 1;
-      pnl += sign * q * volIntrinsic(S, L.strike, isCall);
+      pnl += sign * q * markLegAtHorizon(L, S);
+      ghost += markLegIntrinsic(L, S);
     }
-    points.push({ S, pnl });
+    points.push({ S, pnl, ghost });
     if (pnl > maxProfit) {
       maxProfit = pnl;
       maxProfitSpot = S;
@@ -740,18 +1078,23 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
   }
 
   const dailySig = iv / Math.sqrt(365);
-  const move1 = S0 * dailySig;
-  const move2 = S0 * 2 * dailySig;
+  const move1Daily = S0 * dailySig;
+  const move2Daily = S0 * 2 * dailySig;
+  const T = Tdefault;
+  const horizonMove1 = S0 * iv * Math.sqrt(T);
+  const horizonMove2 = 2 * horizonMove1;
   const pnlAt = (S) => {
     let pnl = netPremium;
     for (const L of optLegs) {
-      const isCall = L.type === "Call";
       const sign = L.side === "BUY" ? 1 : -1;
       const q = Number(L.qty) || 1;
-      pnl += sign * q * volIntrinsic(S, L.strike, isCall);
+      pnl += sign * q * markLegAtHorizon(L, S);
     }
     return pnl;
   };
+  const isMultiExpiry = Math.max(...tenorDays) - Math.min(...tenorDays) > 1;
+  const pinPnl = pnlAt(S0);
+  const wingPnl = pnlAt(S0 * 1.2);
 
   // Emergency numeric levels
   const stopLossUsd = Math.min(maxLoss * 0.5, netPremium < 0 ? netPremium * 1.25 : -Math.abs(netPremium) * 0.5);
@@ -766,7 +1109,6 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
   const isLongVol = netPremium < 0 && maxProfit > Math.abs(netPremium) * 2;
   const isShortVol = netPremium > 0;
 
-  const T = Tdefault;
   return {
     paper,
     ivAnn: iv,
@@ -787,34 +1129,45 @@ function volAnalyzeStructure({ legs, spot, dte, ivAnn, paper = false, ivAnnFront
     pricedLegs,
     points,
     spot: S0,
-    move1,
-    move2,
-    pnlDown1: pnlAt(S0 - move1),
-    pnlUp1: pnlAt(S0 + move1),
-    pnlDown2: pnlAt(S0 - move2),
-    pnlUp2: pnlAt(S0 + move2),
+    move1: move1Daily,
+    move2: move2Daily,
+    move1Daily,
+    move2Daily,
+    horizonMove1,
+    horizonMove2,
+    pnlDown1: pnlAt(S0 - horizonMove1),
+    pnlUp1: pnlAt(S0 + horizonMove1),
+    pnlDown2: pnlAt(S0 - horizonMove2),
+    pnlUp2: pnlAt(S0 + horizonMove2),
     emergencyLoss,
     stopLossUsd: emergencyLoss,
-    isLongVol,
-    isShortVol,
+    isLongVol: isMultiExpiry ? false : isLongVol,
+    isShortVol: isMultiExpiry ? false : isShortVol,
+    isMultiExpiry,
+    horizonDte: Number.isFinite(minDte) ? Math.round(minDte) : Math.round(T * 365),
+    pinPnl,
+    wingPnl,
+    backRemainingDays: isMultiExpiry ? Math.max(...tenorDays) - minDte : 0,
   };
 }
 
 /** SVG expiry P&L chart from analyze().points */
-function volPayoffChartSvg(analyze, width = 420, height = 160) {
+function volPayoffChartSvg(analyze, width = 440, height = 200) {
   if (!analyze?.points?.length) return "";
   const pts = analyze.points;
-  const pad = { t: 12, r: 10, b: 28, l: 48 };
+  const multi = !!analyze.isMultiExpiry;
+  const pad = { t: 22, r: 10, b: 28, l: 52 };
   const w = width - pad.l - pad.r;
   const h = height - pad.t - pad.b;
-  let minP = Math.min(...pts.map((p) => p.pnl), 0);
-  let maxP = Math.max(...pts.map((p) => p.pnl), 0);
+  const pnls = pts.map((p) => p.pnl);
+  const ghosts = multi ? pts.map((p) => p.ghost).filter((g) => Number.isFinite(g)) : [];
+  let minP = Math.min(...pnls, ...ghosts, 0);
+  let maxP = Math.max(...pnls, ...ghosts, 0);
   if (minP === maxP) {
     minP -= 1;
     maxP += 1;
   }
-  // pad y
-  const yPad = (maxP - minP) * 0.08;
+  const yPad = (maxP - minP) * 0.1;
   minP -= yPad;
   maxP += yPad;
   const minS = pts[0].S;
@@ -825,18 +1178,29 @@ function volPayoffChartSvg(analyze, width = 420, height = 160) {
   const path = pts
     .map((p, i) => `${i === 0 ? "M" : "L"}${xAt(p.S).toFixed(1)},${yAt(p.pnl).toFixed(1)}`)
     .join(" ");
+  const ghostPath =
+    multi && ghosts.length === pts.length
+      ? pts
+          .map((p, i) => `${i === 0 ? "M" : "L"}${xAt(p.S).toFixed(1)},${yAt(p.ghost).toFixed(1)}`)
+          .join(" ")
+      : "";
   const zeroY = yAt(0);
   const spotX = xAt(analyze.spot);
+  const pinX = xAt(analyze.maxProfitSpot || analyze.spot);
+  const pinY = yAt(analyze.maxProfit || 0);
 
-  // fill profit / loss areas roughly via polyline to zero
   const be = (analyze.breakevens || []).slice(0, 3);
 
   return (
-    `<svg class="vol-payoff-svg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" role="img" aria-label="Expiry P&amp;L chart">` +
+    `<svg class="vol-payoff-svg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" role="img" aria-label="P&amp;L chart">` +
     `<rect x="0" y="0" width="${width}" height="${height}" fill="transparent"/>` +
     `<line x1="${pad.l}" y1="${zeroY.toFixed(1)}" x2="${(width - pad.r).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="rgba(148,163,184,0.35)" stroke-width="1"/>` +
     `<line x1="${spotX.toFixed(1)}" y1="${pad.t}" x2="${spotX.toFixed(1)}" y2="${(height - pad.b).toFixed(1)}" stroke="rgba(56,189,248,0.45)" stroke-width="1" stroke-dasharray="3 3"/>` +
-    `<path d="${path}" fill="none" stroke="#2dd4bf" stroke-width="2"/>` +
+    (ghostPath
+      ? `<path d="${ghostPath}" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" stroke-dasharray="4 3"/>`
+      : "") +
+    `<path d="${path}" fill="none" stroke="#2dd4bf" stroke-width="2.4"/>` +
+    `<circle cx="${pinX.toFixed(1)}" cy="${pinY.toFixed(1)}" r="4" fill="#fbbf24"/>` +
     be
       .map(
         (b) =>
@@ -847,8 +1211,206 @@ function volPayoffChartSvg(analyze, width = 420, height = 160) {
     `<text x="${width - pad.r}" y="${height - 8}" fill="#64748b" font-size="10" font-family="IBM Plex Mono,monospace" text-anchor="end">${volFmtUsdAbs(maxS, 0)}</text>` +
     `<text x="${pad.l - 4}" y="${(pad.t + 10).toFixed(1)}" fill="#64748b" font-size="10" font-family="IBM Plex Mono,monospace" text-anchor="end">${volFmtUsd(maxP, 0)}</text>` +
     `<text x="${pad.l - 4}" y="${(height - pad.b).toFixed(1)}" fill="#64748b" font-size="10" font-family="IBM Plex Mono,monospace" text-anchor="end">${volFmtUsd(minP, 0)}</text>` +
-    `<text x="${spotX.toFixed(1)}" y="${(pad.t + 10).toFixed(1)}" fill="#38bdf8" font-size="9" font-family="IBM Plex Sans,sans-serif" text-anchor="middle">spot</text>` +
+    `<text x="${spotX.toFixed(1)}" y="${(pad.t + 11).toFixed(1)}" fill="#38bdf8" font-size="9" font-family="IBM Plex Sans,sans-serif" text-anchor="middle">spot</text>` +
+    `<text x="${pinX.toFixed(1)}" y="${Math.max(12, pinY - 8).toFixed(1)}" fill="#fbbf24" font-size="9" font-family="IBM Plex Sans,sans-serif" text-anchor="middle">pin ${volFmtUsd(analyze.maxProfit, 0)}</text>` +
     `</svg>`
+  );
+}
+
+function volInterpPnl(pts, S) {
+  if (!pts?.length) return null;
+  if (S <= pts[0].S) return pts[0].pnl;
+  const last = pts[pts.length - 1];
+  if (S >= last.S) return last.pnl;
+  for (let i = 1; i < pts.length; i++) {
+    if (S <= pts[i].S) {
+      const a = pts[i - 1];
+      const b = pts[i];
+      const t = (S - a.S) / (b.S - a.S || 1);
+      return a.pnl + t * (b.pnl - a.pnl);
+    }
+  }
+  return last.pnl;
+}
+
+function volWinLoseBands(points) {
+  const bands = [];
+  for (const p of points || []) {
+    const zone = p.pnl > 0 ? "win" : p.pnl < 0 ? "lose" : "even";
+    const last = bands[bands.length - 1];
+    if (last && last.zone === zone) last.hi = p.S;
+    else bands.push({ zone, lo: p.S, hi: p.S });
+  }
+  return bands;
+}
+
+function volWinLoseKeyRows(analyze) {
+  const S0 = +analyze?.spot;
+  const pts = analyze?.points || [];
+  if (!(S0 > 0) || !pts.length) return [];
+  const lo = pts[0].S;
+  const hi = pts[pts.length - 1].S;
+  const buckets = new Map();
+  const add = (px, tag) => {
+    const S = Number(px);
+    if (!(S > 0) || !Number.isFinite(S)) return;
+    if (S < lo - 1 || S > hi + 1) return;
+    const k = Math.round(S);
+    let row = buckets.get(k);
+    if (!row) {
+      row = { S: k, tags: [] };
+      buckets.set(k, row);
+    }
+    if (tag && !row.tags.includes(tag)) row.tags.push(tag);
+  };
+  add(S0, "now");
+  add(S0 * 0.8, "−20%");
+  add(S0 * 0.9, "−10%");
+  add(S0 * 1.1, "+10%");
+  add(S0 * 1.2, "+20%");
+  const h1 = +analyze.horizonMove1 || 0;
+  const h2 = +analyze.horizonMove2 || 0;
+  if (h1 > 0) {
+    add(S0 - h1, "−1σ");
+    add(S0 + h1, "+1σ");
+  }
+  if (h2 > 0) {
+    add(S0 - h2, "−2σ");
+    add(S0 + h2, "+2σ");
+  }
+  const bes = analyze.breakevens || [];
+  bes.forEach((b, i) => add(b, bes.length > 1 ? `BE${i + 1}` : "BE"));
+  if (analyze.maxProfitSpot) add(analyze.maxProfitSpot, "pin");
+  if (
+    analyze.maxLossSpot &&
+    Math.abs(analyze.maxLossSpot - S0) > Math.max(50, S0 * 0.004)
+  ) {
+    add(analyze.maxLossSpot, "worst");
+  }
+
+  return [...buckets.values()]
+    .sort((a, b) => a.S - b.S)
+    .map((r) => {
+      const pnl = volInterpPnl(pts, r.S);
+      const move = ((r.S - S0) / S0) * 100;
+      let zone = "even";
+      if (pnl > 5) zone = "win";
+      else if (pnl < -5) zone = "lose";
+      return { ...r, pnl, move, zone };
+    });
+}
+
+function volWinLoseStripHtml(analyze, opts = {}) {
+  const pts = analyze?.points;
+  if (!pts?.length) return "";
+  const nCells = opts.cells || 21;
+  const mini = !!opts.mini;
+  const n = pts.length;
+  const maxAbs = Math.max(...pts.map((p) => Math.abs(p.pnl)), 1);
+  const cells = [];
+  for (let i = 0; i < nCells; i++) {
+    const a = Math.floor((i * n) / nCells);
+    const b = Math.max(a + 1, Math.floor(((i + 1) * n) / nCells));
+    let sum = 0;
+    let c = 0;
+    for (let j = a; j < b && j < n; j++) {
+      sum += pts[j].pnl;
+      c++;
+    }
+    const avg = c ? sum / c : 0;
+    const zone = avg > 0 ? "win" : avg < 0 ? "lose" : "even";
+    const t = Math.min(1, Math.abs(avg) / maxAbs);
+    cells.push({
+      zone,
+      t,
+      lo: pts[a].S,
+      hi: pts[Math.min(b, n) - 1].S,
+    });
+  }
+  const minS = pts[0].S;
+  const maxS = pts[n - 1].S;
+  const span = maxS - minS || 1;
+  const spotPct = Math.max(0, Math.min(100, ((analyze.spot - minS) / span) * 100));
+  const cellHtml = cells
+    .map((c) => {
+      const alpha = (0.28 + 0.72 * c.t).toFixed(2);
+      const bg =
+        c.zone === "win"
+          ? `rgba(52, 211, 153, ${alpha})`
+          : c.zone === "lose"
+            ? `rgba(248, 113, 113, ${alpha})`
+            : `rgba(148, 163, 184, 0.38)`;
+      const title = `${volFmtUsdAbs(c.lo, 0)}–${volFmtUsdAbs(c.hi, 0)} · ${c.zone.toUpperCase()}`;
+      return `<span class="vol-wl-cell vol-wl-cell--${c.zone}" style="background:${bg}" title="${volEscape(title)}"></span>`;
+    })
+    .join("");
+  return (
+    `<div class="vol-wl-strip${mini ? " vol-wl-strip--mini" : ""}" role="img" aria-label="Win and lose zones versus spot">` +
+    cellHtml +
+    `<span class="vol-wl-spot" style="left:${spotPct.toFixed(2)}%" title="spot"></span>` +
+    `</div>`
+  );
+}
+
+function volWinLoseGridHtml(analyze) {
+  const pts = analyze?.points;
+  if (!pts?.length) return "";
+  const rows = volWinLoseKeyRows(analyze);
+  const bands = volWinLoseBands(pts);
+  const wins = bands.filter((b) => b.zone === "win");
+  const horizon = analyze.isMultiExpiry
+    ? `front expiry (${analyze.horizonDte}d; back still live)`
+    : `expiry (${analyze.dte}d)`;
+  const bandText = wins.length
+    ? `WIN ${wins
+        .map((b) => `${volFmtUsdAbs(b.lo, 0)}–${volFmtUsdAbs(b.hi, 0)}`)
+        .join(" · ")} · LOSE elsewhere on this ±28% scan.`
+    : "No win zone on the scanned ±28% grid — P&amp;L ≤ 0 at every sampled spot.";
+  const tableRows = rows
+    .map((r) => {
+      const now = r.tags.includes("now");
+      const move =
+        Math.abs(r.move) < 0.05
+          ? "0%"
+          : `${r.move > 0 ? "+" : "−"}${Math.abs(r.move).toFixed(1)}%`;
+      return (
+        `<tr class="vol-wl-row vol-wl-row--${r.zone}${now ? " vol-wl-row--now" : ""}">` +
+        `<td class="mono">${volFmtUsdAbs(r.S, 0)}</td>` +
+        `<td class="mono">${move}</td>` +
+        `<td>${volEscape(r.tags.join(" · ") || "—")}</td>` +
+        `<td class="mono">${volFmtUsd(r.pnl, 0)}</td>` +
+        `<td class="vol-wl-zone">${r.zone.toUpperCase()}</td>` +
+        `</tr>`
+      );
+    })
+    .join("");
+  return (
+    `<div class="vol-wl-grid">` +
+    `<div class="vol-wl-grid-head">` +
+    `<span class="vol-wl-grid-label" data-help-key="vol-ticket-wlgrid">Win / lose zone grid</span>` +
+    `<span class="vol-wl-legend">` +
+    `<span class="vol-wl-chip vol-wl-chip--win">WIN</span>` +
+    `<span class="vol-wl-chip vol-wl-chip--lose">LOSE</span>` +
+    `<span class="vol-wl-chip vol-wl-chip--even">EVEN</span>` +
+    `</span>` +
+    `</div>` +
+    `<p class="vol-wl-grid-sub">At ${horizon} · green = theo P&amp;L &gt; 0 · cyan tick = spot now · not a live probability</p>` +
+    volWinLoseStripHtml(analyze, { cells: 24 }) +
+    `<div class="vol-wl-axis">` +
+    `<span class="mono">${volFmtUsdAbs(pts[0].S, 0)}</span>` +
+    `<span>spot</span>` +
+    `<span class="mono">${volFmtUsdAbs(pts[pts.length - 1].S, 0)}</span>` +
+    `</div>` +
+    `<p class="vol-wl-bands">${bandText}</p>` +
+    `<div class="vol-wl-table-wrap">` +
+    `<table class="vol-wl-table">` +
+    `<thead><tr>` +
+    `<th>Spot</th><th>vs now</th><th>Tag</th><th>P&amp;L</th><th>Zone</th>` +
+    `</tr></thead>` +
+    `<tbody>${tableRows}</tbody>` +
+    `</table>` +
+    `</div>` +
+    `</div>`
   );
 }
 
@@ -859,6 +1421,7 @@ function volPayoffChartSvg(analyze, width = 420, height = 160) {
 function volTradeTicketHtml(ticket) {
   const legs = ticket.legs || [];
   const a = ticket.analyze;
+  const missingLegs = legs.filter((L) => L.type !== "Perp" && L.listed === false);
   const legRows = legs
     .map((L) => {
       const sideCls = L.side === "BUY" ? "vol-ticket-buy" : "vol-ticket-sell";
@@ -870,9 +1433,14 @@ function volTradeTicketHtml(ticket) {
             : "—";
       const expCode = L.expiryCode || ticket.expiryCode;
       const inst =
-        L.type === "Perp"
+        L.instrument ||
+        (L.type === "Perp"
           ? "BTC-PERPETUAL"
-          : `BTC-${volEscape(expCode)}-${L.strike}-${L.type === "Call" ? "C" : "P"}`;
+          : `BTC-${expCode}-${L.strike}-${L.type === "Call" ? "C" : "P"}`);
+      const listed = L.type === "Perp" ? true : L.listed !== false;
+      const instHtml = listed
+        ? volEscape(inst)
+        : `<span class="vol-inst-missing" title="Not on the live Deribit instrument list">${volEscape(inst)}</span>`;
       const priced = a?.pricedLegs?.find(
         (p) =>
           p.type === L.type &&
@@ -886,13 +1454,24 @@ function volTradeTicketHtml(ticket) {
           : priced
             ? volFmtUsdAbs(priced.theoUsd, 0)
             : "—";
-      return `<tr>
+      const liveIv =
+        L.liveIv != null && Number.isFinite(Number(L.liveIv))
+          ? volFmtPct(Number(L.liveIv), 1)
+          : "—";
+      const listedCell = L.type === "Perp"
+        ? `<span class="vol-listed vol-listed--ok">listed</span>`
+        : listed
+          ? `<span class="vol-listed vol-listed--ok">listed</span>`
+          : `<span class="vol-listed vol-listed--miss">MISSING</span>`;
+      return `<tr class="${listed ? "" : "vol-leg-row--missing"}">
         <td class="mono ${sideCls}"><strong>${volEscape(L.side)}</strong></td>
-        <td class="mono">${volEscape(inst)}</td>
+        <td class="mono">${instHtml}</td>
+        <td>${listedCell}</td>
         <td>${volEscape(L.type)}</td>
         <td class="mono">${strike}</td>
         <td class="mono">${L.qty != null ? L.qty : 1}</td>
         <td class="mono">${theo}</td>
+        <td class="mono">${liveIv}</td>
         <td>${volEscape(L.note || "")}</td>
       </tr>`;
     })
@@ -920,21 +1499,34 @@ function volTradeTicketHtml(ticket) {
       `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-greeks">Net Δ / Γ / ν / Θ</span><span class="vol-ticket-stat-v mono">${a.delta.toFixed(2)} / ${a.gamma.toFixed(5)} / ${a.vega.toFixed(1)} / ${a.theta.toFixed(1)}</span></div>` +
       `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-sigma1">P&amp;L if −1σ / +1σ at expiry</span><span class="vol-ticket-stat-v mono">${volFmtUsd(a.pnlDown1, 0)} / ${volFmtUsd(a.pnlUp1, 0)}</span></div>` +
       `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-sigma2">P&amp;L if −2σ / +2σ at expiry</span><span class="vol-ticket-stat-v mono">${volFmtUsd(a.pnlDown2, 0)} / ${volFmtUsd(a.pnlUp2, 0)}</span></div>` +
-      `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-bands">1σ / 2σ spot (from IV)</span><span class="vol-ticket-stat-v mono">${volFmtUsdAbs(a.spot - a.move1, 0)}–${volFmtUsdAbs(a.spot + a.move1, 0)} · ${volFmtUsdAbs(a.spot - a.move2, 0)}–${volFmtUsdAbs(a.spot + a.move2, 0)}</span></div>` +
+      `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-bands">Intraday 1σ / 2σ (stops)</span><span class="vol-ticket-stat-v mono">${volFmtUsdAbs(a.spot - a.move1Daily, 0)}–${volFmtUsdAbs(a.spot + a.move1Daily, 0)} · ${volFmtUsdAbs(a.spot - a.move2Daily, 0)}–${volFmtUsdAbs(a.spot + a.move2Daily, 0)}</span></div>` +
       `<div class="vol-ticket-stat"><span class="vol-ticket-stat-l" data-help-key="vol-ticket-dte">DTE / T (years)</span><span class="vol-ticket-stat-v mono">${a.dte}d · ${a.tYears.toFixed(3)}</span></div>` +
       `</div>` +
-      `<p class="vol-ticket-pricing-note">Pricing: Black–Scholes (r=0), linear USD/BTC notional, IV = <strong>${volFmtPct(a.ivAnn, 1)}</strong> from model RV` +
-      (ticket.ivBumpPts
-        ? ` with <strong>+${ticket.ivBumpPts.toFixed(0)} vol pt</strong> entry premium assumption`
-        : "") +
-      `. Not live Deribit mids. Greeks: Δ unitless, Γ per $1, ν per 1 vol pt, Θ $/day.</p>`
+      `<p class="vol-ticket-pricing-note">Pricing: Black–Scholes (r=0) <strong>USD-linear proxy</strong> — Deribit BTC options are <strong>inverse</strong> (premium in BTC). These USD figures will not match the Deribit UI. IV = <strong>${volFmtPct(a.ivAnn, 1)}</strong>` +
+      (ticket.ivSource === "live"
+        ? ` from <strong>live Deribit ATM mark IV</strong>`
+        : ` from model term RV` +
+          (ticket.ivBumpPts
+            ? ` with <strong>+${ticket.ivBumpPts.toFixed(0)} vol pt</strong> entry premium assumption`
+            : "")) +
+      `. Expiry ±1σ/±2σ uses <em>horizon</em> move S×IV×√T. Greeks: Δ unitless, Γ per $1, ν per 1 vol pt, Θ $/day.</p>`
     : "";
 
   const chartHtml = a
     ? `<div class="vol-payoff-wrap">` +
-      `<div class="vol-payoff-label" data-help-key="vol-ticket-payoff">Expiry P&amp;L vs spot (USD) · yellow dots = breakevens · dashed = spot</div>` +
+      `<div class="vol-payoff-label" data-help-key="vol-ticket-payoff">${
+        a.isMultiExpiry
+          ? `Teal = P&amp;L when the weekly expires (${a.horizonDte}d) and the monthly still has ~${Math.round(a.backRemainingDays || 0)}d left. Red dashed = old (wrong) chart that expired both months — a flat debit. Yellow = pin.`
+          : `Expiry P&amp;L vs spot (USD) · yellow dots = breakevens · dashed = spot`
+      }</div>` +
+      (a.isMultiExpiry
+        ? `<p class="vol-payoff-readout"><strong>Pin (spot still here at Friday):</strong> ${volFmtUsd(a.pinPnl, 0)}` +
+          ` · <strong>If BTC is ±20% away:</strong> ${volFmtUsd(a.wingPnl, 0)}` +
+          ` · Net debit to put on: ${volFmtUsd(a.netPremium, 0)}. You do <em>not</em> lose the debit at the pin if the monthly is still live.</p>`
+        : "") +
       volPayoffChartSvg(a) +
-      `</div>`
+      `</div>` +
+      volWinLoseGridHtml(a)
     : "";
 
   // Emergency actions with real numbers + preliminary action buttons
@@ -1017,7 +1609,7 @@ function volTradeTicketHtml(ticket) {
                 `Buy back short option legs on Trade ${tradeId}; leave long wings on if still needed for protection, then reassess.`,
               )
             : "") +
-          (a.isLongVol || a.isDebit
+          (a.isLongVol && !a.isMultiExpiry
             ? btn(
                 "dump_longs",
                 "Dump long premium",
@@ -1044,14 +1636,20 @@ function volTradeTicketHtml(ticket) {
       })()
     : "";
 
+  const executeDisabled = missingLegs.length > 0;
   const executeBtn =
     `<div class="vol-ticket-actions">` +
     `<button type="button" class="vol-execute-btn" data-vol-em-action="execute" ` +
     `data-trade-id="${volEscape(tradeId)}" data-trade-title="${volEscape(ticket.title)}" ` +
-    `title="Preliminary — not sent to Deribit yet">` +
-    `Execute on Deribit` +
+    `${executeDisabled ? "disabled" : ""} ` +
+    `title="${executeDisabled ? "Blocked: a leg is not on the live Deribit list" : "Does not send to Deribit — logs a dry-run only"}">` +
+    `Log dry-run` +
     `</button>` +
-    `<span class="vol-execute-hint">Preliminary control — click logs a dry-run order ticket; live routing comes next.</span>` +
+    `<span class="vol-execute-hint">${
+      executeDisabled
+        ? `Blocked — ${missingLegs.length} leg(s) not listed. Do not type the name by hand.`
+        : "Does not send orders. Click only logs a dry-run checklist in this browser."
+    }</span>` +
     `</div>`;
 
   const sophBadge = ticket.sophistication
@@ -1066,13 +1664,12 @@ function volTradeTicketHtml(ticket) {
     ? `<p class="vol-ticket-scoreline">` +
       `<span data-help-key="vol-ticket-score">Desk scores</span> · ` +
       `<strong>Rank #${ticket.rank}</strong>` +
-      (ticket.rank === 1 ? " · <strong>most attractive / best success score in this list</strong>" : "") +
-      ` · Attractiveness <span class="mono">${sc.attract}</span>` +
-      ` · Chance of success <span class="mono">${sc.success}%</span>` +
+      (ticket.rank === 1 ? " · <strong>top composite in this list</strong>" : "") +
+      ` · Attract <span class="mono">${sc.attract}</span>` +
       ` · Composite <span class="mono">${sc.composite}</span>` +
       ` · Grade <span class="mono">${volEscape(sc.grade)}</span>` +
       (sc.winPct != null
-        ? ` · Theo win zone <span class="mono">${(sc.winPct * 100).toFixed(0)}%</span>`
+        ? ` · Win-zone on grid <span class="mono">${(sc.winPct * 100).toFixed(0)}%</span> of scanned spots (not a live win rate)`
         : "") +
       (sc.rr != null && Number.isFinite(sc.rr)
         ? ` · R:R <span class="mono">${sc.rr.toFixed(2)}</span>`
@@ -1088,6 +1685,11 @@ function volTradeTicketHtml(ticket) {
     `<span class="vol-ticket-title">${volEscape(ticket.title)}</span>` +
     sophBadge +
     (a?.paper ? `<span class="vol-ticket-badge vol-ticket-badge--paper">PAPER</span>` : "") +
+    (missingLegs.length
+      ? `<span class="vol-ticket-badge vol-ticket-badge--miss">${missingLegs.length} missing contract${missingLegs.length > 1 ? "s" : ""}</span>`
+      : legs.some((L) => L.type !== "Perp" && L.listed === true)
+        ? `<span class="vol-ticket-badge vol-ticket-badge--listed">all legs listed</span>`
+        : `<span class="vol-ticket-badge vol-ticket-badge--unverified">book not checked</span>`) +
     (a?.isCredit ? `<span class="vol-ticket-badge vol-ticket-badge--credit">CREDIT</span>` : "") +
     (a?.isDebit ? `<span class="vol-ticket-badge vol-ticket-badge--debit">DEBIT</span>` : "") +
     `</header>` +
@@ -1108,7 +1710,7 @@ function volTradeTicketHtml(ticket) {
     chartHtml +
     `<div class="vol-ticket-legs-wrap">` +
     `<table class="vol-ticket-legs">` +
-    `<thead><tr><th>Side</th><th>Instrument</th><th>Type</th><th>Strike</th><th>Qty</th><th>Theo $</th><th>Role</th></tr></thead>` +
+    `<thead><tr><th>Side</th><th>Instrument</th><th>Book</th><th>Type</th><th>Strike</th><th>Qty</th><th>Theo $</th><th>Live IV</th><th>Role</th></tr></thead>` +
     `<tbody>${legRows}</tbody>` +
     `</table>` +
     `</div>` +
@@ -1123,32 +1725,68 @@ function volTradeTicketHtml(ticket) {
 
 /** Attach BS analysis to each ticket (mutates tickets). */
 function volEnrichTickets(tickets, ctx) {
-  const { spot, rv7, rv30, bias } = ctx;
+  const { spot, rv7, rv30, bias, chain, liveIv7, liveIv30 } = ctx;
   return (tickets || []).map((t) => {
     const dte = t.dte || 7;
-    // IV for pricing: model RV for tenor + entry premium assumption
+    // IV for pricing: live ATM mark IV if we have it, else model term RV + bump
     let baseIv = dte >= 20 ? rv30 : rv7;
     if (baseIv == null || !Number.isFinite(baseIv)) baseIv = 0.45;
     const baseIvFront =
       rv7 != null && Number.isFinite(rv7) ? rv7 : baseIv;
     let ivBumpPts = 0;
-    if (bias === "short") ivBumpPts = 6; // assume IV is rich vs model (entry thesis)
-    else if (bias === "long") ivBumpPts = 0; // price at model (cheap edge case)
+    let ivSource = "model";
+    const liveForTicket = dte >= 20 ? liveIv30 : liveIv7;
+    if (liveForTicket != null && Number.isFinite(liveForTicket) && liveForTicket > 0.05) {
+      baseIv = liveForTicket;
+      ivBumpPts = 0;
+      ivSource = "live";
+    } else if (bias === "short") ivBumpPts = 6;
+    else if (bias === "long") ivBumpPts = 0;
     else if (bias === "neutral") ivBumpPts = 3;
-    else ivBumpPts = 0;
     const ivAnn = Math.max(0.08, baseIv + ivBumpPts / 100);
-    const ivAnnFront = Math.max(0.08, baseIvFront + (bias === "neutral" ? 5 : ivBumpPts) / 100);
-    const paper = bias === "none" || t.paper === true;
-    // Tag calendar front legs
-    const legs = (t.legs || []).map((L) => {
-      if (L.dte != null || L.useFrontIv) return L;
-      if (L.expiryCode && t.frontExpiryCode && L.expiryCode === t.frontExpiryCode) {
-        return { ...L, useFrontIv: true, dte: t.frontDte ?? dte };
+    const ivAnnFront = Math.max(
+      0.08,
+      (liveIv7 != null && Number.isFinite(liveIv7) ? liveIv7 : baseIvFront) +
+        (ivSource === "live" ? 0 : bias === "neutral" ? 5 : ivBumpPts) / 100,
+    );
+    let gateFailed = false;
+    if (
+      t.frontExpiryCode &&
+      t.backExpiryCode &&
+      liveIv7 != null &&
+      liveIv30 != null &&
+      rv7 != null &&
+      rv30 != null &&
+      /calendar/i.test(t.title || "")
+    ) {
+      const frontEdge = liveIv7 - rv7 - (liveIv30 - rv30);
+      if (!(frontEdge >= 0.025)) gateFailed = true;
+    }
+    const paper = bias === "none" || t.paper === true || gateFailed;
+    // Tag calendar front legs + bind to live book
+    const expFor = (code) => {
+      if (!chain?.expirations || !code) return null;
+      return (
+        chain.expirations.find(
+          (e) => volExpiryCodeFromMs(e.expirationTimestamp) === String(code),
+        ) || null
+      );
+    };
+    const legs = (t.legs || []).map((L0) => {
+      let L = { ...L0 };
+      if (L.dte == null && !L.useFrontIv) {
+        if (L.expiryCode && t.frontExpiryCode && L.expiryCode === t.frontExpiryCode) {
+          L = { ...L, useFrontIv: true, dte: t.frontDte ?? dte };
+        } else if (L.expiryCode && t.backExpiryCode && L.expiryCode === t.backExpiryCode) {
+          L = { ...L, dte: t.backDte ?? dte };
+        }
       }
-      if (L.expiryCode && t.backExpiryCode && L.expiryCode === t.backExpiryCode) {
-        return { ...L, dte: t.backDte ?? dte };
-      }
-      return L;
+      return volBindLegToBook(
+        chain,
+        L,
+        expFor(L.expiryCode || t.expiryCode),
+        t.expiryCode,
+      );
     });
     const analyze = volAnalyzeStructure({
       legs,
@@ -1167,7 +1805,16 @@ function volEnrichTickets(tickets, ctx) {
     ) {
       analyze.maxProfitDisplay = "large / uncapped on grid";
     }
-    return { ...t, legs, analyze, ivBumpPts, paper };
+    if (gateFailed && analyze) {
+      t = {
+        ...t,
+        paper: true,
+        juniorNote:
+          (t.juniorNote || "") +
+          " LIVE GATE FAILED: front IV is not ≥ ~3 vol pts richer than back vs the model. Do not run this calendar live — the chart would still show a pin peak, but you are selling the cheap tenor.",
+      };
+    }
+    return { ...t, legs, analyze, ivBumpPts, paper, ivSource, gateFailed };
   });
 }
 
@@ -1191,6 +1838,10 @@ function volScoreTicket(t, ctx) {
     success += 14;
     attract += 4;
     notes.push("core structure");
+  } else if (t.sophistication === "Genius") {
+    success -= 12;
+    attract += 14;
+    notes.push("genius / high ops load");
   } else if (t.sophistication === "Advanced") {
     success -= 10;
     attract += 10;
@@ -1339,8 +1990,11 @@ function volTicketsSummaryTableHtml(tickets) {
     .map((t) => {
       const a = t.analyze;
       const s = t.score || {};
-      const win =
+      const winPctTxt =
         s.winPct != null ? `${(s.winPct * 100).toFixed(0)}%` : "—";
+      const winCell = a
+        ? `<div class="vol-wl-mini">${volWinLoseStripHtml(a, { cells: 17, mini: true })}<span class="mono">${winPctTxt}</span></div>`
+        : winPctTxt;
       const rr =
         s.rr != null && Number.isFinite(s.rr) ? s.rr.toFixed(2) : "—";
       const prem = a
@@ -1363,15 +2017,14 @@ function volTicketsSummaryTableHtml(tickets) {
           : s.grade === "D"
             ? "vol-rank-lo"
             : "";
-      return `<tr class="${t.rank === 1 ? "vol-summary-row--best" : ""}">
+      return `<tr class="vol-summary-row${t.rank === 1 ? " vol-summary-row--best" : ""}${String(t.id) === String(volPlanTicketSel) ? " vol-summary-row--sel" : ""}" data-vol-ticket-id="${volEscape(String(t.id))}" tabindex="0" role="button">
         <td class="mono"><strong>${t.rank}</strong></td>
         <td>${volEscape(t.title)}${t.paper ? ' <span class="vol-ticket-badge vol-ticket-badge--paper">PAPER</span>' : ""}</td>
         <td>${volEscape(t.sophistication || "—")}</td>
         <td class="mono ${gradeCls}"><strong>${volEscape(s.grade || "—")}</strong></td>
         <td class="mono">${s.attract != null ? s.attract : "—"}</td>
-        <td class="mono">${s.success != null ? s.success + "%" : "—"}</td>
+        <td>${winCell}</td>
         <td class="mono">${s.composite != null ? s.composite : "—"}</td>
-        <td class="mono">${win}</td>
         <td class="mono">${prem}</td>
         <td class="mono vol-ticket-sell">${maxL}</td>
         <td class="mono vol-ticket-buy">${volEscape(String(maxP))}</td>
@@ -1385,9 +2038,10 @@ function volTicketsSummaryTableHtml(tickets) {
   return (
     `<h3 class="vol-plan-h" data-help-key="vol-plan-summary">Suggested trades — ranked summary</h3>` +
     `<p class="vol-plan-why">Ordered by <strong>composite desk score</strong> = 42% attractiveness (edge, R:R, structure fit) + ` +
-    `58% chance of success (expiry win-zone on theo payoff grid, defined risk, delta neutrality, simplicity). ` +
-    `Win zone = share of the spot grid with P&amp;L &gt; 0 at expiry under theo IV — not a live probability of profit. ` +
-    `Best trade is <strong>#1</strong>.</p>` +
+    `58% process score (defined risk, delta neutrality, simplicity, grid win-zone). ` +
+    `<strong>Win-zone</strong> = share of a uniform spot grid with theo P&amp;L &gt; 0 — not a live probability of profit. ` +
+    `The green/red strip on each row is that same grid (left = −28%, right = +28%, cyan = spot). ` +
+    `Click a row to open that ticket below (legs, payoff, win/lose zone table, dry-run). <strong>#1</strong> is selected by default.</p>` +
     `<div class="vol-summary-wrap">` +
     `<table class="vol-summary-table">` +
     `<thead><tr>` +
@@ -1396,9 +2050,8 @@ function volTicketsSummaryTableHtml(tickets) {
     `<th data-help-key="vol-sum-style">Style</th>` +
     `<th data-help-key="vol-sum-grade">Grade</th>` +
     `<th data-help-key="vol-sum-attract">Attract</th>` +
-    `<th data-help-key="vol-sum-success">Success</th>` +
+    `<th data-help-key="vol-sum-winzone">Win-zone (grid)</th>` +
     `<th data-help-key="vol-sum-score">Score</th>` +
-    `<th data-help-key="vol-sum-winzone">Win zone</th>` +
     `<th data-help-key="vol-sum-premium">Premium</th>` +
     `<th data-help-key="vol-sum-maxloss">Max loss</th>` +
     `<th data-help-key="vol-sum-maxprofit">Max profit</th>` +
@@ -1415,29 +2068,501 @@ function volTicketsSummaryTableHtml(tickets) {
 /**
  * Concrete example tickets from suite marks + spot (educational, not live quotes).
  */
+function volExpiryFromListed(exp) {
+  if (!exp?.expirationTimestamp) return null;
+  const d = new Date(exp.expirationTimestamp);
+  return {
+    date: d,
+    code: volExpiryCodeFromMs(exp.expirationTimestamp),
+    label: volFmtExpiryLabel(d),
+    dte: Math.max(0, Math.round(Number(exp.daysToExpiration) || volDte(d))),
+    exp,
+  };
+}
+
+function volSnapStrike(exp, target, needBoth = false) {
+  if (!exp) return volRoundStrike(target, Number(target) >= 100_000 ? 2000 : 1000);
+  const row = volNearestStrikeRow(exp, target, needBoth);
+  return row ? Number(row.strike) : volRoundStrike(target, Number(target) >= 100_000 ? 2000 : 1000);
+}
+
+function volBindLegToBook(chain, L, fallbackExp, ticketExpCode) {
+  if (!L || L.type === "Perp") {
+    if (L) L.listed = true;
+    return L;
+  }
+  if (!chain?.quotesByInstrument && !chain?.expirations?.length) {
+    return L;
+  }
+  const code = L.expiryCode || ticketExpCode;
+  const isCall = L.type === "Call";
+  let exp = fallbackExp;
+  if (chain?.expirations && code && !String(code).includes("/")) {
+    const hit = chain.expirations.find(
+      (e) => volExpiryCodeFromMs(e.expirationTimestamp) === String(code),
+    );
+    if (hit) exp = hit;
+  }
+  const target = Number(L.strike);
+  const snapped = volSnapStrike(exp, target, false);
+  if (snapped != null) L.strike = snapped;
+  const name = exp
+    ? volLiveInstrumentName(exp, L.strike, isCall)
+    : `BTC-${code}-${L.strike}-${isCall ? "C" : "P"}`;
+  L.instrument = name;
+  const q = volQuoteName(chain, name);
+  if (q) {
+    L.listed = true;
+    L.liveIv = q.iv != null ? (Number(q.iv) > 3 ? Number(q.iv) / 100 : Number(q.iv)) : null;
+    L.liveMark = q.mark;
+    L.liveOi = q.openInterest;
+    L.liveVolume = q.volume;
+  } else if (exp) {
+    const row = volNearestStrikeRow(exp, L.strike, false);
+    const side = isCall ? row?.call : row?.put;
+    if (side?.instrumentName) {
+      L.instrument = side.instrumentName;
+      L.strike = Number(row.strike);
+      L.listed = true;
+      L.liveIv = side.iv != null ? (Number(side.iv) > 3 ? Number(side.iv) / 100 : Number(side.iv)) : null;
+      L.liveMark = side.mark;
+    } else {
+      L.listed = false;
+    }
+  } else {
+    L.listed = false;
+  }
+  return L;
+}
+
+/**
+ * Extra tickets from Derivatives → Options → Strategy builder catalog
+ * plus longer-dated (quarterly / LEAPS) structures sized to the 4y cycle lens.
+ */
+function volBuilderCycleExtras(p) {
+  const {
+    bias,
+    spot,
+    qty,
+    atm,
+    hedgeNote,
+    rv7s,
+    rv30s,
+    wCode,
+    mCode,
+    qCode,
+    leapCode,
+    wLabel,
+    mLabel,
+    qLabel,
+    leapLabel,
+    wDte,
+    mDte,
+    qDte,
+    leapDte,
+    putWing,
+    callWing,
+    putFar,
+    callFar,
+    put25,
+    call25,
+    put15,
+    call15,
+    put10,
+    call10,
+    itmCall,
+    itmPut,
+    cycle,
+    leapExp,
+    qExp,
+    mExp,
+  } = p;
+  if (bias === "none") return [];
+  const rows = [];
+  const qOk = qCode && qDte >= 80;
+  const leapOk = leapCode && leapDte >= 170;
+  const longDated = leapOk ? leapCode : qOk ? qCode : mCode;
+  const longLabel = leapOk ? leapLabel : qOk ? qLabel : mLabel;
+  const longDte = leapOk ? leapDte : qOk ? qDte : mDte;
+  const longExp = leapExp || qExp || mExp;
+  const late = cycle?.regime === "markdown" || cycle?.regime === "late_cycle" || cycle?.regime === "late_distribution";
+  const early = cycle?.regime === "markup";
+  const snapL = (target) => volSnapStrike(longExp || mExp, target);
+
+  const base = (partial) => ({
+    spot,
+    hedge: true,
+    ...partial,
+  });
+
+  // Strategy-builder catalog gaps (same-expiry vanilla / defined)
+  if (bias === "long") {
+    rows.push(
+      base({
+        id: "SB-LC",
+        sophistication: "Core",
+        title: "Long call (strategy builder)",
+        intent: "Vanilla upside from the Options Strategy library. Use when IV is cheap and you want a simple directional long.",
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `Monthly IV ≤ ${rv30s} + 2 pts. Cycle: prefer this more in markup; in markdown size tiny.`,
+        exit: "Take profit on a squeeze; cut if IV crush + no trend.",
+        juniorNote: hedgeNote + " Same structure as Strategy Builder → Long Call.",
+        legs: [{ side: "BUY", type: "Call", strike: atm, qty, note: "ATM call" }],
+      }),
+      base({
+        id: "SB-BCS",
+        sophistication: "Core",
+        title: "Bull call spread (debit vertical)",
+        intent: "Buy ATM call, sell higher call. Defined-risk upside from the builder catalog — cheaper than a naked long call.",
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `IV not rich vs ${rv30s}. You will accept capped upside.`,
+        exit: "Hold to expiry if thesis intact; cut if debit is lost ~1.5×.",
+        juniorNote: "Strategy Builder → Bull Call Spread. Max profit = width − debit.",
+        legs: [
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long ATM call" },
+          { side: "SELL", type: "Call", strike: call25, qty, note: "Short OTM call (cap)" },
+        ],
+      }),
+      base({
+        id: "SB-STRAP",
+        sophistication: "Advanced",
+        title: "Strap (2× call + 1× put — squeeze-biased long vol)",
+        intent: "Builder strap: extra call vs a straddle. Cheap-IV long vol with upside weight.",
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `Weekly IV ≤ ${rv7s} + 2 pts.`,
+        exit: "Same as straddle; extra call is the squeeze kicker.",
+        juniorNote: "Strategy Builder → Strap. Hedge residual delta.",
+        legs: [
+          { side: "BUY", type: "Call", strike: atm, qty: qty * 2, note: "2× ATM call" },
+          { side: "BUY", type: "Put", strike: atm, qty, note: "ATM put" },
+        ],
+      }),
+      base({
+        id: "SB-GUTS",
+        sophistication: "Genius",
+        title: "Guts (ITM strangle — expensive long vol)",
+        intent: "Buy ITM call + ITM put. Very expensive, very long gamma. Builder guts. Only if options are genuinely cheap vs term RV.",
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `IV well below ${rv7s}. If IV is even slightly rich, skip — you overpay for both sides.`,
+        exit: "Take profit on a large move; theta is brutal.",
+        juniorNote: "ITM call strike below spot, ITM put above spot. Confirm both listed.",
+        legs: [
+          { side: "BUY", type: "Call", strike: itmCall, qty, note: "ITM call" },
+          { side: "BUY", type: "Put", strike: itmPut, qty, note: "ITM put" },
+        ],
+      }),
+      base({
+        id: "SB-IIB",
+        sophistication: "Advanced",
+        title: "Inverse iron butterfly (long ATM straddle, short wings)",
+        intent: "Builder inverse fly: long ATM vol, short further wings to cut debit. Defined-risk long vol.",
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `Weekly IV ≤ ${rv7s} + 2 pts on the ATM.`,
+        exit: "Take profit if ATM vol pays; max loss is the debit.",
+        juniorNote: "Strategy Builder → Inverse Iron Butterfly.",
+        legs: [
+          { side: "BUY", type: "Put", strike: atm, qty, note: "Long ATM put" },
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long ATM call" },
+          { side: "SELL", type: "Put", strike: putWing, qty, note: "Short put wing" },
+          { side: "SELL", type: "Call", strike: callWing, qty, note: "Short call wing" },
+        ],
+      }),
+      base({
+        id: "SB-LCB",
+        sophistication: "Advanced",
+        title: "Long call butterfly",
+        intent: "Builder long call fly: buy 1 / sell 2 / buy 1. You want a pin at the body, with a cheap IV entry.",
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `Use when you want defined-risk long gamma around a level and IV ≤ ${rv30s} + 2 pts.`,
+        exit: "Take profit if the body pays; this is not a trend trade.",
+        juniorNote: "Strategy Builder → Long Call Butterfly.",
+        legs: [
+          { side: "BUY", type: "Call", strike: putWing, qty, note: "Long lower call" },
+          { side: "SELL", type: "Call", strike: atm, qty: qty * 2, note: "Short 2× ATM" },
+          { side: "BUY", type: "Call", strike: callWing, qty, note: "Long higher call" },
+        ],
+      }),
+    );
+  }
+
+  if (bias === "short") {
+    rows.push(
+      base({
+        id: "SB-SCB",
+        sophistication: "Advanced",
+        title: "Short call butterfly (defined short vol)",
+        intent: "Builder short call fly — the inverse of a long fly. Credit if IV is rich; defined if wings are on.",
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `Monthly IV − ${rv30s} ≥ 5 pts.`,
+        exit: "Cover if the wings get tested; never pull the longs.",
+        juniorNote: "Strategy Builder → Short Call Butterfly. We keep the long wings.",
+        legs: [
+          { side: "SELL", type: "Call", strike: putWing, qty, note: "Short lower call" },
+          { side: "BUY", type: "Call", strike: atm, qty: qty * 2, note: "Long 2× ATM (body)" },
+          { side: "SELL", type: "Call", strike: callWing, qty, note: "Short higher call" },
+          { side: "BUY", type: "Call", strike: callFar, qty, note: "Extra far long (cap)" },
+        ],
+      }),
+      base({
+        id: "SB-RJL",
+        sophistication: "Genius",
+        title: "Reverse jade lizard (put credit + short call)",
+        intent: "Builder reverse jade: bullish? No — short call plus put credit spread. Bearish/income. We add a long call wing so upside is defined.",
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `IV rich vs ${rv30s}. You can tolerate mild downside; you cannot tolerate a moonshot without the far call.`,
+        exit: "Cover if the short call is tested or put spread maxes.",
+        juniorNote: "Strategy Builder → Reverse Jade Lizard, with a long call cap (we will not suggest naked short calls).",
+        legs: [
+          { side: "BUY", type: "Put", strike: putFar, qty, note: "Long lower put" },
+          { side: "SELL", type: "Put", strike: putWing, qty, note: "Short put" },
+          { side: "SELL", type: "Call", strike: call25, qty, note: "Short OTM call" },
+          { side: "BUY", type: "Call", strike: callFar, qty, note: "Long far call (cap)" },
+        ],
+      }),
+    );
+  }
+
+  if (bias === "neutral") {
+    rows.push(
+      base({
+        id: "SB-CCAL",
+        sophistication: "Advanced",
+        title: "Calendar call spread (builder)",
+        intent: "Long back ATM call, short front ATM call. Strategy Builder calendar call — harvest front theta, keep back upside.",
+        expiryCode: `${wCode} / ${mCode}`,
+        expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
+        dte: wDte,
+        frontExpiryCode: wCode,
+        backExpiryCode: mCode,
+        frontDte: wDte,
+        backDte: mDte,
+        gate: `Front call IV rich vs ${rv7s} relative to back vs ${rv30s}.`,
+        exit: "Unwind after Friday or if tenors reprice together.",
+        juniorNote: "Strategy Builder → Calendar Call Spread.",
+        legs: [
+          { side: "SELL", type: "Call", strike: atm, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front ${wCode}` },
+          { side: "BUY", type: "Call", strike: atm, qty, expiryCode: mCode, dte: mDte, note: `Long back ${mCode}` },
+        ],
+      }),
+      base({
+        id: "SB-PCAL",
+        sophistication: "Advanced",
+        title: "Calendar put spread (builder)",
+        intent: "Mirror calendar on puts. Front put theta vs back crash convexity.",
+        expiryCode: `${wCode} / ${mCode}`,
+        expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
+        dte: wDte,
+        frontExpiryCode: wCode,
+        backExpiryCode: mCode,
+        frontDte: wDte,
+        backDte: mDte,
+        gate: `Front put IV rich vs ${rv7s} vs back vs ${rv30s}.`,
+        exit: "Cover front if tested; keep back put if crash thesis remains.",
+        juniorNote: "Strategy Builder → Calendar Put Spread.",
+        legs: [
+          { side: "SELL", type: "Put", strike: atm, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front ${wCode}` },
+          { side: "BUY", type: "Put", strike: atm, qty, expiryCode: mCode, dte: mDte, note: `Long back ${mCode}` },
+        ],
+      }),
+    );
+  }
+
+  // Longer-dated / 4y-cycle
+  if (!qCode && !leapCode) return rows;
+
+  const leapPut = snapL(put15);
+  const leapCall = snapL(call15);
+  const leapAtm = snapL(atm);
+
+  if (late && (bias === "long" || bias === "neutral")) {
+    if (leapOk || qOk) {
+      rows.push(
+        base({
+          id: "CY-LP",
+          sophistication: "Genius",
+          title: `Cycle LEAPS put (${longDated})`,
+          intent:
+            `4y lens: ${cycle.regime.replace(/_/g, " ")} — ${daysLine(cycle)} Own far-dated crash convexity instead of selling it. This is the cycle-congruent long-vol expression when you are years after a halvings and off the highs.`,
+          expiryCode: longDated,
+          expiryLabel: longLabel,
+          dte: longDte,
+          gate: `Long-dated IV not already screaming vs 30d term RV ${rv30s}. You can hold through noise. Do not sell this put to “yield”.`,
+          exit: "Hold as a cycle hedge; take profit if markdown deepens and IV rips; roll if DTE < 60.",
+          juniorNote:
+            `Listed long expiry ${longDated} (~${longDte}d). Same idea as Strategy Builder long put, on the furthest liquid Deribit date.`,
+          legs: [{ side: "BUY", type: "Put", strike: leapPut, qty, note: `Long ${longDated} ~15Δ put` }],
+        }),
+        base({
+          id: "CY-BPS",
+          sophistication: "Advanced",
+          title: `Cycle bear put spread (${longDated})`,
+          intent: "Defined-risk markdown expression: long far put, short a lower put to cut debit. Builder bear put on a quarterly/LEAPS expiry.",
+          expiryCode: longDated,
+          expiryLabel: longLabel,
+          dte: longDte,
+          gate: "You want crash convexity but not a full LEAPS debit. Cap is the lower strike.",
+          exit: "Hold as a hedge; take profit on a flush.",
+          juniorNote: "Strategy Builder → Bear Put Spread, mapped to the long-dated listed expiry.",
+          legs: [
+            { side: "BUY", type: "Put", strike: snapL(put25), qty, note: `Long ${longDated} put` },
+            { side: "SELL", type: "Put", strike: snapL(put10), qty, note: `Short lower ${longDated} put` },
+          ],
+        }),
+      );
+    }
+    if (leapOk && mCode) {
+      rows.push(
+        base({
+          id: "CY-PDC",
+          sophistication: "Genius",
+          title: `LEAPS put diagonal (short ${mCode} / long ${leapCode})`,
+          intent:
+            "The cycle trade: sell near-month put premium, keep LEAPS crash convexity. You are not selling the cycle — you are financing the hedge with front-month theta.",
+          expiryCode: `${mCode} / ${leapCode}`,
+          expiryLabel: `Front ${mLabel} · Back ${leapLabel}`,
+          dte: mDte,
+          frontExpiryCode: mCode,
+          backExpiryCode: leapCode,
+          frontDte: mDte,
+          backDte: leapDte,
+          gate: `Front monthly put IV rich vs ${rv30s}; LEAPS put not already vertical. If front puts are cheap, skip.`,
+          exit: "Roll or cover the monthly before expiry; keep the LEAPS put as the cycle hedge.",
+          juniorNote: "Strategy Builder → Diagonal Put, using the furthest listed back month.",
+          legs: [
+            { side: "SELL", type: "Put", strike: putWing, qty, expiryCode: mCode, dte: mDte, note: `Short monthly ${mCode}` },
+            { side: "BUY", type: "Put", strike: leapPut, qty, expiryCode: leapCode, dte: leapDte, note: `Long LEAPS ${leapCode}` },
+          ],
+        }),
+      );
+    }
+  }
+
+  if (early && (bias === "long" || bias === "neutral") && (leapOk || qOk)) {
+    rows.push(
+      base({
+        id: "CY-LC",
+        sophistication: "Genius",
+        title: `Cycle LEAPS call (${longDated})`,
+        intent: `Post-halving markup analogue (${cycle.daysSinceH}d since H4). Own far-dated upside instead of short-dated lotto tickets.`,
+        expiryCode: longDated,
+        expiryLabel: longLabel,
+        dte: longDte,
+        gate: `Long-dated IV ≤ ${rv30s} + 4 pts. This is a multi-month hold.`,
+        exit: "Trail as the cycle marks up; do not sell the LEAPS to fund weekly shorts without a plan.",
+        juniorNote: "Strategy Builder → Long Call on the furthest liquid expiry.",
+        legs: [{ side: "BUY", type: "Call", strike: leapAtm, qty, note: `Long ${longDated} ATM call` }],
+      }),
+      base({
+        id: "CY-BCS",
+        sophistication: "Advanced",
+        title: `Cycle bull call spread (${longDated})`,
+        intent: "Defined-risk markup: long ATM LEAPS call, short a higher LEAPS call.",
+        expiryCode: longDated,
+        expiryLabel: longLabel,
+        dte: longDte,
+        gate: "You accept capped upside to cut the debit.",
+        exit: "Hold through the cycle window; take profit if the spread maxes.",
+        juniorNote: "Strategy Builder → Bull Call Spread on LEAPS/quarterly.",
+        legs: [
+          { side: "BUY", type: "Call", strike: leapAtm, qty, note: `Long ${longDated} ATM` },
+          { side: "SELL", type: "Call", strike: leapCall, qty, note: `Short ${longDated} OTM` },
+        ],
+      }),
+    );
+  }
+
+  if (bias === "short" && (leapOk || qOk)) {
+    rows.push(
+      base({
+        id: "CY-NOSHORT",
+        sophistication: "Genius",
+        paper: late,
+        title: late
+          ? `Do not sell LEAPS vol (${longDated}) — cycle warning`
+          : `Quarterly iron condor (${longDated}) only if IV is rich`,
+        intent: late
+          ? `Cycle lens says ${cycle.regime.replace(/_/g, " ")}. Selling ${longDated} premium is how books blow up in markdown. This ticket is paper: map the condor, do not send it.`
+          : `If you must sell longer-dated vol, use a defined quarterly condor — never naked — and only if IV − term RV is fat.`,
+        expiryCode: longDated,
+        expiryLabel: longLabel,
+        dte: longDte,
+        gate: late
+          ? "PAPER. Cycle regime argues against short LEAPS vol."
+          : `Long-dated IV − 30d term RV ${rv30s} ≥ 8 pts. Still defined wings only.`,
+        exit: late ? "N/A live" : "Cover if IV−RV collapses or a wing is tested.",
+        hedge: !late,
+        juniorNote: late
+          ? "The genius trade in late cycle is often *not* selling the far dated condor."
+          : "Same iron condor as monthly, on a longer listed expiry.",
+        legs: [
+          { side: "BUY", type: "Put", strike: snapL(putFar), qty, note: "Long put wing" },
+          { side: "SELL", type: "Put", strike: snapL(putWing), qty, note: "Short put" },
+          { side: "SELL", type: "Call", strike: snapL(callWing), qty, note: "Short call" },
+          { side: "BUY", type: "Call", strike: snapL(callFar), qty, note: "Long call wing" },
+        ],
+      }),
+    );
+  }
+
+  return rows;
+
+  function daysLine(c) {
+    const bits = [`${c.daysSinceH}d since Apr 2024 halvings`, `~${c.daysToNext}d to ~Apr 2028`];
+    if (c.dd != null) bits.push(`${c.dd.toFixed(0)}% off sample/cycle high`);
+    return bits.join(" · ") + ".";
+  }
+}
+
 function volBuildExampleTickets(ctx) {
-  const { bias, spot, rv7, rv30, dailyVol, conf } = ctx;
+  const { bias, spot, rv7, rv30, dailyVol, conf, chain } = ctx;
   if (!spot || spot < 1000) return [];
 
-  const step = spot >= 100_000 ? 2000 : 1000;
-  const atm = volRoundStrike(spot, step);
-  const wing = step * 2; // ~2 grids OTM
-  const farWing = step * 4;
-  const putWing = atm - wing;
-  const callWing = atm + wing;
-  const putFar = atm - farWing;
-  const callFar = atm + farWing;
-  const put25 = volRoundStrike(spot * 0.92, step); // rough 25Δ proxy
-  const call25 = volRoundStrike(spot * 1.08, step);
+  const wListed = volExpiryFromListed(volPickListedExpiry(chain, { minDte: 3, maxDte: 12 }));
+  const mListed = volExpiryFromListed(volPickMonthlyExpiry(chain));
+  const bListed = volExpiryFromListed(
+    volPickListedExpiry(chain, { minDte: 10, maxDte: 18 }),
+  );
 
-  const weekly = volDeribitFriday(5);
-  const monthly = volDeribitFriday(26);
-  const wCode = volFmtDeribitExpiry(weekly);
-  const mCode = volFmtDeribitExpiry(monthly);
-  const wLabel = volFmtExpiryLabel(weekly);
-  const mLabel = volFmtExpiryLabel(monthly);
-  const wDte = volDte(weekly);
-  const mDte = volDte(monthly);
+  const weekly = wListed?.date || volDeribitFriday(5);
+  const monthly = mListed?.date || volDeribitFriday(26);
+  const biweekly = bListed?.date || volDeribitFriday(12);
+  const wExp = wListed?.exp || null;
+  const mExp = mListed?.exp || null;
+  const bExp = bListed?.exp || null;
+
+  const step = spot >= 100_000 ? 2000 : 1000;
+  const atm = volSnapStrike(wExp || mExp, spot, true) || volRoundStrike(spot, step);
+  const wing = step * 2;
+  const farWing = step * 4;
+  const putWing = volSnapStrike(mExp || wExp, atm - wing);
+  const callWing = volSnapStrike(mExp || wExp, atm + wing);
+  const putFar = volSnapStrike(mExp || wExp, atm - farWing);
+  const callFar = volSnapStrike(mExp || wExp, atm + farWing);
+  const put25 = volSnapStrike(wExp || mExp, spot * 0.92);
+  const call25 = volSnapStrike(wExp || mExp, spot * 1.08);
+
+  const wCode = wListed?.code || volFmtDeribitExpiry(weekly);
+  const mCode = mListed?.code || volFmtDeribitExpiry(monthly);
+  const wLabel = wListed?.label || volFmtExpiryLabel(weekly);
+  const mLabel = mListed?.label || volFmtExpiryLabel(monthly);
+  const wDte = wListed?.dte != null ? wListed.dte : volDte(weekly);
+  const mDte = mListed?.dte != null ? mListed.dte : volDte(monthly);
 
   const qty = conf >= 75 ? 2 : 1;
   const hedgeNote =
@@ -1448,17 +2573,70 @@ function volBuildExampleTickets(ctx) {
   const rv7s = volFmtPct(rv7, 1);
   const rv30s = volFmtPct(rv30, 1);
 
-  const put15 = volRoundStrike(spot * 0.88, step);
-  const call15 = volRoundStrike(spot * 1.12, step);
-  const put10 = volRoundStrike(spot * 0.85, step);
-  const call10 = volRoundStrike(spot * 1.15, step);
-  const biweekly = volDeribitFriday(12);
-  const bCode = volFmtDeribitExpiry(biweekly);
-  const bLabel = volFmtExpiryLabel(biweekly);
-  const bDte = volDte(biweekly);
+  const put15 = volSnapStrike(mExp || wExp, spot * 0.88);
+  const call15 = volSnapStrike(mExp || wExp, spot * 1.12);
+  const put10 = volSnapStrike(mExp || wExp, spot * 0.85);
+  const call10 = volSnapStrike(mExp || wExp, spot * 1.15);
+  const itmCall = volSnapStrike(wExp || mExp, atm - step);
+  const itmPut = volSnapStrike(wExp || mExp, atm + step);
+  const bCode = bListed?.code || volFmtDeribitExpiry(biweekly);
+  const bLabel = bListed?.label || volFmtExpiryLabel(biweekly);
+  const bDte = bListed?.dte != null ? bListed.dte : volDte(biweekly);
+
+  const cycle = volCycleFromSuite(ctx.suite);
+  const qListed = volExpiryFromListed(volPickExpiryBand(chain, 85, 170));
+  const leapListed = volExpiryFromListed(volPickExpiryBand(chain, 175, 420));
+  const qExp = qListed?.exp || null;
+  const leapExp = leapListed?.exp || null;
+  const qCode = qListed?.code || "";
+  const leapCode = leapListed?.code || "";
+  const qLabel = qListed?.label || "";
+  const leapLabel = leapListed?.label || "";
+  const qDte = qListed?.dte != null ? qListed.dte : 0;
+  const leapDte = leapListed?.dte != null ? leapListed.dte : 0;
+  const pack = {
+    bias,
+    spot,
+    qty,
+    atm,
+    hedgeNote,
+    rv7s,
+    rv30s,
+    wCode,
+    mCode,
+    bCode,
+    qCode,
+    leapCode,
+    wLabel,
+    mLabel,
+    qLabel,
+    leapLabel,
+    wDte,
+    mDte,
+    qDte,
+    leapDte,
+    putWing,
+    callWing,
+    putFar,
+    callFar,
+    put25,
+    call25,
+    put15,
+    call15,
+    put10,
+    call10,
+    itmCall,
+    itmPut,
+    cycle,
+    qExp,
+    leapExp,
+    mExp,
+    wExp,
+  };
+  const finish = (rows) => rows.concat(volBuilderCycleExtras(pack));
 
   if (bias === "long") {
-    return [
+    return finish([
       {
         id: "A",
         sophistication: "Core",
@@ -1584,11 +2762,91 @@ function volBuildExampleTickets(ctx) {
           { side: "BUY", type: "Put", strike: put25, qty, expiryCode: mCode, dte: mDte, note: `Long back put ${mCode}` },
         ],
       },
-    ];
+      {
+        id: "G",
+        sophistication: "Genius",
+        title: "Put ratio backspread (1×2 crash convexity)",
+        intent:
+          "Sell 1 ATM put to finance 2 further OTM puts. Small debit/credit; you want a crash, not a grind. The “genius” is owning extra crash gamma while the tape is still bid.",
+        spot,
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `Put skew not already vertical; monthly IV ≤ ${rv30s} + 3 pts on the long puts. Skip if you need the market to go up.`,
+        exit: "Take profit on a flush; cut if spot pins at the short put into expiry.",
+        hedge: true,
+        juniorNote:
+          "Short 1 ATM put, long 2 lower puts. Valley of pain if BTC dies exactly at the short strike. Size tiny until you can sketch the payoff.",
+        legs: [
+          { side: "SELL", type: "Put", strike: atm, qty, note: "Short ATM put (finances longs)" },
+          { side: "BUY", type: "Put", strike: put15, qty: qty * 2, note: "Long 2× crash puts" },
+        ],
+      },
+      {
+        id: "H",
+        sophistication: "Genius",
+        title: "Strip (2× put + 1× call — crash-biased long vol)",
+        intent:
+          "A straddle with an extra put. Same cheap-IV thesis as the ATM straddle, but you are willing to be more long downside. Classic when BTC vol is cheap and skew is not yet bid.",
+        spot,
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `Same cheap-IV gate vs ${rv7s}. Prefer when 25Δ RR is not already screaming puts.`,
+        exit: "Same as the ATM straddle; the extra put is the crash kicker — do not strip the hedge.",
+        hedge: true,
+        juniorNote: "Two ATM puts + one ATM call. You are net short delta unless you hedge the perp. Not a symmetric straddle.",
+        legs: [
+          { side: "BUY", type: "Put", strike: atm, qty: qty * 2, note: "2× ATM put (crash weight)" },
+          { side: "BUY", type: "Call", strike: atm, qty, note: "ATM call" },
+        ],
+      },
+      {
+        id: "I",
+        sophistication: "Advanced",
+        title: "Call Christmas tree (1×2×1 cheap upside convexity)",
+        intent:
+          "Buy 1 ATM call, sell 2 slightly OTM, buy 1 far OTM. Defined risk, cheap debit, pays on a melt-up that does not pin the short body.",
+        spot,
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `Call wing IV not already vertical; monthly IV ≤ ${rv30s} + 3 pts. Avoid if you expect a slow grind that dies on the short strikes.`,
+        exit: "Take profit on a vertical squeeze; cut if spot lodges between ATM and the short cluster.",
+        hedge: true,
+        juniorNote:
+          "1–2–1 call tree. Max pain is a pin at the double-short strike. Draw it before live.",
+        legs: [
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long ATM call" },
+          { side: "SELL", type: "Call", strike: call25, qty: qty * 2, note: "Short 2× OTM calls" },
+          { side: "BUY", type: "Call", strike: callFar, qty, note: "Long far call (caps the shorts)" },
+        ],
+      },
+      {
+        id: "J",
+        sophistication: "Advanced",
+        title: "Skip-strike call butterfly (uneven fly, defined)",
+        intent:
+          "Long 1 ATM call, short 2 at a nearby wing, long 1 much further. The skipped spacing tilts payoff toward a squeeze without a naked short.",
+        spot,
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: `IV still ≤ ${rv30s} + 3 pts on the longs. Use when you want defined-risk upside more than a vanilla call.`,
+        exit: "Take profit if the short body decays or spot rips through; cut if the tape pins the double short.",
+        hedge: true,
+        juniorNote: "Buy K, sell 2× (K+w), buy (K+far). Spacing is the whole trade. Confirm strikes exist on the book.",
+        legs: [
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long ATM" },
+          { side: "SELL", type: "Call", strike: callWing, qty: qty * 2, note: "Short 2× near wing" },
+          { side: "BUY", type: "Call", strike: call10, qty, note: "Long skipped far call" },
+        ],
+      },
+    ]);
   }
 
   if (bias === "short") {
-    return [
+    return finish([
       {
         id: "A",
         sophistication: "Core",
@@ -1657,19 +2915,20 @@ function volBuildExampleTickets(ctx) {
       {
         id: "D",
         sophistication: "Advanced",
-        title: "Jade lizard (short put + short call spread)",
+        title: "Defined-risk lizard (put spread + call credit spread)",
         intent:
-          "Collect premium with no upside risk beyond the call spread width if structured so net credit ≥ call width. Classic short-vol / mild bullish structure.",
+          "Same idea as a jade lizard, but the short put is protected by a further long put. Defined max loss on both sides — required for live size on this desk.",
         spot,
         expiryCode: mCode,
         expiryLabel: mLabel,
         dte: mDte,
-        gate: `Monthly IV − ${rv30s} ≥ 5 pts; you are OK being short put downside (defined only if you add a long put wing — here the put is naked in the classic lizard, so size tiny or upgrade to put spread).`,
-        exit: "Cover if short put is tested or call spread is maxed; take 50% of credit when available.",
+        gate: `Monthly IV − ${rv30s} ≥ 5 pts. Classic naked-put lizard is not suggested live.`,
+        exit: "Cover if either short strike is tested or loss > ~50% of credit.",
         hedge: true,
         juniorNote:
-          "Classic jade lizard: short OTM put + short call credit spread, credit ≥ call wing width so upside is “risk-defined by credit.” Downside put risk remains — treat as advanced; many desks convert the put to a spread.",
+          "Short OTM put + long further put (put credit spread) plus short call + long further call. No naked short put.",
         legs: [
+          { side: "BUY", type: "Put", strike: putFar, qty, note: "Long lower put (caps put loss)" },
           { side: "SELL", type: "Put", strike: putWing, qty, note: "Short OTM put" },
           { side: "SELL", type: "Call", strike: callWing, qty, note: "Short call" },
           { side: "BUY", type: "Call", strike: callFar, qty, note: "Long further call (call credit spread)" },
@@ -1715,18 +2974,82 @@ function volBuildExampleTickets(ctx) {
           { side: "BUY", type: "Call", strike: callWing, qty, note: "Long higher call (cap loss)" },
         ],
       },
-    ];
+      {
+        id: "G",
+        sophistication: "Core",
+        title: "Weekly iron condor (faster theta, defined)",
+        intent:
+          "Same defined-risk short vol as the monthly condor, but on the front Friday so theta is faster and the test comes sooner.",
+        spot,
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `Weekly IV − ${rv7s} ≥ 5 pts. No event inside the week. Do not sell the weekly if IV ≤ model.`,
+        exit: "Cover at 50% of credit, or if spot threatens a short wing, or if IV−RV collapses.",
+        hedge: true,
+        juniorNote: "Shorter DTE = more gamma against you. Flatten into Friday; do not “see what happens” on expiry.",
+        legs: [
+          { side: "BUY", type: "Put", strike: putFar, qty, note: "Long put wing" },
+          { side: "SELL", type: "Put", strike: putWing, qty, note: "Short put" },
+          { side: "SELL", type: "Call", strike: callWing, qty, note: "Short call" },
+          { side: "BUY", type: "Call", strike: callFar, qty, note: "Long call wing" },
+        ],
+      },
+      {
+        id: "H",
+        sophistication: "Genius",
+        title: "Call broken-wing butterfly (short vol, squeeze-skewed)",
+        intent:
+          "Sell a call fly but skip/widen the upper wing so you collect more if BTC drifts up a bit, while a moonshot is still defined. Surgical short-vol with a bullish tilt.",
+        spot,
+        expiryCode: bCode,
+        expiryLabel: bLabel,
+        dte: bDte,
+        gate: `IV rich vs model on ~2w tenor. You can tolerate a mild squeeze; you cannot tolerate a melt-up through the far call.`,
+        exit: "Take profit if the body decays; cut if spot drives into the long far call with expanding IV.",
+        hedge: true,
+        juniorNote:
+          "Long ATM call, short 2× mid call, long a further call that is not equally spaced. Confirm the skip on the live grid.",
+        legs: [
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long lower call" },
+          { side: "SELL", type: "Call", strike: callWing, qty: qty * 2, note: "Short 2× mid call" },
+          { side: "BUY", type: "Call", strike: call10, qty, note: "Long far call (broken wing)" },
+        ],
+      },
+      {
+        id: "I",
+        sophistication: "Advanced",
+        title: "Call ladder (short vol + mild bearish, defined-ish)",
+        intent:
+          "Buy a lower call, sell a middle, sell a higher. You want IV rich and upside capped. The far short is the risk — we cap it with the long below only on the first step; treat the extra short as needing the far long from the tree if you size up.",
+        spot,
+        expiryCode: wCode,
+        expiryLabel: wLabel,
+        dte: wDte,
+        gate: `Weekly IV − ${rv7s} ≥ 5 pts. Prefer replacing the naked-feeling far short with a long call10 if size is not tiny.`,
+        exit: "Buy back if spot squeezes into the shorts; take 50% of credit when available.",
+        hedge: true,
+        juniorNote:
+          "This ladder still has open-ended upside above the highest short unless you add a long wing. We add call10 as the cap — check it is listed.",
+        legs: [
+          { side: "BUY", type: "Call", strike: itmCall, qty, note: "Long lower call" },
+          { side: "SELL", type: "Call", strike: atm, qty, note: "Short ATM call" },
+          { side: "SELL", type: "Call", strike: call25, qty, note: "Short OTM call" },
+          { side: "BUY", type: "Call", strike: call10, qty, note: "Long far call (cap)" },
+        ],
+      },
+    ]);
   }
 
   // neutral / calendar / relative value
   if (bias === "neutral") {
-    return [
+    return finish([
       {
         id: "A",
         sophistication: "Core",
         title: "Long calendar: short weekly / long monthly ATM straddle",
         intent:
-          "You do not have a strong “vol is high/low” call. You try to harvest front-week time decay while keeping longer-dated vol. Needs front IV rich vs back relative to 7d vs 30d marks.",
+          "Not a bet that BTC goes up or down. You sell this week’s ATM straddle (fast theta) and buy next month’s ATM straddle (keeps time value after Friday). You want a quiet pin into the weekly and the monthly still worth something. A big trend is the loss case — both straddles go equally ITM and you paid extra for the back month.",
         spot,
         expiryCode: `${wCode} / ${mCode}`,
         expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
@@ -1739,7 +3062,7 @@ function volBuildExampleTickets(ctx) {
         exit: "Unwind after front expiry or if both tenors reprice to within ~1 vol pt of model marks.",
         hedge: true,
         juniorNote:
-          "You sell the near expiry straddle and buy the far one (same strikes). Two expiries = more operational work. Paper this once before live size.",
+          "Win = spot near the strike when the weekly expires (front ~worthless) while the monthly still has weeks of premium. Lose = a large trend, or the monthly IV crushes. The chart is P&amp;L at Friday, with the monthly still marked — it is not “both expire today.” If front IV is not richer than back, skip or reverse.",
         legs: [
           { side: "SELL", type: "Call", strike: atm, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front ${wCode} call` },
           { side: "SELL", type: "Put", strike: atm, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front ${wCode} put` },
@@ -1826,7 +3149,7 @@ function volBuildExampleTickets(ctx) {
         exit: "Let expire if quiet; manage short call on a squeeze; take profit on put spread after a dump.",
         hedge: true,
         juniorNote:
-          "Long lower put, short higher put (put credit? wait: long put ATM-ish, short lower put, short OTM call). Standard seagull: buy put, sell lower put, sell OTM call.",
+          "Standard seagull: buy a put, sell a further OTM put (put spread), sell an OTM call to finance. Crash is defined; upside is capped by the short call.",
         legs: [
           { side: "BUY", type: "Put", strike: putWing, qty, note: "Long put" },
           { side: "SELL", type: "Put", strike: putFar, qty, note: "Short lower put (defines put spread)" },
@@ -1854,11 +3177,107 @@ function volBuildExampleTickets(ctx) {
           { side: "SELL", type: "Put", strike: atm, qty: 1, note: "Short ATM put" },
         ],
       },
-    ];
+      {
+        id: "G",
+        sophistication: "Genius",
+        title: "Skew calendar (short front RR / long back RR)",
+        intent:
+          "The desk trade when the weekly crash premium is rich and the monthly has not caught up: sell this week’s 25Δ risk-reversal, buy next month’s. You harvest front skew/theta and keep back-month crash convexity. Not a direction bet if you delta-hedge.",
+        spot,
+        expiryCode: `${wCode} / ${mCode}`,
+        expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
+        dte: wDte,
+        frontExpiryCode: wCode,
+        backExpiryCode: mCode,
+        frontDte: wDte,
+        backDte: mDte,
+        gate: `Front 25Δ RR (put−call) richer than back by ≳ 3 vol pts after spreads. If weekly skew is cheap, skip — you would be selling the wrong tenor.`,
+        exit: "Cover the front RR before Friday if tested; hold/roll the back RR if skew term structure normalizes.",
+        hedge: true,
+        juniorNote:
+          "Front: short put / long call (you sold the rich weekly crash). Back: long put / short call. Four names, two expiries. Hedge residual delta with BTC-PERPETUAL. This is the closest thing on this list to a “genius” relative-value trade.",
+        legs: [
+          { side: "SELL", type: "Put", strike: put25, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front put ${wCode} (sell rich weekly skew)` },
+          { side: "BUY", type: "Call", strike: call25, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Long front call ${wCode}` },
+          { side: "BUY", type: "Put", strike: put25, qty, expiryCode: mCode, dte: mDte, note: `Long back put ${mCode} (keep crash)` },
+          { side: "SELL", type: "Call", strike: call25, qty, expiryCode: mCode, dte: mDte, note: `Short back call ${mCode}` },
+        ],
+      },
+      {
+        id: "H",
+        sophistication: "Genius",
+        title: "25Δ double calendar (strangle calendar, same strikes)",
+        intent:
+          "Short this week’s OTM strangle, long next month’s same strikes. Like the ATM calendar but you need a larger move to hurt you, and you collect OTM theta. Pin can be wider.",
+        spot,
+        expiryCode: `${wCode} / ${mCode}`,
+        expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
+        dte: wDte,
+        frontExpiryCode: wCode,
+        backExpiryCode: mCode,
+        frontDte: wDte,
+        backDte: mDte,
+        gate: `Front 25Δ IV rich vs ${rv7s} relative to back vs ${rv30s} (≥ 3 vol pts). If front is cheap, reverse or skip.`,
+        exit: "Unwind after front expiry or if both tenors reprice near the model.",
+        hedge: true,
+        juniorNote:
+          "Same idea as the ATM calendar, OTM. Chart should peak if spot stays between the strikes through Friday, with the monthly still live.",
+        legs: [
+          { side: "SELL", type: "Put", strike: put25, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front put ${wCode}` },
+          { side: "SELL", type: "Call", strike: call25, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front call ${wCode}` },
+          { side: "BUY", type: "Put", strike: put25, qty, expiryCode: mCode, dte: mDte, note: `Long back put ${mCode}` },
+          { side: "BUY", type: "Call", strike: call25, qty, expiryCode: mCode, dte: mDte, note: `Long back call ${mCode}` },
+        ],
+      },
+      {
+        id: "I",
+        sophistication: "Genius",
+        title: "Zebra (RR + long ATM call — crash + squeeze)",
+        intent:
+          "Long 25Δ put, short 25Δ call, long ATM call. You own crash convexity and a squeeze kicker, financed by the short OTM call. Near-zero debit if skew is well behaved. The clever bit is not dying on a grind-up through the short call without the ATM long.",
+        spot,
+        expiryCode: mCode,
+        expiryLabel: mLabel,
+        dte: mDte,
+        gate: "25Δ RR not already extreme; you can hedge delta. Skip if the short call is the only cheap option on the board.",
+        exit: "Flatten if the short call gamma explodes and the ATM long is not enough; take profit after a dump or a squeeze.",
+        hedge: true,
+        juniorNote:
+          "Three legs, same expiry. Still directional without the perp hedge. Not a free lunch — map the three strikes first.",
+        legs: [
+          { side: "BUY", type: "Put", strike: put25, qty, note: "Long crash put" },
+          { side: "SELL", type: "Call", strike: call25, qty, note: "Short OTM call (finances)" },
+          { side: "BUY", type: "Call", strike: atm, qty, note: "Long ATM call (squeeze kicker)" },
+        ],
+      },
+      {
+        id: "J",
+        sophistication: "Advanced",
+        title: "Poor man’s covered call (long back ATM call / short front OTM call)",
+        intent:
+          "Own monthly upside, sell this week’s OTM call against it to cheapen carry. Classic when front call IV is rich vs back.",
+        spot,
+        expiryCode: `${wCode} / ${mCode}`,
+        expiryLabel: `Front ${wLabel} · Back ${mLabel}`,
+        dte: wDte,
+        frontExpiryCode: wCode,
+        backExpiryCode: mCode,
+        frontDte: wDte,
+        backDte: mDte,
+        gate: `Front call IV rich vs ${rv7s}; back call not expensive vs ${rv30s}. Skip if weekly calls are already cheap.`,
+        exit: "Let the weekly expire if OTM; roll or close if it goes ITM. Keep the monthly if the upside thesis remains.",
+        hedge: true,
+        juniorNote: "Short weekly call, long monthly ATM call. If BTC rips through the short, you still have the back call — manage the short first.",
+        legs: [
+          { side: "SELL", type: "Call", strike: call25, qty, expiryCode: wCode, dte: wDte, useFrontIv: true, note: `Short front call ${wCode}` },
+          { side: "BUY", type: "Call", strike: atm, qty, expiryCode: mCode, dte: mDte, note: `Long back ATM call ${mCode}` },
+        ],
+      },
+    ]);
   }
 
   // no-trade / paper
-  return [
+  return finish([
     {
       id: "A",
       sophistication: "Core",
@@ -1901,15 +3320,192 @@ function volBuildExampleTickets(ctx) {
         { side: "BUY", type: "Call", strike: callFar, qty: 1, note: "Long call wing" },
       ],
     },
-  ];
+  ]);
 }
 
 /**
  * Structured Deribit trade plan from suite marks (rule-based, educational).
- * Live DVOL/IV is not in this payload — plan is gated on IV − model_RV.
- * Written for junior traders: plain English + concrete multi-leg tickets.
+ * Model product = annualized RV forecast path. Live trades snap to listed Deribit
+ * instruments and prefer live ATM IV − model term RV as the edge, not AIC.
  */
-function volBuildDeribitTradePlan(suite) {
+function volMarkTermRv(mark, s) {
+  const path = mark?.forecastAnn || [];
+  const term = mark?.forecastTermAnn || [];
+  const rv1 = path[0] != null ? Number(path[0]) : s.forecast1d != null ? Number(s.forecast1d) : null;
+  const day7 = path[6] != null ? Number(path[6]) : s.forecast7d != null ? Number(s.forecast7d) : null;
+  const day30 =
+    path[29] != null ? Number(path[29]) : s.forecast30d != null ? Number(s.forecast30d) : null;
+  const term7 =
+    term[6] != null
+      ? Number(term[6])
+      : s.forecastTerm7d != null
+        ? Number(s.forecastTerm7d)
+        : volTermFromPath(path, 7);
+  const term30 =
+    term[29] != null
+      ? Number(term[29])
+      : s.forecastTerm30d != null
+        ? Number(s.forecastTerm30d)
+        : volTermFromPath(path, 30);
+  return { rv1, day7, day30, term7: term7 ?? day7, term30: term30 ?? day30 };
+}
+
+function volDeriveTradeBias({
+  usable,
+  crossOnly,
+  conf,
+  cur,
+  unc,
+  regime,
+  liveGap7,
+  liveGap30,
+  hasLiveIv,
+}) {
+  if (!usable && !crossOnly) {
+    return { bias: "none", reason: "model not usable" };
+  }
+  if (conf < 55) {
+    return { bias: "none", reason: "confidence < 55%" };
+  }
+  if (hasLiveIv && (liveGap7 != null || liveGap30 != null)) {
+    const gap = liveGap30 != null ? liveGap30 : liveGap7;
+    if (gap >= 0.05) return { bias: "short", reason: "live IV − term RV ≥ 5 pts" };
+    if (gap <= -0.02) return { bias: "long", reason: "live IV − term RV ≤ −2 pts (options cheap vs model)" };
+    return { bias: "neutral", reason: "live IV near model term RV" };
+  }
+  const reg = String(regime || "").toLowerCase();
+  if (reg.includes("elevat") || (cur != null && unc != null && cur > unc * 1.2)) {
+    return { bias: "long", reason: "regime fallback: cond. vol elevated vs long-run (no live IV)" };
+  }
+  if (reg.includes("subdu") || (cur != null && unc != null && cur < unc * 0.85)) {
+    return { bias: "short", reason: "regime fallback: cond. vol subdued vs long-run (no live IV)" };
+  }
+  return { bias: "neutral", reason: "regime fallback: near long-run (no live IV)" };
+}
+
+function volModelProductHtml({
+  mark,
+  rv1,
+  day7,
+  day30,
+  term7,
+  term30,
+  liveIv7,
+  liveIv30,
+  liveGap7,
+  liveGap30,
+  chain,
+  wExp,
+  mExp,
+}) {
+  const wCode = wExp ? volExpiryCodeFromMs(wExp.expirationTimestamp) : "—";
+  const mCode = mExp ? volExpiryCodeFromMs(mExp.expirationTimestamp) : "—";
+  const nExp = chain?.expirations?.length || 0;
+  const nInst = chain?.quotesByInstrument
+    ? Object.keys(chain.quotesByInstrument).length
+    : 0;
+  return (
+    `<div class="vol-product" data-help-key="vol-model-product">` +
+    `<h3 class="vol-plan-h">What model selection produces</h3>` +
+    `<p class="vol-plan-why">Checking models does <strong>not</strong> pick a trade. It estimates a <strong>conditional volatility path</strong> on BTC log returns (√365 annualized). ` +
+    `The QLIKE leader (else AIC) is the <strong>mark model</strong> used as an RV forecast. Suggested Deribit tickets are a separate mapping: term RV vs live IV, then structures on listed contracts.</p>` +
+    `<ul class="vol-plan-list">` +
+    `<li><strong>Input:</strong> daily BTC log returns (estimation range + error distribution you selected).</li>` +
+    `<li><strong>Output (mark = ${volEscape(mark.name)}):</strong> ` +
+    `day-ahead vol 1d ${volFmtPct(rv1, 1)} · day-7 ${volFmtPct(day7, 1)} · day-30 ${volFmtPct(day30, 1)}. ` +
+    `Those are E[σ] for <em>that future day</em>, not an option’s average vol.</li>` +
+    `<li><strong>Term RV (used vs options):</strong> 7d ${volFmtPct(term7, 1)} · 30d ${volFmtPct(term30, 1)} = ` +
+    `√(mean of daily variances over the horizon) × √365. Compare this to Deribit ATM IV for ~that DTE.</li>` +
+    `<li><strong>Live book:</strong> ${
+      nInst
+        ? `${nInst} BTC option instruments · ${nExp} expiries · weekly ${volEscape(wCode)} · monthly ${volEscape(mCode)}`
+        : "not loaded — tickets fall back to synthesized Friday names (higher error risk)"
+    }</li>` +
+    `<li><strong>Live ATM IV vs term RV:</strong> ${
+      liveIv7 != null || liveIv30 != null
+        ? `7d IV ${volFmtPct(liveIv7, 1)} − RV ${volFmtPct(term7, 1)} = <strong>${volFmtPct(liveGap7, 1)}</strong>` +
+          ` · 30d IV ${volFmtPct(liveIv30, 1)} − RV ${volFmtPct(term30, 1)} = <strong>${volFmtPct(liveGap30, 1)}</strong>`
+        : "unavailable"
+    }</li>` +
+    `</ul></div>`
+  );
+}
+
+function volForecastSensitivityHtml(ctx) {
+  const {
+    usable,
+    crossOnly,
+    conf,
+    cur,
+    unc,
+    regime,
+    term7,
+    term30,
+    liveIv7,
+    liveIv30,
+    hasLiveIv,
+    spot,
+    chain,
+    dailyVol,
+    mark,
+  } = ctx;
+  const shocks = [-0.1, -0.05, 0, 0.05, 0.1];
+  const rows = shocks
+    .map((d) => {
+      const t7 = term7 != null ? term7 + d : null;
+      const t30 = term30 != null ? term30 + d : null;
+      const c = cur != null ? cur + d : null;
+      const gap7 = liveIv7 != null && t7 != null ? liveIv7 - t7 : null;
+      const gap30 = liveIv30 != null && t30 != null ? liveIv30 - t30 : null;
+      const der = volDeriveTradeBias({
+        usable,
+        crossOnly,
+        conf,
+        cur: c,
+        unc,
+        regime,
+        liveGap7: gap7,
+        liveGap30: gap30,
+        hasLiveIv,
+      });
+      const label =
+        d === 0 ? "Base" : `${d > 0 ? "+" : "−"}${Math.round(Math.abs(d) * 100)} vol pts`;
+      const flip = d !== 0 && der.bias !== volDeriveTradeBias({
+        usable,
+        crossOnly,
+        conf,
+        cur,
+        unc,
+        regime,
+        liveGap7: liveIv7 != null && term7 != null ? liveIv7 - term7 : null,
+        liveGap30: liveIv30 != null && term30 != null ? liveIv30 - term30 : null,
+        hasLiveIv,
+      }).bias;
+      return `<tr class="${d === 0 ? "vol-summary-row--best" : flip ? "vol-sens-flip" : ""}">
+        <td>${label}${flip ? " · <strong>stance flips</strong>" : ""}</td>
+        <td class="mono">${volFmtPct(t7, 1)}</td>
+        <td class="mono">${volFmtPct(t30, 1)}</td>
+        <td class="mono">${volFmtPct(gap7, 1)} / ${volFmtPct(gap30, 1)}</td>
+        <td>${volEscape(der.bias)}</td>
+      </tr>`;
+    })
+    .join("");
+
+  return (
+    `<h3 class="vol-plan-h" data-help-key="vol-plan-sensitivity">How forecast error changes the book</h3>` +
+    `<p class="vol-plan-why">If the mark model’s term RV is off by 5–10 vol points, the IV−RV gap (and sometimes the long/short/neutral stance) changes. ` +
+    `OOS RMSE on this suite is the right scale for “how wrong could we be.” A flip means <strong>do not size as if the base ticket is robust</strong>.</p>` +
+    `<div class="vol-summary-wrap">` +
+    `<table class="vol-summary-table vol-sens-table">` +
+    `<thead><tr>` +
+    `<th>RV shock</th><th>Term 7d</th><th>Term 30d</th><th>IV−RV 7d / 30d</th><th>Stance</th>` +
+    `</tr></thead><tbody>${rows}</tbody></table></div>` +
+    `<p class="vol-plan-why">Mark model: ${volEscape(mark?.name || "—")}. ` +
+    `Shocks are added to term RV (and cond. vol for regime fallback). Live IV is held fixed.</p>`
+  );
+}
+
+function volBuildDeribitTradePlan(suite, chain = null) {
   const models = suite.models || [];
   const ok = models.filter((m) => m.status === "ok");
   const s = suite.summary || {};
@@ -1927,11 +3523,9 @@ function volBuildDeribitTradePlan(suite) {
   }
 
   const verdict = volBuildVerdict(volRowAsDetail(mark), suite);
-  const f = mark.forecastAnn || [];
-  const rv1 = f[0] != null ? Number(f[0]) : s.forecast1d != null ? Number(s.forecast1d) : null;
-  const rv7 = f[6] != null ? Number(f[6]) : s.forecast7d != null ? Number(s.forecast7d) : null;
-  const rv30 =
-    f[29] != null ? Number(f[29]) : s.forecast30d != null ? Number(s.forecast30d) : null;
+  const { rv1, day7, day30, term7, term30 } = volMarkTermRv(mark, s);
+  const rv7 = term7;
+  const rv30 = term30;
   const cur =
     mark.currentCondVolAnn != null
       ? Number(mark.currentCondVolAnn)
@@ -1948,9 +3542,25 @@ function volBuildDeribitTradePlan(suite) {
   const conf = verdict?.score ?? 0;
   const usable = verdict?.tableLabel === "Yes";
   const crossOnly = verdict?.tableLabel === "Cross-check only";
-  const spot = volSuiteSpot(suite);
+  const indexPx = chain?.indexPrice != null ? Number(chain.indexPrice) : null;
+  const spot = indexPx > 0 ? indexPx : volSuiteSpot(suite);
   const dailyVol =
     cur != null && Number.isFinite(cur) ? cur / Math.sqrt(365) : null;
+
+  const wExp = volPickListedExpiry(chain, { minDte: 3, maxDte: 12 });
+  const mExp = volPickMonthlyExpiry(chain);
+  const qExpPlan = volPickExpiryBand(chain, 85, 170);
+  const leapExpPlan = volPickExpiryBand(chain, 175, 420);
+  const cycleLens = volCycleFromSuite(suite);
+  const liveW = wExp && spot ? volAtmIvFromExp(wExp, spot) : null;
+  const liveM = mExp && spot ? volAtmIvFromExp(mExp, spot) : null;
+  const liveIv7 = liveW?.iv ?? null;
+  const liveIv30 = liveM?.iv ?? null;
+  const liveGap7 =
+    liveIv7 != null && rv7 != null ? liveIv7 - rv7 : null;
+  const liveGap30 =
+    liveIv30 != null && rv30 != null ? liveIv30 - rv30 : null;
+  const hasLiveIv = liveIv7 != null || liveIv30 != null;
 
   let slope = "flat";
   if (rv7 != null && rv30 != null) {
@@ -1972,7 +3582,18 @@ function volBuildDeribitTradePlan(suite) {
     else regime = "near long-run";
   }
 
-  let bias = "neutral"; // long | short | neutral | none
+  const derived = volDeriveTradeBias({
+    usable,
+    crossOnly,
+    conf,
+    cur,
+    unc,
+    regime,
+    liveGap7,
+    liveGap30,
+    hasLiveIv,
+  });
+  let bias = derived.bias;
   let stanceShort;
   let stancePlain;
   let whyJunior;
@@ -1980,8 +3601,7 @@ function volBuildDeribitTradePlan(suite) {
   let invalidation;
   let greeksPlain;
 
-  if (!usable && !crossOnly) {
-    bias = "none";
+  if (bias === "none" && !usable && !crossOnly) {
     stanceShort = "No live trade";
     stancePlain =
       "Do not open a new Deribit options position from this run. The model is not good enough to mark physical vol.";
@@ -1990,8 +3610,7 @@ function volBuildDeribitTradePlan(suite) {
     entryGate = "N/A until the suite has a usable QLIKE leader and higher confidence.";
     invalidation = "N/A";
     greeksPlain = "N/A — stay flat.";
-  } else if (conf < 55) {
-    bias = "none";
+  } else if (bias === "none") {
     stanceShort = "Paper only — no new live risk";
     stancePlain =
       "Treat this as a watchlist. You may paper-trade one micro structure, but do not send live size.";
@@ -1999,52 +3618,53 @@ function volBuildDeribitTradePlan(suite) {
     entryGate = "Live trading only if confidence later reaches ~70%+ with a stable QLIKE leader.";
     invalidation = "Any live fill at this confidence breaks process — close and review.";
     greeksPlain = "If papering: practice keeping delta near zero with the perpetual.";
-  } else if (
-    String(regime).toLowerCase().includes("elevat") ||
-    (cur != null && unc != null && cur > unc * 1.2)
-  ) {
-    bias = "long";
-    stanceShort = "Long volatility (buy options premium) — if IV is not already rich";
+  } else if (bias === "long") {
+    stanceShort = hasLiveIv
+      ? "Long volatility (buy options) — live IV is cheap vs model term RV"
+      : "Long volatility (buy options premium) — regime fallback, live IV missing";
     stancePlain =
-      "The model says realized/conditional vol is running hot. Prefer owning options (long straddle/strangle) so you benefit if the market keeps moving or IV stays high. Do not sell naked premium into this regime.";
+      "Prefer owning defined-risk long-vol structures so you benefit if realized vol stays high or IV re-rates up. Do not sell naked premium.";
     whyJunior =
-      `Latest cond. vol is ${volFmtPct(cur, 1)} vs long-run ${volFmtPct(unc, 1)}. ` +
-      `In elevated regimes, short-vol (selling options) often looks good until one jump wipes the week. ` +
-      `Path: ${pathBias}. Term structure of the model mark: ${slope}.`;
+      `Driver: ${volEscape(derived.reason)}. Cond. vol ${volFmtPct(cur, 1)} vs long-run ${volFmtPct(unc, 1)}. ` +
+      `Term RV (option mark): 7d ${volFmtPct(rv7, 1)} · 30d ${volFmtPct(rv30, 1)}` +
+      (hasLiveIv
+        ? ` · live ATM IV 7d ${volFmtPct(liveIv7, 1)} (gap ${volFmtPct(liveGap7, 1)}) · 30d ${volFmtPct(liveIv30, 1)} (gap ${volFmtPct(liveGap30, 1)}).`
+        : ".") +
+      ` Path: ${pathBias}. Term slope: ${slope}.`;
     entryGate =
-      `Only buy if live Deribit mid IV for your expiry is not much higher than the model: weekly IV ≲ ${volFmtPct(rv7, 1)} + 2 pts, monthly ≲ ${volFmtPct(rv30, 1)} + 2 pts. ` +
-      `If IV is already ≥ model + 8–10 pts, options are expensive — stand aside or use a defined-risk short structure instead.`;
+      `Only buy if live ATM IV ≤ term RV + 2 pts (weekly vs ${volFmtPct(rv7, 1)}, monthly vs ${volFmtPct(rv30, 1)}). ` +
+      `If IV is already ≥ model + 8–10 pts, options are expensive — stand aside.`;
     invalidation =
       "Exit longs if: (1) IV falls back to the model while spot is quiet for 3+ days, (2) you lose ~1–1.5× the debit, (3) a major event is &lt;24h away and you are not paid for it.";
     greeksPlain =
       "You want ≈0 delta (±5%), positive vega, positive gamma, negative theta. Hedge delta with BTC-PERPETUAL at least once per day or on ~1σ spot moves.";
-  } else if (
-    String(regime).toLowerCase().includes("subdu") ||
-    (cur != null && unc != null && cur < unc * 0.85)
-  ) {
-    bias = "short";
-    stanceShort = "Short volatility (sell premium) — only with wings, only if IV is rich";
+  } else if (bias === "short") {
+    stanceShort = hasLiveIv
+      ? "Short volatility (sell premium with wings) — live IV rich vs model term RV"
+      : "Short volatility (sell premium with wings) — regime fallback, live IV missing";
     stancePlain =
-      "The model says vol is calm vs its long-run level. Selling options can work if the market prices high IV anyway — but only with defined-risk structures (iron condor / butterfly). Never naked short straddles on BTC.";
+      "Selling options can work when the market prices high IV vs the model — only with defined-risk structures. Never naked short straddles on BTC.";
     whyJunior =
-      `Cond. vol ${volFmtPct(cur, 1)} is below long-run ${volFmtPct(unc, 1)}. ` +
-      `That is a “quiet tape” signal, not a free lunch: one liquidation cascade can still spike IV. ` +
-      `Path: ${pathBias}. Term slope: ${slope}.`;
+      `Driver: ${volEscape(derived.reason)}. Cond. vol ${volFmtPct(cur, 1)} vs long-run ${volFmtPct(unc, 1)}. ` +
+      `Term RV 7d ${volFmtPct(rv7, 1)} · 30d ${volFmtPct(rv30, 1)}` +
+      (hasLiveIv
+        ? ` · live ATM IV gap 7d ${volFmtPct(liveGap7, 1)} · 30d ${volFmtPct(liveGap30, 1)}.`
+        : ".") +
+      ` Path: ${pathBias}. Term slope: ${slope}.`;
     entryGate =
-      `Sell only if live mid IV − model RV ≥ 5 vol pts (weekly vs ${volFmtPct(rv7, 1)}, monthly vs ${volFmtPct(rv30, 1)}). ` +
-      `Skip if IV is already ≤ model, or a big event is inside 48h without extra wing width.`;
+      `Sell only if live mid IV − model term RV ≥ 5 vol pts (weekly vs ${volFmtPct(rv7, 1)}, monthly vs ${volFmtPct(rv30, 1)}). ` +
+      `Skip if IV ≤ model, or a big event is inside 48h without extra wing width.`;
     invalidation =
       "Cover if: (1) 1-day spot move &gt; ~2.5× model daily vol, (2) IV−RV shrinks below ~2 pts, (3) loss &gt; ~50% of credit, (4) cascade/funding stress.";
     greeksPlain =
       "Target ≈0 delta, negative vega, negative gamma, positive theta. Hard max loss = wing width − credit. Hedge delta on large moves; never remove long wings.";
   } else {
-    bias = "neutral";
     stanceShort = "Neutral / relative-value (calendar) — no strong long/short vol call";
     stancePlain =
-      "Vol is near average. Do not force a big long-vol or short-vol bet. If you trade, look for term-structure mispricing (front week vs next month) versus the 7d and 30d model marks.";
+      "Do not force a big long-vol or short-vol bet. If you trade, look for term-structure mispricing (front week vs next month) versus the 7d and 30d model term RV.";
     whyJunior =
-      `Cond. vol ${volFmtPct(cur, 1)} is close to long-run ${volFmtPct(unc, 1)}. ` +
-      `Edge, if any, is “which expiry is mispriced,” not “vol must explode/collapse.” Path: ${pathBias}; slope: ${slope}.`;
+      `Driver: ${volEscape(derived.reason)}. Cond. vol ${volFmtPct(cur, 1)} vs long-run ${volFmtPct(unc, 1)}. ` +
+      `Path: ${pathBias}; slope: ${slope}.`;
     entryGate =
       `Compare live front IV vs ${volFmtPct(rv7, 1)} and back IV vs ${volFmtPct(rv30, 1)}. ` +
       `Prefer short the rich tenor / long the cheap tenor if the gap is ≥ ~3 vol pts after spreads.`;
@@ -2059,51 +3679,121 @@ function volBuildDeribitTradePlan(suite) {
       ? "risk only ~0.25–0.5% of options book NAV (max loss), not notional"
       : "risk only ~0.1–0.25% of NAV (max loss)";
 
-  const rawTickets = volBuildExampleTickets({
-    bias,
+  const enrichCtx = {
     spot,
     rv7,
     rv30,
-    dailyVol,
+    bias,
     conf,
+    chain,
+    liveIv7,
+    liveIv30,
+    suite,
+  };
+  const showAdvanced = volEl("vol-show-advanced") ? !!volEl("vol-show-advanced").checked : true;
+  let rawTickets = volBuildExampleTickets({
+    ...enrichCtx,
+    dailyVol,
+    showAdvanced,
   });
-  const enrichCtx = { spot, rv7, rv30, bias, conf };
+  if (!showAdvanced) {
+    rawTickets = rawTickets.filter((t) => t.sophistication === "Core");
+  }
   const enriched = volEnrichTickets(rawTickets, enrichCtx);
   const tickets = volRankTickets(enriched, enrichCtx);
+  const listedN = tickets.reduce(
+    (n, t) => n + (t.legs || []).filter((L) => L.listed === true).length,
+    0,
+  );
+  const missN = tickets.reduce(
+    (n, t) => n + (t.legs || []).filter((L) => L.listed === false).length,
+    0,
+  );
 
   const ticketsHtml = tickets.length
-    ? `<h3 class="vol-plan-h" data-help-key="vol-plan-tickets">Example Deribit tickets (ranked · theo-priced)</h3>` +
-      `<p class="vol-plan-why">Shown <strong>best first</strong> by composite score (attractiveness + chance of success). ` +
-      `Each ticket uses <strong>real sample spot</strong>, liquid strike grid, next Deribit-style Fridays, ` +
-      `and <strong>Black–Scholes premiums/greeks/payoff</strong> at model IV (short-vol tickets assume +6 vol pts of rich IV for entry). ` +
-      `Not live mids. <strong>Re-center ATM and check DVOL/IV on Deribit before any fill.</strong></p>` +
-      `<div class="vol-ticket-list">${tickets.map(volTradeTicketHtml).join("")}</div>` +
-      volTicketsSummaryTableHtml(tickets)
+    ? `<h3 class="vol-plan-h" data-help-key="vol-plan-tickets">Example Deribit tickets (ranked · live-book checked)</h3>` +
+      `<p class="vol-plan-why">Shown <strong>best first</strong> by composite score. ` +
+      `Each leg is snapped to the <strong>live Deribit instrument list</strong> (same book as Options Strategy). ` +
+      `Pricing is a <strong>USD-linear BS proxy</strong> (Deribit BTC options are inverse). ` +
+      `Missing names are blocked from dry-run. Book: <strong>${listedN} listed</strong>` +
+      (missN ? ` · <strong class="vol-ticket-sell">${missN} missing</strong>` : "") +
+      `${chain?.indexPrice ? ` · index $${Number(chain.indexPrice).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : " · chain unavailable — names are estimates"}.</p>` +
+      volTicketsSummaryTableHtml(tickets) +
+      `<div id="vol-ticket-detail" class="vol-ticket-detail" aria-live="polite"></div>`
     : "";
+
+  const productHtml = volModelProductHtml({
+    mark,
+    rv1,
+    day7,
+    day30,
+    term7,
+    term30,
+    liveIv7,
+    liveIv30,
+    liveGap7,
+    liveGap30,
+    chain,
+    wExp,
+    mExp,
+  });
+  const sensitivityHtml = volForecastSensitivityHtml({
+    usable,
+    crossOnly,
+    conf,
+    cur,
+    unc,
+    regime,
+    term7,
+    term30,
+    liveIv7,
+    liveIv30,
+    hasLiveIv,
+    spot,
+    chain,
+    dailyVol,
+    mark,
+  });
 
   const html =
     `<div class="vol-trade-plan">` +
     `<p class="vol-plan-stance"><span class="vol-plan-kicker">Suggested Deribit position</span> ` +
     `<strong>${volEscape(stanceShort)}</strong></p>` +
     `<p class="vol-plan-why">${stancePlain}</p>` +
+    productHtml +
     `<h3 class="vol-plan-h" data-help-key="vol-plan-primer">1 · Read this first (junior)</h3>` +
     `<ul class="vol-plan-list">` +
     `<li><strong>What “long vol” means:</strong> you buy options (pay premium). You want big moves or higher IV. Time decay hurts you.</li>` +
     `<li><strong>What “short vol” means:</strong> you sell options (collect premium). You want a quiet market. Jumps and IV spikes hurt you — always use wings.</li>` +
-    `<li><strong>IV vs model RV:</strong> pull live ATM IV (or DVOL) for the same expiry length as the model mark. ` +
-    `<em>Premium ≈ IV − model RV</em>. Rich premium (IV much higher) favors selective short vol; cheap premium favors long vol.</li>` +
-    `<li><strong>This page does not know live IV</strong> — every live trade below is gated on that check.</li>` +
+    `<li><strong>The model’s product is a volatility forecast</strong> (annualized RV), not a trade. Trades are a second step: compare that forecast to live Deribit ATM IV on a matching expiry.</li>` +
+    `<li><strong>Edge ≈ live IV − model term RV</strong> for the same tenor. Rich IV (positive gap) favors selective short vol; cheap IV favors long vol.</li>` +
+    `<li><strong>Contracts:</strong> every suggested name is checked against the live Deribit book. Missing = do not type it in by hand.</li>` +
     `</ul>` +
     `<h3 class="vol-plan-h" data-help-key="vol-plan-why">2 · Why this stance</h3>` +
     `<p class="vol-plan-why">${whyJunior}</p>` +
     `<ul class="vol-plan-list">` +
     `<li><strong>Mark model:</strong> ${volEscape(mark.name)} · desk conf <strong>${conf}%</strong> · usable: <strong>${volEscape(verdict?.tableLabel || "—")}</strong></li>` +
-    `<li><strong>Model RV anchors (ann.):</strong> 1d ${volFmtPct(rv1, 1)} · 7d ${volFmtPct(rv7, 1)} · 30d ${volFmtPct(rv30, 1)}</li>` +
-    `<li><strong>Regime:</strong> ${volEscape(String(regime))} · persistence ${pers != null ? Number(pers).toFixed(3) : "—"}</li>` +
-    `<li><strong>Sample spot (for strike sketch):</strong> ${
-      spot != null ? `$${Number(spot).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "unavailable — refresh suite"
+    `<li><strong>4y cycle lens:</strong> ${volEscape(String(cycleLens.regime).replace(/_/g, " "))} — ${volEscape(cycleLens.blurb)} ` +
+    `Longer-dated tickets use listed ${
+      leapExpPlan
+        ? volExpiryCodeFromMs(leapExpPlan.expirationTimestamp)
+        : qExpPlan
+          ? volExpiryCodeFromMs(qExpPlan.expirationTimestamp)
+          : "monthly (no quarterly/LEAPS on book)"
+    }.</li>` +
+    `<li><strong>Day-ahead path (ann.):</strong> 1d ${volFmtPct(rv1, 1)} · day-7 ${volFmtPct(day7, 1)} · day-30 ${volFmtPct(day30, 1)}</li>` +
+    `<li><strong>Term RV (option mark):</strong> 7d ${volFmtPct(term7, 1)} · 30d ${volFmtPct(term30, 1)} — this is what you compare to IV</li>` +
+    `<li><strong>Live ATM IV:</strong> ${
+      hasLiveIv
+        ? `7d ${volFmtPct(liveIv7, 1)} (gap ${volFmtPct(liveGap7, 1)}) · 30d ${volFmtPct(liveIv30, 1)} (gap ${volFmtPct(liveGap30, 1)})`
+        : "chain unavailable — stance used regime fallback, not a priced IV−RV edge"
     }</li>` +
+    `<li><strong>Regime:</strong> ${volEscape(String(regime))} · persistence ${pers != null ? Number(pers).toFixed(3) : "—"}</li>` +
+    `<li><strong>Spot:</strong> ${
+      spot != null ? `$${Number(spot).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "unavailable"
+    }${indexPx > 0 ? " (Deribit index)" : " (sample close)"}</li>` +
     `</ul>` +
+    sensitivityHtml +
     `<h3 class="vol-plan-h" data-help-key="vol-plan-rules">3 · Rules before you click</h3>` +
     `<ol class="vol-plan-list vol-plan-steps">` +
     `<li><strong>Entry gate:</strong> ${entryGate}</li>` +
@@ -2120,11 +3810,12 @@ function volBuildDeribitTradePlan(suite) {
     `<li><strong>Never:</strong> naked short straddles; size from AIC alone; ignore wings; treat this as a guaranteed edge.</li>` +
     `</ol>` +
     ticketsHtml +
-    `<p class="vol-plan-disclaimer">Educational template from this suite’s fits only — not investment advice, not a Deribit order ticket, and not a promise of profit. ` +
-    `Instrument names assume standard Deribit Friday expiries and rounded strikes; always verify the live instrument list, mark IV, and portfolio margin before any fill.</p>` +
+    `<p class="vol-plan-disclaimer">Educational template from this suite’s fits plus a live Deribit book snapshot — not investment advice, not a Deribit order, and not a promise of profit. ` +
+    `Theo premiums are a <strong>USD-linear Black–Scholes proxy</strong>; Deribit BTC options are inverse (BTC). ` +
+    `A listed name can still be illiquid. Always re-check mark IV, bid/ask, open interest, and portfolio margin on Deribit before any fill.</p>` +
     `</div>`;
 
-  return { stance: stanceShort, html, conf, mark: mark.name, bias };
+  return { stance: stanceShort, html, conf, mark: mark.name, bias, tickets };
 }
 
 /**
@@ -2166,13 +3857,13 @@ function volBindTicketActionButtons(root) {
         cover_shorts: "COVER SHORT PREMIUM",
         dump_longs: "DUMP LONG PREMIUM",
         log_escalate: "LOG & ESCALATE",
-        execute: "EXECUTE (DRY-RUN)",
+        execute: "LOG DRY-RUN",
       };
       const headline = labels[action] || action.toUpperCase();
 
       const confirmMsg =
         action === "execute"
-          ? `DRY-RUN only.\n\nTrade ${tradeId}: ${title}\n\nLive Deribit routing is NOT connected.\nClick OK to log a draft order ticket.`
+          ? `DRY-RUN only — nothing is sent to Deribit.\n\nTrade ${tradeId}: ${title}\n\nClick OK to log a draft ticket in this browser.`
           : `EMERGENCY ACTION (preliminary)\n\n${headline}\nTrade ${tradeId}: ${title}\n\n${detail}\n\n` +
             (lossCap ? `Loss cap ref: ${lossCap}\n` : "") +
             (low && high ? `2σ band ref: ${low} – ${high}\n` : "") +
@@ -2220,21 +3911,92 @@ function volBindTicketActionButtons(root) {
   });
 }
 
-function volRenderRunCommentary(suite) {
+function volSelectPlanTicket(id, { scroll = false } = {}) {
+  const tickets = volPlanTickets || [];
+  if (!tickets.length) return;
+  const wanted = String(id || volPlanTicketSel || tickets[0].id);
+  const ticket = tickets.find((t) => String(t.id) === wanted) || tickets[0];
+  volPlanTicketSel = String(ticket.id);
+  const host = volEl("vol-trade-plan-host");
+  host?.querySelectorAll(".vol-summary-row").forEach((tr) => {
+    tr.classList.toggle("vol-summary-row--sel", tr.getAttribute("data-vol-ticket-id") === volPlanTicketSel);
+  });
+  const detail = volEl("vol-ticket-detail");
+  if (!detail) return;
+  detail.innerHTML = volTradeTicketHtml(ticket);
+  volBindTicketActionButtons(detail);
+  const screen = document.querySelector(
+    '.menu-screen[data-l1="stats"][data-l2="volatility"]',
+  );
+  window.decorateHelpLabels?.(screen);
+  if (scroll) detail.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+function volBindTicketPicker(root) {
+  if (!root) return;
+  root.querySelectorAll("tr.vol-summary-row[data-vol-ticket-id]").forEach((tr) => {
+    if (tr.dataset.volPickBound === "1") return;
+    tr.dataset.volPickBound = "1";
+    const open = () => volSelectPlanTicket(tr.getAttribute("data-vol-ticket-id"), { scroll: true });
+    tr.addEventListener("click", open);
+    tr.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+}
+
+function volPaintTradePlan(suite, chain) {
+  const host = volEl("vol-trade-plan-host");
+  const meta = volEl("vol-trade-plan-meta");
+  if (!host) return null;
+  const plan = volBuildDeribitTradePlan(suite, chain);
+  volPlanTickets = plan?.tickets || [];
+  const keep = volPlanTickets.some((t) => String(t.id) === String(volPlanTicketSel));
+  if (!keep) volPlanTicketSel = volPlanTickets[0] ? String(volPlanTickets[0].id) : "1";
+  host.innerHTML = plan?.html || "";
+  if (meta) {
+    meta.textContent = [
+      plan?.mark ? `mark ${plan.mark}` : "",
+      plan?.stance ? plan.stance.split("—")[0].trim() : "",
+      `${volPlanTickets.length} strategies`,
+      chain?.indexPrice
+        ? `index $${Number(chain.indexPrice).toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+        : "book n/a",
+    ]
+      .filter(Boolean)
+      .join(" · ");
+  }
+  volBindTicketPicker(host);
+  volSelectPlanTicket(volPlanTicketSel);
+  return plan;
+}
+
+async function volRenderRunCommentary(suite) {
   const host = volEl("vol-run-commentary");
   const meta = volEl("vol-run-commentary-meta");
-  if (!host) return;
-  if (!suite?.models?.length) {
-    host.innerHTML = `<p>Run all models to generate a desk read of this estimation pass.</p>`;
+  const planHost = volEl("vol-trade-plan-host");
+  if (host && !suite?.models?.length) {
+    host.innerHTML = `<p>Run selected models to generate a desk read of this estimation pass.</p>`;
     if (meta) meta.textContent = "After estimation";
+  }
+  if (planHost && !suite?.models?.length) {
+    planHost.innerHTML = `<p class="macro-muted">Run selected models to draft a plan. Tickets snap to listed Deribit contracts. Nothing here sends an order.</p>`;
     return;
   }
-  const lines = volBuildRunCommentary(suite);
-  const plan = volBuildDeribitTradePlan(suite);
-    host.innerHTML =
-    lines.map((p) => `<p>${p}</p>`).join("") +
-    `<h3 class="vol-plan-section-title" data-help-key="vol-plan-section">Deribit position &amp; trade plan</h3>` +
-    (plan?.html || "");
+  if (planHost) {
+    planHost.innerHTML = `<p class="macro-muted">Loading live Deribit book to verify contracts…</p>`;
+  }
+  const chain = await volLoadDeribitChain();
+  volDeribitChain = chain;
+  volSetLiveIvKpis(suite, chain);
+  const plan = volPaintTradePlan(suite, chain);
+  if (host) {
+    const lines = volBuildRunCommentary(suite);
+    host.innerHTML = lines.map((p) => `<p>${p}</p>`).join("");
+  }
   if (meta) {
     meta.textContent = [
       suite.asOf ? `as of ${String(suite.asOf).replace("T", " ").slice(0, 16)} UTC` : "",
@@ -2249,7 +4011,6 @@ function volRenderRunCommentary(suite) {
       .filter(Boolean)
       .join(" · ");
   }
-  volBindTicketActionButtons(host);
   const screen = document.querySelector(
     '.menu-screen[data-l1="stats"][data-l2="volatility"]',
   );
@@ -2364,6 +4125,8 @@ function volRowAsDetail(m) {
     id: m.id,
     name: m.name,
     warning: m.warning,
+    rvNote: m.rvNote,
+    fallbackFrom: m.fallbackFrom,
     engine: m.engine,
     backtest: m.backtest || {},
     metrics: {
@@ -2402,7 +4165,8 @@ function volBuildVerdict(detail, suite) {
   const bestQ = suite?.bestByQlike;
   const isBestQ = bestQ && detail.id === bestQ;
   const isFallback = !!(
-    detail.warning && /fallback|not installed|GARCH\(1,1\)/i.test(detail.warning)
+    detail.fallbackFrom ||
+    (detail.warning && /fallback|not installed|GARCH\(1,1\)/i.test(detail.warning))
   );
   // Suite stores backtest.ok; tolerate meanQlike alone
   const hasBt =
@@ -2417,7 +4181,12 @@ function volBuildVerdict(detail, suite) {
   const reasons = [];
   if (hasBt) {
     score += 18;
-    reasons.push("OOS backtest available (expanding window).");
+    const nOrig = bt.origins != null ? Number(bt.origins) : null;
+    reasons.push(
+      nOrig != null
+        ? `OOS backtest available (expanding window, n=${nOrig} origins — modest, not a full walk-forward).`
+        : "OOS backtest available (expanding window).",
+    );
     if (isBestQ) {
       score += 18;
       reasons.push("Best mean QLIKE in this suite — strongest forecast rank among peers.");
@@ -2511,7 +4280,7 @@ function volBuildVerdict(detail, suite) {
     reasons,
     profitLine,
     summary: hasBt
-      ? `Score ${score}/100 · mean QLIKE ${meanQ != null ? Number(meanQ).toFixed(3) : "—"} · ${nOk} models in suite`
+      ? `Score ${score}/100 · mean QLIKE ${meanQ != null ? Number(meanQ).toFixed(3) : "—"} · OOS n=${bt.origins != null ? bt.origins : "—"} · ${nOk} models`
       : `Score ${score}/100 · no OOS · ${nOk} models in suite`,
   };
 }
@@ -2803,6 +4572,7 @@ function volRenderDetail(detail) {
         risk.var99,
         2,
       )} · ES95 ${volFmtPct(risk.es95, 2)} · ES99 ${volFmtPct(risk.es99, 2)}</p>`,
+      detail.rvNote ? `<p class="vol-engine-note">${volEscape(detail.rvNote)}</p>` : "",
       detail.warning ? `<p class="vol-warn">${volEscape(detail.warning)}</p>` : "",
     ];
     insights.innerHTML = lines.filter(Boolean).join("");
@@ -2941,6 +4711,7 @@ function volDrawCondChart(suite) {
 function volDrawForecastChart(detail) {
   const f = (detail?.forecastAnn || []).map(Number);
   if (!f.length) return;
+  const term = (detail?.forecastTermAnn || []).map(Number);
   const n = f.length;
   volMountChart("vol-forecast-chart", {
     pad: { top: 18, right: 16, bottom: 34, left: 52 },
@@ -2951,25 +4722,38 @@ function volDrawForecastChart(detail) {
       const indices = api.indices;
       const drawCount = indices.length;
       const slice = indices.map((i) => f[i]);
-      const minV = Math.min(...slice.filter(Number.isFinite)) * 0.95;
-      const maxV = Math.max(...slice.filter(Number.isFinite)) * 1.05;
+      const termSlice = indices.map((i) => (i < term.length ? term[i] : NaN));
+      const both = [...slice, ...termSlice].filter(Number.isFinite);
+      const minV = Math.min(...both) * 0.95;
+      const maxV = Math.max(...both) * 1.05;
       const range = maxV - minV || 0.01;
       const yAt = (v) => api.pad.top + api.chartH - ((v - minV) / range) * api.chartH;
 
-      ctx.strokeStyle = "#38bdf8";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      slice.forEach((v, i) => {
-        const x = api.xAt(i, drawCount);
-        const y = yAt(v);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      });
-      ctx.stroke();
+      const stroke = (vals, color, width) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        let started = false;
+        vals.forEach((v, i) => {
+          if (!Number.isFinite(v)) return;
+          const x = api.xAt(i, drawCount);
+          const y = yAt(v);
+          if (!started) {
+            ctx.moveTo(x, y);
+            started = true;
+          } else ctx.lineTo(x, y);
+        });
+        if (started) ctx.stroke();
+      };
+      stroke(slice, "#38bdf8", 2);
+      if (termSlice.some(Number.isFinite)) stroke(termSlice, "#fbbf24", 2);
 
       if (api.hoverGlobal != null && Number.isFinite(f[api.hoverGlobal])) {
         api.drawCrosshair?.(api.xAtGlobal(api.hoverGlobal));
         api.drawDot?.(api.xAtGlobal(api.hoverGlobal), yAt(f[api.hoverGlobal]), "#38bdf8");
+        if (Number.isFinite(term[api.hoverGlobal])) {
+          api.drawDot?.(api.xAtGlobal(api.hoverGlobal), yAt(term[api.hoverGlobal]), "#fbbf24");
+        }
       }
 
       ctx.fillStyle = "#7d8799";
@@ -2977,14 +4761,16 @@ function volDrawForecastChart(detail) {
       ctx.textAlign = "right";
       ctx.fillText(`${(maxV * 100).toFixed(0)}%`, api.pad.left - 6, api.pad.top + 10);
       ctx.textAlign = "center";
-      ctx.fillText("horizon (days)", w / 2, h - 8);
+      ctx.fillText("horizon (days) · cyan = vol on that day · gold = term RV to that day", w / 2, h - 8);
     },
     formatTooltip(globalIdx) {
       const h = globalIdx + 1;
       const v = f[globalIdx];
+      const tv = term[globalIdx];
       return (
         volTipTitle(`Horizon ${h}d`) +
-        volTipRow("Forecast vol (ann.)", Number.isFinite(v) ? `${(v * 100).toFixed(2)}%` : "—") +
+        volTipRow("Vol on day h (ann.)", Number.isFinite(v) ? `${(v * 100).toFixed(2)}%` : "—") +
+        volTipRow("Term RV to day h", Number.isFinite(tv) ? `${(tv * 100).toFixed(2)}%` : "—") +
         volTipRow("Model", detail?.name || "—")
       );
     },
@@ -3127,8 +4913,8 @@ async function volSelectModel(id) {
     volDrawAll({ ...volSuite, detail: volSuite.detail });
     return;
   }
-  const days = volEl("vol-range")?.value || "3650";
-  const dist = volEl("vol-dist")?.value || "t";
+  const days = volEl("vol-range")?.value || VOL_DESK_DAYS;
+  const dist = volEl("vol-dist")?.value || VOL_DESK_DIST;
   try {
     const res = await fetch(
       `${VOL_API}/${encodeURIComponent(id)}?days=${encodeURIComponent(days)}&dist=${encodeURIComponent(dist)}`,
@@ -3157,6 +4943,7 @@ async function volSelectModel(id) {
         rSquared: fit.rSquared,
       },
       forecastAnn: fit.forecastAnn || [],
+      forecastTermAnn: fit.forecastTermAnn || [],
       condVol: fit.condVol || [],
       stdResid: fit.stdResid || [],
       newsImpact: fit.newsImpact || [],
@@ -3165,6 +4952,8 @@ async function volSelectModel(id) {
       regime: fit.regime,
       sizingMultiplier: fit.sizingMultiplier,
       warning: fit.warning,
+      rvNote: fit.rvNote,
+      fallbackFrom: fit.fallbackFrom,
       engine: fit.engine,
       distribution: data.distribution,
       currentCondVolAnn: fit.currentCondVolAnn,
@@ -3260,13 +5049,18 @@ async function volRun(force = false, opts = {}) {
     }
     const suite = await volFetchSuite(force, opts);
     volSuite = suite;
-    volSelectedId = suite.bestByAic || suite.models?.find((m) => m.status === "ok")?.id || null;
+    volSelectedId =
+      suite.bestByQlike ||
+      suite.summary?.markModelId ||
+      suite.bestByAic ||
+      suite.models?.find((m) => m.status === "ok")?.id ||
+      null;
     volSetKpis(suite);
     volRenderTable(suite);
     volRenderGuide(suite);
     volRenderGlossary(suite);
     volRenderDetail(suite.detail);
-    volRenderRunCommentary(suite);
+    await volRenderRunCommentary(suite);
     volDrawAll(suite);
     if (meta) {
       const nSel = (suite.selectedModelIds || suite.models || []).length;
@@ -3358,6 +5152,15 @@ function initVolatilityModule() {
   volEl("vol-dist")?.addEventListener("change", () => {
     volSavePrefs({ dist: volEl("vol-dist")?.value });
     volUpdatePickerMeta();
+  });
+  volEl("vol-show-advanced")?.addEventListener("change", () => {
+    if (volSuite && volDeribitChain !== undefined) {
+      volPaintTradePlan(volSuite, volDeribitChain);
+      const screen = document.querySelector(
+        '.menu-screen[data-l1="stats"][data-l2="volatility"]',
+      );
+      window.decorateHelpLabels?.(screen);
+    }
   });
 
   volEl("vol-models-all")?.addEventListener("click", () => {

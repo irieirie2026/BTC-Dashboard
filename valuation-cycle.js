@@ -328,6 +328,7 @@ function vcBuildCyclesFromSeries() {
     pair: vcMeta?.pair,
     seriesCount: vcSeries.length,
   };
+  if (typeof window !== "undefined") window.vcRef = vcRef;
 }
 
 function vcDaysFrom(dateStr, asOf = vcRef?.asOf) {

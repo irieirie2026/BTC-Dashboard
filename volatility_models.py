@@ -492,6 +492,34 @@ def _ann_vol(sigma_daily: float) -> float:
     return float(sigma_daily) * math.sqrt(TRADING_DAYS_CRYPTO)
 
 
+def _term_vol_path(forecast_ann: list | None) -> list[float]:
+    """Option-relevant term RV from a 1..H path of annualized *day-ahead* vols.
+
+    ``forecastAnn[h-1]`` is E[σ_{t+h}] annualized (that calendar day's
+    conditional vol). An h-day option marks against the *average* variance
+    over the next h days:
+
+        σ_term(h) = sqrt( mean_{i=1..h} σ_daily(i)^2 ) × √365
+
+    That is the quantity to compare with Deribit mid IV for ~h DTE, not the
+    single-day vol at horizon h.
+    """
+    out: list[float] = []
+    acc = 0.0
+    n = 0
+    for sig in forecast_ann or []:
+        try:
+            s = float(sig)
+        except (TypeError, ValueError):
+            continue
+        if not math.isfinite(s) or s <= 0:
+            continue
+        acc += (s / math.sqrt(TRADING_DAYS_CRYPTO)) ** 2
+        n += 1
+        out.append(math.sqrt(acc / n) * math.sqrt(TRADING_DAYS_CRYPTO))
+    return out
+
+
 def _load_returns(days: int = 1095) -> dict[str, Any]:
     """Load BTC log returns from existing stats history pipeline."""
     from server import get_stats_btc_history_payload
@@ -729,7 +757,7 @@ def _fit_har(data: dict[str, Any]) -> dict[str, Any]:
         "forecastAnn": forecasts,
         "currentCondVolAnn": cur_ann,
         "engine": "har-numpy",
-        "warning": rv_note,
+        "rvNote": rv_note,
         "rSquared": float(1.0 - np.var(resid) / max(np.var(y), 1e-18)),
     }
 
@@ -1312,12 +1340,12 @@ def _backtest_model(
     horizons: tuple[int, ...] = BT_HORIZONS,
     step: int = 28,
     min_train: int = 365,
-    max_origins: int = 10,
+    max_origins: int = 16,
 ) -> dict[str, Any]:
     """
     Expanding-window forecast backtest for option-relevant horizons.
-    Compares model multi-day variance forecasts to realized sum of squared returns.
-    Losses: QLIKE (primary for vol), MSE, MAE on variance scale.
+    Scores *term* h-day variance (mean of path variances) vs realized sum of
+    squared log returns — same quantity tickets compare to Deribit IV.
     """
     returns = np.asarray(data["returns"], dtype=float)
     n = len(returns)
@@ -1354,16 +1382,25 @@ def _backtest_model(
         f_ann = fit.get("forecastAnn") or []
         if not f_ann:
             continue
-        # Convert annualized vol forecast at horizon h to multi-day variance:
-        # σ_ann(h) is "average" path vol; use σ_daily^2 * h with σ_daily = σ_ann/√365
+        term = fit.get("forecastTermAnn") or _term_vol_path(f_ann)
         for h in horizons:
-            if h > len(f_ann):
+            if h > len(term) and h > len(f_ann):
                 continue
-            # Use h-step ahead annualized forecast (1-indexed in list as h-1)
-            sig_ann = float(f_ann[h - 1])
-            if not math.isfinite(sig_ann) or sig_ann <= 0:
+            # Term RV over the next h days (option mark), not σ on day h alone
+            sig_ann = None
+            if h <= len(term):
+                try:
+                    sig_ann = float(term[h - 1])
+                except (TypeError, ValueError, IndexError):
+                    sig_ann = None
+            if sig_ann is None or not math.isfinite(sig_ann) or sig_ann <= 0:
+                if h <= len(f_ann):
+                    try:
+                        sig_ann = float(f_ann[h - 1])
+                    except (TypeError, ValueError, IndexError):
+                        continue
+            if sig_ann is None or not math.isfinite(sig_ann) or sig_ann <= 0:
                 continue
-            # h-day variance in return units
             f_var = (sig_ann / math.sqrt(TRADING_DAYS_CRYPTO)) ** 2 * h
             rv = _realized_var_ahead(returns, t, h)
             if rv is None or rv <= 0:
@@ -1401,9 +1438,10 @@ def _backtest_model(
         "stepDays": step,
         "minTrain": min_train,
         "note": (
-            "Expanding-window OOS: re-estimate at each origin, forecast h-day variance, "
-            "score vs sum of squared log returns. Primary loss = QLIKE (lower is better). "
-            "Designed for Deribit option desks comparing model RV to implied vol."
+            "Expanding-window OOS: re-estimate at each origin, forecast term h-day "
+            "variance (mean of the path, same as ticket term RV), score vs sum of "
+            "squared log returns. Primary loss = QLIKE (lower is better). "
+            f"Origins kept: {len(origins)} (step {step}d)."
         ),
     }
 
@@ -1416,7 +1454,7 @@ def get_volatility_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Estimate catalog of models and return comparison + series for UI."""
-    key = f"vol:suite:v4:{days}:{dist}:{','.join(models or [])}"
+    key = f"vol:suite:v5:{days}:{dist}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1440,6 +1478,8 @@ def get_volatility_suite_payload(
             fit["params"] = _annotate_params(fit["params"], m)
             fit["equation"] = m.get("equation")
             fit["equationNote"] = m.get("equationNote")
+        if fit.get("ok"):
+            fit["forecastTermAnn"] = _term_vol_path(fit.get("forecastAnn") or [])
 
         # Forecast backtest (option-relevant horizons) — can be slow; keep origins modest
         bt: dict[str, Any] = {"ok": False}
@@ -1460,6 +1500,7 @@ def get_volatility_suite_payload(
             "status": "ok" if fit.get("ok") else "failed",
             "error": fit.get("error"),
             "warning": fit.get("warning"),
+            "rvNote": fit.get("rvNote"),
             "fallbackFrom": fit.get("fallbackFrom"),
             "logLikelihood": fit.get("logLikelihood"),
             "aic": fit.get("aic"),
@@ -1474,10 +1515,12 @@ def get_volatility_suite_payload(
             "unconditionalVolAnn": fit.get("unconditionalVolAnn"),
             "currentCondVolAnn": fit.get("currentCondVolAnn"),
             "forecastAnn": (fit.get("forecastAnn") or [])[:30],
+            "forecastTermAnn": (fit.get("forecastTermAnn") or [])[:30],
             "engine": fit.get("engine"),
             "backtest": {
                 "ok": bt.get("ok"),
                 "meanQlike": bt.get("meanQlike"),
+                "origins": bt.get("origins"),
                 "horizons": {
                     h: {
                         "qlike": (bt.get("horizons") or {}).get(h, {}).get("qlike"),
@@ -1549,6 +1592,8 @@ def get_volatility_suite_payload(
                 "rSquared": fit.get("rSquared"),
             },
             "forecastAnn": fit.get("forecastAnn"),
+            "forecastTermAnn": fit.get("forecastTermAnn")
+            or _term_vol_path(fit.get("forecastAnn") or []),
             "condVol": cond,
             "stdResid": fit.get("stdResid"),
             "newsImpact": _news_impact_curve(row["id"], fit),
@@ -1557,6 +1602,7 @@ def get_volatility_suite_payload(
             "regime": _regime_label(cur, fit.get("unconditionalVolAnn")),
             "sizingMultiplier": round(0.55 / cur, 3) if cur > 0.05 else None,
             "warning": fit.get("warning"),
+            "rvNote": fit.get("rvNote"),
             "engine": fit.get("engine"),
             "distribution": fit.get("distribution") or dist,
             "deribitNote": (
@@ -1642,6 +1688,12 @@ def get_volatility_suite_payload(
             "forecast1d": (best_detail.get("forecastAnn") or [None])[0] if best_detail else None,
             "forecast7d": (best_detail.get("forecastAnn") or [None] * 7)[6] if best_detail else None,
             "forecast30d": (best_detail.get("forecastAnn") or [None] * 30)[29] if best_detail else None,
+            "forecastTerm7d": (best_detail.get("forecastTermAnn") or [None] * 7)[6]
+            if best_detail
+            else None,
+            "forecastTerm30d": (best_detail.get("forecastTermAnn") or [None] * 30)[29]
+            if best_detail
+            else None,
             "bestModelName": best_aic["name"] if best_aic else None,
             "bestModelId": best_aic["id"] if best_aic else None,
             "markModelName": (detail_row or {}).get("name") if detail_row else None,
@@ -1715,6 +1767,7 @@ def get_volatility_model_payload(
     fit["params"] = _annotate_params(fit.get("params") or [], cat)
     fit["equation"] = cat.get("equation")
     fit["equationNote"] = cat.get("equationNote")
+    fit["forecastTermAnn"] = _term_vol_path(fit.get("forecastAnn") or [])
     try:
         fit["backtest"] = _backtest_model(model_id, cat, data, dist)
     except Exception as exc:

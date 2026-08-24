@@ -610,8 +610,302 @@ const LAW_LOCAL_SERVICES_ALIASES = {
 };
 
 /**
+ * Named banks / EMIs often discussed for crypto founders (fiat rails, not always “crypto banks”).
+ * type: crypto-bank | private | retail | neo | emi | specialist
+ * Educational — not endorsements; policies change; SOF/EDD always apply.
+ */
+const LAW_CRYPTO_BANKS = {
+  "united-states": [
+    ["Customers Bank / CB-related rails", "specialist", "US bank that has been more open to crypto-industry clients than big money-center banks — still full BSA/AML."],
+    ["Lead Bank / BaaS partners", "specialist", "Banking-as-a-service partners used by fintechs/VASPs; availability depends on program and risk policy."],
+    ["Mercury / Brex (fintech, not pure banks)", "neo", "Startup banking UX; crypto-company acceptance is policy-driven and can change — verify live."],
+    ["Coinbase / Kraken fiat rails", "specialist", "Primary USD on-off for many founders is the exchange bank partner, not a traditional checking account."],
+    ["JPMorgan / BofA / Citi (traditional)", "retail", "Top US banks — generally poor for pure crypto SOF; possible for clean software cos with limited crypto footprint."],
+  ],
+  canada: [
+    ["Wealthsimple Cash / partner banks", "neo", "Fintech rails alongside Wealthsimple Crypto — not a crypto-custody bank."],
+    ["EQ Bank / digital banks", "neo", "Digital retail banks; crypto industry acceptance varies."],
+    ["RBC / TD / Scotiabank / BMO / CIBC", "retail", "Big-5: historically cautious on crypto-linked accounts; clean employment income easier than VASP treasury."],
+    ["Registered exchange CAD rails", "specialist", "Bitbuy, Newton, etc. for CAD on-off more than corporate crypto banking."],
+  ],
+  "united-kingdom": [
+    ["Revolut Business / personal", "neo", "Widely used by founders; crypto features and business policy change — check current terms."],
+    ["Starling / Monzo Business", "neo", "UK challengers; crypto-company onboarding is selective and SOF-heavy."],
+    ["ClearBank / modular banking", "specialist", "Infrastructure bank used by fintechs; not a retail crypto bank."],
+    ["HSBC / Barclays / NatWest / Lloyds", "retail", "High-street majors — often difficult for pure crypto SOF; better for ordinary salary after residence."],
+    ["Zodia / custody banking adjacency", "specialist", "Institutional crypto custody stack (Standard Chartered ecosystem) — not SME retail banking."],
+  ],
+  switzerland: [
+    ["SEBA Bank", "crypto-bank", "FINMA-supervised crypto bank: banking + digital asset services for qualifying clients."],
+    ["Sygnum Bank", "crypto-bank", "Digital asset bank focused on institutional and affluent crypto clients."],
+    ["Bitcoin Suisse (brokerage rails)", "specialist", "Long-standing crypto broker; banking is via partners/relationships, not a universal bank."],
+    ["UBS / Credit Suisse successor / Julius Baer", "private", "Private banks may open with high minimums and strict EDD after crypto industry filters."],
+    ["PostFinance / cantonal banks", "retail", "Retail Swiss banks — mixed crypto tolerance; often refuse pure crypto income."],
+  ],
+  germany: [
+    ["N26 / Vivid / fintechs", "neo", "Consumer neobanks; crypto-company accounts are limited — personal salary easier."],
+    ["Solaris / banking-as-a-service", "specialist", "BaFin-regulated BaaS used by fintech front-ends; program-dependent."],
+    ["Deutsche Bank / Commerzbank / Sparkasse / Volksbank", "retail", "Large German banks — typically require clean non-crypto narrative or licensed CASP story."],
+    ["Licensed CASP fiat partners", "specialist", "Many founders use Bitpanda/Trade Republic-class ramps for EUR rather than classic company accounts."],
+  ],
+  france: [
+    ["Qonto / Shine", "neo", "Popular French SME neobanks; crypto activity disclosure required; policy varies."],
+    ["BNP Paribas / Société Générale / Crédit Agricole", "retail", "Major banks — cautious on crypto founders; corporate accounts need clear perimeter."],
+    ["Banque Delubac / specialist names (verify live)", "specialist", "Some specialist/private banks have been more open historically — always re-check."],
+    ["CASP EUR rails (Coinhouse, etc.)", "specialist", "On-off via AMF/MiCA-path platforms often easier than classic bank crypto SOF."],
+  ],
+  italy: [
+    ["N26 / Revolut / Hype / Buddybank", "neo", "Common personal rails; business crypto still hard."],
+    ["Intesa Sanpaolo / UniCredit / Banco BPM / MPS", "retail", "Large Italian banks frequently refuse pure crypto SOF; salary + clean docs better odds."],
+    ["Illimity / Fineco", "neo", "Digital/specialist banks — crypto policy still selective."],
+    ["Authorized CASP EUR rails", "specialist", "Young Platform and other authorized venues for EUR on-off when bank accounts fail."],
+  ],
+  spain: [
+    ["Revolut / N26 / Bunq", "neo", "EU neobanks used by expats; business crypto varies."],
+    ["BBVA / Santander / CaixaBank / Sabadell", "retail", "Majors — crypto-enhanced DD; fintech law clients may fare better with clean story."],
+    ["Bit2Me / local CASP rails", "specialist", "Local exchange rails for EUR when traditional banks stall."],
+  ],
+  portugal: [
+    ["Millennium BCP / CGD / Novo Banco / Santander PT", "retail", "Traditional PT banks — crypto SOF still enhanced; residence + clean income helps."],
+    ["Revolut / N26 / Wise", "neo", "Common for newcomers; not a substitute for full corporate banking."],
+    ["ActivBank / digital channels", "neo", "Digital arms of local banks — verify crypto policy live."],
+  ],
+  netherlands: [
+    ["bunq", "neo", "NL neo widely used by freelancers; crypto income must be documented."],
+    ["ING / ABN AMRO / Rabobank", "retail", "Major Dutch banks historically strict on crypto; licensed CASP story helps corporates."],
+    ["Knab / other digitals", "neo", "Selective SME banking."],
+    ["Bitvavo EUR rails", "specialist", "Primary retail EUR on-off for many NL users."],
+  ],
+  ireland: [
+    ["AIB / Bank of Ireland / Permanent TSB", "retail", "Domestic banks — crypto-company onboarding limited; multinationals easier than VASPs."],
+    ["Revolut / N26 / Wise", "neo", "Expat default stack for personal accounts."],
+    ["International banks with IFSC presence", "private", "Institutional presence; high bar for pure crypto startups."],
+  ],
+  luxembourg: [
+    ["BGL BNP / Spuerkeess / Banque de Luxembourg", "private", "Private/corporate banking with high DD; crypto desks rare and selective."],
+    ["International private banks", "private", "Fund/custody adjacency more than retail crypto."],
+  ],
+  estonia: [
+    ["LHV / SEB / Swedbank EE", "retail", "Local banks post-cleanup era are strict; e-Residency alone does not open accounts."],
+    ["Wise / Revolut / EU EMIs", "emi", "Default multi-rail for e-Residency companies when local banks refuse."],
+    ["Modular banking partners", "specialist", "Fintech BaaS — program dependent."],
+  ],
+  austria: [
+    ["Erste / Raiffeisen / Bank Austria", "retail", "Austrian majors — crypto SOF enhanced DD."],
+    ["N26 / Revolut", "neo", "Personal rails."],
+    ["Bitpanda EUR rails", "specialist", "Major AT/EU retail on-off path."],
+  ],
+  belgium: [
+    ["KBC / BNP Paribas Fortis / Belfius / ING BE", "retail", "Cautious on crypto; clean salary easier."],
+    ["Keyrock adjacency (MM, not bank)", "specialist", "Liquidity firm — not a retail bank."],
+    ["Revolut / N26", "neo", "Expat personal accounts."],
+  ],
+  "czech-republic": [
+    ["ČSOB / Česká spořitelna / Komerční banka", "retail", "Czech majors — crypto policy mixed/strict."],
+    ["Revolut / Wise", "neo", "Common founder multi-rail."],
+    ["Local exchange CZK rails", "specialist", "Coinmate/Anycoin-class for CZK on-off."],
+  ],
+  poland: [
+    ["PKO BP / Pekao / mBank / ING PL", "retail", "Polish banks — crypto SOF often difficult."],
+    ["Revolut / Wise", "neo", "Widely used personal/business float."],
+    ["Zonda and local exchange PLN rails", "specialist", "Primary crypto fiat ramps for many users."],
+  ],
+  sweden: [
+    ["SEB / Handelsbanken / Nordea / Swedbank", "retail", "Nordic majors — cautious crypto industry stance."],
+    ["Klarna (not a full bank for crypto cos)", "neo", "Payments giant; not a crypto treasury bank."],
+    ["Safello SEK rails", "specialist", "Local exchange on-off."],
+  ],
+  denmark: [
+    ["Danske Bank / Nordea DK / Jyske", "retail", "Strict KYC culture."],
+    ["Lunar / neo apps", "neo", "Consumer neobanks; crypto income scrutiny."],
+  ],
+  finland: [
+    ["Nordea / OP / Danske FI", "retail", "Cautious mainstream banking."],
+    ["Revolut / Wise", "neo", "Expat stack."],
+  ],
+  greece: [
+    ["Eurobank / NBG / Piraeus / Alpha", "retail", "Greek majors — crypto SOF enhanced."],
+    ["Viva Wallet / neobanks", "neo", "Fintech rails where available."],
+  ],
+  "united-arab-emirates": [
+    ["Wio / Liv / digital free-zone banks", "neo", "UAE digital banks used by residents; crypto disclosure and free-zone status matter."],
+    ["Emirates NBD / FAB / ADCB / Mashreq", "retail", "Large UAE banks — crypto founders need clean free-zone + licence narrative."],
+    ["Ruya / crypto-friendly programmes (verify live)", "specialist", "Occasional specialised offerings — policies change quickly."],
+    ["VARA/ADGM-licensed VASP banking corridors", "specialist", "Best odds after licensing and substance in Dubai/Abu Dhabi free zones."],
+  ],
+  uae: null,
+  singapore: [
+    ["DBS / OCBC / UOB", "retail", "Major SG banks — excellent once accepted; pure unlicensed crypto is hard."],
+    ["Maribank / digital banks", "neo", "Digital banking licences; crypto industry still filtered."],
+    ["XM / private banks", "private", "UHNW; high minimums."],
+    ["MAS-licensed DPT platform SGD rails", "specialist", "Primary crypto on-off for many residents."],
+  ],
+  "hong-kong": [
+    ["HSBC / Hang Seng / BOCHK / Standard Chartered HK", "retail", "Strong banks after multi-month DD; crypto wealth needs institutional-grade SOF."],
+    ["ZA Bank / digital banks", "neo", "Virtual banks — policy varies on crypto links."],
+    ["OSL / HashKey fiat corridors", "specialist", "Licensed VATP-adjacent rails for digital assets."],
+  ],
+  japan: [
+    ["MUFG / SMBC / Mizuho", "retail", "Mega-banks — excellent after residence + My Number; crypto SOF still careful."],
+    ["Rakuten Bank / Japan Net Bank / digital", "neo", "Online banks popular with residents."],
+    ["bitFlyer / bitbank JPY rails", "specialist", "Registered exchanges as main JPY on-off."],
+  ],
+  australia: [
+    ["CBA / Westpac / NAB / ANZ", "retail", "Big-4 historically de-risked crypto then partially reopened — policy fluid."],
+    ["Up / ING AU / digital", "neo", "Consumer digitals; crypto income scrutiny."],
+    ["Independent Reserve / Swyftx / CoinSpot AUD rails", "specialist", "Main AUD crypto ramps."],
+  ],
+  "new-zealand": [
+    ["ANZ NZ / ASB / BNZ / Westpac NZ", "retail", "Cautious major banks."],
+    ["Easy Crypto NZD rails", "specialist", "Local broker on-off."],
+  ],
+  "south-korea": [
+    ["KB / Shinhan / Woori / Hana", "retail", "Real-name bank accounts mandatory for exchange KRW deposits."],
+    ["KakaoBank / Toss Bank", "neo", "Digital banks used by retail; exchange linkage rules apply."],
+    ["Upbit / Bithumb KRW rails", "specialist", "Dominant local exchange on-off (real-name only)."],
+  ],
+  taiwan: [
+    ["CTBC / Cathay / Fubon / Mega", "retail", "Selective on crypto wealth."],
+    ["MAX / MaiCoin / BitoPro TWD rails", "specialist", "Local exchange ramps."],
+  ],
+  thailand: [
+    ["Bangkok Bank / Kasikorn / SCB / Krungthai", "retail", "Hard without proper residence/work status."],
+    ["Bitkub THB rails", "specialist", "Major licensed digital-asset exchange on-off."],
+  ],
+  malaysia: [
+    ["Maybank / CIMB / Public Bank / RHB", "retail", "Mixed; Islamic-finance product filters may apply."],
+    ["Luno / Tokenize / SC-approved exchange MYR rails", "specialist", "Approved digital-asset venues for MYR."],
+  ],
+  indonesia: [
+    ["BCA / Mandiri / BRI / BNI", "retail", "Hard for foreigners without KITAS; limited crypto products."],
+    ["Tokocrypto / Indodax / Pintu IDR rails", "specialist", "Main local exchange ramps."],
+  ],
+  philippines: [
+    ["BDO / BPI / Metrobank", "retail", "Traditional banks; e-wallets often more practical."],
+    ["GCash / Maya", "emi", "Dominant e-money rails; crypto adjacency varies."],
+    ["Coins.ph / PDAX", "specialist", "BSP VASP rails for crypto + remittance."],
+  ],
+  kazakhstan: [
+    ["Halyk / Kaspi / Forte", "retail", "Selective; mining clients need contracts."],
+    ["AIFC banking participants", "specialist", "English-law zone banks/fintechs for institutional stacks."],
+  ],
+  brazil: [
+    ["Nubank / C6 / Inter", "neo", "Major digital banks; crypto policy evolves."],
+    ["Itaú / Bradesco / Banco do Brasil / Santander BR", "retail", "Large banks — VASP clients need BCB-path story."],
+    ["Mercado Bitcoin / Foxbit BRL + Pix rails", "specialist", "Primary crypto BRL on-off via Pix."],
+  ],
+  argentina: [
+    ["Mercado Pago / Ualá / digital wallets", "emi", "More practical than traditional banks for many users."],
+    ["Galicia / Santander AR / BBVA AR", "retail", "FX controls and crypto SOF make classic banking complex."],
+    ["Lemon / Ripio / Belo rails", "specialist", "Consumer crypto apps as primary ramps."],
+  ],
+  chile: [
+    ["Banco de Chile / Santander CL / Bci / Estado", "retail", "Selective crypto SOF."],
+    ["Buda.com CLP rails", "specialist", "Major local exchange on-off."],
+  ],
+  colombia: [
+    ["Bancolombia / Davivienda / Banco de Bogotá", "retail", "Mixed; fintechs help."],
+    ["Nequi / Daviplata", "emi", "Mobile wallets for daily float."],
+    ["Buda / P2P COP rails", "specialist", "Exchange and P2P depth."],
+  ],
+  peru: [
+    ["BCP / Interbank / BBVA PE / Scotiabank PE", "retail", "Conservative on crypto."],
+    ["Yape / Plin", "emi", "Mobile payments culture."],
+    ["Regional exchange PEN rails", "specialist", "Thinner than BR/CL."],
+  ],
+  uruguay: [
+    ["BROU / Itaú UY / Santander UY / Scotiabank UY", "retail", "Selective but often approachable with clean SOF."],
+    ["Regional exchange rails", "specialist", "Smaller local CEX density."],
+  ],
+  panama: [
+    ["Banco General / Banistmo / Multibank / BAC", "retail", "KYC-heavy; pure crypto narratives often fail."],
+    ["MMG / private banks", "private", "Selective private banking."],
+    ["Regional exchange + US EMI multi-rail", "specialist", "Common founder stack when local banks refuse."],
+  ],
+  "el-salvador": [
+    ["Banco Agrícola / Cuscatlán / Davivienda SV", "retail", "Selective; dollarized system helps once onboarded."],
+    ["Chivo / Lightning wallets", "specialist", "Policy-era rails; verify live status post-reforms."],
+    ["Strike / regional ramps", "specialist", "Cross-border Lightning/fiat tools used by some residents."],
+  ],
+  paraguay: [
+    ["Itaú PY / Continental / Vision / GNB", "retail", "Conservative; plan multi-rail early."],
+    ["Regional exchange + Argentine/Brazilian apps", "specialist", "Common cross-border ramps."],
+  ],
+  "costa-rica": [
+    ["BAC / BCR / National Bank / Scotiabank CR", "retail", "Mixed; Spanish docs and SOF required."],
+    ["SINPE Móvil rails", "emi", "Domestic instant payments culture."],
+    ["Foreign EMI + US exchange multi-rail", "specialist", "Common for crypto founders."],
+  ],
+  guatemala: [
+    ["Industrial / G&T / Banrural / BAM", "retail", "Hard crypto SOF."],
+    ["Foreign EMI multi-rail", "emi", "Often primary for crypto founders."],
+  ],
+  georgia: [
+    ["Bank of Georgia / TBC Bank", "retail", "Most practical local banks; crypto SOF still required but more familiar than many EU banks."],
+    ["Liberty Bank", "retail", "Retail alternative."],
+    ["Wise / Revolut multi-rail", "emi", "Common backup for international founders."],
+  ],
+  japan_alias: null,
+  israel: [
+    ["Bank Hapoalim / Leumi / Discount / Mizrahi", "retail", "Historically uneven crypto banking; long DD."],
+    ["Pepper / digital channels", "neo", "Digital arms — policy varies."],
+    ["Local exchange ILS rails", "specialist", "Supervised platforms for on-off."],
+  ],
+  "south-africa": [
+    ["Standard Bank / FNB / Absa / Nedbank / Capitec", "retail", "Mixed after de-risking cycles; FICA SOF essential."],
+    ["TymeBank / digital", "neo", "Consumer digitals."],
+    ["Luno / VALR ZAR rails", "specialist", "Main crypto ZAR on-off."],
+  ],
+  mauritius: [
+    ["MCB / SBM / Absa MU", "retail", "Selective; licence + substance open doors."],
+    ["AfrAsia / private banks", "private", "Private banking with high DD."],
+    ["VAITOS VASP corridors", "specialist", "Licensed virtual-asset service banking narratives."],
+  ],
+  kenya: [
+    ["Equity / KCB / Co-op / NCBA", "retail", "Mixed; mobile money often more important."],
+    ["M-Pesa (Safaricom)", "emi", "Dominant cash-in/out culture for retail."],
+    ["Local P2P / exchange KES rails", "specialist", "Primary crypto ramps."],
+  ],
+  mexico: [
+    ["BBVA México / Banorte / Santander MX / Citibanamex", "retail", "Large banks — crypto SOF and CNBV/fintech-law narrative matter."],
+    ["Nu México / Ualá / digital banks", "neo", "Digital retail; policy on crypto income still selective."],
+    ["Bitso / other fintech-law platforms MXN rails", "specialist", "Primary MXN crypto on-off for many users."],
+  ],
+  norway: [
+    ["DNB / Nordea NO / SpareBank 1", "retail", "Nordic majors — cautious on pure crypto SOF."],
+    ["Sbanken / digital channels", "neo", "Consumer digitals; crypto income scrutiny."],
+    ["Firi / NBX NOK rails", "specialist", "Local exchange on-off for retail."],
+  ],
+  ukraine: [
+    ["PrivatBank / monobank / Oschadbank", "retail", "Wartime ops and SOF scrutiny; practical for residents with clean docs."],
+    ["monobank / neo apps", "neo", "Popular digital banking UX."],
+    ["WhiteBIT / Kuna UAH rails", "specialist", "Local exchange corridors when available."],
+  ],
+  ghana: [
+    ["GCB / Ecobank / Absa GH / Stanbic", "retail", "Selective; mobile money often more practical day-to-day."],
+    ["MTN MoMo / Vodafone Cash", "emi", "Dominant mobile-money rails for retail cash conversion."],
+    ["Local P2P / exchange GHS rails", "specialist", "Primary crypto ramps — verify authorization."],
+  ],
+  nigeria: [
+    ["GTBank / Access / Zenith / FirstBank", "retail", "Historically difficult for pure crypto; policies shift with CBN stance."],
+    ["OPay / PalmPay / Flutterwave rails", "emi", "Fintech/e-money layer often more usable than classic banks."],
+    ["Quidax / Bundle / local exchange NGN rails", "specialist", "Registered/local venues where available — verify live lists."],
+  ],
+  singapore_alias: null,
+};
+
+// Aliases for browser short ids
+LAW_CRYPTO_BANKS.usa = LAW_CRYPTO_BANKS["united-states"];
+LAW_CRYPTO_BANKS.uk = LAW_CRYPTO_BANKS["united-kingdom"];
+LAW_CRYPTO_BANKS.uae = LAW_CRYPTO_BANKS["united-arab-emirates"];
+LAW_CRYPTO_BANKS.mx = LAW_CRYPTO_BANKS.mexico;
+LAW_CRYPTO_BANKS.no = LAW_CRYPTO_BANKS.norway;
+LAW_CRYPTO_BANKS.ua = LAW_CRYPTO_BANKS.ukraine;
+LAW_CRYPTO_BANKS.ng = LAW_CRYPTO_BANKS.nigeria;
+
+/**
  * Illustrative local crypto industry startups / scale-ups per jurisdiction.
- * Columns: name · category · focus · note
+ * Columns: name · category · focus · description
  * Not complete, not endorsed, not investment advice — ecosystems change; verify HQ and licence status live.
  */
 const LAW_CRYPTO_STARTUPS = {
@@ -671,9 +965,11 @@ const LAW_CRYPTO_STARTUPS = {
   georgia: {
     scene: "Mining + exchange culture; lean startup costs; rules evolve yearly.",
     rows: [
-      ["Local mining operators", "Mining", "Hydro/cheap power themes", "Many private operators — not a single brand"],
-      ["Regional exchange desks", "Exchange / OTC", "GEL/USD pairs", "Verify registration status live"],
-      ["Crypto freelancers / studios", "Services", "Dev & OTC advisory", "Active community in Tbilisi"],
+      ["Cryptal", "Exchange", "GEL/crypto retail & OTC", "Tbilisi-based exchange known to local traders — verify current licence status"],
+      ["Adrodex", "Exchange", "Spot trading", "Georgian exchange brand; check live registration"],
+      ["Bitcoin.ge / community desks", "OTC / education", "Local BTC market making & meetups", "Community-facing rails more than unicorn apps"],
+      ["Bitfury (historic regional footprint)", "Mining / infra", "Mining tech & data centres", "Major mining-tech name historically tied to the region — ops evolve"],
+      ["Tbilisi Web3 studios", "Services", "Dev shops & freelancers", "Lean builder base serving EU/remote clients"],
     ],
   },
   ukraine: {
@@ -729,9 +1025,11 @@ const LAW_CRYPTO_STARTUPS = {
   portugal: {
     scene: "Lisbon hub era attracted remote founders; product cos + exchanges thinner than FR/DE.",
     rows: [
-      ["Local CASP applicants", "CASP / exchange", "EU MiCA packaging", "Many foreign teams used PT HQ — verify registers"],
-      ["Anchorage / global cos (presence)", "Custody", "EU ops", "International firms with PT footprint"],
-      ["Startup studios / BTCPay merchants", "Services", "Tourism + remittance", "Community-driven more than unicorns"],
+      ["Utrust (UTK)", "Payments", "Crypto merchant payments", "Portuguese-founded payments protocol; brand/ops evolved — verify live entity"],
+      ["RealFevr", "NFT / sports", "Digital collectibles", "Lisbon-area consumer NFT brand"],
+      ["Fasthouse / local Web3 studios", "Services", "Product studios", "Remote-first teams using PT as EU lifestyle base"],
+      ["Bit2Me / EU CASP access", "Exchange access", "EUR retail via ES/EU platforms", "Many PT users trade on Iberian/EU CASPs — check CMVM/ESMA lists"],
+      ["BTCPay / tourism merchant tools", "Merchant tools", "BTC accept in tourism corridors", "Community rails more than large funded startups"],
     ],
   },
   netherlands: {
@@ -746,9 +1044,11 @@ const LAW_CRYPTO_STARTUPS = {
   ireland: {
     scene: "English EU HQ for multinationals; fewer pure crypto unicorns, many EU ops offices.",
     rows: [
-      ["Kraken / Coinbase EU entities (presence)", "Exchange ops", "EU corporate seats", "International firms use IE — check registers"],
-      ["Tether / stablecoin ops (presence themes)", "Stablecoin", "EU footprint debates", "Verify actual regulated entities"],
-      ["Local fintech + Web3 studios", "Services", "Dev shops", "Dublin talent pool"],
+      ["Coinbase (EU/IE entities)", "Exchange ops", "EU corporate & compliance seats", "Major US exchange uses Ireland for EU packaging — check live registers"],
+      ["Kraken (EU presence)", "Exchange ops", "EU services entity themes", "International CEX with IE/EU footprint"],
+      ["Circle (EU ops themes)", "Stablecoin / infra", "USDC issuer European entities", "Verify which legal entities are actually Irish-regulated"],
+      ["Stripe (crypto adjacency)", "Payments", "Merchant + stablecoin experiments", "Dublin-scale fintech with occasional crypto rails"],
+      ["Dublin Web3 / fintech studios", "Services", "Build & compliance shops", "Strong English-speaking talent for EU GTM"],
     ],
   },
   luxembourg: {
@@ -801,19 +1101,23 @@ const LAW_CRYPTO_STARTUPS = {
     ],
   },
   finland: {
-    scene: "Strong engineering; smaller pure-crypto market cap.",
+    scene: "Strong engineering; smaller pure-crypto market cap; historic P2P roots.",
     rows: [
-      ["Local brokerage apps", "Broker", "Retail FI", "Thin pure-crypto unicorn list"],
-      ["Gaming / NFT studios", "Gaming", "Web3 games", "Helsinki game industry adjacency"],
-      ["Compliance tooling", "Regtech", "AML/tax", "Nordic B2B tools"],
+      ["Coinmotion", "Exchange / broker", "FI retail crypto", "Finnish registered broker/exchange brand"],
+      ["Northcrypto", "Exchange", "Nordic retail", "Finnish venue serving local markets"],
+      ["LocalBitcoins (legacy)", "P2P (historic)", "Global P2P BTC", "Helsinki-founded pioneer — marketplace wound down; talent remains"],
+      ["Supercell / game cos (adjacency)", "Gaming", "Helsinki game talent → Web3 experiments", "Game industry crossover more than pure crypto unicorns"],
+      ["Nordic tax/AML tooling", "Regtech", "Reporting & compliance", "B2B tools for FI/SE users"],
     ],
   },
   greece: {
     scene: "Growing Athens fintech; tourism experiments; thinner institutional stack.",
     rows: [
-      ["Local brokers / CASP applicants", "Broker / CASP", "Retail GR", "Verify HCMC registers"],
-      ["Tourism payment pilots", "Payments", "Merchant BTC", "Seasonal experiments"],
-      ["Shipping-adjacent treasuries", "Corporate BTC", "Balance-sheet BTC", "Traditional cos more than startups"],
+      ["Viva Wallet (fintech adjacency)", "Payments / EMI", "Merchant acquiring", "Major Greek fintech — not a pure crypto co, but key payments rail"],
+      ["Coinbase / Bitpanda users via EU", "Exchange access", "EUR retail", "Many GR users on EU platforms — check HCMC/ESMA CASP lists"],
+      ["Local MiCA CASP applicants", "CASP / broker", "GR retail packaging", "Verify Hellenic Capital Market Commission registers for live names"],
+      ["Tourism BTCPay merchants", "Merchant tools", "Islands & Athens hospitality", "Seasonal acceptance experiments"],
+      ["Shipping-family treasury experiments", "Corporate BTC", "Balance-sheet pilots", "Traditional industry adjacency more than VC startups"],
     ],
   },
   poland: {
@@ -960,9 +1264,11 @@ const LAW_CRYPTO_STARTUPS = {
   kazakhstan: {
     scene: "Mining + AIFC experiments; energy-linked operators.",
     rows: [
-      ["Local mining farms", "Mining", "Power contracts", "Many private operators"],
-      ["AIFC fintech participants", "Fintech / VASP", "English-law zone", "Check AIFC registers"],
-      ["Regional OTC desks", "OTC", "BTC/USDT", "B2B mining payouts"],
+      ["Intebix", "Exchange", "KZ crypto trading", "Kazakh exchange brand — verify AIFC/national status live"],
+      ["XCOEX", "Exchange / broker", "Multi-asset trading", "Platform with regional/KZ footprint themes"],
+      ["Ataix", "Exchange", "Digital assets", "AIFC-oriented venue narrative — check live licence list"],
+      ["Enegix / large mining hosts", "Mining", "Hosting & power contracts", "Industrial mining operators in energy regions"],
+      ["Freedom Broker (adjacency)", "Brokerage", "Securities + digital-asset themes", "Large KZ broker group with product adjacency — not pure crypto"],
     ],
   },
   brazil: {
@@ -1020,42 +1326,62 @@ const LAW_CRYPTO_STARTUPS = {
   panama: {
     scene: "USD hub; exchanges + regional OTC; bank KYC is the bottleneck.",
     rows: [
-      ["Local exchange / OTC desks", "OTC / exchange", "USD pairs", "Verify any new licence bills"],
-      ["Regional LatAm apps", "App", "Cross-border", "Many serve PA users remotely"],
-      ["Free-zone fintechs", "Fintech", "Holding cos + apps", "Substance varies"],
+      ["Cryptobuyer", "Payments / card", "Crypto cards & merchant pay", "LatAm brand with strong Central America / Panama corridor usage"],
+      ["Xapo (historic PA roots)", "Wallet / bank (evolved)", "Self-custody → banking stack", "Early Panama-associated brand; now Gibraltar-regulated bank — ops moved"],
+      ["Bitso / Ripio (serve PA users)", "Exchange access", "USD/LatAm retail", "Regional apps used by Panama residents when local CEX is thin"],
+      ["Multibank Group (adjacency)", "Banking / FX", "Multi-asset financial group", "Panama financial group — not a pure crypto startup; KYC still heavy"],
+      ["Free-zone fintech CSPs", "Services", "Entity + compliance packaging", "HoldCo/service layer; substance and banking remain the hard parts"],
     ],
   },
   "el-salvador": {
     scene: "BTC-branded startups + tourism; policy still evolves post-reform.",
     rows: [
-      ["Chivo (public wallet)", "Wallet / public infra", "Government wallet", "Policy product — not a private startup"],
-      ["Blink / Lightning firms", "Payments", "Lightning", "BTC payment experiments"],
-      ["Athena Bitcoin / ATM ops", "ATM / rails", "Cash ramps", "ATM operators in region"],
-      ["Local tourism merchants tools", "Merchant tools", "BTC pay", "Surf-city corridor"],
+      ["Chivo", "Wallet / public infra", "Government BTC/USD wallet", "Policy product from the legal-tender era — verify live status post-reforms"],
+      ["Blink", "Lightning wallet", "BTC payments & remittances", "El Salvador–rooted Lightning wallet for everyday payments"],
+      ["Strike", "Payments", "Lightning / fiat ramps", "Global BTC payments app with strong SV usage narrative"],
+      ["Athena Bitcoin", "ATM / rails", "BTC ATMs & cash ramps", "ATM operator active across the region including SV"],
+      ["IBEX Mercado", "Lightning / enterprise", "Payment infra for businesses", "Lightning infrastructure company with LatAm focus"],
+      ["Surf City merchant tools", "Merchant tools", "Tourism BTC accept", "Hospitality corridor experiments more than large VC startups"],
     ],
   },
   paraguay: {
     scene: "Mining-heavy narrative; thinner consumer app layer.",
     rows: [
-      ["Mining operators", "Mining", "Hydro power", "Private farms dominate"],
-      ["Regional exchange access", "Exchange", "via AR/BR/global", "Thin local CEX brands"],
-      ["OTC mining desks", "OTC", "Hash → USD/USDT", "B2B more than retail apps"],
+      ["Private hydro mining operators", "Mining", "Cheap power → hash", "Industry is mostly private farms, not public consumer apps — contracts matter"],
+      ["Ripio / Lemon (regional access)", "Exchange access", "ARS/USD/USDT retail", "Argentine apps commonly used by PY residents for on-off"],
+      ["Mercado Bitcoin / Foxbit access", "Exchange access", "BRL corridor", "Brazilian venues used for cross-border ramps"],
+      ["OTC mining payout desks", "OTC", "Hash → USDT/USD", "B2B desks settle miner revenue; names change — use referrals + escrow care"],
+      ["Asunción fintech freelancers", "Services", "Compliance & ops support", "Service layer for mining cos more than product unicorns"],
     ],
   },
   "costa-rica": {
     scene: "Lifestyle base; builders often serve US/LatAm remotely.",
     rows: [
-      ["Remote-first Web3 studios", "Services", "Dev shops", "CR as life base, clients abroad"],
-      ["Regional exchange users", "Exchange access", "via global apps", "Few pure-CR unicorns"],
-      ["Tourism merchant tools", "Payments", "BTCPay niches", "Beach-town experiments"],
+      ["Bitcoin Jungle / community projects", "Community / payments", "Local BTC circular economy", "Guanacaste-area community experiments — not a VC unicorn"],
+      ["Bitso / Ripio (regional apps)", "Exchange access", "MXN/USD/LatAm retail", "Most CR users rely on regional or global apps"],
+      ["Cryptobuyer", "Payments / card", "Crypto cards in LatAm", "Used in Central America for spend-out"],
+      ["Remote Web3 studios (SJO/beach)", "Services", "Dev shops for US clients", "CR as life base; product companies often US/EU-incorporated"],
+      ["BTCPay tourism merchants", "Merchant tools", "Hospitality accept BTC", "Beach-town and digital-nomad corridor niches"],
     ],
   },
   guatemala: {
     scene: "Thin formal startup layer; remittance culture.",
     rows: [
-      ["Remittance / fintech apps", "Remittance", "USD/GTQ", "Crypto-adjacent more than pure"],
-      ["P2P communities", "P2P", "Local OTC", "Informal depth"],
-      ["Regional platforms", "Exchange access", "Cross-border", "Few local CEX brands"],
+      ["Airtm", "P2P / remittance", "USD balance & cash-out", "Regional P2P platform popular for LatAm dollar rails"],
+      ["Bitso / Lemon (access)", "Exchange access", "Cross-border retail", "Few pure-GT CEX brands; users go regional"],
+      ["Tigo Money / Banrural adjacency", "Mobile money / bank", "Domestic cash rails", "Not crypto startups — the practical cash layer remittances hit first"],
+      ["Local OTC / Telegram desks", "OTC", "GTQ/USDT", "Informal depth; counterparty risk is the product"],
+      ["Remittance fintechs (crypto-adjacent)", "Remittance", "US→GT corridors", "Some use stablecoins under the hood — verify licences"],
+    ],
+  },
+  mexico: {
+    scene: "Large Spanish LatAm market; fintech law; Bitso as regional champion.",
+    rows: [
+      ["Bitso", "Exchange", "MX + LatAm retail", "Largest Mexican crypto exchange; fintech-law era brand"],
+      ["Volabit", "Exchange / broker", "MX retail", "Long-standing Mexican on-ramp brand"],
+      ["GBTC / local brokers (verify)", "Broker", "MXN markets", "Smaller local venues — check CNBV/fintech registers"],
+      ["Kollider / Lightning experiments", "Trading / Lightning", "Derivatives & payments experiments", "Builder scene with MX presence themes"],
+      ["Mercado Libre / fintech adjacency", "Super-app", "Payments distribution", "Not pure crypto; massive MX distribution layer"],
     ],
   },
   belize: {
@@ -1103,34 +1429,38 @@ const LAW_CRYPTO_STARTUPS = {
   mauritius: {
     scene: "Licensed VASP hub; funds more than consumer apps.",
     rows: [
-      ["VAITOS-licensed VASPs", "VASP", "Licensed services", "Check FSC register for names"],
-      ["Fund administrators (digital assets)", "Funds", "Admin + custody themes", "Institutional"],
-      ["CSP fintech packages", "Services", "Entity + licence", "Substance-driven"],
+      ["FSC VAITOS licensees", "VASP", "Licensed virtual-asset services", "Use the Financial Services Commission public register for live company names"],
+      ["Absa / MCB digital-asset desks (adjacency)", "Banking adjacency", "Selective institutional rails", "Incumbent banks more than consumer startups"],
+      ["Fund admins (digital assets)", "Funds", "Admin + custody packaging", "Institutional fund stack for tokenised products"],
+      ["CSP licence packages", "Services", "Entity + VASP packaging", "Substance and real directors required — not a product startup list"],
     ],
   },
   seychelles: {
     scene: "Historic incorporation hub for global CEXs; local consumer market tiny.",
     rows: [
-      ["Global CEX entities (historic)", "Exchange HoldCos", "Offshore entities", "Many brands incorporated here — ops elsewhere"],
-      ["Local VASP licensees", "VASP", "FSA registers", "Verify live names"],
-      ["CSP service providers", "Services", "Formation", "Not product startups"],
+      ["Binance / historic CEX HoldCos", "Exchange HoldCo", "Offshore incorporation history", "Many global brands used SC entities — actual ops are elsewhere"],
+      ["KuCoin / other CEX entities (historic)", "Exchange HoldCo", "Entity packaging", "Verify FSA registers; do not confuse incorporation with local product market"],
+      ["Local FSA VASP licensees", "VASP", "Licensed service cos", "Check Seychelles FSA lists for current names"],
+      ["CSP formation houses", "Services", "Company + nominee packages", "Service industry, not consumer crypto apps"],
     ],
   },
   kenya: {
     scene: "Nairobi fintech + M-Pesa adjacency; strong builder culture.",
     rows: [
-      ["Local crypto ramps / P2P apps", "P2P / ramp", "KES markets", "High mobile usage"],
-      ["BitPesa / AZA (legacy adjacency)", "Payments", "Cross-border", "Historic crypto-fx brand evolution"],
-      ["Web3 / blockchain studios", "Services", "Build teams", "Nairobi tech scene"],
-      ["Mini-apps on mobile money", "Fintech", "M-Pesa plugins", "Crypto-adjacent rails"],
+      ["AZA Finance (ex-BitPesa)", "Payments / FX", "Cross-border B2B payments", "Kenya-rooted crypto-era FX pioneer evolved into licensed payments"],
+      ["Binance P2P / local ramps", "P2P / ramp", "KES markets", "High mobile + P2P usage — counterparty and policy risk"],
+      ["Chipper Cash (adjacency)", "Fintech", "Pan-African payments", "Not pure crypto; major distribution narrative in the region"],
+      ["Nairobi Web3 studios", "Services", "Build teams & education", "Strong engineering/community scene"],
+      ["M-Pesa mini-app experiments", "Fintech", "Mobile-money plugins", "Crypto-adjacent rails ride Safaricom distribution"],
     ],
   },
   ghana: {
     scene: "Accra fintech; regulatory progress; thinner pure-crypto unicorns.",
     rows: [
-      ["Local exchange / P2P platforms", "P2P / exchange", "GHS markets", "Verify authorization"],
-      ["Mobile-money fintechs", "Fintech", "Payments", "Distribution layer"],
-      ["Web3 education communities", "Community / services", "Builders", "Early ecosystem"],
+      ["Maviance / mobile-money fintechs", "Fintech", "Payments & bill pay", "Distribution layer more than pure crypto"],
+      ["Yellow Card (regional access)", "Exchange / ramp", "Africa on-off ramps", "Pan-African ramp used across West/East Africa — verify GH availability"],
+      ["Local P2P desks", "P2P", "GHS/USDT", "Informal depth; verify any BoG authorization claims"],
+      ["Accra builder communities", "Community / services", "Education & freelancers", "Early ecosystem, talent-forward"],
     ],
   },
   botswana: {
@@ -1211,12 +1541,15 @@ const LAW_CRYPTO_STARTUPS = {
  * @returns {{ scene: string, rows: string[][], source: string }}
  */
 function lawBuildCryptoStartups(j, seed = {}) {
-  if (seed.cryptoStartups) return { ...seed.cryptoStartups, source: "seed" };
   const lawId = j?.id || "";
   const alias = LAW_LOCAL_SERVICES_ALIASES[lawId] || lawId;
   const curated = LAW_CRYPTO_STARTUPS[alias] || LAW_CRYPTO_STARTUPS[lawId];
+  // Prefer live curated named companies over seed stubs when both exist
   if (curated?.rows?.length) {
     return { scene: curated.scene || "", rows: curated.rows, source: "curated" };
+  }
+  if (seed.cryptoStartups?.rows?.length) {
+    return { ...seed.cryptoStartups, source: "seed" };
   }
   const name = j?.name || "This market";
   const tags = j?.tags || [];
@@ -1251,8 +1584,58 @@ function lawNoteField(field) {
  * Build structured local crypto services for a jurisdiction.
  * @returns {{ exchanges, banks, atm, merchants, rails, summary, regulators, vaspLicensing }}
  */
+function lawSimBanksFor(j) {
+  const lawId = j?.id || "";
+  const alias = LAW_LOCAL_SERVICES_ALIASES[lawId] || lawId;
+  let list = LAW_CRYPTO_BANKS[alias] || LAW_CRYPTO_BANKS[lawId];
+  if (list === null && LAW_LOCAL_SERVICES_ALIASES[lawId]) {
+    list = LAW_CRYPTO_BANKS[LAW_LOCAL_SERVICES_ALIASES[lawId]];
+  }
+  if (Array.isArray(list) && list.length) return list;
+  // Region fallbacks with real institution families
+  const region = j?.region || "";
+  if (region === "eu-mica") {
+    return [
+      ["Domestic universal banks (local majors)", "retail", "Usually the first call for salary accounts after residence — pure crypto SOF is often refused."],
+      ["Revolut / N26 / Wise", "neo", "Common EU founder multi-rail for personal float; business crypto policies change."],
+      ["Licensed CASP EUR rails", "specialist", "Bitpanda, national CASPs, and ESMA-listed platforms for EUR on-off when banks stall."],
+      ["Specialist / private banks (case-by-case)", "private", "High minimums; need licensed business narrative and clean UBO file."],
+    ];
+  }
+  if (region === "latin-america") {
+    return [
+      ["Domestic retail banks (local top 3–5)", "retail", "KYC-heavy; crypto founders should expect multi-week EDD."],
+      ["Digital banks / wallets (Nubank-class, Mercado Pago-class where present)", "neo", "Often more practical than legacy banks for day-to-day float."],
+      ["Local exchange fiat rails", "specialist", "Primary crypto on-off (Pix, local ACH) when corporate banking fails."],
+    ];
+  }
+  if (region === "asia-pacific") {
+    return [
+      ["Domestic major banks", "retail", "Excellent after residence in hubs (SG/JP/AU) — unlicensed crypto activity is hard."],
+      ["Digital / neobanks", "neo", "Faster UX; still SOF-gated for crypto income."],
+      ["Licensed local exchange rails", "specialist", "Main fiat on-off for retail crypto users."],
+    ];
+  }
+  if (region === "middle-east-africa") {
+    return [
+      ["Domestic retail banks", "retail", "Selective; free-zone or licence story helps where relevant."],
+      ["Mobile money / e-wallets (where dominant)", "emi", "Often more important than banks for retail cash conversion."],
+      ["Licensed VASP corridors", "specialist", "Use registered platforms for crypto fiat ramps."],
+    ];
+  }
+  return [
+    ["Domestic top retail banks", "retail", "First stop for personal accounts after residence; crypto SOF often enhanced."],
+    ["EU/global neobanks & EMIs (Wise, Revolut-class)", "emi", "Common multi-rail backup for international founders."],
+    ["Licensed exchange / VASP fiat rails", "specialist", "Practical crypto on-off when traditional banks refuse pure crypto income."],
+  ];
+}
+
 function lawBuildLocalServices(j, seed = {}) {
-  if (seed.localServices) return { ...seed.localServices };
+  if (seed.localServices) {
+    const s = { ...seed.localServices };
+    if (!s.banksList?.length) s.banksList = lawSimBanksFor(j);
+    return s;
+  }
 
   const lawId = j?.id || "";
   const alias = LAW_LOCAL_SERVICES_ALIASES[lawId] || lawId;
@@ -1271,11 +1654,13 @@ function lawBuildLocalServices(j, seed = {}) {
   const tags = j?.tags || [];
   const isMica = tags.includes("mica") || j?.region === "eu-mica";
   const name = j?.name || "this jurisdiction";
+  const banksList = lawSimBanksFor(j);
 
   if (curated && typeof curated === "object") {
     return {
       exchanges: curated.exchanges,
       banks: curated.banks,
+      banksList,
       atm: curated.atm,
       merchants: curated.merchants,
       rails: curated.rails || "",
@@ -1324,6 +1709,7 @@ function lawBuildLocalServices(j, seed = {}) {
   return {
     exchanges,
     banks,
+    banksList,
     atm,
     merchants,
     rails,
@@ -2512,6 +2898,10 @@ function lawSyncLegalRelocateDestinations() {
         hub.localServices = services;
       } else if (services.source === "curated") {
         hub.localServices = services;
+      }
+      // Always refresh named bank list so curated banks stay current
+      if (hub.localServices) {
+        hub.localServices.banksList = services.banksList || lawSimBanksFor(j);
       }
       if (!hub.cryptoStartups || !hub.cryptoStartups.rows?.length || hub.cryptoStartups.source === "template") {
         hub.cryptoStartups = startups;

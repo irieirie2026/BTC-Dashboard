@@ -1018,16 +1018,20 @@ function lawCryptoStartupsTableHtml(startups, { compact = false } = {}) {
       .map((r) => r[0])
       .filter(Boolean)
       .join(", ");
-    return `<p class="law-relocate-card__startups" ${lawTipAttrs("Illustrative local crypto startups / scale-ups. Open hub for the full table. Not complete or endorsed.")}><span class="law-relocate-card__startups-label">Crypto startups</span> ${lawEsc(String(n))} listed${names ? ` · e.g. ${lawEsc(names)}` : ""}</p>`;
+    return `<p class="law-relocate-card__startups" ${lawTipAttrs("Named local crypto startups / scale-ups. Open hub for full descriptions. Not complete or endorsed.")}><span class="law-relocate-card__startups-label">Crypto startups</span> ${lawEsc(String(n))} listed${names ? ` · e.g. ${lawEsc(names)}` : ""}</p>`;
   }
   const body = startups.rows
     .map((r) => {
       const [name, cat, focus, note] = r;
+      const desc = note
+        ? focus
+          ? `${focus}. ${note}`
+          : note
+        : focus || "—";
       return `<tr>
-        <td><strong>${lawEsc(name || "—")}</strong></td>
-        <td>${lawEsc(cat || "—")}</td>
-        <td>${lawEsc(focus || "—")}</td>
-        <td>${lawEsc(note || "—")}</td>
+        <td class="law-startups-name"><strong>${lawEsc(name || "—")}</strong></td>
+        <td><span class="law-startups-cat">${lawEsc(cat || "—")}</span></td>
+        <td class="law-startups-desc">${lawEsc(desc)}</td>
       </tr>`;
     })
     .join("");
@@ -1038,16 +1042,45 @@ function lawCryptoStartupsTableHtml(startups, { compact = false } = {}) {
         <table class="law-guide-table law-startups-table">
           <thead>
             <tr>
-              <th>${lawTip("Company", "Illustrative name — may be a startup, scale-up, or listed crypto company with local roots or major local presence.")}</th>
+              <th>${lawTip("Company", "Named startup, scale-up, or listed crypto company with local roots or major local presence.")}</th>
               <th>${lawTip("Category", "Exchange, custody, wallet, payments, mining, regtech, etc.")}</th>
-              <th>${lawTip("Focus", "Main product or market slice.")}</th>
-              <th>${lawTip("Note", "Context only — not due diligence. Verify HQ, licence, and status live.")}</th>
+              <th>${lawTip("What they do", "Short plain-English description of the business. Not due diligence — verify licences and status live.")}</th>
             </tr>
           </thead>
           <tbody>${body}</tbody>
         </table>
       </div>
-      <p class="law-muted law-startups-disclaimer">Educational sample of the local crypto industry — <strong>not complete, not ranked, not an endorsement or investment recommendation</strong>. Brands move HQ, rebrand, or shut down; always verify regulator registers and corporate filings.</p>
+      <p class="law-muted law-startups-disclaimer">Named companies for orientation — <strong>not complete, not ranked, not an endorsement</strong>. Brands rebrand, move HQ, or shut down; always verify regulator registers and corporate filings.</p>
+    </div>`;
+}
+
+function lawBanksTableHtml(banksList) {
+  if (!Array.isArray(banksList) || !banksList.length) return "";
+  const body = banksList
+    .map((r) => {
+      const [name, type, note] = r;
+      return `<tr>
+        <td class="law-banks-name"><strong>${lawEsc(name || "—")}</strong></td>
+        <td><span class="law-banks-type law-banks-type--${lawEsc(String(type || "retail").replace(/\s+/g, "-"))}">${lawEsc(type || "—")}</span></td>
+        <td>${lawEsc(note || "—")}</td>
+      </tr>`;
+    })
+    .join("");
+  return `
+    <div class="law-banks-wrap">
+      <h4 class="law-banks-title">${lawTip("Named banks & rails", "Crypto-friendly specialists where they exist; otherwise the top practical banks/EMIs for founder fiat. Policies change — not endorsements.")}</h4>
+      <div class="law-guide-table-wrap">
+        <table class="law-guide-table law-banks-table">
+          <thead>
+            <tr>
+              <th>Institution</th>
+              <th>Type</th>
+              <th>Why founders discuss them</th>
+            </tr>
+          </thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
     </div>`;
 }
 
@@ -1060,8 +1093,13 @@ function lawLocalServicesHtml(services, { compact = false } = {}) {
   }
   if (compact) {
     const sum = services.summary || "";
-    if (!sum) return "";
-    return `<p class="law-relocate-card__services" ${lawTipAttrs("Local / authorized crypto landscape: exchanges & CASPs, banking access, ATMs, merchant acceptance. Open hub for full detail.")}><span class="law-relocate-card__services-label">Local services</span> ${lawEsc(sum)}</p>`;
+    const bankNames = (services.banksList || [])
+      .slice(0, 2)
+      .map((r) => r[0])
+      .filter(Boolean)
+      .join(", ");
+    if (!sum && !bankNames) return "";
+    return `<p class="law-relocate-card__services" ${lawTipAttrs("Local services + named banks. Open hub for full tables.")}><span class="law-relocate-card__services-label">Local services</span> ${lawEsc(sum || "")}${bankNames ? ` · banks e.g. ${lawEsc(bankNames)}` : ""}</p>`;
   }
   const row = (label, tip, text) => {
     if (!text) return "";
@@ -1073,16 +1111,17 @@ function lawLocalServicesHtml(services, { compact = false } = {}) {
   return `
     <div class="law-services-wrap">
       ${services.summary ? `<p class="law-services-summary">${lawEsc(services.summary)}</p>` : ""}
+      ${lawBanksTableHtml(services.banksList)}
       <dl class="law-services-dl">
         ${row("Exchanges / CASPs", "Local or locally authorized trading platforms, VASPs, CASPs — verify live regulator registers before depositing.", services.exchanges)}
-        ${row("Banks", "How traditional banks and EMIs treat crypto users and crypto companies for fiat rails and accounts.", services.banks)}
+        ${row("Banking overview", "How traditional banks and EMIs treat crypto users — see named table above for institutions.", services.banks)}
         ${row("ATMs", "Bitcoin ATM density and practicality as an on/off-ramp (usually secondary to exchange bank transfer).", services.atm)}
         ${row("Merchants", "Whether shops/services accept crypto; almost always voluntary and not legal tender.", services.merchants)}
         ${row("Fiat rails", "How money moves between bank accounts, EMIs, and licensed platforms (SEPA, Pix, real-name, Travel Rule, etc.).", services.rails)}
       </dl>
       ${services.vaspLicensing ? `<p class="law-services-meta"><strong>Licensing note:</strong> ${lawEsc(services.vaspLicensing)}</p>` : ""}
       ${services.regulators ? `<p class="law-services-meta">${lawEsc(services.regulators)}</p>` : ""}
-      <p class="law-muted law-services-disclaimer">Educational snapshot — not a directory or endorsement. Brand availability changes; always check the live national / ESMA register and terms of service (geo-blocks, promotions rules).</p>
+      <p class="law-muted law-services-disclaimer">Educational snapshot — <strong>not a recommendation to open accounts</strong>. Brand availability and risk appetite change; always check live bank policy and national / ESMA registers.</p>
     </div>`;
 }
 
@@ -1943,11 +1982,21 @@ function lawEnrichHubParity(entry, hub) {
     trading: {},
     payments: {},
   };
-  if (!h.localServices && typeof lawBuildLocalServices === "function") {
-    h.localServices = lawBuildLocalServices(jProxy, {});
+  if (typeof lawBuildLocalServices === "function") {
+    // Always refresh banksList so named banks stay current even on handcrafted hubs
+    const built = lawBuildLocalServices(jProxy, h.localServices ? { localServices: h.localServices } : {});
+    h.localServices = {
+      ...(h.localServices || {}),
+      ...built,
+      banksList: built.banksList || h.localServices?.banksList || [],
+    };
   }
-  if ((!h.cryptoStartups || !h.cryptoStartups.rows?.length) && typeof lawBuildCryptoStartups === "function") {
-    h.cryptoStartups = lawBuildCryptoStartups(jProxy, {});
+  if (typeof lawBuildCryptoStartups === "function") {
+    const builtStartups = lawBuildCryptoStartups(jProxy, h.cryptoStartups ? { cryptoStartups: h.cryptoStartups } : {});
+    // Prefer curated named companies; keep handcrafted seed only if curated missing
+    if (builtStartups?.rows?.length && (builtStartups.source === "curated" || !h.cryptoStartups?.rows?.length)) {
+      h.cryptoStartups = builtStartups;
+    }
   }
   if (!h.kycAml) {
     h.kycAml =

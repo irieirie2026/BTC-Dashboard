@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=219" />
+    <link rel="stylesheet" href="styles.css?v=228" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
     <!-- Bundled home motto (Grok Luna) — same clip every time; no live TTS / browser voice -->
     <link rel="preload" href="assets/home-motto.mp3" as="audio" type="audio/mpeg" />
@@ -1818,15 +1818,15 @@
                     <option value="365">1Y</option>
                     <option value="730">2Y</option>
                     <option value="1095">3Y</option>
-                    <option value="1825">5Y</option>
-                    <option value="3650" selected>10Y</option>
+                    <option value="1825" selected>5Y · desk default</option>
+                    <option value="3650">10Y</option>
                     <option value="5000">All</option>
                   </select>
                 </label>
                 <label class="vol-ctrl">
                   <span data-help-key="vol-dist">Distribution</span>
                   <select id="vol-dist" class="md-select vol-select" aria-label="Error distribution">
-                    <option value="t" selected>Student-t</option>
+                    <option value="t" selected>Student-t · desk default</option>
                     <option value="normal">Normal</option>
                     <option value="ged">GED</option>
                     <option value="skewt">Skewed-t</option>
@@ -1839,10 +1839,29 @@
               </div>
             </div>
             <p class="md-stats vc-intro">
-              Conditional volatility models for BTC (ARCH/GARCH family + HAR-RV + EWMA). Estimation uses the
-              <code>arch</code> library when installed; otherwise a pure-NumPy GARCH(1,1) fallback.
-              Annualization √365. Choose models below — selection and distribution are saved for faster re-runs.
+              Conditional volatility models for BTC (ARCH/GARCH family + HAR-RV + EWMA).
+              <strong>Selecting models produces a volatility forecast</strong> (annualized realized-vol path),
+              not a trade. Suggested Deribit tickets are a second step: compare that forecast’s
+              <em>term RV</em> to live ATM IV, then only use contracts that exist on the Deribit book.
+              Annualization √365. Estimation uses <code>arch</code> when installed; otherwise a NumPy GARCH(1,1) fallback.
             </p>
+            <aside class="vol-est-why" id="vol-est-why" data-help-key="vol-est-why">
+              <p class="vol-est-why-kicker">Desk default · 5Y sample · Student-t errors</p>
+              <p>
+                <strong>Range 5Y</strong> (~1,800 daily log returns) is long enough for stable GARCH
+                (α, β, tail ν) and the expanding-window QLIKE backtest, and short enough to stay in the
+                post-2020 futures/ETF vol regime. 10Y/All mix 2017–2018 illiquid crash days into today’s
+                ~40–50% DVOL world and tend to inflate long-run vol — that can make short-vol tickets look
+                cheaper than they are. 1–2Y is too short: few crash observations, noisy tails, weak OOS.
+              </p>
+              <p>
+                <strong>Student-t</strong> matches BTC’s fat tails. Normal treats COVID/FTX days as
+                near-impossible and warps persistence. Crash <em>asymmetry</em> belongs in the variance
+                (EGARCH/GJR), not the error law; skewed-t is a robustness check, not the default
+                (extra skew parameter, noisier MLE). Switch range or distribution only with a reason,
+                then compare term RV and QLIKE to this 5Y-t baseline before sizing.
+              </p>
+            </aside>
             <div class="vol-model-picker" id="vol-model-picker" data-help-key="vol-model-picker">
               <div class="vol-model-picker-head">
                 <span class="vol-model-picker-title">Models to estimate</span>
@@ -1868,14 +1887,24 @@
               <span class="deriv-hero-sub" id="vol-kpi-cond-sub">Best model · latest</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label" data-help-key="vol-fcast">Forecast 1d / 7d / 30d</span>
+              <span class="deriv-hero-label" data-help-key="vol-fcast">Term RV 7d / 30d</span>
               <span class="deriv-hero-value" id="vol-kpi-fcast">—</span>
-              <span class="deriv-hero-sub">Annualized path</span>
+              <span class="deriv-hero-sub">Option-horizon mark (ann.)</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label" data-help-key="vol-best">Best model (AIC)</span>
+              <span class="deriv-hero-label" data-help-key="vol-best">Mark model (QLIKE)</span>
               <span class="deriv-hero-value" id="vol-kpi-best">—</span>
-              <span class="deriv-hero-sub" id="vol-kpi-best-sub">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-best-sub">OOS forecast leader</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-dvol">DVOL / ATM IV</span>
+              <span class="deriv-hero-value" id="vol-kpi-dvol">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-dvol-sub">Live Deribit</span>
+            </article>
+            <article class="deriv-hero-block">
+              <span class="deriv-hero-label" data-help-key="vol-ivgap">IV − term RV</span>
+              <span class="deriv-hero-value" id="vol-kpi-ivgap">—</span>
+              <span class="deriv-hero-sub" id="vol-kpi-ivgap-sub">7d / 30d gap</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="vol-persist">Persistence · half-life</span>
@@ -1892,6 +1921,23 @@
               <span class="deriv-hero-value" id="vol-kpi-regime">—</span>
               <span class="deriv-hero-sub">vs long-run</span>
             </article>
+          </section>
+          <p class="vol-kpi-asof" id="vol-kpi-asof">Run models to attach live IV. Cond. vol is the last daily close; IV is the live book.</p>
+
+          <section class="panel" id="vol-trade-plan-panel">
+            <div class="panel-header">
+              <h2 data-help-key="vol-plan-section">Deribit trade plan</h2>
+              <span class="panel-meta" id="vol-trade-plan-meta">After estimation · live book</span>
+            </div>
+            <div class="vol-trade-plan-toolbar">
+              <label class="vol-adv-toggle">
+                <input type="checkbox" id="vol-show-advanced" checked />
+                Show advanced / genius structures
+              </label>
+            </div>
+            <div id="vol-trade-plan-host" class="stats-commentary">
+              <p class="macro-muted">Run selected models to draft a plan. Tickets snap to listed Deribit contracts. Nothing here sends an order.</p>
+            </div>
           </section>
 
           <section class="panel">
@@ -1941,7 +1987,7 @@
             <section class="panel">
               <div class="panel-header">
                 <h2 data-help-key="vol-chart-forecast">Multi-step forecast</h2>
-                <span class="panel-meta">1–30 day annualized</span>
+                <span class="panel-meta">Day-h path (cyan) · term RV (gold)</span>
               </div>
               <div class="deriv-chart-wrap">
                 <canvas id="vol-forecast-chart" height="170"></canvas>
@@ -2034,8 +2080,9 @@
               <span class="panel-meta" id="vol-backtest-meta">Horizons 1d · 7d · 14d · 30d · QLIKE primary</span>
             </div>
             <p class="vol-backtest-intro" id="vol-backtest-intro">
-              Expanding-window out-of-sample: re-estimate, forecast multi-day variance, score vs realized
-              sum of squared log returns. Lower QLIKE = better for vol forecasting (option desks).
+              Expanding-window out-of-sample: re-estimate, forecast <strong>term</strong> h-day variance
+              (same quantity as ticket term RV), score vs realized sum of squared log returns.
+              Lower QLIKE = better option mark. Origin count is in the table — it is modest, not a full walk-forward.
             </p>
             <div class="vol-backtest-charts">
               <div class="vol-backtest-chart-panel">
@@ -5389,7 +5436,7 @@
     <script src="swr-cache.js?v=6"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=171"></script>
+    <script src="help.js?v=177"></script>
     <script src="home.js?v=19"></script>
     <script src="dashboard.js?v=75"></script>
     <script src="etf.js?v=12"></script>
@@ -5398,7 +5445,7 @@
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=2"></script>
     <script src="stats.js?v=27"></script>
-    <script src="stats-volatility.js?v=20"></script>
+    <script src="stats-volatility.js?v=32"></script>
     <script src="stats-timeseries.js?v=16"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
@@ -5415,14 +5462,14 @@
     <script src="misc-greed-fear.js?v=4"></script>
     <script src="misc-bitcoin-valuation-models.js?v=11"></script>
     <script src="misc-bitcoin.js?v=34"></script>
-    <script src="valuation-cycle.js?v=11"></script>
+    <script src="valuation-cycle.js?v=12"></script>
     <script src="super-summary.js?v=19"></script>
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
     <script src="chart-patterns.js?v=15"></script>
 
-    <script src="law.js?v=24"></script>
-    <script src="law-relocate-legal.js?v=3"></script>
+    <script src="law.js?v=26"></script>
+    <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
     <script src="prediction-markets.js?v=10"></script>
     <script src="cross-market-engine.js?v=12"></script>
