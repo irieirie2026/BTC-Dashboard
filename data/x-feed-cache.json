@@ -1,7 +1,137 @@
 {
-  "fetchedAt": "2026-08-24T11:26:07Z",
+  "fetchedAt": "2026-08-24T12:45:56Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Michael Saylor(@saylor)'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC. https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
+      "link": "https://x.com/lookonchain/status/2091866519320064054#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Michael Saylor( @saylor )'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC . sec.gov/Archives/edgar/data/\u2026",
+      "publishedAt": "2026-08-24T12:33:37+00:00",
+      "publishedTs": 1787574817.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive purchases 1,110 Bitcoin for $81.5 million! This brings their total to 21,356 BTC \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2091863805512794594#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-24T12:22:50+00:00",
+      "publishedTs": 1787574170.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Someone created a new wallet (0xa314), deposited 8M $USDC into #Hyperliquid, and opened 20x longs on 600 $BTC($46.92M) and 10,000 $ETH($24.85M). https://hypurrscan.io/address/0xa31489f5bcba00d33621fed897721566ff07d8f9#perps",
+      "link": "https://x.com/lookonchain/status/2091862969256968372#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Someone created a new wallet (0xa314), deposited 8M $USDC into #Hyperliquid , and opened 20x longs on 600 $BTC ($46.92M) and 10,000 $ETH ($24.85M). hypurrscan.io/address/0xa314\u2026",
+      "publishedAt": "2026-08-24T12:19:31+00:00",
+      "publishedTs": 1787573971.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strive acquired an additional 1,110 $BTC for $81.5M at an average cost of $73,409 per bitcoin, bringing total holdings to \u20bf21,356. $ASST $SATA",
+      "link": "https://x.com/ColeMacro/status/2091859322624155994#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-24T12:05:02+00:00",
+      "publishedTs": 1787573102.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "These actions further strengthen $STRC. USD Duration is now 3.9 yrs (+414d) and STRC BTC Credit is 59 bps (-21 bps) assuming 10% BTC ARR, 40% BTC Vol, and a BTC price of $77,004. http://strategy.com/credit",
+      "link": "https://x.com/saylor/status/2091859025172258998#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "These actions further strengthen $STRC . USD Duration is now 3.9 yrs (+414d) and STRC BTC Credit is 59 bps (-21 bps) assuming 10% BTC ARR, 40% BTC Vol, and a BTC price of $77,004. strategy.com/credit",
+      "publishedAt": "2026-08-24T12:03:51+00:00",
+      "publishedTs": 1787573031.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "USD Cash enhances our Digital Credit Capital Framework, and is separately designated for general Bitcoin Treasury Company purposes, including acquiring BTC, paying preferred dividends & interest, repurchasing MSTR/preferred stock, repaying converts, and increasing USD Reserve.",
+      "link": "https://x.com/saylor/status/2091859023318397319#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "USD Cash enhances our Digital Credit Capital Framework, and is separately designated for general Bitcoin Treasury Company purposes, including acquiring BTC, paying preferred dividends &amp; interest, repurchasing MSTR/preferred stock, repaying converts, and increasing USD Reserve",
+      "publishedAt": "2026-08-24T12:03:50+00:00",
+      "publishedTs": 1787573030.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy increased USD Reserve to $5.10B, established additional USD Cash of $1.59B, and repurchased $136M of $STRC. As of 8/23/26: Strategy holds ~4% of Total BTC Supply and has ~0% Net Leverage. $MSTR https://www.strategy.com/press/strategy-increases-usd-reserve-to-5-10-billion",
+      "link": "https://x.com/saylor/status/2091859021456146659#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy increased USD Reserve to $5.10B, established additional USD Cash of $1.59B, and repurchased $136M of $STRC . As of 8/23/26: Strategy holds ~4% of Total BTC Supply and has ~0% Net Leverage. $MSTR strategy.com/press/strategy-\u2026",
+      "publishedAt": "2026-08-24T12:03:50+00:00",
+      "publishedTs": 1787573030.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Excited to announce that @JSeyff and I have a new book coming out this fall called \"Both Sides of the Coin\" which is available for pre-order now. We thought it was time for a fresh look at bitcoin/crypto post-ETF and sought to write a fair and balanced book for everyday TradFi in",
+      "link": "https://x.com/EricBalchunas/status/2091856208768426048#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Excited to announce that @JSeyff and I have a new book coming out this fall called \"Both Sides of the Coin\" which is available for pre-order now. We thought it was time for a fresh look at bitcoin/crypto post-ETF and sought to write a fair and balanced book for everyday TradFi in",
+      "publishedAt": "2026-08-24T11:52:39+00:00",
+      "publishedTs": 1787572359.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Stop over intellectualizing the anti data center panic They haven\u2019t been carefully contemplating AI job loss (not even a thing yet) or listening to Dario or reading Bostrom or Yud People are just impressionable and get worked up over all kinds of nonsense for reasons they can\u2019t c",
+      "link": "https://x.com/nic_carter/status/2091852864016564657#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Stop over intellectualizing the anti data center panic They haven\u2019t been carefully contemplating AI job loss (not even a thing yet) or listening to Dario or reading Bostrom or Yud People are just impressionable and get worked up over all kinds of nonsense for reasons they can\u2019t c",
+      "publishedAt": "2026-08-24T11:39:22+00:00",
+      "publishedTs": 1787571562.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin key indicators are strong: Premium to 200W MA: 21.1% Fear/Greed Index: 73 (Greed) ETF Net Inflows: $1.731B last 7D, $2.228B last 14D",
+      "link": "https://x.com/phongle/status/2091848699085275521#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-24T11:22:49+00:00",
+      "publishedTs": 1787570569.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Roundhill joined VolShares in filing for 32 Hockey Team ETFs.. which are linked to CME futures. Roundhill must see some potential, altho NHL is arguably weakest of the Big Four sports, no? My guess is NFL would be the best test as to whether these products have a real market.",
       "link": "https://x.com/EricBalchunas/status/2091846528935620991#m",
@@ -120,7 +250,7 @@
       "isRetweet": false
     },
     {
-      "title": "Human in the Loop | A short story about the AI aligned future http://x.com/i/article/2091553926059323392",
+      "title": "Pinned: Human in the Loop | A short story about the AI aligned future http://x.com/i/article/2091553926059323392",
       "link": "https://x.com/nic_carter/status/2091556059575906311#m",
       "source": "@nic_carter",
       "authorName": "Nic Carter",
@@ -601,19 +731,6 @@
       "isRetweet": true
     },
     {
-      "title": "The #Matrixport (@BITofficial_EN)-linked whale has closed 40K $ETH ($100.5M) for a $9.9M profit. He still holds longs on 80K $ETH ($201M) and 500 $BTC ($39M), with an unrealized profit of $22.9M. From being down $92.5M to now up $32.8M \u2014 what a legend! https://x.com/lookonchain/s",
-      "link": "https://x.com/lookonchain/status/2090989441435463903#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The #Matrixport ( @BITofficial_EN )-linked whale has closed 40K $ETH ($100.5M) for a $9.9M profit. He still holds longs on 80K $ETH ($201M) and 500 $BTC ($39M), with an unrealized profit of $22.9M . From being down $92.5M to now up $32.8M \u2014 what a legend! nitter.perennialte.ch/lo",
-      "publishedAt": "2026-08-22T02:28:26+00:00",
-      "publishedTs": 1787365706.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin Magazine Weekly Recap \ud83d\udcf0 - Bitcoin from $63K to $78K - Bessent & GENIUS Act - Saylor LIVE Q&A - Harvard - Jane Street - Citi Bank Bitcoin custody - SEC's new crypto rules - White House & crypto - Fear & Greed - Brian Armstrong - VanEck - CFTC - Ray Dalio - BMTV Promo",
       "link": "https://x.com/theonlyposted/status/2090933633968128151#m",
       "source": "@BitcoinMagazine",
@@ -861,19 +978,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Standard Chartered bank says Bitcoin could surge back to $100,000 this year, ending the \"shallowest\" bear market so far \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2090791009319899616#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-21T13:19:56+00:00",
-      "publishedTs": 1787318396.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Is cryptocurrency the answer to all our problems? Or, is it just funny money from space? In Both Sides of the Coin, two of the world\u2019s leading ETF analysts @EricBalchunas (Senior ETF Analyst at Bloomberg Intelligence) and James Seyffart @JSeyff (ETF Analyst at Bloomberg Intellige",
       "link": "https://x.com/harrimanhouse/status/2090786001459253755#m",
       "source": "@JSeyff",
@@ -924,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "\ud83d\udea8ETHENA IS A 5X FROM HERE! @cryptomanran and @CryptoHayes discuss Ethena: $ENA is down ~99% from its all-time high. VC overhang and zero interest in crypto killed the yield, so the whole mechanism stalled. If Bitcoin starts crushing shorts, basis will rip. Higher basis means Ethe",
-      "link": "https://x.com/crypto_banter/status/2090732020661899295#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "\ud83d\udea8ETHENA IS A 5X FROM HERE! @cryptomanran and @CryptoHayes discuss Ethena: $ENA is down ~99% from its all-time high. VC overhang and zero interest in crypto killed the yield, so the whole mechanism stalled. If Bitcoin starts crushing shorts, basis will rip. Higher basis means Ethe",
-      "publishedAt": "2026-08-21T09:25:32+00:00",
-      "publishedTs": 1787304332.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "\ud83d\udea8ETH IS THE MOST HATED MEGA-CAP RIGHT NOW! @cryptomanran asked @CryptoHayes on Crypto Insider why he\u2019s all-in on Ethereum: He\u2019s already structurally long plenty of $BTC. For the trading slice of the portfolio, $ETH is the bet. It\u2019s the most hated mega-cap crypto, still hasn\u2019t bro",
@@ -1015,19 +1106,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Shocker but also not a shocker. Another upstart indie ETF issuer gets bought but a big MF company. Look for more.",
-      "link": "https://x.com/EricBalchunas/status/2090552894403579916#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Shocker but also not a shocker. Another upstart indie ETF issuer gets bought but a big MF company. Look for more. Nate Geraci (@NateGeraci) Another major acquisition in ETF land\u2026 T. Rowe price to acquire F/m Investments, a nearly $20bil issuer. M&amp;A heating up. \u2014 http://nitter",
-      "publishedAt": "2026-08-20T21:33:45+00:00",
-      "publishedTs": 1787261625.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "We\u2019re long-term thinkers, not short-term traders. $MSTR $BTC",
@@ -1290,32 +1368,6 @@
       "isRetweet": false
     },
     {
-      "title": "True North Episode 77: We're So (Buy)Back https://x.com/i/broadcasts/1NxaroDwpXEKj",
-      "link": "https://x.com/TNorth/status/2090197131743334616#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "True North Episode 77: We're So (Buy)Back nitter.perennialte.ch/i/broadcasts/1NxaroDwp\u2026",
-      "publishedAt": "2026-08-19T22:00:04+00:00",
-      "publishedTs": 1787176804.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "\ud83e\udd23 This is great and spot-on, those two tickers (along with ARKK) are the best ETFs for trolling hands down",
-      "link": "https://x.com/EricBalchunas/status/2090188172659499271#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "\ud83e\udd23 This is great and spot-on, those two tickers (along with ARKK) are the best ETFs for trolling hands down Jay Dilks (@DilksJay) Here\u2019s some CHUM to attract rage bait. $TQQQ $IBIT l have fun ! \u2014 http://nitter.perennialte.ch/DilksJay/status/2090100591280136486#m",
-      "publishedAt": "2026-08-19T21:24:28+00:00",
-      "publishedTs": 1787174668.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "My guest on the Karol Markowicz Show today is @nic_carter! We talk moving from journalism to venture capital, what AI will mean for personal relationships, why red states will continue to dominate, and so much more. Listen anywhere you get podcasts: https://omny.fm/shows/the-karo",
       "link": "https://x.com/karol/status/2090182832802894180#m",
       "source": "@nic_carter",
@@ -1340,32 +1392,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Trump when asked if the U.S. plans to accumulate sizable amounts of Bitcoin: \"Certainly it's been talked about. It's take a lot of pressure off the dollar. It's been very, very good for the dollar. and I think if you came in with recommendations I would cer",
-      "link": "https://x.com/BitcoinMagazine/status/2090162228641010060#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "BREAKING: \ud83c\uddfa\ud83c\uddf8 President Trump when asked if the U.S. plans to accumulate sizable amounts of Bitcoin: \"Certainly it's been talked about. It's take a lot of pressure off the dollar. It's been very, very good for the dollar. and I think if you came in with recommendations I would cer",
-      "publishedAt": "2026-08-19T19:41:23+00:00",
-      "publishedTs": 1787168483.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "He\u2019s the greatest to ever do it.",
-      "link": "https://x.com/Geiger_Capital/status/2090162049632424307#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "He\u2019s the greatest to ever do it. unusual_whales (@unusual_whales) JUST IN: Jim Cramer has said he's reportedly selling all his Bitcoin, per CoinDesk \u2014 http://nitter.perennialte.ch/unusual_whales/status/2084344237227995246#m",
-      "publishedAt": "2026-08-19T19:40:40+00:00",
-      "publishedTs": 1787168440.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "What a violent move upward that was violently rejected by the 200-day average (for now?)",
@@ -1394,19 +1420,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin is classified information.",
-      "link": "https://x.com/saylor/status/2090109106791092320#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is classified information. Video",
-      "publishedAt": "2026-08-19T16:10:18+00:00",
-      "publishedTs": 1787155818.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83d\udea8NEW: On stage at @SALTConference in Wyoming, @USComptroller says digital asset chartering activity has increased eightfold since the Biden administration, calling the previous administration\u2019s effort to eliminate risk \u201cextremely shortsighted.\u201d He says the OCC expects to finalize",
       "link": "https://x.com/EleanorTerrett/status/2090108776103968963#m",
       "source": "@nic_carter",
@@ -1415,32 +1428,6 @@
       "summary": "\ud83d\udea8NEW: On stage at @SALTConference in Wyoming, @USComptroller says digital asset chartering activity has increased eightfold since the Biden administration, calling the previous administration\u2019s effort to eliminate risk \u201cextremely shortsighted.\u201d He says the OCC expects to finalize",
       "publishedAt": "2026-08-19T16:08:59+00:00",
       "publishedTs": 1787155739.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Top non-index buyers: Goldman Sachs $407M, Capital International $346M, Jane Street Capital $247M, HRT Financial $137M, Wells Fargo Securities $132M, Susquehanna International Group $124M, Capula Investment Management $100M.",
-      "link": "https://x.com/phongle/status/2090080103183024618#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Top non-index buyers: Goldman Sachs $407M, Capital International $346M, Jane Street Capital $247M, HRT Financial $137M, Wells Fargo Securities $132M, Susquehanna International Group $124M, Capula Investment Management $100M. Strategy (@Strategy) 12 of the Top 15 institutional sha",
-      "publishedAt": "2026-08-19T14:15:03+00:00",
-      "publishedTs": 1787148903.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "$BTC gave us Digital Capital. @Strategy turned its volatility into Digital Credit. Apyx brings those cash flows onchain to $ETH, @Base, $BNB, & $SOL.",
-      "link": "https://x.com/apyx_fi/status/2090080077774196900#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "$BTC gave us Digital Capital. @Strategy turned its volatility into Digital Credit. Apyx brings those cash flows onchain to $ETH , @Base , $BNB , &amp; $SOL . Video",
-      "publishedAt": "2026-08-19T14:14:57+00:00",
-      "publishedTs": 1787148897.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1480,19 +1467,6 @@
       "summary": "I think a non-negligible component of the data center backlash comes from people having imagined that the internet was a weightless thing that lived in \"the cloud\" They are now learning that the internet requires physical infrastructure, cooling, and power, and they are upset abo",
       "publishedAt": "2026-08-19T10:16:07+00:00",
       "publishedTs": 1787134567.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a majority of which i",
-      "link": "https://x.com/nic_carter/status/2089932957029109887#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "There\u2019s a ton of fraud all over obviously but it\u2019s specifically those two states that have scaled up carefare to a comical extent - IHSS in CA and CDPAP in NY IHSS pays people to hang out with their relatives. 875k recipients this year costing the state $34b a majority of which i",
-      "publishedAt": "2026-08-19T04:30:20+00:00",
-      "publishedTs": 1787113820.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
