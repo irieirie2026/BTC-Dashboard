@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-25T15:40:16Z",
+  "fetchedAt": "2026-08-25T16:35:09Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Send more \u20bfears.",
+      "link": "https://x.com/saylor/status/2092277359034458361#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Send more \u20bfears. Video",
+      "publishedAt": "2026-08-25T15:46:09+00:00",
+      "publishedTs": 1787672769.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddf9\ud83c\udded Thailand's SEC officially proposes regulations to introduce Bitcoin and crypto ETFs \ud83d\udc40 \"The proposals aim to broaden investment opportunities for investors...and establish consistent standards for the offshore custody of digital assets\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2092271931563139540#m",
@@ -573,6 +586,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "I'm making a game that you are trying to find your Bitcoin hard drive in a landfill. Still in progress...",
+      "link": "https://x.com/7paiden/status/2091935998775034117#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I'm making a game that you are trying to find your Bitcoin hard drive in a landfill. Still in progress... Video",
+      "publishedAt": "2026-08-24T17:09:43+00:00",
+      "publishedTs": 1787591383.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Ionic Digital increased their treasury by 21 Bitcoin, now totaling 2,882 BTC worth $168 million! \ud83d\ude80",
@@ -1433,19 +1459,6 @@
       "isRetweet": true
     },
     {
-      "title": "x.com/i/article/209050735975\u2026",
-      "link": "https://x.com/hillery_dan/status/2090903165491085799#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-21T20:45:36+00:00",
-      "publishedTs": 1787345136.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Dear people of America we\u2019ve heard you regarding the data centers. As a gesture of our penitence we are offering you the man known as Dario Amodei. Do with him what you will. We are very sorry",
       "link": "https://x.com/nic_carter/status/2090900833663672550#m",
       "source": "@nic_carter",
@@ -1717,19 +1730,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "A new 3D audiovisual guided tour of Bitcoin as a system just launched at https://visualizebitcoin.org/",
-      "link": "https://x.com/lopp/status/2089691279299133581#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "A new 3D audiovisual guided tour of Bitcoin as a system just launched at visualizebitcoin.org/",
-      "publishedAt": "2026-08-18T12:30:00+00:00",
-      "publishedTs": 1787056200.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "most ppl simply do not realize that before fb the internet was almost entirely anonymous. there was very little personal branding, in fact if you went into chat rooms or forums, you had no idea who was who. not only that but ppl were afraid to put in credit cards on the internet ",
