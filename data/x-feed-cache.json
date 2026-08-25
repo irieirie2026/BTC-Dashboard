@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-25T16:35:09Z",
+  "fetchedAt": "2026-08-25T17:30:02Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: ProCap Financial CEO Anthony Pompliano tells Fox Business \"\"As long as they keep printing money, Bitcoin's going to keep going up over the long run\" \ud83d\ude80 \"There's a saying that Bitcoin has no top because the dollar has no bottom. I think people got reminded of that.\"",
+      "link": "https://x.com/BitcoinMagazine/status/2092290650997760436#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: ProCap Financial CEO Anthony Pompliano tells Fox Business \"\"As long as they keep printing money, Bitcoin's going to keep going up over the long run\" \ud83d\ude80 \"There's a saying that Bitcoin has no top because the dollar has no bottom. I think people got reminded of that.\" Video",
+      "publishedAt": "2026-08-25T16:38:58+00:00",
+      "publishedTs": 1787675938.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Two footguns most bitcoiners miss when setting up multisig according to @lopp. Not backing up your wallet descriptor, and treating multi-vendor multisig as \"set it and forget it.\u201d",
+      "link": "https://x.com/CasaHODL/status/2092279381964234841#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Two footguns most bitcoiners miss when setting up multisig according to @lopp . Not backing up your wallet descriptor, and treating multi-vendor multisig as \"set it and forget it.\u201d Video",
+      "publishedAt": "2026-08-25T15:54:11+00:00",
+      "publishedTs": 1787673251.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Send more \u20bfears.",
       "link": "https://x.com/saylor/status/2092277359034458361#m",
@@ -1121,19 +1147,6 @@
       "isRetweet": false
     },
     {
-      "title": "It's not too late to FOMO in to Asia's largest Bitcoin event \ud83d\udc40 Trust us, you don't want to miss this \ud83d\udd25 10% off here \ud83d\udc49 https://tickets.b.tc/event/bitcoin-asia-2026?promoCodeTask=apply&promoCodeInput=BULLISH",
-      "link": "https://x.com/BitcoinMagazine/status/2091548082575925484#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "It's not too late to FOMO in to Asia's largest Bitcoin event \ud83d\udc40 Trust us, you don't want to miss this \ud83d\udd25 10% off here \ud83d\udc49 tickets.b.tc/event/bitcoin-a\u2026",
-      "publishedAt": "2026-08-23T15:28:16+00:00",
-      "publishedTs": 1787498896.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin was released without a company, patent, or fundraising round. The idea itself was enough.",
       "link": "https://x.com/DocumentingBTC/status/2091525987091533982#m",
       "source": "@DocumentingBTC",
@@ -1168,19 +1181,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T12:48:00+00:00",
       "publishedTs": 1787489280.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cFiring on all cylinders.\u201d \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091504629615821069#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-23T12:35:36+00:00",
-      "publishedTs": 1787488536.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1714,19 +1714,6 @@
       "summary": "Bring your own hardware. Multi-vendor multisig with your Ledger. Hpayne (@hpayne_writer) How to get started with multi-vendor multisig using the Ledger hardware wallet you have in the drawer at home with @CasaHODL . Video \u2014 http://nitter.perennialte.ch/hpayne_writer/status/208975",
       "publishedAt": "2026-08-18T16:37:36+00:00",
       "publishedTs": 1787071056.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time.",
-      "link": "https://x.com/Rob1Ham/status/2089717836855873774#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I know I've been a vocal proponent before, but wanted to +1 this again. Vaults provide orders of magnittude more security. In bitcoin today, once you broadcast a transaction, its a race in the mempool on saving funds. With vaults, you can make it days/weeks of response time. Alex",
-      "publishedAt": "2026-08-18T14:15:32+00:00",
-      "publishedTs": 1787062532.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
