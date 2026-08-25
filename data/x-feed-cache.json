@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-25T07:42:05Z",
+  "fetchedAt": "2026-08-25T08:39:55Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Bitcoin just rallied without MSTR buying a single coin. That matters.",
+      "link": "https://x.com/Eric_BIGfund/status/2092142458796720291#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-25T06:50:06+00:00",
+      "publishedTs": 1787640606.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Get out of \u20bfed.",
       "link": "https://x.com/saylor/status/2092138553736135089#m",
@@ -1457,19 +1470,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Average Bitcoin hodler morning routine.\ud83c\udf1e",
-      "link": "https://x.com/AlexesNakamoto/status/2090688757636694503#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Average Bitcoin hodler morning routine.\ud83c\udf1e Video",
-      "publishedAt": "2026-08-21T06:33:37+00:00",
-      "publishedTs": 1787294017.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The bitcoin bear market is likely over says financial macro analyst @LynAldenContact",
