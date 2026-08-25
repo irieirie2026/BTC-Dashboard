@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-25T02:56:51Z",
+  "fetchedAt": "2026-08-25T03:50:25Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "In just one week, Michael Saylor's (@saylor) #Strategy went from a $9.5B+ loss to a $4.7B+ profit.",
+      "link": "https://x.com/lookonchain/status/2092092787193999565#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "In just one week, Michael Saylor's ( @saylor ) #Strategy went from a $9.5B+ loss to a $4.7B+ profit.",
+      "publishedAt": "2026-08-25T03:32:44+00:00",
+      "publishedTs": 1787628764.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin miner Metaplanet (@Metaplanet), which bought 43,000 $BTC ($3.48B) at an average price of $96,191, deposited another 1,000 $BTC ($79.77M) into Coinbase Prime 1 hour ago https://arkm.com/explorer/entity/metaplanet-2",
+      "link": "https://x.com/lookonchain/status/2092087321369903584#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Bitcoin miner Metaplanet ( @Metaplanet ), which bought 43,000 $BTC ($3.48B) at an average price of $96,191, deposited another 1,000 $BTC ($79.77M) into Coinbase Prime 1 hour ago arkm.com/explorer/entity/met\u2026",
+      "publishedAt": "2026-08-25T03:11:01+00:00",
+      "publishedTs": 1787627461.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "At one point, Machi(@machibigbrother) was liquidated until he had less than $60K left in his account. Now, his account balance has grown nearly 200x, and he has opened massive $113M in $BTC and $ETH longs. Current positions: 23,350 $ETH($59M) 668 $BTC($54M) https://hypurrscan.io/",
       "link": "https://x.com/lookonchain/status/2092078301032689744#m",
@@ -978,19 +1004,6 @@
       "isRetweet": false
     },
     {
-      "title": "Whale 0x2684, who bought 79,216 $ETH($140.77M) at $1,777 and 1,400 $WBTC($89.44M) at $63,887, is taking profits as the market rises. Over the past 3 days, he sold 15,765 $ETH($36M) at $2,281 and 110 $WBTC($8.6M) at $78,235, realizing a $9.5M profit. https://x.com/lookonchain/stat",
-      "link": "https://x.com/lookonchain/status/2091481452915609886#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale 0x2684, who bought 79,216 $ETH ($140.77M) at $1,777 and 1,400 $WBTC ($89.44M) at $63,887, is taking profits as the market rises. Over the past 3 days, he sold 15,765 $ETH ($36M) at $2,281 and 110 $WBTC ($8.6M) at $78,235, realizing a $9.5M profit. nitter.perennialte.ch/look",
-      "publishedAt": "2026-08-23T11:03:30+00:00",
-      "publishedTs": 1787483010.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "PANEL ANNOUNCEMENT \ud83d\udce3 What happens when #Bitcoin conviction scales from the individual to the corporation? \ud83d\udc40 Stephan Livera and David Bailey unpack the evolution of Bitcoin ownership, and what changes when companies put Bitcoin at the center of their strategy. \ud83d\udd25 August 28 | Nakamo",
       "link": "https://x.com/Bitcoinconfasia/status/2091361085123105138#m",
       "source": "@BitcoinMagazine",
@@ -1025,19 +1038,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T02:38:10+00:00",
       "publishedTs": 1787452690.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Whale 3NVeXm deposited 2,555 $BTC($197M) into #Binance 13 hours ago. https://arkm.com/explorer/address/3NVeXmBcmXsBSvXgpQuXWuGg4pDBDEWEok",
-      "link": "https://x.com/lookonchain/status/2091336724815511680#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Whale 3NVeXm deposited 2,555 $BTC ($197M) into #Binance 13 hours ago. arkm.com/explorer/address/3N\u2026",
-      "publishedAt": "2026-08-23T01:28:25+00:00",
-      "publishedTs": 1787448505.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
