@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-25T05:29:52Z",
+  "fetchedAt": "2026-08-25T06:43:04Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Get out of \u20bfed.",
+      "link": "https://x.com/saylor/status/2092138553736135089#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Get out of \u20bfed. Video",
+      "publishedAt": "2026-08-25T06:34:35+00:00",
+      "publishedTs": 1787639675.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Two wallets(possibly belonging to the same whale) closed their $BTC longs 1 hour ago after holding them for nearly 2 months, making a $11.6M profit. Wallets: 0x5FA92137445B8cAA21a85a4B69156B7Fc40C3C83 0x237152b038d88f4156a0cd71090462de7e3f0883",
       "link": "https://x.com/lookonchain/status/2092118998511202313#m",
@@ -1457,19 +1470,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Take the orange pill.",
-      "link": "https://x.com/saylor/status/2090684641942360459#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Take the orange pill. Video",
-      "publishedAt": "2026-08-21T06:17:16+00:00",
-      "publishedTs": 1787293036.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "The bitcoin bear market is likely over says financial macro analyst @LynAldenContact",
