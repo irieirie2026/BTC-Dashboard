@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-25T20:26:54Z",
+  "fetchedAt": "2026-08-25T21:26:10Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "NEW: Bitcoin has jumped above the 200 Week Moving Average! Bullish \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2092357544102514935#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-25T21:04:47+00:00",
+      "publishedTs": 1787691887.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "See how the BMTV studio took shape. \ud83d\udc40 What started as an empty room is now a global platform built for covering the biggest stories in Finance, Markets, and Bitcoin. Follow for more updates on speakers and upcoming schedules coming soon. \ud83d\udca5",
       "link": "https://x.com/watchbmtv/status/2092346438717956425#m",
@@ -791,19 +804,6 @@
       "summary": "Market here: polymarket.com/event/what-pr\u2026",
       "publishedAt": "2026-08-24T16:07:14+00:00",
       "publishedTs": 1787587634.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: There's now a 53% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091917601681076297#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T15:56:36+00:00",
-      "publishedTs": 1787586996.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
