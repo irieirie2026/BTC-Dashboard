@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-25T19:30:03Z",
+  "fetchedAt": "2026-08-25T20:26:54Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "See how the BMTV studio took shape. \ud83d\udc40 What started as an empty room is now a global platform built for covering the biggest stories in Finance, Markets, and Bitcoin. Follow for more updates on speakers and upcoming schedules coming soon. \ud83d\udca5",
+      "link": "https://x.com/watchbmtv/status/2092346438717956425#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "See how the BMTV studio took shape. \ud83d\udc40 What started as an empty room is now a global platform built for covering the biggest stories in Finance, Markets, and Bitcoin. Follow for more updates on speakers and upcoming schedules coming soon. \ud83d\udca5 Video",
+      "publishedAt": "2026-08-25T20:20:39+00:00",
+      "publishedTs": 1787689239.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: Fairlead Strategies founder tells CNBC Bitcoin is \"not over bought yet, so that's the good thing.\" \"We're looking for more upside from gold...maybe it won't be quite as long lived as what we expect from Bitcoin\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2092342341856109054#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Fairlead Strategies founder tells CNBC Bitcoin is \"not over bought yet, so that's the good thing.\" \"We're looking for more upside from gold...maybe it won't be quite as long lived as what we expect from Bitcoin\" \ud83d\ude80 Video",
+      "publishedAt": "2026-08-25T20:04:22+00:00",
+      "publishedTs": 1787688262.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "\"Don't get so busy making a living that you forget to make a life.\" - Dolly Parton Rest in Peace",
       "link": "https://x.com/lopp/status/2092333425822683424#m",
@@ -939,19 +965,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: $79,037 Bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091871163655860229#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T12:52:05+00:00",
-      "publishedTs": 1787575925.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "I believe $BRR is the first public company to sit at the intersection of AI and bitcoin. We have built a leading AI research lab exclusively focused on finance. We then hold hundreds of millions of dollars of bitcoin on balance sheet. AI is offense, bitcoin is defense.",
       "link": "https://x.com/APompliano/status/2091871073419542736#m",
       "source": "@APompliano",
@@ -973,19 +986,6 @@
       "summary": "Michael Saylor( @saylor )'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC . sec.gov/Archives/edgar/data/\u2026",
       "publishedAt": "2026-08-24T12:33:37+00:00",
       "publishedTs": 1787574817.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive purchases 1,110 Bitcoin for $81.5 million! This brings their total to 21,356 BTC \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091863805512794594#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T12:22:50+00:00",
-      "publishedTs": 1787574170.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1288,19 +1288,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "PANEL ANNOUNCEMENT \ud83d\udce3 What happens when #Bitcoin conviction scales from the individual to the corporation? \ud83d\udc40 Stephan Livera and David Bailey unpack the evolution of Bitcoin ownership, and what changes when companies put Bitcoin at the center of their strategy. \ud83d\udd25 August 28 | Nakamo",
-      "link": "https://x.com/Bitcoinconfasia/status/2091361085123105138#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "PANEL ANNOUNCEMENT \ud83d\udce3 What happens when #Bitcoin conviction scales from the individual to the corporation? \ud83d\udc40 Stephan Livera and David Bailey unpack the evolution of Bitcoin ownership, and what changes when companies put Bitcoin at the center of their strategy. \ud83d\udd25 August 28 | Nakamo",
-      "publishedAt": "2026-08-23T03:05:12+00:00",
-      "publishedTs": 1787454312.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The smallest Bitcoin node running in a college dorm room can check and reject the work of the largest corporate Bitcoin mining company.",
