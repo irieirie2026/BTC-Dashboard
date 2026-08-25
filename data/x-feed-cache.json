@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-25T11:25:12Z",
+  "fetchedAt": "2026-08-25T12:43:12Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "The X @Safety team should launch a new initiative aimed at identifying unwell people who argue with Grok as if it's a human or portray other traits of AI psychosis, so that they can direct those folks to seek the help of a mental health professional.",
+      "link": "https://x.com/lopp/status/2092223824133517784#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-25T12:13:25+00:00",
+      "publishedTs": 1787660005.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Good q.. This is first book I'm aware of that covers the ETF effect in depth, which in our view was a total game changer as it solved the ongoing intermediary problem for bitcoin/crypto (by making it much cheaper and much safer) and opened it up to $40T of financial advisor money",
+      "link": "https://x.com/EricBalchunas/status/2092215646058631403#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Good q.. This is first book I'm aware of that covers the ETF effect in depth, which in our view was a total game changer as it solved the ongoing intermediary problem for bitcoin/crypto (by making it much cheaper and much safer) and opened it up to $40T of financial advisor money",
+      "publishedAt": "2026-08-25T11:40:56+00:00",
+      "publishedTs": 1787658056.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Here's Top 10 asset mgrs by 1yr organic growth rate (w at least $5b). NEOS in league of own hence why GS wanted them so bad. Lot of indie ETF firms (aka acquisition targets), incl Amplify, Simplify and VolShares at #2, that's a lot of 2x and crypto. AQR shows MF cos can still gro",
+      "link": "https://x.com/EricBalchunas/status/2092214796175184223#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Here's Top 10 asset mgrs by 1yr organic growth rate (w at least $5b). NEOS in league of own hence why GS wanted them so bad. Lot of indie ETF firms (aka acquisition targets), incl Amplify, Simplify and VolShares at #2, that's a lot of 2x and crypto. AQR shows MF cos can still gro",
+      "publishedAt": "2026-08-25T11:37:33+00:00",
+      "publishedTs": 1787657853.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "A whale sold 1,400 $BTC($111.61M) after 4 years of inactivity. The whale received 2,200 $BTC ($99.05M) at an average price of $45,024 4 years ago. He survived the long bear market and finally made it to the bull market, without selling even when his unrealized profit peaked at $1",
       "link": "https://x.com/lookonchain/status/2092180304144597425#m",
@@ -284,6 +323,19 @@
       "summary": "",
       "publishedAt": "2026-08-24T20:32:02+00:00",
       "publishedTs": 1787603522.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "$STRC up 35% since an explosion of first time commentators created an opinion on a topic they know nothing about",
+      "link": "https://x.com/mikewmunz/status/2091986496718823505#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-24T20:30:22+00:00",
+      "publishedTs": 1787603422.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1342,19 +1394,6 @@
       "isRetweet": true
     },
     {
-      "title": "We have competition for those hockey futures ETFs !",
-      "link": "https://x.com/JSeyff/status/2090918149520552334#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "We have competition for those hockey futures ETFs ! Todd Sohn (@Todd_Sohn) Hockey baby meme feels even more apt now @MazzaDave @maybebullish \u2014 http://nitter.perennialte.ch/Todd_Sohn/status/2090914997530476805#m",
-      "publishedAt": "2026-08-21T21:45:08+00:00",
-      "publishedTs": 1787348708.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "x.com/i/article/209050735975\u2026",
       "link": "https://x.com/hillery_dan/status/2090903165491085799#m",
       "source": "@saylor",
@@ -1405,19 +1444,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "The Need for \u20bfitcoin.",
-      "link": "https://x.com/saylor/status/2090799524612612282#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "The Need for \u20bfitcoin. Video",
-      "publishedAt": "2026-08-21T13:53:46+00:00",
-      "publishedTs": 1787320426.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Pinned: What are the potential scenarios that could unfold if a quantum capable adversary appears on the Bitcoin network and what can we do to prepare for them? https://www.youtube.com/watch?v=rAeM3uKyixU",
@@ -1688,19 +1714,6 @@
       "summary": "most ppl simply do not realize that before fb the internet was almost entirely anonymous. there was very little personal branding, in fact if you went into chat rooms or forums, you had no idea who was who. not only that but ppl were afraid to put in credit cards on the internet ",
       "publishedAt": "2026-08-18T03:03:41+00:00",
       "publishedTs": 1787022221.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "This is a delightfully thorough postmortem of BIP-110, and the silly & obviously-broken lines of thinking its supporters espoused. Complete with tons of receipts:",
-      "link": "https://x.com/robustus/status/2089528358874890308#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This is a delightfully thorough postmortem of BIP-110, and the silly &amp; obviously-broken lines of thinking its supporters espoused. Complete with tons of receipts: Jameson Lopp (@lopp) Reflections upon the past year of the BIP-110 movement, similarities I noted to the 2017 sca",
-      "publishedAt": "2026-08-18T01:42:36+00:00",
-      "publishedTs": 1787017356.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
