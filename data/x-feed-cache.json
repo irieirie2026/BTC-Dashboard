@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-26T05:32:54Z",
+  "fetchedAt": "2026-08-26T06:45:14Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "It's not too late to FOMO in to Asia's largest Bitcoin event \ud83d\udc40 Trust us, you don't want to miss this \ud83d\udd25 10% off here \ud83d\udc47 https://tickets.b.tc/event/bitcoin-\u2026",
+      "link": "https://x.com/BitcoinMagazine/status/2092491322909483214#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "It's not too late to FOMO in to Asia's largest Bitcoin event \ud83d\udc40 Trust us, you don't want to miss this \ud83d\udd25 10% off here \ud83d\udc47 tickets.b.tc/event/bitcoin- \u2026",
+      "publishedAt": "2026-08-26T05:56:22+00:00",
+      "publishedTs": 1787723782.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Asia\u2019s largest Bitcoin conference starts tomorrow \ud83c\udded\ud83c\uddf0 You are not ready \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2092485707902161296#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-26T05:34:03+00:00",
+      "publishedTs": 1787722443.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "TRON reached 400M total users in just 8.16 years, much faster than Bitcoin and Ethereum. Bitcoin took 9.4 years to reach 400M users, while Ethereum took over 10 years.",
       "link": "https://x.com/lookonchain/status/2092425715249811507#m",
@@ -848,19 +874,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Ionic Digital increased their treasury by 21 Bitcoin, now totaling 2,882 BTC worth $168 million! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091932807203348970#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T16:57:02+00:00",
-      "publishedTs": 1787590622.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Here is the first big step toward Monad's post-quantum roadmap: a mechanism for allowing signature scheme upgrades without changing the public address. Users will be able to switch to a quantum-resistant scheme without disrupting address books, DeFi positions, etc. We think this ",
       "link": "https://x.com/keoneHD/status/2091927322152583617#m",
       "source": "@nic_carter",
@@ -895,19 +908,6 @@
       "summary": "",
       "publishedAt": "2026-08-24T16:18:40+00:00",
       "publishedTs": 1787588320.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-august-2026",
-      "link": "https://x.com/BitcoinMagazine/status/2091920276271300672#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Market here: polymarket.com/event/what-pr\u2026",
-      "publishedAt": "2026-08-24T16:07:14+00:00",
-      "publishedTs": 1787587634.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1090,19 +1090,6 @@
       "summary": "Michael Saylor( @saylor )'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC . sec.gov/Archives/edgar/data/\u2026",
       "publishedAt": "2026-08-24T12:33:37+00:00",
       "publishedTs": 1787574817.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Someone created a new wallet (0xa314), deposited 8M $USDC into #Hyperliquid, and opened 20x longs on 600 $BTC($46.92M) and 10,000 $ETH($24.85M). https://hypurrscan.io/address/0xa31489f5bcba00d33621fed897721566ff07d8f9#perps",
-      "link": "https://x.com/lookonchain/status/2091862969256968372#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Someone created a new wallet (0xa314), deposited 8M $USDC into #Hyperliquid , and opened 20x longs on 600 $BTC ($46.92M) and 10,000 $ETH ($24.85M). hypurrscan.io/address/0xa314\u2026",
-      "publishedAt": "2026-08-24T12:19:31+00:00",
-      "publishedTs": 1787573971.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
