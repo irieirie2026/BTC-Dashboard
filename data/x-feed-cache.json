@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-26T01:11:48Z",
+  "fetchedAt": "2026-08-26T03:03:09Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "TRON reached 400M total users in just 8.16 years, much faster than Bitcoin and Ethereum. Bitcoin took 9.4 years to reach 400M users, while Ethereum took over 10 years.",
+      "link": "https://x.com/lookonchain/status/2092425715249811507#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "",
+      "publishedAt": "2026-08-26T01:35:40+00:00",
+      "publishedTs": 1787708140.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "After getting back into profit, Garrett Jin (@GarrettBullish) didn't take profit. Instead, he added another 600 $BTC($47.19M) to his long. Current positions: Long 1,868 $BTC($147M) PnL: +$2.9M Liquidation: $44,455 Short 32,760 $ZEC($25.5M) PnL: -$11M Liquidation: $2,529 https://h",
       "link": "https://x.com/lookonchain/status/2092417181053227408#m",
@@ -27,6 +40,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "BITCOIN ASIA 2026 LAUNCHES TOMORROW \ud83d\ude80 THOUSANDS OF BITCOINERS ARE ABOUT TO COME TOGETHER \ud83d\udc4f",
+      "link": "https://x.com/Bitcoinconfasia/status/2092406731309527512#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-26T00:20:14+00:00",
+      "publishedTs": 1787703614.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "has X admitted a data breach yet? cause one def happened. i'm getting phishing emails to my connected email which has never happened before.",
@@ -887,19 +913,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: There's now a 53% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2091917601681076297#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-24T15:56:36+00:00",
-      "publishedTs": 1787586996.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "ETF IQ today we have exclusive intv w/ Goldman and NEOS together to discuss the recent acquisition. Also talking to Wellington about their privates interval fund w/ Blackstone/Vgrd. Also a Drill Down into the Texas ETF $TXS and @psarofagis on the proposed NHL Team ETFs (which I'm",
       "link": "https://x.com/EricBalchunas/status/2091908503807898098#m",
       "source": "@ericbalchunas",
@@ -1199,19 +1212,6 @@
       "isRetweet": false
     },
     {
-      "title": "Over the past 30 minutes, #Ceffu deposited 136.54M $USDC into #Binance, then withdrew 1,524 $BTC ($117.89M) and 59,484 $ETH ($145.92M) from #Binance. https://arkm.com/explorer/address/12993NM9fV8dSSQgbWDZSBVgqtPw4DaAXS https://arkm.com/explorer/address/0xed9B63d1D4EFA9AE415854486",
-      "link": "https://x.com/lookonchain/status/2091779480989872452#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Over the past 30 minutes, #Ceffu deposited 136.54M $USDC into #Binance , then withdrew 1,524 $BTC ($117.89M) and 59,484 $ETH ($145.92M) from #Binance . arkm.com/explorer/address/12\u2026 arkm.com/explorer/address/0x\u2026 arkm.com/explorer/entity/cef\u2026",
-      "publishedAt": "2026-08-24T06:47:46+00:00",
-      "publishedTs": 1787554066.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "With due respect to my ex-Bloomberg Intelligence colleague and all round solid guy, @mikemcglone11, who's copping a tonne of flak right now for being bearish on Bitcoin. I loved my years working with Mike. Before I joined as the dedicated crypto analyst, he was already a Bitcoin ",
       "link": "https://x.com/Jamie1Coutts/status/2091773144705220911#m",
       "source": "@JSeyff",
@@ -1223,19 +1223,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "This bear is back for his 15th short! Over the past 5 days, he has shorted $BTC and $ETH 14 times, losing every single time for a total loss of $4.56M. Now he's opened a 40x short on 300 $BTC ($23.13M). Can he finally win one? Wallet: 0x004edcd40360e293e4cf260d2ebdf8c7076c1bb8",
-      "link": "https://x.com/lookonchain/status/2091749547643113785#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "",
-      "publishedAt": "2026-08-24T04:48:49+00:00",
-      "publishedTs": 1787546929.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Bitcoin created a digital thing that becomes more valuable when copied. Every additional copy of the ledger helps preserve and verify the same set of units. Replication, which normally makes digital scarcity and value impossible, became part of the mechanism that protects it.",
