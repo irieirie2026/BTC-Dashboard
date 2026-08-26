@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-26T11:27:53Z",
+  "fetchedAt": "2026-08-26T12:48:14Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Cold-blooded conviction.",
+      "link": "https://x.com/saylor/status/2092589286377808000#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Cold-blooded conviction. Video",
+      "publishedAt": "2026-08-26T12:25:38+00:00",
+      "publishedTs": 1787747138.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: REMINDER: this is a CRITICAL security practice. If you don't follow this advice & your gmail account gets compromised, you are completely screwed. Attackers will reset your other account passwords via your email and then use your 2FA code to log in. https://x.com/lopp/sta",
+      "link": "https://x.com/lopp/status/2092585292326658380#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "REMINDER: this is a CRITICAL security practice. If you don't follow this advice &amp; your gmail account gets compromised, you are completely screwed. Attackers will reset your other account passwords via your email and then use your 2FA code to log in. nitter.perennialte.ch/lopp",
+      "publishedAt": "2026-08-26T12:09:46+00:00",
+      "publishedTs": 1787746186.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "INSIGHT: Michael @Saylor's @Strategy reduces its net leverage to near zero after building $6.69B in dollar liquidity. Its USD reserve now covers 4 years of preferred stock dividends as $STRC recovers 35% from its June lows.",
+      "link": "https://x.com/CoinDesk/status/2092569912338157723#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "INSIGHT: Michael @Saylor 's @Strategy reduces its net leverage to near zero after building $6.69B in dollar liquidity. Its USD reserve now covers 4 years of preferred stock dividends as $STRC recovers 35% from its June lows.",
+      "publishedAt": "2026-08-26T11:08:39+00:00",
+      "publishedTs": 1787742519.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Meet a smart trader on @Aster_DEX who turned $24K into $275K in less than a month \u2014 an 11x return! He deposited $24K into #Aster and used up to 100x leverage to long $BTC, $ETH, and $LINK, making 10x+ on each. He has withdrawn $91K in profit and still has $184K on #Aster. https:/",
       "link": "https://x.com/lookonchain/status/2092518101765997030#m",
@@ -1160,32 +1199,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin key indicators are strong: Premium to 200W MA: 21.1% Fear/Greed Index: 73 (Greed) ETF Net Inflows: $1.731B last 7D, $2.228B last 14D",
-      "link": "https://x.com/phongle/status/2091848699085275521#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-24T11:22:49+00:00",
-      "publishedTs": 1787570569.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Think like a \u20bfillionaire.",
-      "link": "https://x.com/saylor/status/2091783503759224868#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Think like a \u20bfillionaire. Video",
-      "publishedAt": "2026-08-24T07:03:45+00:00",
-      "publishedTs": 1787555025.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "With due respect to my ex-Bloomberg Intelligence colleague and all round solid guy, @mikemcglone11, who's copping a tonne of flak right now for being bearish on Bitcoin. I loved my years working with Mike. Before I joined as the dedicated crypto analyst, he was already a Bitcoin ",
       "link": "https://x.com/Jamie1Coutts/status/2091773144705220911#m",
       "source": "@JSeyff",
@@ -1524,7 +1537,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: What are the potential scenarios that could unfold if a quantum capable adversary appears on the Bitcoin network and what can we do to prepare for them? https://www.youtube.com/watch?v=rAeM3uKyixU",
+      "title": "What are the potential scenarios that could unfold if a quantum capable adversary appears on the Bitcoin network and what can we do to prepare for them? https://www.youtube.com/watch?v=rAeM3uKyixU",
       "link": "https://x.com/lopp/status/2090782218645827899#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -1701,19 +1714,6 @@
       "summary": "BEHIND THE CURTAIN: FORMER @citrea_xyz DEVELOPER @otaliptus BREAKS SILENCE ABOUT ROLE IN OP_RETURN WAR IN TELL-ALL INTERVIEW WITH @TheGuySwann Video",
       "publishedAt": "2026-08-19T11:09:51+00:00",
       "publishedTs": 1787137791.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Preppers shouldn't neglect cyber prepping in addition to analog survival skills & resources. I myself load hard drives with a wikipedia archive and educational media. We're at the point now that you should probably also throw in the most powerful open LLMs you can grab.",
-      "link": "https://x.com/lopp/status/2089760832242487596#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Preppers shouldn't neglect cyber prepping in addition to analog survival skills &amp; resources. I myself load hard drives with a wikipedia archive and educational media. We're at the point now that you should probably also throw in the most powerful open LLMs you can grab.",
-      "publishedAt": "2026-08-18T17:06:22+00:00",
-      "publishedTs": 1787072782.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
