@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-08-26T06:45:14Z",
+  "fetchedAt": "2026-08-26T07:44:00Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Meet a smart trader on @Aster_DEX who turned $24K into $275K in less than a month \u2014 an 11x return! He deposited $24K into #Aster and used up to 100x leverage to long $BTC, $ETH, and $LINK, making 10x+ on each. He has withdrawn $91K in profit and still has $184K on #Aster. https:/",
+      "link": "https://x.com/lookonchain/status/2092518101765997030#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Meet a smart trader on @Aster_DEX who turned $24K into $275K in less than a month \u2014 an 11x return! He deposited $24K into #Aster and used up to 100x leverage to long $BTC , $ETH , and $LINK , making 10x+ on each. He has withdrawn $91K in profit and still has $184K on #Aster . ast",
+      "publishedAt": "2026-08-26T07:42:47+00:00",
+      "publishedTs": 1787730167.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is Digital Capital. Study it.",
+      "link": "https://x.com/saylor/status/2092505791420932522#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bitcoin is Digital Capital. Study it. Strategy (@Strategy) Bitcoin is an open, global reserve asset with absolute scarcity. The Investor Guide explores Bitcoin\u2019s monetary properties, investment case, market structure, portfolio role, custody and risks. bitcoin:native strategy.com",
+      "publishedAt": "2026-08-26T06:53:52+00:00",
+      "publishedTs": 1787727232.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "It's not too late to FOMO in to Asia's largest Bitcoin event \ud83d\udc40 Trust us, you don't want to miss this \ud83d\udd25 10% off here \ud83d\udc47 https://tickets.b.tc/event/bitcoin-\u2026",
       "link": "https://x.com/BitcoinMagazine/status/2092491322909483214#m",
@@ -76,6 +102,19 @@
       "summary": "",
       "publishedAt": "2026-08-26T00:20:14+00:00",
       "publishedTs": 1787703614.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Michael Saylor: The Single Most Important Thing Right Now Is to Fix the Credit Business At Strategy's Q2 2026 investor Q&A, livestreamed on Aug. 17, regarding the company's future business blueprint and capital allocation strategy, Executive Chairman Michael Saylor @saylor stated",
+      "link": "https://x.com/WuBlockchain/status/2092401646084993514#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Michael Saylor: The Single Most Important Thing Right Now Is to Fix the Credit Business At Strategy's Q2 2026 investor Q&A, livestreamed on Aug. 17, regarding the company's future business blueprint and capital allocation strategy, Executive Chairman Michael Saylor @saylor stated",
+      "publishedAt": "2026-08-26T00:00:02+00:00",
+      "publishedTs": 1787702402.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1082,19 +1121,6 @@
       "isRetweet": false
     },
     {
-      "title": "Michael Saylor(@saylor)'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC. https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
-      "link": "https://x.com/lookonchain/status/2091866519320064054#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Michael Saylor( @saylor )'s #Strategy didn't buy or sell any $BTC last week. But it sold 18.26M shares of $MSTR for $2.01B, with $1.57B allocated to USD Cash, which can be used to buy more $BTC . sec.gov/Archives/edgar/data/\u2026",
-      "publishedAt": "2026-08-24T12:33:37+00:00",
-      "publishedTs": 1787574817.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Strive acquired an additional 1,110 $BTC for $81.5M at an average cost of $73,409 per bitcoin, bringing total holdings to \u20bf21,356. $ASST $SATA",
       "link": "https://x.com/ColeMacro/status/2091859322624155994#m",
       "source": "@saylor",
@@ -1238,19 +1264,6 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin is \u20bfetter.",
-      "link": "https://x.com/saylor/status/2091578903500406989#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is \u20bfetter. Video",
-      "publishedAt": "2026-08-23T17:30:44+00:00",
-      "publishedTs": 1787506244.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Pinned: Human in the Loop | A short story about the AI aligned future http://x.com/i/article/2091553926059323392",
       "link": "https://x.com/nic_carter/status/2091556059575906311#m",
       "source": "@nic_carter",
@@ -1311,19 +1324,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T12:22:52+00:00",
       "publishedTs": 1787487772.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin\u2019s most profound breakthrough is the ability to convert economic energy into digital form and bind it securely to a person, family, company, machine, or nation.",
-      "link": "https://x.com/saylor/status/2091501126013087838#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-23T12:21:41+00:00",
-      "publishedTs": 1787487701.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
