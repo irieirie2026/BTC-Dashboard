@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-08-28T21:05:47Z",
+  "fetchedAt": "2026-08-29T03:30:30Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Machi(@machibigbrother) currently holds over $100M in $ETH longs, making him the largest on-chain $ETH bull! As the market dropped, Machi closed part of his position at a loss 7 hours ago, losing $1.96M. Current positions: 41,000 $ETH($100.01M) 75,000 $HYPE($6.03M) 45 bitcoin:nat",
+      "link": "https://x.com/lookonchain/status/2093524179471765989#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Machi( @machibigbrother ) currently holds over $100M in $ETH longs, making him the largest on-chain $ETH bull! As the market dropped, Machi closed part of his position at a loss 7 hours ago, losing $1.96M. Current positions: 41,000 $ETH ($100.01M) 75,000 $HYPE ($6.03M) 45 bitcoin",
+      "publishedAt": "2026-08-29T02:20:34+00:00",
+      "publishedTs": 1787970034.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin mining company #MetaPlanet has deposited 3,000 bitcoin:native($237M) into #CoinbasePrime in the past 24 hours. https://arkm.com/explorer/entity/metaplanet-2",
+      "link": "https://x.com/lookonchain/status/2093516783672307793#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Bitcoin mining company #MetaPlanet has deposited 3,000 bitcoin:native($237M) into #CoinbasePrime in the past 24 hours. arkm.com/explorer/entity/met\u2026",
+      "publishedAt": "2026-08-29T01:51:11+00:00",
+      "publishedTs": 1787968271.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This week at Bitcoin Magazine \ud83d\udcf0 - Strive - $81K - Ionic Digital - Historic August - Webull CEO - FOX on Bitcoin - BitGo CEO - Thailand - Pomp the bull - Bitcoin in WSJ - Fairlead Strategies - 200 WMA - Bitcoin Asia - US SEC - BlackRock - Coinbase Mortgages - Pakistan - CNBC on BT",
+      "link": "https://x.com/theonlyposted/status/2093469516692942996#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "This week at Bitcoin Magazine \ud83d\udcf0 - Strive - $81K - Ionic Digital - Historic August - Webull CEO - FOX on Bitcoin - BitGo CEO - Thailand - Pomp the bull - Bitcoin in WSJ - Fairlead Strategies - 200 WMA - Bitcoin Asia - US SEC - BlackRock - Coinbase Mortgages - Pakistan - CNBC on BT",
+      "publishedAt": "2026-08-28T22:43:22+00:00",
+      "publishedTs": 1787957002.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: BitGo CEO tells CNBC \"The one thing that's been steady is the thesis behind Bitcoin continues to grow, and so all these products behind it grow\" \ud83d\udc4f \"Everybody from traditional finance is announcing their products and plans...it's just been growing every day.\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2093446907750170709#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: BitGo CEO tells CNBC \"The one thing that's been steady is the thesis behind Bitcoin continues to grow, and so all these products behind it grow\" \ud83d\udc4f \"Everybody from traditional finance is announcing their products and plans...it's just been growing every day.\" \ud83d\ude80 Video",
+      "publishedAt": "2026-08-28T21:13:31+00:00",
+      "publishedTs": 1787951611.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "NEW: Bitcoin \"appears to have entered a new bull-market regime\", according to CryptoQuant. \ud83d\udc40 \"Spot demand, ETF flows, and market momentum have turned decisively bullish\" \ud83d\udc02",
       "link": "https://x.com/BitcoinMagazine/status/2093424108276982066#m",
@@ -601,19 +653,6 @@
       "isRetweet": false
     },
     {
-      "title": "Coinkite\u2019s Coldcard Bug Exposed Single-Sig Risk. Multi-Vendor Multisig Is the New Bitcoin Custody Baseline https://bitcoinmagazine.com/business/coinkites-coldcard-bug-exposed-single-sig-risk-multi-vendor-multisig-is-the-new-bitcoin-custody-baseline",
-      "link": "https://x.com/JuanSGalt/status/2093027257904242772#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Coinkite\u2019s Coldcard Bug Exposed Single-Sig Risk. Multi-Vendor Multisig Is the New Bitcoin Custody Baseline bitcoinmagazine.com/business\u2026",
-      "publishedAt": "2026-08-27T17:25:59+00:00",
-      "publishedTs": 1787851559.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Regime shift: Bitcoin now more correlated with gold than stocks In digital assets we expect the so-called \"debasement trade\" to primarily benefit $BTC, $ETH, and $ZEC Quick blog post (h/t @charlieperk4): https://www.grayscale.com/the-stack/regime-shift-bitcoin-and-the-return-of-t",
       "link": "https://x.com/LowBeta/status/2093021378584756732#m",
       "source": "@JSeyff",
@@ -648,19 +687,6 @@
       "summary": "stop over-intellectualizing the anti-datacenter moral panic it's not \"because Dario said AI would take the jobs and Yud wrote a book about p_doom. normal people don't follow these debates. they can't name an AI company aside from OpenAI. they just hate it when anyone builds anyth",
       "publishedAt": "2026-08-27T16:23:24+00:00",
       "publishedTs": 1787847804.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Alpha Modus announced the completion of 3,170 Bitcoin PIPE financing worth $254 million! \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2093008267584614422#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-27T16:10:31+00:00",
-      "publishedTs": 1787847031.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -874,19 +900,6 @@
       "isRetweet": true
     },
     {
-      "title": "Someone created a new wallet, deposited 5M $USDC into Hyperliquid, then opened 20x shorts on 8,155 $ETH($20.33M) and 247.6 $BTC($19.49M). https://hypurrscan.io/address/0xe2ad376800c2da03d611700ffc1d013090733c8c#perps",
-      "link": "https://x.com/lookonchain/status/2092809264427634811#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Someone created a new wallet, deposited 5M $USDC into Hyperliquid, then opened 20x shorts on 8,155 $ETH ($20.33M) and 247.6 $BTC ($19.49M). hypurrscan.io/address/0xe2ad\u2026",
-      "publishedAt": "2026-08-27T02:59:45+00:00",
-      "publishedTs": 1787799585.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
       "link": "https://x.com/DocumentingBTC/status/2092804189051097201#m",
       "source": "@DocumentingBTC",
@@ -898,19 +911,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Catch BMTV anchor Grace Remington & market analyst Sean Hagan on the @Bitcoinconfasia Live News Desk \ud83c\udfa5 Don't forget BMTV launches on September 14th \u26a1\ufe0f",
-      "link": "https://x.com/watchbmtv/status/2092793307948892666#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Catch BMTV anchor Grace Remington &amp; market analyst Sean Hagan on the @Bitcoinconfasia Live News Desk \ud83c\udfa5 Don't forget BMTV launches on September 14th \u26a1\ufe0f",
-      "publishedAt": "2026-08-27T01:56:21+00:00",
-      "publishedTs": 1787795781.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "1/ @CryptoHayes's argument in Seoul: there's no efficient spot market today for turning money into a known quantity of compute over a known period. The currency that solves that becomes the money of the agent economy. Not dollars. Not Bitcoin. Something redeemable for what an age",
