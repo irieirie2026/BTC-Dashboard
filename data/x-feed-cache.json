@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-29T19:12:32Z",
+  "fetchedAt": "2026-08-29T22:21:57Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
@@ -66,6 +66,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47",
+      "link": "https://x.com/SolanaFloor/status/2093564365983346800#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47 Video",
+      "publishedAt": "2026-08-29T05:00:16+00:00",
+      "publishedTs": 1787979616.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Machi(@machibigbrother) currently holds over $100M in $ETH longs, making him the largest on-chain $ETH bull! As the market dropped, Machi closed part of his position at a loss 7 hours ago, losing $1.96M. Current positions: 41,000 $ETH($100.01M) 75,000 $HYPE($6.03M) 45 bitcoin:nat",
