@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-30T01:04:01Z",
+  "fetchedAt": "2026-08-30T07:53:14Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "\u20bfusiness as usual.",
+      "link": "https://x.com/saylor/status/2093970108603371740#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "\u20bfusiness as usual. Video",
+      "publishedAt": "2026-08-30T07:52:32+00:00",
+      "publishedTs": 1788076352.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "NEW: Fidelity says \"Bitcoin has held the floor of its power law curve and has now corrected long enough to satisfy the time element of its mild 4- year cycle winter.\" \ud83d\udc40 Bullish \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2093717207029018906#m",
@@ -130,7 +143,7 @@
       "publishedTs": 1787951611.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "NEW: Bitcoin \"appears to have entered a new bull-market regime\", according to CryptoQuant. \ud83d\udc40 \"Spot demand, ETF flows, and market momentum have turned decisively bullish\" \ud83d\udc02",
@@ -510,19 +523,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin miner Metaplanet (@Metaplanet), which bought 43,000 $BTC($3.48B) at an average price of $96,191, deposited another 1,350 $BTC ($108M) into Coinbase Prime an hour ago. https://arkm.com/explorer/entity/metaplanet-2",
-      "link": "https://x.com/lookonchain/status/2093214382587334918#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Bitcoin miner Metaplanet ( @Metaplanet ), which bought 43,000 $BTC ($3.48B) at an average price of $96,191, deposited another 1,350 $BTC ($108M) into Coinbase Prime an hour ago. arkm.com/explorer/entity/met\u2026",
-      "publishedAt": "2026-08-28T05:49:33+00:00",
-      "publishedTs": 1787896173.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83c\udded\ud83c\uddf0 Asia\u2019s largest Bitcoin conference in Hong Kong is PACKED with attendees \ud83d\udc40 Bullish! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2093197066545570131#m",
       "source": "@BitcoinMagazine",
@@ -531,19 +531,6 @@
       "summary": "",
       "publishedAt": "2026-08-28T04:40:45+00:00",
       "publishedTs": 1787892045.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "After losing 17 shorts in a row, he finally won one! Trader 0x004e previously shorted $BTC and $ETH 17 times in a row and lost every time, losing $5.3M in total. About an hour ago, he shorted $BTC again and quickly closed the position for a $48K profit. https://x.com/lookonchain/",
-      "link": "https://x.com/lookonchain/status/2093172127101067505#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "After losing 17 shorts in a row, he finally won one! Trader 0x004e previously shorted $BTC and $ETH 17 times in a row and lost every time, losing $5.3M in total. About an hour ago, he shorted $BTC again and quickly closed the position for a $48K profit. nitter.perennialte.ch/look",
-      "publishedAt": "2026-08-28T03:01:39+00:00",
-      "publishedTs": 1787886099.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -687,6 +674,19 @@
       "summary": "",
       "publishedAt": "2026-08-27T20:17:13+00:00",
       "publishedTs": 1787861833.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: The Bitcoin Fear & Greed Index is now up to 71, \"Greed\" \ud83d\udc40 Bullish \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2093053954229731355#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: The Bitcoin Fear &amp; Greed Index is now up to 71, \"Greed\" \ud83d\udc40 Bullish \ud83d\ude80",
+      "publishedAt": "2026-08-27T19:12:04+00:00",
+      "publishedTs": 1787857924.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1311,19 +1311,6 @@
       "summary": "Bitcoin is an open, global reserve asset with absolute scarcity. The Investor Guide explores Bitcoin\u2019s monetary properties, investment case, market structure, portfolio role, custody and risks. bitcoin:native strategy.com/bitcoin/brief",
       "publishedAt": "2026-08-25T19:11:31+00:00",
       "publishedTs": 1787685091.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Welcome Back to The Hurdle Rate Episode 71: Liquidity Is The Moat In this week\u2019s Hurdle Rate, the crew breaks down an explosive week across Bitcoin $BTC treasury markets, from Strategy $MSTR reaching 0% net leverage and expanding its cash reserves to Strive growing its Bitcoin st",
-      "link": "https://x.com/HurdleRatePod/status/2092289166809694534#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Welcome Back to The Hurdle Rate Episode 71: Liquidity Is The Moat In this week\u2019s Hurdle Rate, the crew breaks down an explosive week across Bitcoin $BTC treasury markets, from Strategy $MSTR reaching 0% net leverage and expanding its cash reserves to Strive growing its Bitcoin st",
-      "publishedAt": "2026-08-25T16:33:04+00:00",
-      "publishedTs": 1787675584.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
