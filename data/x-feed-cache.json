@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-08-30T07:53:14Z",
+  "fetchedAt": "2026-08-30T13:33:18Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Oh hell naw.",
+      "link": "https://x.com/lopp/status/2094039549697544638#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-30T12:28:28+00:00",
+      "publishedTs": 1788092908.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints at buying more Bitcoin \ud83d\udc40 \u201cWe\u2019re \u20bfack.\u201d \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094034569444147374#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-30T12:08:41+00:00",
+      "publishedTs": 1788091721.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We\u2019re \u20bfack.",
+      "link": "https://x.com/saylor/status/2094033266906955896#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-08-30T12:03:30+00:00",
+      "publishedTs": 1788091410.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\u20bfusiness as usual.",
       "link": "https://x.com/saylor/status/2093970108603371740#m",
@@ -471,19 +510,6 @@
       "isRetweet": false
     },
     {
-      "title": "Trader 0x12C2 opened a 50x long on 50 $BTC ($3.99M) on @Aster_DEX and is now sitting on a $658K unrealized profit \u2014 an 825% return! https://www.asterdex.com/en/explorer/address/0x12C231Fc8825A35e5e390c84f23b9A2C5DF9D8f8",
-      "link": "https://x.com/lookonchain/status/2093255595994620387#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Trader 0x12C2 opened a 50x long on 50 $BTC ($3.99M) on @Aster_DEX and is now sitting on a $658K unrealized profit \u2014 an 825% return! asterdex.com/en/explorer/add\u2026",
-      "publishedAt": "2026-08-28T08:33:19+00:00",
-      "publishedTs": 1787905999.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japanese public company Metaplanet CEO says the bottom for Bitcoin's price is in \ud83d\udc40 \"The buyers arriving now aren't going anywhere. I believe the bottom is in. And I'm expecting a much brighter rest of the year.\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2093249918525727064#m",
       "source": "@BitcoinMagazine",
@@ -674,19 +700,6 @@
       "summary": "",
       "publishedAt": "2026-08-27T20:17:13+00:00",
       "publishedTs": 1787861833.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: The Bitcoin Fear & Greed Index is now up to 71, \"Greed\" \ud83d\udc40 Bullish \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093053954229731355#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: The Bitcoin Fear &amp; Greed Index is now up to 71, \"Greed\" \ud83d\udc40 Bullish \ud83d\ude80",
-      "publishedAt": "2026-08-27T19:12:04+00:00",
-      "publishedTs": 1787857924.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1303,19 +1316,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin is an open, global reserve asset with absolute scarcity. The Investor Guide explores Bitcoin\u2019s monetary properties, investment case, market structure, portfolio role, custody and risks. bitcoin:native https://www.strategy.com/bitcoin/brief",
-      "link": "https://x.com/Strategy/status/2092329038807289884#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is an open, global reserve asset with absolute scarcity. The Investor Guide explores Bitcoin\u2019s monetary properties, investment case, market structure, portfolio role, custody and risks. bitcoin:native strategy.com/bitcoin/brief",
-      "publishedAt": "2026-08-25T19:11:31+00:00",
-      "publishedTs": 1787685091.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Two footguns most bitcoiners miss when setting up multisig according to @lopp. Not backing up your wallet descriptor, and treating multi-vendor multisig as \"set it and forget it.\u201d",
       "link": "https://x.com/CasaHODL/status/2092279381964234841#m",
       "source": "@lopp",
@@ -1597,19 +1597,6 @@
       "summary": "",
       "publishedAt": "2026-08-22T16:16:19+00:00",
       "publishedTs": 1787415379.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The folks who get upset when they run out of tokens on their AI subscription are going to have a bad time when the VC subsidies dry up and prices rise to market rates. Y'all had better be figuring out how to run open weight models locally.",
-      "link": "https://x.com/lopp/status/2091174274383970558#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-22T14:42:53+00:00",
-      "publishedTs": 1787409773.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
