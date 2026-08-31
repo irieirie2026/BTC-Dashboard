@@ -1,7 +1,150 @@
 {
-  "fetchedAt": "2026-08-31T17:53:01Z",
+  "fetchedAt": "2026-08-31T22:28:29Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "BMTV launches 9/14 \ud83d\udfe7 Subscribe on Substack for guest announcements, segment previews, and the full schedule. \ud83d\udc49 https://watchbmtv.substack.com/",
+      "link": "https://x.com/watchbmtv/status/2094546635187478766#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "BMTV launches 9/14 \ud83d\udfe7 Subscribe on Substack for guest announcements, segment previews, and the full schedule. \ud83d\udc49 watchbmtv.substack.com/",
+      "publishedAt": "2026-08-31T22:03:27+00:00",
+      "publishedTs": 1788213807.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The world had to judge Bitcoin before it could ever judge its anonymous inventor. That may be the most important fact in all of computer science.",
+      "link": "https://x.com/DocumentingBTC/status/2094545212920004781#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-31T21:57:48+00:00",
+      "publishedTs": 1788213468.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Bitcoin is closing out its 3rd best August EVER! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094543659198743011#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-31T21:51:37+00:00",
+      "publishedTs": 1788213097.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Giovanni Santostasi on the Bitcoin Power Law: \"One of the things you can predict is that Bitcoin will be about $1 million in 8 years from now, and $10 million in 20 [years].\" \ud83d\ude80",
+      "link": "https://x.com/Bitcoinconfasia/status/2094526987805118726#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Giovanni Santostasi on the Bitcoin Power Law: \"One of the things you can predict is that Bitcoin will be about $1 million in 8 years from now, and $10 million in 20 [years].\" \ud83d\ude80 Video",
+      "publishedAt": "2026-08-31T20:45:22+00:00",
+      "publishedTs": 1788209122.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
+      "link": "https://x.com/BitcoinMagazine/status/2094521286311444536#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: saltlending.com/bitcoin-loan\u2026",
+      "publishedAt": "2026-08-31T20:22:43+00:00",
+      "publishedTs": 1788207763.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "MSCI should be a mirror of the market, not an arbiter of it.",
+      "link": "https://x.com/saylor/status/2094504567387906388#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "MSCI should be a mirror of the market, not an arbiter of it. Strategy (@Strategy) Strategy responded today to MSCI\u2019s proposed \u201cnon-operating company\u201d exclusion. While not material to $MSTR , the proposal is misguided, flawed, and conflicts with established securities laws and acc",
+      "publishedAt": "2026-08-31T19:16:17+00:00",
+      "publishedTs": 1788203777.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Crypto ETFs attracted $3.2 billion in inflows last week, \"their largest weekly intake since October 2025\", The Kobeissi Letter reports. \ud83d\udc40 BlackRock's IBIT led with $928 million last week, adding to their $1.3 billion from the prior week, and marking the biggest 2-week in",
+      "link": "https://x.com/BitcoinMagazine/status/2094501752720482552#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Crypto ETFs attracted $3.2 billion in inflows last week, \"their largest weekly intake since October 2025\", The Kobeissi Letter reports. \ud83d\udc40 BlackRock's IBIT led with $928 million last week, adding to their $1.3 billion from the prior week, and marking the biggest 2-week in",
+      "publishedAt": "2026-08-31T19:05:06+00:00",
+      "publishedTs": 1788203106.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
+      "link": "https://x.com/lopp/status/2094499013659636176#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
+      "publishedAt": "2026-08-31T18:54:13+00:00",
+      "publishedTs": 1788202453.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Could bitcoin hit $1 million in the next few years?",
+      "link": "https://x.com/APompliano/status/2094490946415284247#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Could bitcoin hit $1 million in the next few years? Video",
+      "publishedAt": "2026-08-31T18:22:10+00:00",
+      "publishedTs": 1788200530.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A Bitcoin address can amazingly be created on a computer that has never touched the internet.",
+      "link": "https://x.com/DocumentingBTC/status/2094488679595086112#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-31T18:13:09+00:00",
+      "publishedTs": 1788199989.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "XRP ETF flows have been surprisingly resilient. Money in the aggregate has mostly only gone one direction and now they have a total of $1.8 billion in cumulative net inflows. When you look at this compared ripple:native price over this time period ... its particularly impressive",
+      "link": "https://x.com/JSeyff/status/2094485620710117749#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "XRP ETF flows have been surprisingly resilient. Money in the aggregate has mostly only gone one direction and now they have a total of $1.8 billion in cumulative net inflows. When you look at this compared ripple:native price over this time period ... its particularly impressive ",
+      "publishedAt": "2026-08-31T18:01:00+00:00",
+      "publishedTs": 1788199260.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "CoinMarketCap made a new feature that lets you play a \u2018flappy bird\u2019 game using the Bitcoin price",
       "link": "https://x.com/DocumentingBTC/status/2094480002469302301#m",
@@ -133,6 +276,32 @@
       "isRetweet": false
     },
     {
+      "title": "Aug 24\u2013Aug 30, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Stablecoin supply grew by $987.1M last week, DEX spot volume slipped and perp volume fell, while public companies added 4,003 BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market cap increased by $987.1M. \ud83d\udfe2 Spot & Perps Trad",
+      "link": "https://x.com/lookonchain/status/2094428194011333071#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Aug 24\u2013Aug 30, 2026 #LookonchainWeeklyReport \ud83d\udfe2 Overview Stablecoin supply grew by $987.1M last week, DEX spot volume slipped and perp volume fell, while public companies added 4,003 BTC. \ud83d\udfe2 Stablecoin Market The total stablecoin market cap increased by $987.1M. \ud83d\udfe2 Spot & Perps Trad",
+      "publishedAt": "2026-08-31T14:12:48+00:00",
+      "publishedTs": 1788185568.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "August 31 Update: #Bitcoin ETFs: 1D NetFlow: -2,689 bitcoin:native(-$209.79M)\ud83d\udd34 7D NetFlow: +11,724 bitcoin:native(+$914.72M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +31,399 $ETH(+$76.99M)\ud83d\udfe2 7D NetFlow: +302,035 $ETH(+$740.57M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2094427807866831157#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "August 31 Update: #Bitcoin ETFs: 1D NetFlow: -2,689 bitcoin:native(-$209.79M)\ud83d\udd34 7D NetFlow: +11,724 bitcoin:native(+$914.72M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +31,399 $ETH (+$76.99M)\ud83d\udfe2 7D NetFlow: +302,035 $ETH (+$740.57M)\ud83d\udfe2",
+      "publishedAt": "2026-08-31T14:11:16+00:00",
+      "publishedTs": 1788185476.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "\u20bfREAKING: Strategy buys additional 4,603 bitcoins and now holds $65,760,000,000 worth.",
       "link": "https://x.com/DocumentingBTC/status/2094419404599574749#m",
       "source": "@DocumentingBTC",
@@ -185,6 +354,19 @@
       "isRetweet": false
     },
     {
+      "title": "Michael Saylor(@saylor) isn't a great trader either \u2014 always selling bitcoin:native low and buying it back high! Over the past 2 months, he sold 6,916 bitcoin:native($429.35M) at $62,081, then bought back 4,603 bitcoin:native($369.7M) at a much higher price of $80,318. That's an ",
+      "link": "https://x.com/lookonchain/status/2094403231548162287#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Michael Saylor( @saylor ) isn't a great trader either \u2014 always selling bitcoin:native low and buying it back high! Over the past 2 months, he sold 6,916 bitcoin:native($429.35M) at $62,081, then bought back 4,603 bitcoin:native($369.7M) at a much higher price of $80,318. That's a",
+      "publishedAt": "2026-08-31T12:33:37+00:00",
+      "publishedTs": 1788179617.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bill Gates says, \u201cI wouldn\u2019t choose crypto\u201d",
       "link": "https://x.com/DocumentingBTC/status/2094400622753649004#m",
       "source": "@DocumentingBTC",
@@ -193,6 +375,19 @@
       "summary": "Bill Gates says, \u201cI wouldn\u2019t choose crypto\u201d Video",
       "publishedAt": "2026-08-31T12:23:15+00:00",
       "publishedTs": 1788178995.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "After 2 months, #Saylor bought bitcoin:native again! Michael Saylor(@saylor)'s @Strategy bought another 4,603 bitcoin:native($369.7M) at $80,318 last week! https://assets.contentstack.io/v3/assets/bltf8d808d9b8cebd37/blt3276071079cd1642/6a9497da8814aaf69389c17b/form-8-k_08-31-202",
+      "link": "https://x.com/lookonchain/status/2094398989118677052#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "After 2 months, #Saylor bought bitcoin:native again! Michael Saylor( @saylor )'s @Strategy bought another 4,603 bitcoin:native($369.7M) at $80,318 last week! assets.contentstack.io/v3/as\u2026",
+      "publishedAt": "2026-08-31T12:16:45+00:00",
+      "publishedTs": 1788178605.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -302,6 +497,19 @@
       "isRetweet": false
     },
     {
+      "title": "Bitcoin miner Metaplanet (@Metaplanet), which bought 43,000 ($3.48B) at an average price of $96,191, deposited another 2,400 ($186M) into Coinbase Prime in the past 3 hours. https://arkm.com/explorer/entity/metaplanet-2",
+      "link": "https://x.com/lookonchain/status/2094287185717690746#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Bitcoin miner Metaplanet ( @Metaplanet ), which bought 43,000 ($3.48B) at an average price of $96,191, deposited another 2,400 ($186M) into Coinbase Prime in the past 3 hours. arkm.com/explorer/entity/met\u2026",
+      "publishedAt": "2026-08-31T04:52:29+00:00",
+      "publishedTs": 1788151949.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Bitcoin Is About to Punish Everyone Who Waited! | Anthony Pompliano Full Interview",
       "link": "https://x.com/cryptomanran/status/2094147414898651377#m",
       "source": "@APompliano",
@@ -315,7 +523,7 @@
       "isRetweet": true
     },
     {
-      "title": "Pinned: Glassbox is a neat new tool to help you understand how uniquely identifiable of a \"fingerprint\" your browser is leaving when it visits a web site and provides guidance for how to better blend into the crowd. https://glassbox.codecanary.org/",
+      "title": "Glassbox is a neat new tool to help you understand how uniquely identifiable of a \"fingerprint\" your browser is leaving when it visits a web site and provides guidance for how to better blend into the crowd. https://glassbox.codecanary.org/",
       "link": "https://x.com/lopp/status/2094074804835897680#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
@@ -471,6 +679,19 @@
       "isRetweet": false
     },
     {
+      "title": "James Wynn(@JamesWynnReal ) is back again! He opened a 20x short on 1.33 bitcoin:native ($103K). Liquidation price: $80,483.47 https://hypurrscan.io/address/0x5078c2fbea2b2ad61bc840bc023e35fce56bedb6#perps",
+      "link": "https://x.com/lookonchain/status/2093666153004724397#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "James Wynn( @JamesWynnReal ) is back again! He opened a 20x short on 1.33 bitcoin:native ($103K). Liquidation price: $80,483.47 hypurrscan.io/address/0x5078\u2026",
+      "publishedAt": "2026-08-29T11:44:43+00:00",
+      "publishedTs": 1788003883.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47",
       "link": "https://x.com/SolanaFloor/status/2093564365983346800#m",
       "source": "@JSeyff",
@@ -614,19 +835,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs have brought in $1.14 billion in inflows this week. Over $3 billion has been added in the past 9 days! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093356080038338658#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T15:12:36+00:00",
-      "publishedTs": 1787929956.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "We also looked at the top holders of these ETFs based on 13F filings. Goldman is the top known holder of spot Solana ETFs. solana:So11111111111111111111111111111111111111112",
       "link": "https://x.com/JSeyff/status/2093353538973847817#m",
       "source": "@JSeyff",
@@ -674,19 +882,6 @@
       "summary": "We're just getting started. Gird your loins. nitter.perennialte.ch/lopp/status/1367103081\u2026 Jameson Lopp (@lopp) One thing I can predict with certainty: The world will continue to get weirder. The weirdness will accelerate along with the pace of technological progress. EXPECT THE ",
       "publishedAt": "2026-08-28T14:21:00+00:00",
       "publishedTs": 1787926860.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2093340398013890809#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-28T14:10:17+00:00",
-      "publishedTs": 1787926217.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -783,58 +978,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japanese public company Metaplanet CEO says the bottom for Bitcoin's price is in \ud83d\udc40 \"The buyers arriving now aren't going anywhere. I believe the bottom is in. And I'm expecting a much brighter rest of the year.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093249918525727064#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddef\ud83c\uddf5 Japanese public company Metaplanet CEO says the bottom for Bitcoin's price is in \ud83d\udc40 \"The buyers arriving now aren't going anywhere. I believe the bottom is in. And I'm expecting a much brighter rest of the year.\" \ud83d\ude80 Video",
-      "publishedAt": "2026-08-28T08:10:45+00:00",
-      "publishedTs": 1787904645.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "THE RAREST BITCOIN MAGAZINES ARE FOR SALE TODAY AT BITCOIN ASIA \ud83d\udc40 LEGENDARY \ud83d\udca5",
-      "link": "https://x.com/Bitcoinconfasia/status/2093217872470520136#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "THE RAREST BITCOIN MAGAZINES ARE FOR SALE TODAY AT BITCOIN ASIA \ud83d\udc40 LEGENDARY \ud83d\udca5 Video",
-      "publishedAt": "2026-08-28T06:03:25+00:00",
-      "publishedTs": 1787897005.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "JUST IN: \ud83c\uddf5\ud83c\uddf0 Chairman of Pakistan's Virtual Assets Regulatory Authority on establishing a Strategic Bitcoin Reserve: \"It's about the future. It's about preparing for the future.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2093217303877886308#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddf5\ud83c\uddf0 Chairman of Pakistan's Virtual Assets Regulatory Authority on establishing a Strategic Bitcoin Reserve: \"It's about the future. It's about preparing for the future.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-28T06:01:09+00:00",
-      "publishedTs": 1787896869.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\ud83c\udded\ud83c\uddf0 Asia\u2019s largest Bitcoin conference in Hong Kong is PACKED with attendees \ud83d\udc40 Bullish! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093197066545570131#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T04:40:45+00:00",
-      "publishedTs": 1787892045.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "If you\u2019re participating in the anti datacenter moral panic you are either - a literal Chinese bot - a useful idiot for China",
       "link": "https://x.com/nic_carter/status/2093137267061604411#m",
       "source": "@nic_carter",
@@ -908,32 +1051,6 @@
       "summary": "Generative AI enables a person to build, launch, and improve a product in 10% of the time and at 10X the quality. We\u2019re doing this with Strategy software and $STRC . strategy.com/strc/learn",
       "publishedAt": "2026-08-27T18:57:19+00:00",
       "publishedTs": 1787857039.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Farmland in an ETF wrapper. Brings me back to my @CAIAAssociation study days... Weren't you just asking about this on Ask The Compound @duncanhillphoto ??",
-      "link": "https://x.com/JSeyff/status/2093029486400803169#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Farmland in an ETF wrapper. Brings me back to my @CAIAAssociation study days... Weren't you just asking about this on Ask The Compound @duncanhillphoto ?? ETF Hearsay by Henry Jim (@ETFhearsay) Farmland ETF coming This is one of the more interesting non-derivative ETF development",
-      "publishedAt": "2026-08-27T17:34:50+00:00",
-      "publishedTs": 1787852090.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Regime shift: Bitcoin now more correlated with gold than stocks In digital assets we expect the so-called \"debasement trade\" to primarily benefit $BTC, $ETH, and $ZEC Quick blog post (h/t @charlieperk4): https://www.grayscale.com/the-stack/regime-shift-bitcoin-and-the-return-of-t",
-      "link": "https://x.com/LowBeta/status/2093021378584756732#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Regime shift: Bitcoin now more correlated with gold than stocks In digital assets we expect the so-called \"debasement trade\" to primarily benefit $BTC , $ETH , and $ZEC Quick blog post (h/t @charlieperk4 ): grayscale.com/the-stack/regi\u2026",
-      "publishedAt": "2026-08-27T17:02:37+00:00",
-      "publishedTs": 1787850157.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1017,19 +1134,6 @@
       "isRetweet": false
     },
     {
-      "title": "Tbf There are some specific cases for DI. Not saying it doesn\u2019t exist but it was seen as legit competitor, even a replacement, to ETFs 10yrs ago. Tokenization is the new thing. So far I\u2019m not impressed altho I definitely see tokenization distributing ETFs to people on chain.",
-      "link": "https://x.com/EricBalchunas/status/2092977325956878433#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-27T14:07:34+00:00",
-      "publishedTs": 1787839654.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "you'd think that one of them, possessing superior epistemics of course, would become a PM billionaire if for nothing else than to convince the world that the rationalists are correct. that would be the most rational approach, no?",
       "link": "https://x.com/nic_carter/status/2092976375829311559#m",
       "source": "@nic_carter",
@@ -1106,19 +1210,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Digital Money (srUSDat) powered by $STRC is now live on @BinanceWallet DeFi.",
-      "link": "https://x.com/saturn_credit/status/2092811745412927559#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Money (srUSDat) powered by $STRC is now live on @BinanceWallet DeFi. Video",
-      "publishedAt": "2026-08-27T03:09:37+00:00",
-      "publishedTs": 1787800177.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
@@ -1420,19 +1511,6 @@
       "isRetweet": false
     },
     {
-      "title": "If you only use AI as a chat bot, you can achieve a 100X performance gain for some tedious tasks. But you likely don't understand why nerds are excited about the next 100X performance gain that can be achieved by orchestrating agents to solve even more complex tasks.",
-      "link": "https://x.com/lopp/status/2091879463898276242#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-24T13:25:04+00:00",
-      "publishedTs": 1787577904.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin created a digital thing that becomes more valuable when copied. Every additional copy of the ledger helps preserve and verify the same set of units. Replication, which normally makes digital scarcity and value impossible, became part of the mechanism that protects it.",
       "link": "https://x.com/DocumentingBTC/status/2091621170076426339#m",
       "source": "@DocumentingBTC",
@@ -1519,32 +1597,6 @@
       "summary": "",
       "publishedAt": "2026-08-22T21:50:24+00:00",
       "publishedTs": 1787435424.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The most important use of Bitcoin may answer a question humanity has not learned to ask yet.",
-      "link": "https://x.com/DocumentingBTC/status/2091275306334048348#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-22T21:24:21+00:00",
-      "publishedTs": 1787433861.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "At first, people called the internet \u201cjust a way to send messages\u201d. We are making the same mistake by calling bitcoin \u201cjust a way to send money\u201d.",
-      "link": "https://x.com/DocumentingBTC/status/2091236053696823378#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-22T18:48:23+00:00",
-      "publishedTs": 1787424503.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
