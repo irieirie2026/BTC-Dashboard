@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-09-01T17:36:38Z",
+  "fetchedAt": "2026-09-01T20:34:55Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "This Dropbox breach is going to result in lost funds. It's why you never save pictures or files of your seed phrases and private keys in the cloud (or a device synced to the cloud).",
+      "link": "https://x.com/forwardsecrecy/status/2094875955059986665#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "This Dropbox breach is going to result in lost funds. It's why you never save pictures or files of your seed phrases and private keys in the cloud (or a device synced to the cloud). Jameson Lopp (@lopp) One reason I suspect the Dropbox breach may be massive is because I didn't ge",
+      "publishedAt": "2026-09-01T19:52:03+00:00",
+      "publishedTs": 1788292323.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. spot Bitcoin ETFs saw a $3.5 billion inflow in August, the largest since July 2025, Bloomberg reports \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094875833835876849#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-01T19:51:34+00:00",
+      "publishedTs": 1788292294.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
+      "link": "https://x.com/BitcoinMagazine/status/2094875761387741508#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: youtube.com/watch?v=scK8mzjn\u2026",
+      "publishedAt": "2026-09-01T19:51:17+00:00",
+      "publishedTs": 1788292277.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "One reason I suspect the Dropbox breach may be massive is because I didn't get a login email notification when my account was accessed. Turns out, unlike every other login notification I've received from them, it went to spam. Likely due to a large uptick in their send volume...",
+      "link": "https://x.com/lopp/status/2094874991363789051#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-01T19:48:13+00:00",
+      "publishedTs": 1788292093.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "After several rewrites of our pentest harness last month, I have a full run down to $100 in 2 hours. Incremental runs that skip unchanged files are even faster and cheaper. A C C E L E R A T E https://x.com/lopp/status/2084695423076151780",
+      "link": "https://x.com/lopp/status/2094871045849178595#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "After several rewrites of our pentest harness last month, I have a full run down to $100 in 2 hours. Incremental runs that skip unchanged files are even faster and cheaper. A C C E L E R A T E nitter.perennialte.ch/lopp/status/2084695423\u2026 Jameson Lopp (@lopp) To give some perspec",
+      "publishedAt": "2026-09-01T19:32:32+00:00",
+      "publishedTs": 1788291152.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC proposes new rules supporting blockchain technology for securities offerings, share transfers, and official records. \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2094848896321102150#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-01T18:04:31+00:00",
+      "publishedTs": 1788285871.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The first websites on the Internet looked like newspapers because nobody yet knew what a website wanted to become. Most Bitcoin products still look like banks for the same reason.",
+      "link": "https://x.com/DocumentingBTC/status/2094843655429230982#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-01T17:43:42+00:00",
+      "publishedTs": 1788284622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Phong discusses Strategy with Bloomberg. $MSTR",
+      "link": "https://x.com/saylor/status/2094841940562821358#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Phong discusses Strategy with Bloomberg. $MSTR Phong Le (@phongle) I joined Bloomberg @crypto to discuss Strategy's return to buying Bitcoin, building a fortress balance sheet, MSCI\u2019s index proposal, and equity market demand for Bitcoin. $MSTR 00:24 - Back to buying bitcoin:nativ",
+      "publishedAt": "2026-09-01T17:36:53+00:00",
+      "publishedTs": 1788284213.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Busy morning in cybersecurity land: * Potentially massive Dropbox account compromise * Fake BitKey desktop software phishing email * X password reset email deluge * Protonmail outage",
       "link": "https://x.com/lopp/status/2094825940090057033#m",
@@ -801,7 +905,7 @@
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I just clanked out 2,500 lines of code while eating breakfast. Then I'll have a couple other clankers review the code and suggest improvements. The bottleneck to my productivity now is finding another human to peer review it. nitter.perennialte.ch/callebtc/status/209405\u2026 calle \ud83d\udfe5 ",
+      "summary": "I just clanked out 2,500 lines of code while eating breakfast. Then I'll have a couple other clankers review the code and suggest improvements. The bottleneck to my productivity now is finding another human to peer review it. nitter.perennialte.ch/callebtc/status/209405\u2026 dr. call",
       "publishedAt": "2026-08-30T14:01:10+00:00",
       "publishedTs": 1788098470.0,
       "category": "x",
@@ -950,45 +1054,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: BitGo CEO tells CNBC \"The one thing that's been steady is the thesis behind Bitcoin continues to grow, and so all these products behind it grow\" \ud83d\udc4f \"Everybody from traditional finance is announcing their products and plans...it's just been growing every day.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093446907750170709#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: BitGo CEO tells CNBC \"The one thing that's been steady is the thesis behind Bitcoin continues to grow, and so all these products behind it grow\" \ud83d\udc4f \"Everybody from traditional finance is announcing their products and plans...it's just been growing every day.\" \ud83d\ude80 Video",
-      "publishedAt": "2026-08-28T21:13:31+00:00",
-      "publishedTs": 1787951611.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "NEW: Bitcoin \"appears to have entered a new bull-market regime\", according to CryptoQuant. \ud83d\udc40 \"Spot demand, ETF flows, and market momentum have turned decisively bullish\" \ud83d\udc02",
-      "link": "https://x.com/BitcoinMagazine/status/2093424108276982066#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T19:42:56+00:00",
-      "publishedTs": 1787946176.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 $13 trillion Charles Schwab says \"We've really seen a rebirth of the debasement trade, whether you're looking at gold and precious metals or cryptocurrencies such as Bitcoin.\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093407797127815264#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 $13 trillion Charles Schwab says \"We've really seen a rebirth of the debasement trade, whether you're looking at gold and precious metals or cryptocurrencies such as Bitcoin.\" \ud83d\ude80 Video",
-      "publishedAt": "2026-08-28T18:38:07+00:00",
-      "publishedTs": 1787942287.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "this stuff is super complicated and most people are new to the state/local/federal tax analysis so of course headlines like \"datacenters get massive tax waivers\" are compelling. ordinary people _feel_ that they're being cheated by big tech. they read about massive waivers (always",
@@ -1303,19 +1368,6 @@
       "isRetweet": true
     },
     {
-      "title": "\u26a1 SPEAKER ANNOUNCEMENT Founder & Executive Chairman of Strategy, Michael Saylor! Few people have had a greater impact on Bitcoin\u2019s global visibility than Michael Saylor. His conviction and advocacy have helped bring Bitcoin into conversations at the highest levels of business and",
-      "link": "https://x.com/sovereignmiami/status/2092960663819669660#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "\u26a1 SPEAKER ANNOUNCEMENT Founder & Executive Chairman of Strategy, Michael Saylor! Few people have had a greater impact on Bitcoin\u2019s global visibility than Michael Saylor. His conviction and advocacy have helped bring Bitcoin into conversations at the highest levels of business and",
-      "publishedAt": "2026-08-27T13:01:22+00:00",
-      "publishedTs": 1787835682.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Interesting that none of the rationalists with \u201csuperior epistemics\u201d have become prediction market billionaires",
       "link": "https://x.com/nic_carter/status/2092940337849274830#m",
       "source": "@nic_carter",
@@ -1485,19 +1537,6 @@
       "isRetweet": false
     },
     {
-      "title": "Two footguns most bitcoiners miss when setting up multisig according to @lopp. Not backing up your wallet descriptor, and treating multi-vendor multisig as \"set it and forget it.\u201d",
-      "link": "https://x.com/CasaHODL/status/2092279381964234841#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Two footguns most bitcoiners miss when setting up multisig according to @lopp . Not backing up your wallet descriptor, and treating multi-vendor multisig as \"set it and forget it.\u201d Video",
-      "publishedAt": "2026-08-25T15:54:11+00:00",
-      "publishedTs": 1787673251.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 59% Loading\u2026Please HODL Current Block: 963,908 Halving Block: 1,050,000 Blocks Remaining: 86,092 Days Remaining: ~598",
       "link": "https://x.com/DocumentingBTC/status/2092001940964065692#m",
       "source": "@DocumentingBTC",
@@ -1509,19 +1548,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "I'm making a game that you are trying to find your Bitcoin hard drive in a landfill. Still in progress...",
-      "link": "https://x.com/7paiden/status/2091935998775034117#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I'm making a game that you are trying to find your Bitcoin hard drive in a landfill. Still in progress... Video",
-      "publishedAt": "2026-08-24T17:09:43+00:00",
-      "publishedTs": 1787591383.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Bitcoin created a digital thing that becomes more valuable when copied. Every additional copy of the ledger helps preserve and verify the same set of units. Replication, which normally makes digital scarcity and value impossible, became part of the mechanism that protects it.",
@@ -1571,19 +1597,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T12:22:52+00:00",
       "publishedTs": 1787487772.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The smallest Bitcoin node running in a college dorm room can check and reject the work of the largest corporate Bitcoin mining company.",
-      "link": "https://x.com/DocumentingBTC/status/2091355040917185011#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-23T02:41:11+00:00",
-      "publishedTs": 1787452871.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
