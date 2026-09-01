@@ -1,7 +1,137 @@
 {
-  "fetchedAt": "2026-09-01T13:06:12Z",
+  "fetchedAt": "2026-09-01T17:36:38Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Busy morning in cybersecurity land: * Potentially massive Dropbox account compromise * Fake BitKey desktop software phishing email * X password reset email deluge * Protonmail outage",
+      "link": "https://x.com/lopp/status/2094825940090057033#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-01T16:33:18+00:00",
+      "publishedTs": 1788280398.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs saw $216.7 million in net inflows yesterday \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094821382450266288#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-01T16:15:12+00:00",
+      "publishedTs": 1788279312.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
+      "link": "https://x.com/seanjudgeciv/status/2094811677954802118#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
+      "publishedAt": "2026-09-01T15:36:38+00:00",
+      "publishedTs": 1788276998.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Pinned: SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon!",
+      "link": "https://x.com/lopp/status/2094807737200730178#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon! Video",
+      "publishedAt": "2026-09-01T15:20:58+00:00",
+      "publishedTs": 1788276058.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: BlackRock's Bitcoin ETF 'IBIT' has outperformed its S&P 500 ETF since launching in 2024 \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094805307411038509#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: BlackRock's Bitcoin ETF 'IBIT' has outperformed its S&amp;P 500 ETF since launching in 2024 \ud83d\ude80",
+      "publishedAt": "2026-09-01T15:11:19+00:00",
+      "publishedTs": 1788275479.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "My dropbox account was compromised via this vulnerability. Thankfully I encrypt my files locally before uploading to dropbox! https://x.com/9to5mac/status/2094770956912775372 https://blog.lopp.net/how-to-securely-back-up-data-to-cloud-storage/",
+      "link": "https://x.com/lopp/status/2094801655485137106#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "My dropbox account was compromised via this vulnerability. Thankfully I encrypt my files locally before uploading to dropbox! nitter.perennialte.ch/9to5mac/status/2094770\u2026 blog.lopp.net/how-to-securel\u2026 9to5Mac (@9to5mac) Dropbox breach seemingly caused by egregious authentication",
+      "publishedAt": "2026-09-01T14:56:48+00:00",
+      "publishedTs": 1788274608.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
+      "link": "https://x.com/BitcoinMagazine/status/2094793312179745189#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Market here: polymarket.com/event/what-pr\u2026",
+      "publishedAt": "2026-09-01T14:23:39+00:00",
+      "publishedTs": 1788272619.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: There's now a 59% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060.com \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2094789263552291291#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-01T14:07:34+00:00",
+      "publishedTs": 1788271654.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Sept 1 Update: #Bitcoin ETFs: 1D NetFlow: +2,554 bitcoin:native(+$198.95M)\ud83d\udfe2 7D NetFlow: +9,994 bitcoin:native(+$778.51M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,273 $ETH(+$71.56M)\ud83d\udfe2 7D NetFlow: +286,708 $ETH(+$700.92M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2094787049098445228#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Sept 1 Update: #Bitcoin ETFs: 1D NetFlow: +2,554 bitcoin:native(+$198.95M)\ud83d\udfe2 7D NetFlow: +9,994 bitcoin:native(+$778.51M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,273 $ETH (+$71.56M)\ud83d\udfe2 7D NetFlow: +286,708 $ETH (+$700.92M)\ud83d\udfe2",
+      "publishedAt": "2026-09-01T13:58:46+00:00",
+      "publishedTs": 1788271126.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A lot of people getting unsolicited X password reset attempts in their email inbox. Do the following: go to X settings -> security and account access -> security -> check \"password reset protect\"",
+      "link": "https://x.com/nic_carter/status/2094781323357327806#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "A lot of people getting unsolicited X password reset attempts in their email inbox. Do the following: go to X settings -&gt; security and account access -&gt; security -&gt; check \"password reset protect\" nic carter (@nic_carter) has X admitted a data breach yet? cause one def ha",
+      "publishedAt": "2026-09-01T13:36:01+00:00",
+      "publishedTs": 1788269761.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "It's literally the bitcoin price chart",
       "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
@@ -211,12 +341,12 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
+      "title": "The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
       "link": "https://x.com/lopp/status/2094499013659636176#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
+      "summary": "",
       "publishedAt": "2026-08-31T18:54:13+00:00",
       "publishedTs": 1788202453.0,
       "category": "x",
@@ -341,7 +471,7 @@
       "isRetweet": false
     },
     {
-      "title": "Human Capital | A short story about scarcity in a world of abundance https://x.com/i/article/2094454000502632449",
+      "title": "Pinned: Human Capital | A short story about scarcity in a world of abundance https://x.com/i/article/2094454000502632449",
       "link": "https://x.com/nic_carter/status/2094458324993405232#m",
       "source": "@nic_carter",
       "authorName": "Nic Carter",
@@ -887,32 +1017,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: $5.3 billion Cardone Capital's Grant Cardone says \"While Institutions pivot to data centers Cardone Capital double downs on Multi-Family/BTC model, adding ~2000 units and 1200 BTC\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093392048028057698#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T17:35:32+00:00",
-      "publishedTs": 1787938532.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddeb\ud83c\uddf7 French company Capital B announces a \u20ac21.0 million capital raise to \"accelerate its Bitcoin Treasury Company strategy\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093371625630564386#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T16:14:23+00:00",
-      "publishedTs": 1787933663.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "So that Americans will continue to win for generations to come. https://x.com/i/article/2092305472627851264",
       "link": "https://x.com/12Palehorse/status/2093368505303179458#m",
       "source": "@nic_carter",
@@ -934,19 +1038,6 @@
       "summary": "This thread was meant to start with a quote tweet of this. Oh well. lol. Eric Balchunas (@EricBalchunas) Bitwise Solana ETF just cracked the $1b mark. First one to do it. The category has seen $1.7b in cumulative flows w really no outflow stretch despite coming off a nightmare do",
       "publishedAt": "2026-08-28T15:46:34+00:00",
       "publishedTs": 1787931994.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs have brought in $1.14 billion in inflows this week. Over $3 billion has been added in the past 9 days! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2093356080038338658#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-28T15:12:36+00:00",
-      "publishedTs": 1787929956.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -980,15 +1071,15 @@
     {
       "title": "Bitwise Solana ETF just cracked the $1b mark. First one to do it. The category has seen $1.7b in cumulative flows w really no outflow stretch despite coming off a nightmare downturn first half of year. Impressive. Chart from @JSeyff Solana report out today on BI ETF .",
       "link": "https://x.com/EricBalchunas/status/2093349072069656796#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Bitwise Solana ETF just cracked the $1b mark. First one to do it. The category has seen $1.7b in cumulative flows w really no outflow stretch despite coming off a nightmare downturn first half of year. Impressive. Chart from @JSeyff Solana report out today on BI ETF&lt;go&gt;.",
       "publishedAt": "2026-08-28T14:44:45+00:00",
       "publishedTs": 1787928285.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "We're just getting started. Gird your loins. https://x.com/lopp/status/1367103081255759875",
@@ -999,19 +1090,6 @@
       "summary": "We're just getting started. Gird your loins. nitter.perennialte.ch/lopp/status/1367103081\u2026 Jameson Lopp (@lopp) One thing I can predict with certainty: The world will continue to get weirder. The weirdness will accelerate along with the pace of technological progress. EXPECT THE ",
       "publishedAt": "2026-08-28T14:21:00+00:00",
       "publishedTs": 1787926860.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2093340398013890809#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f Video",
-      "publishedAt": "2026-08-28T14:10:17+00:00",
-      "publishedTs": 1787926217.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1381,19 +1459,6 @@
       "isRetweet": false
     },
     {
-      "title": "going to spoil the ending: - chinese or other open weight models end up handling 99% of all inference, maybe 99.99% - frontier models are still able to monetize at $100 s of B in revenue a year, applied to bespoke and enormously complex tasks - labs internalize most or all of tha",
-      "link": "https://x.com/nic_carter/status/2092640208420290778#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "going to spoil the ending: - chinese or other open weight models end up handling 99% of all inference, maybe 99.99% - frontier models are still able to monetize at $100 s of B in revenue a year, applied to bespoke and enormously complex tasks - labs internalize most or all of tha",
-      "publishedAt": "2026-08-26T15:47:59+00:00",
-      "publishedTs": 1787759279.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "REMINDER: this is a CRITICAL security practice. If you don't follow this advice & your gmail account gets compromised, you are completely screwed. Attackers will reset your other account passwords via your email and then use your 2FA code to log in. https://x.com/lopp/status/1702",
       "link": "https://x.com/lopp/status/2092585292326658380#m",
       "source": "@lopp",
@@ -1402,19 +1467,6 @@
       "summary": "REMINDER: this is a CRITICAL security practice. If you don't follow this advice &amp; your gmail account gets compromised, you are completely screwed. Attackers will reset your other account passwords via your email and then use your 2FA code to log in. nitter.perennialte.ch/lopp",
       "publishedAt": "2026-08-26T12:09:46+00:00",
       "publishedTs": 1787746186.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "has X admitted a data breach yet? cause one def happened. i'm getting phishing emails to my connected email which has never happened before.",
-      "link": "https://x.com/nic_carter/status/2092393431960027218#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-08-25T23:27:23+00:00",
-      "publishedTs": 1787700443.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1446,19 +1498,6 @@
       "isRetweet": true
     },
     {
-      "title": "The X @Safety team should launch a new initiative aimed at identifying unwell people who argue with Grok as if it's a human or portray other traits of AI psychosis, so that they can direct those folks to seek the help of a mental health professional.",
-      "link": "https://x.com/lopp/status/2092223824133517784#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-25T12:13:25+00:00",
-      "publishedTs": 1787660005.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 59% Loading\u2026Please HODL Current Block: 963,908 Halving Block: 1,050,000 Blocks Remaining: 86,092 Days Remaining: ~598",
       "link": "https://x.com/DocumentingBTC/status/2092001940964065692#m",
       "source": "@DocumentingBTC",
@@ -1483,32 +1522,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "The past month has reinforced my belief in this perspective like never before. Everything is broken, and yet... https://x.com/lopp/status/1706019491031699944",
-      "link": "https://x.com/lopp/status/2091897818999083087#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "The past month has reinforced my belief in this perspective like never before. Everything is broken, and yet... nitter.perennialte.ch/lopp/status/1706019491\u2026 Jameson Lopp (@lopp) The modern world is held together by digital duct tape &amp; thin strings of electrons. It's a miracl",
-      "publishedAt": "2026-08-24T14:38:00+00:00",
-      "publishedTs": 1787582280.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Few understand: https://x.com/lopp/status/2026288754306981973",
-      "link": "https://x.com/lopp/status/2091879790500278385#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Few understand: nitter.perennialte.ch/lopp/status/2026288754\u2026 Jameson Lopp (@lopp) Thanks to the advent of agentic AI, \"slave driver\" is once again a morally and socially acceptable profession. Roko's basilisk be damned. \u2014 http://nitter.perennialte.ch/lopp/status/2026288754306981",
-      "publishedAt": "2026-08-24T13:26:21+00:00",
-      "publishedTs": 1787577981.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Bitcoin created a digital thing that becomes more valuable when copied. Every additional copy of the ledger helps preserve and verify the same set of units. Replication, which normally makes digital scarcity and value impossible, became part of the mechanism that protects it.",
