@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-01T20:34:55Z",
+  "fetchedAt": "2026-09-01T23:01:12Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Credit on the \u20bfitcoin Standard.",
+      "link": "https://x.com/saylor/status/2094905979062169997#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Credit on the \u20bfitcoin Standard. Strategy (@Strategy) bitcoin:native would have to fall 83% from current levels before $STRC reaches a 1x BTC Rating. \u2014 http://nitter.perennialte.ch/Strategy/status/2094883998094758292#m",
+      "publishedAt": "2026-09-01T21:51:21+00:00",
+      "publishedTs": 1788299481.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "NEW: El Salvador bought another BTC for its Strategic Bitcoin Reserve today \ud83c\uddf8\ud83c\uddfb They now own 7762 BTC! \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2094896032911921632#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-01T21:11:50+00:00",
+      "publishedTs": 1788297110.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This Dropbox breach is going to result in lost funds. It's why you never save pictures or files of your seed phrases and private keys in the cloud (or a device synced to the cloud).",
       "link": "https://x.com/forwardsecrecy/status/2094875955059986665#m",
@@ -29,12 +55,12 @@
       "isRetweet": false
     },
     {
-      "title": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
+      "title": "R to @Bitcoinconfasia: WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
       "link": "https://x.com/BitcoinMagazine/status/2094875761387741508#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: youtube.com/watch?v=scK8mzjn\u2026",
+      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: inv.vern.cc/watch?v=scK8mzjn\u2026",
       "publishedAt": "2026-09-01T19:51:17+00:00",
       "publishedTs": 1788292277.0,
       "category": "x",
@@ -185,7 +211,7 @@
       "isRetweet": false
     },
     {
-      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
+      "title": "R to @BitcoinMagazine: Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
       "link": "https://x.com/BitcoinMagazine/status/2094793312179745189#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -237,12 +263,12 @@
       "isRetweet": false
     },
     {
-      "title": "It's literally the bitcoin price chart",
+      "title": "R to @EricBalchunas: It's literally the bitcoin price chart",
       "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
       "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
+      "summary": "It's literally the bitcoin price chart",
       "publishedAt": "2026-09-01T12:53:59+00:00",
       "publishedTs": 1788267239.0,
       "category": "x",
@@ -406,7 +432,7 @@
       "isRetweet": true
     },
     {
-      "title": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
+      "title": "R to @KobeissiLetter: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
       "link": "https://x.com/BitcoinMagazine/status/2094521286311444536#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -796,7 +822,7 @@
       "isRetweet": false
     },
     {
-      "title": "Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
+      "title": "R to @EricBalchunas: Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
       "link": "https://x.com/EricBalchunas/status/2094390802533220730#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
@@ -1038,19 +1064,6 @@
       "summary": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47 Video",
       "publishedAt": "2026-08-29T05:00:16+00:00",
       "publishedTs": 1787979616.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "This week at Bitcoin Magazine \ud83d\udcf0 - Strive - $81K - Ionic Digital - Historic August - Webull CEO - FOX on Bitcoin - BitGo CEO - Thailand - Pomp the bull - Bitcoin in WSJ - Fairlead Strategies - 200 WMA - Bitcoin Asia - US SEC - BlackRock - Coinbase Mortgages - Pakistan - CNBC on BT",
-      "link": "https://x.com/theonlyposted/status/2093469516692942996#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "This week at Bitcoin Magazine \ud83d\udcf0 - Strive - $81K - Ionic Digital - Historic August - Webull CEO - FOX on Bitcoin - BitGo CEO - Thailand - Pomp the bull - Bitcoin in WSJ - Fairlead Strategies - 200 WMA - Bitcoin Asia - US SEC - BlackRock - Coinbase Mortgages - Pakistan - CNBC on BT",
-      "publishedAt": "2026-08-28T22:43:22+00:00",
-      "publishedTs": 1787957002.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1353,19 +1366,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "A useful way to think about $STRC or $SATA is as a self-directed perpetual annuity. Americans bought $464 billion of annuities last year. Michael @saylor has created a product that is better than a traditional annuity bought from an insurance company. It can provide many of the t",
-      "link": "https://x.com/OffshoreHODL/status/2092975714010083617#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "A useful way to think about $STRC or $SATA is as a self-directed perpetual annuity. Americans bought $464 billion of annuities last year. Michael @saylor has created a product that is better than a traditional annuity bought from an insurance company. It can provide many of the t",
-      "publishedAt": "2026-08-27T14:01:10+00:00",
-      "publishedTs": 1787839270.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Interesting that none of the rationalists with \u201csuperior epistemics\u201d have become prediction market billionaires",
