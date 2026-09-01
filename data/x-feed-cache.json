@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-08-31T22:28:29Z",
+  "fetchedAt": "2026-09-01T01:39:04Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "A carpenter should not have to predict the winning companies in biotech, software, energy, and agriculture to bet on human progress. Bitcoin offers one simple way to save with the assumption that people everywhere will keep making useful things.",
+      "link": "https://x.com/DocumentingBTC/status/2094570016028959210#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-31T23:36:21+00:00",
+      "publishedTs": 1788219381.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "BMTV launches 9/14 \ud83d\udfe7 Subscribe on Substack for guest announcements, segment previews, and the full schedule. \ud83d\udc49 https://watchbmtv.substack.com/",
       "link": "https://x.com/watchbmtv/status/2094546635187478766#m",
@@ -39,7 +52,7 @@
       "publishedTs": 1788213097.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "Giovanni Santostasi on the Bitcoin Power Law: \"One of the things you can predict is that Bitcoin will be about $1 million in 8 years from now, and $10 million in 20 [years].\" \ud83d\ude80",
@@ -679,19 +692,6 @@
       "isRetweet": false
     },
     {
-      "title": "James Wynn(@JamesWynnReal ) is back again! He opened a 20x short on 1.33 bitcoin:native ($103K). Liquidation price: $80,483.47 https://hypurrscan.io/address/0x5078c2fbea2b2ad61bc840bc023e35fce56bedb6#perps",
-      "link": "https://x.com/lookonchain/status/2093666153004724397#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "James Wynn( @JamesWynnReal ) is back again! He opened a 20x short on 1.33 bitcoin:native ($103K). Liquidation price: $80,483.47 hypurrscan.io/address/0x5078\u2026",
-      "publishedAt": "2026-08-29T11:44:43+00:00",
-      "publishedTs": 1788003883.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47",
       "link": "https://x.com/SolanaFloor/status/2093564365983346800#m",
       "source": "@JSeyff",
@@ -830,6 +830,19 @@
       "summary": "This thread was meant to start with a quote tweet of this. Oh well. lol. Eric Balchunas (@EricBalchunas) Bitwise Solana ETF just cracked the $1b mark. First one to do it. The category has seen $1.7b in cumulative flows w really no outflow stretch despite coming off a nightmare do",
       "publishedAt": "2026-08-28T15:46:34+00:00",
       "publishedTs": 1787931994.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs have brought in $1.14 billion in inflows this week. Over $3 billion has been added in the past 9 days! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2093356080038338658#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-08-28T15:12:36+00:00",
+      "publishedTs": 1787929956.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -986,19 +999,6 @@
       "summary": "If you\u2019re participating in the anti datacenter moral panic you are either - a literal Chinese bot - a useful idiot for China Global Government Affairs (@GlobalAffairs) The X Safety team conducted an investigation into suspected Chinese inauthentic accounts involved in influence o",
       "publishedAt": "2026-08-28T00:43:07+00:00",
       "publishedTs": 1787877787.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Nvidia ripped. Inflation was hot. Bitcoin slipped. Jackson Hole opened. Your net worth got pulled in 3 directions today. Don\u2019t wait to see it on a statement next month. Silvia sees every account in real time. Connect them tonight. https://cfosilvia.com",
-      "link": "https://x.com/APompliano/status/2093128026049347774#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Nvidia ripped. Inflation was hot. Bitcoin slipped. Jackson Hole opened. Your net worth got pulled in 3 directions today. Don\u2019t wait to see it on a statement next month. Silvia sees every account in real time. Connect them tonight. cfosilvia.com",
-      "publishedAt": "2026-08-28T00:06:24+00:00",
-      "publishedTs": 1787875584.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1584,19 +1584,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T02:38:10+00:00",
       "publishedTs": 1787452690.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 15 years ago, the first bitcoin exchange company published their trading data. Internet form users calculated that the price of bitcoin reaching $9 required $800,000 of selling, while reaching $13 required $300,000 of buying.",
-      "link": "https://x.com/DocumentingBTC/status/2091281861230133477#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-22T21:50:24+00:00",
-      "publishedTs": 1787435424.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
