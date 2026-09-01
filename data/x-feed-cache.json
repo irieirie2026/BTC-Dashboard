@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-09-01T07:17:02Z",
+  "fetchedAt": "2026-09-01T13:06:12Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "It's literally the bitcoin price chart",
+      "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-09-01T12:53:59+00:00",
+      "publishedTs": 1788267239.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Excited to share what we've been working on for a while in stealth with our new neobank mobile experience built on Ethena's existing product set. This is one of the few product categories that have emerged in the last couple of years that I think has a genuine chance of breaking ",
+      "link": "https://x.com/gdog97_/status/2094757499438289290#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Excited to share what we've been working on for a while in stealth with our new neobank mobile experience built on Ethena's existing product set. This is one of the few product categories that have emerged in the last couple of years that I think has a genuine chance of breaking ",
+      "publishedAt": "2026-09-01T12:01:21+00:00",
+      "publishedTs": 1788264081.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Bitcoin mining can travel to the source of electricity instead of requiring electricity to travel to industry. Energy infrastructure can begin earning before the roads, factories, and cities that may eventually grow around it.",
+      "link": "https://x.com/DocumentingBTC/status/2094744553525809462#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-01T11:09:54+00:00",
+      "publishedTs": 1788260994.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The Bitcoin Meet Up George hosts his first bitcoin meet up at a local bar",
+      "link": "https://x.com/MandelDuck/status/2094718098280513973#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "The Bitcoin Meet Up George hosts his first bitcoin meet up at a local bar Video",
+      "publishedAt": "2026-09-01T09:24:47+00:00",
+      "publishedTs": 1788254687.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Keep your eye on the \u20bfall.",
       "link": "https://x.com/saylor/status/2094681056255291755#m",
@@ -102,6 +154,19 @@
       "summary": "Giovanni Santostasi on the Bitcoin Power Law: \"One of the things you can predict is that Bitcoin will be about $1 million in 8 years from now, and $10 million in 20 [years].\" \ud83d\ude80 Video",
       "publishedAt": "2026-08-31T20:45:22+00:00",
       "publishedTs": 1788209122.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "S&P, FTSE, Bloomberg, Nasdaq, and ICE broadly reflect the market. MSCI seems to be going its own way, against U.S. policy priorities and beyond established securities-law and accounting frameworks.",
+      "link": "https://x.com/phongle/status/2094522756402426218#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "S&amp;P, FTSE, Bloomberg, Nasdaq, and ICE broadly reflect the market. MSCI seems to be going its own way, against U.S. policy priorities and beyond established securities-law and accounting frameworks. Strategy (@Strategy) Strategy responded today to MSCI\u2019s proposed \u201cnon-operatin",
+      "publishedAt": "2026-08-31T20:28:34+00:00",
+      "publishedTs": 1788208114.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -234,7 +299,7 @@
       "publishedTs": 1788197052.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "NEW: Who are the top holders of spot ripple:native ETFs? Here's the data as of the Q2 13F Filings. Goldman, Jane and Millennium top the list.",
@@ -939,6 +1004,19 @@
       "isRetweet": false
     },
     {
+      "title": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2093340398013890809#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Twenty One Capital CEO tells Bloomberg \"Bitcoin is the best savings technology in the world\" \ud83d\udca5 \"Bitcoin is a monetary asset that's different than anything else than we've ever seen as humans, it's extremely predictable. The monetary issuance is written in code.\" \ud83d\udc4f Video",
+      "publishedAt": "2026-08-28T14:10:17+00:00",
+      "publishedTs": 1787926217.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "On this day in history, 16 years ago, Satoshi Nakamoto posted, \u201cAs a thought experiment, imagine there was a base metal as scarce as gold but with\u2026one special, magical property: can be transported over a communication channel\u201d",
       "link": "https://x.com/DocumentingBTC/status/2093335575109546410#m",
       "source": "@DocumentingBTC",
@@ -976,19 +1054,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Things are going to get crazy if bitcoin's price catches up to M2 money supply. It has happened before, so it can happen again.",
-      "link": "https://x.com/APompliano/status/2093328004638241114#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "",
-      "publishedAt": "2026-08-28T13:21:03+00:00",
-      "publishedTs": 1787923263.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Anger can be a powerful tool if you use it as motivation to accomplish something good. But if you don't direct it as a useful motivator, anger can be a powerful poison that consumes you from within.",
@@ -1069,19 +1134,6 @@
       "isRetweet": false
     },
     {
-      "title": "Thanks to @erikalee for hosting me at the Corgi cafe in SF today. Cool place. Everything is Corgi theme. Next level branding. They also filed for 24 ETFs by the time I finished my latte.",
-      "link": "https://x.com/EricBalchunas/status/2093070374623936738#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-27T20:17:19+00:00",
-      "publishedTs": 1787861839.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Generative AI enables a person to build, launch, and improve a product in 10% of the time and at 10X the quality. We\u2019re doing this with Strategy software and $STRC. https://www.strategy.com/strc/learn",
       "link": "https://x.com/phongle/status/2093050242782351819#m",
       "source": "@saylor",
@@ -1121,19 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "Interesting.. a direct-ish Farmland ETF has been filed from WisdomTree",
-      "link": "https://x.com/EricBalchunas/status/2093002511368274084#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Interesting.. a direct-ish Farmland ETF has been filed from WisdomTree ETF Hearsay by Henry Jim (@ETFhearsay) Farmland ETF coming This is one of the more interesting non-derivative ETF developments this year: WisdomTree filed an exemptive application with the SEC that will allow ",
-      "publishedAt": "2026-08-27T15:47:39+00:00",
-      "publishedTs": 1787845659.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "alternative approach to this... a latency budget or a scheduler \"best answer you can provide to me in 15 seconds\" \"spend up to an hour on this, terminate if you reach a good conclusion earlier\" \"spend 30 mins thinking about this whenever compute is cheapest\"",
       "link": "https://x.com/nic_carter/status/2092995422511825295#m",
       "source": "@nic_carter",
@@ -1155,19 +1194,6 @@
       "summary": "I think, even for ordinary users, there should be two degrees of freedom available when you define the effort spent on a prompt. - power/parallelism (width) and - deliberation time (depth) the total effort is the product of the two, or the area of the rectangle. right now in the ",
       "publishedAt": "2026-08-27T15:12:43+00:00",
       "publishedTs": 1787843563.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "All bears welcome.",
-      "link": "https://x.com/saylor/status/2092983879464296578#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "All bears welcome. Video",
-      "publishedAt": "2026-08-27T14:33:37+00:00",
-      "publishedTs": 1787841217.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1223,19 +1249,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Get \u20bfack to Nature",
-      "link": "https://x.com/AtlasHodld/status/2092932482580762883#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-27T11:09:23+00:00",
-      "publishedTs": 1787828963.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
@@ -1433,19 +1446,6 @@
       "isRetweet": true
     },
     {
-      "title": "the leftoids and degrowthers just hate civilization, order, progress, and abundance, so I expect datacenter hate from them, their stated objective is to send us back into the stone age to repent for climate sins. the rightoids on the other hand... you've been preaching this notio",
-      "link": "https://x.com/nic_carter/status/2092248956616974788#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "the leftoids and degrowthers just hate civilization, order, progress, and abundance, so I expect datacenter hate from them, their stated objective is to send us back into the stone age to repent for climate sins. the rightoids on the other hand... you've been preaching this notio",
-      "publishedAt": "2026-08-25T13:53:18+00:00",
-      "publishedTs": 1787665998.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The X @Safety team should launch a new initiative aimed at identifying unwell people who argue with Grok as if it's a human or portray other traits of AI psychosis, so that they can direct those folks to seek the help of a mental health professional.",
       "link": "https://x.com/lopp/status/2092223824133517784#m",
       "source": "@lopp",
@@ -1571,19 +1571,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T02:41:11+00:00",
       "publishedTs": 1787452871.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Everyone participating in Bitcoin remains free to leave, reject a software update, copy the code, or use a different version. The network continues because people repeatedly value the same shared history, not because they are trapped inside it.",
-      "link": "https://x.com/DocumentingBTC/status/2091354281420951817#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-23T02:38:10+00:00",
-      "publishedTs": 1787452690.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
