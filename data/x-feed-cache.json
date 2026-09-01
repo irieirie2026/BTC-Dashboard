@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-09-01T01:39:04Z",
+  "fetchedAt": "2026-09-01T07:17:02Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Keep your eye on the \u20bfall.",
+      "link": "https://x.com/saylor/status/2094681056255291755#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Keep your eye on the \u20bfall. Video",
+      "publishedAt": "2026-09-01T06:57:35+00:00",
+      "publishedTs": 1788245855.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "James Wynn(@JamesWynnReal) has flipped from short to long bitcoin:native! He closed his 1.33 bitcoin:native($103K) short for a $1.5K loss, then opened a 30x long on 1.86 bitcoin:native($147K). Liquidation price: $77,243.53 https://x.com/lookonchain/status/2093666153004724397",
+      "link": "https://x.com/lookonchain/status/2094662174241370313#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "James Wynn( @JamesWynnReal ) has flipped from short to long bitcoin:native! He closed his 1.33 bitcoin:native($103K) short for a $1.5K loss, then opened a 30x long on 1.86 bitcoin:native($147K). Liquidation price: $77,243.53 nitter.perennialte.ch/lookonchain/status/209\u2026 Lookoncha",
+      "publishedAt": "2026-09-01T05:42:33+00:00",
+      "publishedTs": 1788241353.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Stretch Dividend Rate maintained at 12.00% for September 2026. $STRC",
+      "link": "https://x.com/Strategy/status/2094575984666112358#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-09-01T00:00:04+00:00",
+      "publishedTs": 1788220804.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "A carpenter should not have to predict the winning companies in biotech, software, energy, and agriculture to bet on human progress. Bitcoin offers one simple way to save with the assumption that people everywhere will keep making useful things.",
       "link": "https://x.com/DocumentingBTC/status/2094570016028959210#m",
@@ -1199,19 +1238,6 @@
       "isRetweet": true
     },
     {
-      "title": "Ride the \u20bfull.",
-      "link": "https://x.com/saylor/status/2092878381268324795#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Ride the \u20bfull. Video",
-      "publishedAt": "2026-08-27T07:34:24+00:00",
-      "publishedTs": 1787816064.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
       "link": "https://x.com/DocumentingBTC/status/2092804189051097201#m",
       "source": "@DocumentingBTC",
@@ -1275,19 +1301,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Michael Saylor after Bitcoin broke above his $75.4k average.",
-      "link": "https://x.com/BitcoinArchive/status/2092679815321051161#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-26T18:25:22+00:00",
-      "publishedTs": 1787768722.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "putting a sticker on the back saying \"I bought this AFTER Elon went Crazy \ud83d\ude0e\"",
@@ -1379,19 +1392,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "I sat down with the legend @CryptoHayes to discuss: - Scott Bessent's money printing playbook - Stanley Druckenmiller's AI-written op-ed - why bitcoin got overshadowed by the AI trade - gold's next move - how Arthur allocates to BTC, gold & stocks - his new project tokenizing AI ",
-      "link": "https://x.com/APompliano/status/2092406842647286184#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "I sat down with the legend @CryptoHayes to discuss: - Scott Bessent's money printing playbook - Stanley Druckenmiller's AI-written op-ed - why bitcoin got overshadowed by the AI trade - gold's next move - how Arthur allocates to BTC, gold & stocks - his new project tokenizing AI ",
-      "publishedAt": "2026-08-26T00:20:40+00:00",
-      "publishedTs": 1787703640.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "has X admitted a data breach yet? cause one def happened. i'm getting phishing emails to my connected email which has never happened before.",
