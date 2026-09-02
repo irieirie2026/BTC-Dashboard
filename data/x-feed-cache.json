@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-09-02T17:00:05Z",
+  "fetchedAt": "2026-09-02T19:42:00Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "so... we're going to have to invent some new way to do KYC huh",
+      "link": "https://x.com/nic_carter/status/2095230986573254963#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "so... we're going to have to invent some new way to do KYC huh BowTiedMara (@BowTiedMara) Massive unsecured database from IDMerit (ID/age verification service). It exposed ~1 billion personal records across 26 countries: names, addresses, national IDs, DOBs, phones, emails. Digit",
+      "publishedAt": "2026-09-02T19:22:49+00:00",
+      "publishedTs": 1788376969.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Quantum issue \ud83d\udc47 https://store.bitcoinmagazine.com/collections/featured-issues/products/the-quantum-issue-42",
+      "link": "https://x.com/BitcoinMagazine/status/2095230565582622901#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Quantum issue \ud83d\udc47 store.bitcoinmagazine.com/co\u2026",
+      "publishedAt": "2026-09-02T19:21:08+00:00",
+      "publishedTs": 1788376868.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Quantum is coming. Bitcoin isn't panicking. Neither should you. Get the latest issue of Bitcoin Magazine here: https://store.bitcoinmagazine.com/",
+      "link": "https://x.com/BitcoinMagazine/status/2095225988011491655#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Quantum is coming. Bitcoin isn't panicking. Neither should you. Get the latest issue of Bitcoin Magazine here: store.bitcoinmagazine.com/ Video",
+      "publishedAt": "2026-09-02T19:02:57+00:00",
+      "publishedTs": 1788375777.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Strategy now has more Total Reserve Capital than every financial services company in the S&P 500 except Berkshire Hathaway. $MSTR",
+      "link": "https://x.com/saylor/status/2095216788153741432#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Strategy now has more Total Reserve Capital than every financial services company in the S&amp;P 500 except Berkshire Hathaway. $MSTR Strategy (@Strategy) Our ambition is to hold the most capital. bitcoin:native \u2014 http://nitter.perennialte.ch/Strategy/status/2095195773847675256#m",
+      "publishedAt": "2026-09-02T18:26:24+00:00",
+      "publishedTs": 1788373584.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman Paul Atkins gives an update on the CLARITY ACT: \"I anticipate and hope that it will be passed by the Senate, and sent ultimately to the president's desk for signature\" \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2095210284168212800#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman Paul Atkins gives an update on the CLARITY ACT: \"I anticipate and hope that it will be passed by the Senate, and sent ultimately to the president's desk for signature\" \ud83d\udc40 Video",
+      "publishedAt": "2026-09-02T18:00:33+00:00",
+      "publishedTs": 1788372033.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Two identical AI agents can have the same code and data. Give each a different Bitcoin key and let each make their own transactions. Now they contain two separate histories, even though they began as perfect copies. Bitcoin wallets may be what turns AI copies into individuals.",
+      "link": "https://x.com/DocumentingBTC/status/2095199743613751297#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-02T17:18:40+00:00",
+      "publishedTs": 1788369520.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Digital systems have no natural arrow of time, bits do not age. Mining proof-of-work introduces physical irreversibility, and the difficulty adjustment turns it into a probabilistic clock. The Bitcoin network is software that created a shared before and after on the Internet.",
+      "link": "https://x.com/DocumentingBTC/status/2095198712649633844#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-02T17:14:34+00:00",
+      "publishedTs": 1788369274.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Our ambition is to hold the most capital. bitcoin:native",
+      "link": "https://x.com/Strategy/status/2095195773847675256#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-09-02T17:02:53+00:00",
+      "publishedTs": 1788368573.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: G20 Finance Ministers and Central Bank Governors announce that digital assets \"can play in supporting broad-based economic growth\" \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2095194027972850142#m",
@@ -16,12 +120,12 @@
       "isRetweet": false
     },
     {
-      "title": "R to @Bitcoinconfasia: WATCH: The First Asian Cycle w/ Simon Gerovich | Bitcoin Asia 2026 \ud83c\uddef\ud83c\uddf5 What happens when $14 trillion of Japanese household savings wakes up to rising inflation and a weakening yen? https://youtu.be/u7g1g0UihiY",
+      "title": "WATCH: The First Asian Cycle w/ Simon Gerovich | Bitcoin Asia 2026 \ud83c\uddef\ud83c\uddf5 What happens when $14 trillion of Japanese household savings wakes up to rising inflation and a weakening yen? https://youtu.be/u7g1g0UihiY",
       "link": "https://x.com/BitcoinMagazine/status/2095182688449630672#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "WATCH: The First Asian Cycle w/ Simon Gerovich | Bitcoin Asia 2026 \ud83c\uddef\ud83c\uddf5 What happens when $14 trillion of Japanese household savings wakes up to rising inflation and a weakening yen? inv.vern.cc/u7g1g0UihiY",
+      "summary": "WATCH: The First Asian Cycle w/ Simon Gerovich | Bitcoin Asia 2026 \ud83c\uddef\ud83c\uddf5 What happens when $14 trillion of Japanese household savings wakes up to rising inflation and a weakening yen? youtu.be/u7g1g0UihiY",
       "publishedAt": "2026-09-02T16:10:54+00:00",
       "publishedTs": 1788365454.0,
       "category": "x",
@@ -289,12 +393,12 @@
       "isRetweet": false
     },
     {
-      "title": "R to @Bitcoinconfasia: WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
+      "title": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
       "link": "https://x.com/BitcoinMagazine/status/2094875761387741508#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: inv.vern.cc/watch?v=scK8mzjn\u2026",
+      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: youtube.com/watch?v=scK8mzjn\u2026",
       "publishedAt": "2026-09-01T19:51:17+00:00",
       "publishedTs": 1788292277.0,
       "category": "x",
@@ -445,7 +549,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
+      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
       "link": "https://x.com/BitcoinMagazine/status/2094793312179745189#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -679,7 +783,7 @@
       "isRetweet": true
     },
     {
-      "title": "R to @KobeissiLetter: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
+      "title": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
       "link": "https://x.com/BitcoinMagazine/status/2094521286311444536#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -700,19 +804,6 @@
       "summary": "MSCI should be a mirror of the market, not an arbiter of it. Strategy (@Strategy) Strategy responded today to MSCI\u2019s proposed \u201cnon-operating company\u201d exclusion. While not material to $MSTR , the proposal is misguided, flawed, and conflicts with established securities laws and acc",
       "publishedAt": "2026-08-31T19:16:17+00:00",
       "publishedTs": 1788203777.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Crypto ETFs attracted $3.2 billion in inflows last week, \"their largest weekly intake since October 2025\", The Kobeissi Letter reports. \ud83d\udc40 BlackRock's IBIT led with $928 million last week, adding to their $1.3 billion from the prior week, and marking the biggest 2-week in",
-      "link": "https://x.com/BitcoinMagazine/status/2094501752720482552#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Crypto ETFs attracted $3.2 billion in inflows last week, \"their largest weekly intake since October 2025\", The Kobeissi Letter reports. \ud83d\udc40 BlackRock's IBIT led with $928 million last week, adding to their $1.3 billion from the prior week, and marking the biggest 2-week in",
-      "publishedAt": "2026-08-31T19:05:06+00:00",
-      "publishedTs": 1788203106.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -796,19 +887,6 @@
       "isRetweet": false
     },
     {
-      "title": "NEW: Coinbase CEO Brian Armstrong says \"We let you use your Bitcoin, without selling, as collateral towards a down payment on a home.\" \ud83d\udc40 \"Get your house, keep your exposure to Bitcoin.\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2094476360928334251#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-31T17:24:12+00:00",
-      "publishedTs": 1788197052.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "NEW: Who are the top holders of spot ripple:native ETFs? Here's the data as of the Q2 13F Filings. Goldman, Jane and Millennium top the list.",
       "link": "https://x.com/JSeyff/status/2094475586483704255#m",
       "source": "@JSeyff",
@@ -856,19 +934,6 @@
       "summary": "Human Capital | A short story about scarcity in a world of abundance nitter.perennialte.ch/i/article/209445400050\u2026",
       "publishedAt": "2026-08-31T16:12:32+00:00",
       "publishedTs": 1788192752.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. spot Bitcoin ETFs saw $924 million in net inflows last week \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2094455385369252273#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-31T16:00:51+00:00",
-      "publishedTs": 1788192051.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1090,32 +1155,6 @@
       "summary": "",
       "publishedAt": "2026-08-30T12:28:28+00:00",
       "publishedTs": 1788092908.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We\u2019re \u20bfack.",
-      "link": "https://x.com/saylor/status/2094033266906955896#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-30T12:03:30+00:00",
-      "publishedTs": 1788091410.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfusiness as usual.",
-      "link": "https://x.com/saylor/status/2093970108603371740#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "\u20bfusiness as usual. Video",
-      "publishedAt": "2026-08-30T07:52:32+00:00",
-      "publishedTs": 1788076352.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1511,19 +1550,6 @@
       "isRetweet": false
     },
     {
-      "title": "I would wager that not one committed opponent of data centers is aware of the Loudoun county case study",
-      "link": "https://x.com/nic_carter/status/2092662626622869524#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "I would wager that not one committed opponent of data centers is aware of the Loudoun county case study Michael Petricone (@mpetricone) Wow. As a DC taxpayer, I wish we had the data center \u201cproblem\u201d \u2014 http://nitter.perennialte.ch/mpetricone/status/2092607231057355057#m",
-      "publishedAt": "2026-08-26T17:17:04+00:00",
-      "publishedTs": 1787764624.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Next \u20bfitcoin Halving Progress \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 59% Loading\u2026Please HODL Current Block: 963,908 Halving Block: 1,050,000 Blocks Remaining: 86,092 Days Remaining: ~598",
       "link": "https://x.com/DocumentingBTC/status/2092001940964065692#m",
       "source": "@DocumentingBTC",
@@ -1545,32 +1571,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T20:18:42+00:00",
       "publishedTs": 1787516322.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin was released without a company, patent, or fundraising round. The idea itself was enough.",
-      "link": "https://x.com/DocumentingBTC/status/2091525987091533982#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-23T14:00:28+00:00",
-      "publishedTs": 1787493628.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bitcoin is the only system where an AI machine can participate without pretending to be human.",
-      "link": "https://x.com/DocumentingBTC/status/2091525369425784935#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-23T13:58:01+00:00",
-      "publishedTs": 1787493481.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
