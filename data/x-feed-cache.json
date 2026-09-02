@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-01T23:01:12Z",
+  "fetchedAt": "2026-09-02T02:57:43Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Every 2,016 blocks, the Bitcoin network measures how much the world has changed and adjusts its difficulty without changing its promise. Faster chips, cheaper energy, and more miners make the network stronger instead of making more bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2094956655087624234#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-02T01:12:43+00:00",
+      "publishedTs": 1788311563.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "After flipping from short to long bitcoin:native yesterday, James Wynn(@JamesWynnReal) quickly had his entire 1.86 bitcoin:native($147K) long liquidated! https://x.com/lookonchain/status/2094662174241370313",
+      "link": "https://x.com/lookonchain/status/2094953581782937654#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "After flipping from short to long bitcoin:native yesterday, James Wynn( @JamesWynnReal ) quickly had his entire 1.86 bitcoin:native($147K) long liquidated! nitter.perennialte.ch/lookonchain/status/209\u2026 Lookonchain (@lookonchain) James Wynn( @JamesWynnReal ) has flipped from short",
+      "publishedAt": "2026-09-02T01:00:30+00:00",
+      "publishedTs": 1788310830.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Credit on the \u20bfitcoin Standard.",
       "link": "https://x.com/saylor/status/2094905979062169997#m",
@@ -55,12 +81,12 @@
       "isRetweet": false
     },
     {
-      "title": "R to @Bitcoinconfasia: WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
+      "title": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: https://www.youtube.com/watch?v=scK8mzjnqzA&t=34s",
       "link": "https://x.com/BitcoinMagazine/status/2094875761387741508#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
       "authorRole": "Bitcoin media",
-      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: inv.vern.cc/watch?v=scK8mzjn\u2026",
+      "summary": "WATCH NOW: The Bitcoin Century w/ CZ | Bitcoin Asia 2026 \ud83d\udca5 CZ breaks down why Bitcoin reaching $1,000,000 is only a matter of time and explains why nation-states must establish strategic Bitcoin reserves. \ud83d\udd17: youtube.com/watch?v=scK8mzjn\u2026",
       "publishedAt": "2026-09-01T19:51:17+00:00",
       "publishedTs": 1788292277.0,
       "category": "x",
@@ -211,7 +237,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
+      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
       "link": "https://x.com/BitcoinMagazine/status/2094793312179745189#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -263,12 +289,12 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: It's literally the bitcoin price chart",
+      "title": "It's literally the bitcoin price chart",
       "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
       "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "It's literally the bitcoin price chart",
+      "summary": "",
       "publishedAt": "2026-09-01T12:53:59+00:00",
       "publishedTs": 1788267239.0,
       "category": "x",
@@ -432,7 +458,7 @@
       "isRetweet": true
     },
     {
-      "title": "R to @KobeissiLetter: Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
+      "title": "Why should your rate depend on your loan size? With SALT, it doesn't. 7.49% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bitcoin-loans/",
       "link": "https://x.com/BitcoinMagazine/status/2094521286311444536#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -822,7 +848,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
+      "title": "Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
       "link": "https://x.com/EricBalchunas/status/2094390802533220730#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
@@ -1584,19 +1610,6 @@
       "summary": "",
       "publishedAt": "2026-08-23T13:58:01+00:00",
       "publishedTs": 1787493481.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Millions of people are using Bitcoin together without agreeing on what it will ultimately become.",
-      "link": "https://x.com/DocumentingBTC/status/2091501425863925919#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-23T12:22:52+00:00",
-      "publishedTs": 1787487772.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
