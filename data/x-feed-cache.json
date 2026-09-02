@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-02T02:57:43Z",
+  "fetchedAt": "2026-09-02T07:45:55Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Game. Set. \u20bfitcoin.",
+      "link": "https://x.com/saylor/status/2095047682913939676#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Game. Set. \u20bfitcoin. Video",
+      "publishedAt": "2026-09-02T07:14:26+00:00",
+      "publishedTs": 1788333266.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "RNS Announcement: Bitcoin Purchase The Smarter Web Company announces the purchase of additional Bitcoin as part of \"The 10 Year Plan\" which includes an ongoing treasury policy of acquiring Bitcoin. Please read the RNS on our website (link in comments). LSE: #SWC | OTCQB: $TSWCF |",
+      "link": "https://x.com/smarterwebuk/status/2095029119444476236#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "RNS Announcement: Bitcoin Purchase The Smarter Web Company announces the purchase of additional Bitcoin as part of \"The 10 Year Plan\" which includes an ongoing treasury policy of acquiring Bitcoin. Please read the RNS on our website (link in comments). LSE: #SWC | OTCQB: $TSWCF |",
+      "publishedAt": "2026-09-02T06:00:40+00:00",
+      "publishedTs": 1788328840.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Every 2,016 blocks, the Bitcoin network measures how much the world has changed and adjusts its difficulty without changing its promise. Faster chips, cheaper energy, and more miners make the network stronger instead of making more bitcoin.",
       "link": "https://x.com/DocumentingBTC/status/2094956655087624234#m",
@@ -900,19 +926,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin miner Metaplanet (@Metaplanet), which bought 43,000 ($3.48B) at an average price of $96,191, deposited another 2,400 ($186M) into Coinbase Prime in the past 3 hours. https://arkm.com/explorer/entity/metaplanet-2",
-      "link": "https://x.com/lookonchain/status/2094287185717690746#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Bitcoin miner Metaplanet ( @Metaplanet ), which bought 43,000 ($3.48B) at an average price of $96,191, deposited another 2,400 ($186M) into Coinbase Prime in the past 3 hours. arkm.com/explorer/entity/met\u2026",
-      "publishedAt": "2026-08-31T04:52:29+00:00",
-      "publishedTs": 1788151949.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bitcoin Is About to Punish Everyone Who Waited! | Anthony Pompliano Full Interview",
       "link": "https://x.com/cryptomanran/status/2094147414898651377#m",
       "source": "@APompliano",
@@ -1264,19 +1277,6 @@
       "isRetweet": false
     },
     {
-      "title": "Yield on the Bitcoin Standard.",
-      "link": "https://x.com/saylor/status/2093278976345075804#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-08-28T10:06:13+00:00",
-      "publishedTs": 1787911573.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "If you\u2019re participating in the anti datacenter moral panic you are either - a literal Chinese bot - a useful idiot for China",
       "link": "https://x.com/nic_carter/status/2093137267061604411#m",
       "source": "@nic_carter",
@@ -1314,19 +1314,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Generative AI enables a person to build, launch, and improve a product in 10% of the time and at 10X the quality. We\u2019re doing this with Strategy software and $STRC. https://www.strategy.com/strc/learn",
-      "link": "https://x.com/phongle/status/2093050242782351819#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Generative AI enables a person to build, launch, and improve a product in 10% of the time and at 10X the quality. We\u2019re doing this with Strategy software and $STRC . strategy.com/strc/learn",
-      "publishedAt": "2026-08-27T18:57:19+00:00",
-      "publishedTs": 1787857039.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "are people allowed to be NIMBYs? sure, why not. that's how you end up with super expensive power, scarce housing, and no high speed rail. is NIMBYism \"wrong\"? not inherently, it's just an expression of preferences. preferences that lead to suboptimal outcomes, to be sure. if you ",
@@ -1418,19 +1405,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "1/ @CryptoHayes's argument in Seoul: there's no efficient spot market today for turning money into a known quantity of compute over a known period. The currency that solves that becomes the money of the agent economy. Not dollars. Not Bitcoin. Something redeemable for what an age",
-      "link": "https://x.com/flop_labs/status/2092786761709871609#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "1/ @CryptoHayes 's argument in Seoul: there's no efficient spot market today for turning money into a known quantity of compute over a known period. The currency that solves that becomes the money of the agent economy. Not dollars. Not Bitcoin. Something redeemable for what an ag",
-      "publishedAt": "2026-08-27T01:30:20+00:00",
-      "publishedTs": 1787794220.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "On this day in history, 16 years ago, internet forum users invented a game where they give 2 bitcoin to other people, and those people continue paying the bitcoin forward to the next. This continued for months until the chain of giving bitcoin stopped.",
