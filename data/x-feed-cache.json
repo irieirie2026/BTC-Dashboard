@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-02T22:22:42Z",
+  "fetchedAt": "2026-09-03T00:57:02Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
@@ -679,12 +679,12 @@
       "isRetweet": true
     },
     {
-      "title": "R to @EricBalchunas: It's literally the bitcoin price chart",
+      "title": "It's literally the bitcoin price chart",
       "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
       "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "It's literally the bitcoin price chart",
+      "summary": "",
       "publishedAt": "2026-09-01T12:53:59+00:00",
       "publishedTs": 1788267239.0,
       "category": "x",
@@ -1095,7 +1095,7 @@
       "isRetweet": false
     },
     {
-      "title": "R to @EricBalchunas: Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
+      "title": "Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
       "link": "https://x.com/EricBalchunas/status/2094390802533220730#m",
       "source": "@ericbalchunas",
       "authorName": "Eric Balchunas",
