@@ -1,7 +1,111 @@
 {
-  "fetchedAt": "2026-09-03T10:41:55Z",
+  "fetchedAt": "2026-09-03T14:52:23Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: $80,139 Bitcoin \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2095524360907784674#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-03T14:48:35+00:00",
+      "publishedTs": 1788446915.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bears, this is your stop.",
+      "link": "https://x.com/saylor/status/2095524315936530834#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bears, this is your stop. Video",
+      "publishedAt": "2026-09-03T14:48:24+00:00",
+      "publishedTs": 1788446904.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs saw $101.1 million in net inflows yesterday \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2095519837170680153#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-03T14:30:36+00:00",
+      "publishedTs": 1788445836.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Sept 3 Update: #Bitcoin ETFs: 1D NetFlow: +1,532 bitcoin:native(+$121.1M)\ud83d\udfe2 7D NetFlow: +1,255 bitcoin:native(+$99.21M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -36,324 $ETH(-$88.61M)\ud83d\udd34 7D NetFlow: +120,807 $ETH(+$294.71M)\ud83d\udfe2",
+      "link": "https://x.com/lookonchain/status/2095518307835363559#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Sept 3 Update: #Bitcoin ETFs: 1D NetFlow: +1,532 bitcoin:native(+$121.1M)\ud83d\udfe2 7D NetFlow: +1,255 bitcoin:native(+$99.21M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -36,324 $ETH (-$88.61M)\ud83d\udd34 7D NetFlow: +120,807 $ETH (+$294.71M)\ud83d\udfe2",
+      "publishedAt": "2026-09-03T14:24:32+00:00",
+      "publishedTs": 1788445472.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. House Majority Whip Tom Emmer calls on the Senate to pass The Clarity Act: The House sent over the bill a year ago and it 'still sits in the Senate without action'. Pass it \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2095500072926470537#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. House Majority Whip Tom Emmer calls on the Senate to pass The Clarity Act: The House sent over the bill a year ago and it 'still sits in the Senate without action'. Pass it \ud83d\udc4f Video",
+      "publishedAt": "2026-09-03T13:12:04+00:00",
+      "publishedTs": 1788441124.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "GTA VI: Tom Lee & Saylor rename Lake America. \ud83c\udde8\ud83c\udde6",
+      "link": "https://x.com/SAMALTCOIN_ETH/status/2095492393860571632#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "GTA VI: Tom Lee &amp; Saylor rename Lake America. \ud83c\udde8\ud83c\udde6 Video",
+      "publishedAt": "2026-09-03T12:41:33+00:00",
+      "publishedTs": 1788439293.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "The best combination of assets for the next two decades will be bitcoin and AI, but not for the reason you think. The US economy is in a bad situation right now. The federal debt is over $40 trillion and the interest expense is now more than $1 trillion annually. We have a spendi",
+      "link": "https://x.com/APompliano/status/2095481552255750529#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "The best combination of assets for the next two decades will be bitcoin and AI, but not for the reason you think. The US economy is in a bad situation right now. The federal debt is over $40 trillion and the interest expense is now more than $1 trillion annually. We have a spendi",
+      "publishedAt": "2026-09-03T11:58:28+00:00",
+      "publishedTs": 1788436708.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Standard Chartered Bank becomes first Global Systemically Important Bank to launch institutional Bitcoin trading in the UAE \ud83c\udde6\ud83c\uddea",
+      "link": "https://x.com/BitcoinMagazine/status/2095462615556251908#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-03T10:43:14+00:00",
+      "publishedTs": 1788432194.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Play the long game.",
       "link": "https://x.com/saylor/status/2095419991440891984#m",
@@ -120,7 +224,7 @@
       "isRetweet": false
     },
     {
-      "title": "Quantum is coming. Bitcoin isn't panicking. Neither should you. Get the latest issue of Bitcoin Magazine here: https://store.bitcoinmagazine.com/",
+      "title": "Pinned: Quantum is coming. Bitcoin isn't panicking. Neither should you. Get the latest issue of Bitcoin Magazine here: https://store.bitcoinmagazine.com/",
       "link": "https://x.com/BitcoinMagazine/status/2095225988011491655#m",
       "source": "@BitcoinMagazine",
       "authorName": "Bitcoin Magazine",
@@ -248,32 +352,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "In the past six months Bitcoin has had a lower correlation to US stocks than gold, small caps, EM and even treasuries. Had to check for myself when I saw the post below. Tbf btc has always been about .40 it's gold and treasuries that have become much more correlated. Small window",
-      "link": "https://x.com/EricBalchunas/status/2095168233443660147#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "In the past six months Bitcoin has had a lower correlation to US stocks than gold, small caps, EM and even treasuries. Had to check for myself when I saw the post below. Tbf btc has always been about .40 it's gold and treasuries that have become much more correlated. Small window",
-      "publishedAt": "2026-09-02T15:13:27+00:00",
-      "publishedTs": 1788362007.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I don't understand using the Craig Wright story to make a movie but this is being made by a SOLID director and actors (has to be first bitcoin movie feat Oscar winner) so who knows maybe it'll work. Also, the AI component will get a lot of attn. I heard they saved like $150m by u",
-      "link": "https://x.com/EricBalchunas/status/2095165379035189568#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "I don't understand using the Craig Wright story to make a movie but this is being made by a SOLID director and actors (has to be first bitcoin movie feat Oscar winner) so who knows maybe it'll work. Also, the AI component will get a lot of attn. I heard they saved like $150m by u",
-      "publishedAt": "2026-09-02T15:02:07+00:00",
-      "publishedTs": 1788361327.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Summer is usually slow, but we\u2019ve been busy @Strategy over the last 2 months: Bitcoin and USD assets are up 34% to $72B, net leverage down to 0%, and back to buying BTC. $MSTR has outperformed BTC and our prefs are paying dividends and up 10%+. Fall could be quite interesting.",
@@ -640,45 +718,6 @@
       "isRetweet": false
     },
     {
-      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
-      "link": "https://x.com/BitcoinMagazine/status/2094793312179745189#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Market here: polymarket.com/event/what-pr\u2026",
-      "publishedAt": "2026-09-01T14:23:39+00:00",
-      "publishedTs": 1788272619.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: There's now a 59% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060.com \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2094789263552291291#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-01T14:07:34+00:00",
-      "publishedTs": 1788271654.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Sept 1 Update: #Bitcoin ETFs: 1D NetFlow: +2,554 bitcoin:native(+$198.95M)\ud83d\udfe2 7D NetFlow: +9,994 bitcoin:native(+$778.51M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,273 $ETH(+$71.56M)\ud83d\udfe2 7D NetFlow: +286,708 $ETH(+$700.92M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2094787049098445228#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Sept 1 Update: #Bitcoin ETFs: 1D NetFlow: +2,554 bitcoin:native(+$198.95M)\ud83d\udfe2 7D NetFlow: +9,994 bitcoin:native(+$778.51M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +29,273 $ETH (+$71.56M)\ud83d\udfe2 7D NetFlow: +286,708 $ETH (+$700.92M)\ud83d\udfe2",
-      "publishedAt": "2026-09-01T13:58:46+00:00",
-      "publishedTs": 1788271126.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A lot of people getting unsolicited X password reset attempts in their email inbox. Do the following: go to X settings -> security and account access -> security -> check \"password reset protect\"",
       "link": "https://x.com/nic_carter/status/2094781323357327806#m",
       "source": "@nic_carter",
@@ -703,19 +742,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "It's literally the bitcoin price chart",
-      "link": "https://x.com/EricBalchunas/status/2094770746857845061#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-09-01T12:53:59+00:00",
-      "publishedTs": 1788267239.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Excited to share what we've been working on for a while in stealth with our new neobank mobile experience built on Ethena's existing product set. This is one of the few product categories that have emerged in the last couple of years that I think has a genuine chance of breaking ",
@@ -796,19 +822,6 @@
       "isRetweet": false
     },
     {
-      "title": "BMTV launches 9/14 \ud83d\udfe7 Subscribe on Substack for guest announcements, segment previews, and the full schedule. \ud83d\udc49 https://watchbmtv.substack.com/",
-      "link": "https://x.com/watchbmtv/status/2094546635187478766#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "BMTV launches 9/14 \ud83d\udfe7 Subscribe on Substack for guest announcements, segment previews, and the full schedule. \ud83d\udc49 watchbmtv.substack.com/",
-      "publishedAt": "2026-08-31T22:03:27+00:00",
-      "publishedTs": 1788213807.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The world had to judge Bitcoin before it could ever judge its anonymous inventor. That may be the most important fact in all of computer science.",
       "link": "https://x.com/DocumentingBTC/status/2094545212920004781#m",
       "source": "@DocumentingBTC",
@@ -817,19 +830,6 @@
       "summary": "",
       "publishedAt": "2026-08-31T21:57:48+00:00",
       "publishedTs": 1788213468.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Bitcoin is closing out its 3rd best August EVER! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2094543659198743011#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-08-31T21:51:37+00:00",
-      "publishedTs": 1788213097.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -902,15 +902,15 @@
     {
       "title": "XRP ETF flows have been surprisingly resilient. Money in the aggregate has mostly only gone one direction and now they have a total of $1.8 billion in cumulative net inflows. When you look at this compared ripple:native price over this time period ... its particularly impressive",
       "link": "https://x.com/JSeyff/status/2094485620710117749#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "XRP ETF flows have been surprisingly resilient. Money in the aggregate has mostly only gone one direction and now they have a total of $1.8 billion in cumulative net inflows. When you look at this compared ripple:native price over this time period ... its particularly impressive ",
       "publishedAt": "2026-08-31T18:01:00+00:00",
       "publishedTs": 1788199260.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
     },
     {
       "title": "CoinMarketCap made a new feature that lets you play a \u2018flappy bird\u2019 game using the Bitcoin price",
@@ -1030,19 +1030,6 @@
       "isRetweet": false
     },
     {
-      "title": "Leveraged ETF trading in South Korea has plummeted. Down to 4% of its peak volume in June. Why? The selloff def helped but also the 5-day \"training and simulation\" course the govt makes you take is deterring ppl. It's cumbersome as hell sounds like. @YKreports has the details:",
-      "link": "https://x.com/EricBalchunas/status/2094404077505392939#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "",
-      "publishedAt": "2026-08-31T12:36:58+00:00",
-      "publishedTs": 1788179818.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Bill Gates says, \u201cI wouldn\u2019t choose crypto\u201d",
       "link": "https://x.com/DocumentingBTC/status/2094400622753649004#m",
       "source": "@DocumentingBTC",
@@ -1069,56 +1056,17 @@
       "isRetweet": true
     },
     {
-      "title": "STRC\u2019s BTC Credit assumes 10% BTC ARR, 40% BTC Vol, and a BTC price of $77,558. Learn more about Strategy\u2019s BTC Credit metrics: https://strategy.com/credit",
-      "link": "https://x.com/saylor/status/2094395808607039652#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "STRC\u2019s BTC Credit assumes 10% BTC ARR, 40% BTC Vol, and a BTC price of $77,558. Learn more about Strategy\u2019s BTC Credit metrics: strategy.com/credit",
-      "publishedAt": "2026-08-31T12:04:07+00:00",
-      "publishedTs": 1788177847.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "These actions further strengthen $STRC. USD Reserve is $5.10B and USD Cash is $1.61B, improving USD Duration to 4.0 yrs (+23d) and STRC\u2019s BTC Credit to 56 bps (-3 bps).",
-      "link": "https://x.com/saylor/status/2094395806879019172#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "These actions further strengthen $STRC . USD Reserve is $5.10B and USD Cash is $1.61B, improving USD Duration to 4.0 yrs (+23d) and STRC\u2019s BTC Credit to 56 bps (-3 bps).",
-      "publishedAt": "2026-08-31T12:04:07+00:00",
-      "publishedTs": 1788177847.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Link to article https://www.thedailyupside.com/etf/industry-news-etf/index-funds-celebrate-their-50th-birthday/",
-      "link": "https://x.com/EricBalchunas/status/2094390802533220730#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Link to article thedailyupside.com/etf/indus\u2026",
-      "publishedAt": "2026-08-31T11:44:13+00:00",
-      "publishedTs": 1788176653.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "100%. Winklevoss\u2019 Bitcoin ETF filing was ridiculed, Mad Magazine (RIP) had it as one of their Top 20 Dumbest Things of year. The Atlantic crapped on it too, saying even Zuck wouldn\u2019t steal this idea- an idea that went onto crush inflow records in a super-competitive industry. We ",
       "link": "https://x.com/EricBalchunas/status/2094384959603478597#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "100%. Winklevoss\u2019 Bitcoin ETF filing was ridiculed, Mad Magazine (RIP) had it as one of their Top 20 Dumbest Things of year. The Atlantic crapped on it too, saying even Zuck wouldn\u2019t steal this idea- an idea that went onto crush inflow records in a super-competitive industry. We ",
       "publishedAt": "2026-08-31T11:21:00+00:00",
       "publishedTs": 1788175260.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "The Cult George assures Jerry that he is not in a cult",
@@ -1129,19 +1077,6 @@
       "summary": "The Cult George assures Jerry that he is not in a cult Video",
       "publishedAt": "2026-08-31T09:32:04+00:00",
       "publishedTs": 1788168724.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Bitcoin Is About to Punish Everyone Who Waited! | Anthony Pompliano Full Interview",
-      "link": "https://x.com/cryptomanran/status/2094147414898651377#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Bitcoin Is About to Punish Everyone Who Waited! | Anthony Pompliano Full Interview Video",
-      "publishedAt": "2026-08-30T19:37:05+00:00",
-      "publishedTs": 1788118625.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
