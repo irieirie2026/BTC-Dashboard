@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-03T21:34:54Z",
+  "fetchedAt": "2026-09-03T23:47:12Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Bitcoin consensus is deterministic validation wrapped around stochastic leader election.",
+      "link": "https://x.com/DocumentingBTC/status/2095645669251858485#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-03T22:50:37+00:00",
+      "publishedTs": 1788475837.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "BREAKING: Bitcoin rockets to $82,016! \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2095626351503970555#m",
@@ -198,6 +211,19 @@
       "isRetweet": false
     },
     {
+      "title": "bitcoin:native",
+      "link": "https://x.com/JSeyff/status/2095549007137263732#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "",
+      "publishedAt": "2026-09-03T16:26:31+00:00",
+      "publishedTs": 1788452791.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "The top 3 US equity capital issuers this year are powered by AI: SpaceX in space, Google in search, and Intel in semis. Number 4 is Strategy. $MSTR is powered by amplified Bitcoin.",
       "link": "https://x.com/phongle/status/2095547318141325676#m",
       "source": "@saylor",
@@ -354,6 +380,19 @@
       "isRetweet": false
     },
     {
+      "title": "New ETF casually launching with $2.5 billion.",
+      "link": "https://x.com/JSeyff/status/2095274327448977855#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "New ETF casually launching with $2.5 billion. Nate Geraci (@NateGeraci) State Street w/ largest seeded ETF launch *ever* today\u2026 State Street SPDR UC Investments 90/10 Endowment Strategy Index ETF (UCBG) Launched w/ *$2.5bil* UC Investments manages University of California\u2019s retir",
+      "publishedAt": "2026-09-02T22:15:02+00:00",
+      "publishedTs": 1788387302.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: Bitcoin is decoupling from NASDAQ and now closely correlating with gold, Grayscale reports. \ud83d\udc40 \"Rising debt, persistent deficits, and higher yields are pushing investors toward alternatives like Bitcoin and gold.\" \u270a",
       "link": "https://x.com/BitcoinMagazine/status/2095262256455925838#m",
       "source": "@BitcoinMagazine",
@@ -362,6 +401,19 @@
       "summary": "",
       "publishedAt": "2026-09-02T21:27:04+00:00",
       "publishedTs": 1788384424.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "someone explain to me the mindset of a zoomer who is completely dependent on Chat and can't write a work email or breakup text without it, but also hates datacenters. what's the psychology here",
+      "link": "https://x.com/nic_carter/status/2095252590715941228#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-02T20:48:40+00:00",
+      "publishedTs": 1788382120.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -388,6 +440,19 @@
       "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 SEC Chairman Paul Atkins says \"The Regulation Crypto Assets proposal is our most historic step yet to cement America as the Crypto Capital of the World\" \ud83d\udc40 Video",
       "publishedAt": "2026-09-02T20:17:51+00:00",
       "publishedTs": 1788380271.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "so... we're going to have to invent some new way to do KYC huh",
+      "link": "https://x.com/nic_carter/status/2095230986573254963#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "so... we're going to have to invent some new way to do KYC huh BowTiedMara (@BowTiedMara) Massive unsecured database from IDMerit (ID/age verification service). It exposed ~1 billion personal records across 26 countries: names, addresses, national IDs, DOBs, phones, emails. Digit",
+      "publishedAt": "2026-09-02T19:22:49+00:00",
+      "publishedTs": 1788376969.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -757,6 +822,19 @@
       "isRetweet": false
     },
     {
+      "title": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
+      "link": "https://x.com/seanjudgeciv/status/2094811677954802118#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
+      "publishedAt": "2026-09-01T15:36:38+00:00",
+      "publishedTs": 1788276998.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Pinned: SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon!",
       "link": "https://x.com/lopp/status/2094807737200730178#m",
       "source": "@lopp",
@@ -778,6 +856,19 @@
       "summary": "My dropbox account was compromised via this vulnerability. Thankfully I encrypt my files locally before uploading to dropbox! nitter.perennialte.ch/9to5mac/status/2094770\u2026 blog.lopp.net/how-to-securel\u2026 9to5Mac (@9to5mac) Dropbox breach seemingly caused by egregious authentication",
       "publishedAt": "2026-09-01T14:56:48+00:00",
       "publishedTs": 1788274608.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A lot of people getting unsolicited X password reset attempts in their email inbox. Do the following: go to X settings -> security and account access -> security -> check \"password reset protect\"",
+      "link": "https://x.com/nic_carter/status/2094781323357327806#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "A lot of people getting unsolicited X password reset attempts in their email inbox. Do the following: go to X settings -&gt; security and account access -&gt; security -&gt; check \"password reset protect\" nic carter (@nic_carter) has X admitted a data breach yet? cause one def ha",
+      "publishedAt": "2026-09-01T13:36:01+00:00",
+      "publishedTs": 1788269761.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -807,6 +898,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Excited to share what we've been working on for a while in stealth with our new neobank mobile experience built on Ethena's existing product set. This is one of the few product categories that have emerged in the last couple of years that I think has a genuine chance of breaking ",
+      "link": "https://x.com/gdog97_/status/2094757499438289290#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Excited to share what we've been working on for a while in stealth with our new neobank mobile experience built on Ethena's existing product set. This is one of the few product categories that have emerged in the last couple of years that I think has a genuine chance of breaking ",
+      "publishedAt": "2026-09-01T12:01:21+00:00",
+      "publishedTs": 1788264081.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Bitcoin mining can travel to the source of electricity instead of requiring electricity to travel to industry. Energy infrastructure can begin earning before the roads, factories, and cities that may eventually grow around it.",
@@ -991,6 +1095,19 @@
       "isRetweet": false
     },
     {
+      "title": "NEW: Who are the top holders of spot ripple:native ETFs? Here's the data as of the Q2 13F Filings. Goldman, Jane and Millennium top the list.",
+      "link": "https://x.com/JSeyff/status/2094475586483704255#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "",
+      "publishedAt": "2026-08-31T17:21:07+00:00",
+      "publishedTs": 1788196867.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "On this day in history, 16 years ago, a user complained while mining bitcoin at home with their desktop computer, \u201cI just can\u2019t wait one month to see 50 bitcoins\u201d",
       "link": "https://x.com/DocumentingBTC/status/2094470640560492632#m",
       "source": "@DocumentingBTC",
@@ -999,6 +1116,32 @@
       "summary": "",
       "publishedAt": "2026-08-31T17:01:28+00:00",
       "publishedTs": 1788195688.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "written by me",
+      "link": "https://x.com/nic_carter/status/2094464992745521511#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-31T16:39:02+00:00",
+      "publishedTs": 1788194342.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: Human Capital | A short story about scarcity in a world of abundance https://x.com/i/article/2094454000502632449",
+      "link": "https://x.com/nic_carter/status/2094458324993405232#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Human Capital | A short story about scarcity in a world of abundance nitter.perennialte.ch/i/article/209445400050\u2026",
+      "publishedAt": "2026-08-31T16:12:32+00:00",
+      "publishedTs": 1788192752.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1067,6 +1210,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "100%. Winklevoss\u2019 Bitcoin ETF filing was ridiculed, Mad Magazine (RIP) had it as one of their Top 20 Dumbest Things of year. The Atlantic crapped on it too, saying even Zuck wouldn\u2019t steal this idea- an idea that went onto crush inflow records in a super-competitive industry. We ",
+      "link": "https://x.com/EricBalchunas/status/2094384959603478597#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "100%. Winklevoss\u2019 Bitcoin ETF filing was ridiculed, Mad Magazine (RIP) had it as one of their Top 20 Dumbest Things of year. The Atlantic crapped on it too, saying even Zuck wouldn\u2019t steal this idea- an idea that went onto crush inflow records in a super-competitive industry. We ",
+      "publishedAt": "2026-08-31T11:21:00+00:00",
+      "publishedTs": 1788175260.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "The Cult George assures Jerry that he is not in a cult",
@@ -1147,6 +1303,58 @@
       "isRetweet": false
     },
     {
+      "title": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47",
+      "link": "https://x.com/SolanaFloor/status/2093564365983346800#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "\ud83c\udfa5 Bloomberg ETF analyst @JSeyff says the 13F data shows advisors are buying BTC, ETH and SOL. \u201cMoney is coming back into the space, and it\u2019s showing up in prices.\u201d \ud83d\udc47 Video",
+      "publishedAt": "2026-08-29T05:00:16+00:00",
+      "publishedTs": 1787979616.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "this stuff is super complicated and most people are new to the state/local/federal tax analysis so of course headlines like \"datacenters get massive tax waivers\" are compelling. ordinary people _feel_ that they're being cheated by big tech. they read about massive waivers (always",
+      "link": "https://x.com/nic_carter/status/2093395769818538279#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this stuff is super complicated and most people are new to the state/local/federal tax analysis so of course headlines like \"datacenters get massive tax waivers\" are compelling. ordinary people _feel_ that they're being cheated by big tech. they read about massive waivers (always",
+      "publishedAt": "2026-08-28T17:50:19+00:00",
+      "publishedTs": 1787939419.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "this is misleading in 3 major ways. Ronan completely misrepresents how data centers are taxed. 1. it's uncommon to impose sales taxes on datacenters, for a very ordinary tax policy reason 2. data centers pay far more in taxes than just sales taxes - property taxes, corporate inco",
+      "link": "https://x.com/nic_carter/status/2093394514941464597#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this is misleading in 3 major ways. Ronan completely misrepresents how data centers are taxed. 1. it's uncommon to impose sales taxes on datacenters, for a very ordinary tax policy reason 2. data centers pay far more in taxes than just sales taxes - property taxes, corporate inco",
+      "publishedAt": "2026-08-28T17:45:20+00:00",
+      "publishedTs": 1787939120.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "So that Americans will continue to win for generations to come. https://x.com/i/article/2092305472627851264",
+      "link": "https://x.com/12Palehorse/status/2093368505303179458#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "So that Americans will continue to win for generations to come. nitter.perennialte.ch/i/article/209230547262\u2026",
+      "publishedAt": "2026-08-28T16:01:59+00:00",
+      "publishedTs": 1787932919.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "We're just getting started. Gird your loins. https://x.com/lopp/status/1367103081255759875",
       "link": "https://x.com/lopp/status/2093343091973566803#m",
       "source": "@lopp",
@@ -1186,6 +1394,97 @@
       "isRetweet": false
     },
     {
+      "title": "If you\u2019re participating in the anti datacenter moral panic you are either - a literal Chinese bot - a useful idiot for China",
+      "link": "https://x.com/nic_carter/status/2093137267061604411#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "If you\u2019re participating in the anti datacenter moral panic you are either - a literal Chinese bot - a useful idiot for China Global Government Affairs (@GlobalAffairs) The X Safety team conducted an investigation into suspected Chinese inauthentic accounts involved in influence o",
+      "publishedAt": "2026-08-28T00:43:07+00:00",
+      "publishedTs": 1787877787.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "are people allowed to be NIMBYs? sure, why not. that's how you end up with super expensive power, scarce housing, and no high speed rail. is NIMBYism \"wrong\"? not inherently, it's just an expression of preferences. preferences that lead to suboptimal outcomes, to be sure. if you ",
+      "link": "https://x.com/nic_carter/status/2093012237099188530#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "are people allowed to be NIMBYs? sure, why not. that's how you end up with super expensive power, scarce housing, and no high speed rail. is NIMBYism \"wrong\"? not inherently, it's just an expression of preferences. preferences that lead to suboptimal outcomes, to be sure. if you ",
+      "publishedAt": "2026-08-27T16:26:18+00:00",
+      "publishedTs": 1787847978.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "stop over-intellectualizing the anti-datacenter moral panic it's not \"because Dario said AI would take the jobs and Yud wrote a book about p_doom. normal people don't follow these debates. they can't name an AI company aside from OpenAI. they just hate it when anyone builds anyth",
+      "link": "https://x.com/nic_carter/status/2093011510175903827#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "stop over-intellectualizing the anti-datacenter moral panic it's not \"because Dario said AI would take the jobs and Yud wrote a book about p_doom. normal people don't follow these debates. they can't name an AI company aside from OpenAI. they just hate it when anyone builds anyth",
+      "publishedAt": "2026-08-27T16:23:24+00:00",
+      "publishedTs": 1787847804.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "alternative approach to this... a latency budget or a scheduler \"best answer you can provide to me in 15 seconds\" \"spend up to an hour on this, terminate if you reach a good conclusion earlier\" \"spend 30 mins thinking about this whenever compute is cheapest\"",
+      "link": "https://x.com/nic_carter/status/2092995422511825295#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-27T15:19:29+00:00",
+      "publishedTs": 1787843969.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I think, even for ordinary users, there should be two degrees of freedom available when you define the effort spent on a prompt. - power/parallelism (width) and - deliberation time (depth) the total effort is the product of the two, or the area of the rectangle. right now in the ",
+      "link": "https://x.com/nic_carter/status/2092993719205060964#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I think, even for ordinary users, there should be two degrees of freedom available when you define the effort spent on a prompt. - power/parallelism (width) and - deliberation time (depth) the total effort is the product of the two, or the area of the rectangle. right now in the ",
+      "publishedAt": "2026-08-27T15:12:43+00:00",
+      "publishedTs": 1787843563.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "you'd think that one of them, possessing superior epistemics of course, would become a PM billionaire if for nothing else than to convince the world that the rationalists are correct. that would be the most rational approach, no?",
+      "link": "https://x.com/nic_carter/status/2092976375829311559#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-27T14:03:48+00:00",
+      "publishedTs": 1787839428.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Interesting that none of the rationalists with \u201csuperior epistemics\u201d have become prediction market billionaires",
+      "link": "https://x.com/nic_carter/status/2092940337849274830#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Interesting that none of the rationalists with \u201csuperior epistemics\u201d have become prediction market billionaires Aashish Reddy (@_AashishReddy) Eliezer on encountering Leopold, which some of you will enjoy: \u2014 http://nitter.perennialte.ch/_AashishReddy/status/2091987070390600010#m",
+      "publishedAt": "2026-08-27T11:40:36+00:00",
+      "publishedTs": 1787830836.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
       "link": "https://x.com/DocumentingBTC/status/2092804189051097201#m",
       "source": "@DocumentingBTC",
@@ -1199,14 +1498,40 @@
       "isRetweet": false
     },
     {
-      "title": "On this day in history, 16 years ago, internet forum users invented a game where they give 2 bitcoin to other people, and those people continue paying the bitcoin forward to the next. This continued for months until the chain of giving bitcoin stopped.",
-      "link": "https://x.com/DocumentingBTC/status/2092733976104382813#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
+      "title": "putting a sticker on the back saying \"I bought this AFTER Elon went Crazy \ud83d\ude0e\"",
+      "link": "https://x.com/nic_carter/status/2092671878926160074#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
       "summary": "",
-      "publishedAt": "2026-08-26T22:00:35+00:00",
-      "publishedTs": 1787781635.0,
+      "publishedAt": "2026-08-26T17:53:50+00:00",
+      "publishedTs": 1787766830.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "just bought the new Y and the entire thing took me 5 minutes",
+      "link": "https://x.com/nic_carter/status/2092670925200138641#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-26T17:50:03+00:00",
+      "publishedTs": 1787766603.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "it's really nice that you can just go online and buy a Tesla in three clicks. instead of negotiating with a frat bro wearing too much cologne using high pressure sales tactics on you for 4 hours",
+      "link": "https://x.com/nic_carter/status/2092670769847316909#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-08-26T17:49:26+00:00",
+      "publishedTs": 1787766566.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
