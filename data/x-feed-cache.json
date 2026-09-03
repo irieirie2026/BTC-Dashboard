@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-03T05:32:47Z",
+  "fetchedAt": "2026-09-03T10:41:55Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Play the long game.",
+      "link": "https://x.com/saylor/status/2095419991440891984#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Play the long game. Video",
+      "publishedAt": "2026-09-03T07:53:51+00:00",
+      "publishedTs": 1788422031.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Garrett Jin (@GarrettBullish) is taking profit on his 1,868 bitcoin:native ($147M) long, closing 276 bitcoin:native($21.5M) so far for a $210K profit. He still holds 1,592 bitcoin:native($123.92M) with $1.18M in unrealized profit. But after holding the long for over 3 months, he ",
       "link": "https://x.com/lookonchain/status/2095344725872308723#m",
@@ -757,19 +770,6 @@
       "isRetweet": false
     },
     {
-      "title": "James Wynn(@JamesWynnReal) has flipped from short to long bitcoin:native! He closed his 1.33 bitcoin:native($103K) short for a $1.5K loss, then opened a 30x long on 1.86 bitcoin:native($147K). Liquidation price: $77,243.53 https://x.com/lookonchain/status/2093666153004724397",
-      "link": "https://x.com/lookonchain/status/2094662174241370313#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "James Wynn( @JamesWynnReal ) has flipped from short to long bitcoin:native! He closed his 1.33 bitcoin:native($103K) short for a $1.5K loss, then opened a 30x long on 1.86 bitcoin:native($147K). Liquidation price: $77,243.53 nitter.perennialte.ch/lookonchain/status/209\u2026 Lookoncha",
-      "publishedAt": "2026-09-01T05:42:33+00:00",
-      "publishedTs": 1788241353.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Stretch Dividend Rate maintained at 12.00% for September 2026. $STRC",
       "link": "https://x.com/Strategy/status/2094575984666112358#m",
       "source": "@saylor",
@@ -1090,19 +1090,6 @@
       "summary": "These actions further strengthen $STRC . USD Reserve is $5.10B and USD Cash is $1.61B, improving USD Duration to 4.0 yrs (+23d) and STRC\u2019s BTC Credit to 56 bps (-3 bps).",
       "publishedAt": "2026-08-31T12:04:07+00:00",
       "publishedTs": 1788177847.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strategy has acquired 4,603 BTC for $370M, increased USD Cash by $29M, and repurchased $152M of $STRC. As of 8/30/26, we hold 845,050 bitcoin:native and $6.71B of USD Assets, bringing Net Leverage to 0.0%. $MSTR https://www.strategy.com/press/strategy-acquires-4603-btc-increases-",
-      "link": "https://x.com/saylor/status/2094395804962152885#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strategy has acquired 4,603 BTC for $370M, increased USD Cash by $29M, and repurchased $152M of $STRC . As of 8/30/26, we hold 845,050 bitcoin:native and $6.71B of USD Assets, bringing Net Leverage to 0.0%. $MSTR strategy.com/press/strategy-\u2026",
-      "publishedAt": "2026-08-31T12:04:06+00:00",
-      "publishedTs": 1788177846.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
