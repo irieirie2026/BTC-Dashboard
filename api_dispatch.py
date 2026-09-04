@@ -459,6 +459,11 @@ def dispatch_api(path, query, body: dict | None = None):
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         return get_fear_greed_payload(refresh=refresh)
 
+    if path == "/api/misc/mempool":
+        from btc_data.fetchers import fetch_mempool_fees
+
+        return fetch_mempool_fees(refresh=_query_refresh(query))
+
     if path == "/api/misc/btc" or path.startswith("/api/misc/btc/"):
         try:
             btc = _btc_indicators_api()

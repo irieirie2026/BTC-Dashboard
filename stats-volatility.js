@@ -278,9 +278,25 @@ async function volFetchSuite(force = false, opts = {}) {
     url += `&models=${encodeURIComponent(models.join(","))}`;
   }
   if (force) url += "&refresh=1";
-  const res = await fetch(url, { cache: "no-store" });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || data.message || `Volatility ${res.status}`);
+  let res;
+  let data = {};
+  let lastErr;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    res = await fetch(url, { cache: "no-store" });
+    const text = await res.text();
+    try {
+      data = JSON.parse(text);
+    } catch {
+      lastErr = `Volatility ${res.status}: non-JSON`;
+      if (attempt === 0 && (res.status === 504 || res.status === 502)) continue;
+      throw new Error(lastErr);
+    }
+    if (res.ok) break;
+    lastErr = data.error || data.message || `Volatility ${res.status}`;
+    if (attempt === 0 && (res.status === 504 || res.status === 502)) continue;
+    throw new Error(lastErr);
+  }
+  if (!res.ok) throw new Error(lastErr || `Volatility ${res.status}`);
   volRenderModelPicker(volCatalogFromSuite(data));
   // Re-apply selection after re-render of picker
   if (models.length) volSetCheckedModels(models);

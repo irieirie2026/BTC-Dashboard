@@ -374,14 +374,23 @@ def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
         )
         ls_row = (ls.get("data") or [None])[0] or {}
         last = _f(row.get("last"))
-        mark = _f(row.get("last"))
+        mark = _f(row.get("markPx") or row.get("last"))
+        funding = _f(row.get("fundingRate"))
+        if funding is None:
+            try:
+                fr = _fetch_json(
+                    "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP"
+                )
+                funding = _f(((fr.get("data") or [None])[0] or {}).get("fundingRate"))
+            except Exception:
+                funding = None
         out.update({
             "venue": "OKX",
             "lastPrice": last,
             "markPrice": mark,
             "indexPrice": _f(row.get("idxPx")) or last,
             "openInterest": _f(oi_row.get("oiCcy") or oi_row.get("oi")),
-            "fundingRate": _f(row.get("fundingRate")),
+            "fundingRate": funding,
             "longShortRatio": _f(ls_row.get("longShortRatio") or (ls_row[1] if isinstance(ls_row, list) and len(ls_row) > 1 else None)),
             "highPrice": _f(row.get("high24h")),
             "lowPrice": _f(row.get("low24h")),
@@ -425,6 +434,14 @@ def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
         "bids": [[str(bid), "1"]] if bid else [],
         "asks": [[str(ask), "1"]] if ask else [],
     }
+    try:
+        book = _fetch_json("https://api.exchange.coinbase.com/products/BTC-USD/book?level=2")
+        bids = [[str(p), str(q)] for p, q, *_ in (book.get("bids") or [])[:20]]
+        asks = [[str(p), str(q)] for p, q, *_ in (book.get("asks") or [])[:20]]
+        if len(bids) >= 5 and len(asks) >= 5:
+            depth = {"bids": bids, "asks": asks}
+    except Exception:
+        pass
     return {
         "ticker": ticker,
         "klines": klines.get("klines") or [],

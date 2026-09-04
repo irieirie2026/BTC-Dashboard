@@ -66,6 +66,27 @@ function fmtBtc(n, digits = 4) {
   });
 }
 
+function fmtMinerRevenue(raw, btcPrice) {
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) return { value: "—", sub: "Latest daily estimate" };
+  // Blockchain.info miners-revenue is USD. Values > ~2k cannot be BTC/day.
+  if (n > 2000) {
+    const usd = n;
+    const btc = btcPrice > 0 ? usd / btcPrice : null;
+    if (btc != null && btc < 2000) {
+      return {
+        value: btc.toFixed(0) + " BTC/day",
+        sub: "$" + (usd / 1e6).toFixed(1) + "M USD · Blockchain.info",
+      };
+    }
+    return {
+      value: "$" + (usd >= 1e6 ? (usd / 1e6).toFixed(1) + "M" : usd.toFixed(0)) + "/day",
+      sub: "Blockchain.info miner revenue (USD)",
+    };
+  }
+  return { value: n.toFixed(1) + " BTC/day", sub: "Latest daily estimate" };
+}
+
 function fmtPct(n, d = 2) {
   if (n == null || Number.isNaN(n)) return "—";
   const prefix = n >= 0 ? "+" : "";
@@ -138,7 +159,7 @@ async function fetchNetworkSnapshot() {
 
   const items = [
     { label: "Block Height", helpKey: "block-height", value: fmtLarge(heightNum), sub: "Bitcoin mainnet" },
-    { label: "Hash Rate", helpKey: "hash-rate", value: fmtHashrateGhs(stats.hash_rate), sub: "Network compute power" },
+    { label: "Hash Rate", helpKey: "hash-rate", value: fmtHashrateGhs(stats.hash_rate), sub: "Blockchain.info stats" },
     { label: "Difficulty", helpKey: "difficulty", value: fmtDifficulty(stats.difficulty), sub: "Mining difficulty" },
     {
       label: "Mempool",
@@ -295,13 +316,14 @@ async function fetchOnchainSectionData(section) {
       .sort((a, b) => b.share - a.share);
     const leader = pools[0];
     const revLast = minerRev.length ? minerRev[minerRev.length - 1].close : null;
+    const revHero = fmtMinerRevenue(revLast, window.btcSpotPrice);
     return {
       section,
       title: titles.mining,
       heroes: [
-        { name: "Hash Rate", value: snapshot.hashrate, sub: "Network compute" },
+        { name: "Hash Rate", value: snapshot.hashrate, sub: "Blockchain.info stats" },
         { name: "Pool Leader", value: leader?.name || "—", sub: leader ? leader.share.toFixed(1) + "% block share" : "—" },
-        { name: "Miner Revenue", value: revLast != null ? revLast.toFixed(1) + " BTC/day" : "—", sub: "Latest daily estimate" },
+        { name: "Miner Revenue", value: revHero.value, sub: revHero.sub },
         { name: "Adj. ETA", value: fmtDuration(Math.floor(snapshot.remainingTime / 1000)), sub: fmtPct(snapshot.diffChange) + " projected" },
       ],
       table: pools.slice(0, 12),

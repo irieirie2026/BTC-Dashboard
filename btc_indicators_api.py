@@ -881,7 +881,7 @@ def _build_fast_snapshot_cells() -> dict[str, dict]:
             "error": puell_body.get("error"),
         }
 
-    return _assemble_snapshot_cells(
+    cells = _assemble_snapshot_cells(
         bitinfo=bitinfo,
         dominance=dominance,
         oi=oi,
@@ -897,6 +897,16 @@ def _build_fast_snapshot_cells() -> dict[str, dict]:
         netflow=netflow,
         mempool=mempool,
     )
+    for metric in ("sopr", "nupl", "supply_in_profit", "mvrv", "hash_rate"):
+        if not _cell_value_missing(metric, cells.get(metric)):
+            continue
+        body = _store_series_body(metric, ttl=86400) or {}
+        if _latest_from_series_data(body) is None:
+            continue
+        cells[metric] = _cell_from_series_data(
+            body, body.get("source") or "BGeometrics"
+        )
+    return cells
 
 
 def _finalize_snapshot_payload(

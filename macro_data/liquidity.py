@@ -4,8 +4,10 @@ Liquidity proxy builder — CB BS + Broad Money + FX Reserves (ex-gold).
 
 from __future__ import annotations
 
+import json
 import os
 import time
+from pathlib import Path
 from typing import Any
 
 from cache.config import TTL_COLD
@@ -544,6 +546,26 @@ def get_liquidity_map_payload(
     return payload
 
 
+_LAST_GOOD = Path(__file__).resolve().parent.parent / "data" / "liquidity-last.json"
+
+
+def _liquidity_stub(entity: str, year: int | None, *, error: str) -> dict[str, Any]:
+    return {
+        "entity": entity or "WLD",
+        "year": year or 2024,
+        "label": "Global",
+        "global": {"series": [], "label": "Global"},
+        "monthly": None,
+        "regional": [],
+        "countries": [],
+        "entities": [{"id": "WLD", "label": "Global"}],
+        "error": error,
+        "partial": True,
+        "stale": True,
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+
 def get_liquidity_payload(
     *,
     entity: str = "WLD",
@@ -557,13 +579,34 @@ def get_liquidity_payload(
         if cached is not None:
             return cached
 
+    if os.environ.get("VERCEL") == "1":
+        if _LAST_GOOD.is_file():
+            try:
+                payload = json.loads(_LAST_GOOD.read_text(encoding="utf-8"))
+                payload["stale"] = True
+                payload["fromCache"] = True
+                return payload
+            except (OSError, json.JSONDecodeError):
+                pass
+        return _liquidity_stub(
+            entity,
+            year,
+            error="Liquidity proxy uses a last-good cache on Vercel; cold instance has no snapshot yet.",
+        )
+
     try:
         return _build_liquidity_payload(entity=entity, year=year, overlay=overlay, refresh=refresh, cache_key=cache_key)
     except Exception as exc:
         stale = cache_get(cache_key, ttl=86400 * 14)
         if stale is not None:
             return {**stale, "stale": True, "error": str(exc)[:160], "fromCache": True}
-        raise
+        if _LAST_GOOD.is_file():
+            try:
+                payload = json.loads(_LAST_GOOD.read_text(encoding="utf-8"))
+                return {**payload, "stale": True, "error": str(exc)[:160]}
+            except (OSError, json.JSONDecodeError):
+                pass
+        return _liquidity_stub(entity, year, error=str(exc)[:200])
 
 
 def _build_liquidity_payload(

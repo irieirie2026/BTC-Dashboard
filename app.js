@@ -29,6 +29,7 @@ let futuresReconnectTimer = null;
 let nextFundingTime = null;
 let futuresSentimentItems = [];
 let futuresMarketState = {};
+let futuresVenue = "binance";
 
 const $ = (id) => document.getElementById(id);
 
@@ -93,7 +94,9 @@ function formatFundingRate(rate) {
 }
 
 function formatRatio(ratio) {
-  return Number(ratio).toFixed(2);
+  const n = Number(ratio);
+  if (!Number.isFinite(n)) return "—";
+  return n.toFixed(2);
 }
 
 function flashPrice(direction) {
@@ -762,27 +765,34 @@ async function loadFuturesData() {
     await swr.runSWR({
       key: "derivatives:futures",
       l1: "derivatives",
-      source: "Binance",
+      source: "Binance / OKX",
       fetch: async () => {
         try {
+        const ac = new AbortController();
+        const kill = setTimeout(() => ac.abort(), 3500);
         const [tickerRes, premiumRes, oiRes, globalLsRes, topAccRes, topPosRes, takerRes] =
           await Promise.all([
-            fetch(`${FUTURES_REST}/fapi/v1/ticker/24hr?symbol=${SYMBOL}`),
-            fetch(`${FUTURES_REST}/fapi/v1/premiumIndex?symbol=${SYMBOL}`),
-            fetch(`${FUTURES_REST}/fapi/v1/openInterest?symbol=${SYMBOL}`),
+            fetch(`${FUTURES_REST}/fapi/v1/ticker/24hr?symbol=${SYMBOL}`, { signal: ac.signal }),
+            fetch(`${FUTURES_REST}/fapi/v1/premiumIndex?symbol=${SYMBOL}`, { signal: ac.signal }),
+            fetch(`${FUTURES_REST}/fapi/v1/openInterest?symbol=${SYMBOL}`, { signal: ac.signal }),
             fetch(
               `${FUTURES_REST}/futures/data/globalLongShortAccountRatio?symbol=${SYMBOL}&period=1h&limit=1`,
+              { signal: ac.signal },
             ),
             fetch(
               `${FUTURES_REST}/futures/data/topLongShortAccountRatio?symbol=${SYMBOL}&period=1h&limit=1`,
+              { signal: ac.signal },
             ),
             fetch(
               `${FUTURES_REST}/futures/data/topLongShortPositionRatio?symbol=${SYMBOL}&period=1h&limit=1`,
+              { signal: ac.signal },
             ),
             fetch(
               `${FUTURES_REST}/futures/data/takerlongshortRatio?symbol=${SYMBOL}&period=1h&limit=1`,
+              { signal: ac.signal },
             ),
           ]);
+        clearTimeout(kill);
 
         if (!tickerRes.ok) throw new Error("Binance futures blocked");
         const ticker = await tickerRes.json();
@@ -859,6 +869,7 @@ async function loadFuturesData() {
       } catch (binanceErr) {
         const perp = await fetch("/api/market/perp", { cache: "no-store" }).then((r) => r.json());
         if (!perp?.lastPrice) throw binanceErr;
+        futuresVenue = perp.venue || "OKX";
         const ls = perp.longShortRatio;
         return {
           marketState: {
@@ -900,6 +911,8 @@ async function loadFuturesData() {
           return;
         }
         applyFuturesBundle(data);
+        futuresVenue = data.venue || futuresVenue;
+        if (data.marketState?.price) setConnectionStatus("connected", "futures-status");
         setFuturesPanelMeta({
           fetchedAt: data.fetchedAt,
           source: data.venue || "Binance",
@@ -912,7 +925,7 @@ async function loadFuturesData() {
   } catch (err) {
     console.error("Failed to load futures data:", err);
     if (!futuresMarketState.price) {
-      setFuturesPanelMeta({ state: "error", source: "Binance" });
+      setFuturesPanelMeta({ state: "error", source: futuresVenue || "OKX" });
     }
   }
 }
@@ -940,13 +953,19 @@ function handleFuturesMessage(event) {
 }
 
 function connectFutures() {
+  if (futuresVenue && futuresVenue !== "binance") return;
   if (futuresWs) {
     futuresWs.onclose = null;
     futuresWs.close();
   }
 
   setConnectionStatus("connecting", "futures-status");
-  futuresWs = new WebSocket(FUTURES_WS_URL);
+  try {
+    futuresWs = new WebSocket(FUTURES_WS_URL);
+  } catch (_) {
+    futuresVenue = "okx";
+    return;
+  }
 
   futuresWs.onopen = () => {
     setConnectionStatus("connected", "futures-status");

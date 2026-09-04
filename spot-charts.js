@@ -92,8 +92,12 @@ async function spotFetchAllDaily(maxRequests = 20) {
       return spotDedupeBars(
         days
           .map((d) => {
-            const t = Date.parse(d.date || d.time);
-            if (!Number.isFinite(t) || !Number.isFinite(Number(d.close))) return null;
+            let t = d.date ?? d.time;
+            if (typeof t === "string") t = Date.parse(t);
+            t = Number(t);
+            if (!Number.isFinite(t) || t <= 0) return null;
+            if (t < 1e12) t *= 1000;
+            if (!Number.isFinite(Number(d.close))) return null;
             return {
               time: Math.floor(t / 1000),
               open: Number(d.open ?? d.close),
