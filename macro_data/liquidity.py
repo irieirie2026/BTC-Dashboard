@@ -4,6 +4,7 @@ Liquidity proxy builder — CB BS + Broad Money + FX Reserves (ex-gold).
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Any
 
@@ -136,18 +137,23 @@ def _load_component_store(*, refresh: bool = False) -> dict[str, Any]:
     ]
 
     raw: dict[str, dict[str, dict[int, float]]] = {}
-    for code in wb_codes:
-        buckets, _ = fetch_indicator_all_countries(code, start_year=LIQUIDITY_START_YEAR, refresh=refresh)
-        raw[code] = buckets
+    if os.environ.get("VERCEL") != "1":
+        for code in wb_codes:
+            buckets, _ = fetch_indicator_all_countries(
+                code, start_year=LIQUIDITY_START_YEAR, refresh=refresh
+            )
+            raw[code] = buckets
 
     cb_dbn: dict[str, dict[int, float]] = {}
-    for cid, meta in CB_DBNOMICS.items():
-        cb_dbn[cid] = _fetch_dbnomics_annual(
-            meta["provider"],
-            meta["dataset"],
-            meta["series"],
-            meta.get("scale", 1.0),
-        )
+    # DBnomics fan-out blows the Vercel 60s budget on cold start
+    if os.environ.get("VERCEL") != "1":
+        for cid, meta in CB_DBNOMICS.items():
+            cb_dbn[cid] = _fetch_dbnomics_annual(
+                meta["provider"],
+                meta["dataset"],
+                meta["series"],
+                meta.get("scale", 1.0),
+            )
 
     ifs = load_ifs_store(refresh=refresh)
 
@@ -574,7 +580,9 @@ def _build_liquidity_payload(
     yr = year if year in years else (years[-1] if years else 2024)
 
     global_entity = _build_series_for_entity(store, countries, entity)
-    monthly = build_entity_monthly(entity, store, countries, refresh=refresh)
+    monthly = None
+    if os.environ.get("VERCEL") != "1":
+        monthly = build_entity_monthly(entity, store, countries, refresh=refresh)
     apply_liquidity_projections(
         global_entity, monthly, entity, countries, _entity_countries, refresh=refresh
     )
@@ -596,7 +604,11 @@ def _build_liquidity_payload(
         regional.append(block)
     table = _country_table(store, countries, yr, refresh=refresh)
 
-    market_overlay = _build_market_overlay() if overlay else None
+    market_overlay = (
+        _build_market_overlay()
+        if overlay and os.environ.get("VERCEL") != "1"
+        else None
+    )
     credit_gap = get_credit_gap_series(entity, projection_end_year=yr, refresh=refresh)
 
     payload = {

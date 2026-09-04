@@ -378,17 +378,18 @@ def _bt_parse_quotes(quotes_raw):
 def _bt_normalize_company(ent, btc_price):
     if not isinstance(ent, dict):
         return None
-    ent_type = str(ent.get("type") or "").upper()
-    if any(
-        tag in ent_type
-        for tag in ("ETF", "GOVERNMENT", "NATION", "COUNTRY", "PRIVATE", "FUND", "DAO")
-    ):
-        return None
-    if (
-        ent_type
-        and ent_type not in ("PUBLIC_COMPANY", "COMPANY", "PUBLIC", "DATCO", "TREASURY")
-        and not (ent.get("ticker") or ent.get("slug") or ent.get("name"))
-    ):
+    ent_type = str(ent.get("type") or "").upper().replace(" ", "_")
+    blocked = {
+        "ETF",
+        "GOVERNMENT",
+        "NATION",
+        "COUNTRY",
+        "PRIVATE_COMPANY",
+        "DAO",
+        "INDEX_FUND",
+        "EXCHANGE",
+    }
+    if ent_type in blocked or ent_type.endswith("_ETF"):
         return None
 
     raw_btc = ent.get("btc_balance")
@@ -516,6 +517,67 @@ def _parse_homepage_summary(html):
     return summary
 
 
+def _bt_walk_public_companies(data_arr, data_root, limit=400):
+    """SvelteKit payloads sometimes store entities as nested maps, not an index list."""
+    found = []
+
+    def walk(obj, depth=0):
+        if len(found) >= limit or obj is None or depth > 6:
+            return
+        if isinstance(obj, dict):
+            if obj.get("type") == "PUBLIC_COMPANY" or (
+                obj.get("name") and obj.get("btc_balance") is not None
+            ):
+                found.append(obj)
+            for v in list(obj.values())[:80]:
+                walk(v, depth + 1)
+        elif isinstance(obj, list):
+            for x in obj[:300]:
+                walk(x, depth + 1)
+
+    walk(data_root)
+    if len(found) < 10:
+        walk(data_arr[: min(len(data_arr), 400)] if isinstance(data_arr, list) else data_arr)
+    return found
+
+
+def _parse_homepage_companies(html, btc_price):
+    """Fallback scrape when the JSON entity graph is empty."""
+    if not html:
+        return []
+    out = []
+    for m in re.finditer(
+        r'href="/public-companies/([a-z0-9-]+)"[^>]*>\s*([^<]{2,80})\s*</a>',
+        html,
+        re.I,
+    ):
+        slug, name = m.group(1), re.sub(r"\s+", " ", m.group(2)).strip()
+        chunk = html[m.end() : m.end() + 1200]
+        btc_m = re.search(
+            r"([\d][\d,]*(?:\.\d+)?)\s*(?:BTC|₿)", chunk, re.I
+        ) or re.search(r">\s*([\d][\d,]*(?:\.\d+)?)\s*<", chunk)
+        btc = None
+        if btc_m:
+            btc = _bt_num(btc_m.group(1))
+        if btc is None or btc <= 0:
+            continue
+        ticker_m = re.search(r"\b([A-Z]{1,5})\b", chunk)
+        out.append(
+            {
+                "name": name,
+                "slug": slug,
+                "ticker": ticker_m.group(1) if ticker_m else None,
+                "btc": btc,
+                "usd": btc * btc_price if btc_price else None,
+                "pct21m": (btc / 21_000_000) * 100,
+                "url": f"https://bitcointreasuries.net/public-companies/{slug}",
+            }
+        )
+        if len(out) >= 250:
+            break
+    return out
+
+
 def parse_bitcointreasuries(_html=""):
     homepage_html = fetch_html(BT_HOME_URL)
     homepage_summary = _parse_homepage_summary(homepage_html)
@@ -545,18 +607,47 @@ def parse_bitcointreasuries(_html=""):
     )
 
     entities_ref = data_root.get("entities")
-    entity_indices = (
-        data_arr[entities_ref]
-        if isinstance(entities_ref, int) and entities_ref < len(data_arr)
-        else []
-    )
+    raw_entities = []
+    if isinstance(entities_ref, int) and entities_ref < len(data_arr):
+        raw_entities = data_arr[entities_ref]
+    elif isinstance(entities_ref, list):
+        raw_entities = entities_ref
     companies = []
-    for entity_idx in entity_indices or []:
-        if not isinstance(entity_idx, int):
+    seen_slugs: set = set()
+    for item in raw_entities or []:
+        if isinstance(item, int):
+            ent = _resolve_bt_value(data_arr, item, cache={})
+        elif isinstance(item, dict):
+            ent = _resolve_bt_value(data_arr, item, cache={})
+        else:
             continue
-        ent = _resolve_bt_value(data_arr, entity_idx, cache={})
         company = _bt_normalize_company(ent, btc_price)
-        if company:
+        if not company:
+            continue
+        key = company.get("slug") or company.get("name")
+        if key and key in seen_slugs:
+            continue
+        if key:
+            seen_slugs.add(key)
+        companies.append(company)
+    if len(companies) < 10:
+        for ent in _bt_walk_public_companies(data_arr, data_root):
+            company = _bt_normalize_company(ent, btc_price)
+            if not company:
+                continue
+            key = company.get("slug") or company.get("name")
+            if key and key in seen_slugs:
+                continue
+            if key:
+                seen_slugs.add(key)
+            companies.append(company)
+    if len(companies) < 10:
+        for company in _parse_homepage_companies(homepage_html, btc_price):
+            key = company.get("slug") or company.get("name")
+            if key and key in seen_slugs:
+                continue
+            if key:
+                seen_slugs.add(key)
             companies.append(company)
 
     companies.sort(key=lambda c: c["btc"], reverse=True)

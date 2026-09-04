@@ -12,7 +12,7 @@ from macro_data.cache import cache_get, cache_set
 from macro_data.config import HISTORY_START_YEAR, PROJECTION_END_YEAR
 
 WB_BASE = "https://api.worldbank.org/v2"
-REQUEST_TIMEOUT = 90
+REQUEST_TIMEOUT = 12 if __import__("os").environ.get("VERCEL") == "1" else 90
 PER_PAGE = 20000
 MAX_PAGES = 20
 

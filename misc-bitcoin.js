@@ -283,9 +283,10 @@ function mbBandMatches(band, n) {
 }
 
 function mbReadingFor(key, val) {
+  const n = mbNormalizeScore(key, val);
+  if (key === "fear_greed") return mbInterpretValue(key, n);
   const info = mbChartInfo(key);
   const bands = info.hoverBands;
-  const n = mbNormalizeScore(key, val);
   if (bands?.length && Number.isFinite(n)) {
     for (const band of bands) {
       if (mbBandMatches(band, n)) return band.label;
@@ -2139,13 +2140,24 @@ async function mbLoadSnapshot(force = false) {
   const swr = window.DashboardSWR;
   if (!swr) return null;
   mbSnapshot = await swr.runSWR({
-    key: "misc:btc:snapshot:v16",
+    key: "misc:btc:snapshot:v17",
     l1: "misc",
     source: mbSnapshot?.sourceChain || "Multi-source BTC feed",
     persist: true,
     revalidate: true,
     updateHeader: false,
-    fetch: () => mbFetchJson("snapshot", force),
+    fetch: async () => {
+      try {
+        return await mbFetchJson("snapshot", force);
+      } catch (err) {
+        return {
+          cells: {},
+          error: String(err?.message || err),
+          sourceChain: "Store-first snapshot",
+          partial: true,
+        };
+      }
+    },
     render: () => {},
   });
   await Promise.all([
@@ -2370,7 +2382,7 @@ function mbRenderHeroes() {
   const dom = cells.btc_dominance;
   const fngScore = mbNormalizeScore(
     "fear_greed",
-    (typeof fngData !== "undefined" && fngData?.latest?.value) ?? fng?.value,
+    window.__fngLatest ?? fng?.value,
   );
   const fngLabel = Number.isFinite(fngScore)
     ? (fngScore >= 75 ? "Extreme Greed" : fngScore >= 56 ? "Greed" : fngScore <= 24 ? "Extreme Fear" : fngScore <= 44 ? "Fear" : "Neutral")
@@ -4382,7 +4394,10 @@ function mbRenderMempoolPanel(mempool) {
 }
 
 function mbFmtHashrate(raw) {
-  const n = Number(raw);
+  if (raw == null || raw === "") return "—";
+  const s = String(raw).trim();
+  let n = Number(s);
+  if (/^\d{16,}$/.test(s)) n = Number(s) / 1e18;
   if (!Number.isFinite(n) || n <= 0) return "—";
   let eh = n;
   if (n >= 1e18) eh = n / 1e18;
