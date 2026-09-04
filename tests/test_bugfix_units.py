@@ -39,6 +39,14 @@ def test_ts_5y_origin_budget():
     assert _origin_budget(3650) == (8, 8)
 
 
+def test_miner_revenue_usd_not_btc():
+    usd = 45_858_668.8
+    price = 81_000
+    btc = usd / price
+    assert 400 < btc < 800
+    assert usd > 2000
+
+
 def test_datco_allows_public_company():
     from server import _bt_normalize_company
 

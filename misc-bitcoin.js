@@ -339,6 +339,10 @@ function mbCombinedRowTooltip(spec, vals) {
 }
 
 function mbInterpretValue(key, val) {
+  if (val == null || val === "") return "";
+  const n0 = Number(val);
+  if (!Number.isFinite(n0)) return "";
+  if ((key === "sopr" || key === "supply_in_profit" || key === "nupl") && n0 === 0) return "";
   const n = Number(val);
   if (!Number.isFinite(n)) return "";
   switch (key) {

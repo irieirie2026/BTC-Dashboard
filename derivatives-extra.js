@@ -58,14 +58,16 @@ const MONTHS = {
 };
 
 function parseOptionSymbol(symbol) {
-  const deribit = symbol.match(/^BTC-(\d{1,2})([A-Z]{3})(\d{2})-(\d+)-(C|P)$/);
+  const deribit = String(symbol || "").toUpperCase().match(/^BTC-(\d{1,2})([A-Z]{3})(\d{2,4})-(\d+(?:\.\d+)?)-(C|P)$/);
   if (deribit) {
     const mon = MONTHS[deribit[2]];
     if (mon == null) return null;
+    let year = parseInt(deribit[3], 10);
+    if (year < 100) year += 2000;
     return {
       symbol,
-      expiry: Date.UTC(2000 + parseInt(deribit[3], 10), mon, parseInt(deribit[1], 10), 8, 0, 0),
-      strike: parseInt(deribit[4], 10),
+      expiry: Date.UTC(year, mon, parseInt(deribit[1], 10), 8, 0, 0),
+      strike: parseFloat(deribit[4]),
       side: deribit[5],
     };
   }
@@ -420,7 +422,11 @@ async function fetchOptionsBundle() {
               }
             : null
         );
-        if (!parsed || !parsed.strike) return null;
+        if (!parsed || !Number.isFinite(Number(parsed.strike))) return null;
+        let expiry = Number(parsed.expiry);
+        if (Number.isFinite(expiry) && expiry > 0 && expiry < 1e12) expiry *= 1000;
+        parsed.expiry = expiry;
+        parsed.strike = Number(parsed.strike);
         const iv = parseFloat(c.mark_iv);
         return {
           ...parsed,
@@ -702,7 +708,7 @@ function renderOptionsOiScreen() {
   );
   set(
     "opt-max-pain",
-    d.maxPainStrike ? "$" + fmtPrice(d.maxPainStrike, 0) : "—",
+    Number.isFinite(Number(d.maxPainStrike)) ? "$" + fmtPrice(d.maxPainStrike, 0) : "—",
   );
   set("opt-total-oi", fmtVol(d.totalOi) + " contracts");
   set("opt-total-vol", fmtVol(d.callVol + d.putVol) + " contracts");

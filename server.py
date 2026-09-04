@@ -840,8 +840,22 @@ def _fetch_options_payload(_html=""):
     index = _fetch_json_url(
         f"{DERIBIT_API}/get_index_price?index_name=btc_usd"
     )
+    contracts = []
+    for row in summary.get("result") or []:
+        if not isinstance(row, dict):
+            continue
+        parsed = _parse_deribit_option_name(row.get("instrument_name") or "")
+        if parsed:
+            exp_ms, strike, opt_type = parsed
+            row = {
+                **row,
+                "strike": strike,
+                "expiration_timestamp": exp_ms,
+                "option_type": "C" if opt_type == "call" else "P",
+            }
+        contracts.append(row)
     return {
-        "contracts": summary.get("result", []),
+        "contracts": contracts,
         "index": index.get("result", {}),
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -877,7 +891,7 @@ def _parse_deribit_option_name(name: str):
     except ValueError:
         return None
     date_token = parts[1].upper()  # 27JUN25 or 4SEP26
-    m = re.match(r"^(\d{1,2})([A-Z]{3})(\d{2})$", date_token)
+    m = re.match(r"^(\d{1,2})([A-Z]{3})(\d{2,4})$", date_token)
     if not m:
         return None
     try:
