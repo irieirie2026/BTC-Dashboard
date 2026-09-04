@@ -224,7 +224,11 @@ def _compute_premiums(venues: list[dict], fx: dict[str, float]) -> dict:
             usd_prices[v["exchange"]] = usd
             v["priceUsd"] = round(usd, 2)
 
-    ref = usd_prices.get("Binance") or _median(list(usd_prices.values()))
+    robust = _robust_median(list(usd_prices.values()))
+    binance = usd_prices.get("Binance")
+    if binance and robust and abs(binance - robust) / robust > 0.06:
+        binance = None
+    ref = binance or robust
     premiums: dict[str, dict] = {}
 
     def prem(label: str, local: float | None, ref_px: float | None) -> dict | None:
@@ -250,6 +254,17 @@ def _median(vals: list[float]) -> float | None:
     s = sorted(vals)
     m = len(s) // 2
     return s[m] if len(s) % 2 else (s[m - 1] + s[m]) / 2
+
+
+def _robust_median(vals: list[float], *, band: float = 0.06) -> float | None:
+    """Median after dropping prints more than `band` away from a first-pass median (MEXC junk)."""
+    raw = _median(vals)
+    if raw is None or raw <= 0:
+        return raw
+    cleaned = [v for v in vals if abs(v - raw) / raw <= band]
+    if len(cleaned) >= 3:
+        return _median(cleaned)
+    return raw
 
 
 def _fetch_venues() -> tuple[list[dict], list[str]]:
@@ -372,7 +387,7 @@ def _pack_snapshot(
     fx = fx if fx is not None else (_fetch_fx_rates() or {})
     prem = _compute_premiums(venues, fx)
     ref = prem.get("referenceUsd")
-    vwap = _median([v["priceUsd"] for v in venues if v.get("priceUsd")])
+    vwap = _robust_median([v["priceUsd"] for v in venues if v.get("priceUsd")])
     return {
         "updatedAt": datetime.now(timezone.utc).isoformat(),
         "crosses": CROSSES,

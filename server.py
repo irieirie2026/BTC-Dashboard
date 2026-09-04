@@ -785,13 +785,14 @@ def _parse_deribit_option_name(name: str):
         strike = float(parts[-2])
     except ValueError:
         return None
-    date_token = parts[1].upper()  # 27JUN25
-    if len(date_token) < 7:
+    date_token = parts[1].upper()  # 27JUN25 or 4SEP26
+    m = re.match(r"^(\d{1,2})([A-Z]{3})(\d{2})$", date_token)
+    if not m:
         return None
     try:
-        day = int(date_token[:2])
-        mon = _MONTHS.get(date_token[2:5])
-        year = int(date_token[5:])
+        day = int(m.group(1))
+        mon = _MONTHS.get(m.group(2))
+        year = int(m.group(3))
         if mon is None:
             return None
         if year < 100:

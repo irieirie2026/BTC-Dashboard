@@ -68,7 +68,7 @@ const mbEl = (id) => document.getElementById(id);
 function mbFmtValue(val, format) {
   if (val == null || Number.isNaN(val)) return "—";
   const n = Number(val);
-  if (format === "pct") return `${n.toFixed(2)}%`;
+  if (format === "pct") return `${Math.min(n, 100).toFixed(2)}%`;
   if (format === "usd") return `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
   if (format === "usd_precise") {
     if (n > 0 && n < 1) return `$${n.toFixed(4)}`;
@@ -80,7 +80,15 @@ function mbFmtValue(val, format) {
     if (n >= 1e3) return `${(n / 1e3).toFixed(1)}K`;
     return n.toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
-  if (format === "hashrate") return `${n.toFixed(1)} EH/s`;
+  if (format === "hashrate") {
+    let eh = n;
+    if (n >= 1e18) eh = n / 1e18;
+    else if (n >= 1e12) eh = n / 1e9;
+    else if (n >= 1e8) eh = n / 1e6;
+    else if (n >= 1e5) eh = n / 1e3;
+    if (eh > 5000 || eh < 50) return "—";
+    return `${eh.toFixed(1)} EH/s`;
+  }
   if (format === "funding") return `${n >= 0 ? "+" : ""}${n.toFixed(4)}%`;
   if (format === "score") return String(Math.round(n));
   if (format === "zscore") return n.toFixed(2);
@@ -258,21 +266,32 @@ function mbChartInfo(key) {
   };
 }
 
+function mbNormalizeScore(key, val) {
+  const n = Number(val);
+  if (!Number.isFinite(n)) return n;
+  if (key === "fear_greed" && n > 0 && n <= 1) return n * 100;
+  if (key === "supply_in_profit" && n > 100) return 100;
+  return n;
+}
+
+function mbBandMatches(band, n) {
+  if (band.gte != null && !(n >= band.gte)) return false;
+  if (band.gt != null && !(n > band.gt)) return false;
+  if (band.lte != null && !(n <= band.lte)) return false;
+  if (band.lt != null && !(n < band.lt)) return false;
+  return band.gte != null || band.gt != null || band.lte != null || band.lt != null;
+}
+
 function mbReadingFor(key, val) {
   const info = mbChartInfo(key);
   const bands = info.hoverBands;
-  const n = Number(val);
+  const n = mbNormalizeScore(key, val);
   if (bands?.length && Number.isFinite(n)) {
     for (const band of bands) {
-      if (band.gte != null && n >= band.gte) return band.label;
-      if (band.gt != null && n > band.gt) return band.label;
-    }
-    for (const band of [...bands].reverse()) {
-      if (band.lte != null && n <= band.lte) return band.label;
-      if (band.lt != null && n < band.lt) return band.label;
+      if (mbBandMatches(band, n)) return band.label;
     }
   }
-  return mbInterpretValue(key, val);
+  return mbInterpretValue(key, n);
 }
 
 function mbShortReading(key) {
@@ -613,14 +632,19 @@ function mbSanitizeMetricValue(key, val) {
   const n = Number(val);
   if (!Number.isFinite(n)) return null;
   if (key === "hash_rate") {
-    if (n >= 50) return n;
-    if (n > 0 && n < 50) {
-      const scaled = n * 1e6;
-      if (scaled >= 50 && scaled <= 5000) return scaled;
-    }
+    let eh = n;
+    if (n >= 1e18) eh = n / 1e18;
+    else if (n >= 1e12) eh = n / 1e9;
+    else if (n >= 1e8) eh = n / 1e6;
+    else if (n >= 1e5) eh = n / 1e3;
+    else if (n > 0 && n < 50) eh = n * 1e6;
+    if (eh >= 50 && eh <= 5000) return eh;
     const fromSeries = mbSeriesLatestFromCache(key);
-    if (fromSeries != null && fromSeries >= 50) return fromSeries;
+    if (fromSeries != null && fromSeries >= 50 && fromSeries <= 5000) return fromSeries;
+    return null;
   }
+  if (key === "supply_in_profit" && n > 100) return 100;
+  if (key === "fear_greed" && n > 0 && n <= 1) return n * 100;
   if (!mbIsValidSnapshotValue(key, n)) return null;
   return n;
 }
@@ -2303,14 +2327,15 @@ function mbRenderKpis() {
   el.innerHTML = indicators
     .map((ind) => {
       const cell = cells[ind.key] || {};
-      const val = mbFmtValue(mbCellLatestValue(ind.key, cell), ind.format);
+      const latest = mbCellLatestValue(ind.key, cell);
+      const val = mbFmtValue(latest, ind.format);
       const src = cell.source || ind.source;
       const hint = mbShortReading(ind.key);
       const helpAttr = ind.help ? ` data-help-key="${ind.help}"` : "";
       return `<article class="md-kpi-card" data-mb-kpi="${ind.key}" role="button" tabindex="0" title="${hint}">
         <span class="md-kpi-label"${helpAttr}>${ind.label}${ind.help ? '<button type="button" class="help-trigger help-trigger--inline" data-help-key="' + ind.help + '" aria-label="Explain ' + ind.label + '">?</button>' : ""}</span>
         <span class="md-kpi-value mono">${val}</span>
-        <span class="md-kpi-hint">${mbReadingFor(ind.key, cell.value) || hint}</span>
+        <span class="md-kpi-hint">${mbReadingFor(ind.key, latest) || hint}</span>
         <span class="md-kpi-meta">${mbSourceBadge(src, cell)}</span>
       </article>`;
     })
@@ -2343,8 +2368,15 @@ function mbRenderHeroes() {
   const fng = cells.fear_greed;
   const mvrv = cells.mvrv;
   const dom = cells.btc_dominance;
+  const fngScore = mbNormalizeScore(
+    "fear_greed",
+    (typeof fngData !== "undefined" && fngData?.latest?.value) ?? fng?.value,
+  );
+  const fngLabel = Number.isFinite(fngScore)
+    ? (fngScore >= 75 ? "Extreme Greed" : fngScore >= 56 ? "Greed" : fngScore <= 24 ? "Extreme Fear" : fngScore <= 44 ? "Fear" : "Neutral")
+    : "Sentiment";
   const blocks = [
-    { label: "Fear & Greed", value: fng?.value, fmt: "score", sub: fng?.classification || "Sentiment", hint: mbReadingFor("fear_greed", fng?.value), cls: fng?.value >= 56 ? "positive" : fng?.value <= 44 ? "negative" : "" },
+    { label: "Fear & Greed", value: fngScore, fmt: "score", sub: fngLabel, hint: mbReadingFor("fear_greed", fngScore), cls: fngScore >= 56 ? "positive" : fngScore <= 44 ? "negative" : "" },
     { label: "MVRV", value: mvrv?.value, fmt: "ratio", sub: "Market vs realized cap", hint: mbReadingFor("mvrv", mvrv?.value) },
     { label: "BTC dominance", value: dom?.value, fmt: "pct", sub: "Global crypto mcap", hint: mbReadingFor("btc_dominance", dom?.value) },
     { label: "Hash rate", value: mbCellLatestValue("hash_rate", cells.hash_rate || {}), fmt: "hashrate", sub: "Network security", hint: mbShortReading("hash_rate") },
@@ -4352,7 +4384,12 @@ function mbRenderMempoolPanel(mempool) {
 function mbFmtHashrate(raw) {
   const n = Number(raw);
   if (!Number.isFinite(n) || n <= 0) return "—";
-  const eh = n >= 1e15 ? n / 1e18 : n;
+  let eh = n;
+  if (n >= 1e18) eh = n / 1e18;
+  else if (n >= 1e12) eh = n / 1e9;
+  else if (n >= 1e8) eh = n / 1e6;
+  else if (n >= 1e5) eh = n / 1e3;
+  if (eh < 50 || eh > 5000) return "—";
   return `${eh.toFixed(1)} EH/s`;
 }
 

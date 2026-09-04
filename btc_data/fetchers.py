@@ -400,6 +400,19 @@ def _hashribbons_signal_value(raw: Any) -> float | None:
     return mapped.get(str(raw).strip().lower())
 
 
+def _scale_bg_value(raw: float, scale: float, spec: dict[str, Any]) -> float:
+    """Apply optional scale; clamp percent metrics to 0–100."""
+    metric = str(spec.get("path") or spec.get("value_key") or "")
+    is_pct = spec.get("scale") == 100 or "profit" in metric or metric.endswith("pct")
+    if is_pct:
+        if 0 <= raw <= 1.5:
+            return min(100.0, raw * 100.0)
+        if 10 <= raw <= 100:
+            return float(raw)
+        return 100.0
+    return raw * scale
+
+
 def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
     value_key = spec.get("value_key")
     if value_key == "_hodl_1y_plus_pct":
@@ -413,7 +426,7 @@ def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
             if mapped is not None:
                 return mapped
         try:
-            return float(raw_val) * scale
+            return _scale_bg_value(float(raw_val), scale, spec)
         except (TypeError, ValueError):
             pass
 
@@ -425,7 +438,7 @@ def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
                     if mapped is not None:
                         return mapped
                 try:
-                    return float(v) * scale
+                    return _scale_bg_value(float(v), scale, spec)
                 except (TypeError, ValueError):
                     continue
 
@@ -767,17 +780,21 @@ def normalize_hash_rate_ehs(
         val = float(raw)
     except (TypeError, ValueError):
         return None
-    if unit == "EH/s" or from_store:
-        return val
+    if val <= 0:
+        return None
+    # Magnitude buckets — do this before trusting unit/from_store (stores often keep TH/s).
+    if val >= 1e18:
+        val = val / 1e18
+    elif val >= 1e12:
+        val = val / 1e9
+    elif val >= 1e8:
+        val = val / 1e6
+    elif val >= 1e5:
+        val = val / 1e3
+    elif val < 50:
+        scaled = val * 1e6
+        if 50 <= scaled <= 5000:
+            val = scaled
     if 50 <= val <= 5000:
         return val
-    if val >= 1e5:
-        return blockchain_hashrate_to_ehs(val)
-    if 0 < val < 50:
-        fixed = val * 1e6
-        if 50 <= fixed <= 5000:
-            return fixed
-    converted = blockchain_hashrate_to_ehs(val)
-    if converted is not None and 50 <= converted <= 5000:
-        return converted
-    return val if val >= 50 else converted
+    return None

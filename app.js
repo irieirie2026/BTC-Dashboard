@@ -318,16 +318,94 @@ function handleMessage(event) {
   else if (stream === "btcusdt@depth20@100ms") updateDepth(data);
 }
 
+let spotVenue = "binance";
+let binanceWsFails = 0;
+
+function mapCoinbaseTicker(msg) {
+  if (!msg || msg.type !== "ticker") return;
+  updateTicker({
+    c: msg.price,
+    o: msg.open_24h || msg.price,
+    h: msg.high_24h || msg.price,
+    l: msg.low_24h || msg.price,
+    v: msg.volume_24h || 0,
+    q: (parseFloat(msg.volume_24h) || 0) * (parseFloat(msg.price) || 0),
+    w: msg.price,
+  });
+  if (msg.best_bid && msg.best_ask) {
+    updateDepth({
+      bids: [[parseFloat(msg.best_bid), parseFloat(msg.best_bid_size) || 0.1]],
+      asks: [[parseFloat(msg.best_ask), parseFloat(msg.best_ask_size) || 0.1]],
+    });
+  }
+}
+
+function connectCoinbase() {
+  if (ws) {
+    ws.onclose = null;
+    ws.close();
+  }
+  spotVenue = "coinbase";
+  setConnectionStatus("connecting");
+  ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
+  ws.onopen = () => {
+    binanceWsFails = 0;
+    setConnectionStatus("connected");
+    ws.send(JSON.stringify({
+      type: "subscribe",
+      product_ids: ["BTC-USD"],
+      channels: ["ticker"],
+    }));
+    if (reconnectTimer) {
+      clearTimeout(reconnectTimer);
+      reconnectTimer = null;
+    }
+  };
+  ws.onmessage = (event) => {
+    try {
+      mapCoinbaseTicker(JSON.parse(event.data));
+    } catch (_) {}
+  };
+  ws.onclose = () => {
+    setConnectionStatus("disconnected");
+    reconnectTimer = setTimeout(connect, 4000);
+  };
+  ws.onerror = () => ws.close();
+}
+
 function connect() {
   if (ws) {
     ws.onclose = null;
     ws.close();
   }
 
+  if (binanceWsFails >= 2) {
+    connectCoinbase();
+    return;
+  }
+
+  spotVenue = "binance";
   setConnectionStatus("connecting");
-  ws = new WebSocket(WS_URL);
+  try {
+    ws = new WebSocket(WS_URL);
+  } catch (_) {
+    binanceWsFails += 1;
+    connectCoinbase();
+    return;
+  }
+
+  const failTimer = setTimeout(() => {
+    if (spotVenue === "binance" && ws && ws.readyState !== WebSocket.OPEN) {
+      binanceWsFails += 1;
+      ws.onclose = null;
+      ws.close();
+      connectCoinbase();
+    }
+  }, 4000);
 
   ws.onopen = () => {
+    clearTimeout(failTimer);
+    binanceWsFails = 0;
     setConnectionStatus("connected");
     if (reconnectTimer) {
       clearTimeout(reconnectTimer);
@@ -338,7 +416,9 @@ function connect() {
   ws.onmessage = handleMessage;
 
   ws.onclose = () => {
+    clearTimeout(failTimer);
     setConnectionStatus("disconnected");
+    binanceWsFails += 1;
     reconnectTimer = setTimeout(connect, 3000);
   };
 
@@ -472,16 +552,14 @@ async function loadMarketIndicators(tf, options = {}) {
     await swr.runSWR({
       key: `market:indicators:${tf}`,
       l1: "market",
-      source: "Binance",
+      source: "Binance / Coinbase",
       updateHeader,
       fetch: async () => {
-        const res = await fetch(
-          `${REST_BASE}/klines?symbol=${SYMBOL}&interval=${cfg.interval}&limit=${cfg.limit}`,
-        );
-        const klines = await res.json();
+        const bundled = await window.marketFetchKlines(cfg.interval, cfg.limit);
         return {
-          klines,
+          klines: bundled.klines,
           fetchedAt: new Date().toISOString(),
+          venue: bundled.venue,
         };
       },
       render: (data, opts = {}) => {
@@ -686,6 +764,7 @@ async function loadFuturesData() {
       l1: "derivatives",
       source: "Binance",
       fetch: async () => {
+        try {
         const [tickerRes, premiumRes, oiRes, globalLsRes, topAccRes, topPosRes, takerRes] =
           await Promise.all([
             fetch(`${FUTURES_REST}/fapi/v1/ticker/24hr?symbol=${SYMBOL}`),
@@ -705,6 +784,7 @@ async function loadFuturesData() {
             ),
           ]);
 
+        if (!tickerRes.ok) throw new Error("Binance futures blocked");
         const ticker = await tickerRes.json();
         const premium = await premiumRes.json();
         const oi = await oiRes.json();
@@ -774,17 +854,55 @@ async function loadFuturesData() {
             },
           ],
           fetchedAt: new Date().toISOString(),
+          venue: "Binance",
         };
+      } catch (binanceErr) {
+        const perp = await fetch("/api/market/perp", { cache: "no-store" }).then((r) => r.json());
+        if (!perp?.lastPrice) throw binanceErr;
+        const ls = perp.longShortRatio;
+        return {
+          marketState: {
+            price: perp.lastPrice,
+            openPrice: perp.lastPrice,
+            high: perp.highPrice,
+            low: perp.lowPrice,
+            volume: perp.volume,
+            quoteVolume: perp.quoteVolume,
+            openInterest: perp.openInterest,
+            mark: perp.markPrice,
+            index: perp.indexPrice,
+            fundingRate: perp.fundingRate,
+            nextFundingTime: null,
+          },
+          sentimentItems: [
+            {
+              label: "Open Interest",
+              helpKey: "open-interest",
+              value: perp.openInterest != null ? formatBtc(perp.openInterest) : "—",
+              sub: (perp.venue || "OKX") + " swap",
+            },
+            {
+              label: "Long/Short",
+              helpKey: "global-ls",
+              value: ls != null ? formatRatio(ls) : "—",
+              sub: "Account ratio",
+              valueClass: ls > 1 ? "positive" : ls < 1 ? "negative" : "",
+            },
+          ],
+          fetchedAt: perp.fetchedAt || new Date().toISOString(),
+          venue: perp.venue || "OKX",
+        };
+      }
       },
       render: (data, opts = {}) => {
         if (opts.loading) {
-          setFuturesPanelMeta({ state: "loading", source: "Binance" });
+          setFuturesPanelMeta({ state: "loading", source: data?.venue || "Binance" });
           return;
         }
         applyFuturesBundle(data);
         setFuturesPanelMeta({
           fetchedAt: data.fetchedAt,
-          source: "Binance",
+          source: data.venue || "Binance",
           stale: opts.stale,
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,
@@ -801,11 +919,8 @@ async function loadFuturesData() {
 
 async function loadFuturesIndicators() {
   try {
-    const res = await fetch(
-      `${FUTURES_REST}/fapi/v1/klines?symbol=${SYMBOL}&interval=1h&limit=250`,
-    );
-    const klines = await res.json();
-    renderIndicatorsList("futures-indicators-list", klines, {
+    const bundled = await window.marketFetchKlines("1h", 250);
+    renderIndicatorsList("futures-indicators-list", bundled.klines, {
       overviewId: "futures-indicators-overview-commentary",
       mode: "futures",
     });
@@ -878,20 +993,34 @@ async function loadInitialData() {
       l1: "market",
       source: "Binance",
       fetch: async () => {
-        const [tickerRes, klinesRes, depthRes] = await Promise.all([
-          fetch(`${REST_BASE}/ticker/24hr?symbol=${SYMBOL}`),
-          fetch(`${REST_BASE}/klines?symbol=${SYMBOL}&interval=1m&limit=1000`),
-          fetch(`${REST_BASE}/depth?symbol=${SYMBOL}&limit=20`),
-        ]);
-
-        const ticker = await tickerRes.json();
-        const klines = await klinesRes.json();
-        const depth = await depthRes.json();
+        try {
+          const ac = new AbortController();
+          const t = setTimeout(() => ac.abort(), 3500);
+          const [tickerRes, klinesRes, depthRes] = await Promise.all([
+            fetch(`${REST_BASE}/ticker/24hr?symbol=${SYMBOL}`, { signal: ac.signal }),
+            fetch(`${REST_BASE}/klines?symbol=${SYMBOL}&interval=1m&limit=1000`, { signal: ac.signal }),
+            fetch(`${REST_BASE}/depth?symbol=${SYMBOL}&limit=20`, { signal: ac.signal }),
+          ]);
+          clearTimeout(t);
+          if (tickerRes.ok && klinesRes.ok) {
+            const ticker = await tickerRes.json();
+            const klines = await klinesRes.json();
+            const depth = depthRes.ok ? await depthRes.json() : { bids: [], asks: [] };
+            if (ticker.lastPrice && Array.isArray(klines) && klines.length) {
+              return { ticker, klines, depth, fetchedAt: new Date().toISOString(), venue: "Binance" };
+            }
+          }
+        } catch (_) {
+          /* Binance blocked */
+        }
+        const bundle = await fetch("/api/market/spot", { cache: "no-store" }).then((r) => r.json());
+        if (!bundle?.ticker?.lastPrice) throw new Error(bundle?.error || "Spot feed unavailable");
         return {
-          ticker,
-          klines,
-          depth,
-          fetchedAt: new Date().toISOString(),
+          ticker: bundle.ticker,
+          klines: bundle.klines || [],
+          depth: bundle.depth || { bids: [], asks: [] },
+          fetchedAt: bundle.fetchedAt || new Date().toISOString(),
+          venue: bundle.venue,
         };
       },
       render: (data, opts = {}) => {

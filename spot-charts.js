@@ -68,9 +68,18 @@ async function spotFetchKlines(interval, limit = 1000, endTime) {
     limit: String(Math.min(limit, 1000)),
   });
   if (endTime) params.set("endTime", String(endTime));
-  const res = await fetch(`${SPOT_REST}/klines?${params}`);
-  if (!res.ok) throw new Error(`Binance klines HTTP ${res.status}`);
-  const raw = await res.json();
+  try {
+    const res = await fetch(`${SPOT_REST}/klines?${params}`);
+    if (res.ok) {
+      const raw = await res.json();
+      if (Array.isArray(raw) && raw.length) return spotDedupeBars(raw.map(spotKlineToBar));
+    }
+  } catch (_) {
+    /* Binance blocked — same-origin proxy */
+  }
+  const bundled = await window.marketFetchKlines?.(interval, limit);
+  const raw = bundled?.klines || [];
+  if (!raw.length) throw new Error("Klines unavailable");
   return spotDedupeBars(raw.map(spotKlineToBar));
 }
 

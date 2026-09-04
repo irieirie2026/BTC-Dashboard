@@ -1635,12 +1635,10 @@ def _path_to_price_forecasts(
 
 def _origin_budget(n: int) -> tuple[int, int]:
     """Keep full-suite runtime inside typical 60s serverless limits."""
-    if n >= 2800:  # ~10Y
+    if n >= 1600:  # 5Y and 10Y — forecasts first; thin OOS
         return 8, 8
-    if n >= 1600:  # ~5Y
-        return 16, 16
     if n >= 900:
-        return 24, 28
+        return 16, 16
     return BT_TARGET_ORIGINS, BT_MAX_ORIGINS
 
 
@@ -1907,7 +1905,20 @@ def get_timeseries_suite_payload(
         catalog = [c for c in MODEL_CATALOG if c["id"] in want] or MODEL_CATALOG
 
     results = []
+    deadline = time.time() + 48.0
+    n_obs = len(data["close"])
+    skip_all_bt = n_obs >= 1600
     for cat in catalog:
+        if time.time() > deadline:
+            results.append({
+                "id": cat["id"],
+                "name": cat["name"],
+                "family": cat["family"],
+                "kind": cat["kind"],
+                "status": "failed",
+                "error": "Suite time budget — forecasts for earlier models still returned",
+            })
+            continue
         fit: dict[str, Any]
         try:
             fit = _fit_model(cat, data, macro)
@@ -1915,7 +1926,9 @@ def get_timeseries_suite_payload(
             fit = {"ok": False, "error": str(exc)[:240]}
 
         bt: dict[str, Any] = {"ok": False}
-        skip_bt = cat["id"] in _HEAVY_BACKTEST_IDS and len(data["close"]) >= 2000
+        skip_bt = skip_all_bt or (
+            cat["id"] in _HEAVY_BACKTEST_IDS and n_obs >= 900
+        )
         if fit.get("ok") and not skip_bt:
             try:
                 bt = _backtest_model(cat["id"], data, macro)

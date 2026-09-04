@@ -952,6 +952,15 @@ async function fetchBtcHistory() {
 }
 
 async function fetchKlines(symbol) {
+  if (symbol === "ETHUSDT" || symbol === "ETHUSD") {
+    try {
+      const res = await fetch("/api/market/eth-daily", { cache: "no-store" });
+      const data = await res.json();
+      if (res.ok && Array.isArray(data.days) && data.days.length) return data.days;
+    } catch (_) {
+      /* fall through to Binance */
+    }
+  }
   const url =
     `${BINANCE_KLINES}?symbol=${symbol}&interval=${STATS_INTERVAL}&limit=${ETH_STATS_LIMIT}`;
   const res = await fetch(url);

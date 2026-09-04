@@ -490,9 +490,16 @@ async function cpFetchKlines(tfKey) {
     const limit = Math.min(chunk, remain);
     let url = `${CP_REST}/klines?symbol=${CP_SYMBOL}&interval=${cfg.interval}&limit=${limit}`;
     if (endTime) url += `&endTime=${endTime}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Binance ${res.status}`);
-    const batch = await res.json();
+    let batch;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Binance ${res.status}`);
+      batch = await res.json();
+    } catch (err) {
+      if (endTime) throw err;
+      const bundled = await window.marketFetchKlines?.(cfg.interval, limit);
+      batch = bundled?.klines || [];
+    }
     if (!Array.isArray(batch)) {
       throw new Error(batch?.msg || "Invalid kline response");
     }
