@@ -1,19 +1,58 @@
 {
-  "fetchedAt": "2026-09-03T23:47:12Z",
+  "fetchedAt": "2026-09-04T07:54:34Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
-      "title": "Bitcoin consensus is deterministic validation wrapped around stochastic leader election.",
-      "link": "https://x.com/DocumentingBTC/status/2095645669251858485#m",
+      "title": "A company can own a large percentage of all bitcoin while owning zero percent of Bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2095715847448768981#m",
       "source": "@DocumentingBTC",
       "authorName": "Documenting Bitcoin",
       "authorRole": "BTC history & culture",
       "summary": "",
-      "publishedAt": "2026-09-03T22:50:37+00:00",
-      "publishedTs": 1788475837.0,
+      "publishedAt": "2026-09-04T03:29:29+00:00",
+      "publishedTs": 1788492569.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "The last person on Earth to buy bitcoin will never be too late to buy bitcoin. They will benefit from its deepest liquidity, strongest infrastructure, widest usefulness, and the same rules as everyone else.",
+      "link": "https://x.com/DocumentingBTC/status/2095704350026817622#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-04T02:43:48+00:00",
+      "publishedTs": 1788489828.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin calls the politicians\u2019 bluff",
+      "link": "https://x.com/APompliano/status/2095684276989685912#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-09-04T01:24:02+00:00",
+      "publishedTs": 1788485042.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We\u2019re not traders. We don\u2019t speculate or try to time the market. We don\u2019t do technical analysis or draw lines on charts. bitcoin:native is going up forever. There\u2019s only one @Strategy. Buy and hodl.",
+      "link": "https://x.com/CJ_Bitcoin/status/2095648667638038584#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We\u2019re not traders. We don\u2019t speculate or try to time the market. We don\u2019t do technical analysis or draw lines on charts. bitcoin:native is going up forever. There\u2019s only one @Strategy . Buy and hodl.",
+      "publishedAt": "2026-09-03T23:02:32+00:00",
+      "publishedTs": 1788476552.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "BREAKING: Bitcoin rockets to $82,016! \ud83d\ude80",
@@ -640,19 +679,6 @@
       "isRetweet": true
     },
     {
-      "title": "Sept 2 Update: #Bitcoin ETFs: 1D NetFlow: -3,148 bitcoin:native(-$241.35M)\ud83d\udd34 7D NetFlow: +2,808 bitcoin:native(+$215.24M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +7,522 $ETH(+$17.91M)\ud83d\udfe2 7D NetFlow: +219,080 $ETH(+$521.71M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2095150988726583801#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Sept 2 Update: #Bitcoin ETFs: 1D NetFlow: -3,148 bitcoin:native(-$241.35M)\ud83d\udd34 7D NetFlow: +2,808 bitcoin:native(+$215.24M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +7,522 $ETH (+$17.91M)\ud83d\udfe2 7D NetFlow: +219,080 $ETH (+$521.71M)\ud83d\udfe2",
-      "publishedAt": "2026-09-02T14:04:56+00:00",
-      "publishedTs": 1788357896.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Dropbox provided me with a list of files downloaded from my compromised account. It was a single file: IMPORTANT.rtf Here are the contents of the file. It must have been quite disappointing \ud83d\ude07 https://x.com/lopp/status/2094801655485137106",
       "link": "https://x.com/lopp/status/2095118262103106026#m",
       "source": "@lopp",
@@ -661,19 +687,6 @@
       "summary": "Dropbox provided me with a list of files downloaded from my compromised account. It was a single file: IMPORTANT.rtf Here are the contents of the file. It must have been quite disappointing \ud83d\ude07 nitter.perennialte.ch/lopp/status/2094801655\u2026 Jameson Lopp (@lopp) My dropbox account wa",
       "publishedAt": "2026-09-02T11:54:53+00:00",
       "publishedTs": 1788350093.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The Royal Government of #Bhutan just transferred out another 400 bitcoin:native($30.62M). https://arkm.com/explorer/entity/druk-holding-investments",
-      "link": "https://x.com/lookonchain/status/2095110805129957433#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The Royal Government of #Bhutan just transferred out another 400 bitcoin:native($30.62M). arkm.com/explorer/entity/dru\u2026",
-      "publishedAt": "2026-09-02T11:25:15+00:00",
-      "publishedTs": 1788348315.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1030,19 +1043,6 @@
       "isRetweet": false
     },
     {
-      "title": "Could bitcoin hit $1 million in the next few years?",
-      "link": "https://x.com/APompliano/status/2094490946415284247#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "Could bitcoin hit $1 million in the next few years? Video",
-      "publishedAt": "2026-08-31T18:22:10+00:00",
-      "publishedTs": 1788200530.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A Bitcoin address can amazingly be created on a computer that has never touched the internet.",
       "link": "https://x.com/DocumentingBTC/status/2094488679595086112#m",
       "source": "@DocumentingBTC",
@@ -1220,19 +1220,6 @@
       "summary": "100%. Winklevoss\u2019 Bitcoin ETF filing was ridiculed, Mad Magazine (RIP) had it as one of their Top 20 Dumbest Things of year. The Atlantic crapped on it too, saying even Zuck wouldn\u2019t steal this idea- an idea that went onto crush inflow records in a super-competitive industry. We ",
       "publishedAt": "2026-08-31T11:21:00+00:00",
       "publishedTs": 1788175260.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "The Cult George assures Jerry that he is not in a cult",
-      "link": "https://x.com/MandelDuck/status/2094357543707382024#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "The Cult George assures Jerry that he is not in a cult Video",
-      "publishedAt": "2026-08-31T09:32:04+00:00",
-      "publishedTs": 1788168724.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1480,19 +1467,6 @@
       "summary": "Interesting that none of the rationalists with \u201csuperior epistemics\u201d have become prediction market billionaires Aashish Reddy (@_AashishReddy) Eliezer on encountering Leopold, which some of you will enjoy: \u2014 http://nitter.perennialte.ch/_AashishReddy/status/2091987070390600010#m",
       "publishedAt": "2026-08-27T11:40:36+00:00",
       "publishedTs": 1787830836.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart:",
-      "link": "https://x.com/DocumentingBTC/status/2092804189051097201#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "The amount of new bitcoins mined has decreased every four years as programmed. Here\u2019s the chart: Video",
-      "publishedAt": "2026-08-27T02:39:35+00:00",
-      "publishedTs": 1787798375.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
