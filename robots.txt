@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Public dashboard — Grok / researcher crawlers welcome.
+# Live app: https://btc-dashboard-bay.vercel.app
