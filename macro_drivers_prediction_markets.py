@@ -854,6 +854,22 @@ def _fetch_kalshi_live() -> list[dict]:
         out: list[dict] = []
         for m in payload.get("markets") or []:
             row = _kalshi_row_from_market(m)
+            if not row and (m.get("title") or m.get("ticker")):
+                # Series tickers are already BTC; keep the row even if keyword filter misses.
+                row = _normalize_market(
+                    mid=f"kalshi-{m.get('ticker')}",
+                    question=m.get("title") or m.get("ticker") or "Kalshi BTC",
+                    yes_p=_as_float(m.get("yes_ask_dollars") or m.get("last_price_dollars")),
+                    no_p=None,
+                    volume24h=_as_float(m.get("volume_24h")),
+                    volume_total=_as_float(m.get("volume")),
+                    end_date=m.get("close_time") or m.get("expiration_time"),
+                    platform="kalshi",
+                    url=_kalshi_url(m.get("ticker")),
+                    description=m.get("rules_primary") or "",
+                    liquidity=_as_float(m.get("liquidity_dollars")),
+                    active=m.get("status") == "open",
+                )
             if row:
                 out.append(row)
         return out
@@ -3139,6 +3155,10 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
 
         mock = _mock_markets()
         markets = _enrich_markets(_merge_live_with_mock(live, mock))
+        if not any(m.get("platform") == "kalshi" for m in markets):
+            markets = _enrich_markets(
+                list(markets) + [m for m in mock if m.get("platform") == "kalshi"]
+            )
         source = "live" if live else "mock"
         if live and len(live) < len(mock):
             source = "live+mock"

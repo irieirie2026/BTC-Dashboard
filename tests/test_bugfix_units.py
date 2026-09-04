@@ -39,6 +39,22 @@ def test_ts_5y_origin_budget():
     assert _origin_budget(3650) == (8, 8)
 
 
+def test_datco_allows_public_company():
+    from server import _bt_normalize_company
+
+    c = _bt_normalize_company(
+        {
+            "type": "PUBLIC_COMPANY",
+            "name": "Strategy",
+            "slug": "strategy",
+            "btc_balance": {"display_value": 640000},
+            "ticker": {"symbol": "MSTR"},
+        },
+        100000,
+    )
+    assert c and c["btc"] == 640000
+
+
 def test_mexc_outlier_median():
     vals = [100_000, 100_200, 99_800, 12_500_000]
     med = _robust_median(vals)

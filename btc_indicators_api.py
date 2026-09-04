@@ -297,6 +297,10 @@ def _snapshot_value_usable(key: str, val: Any) -> bool:
         return fval > 0.0001
     if key in ("difficulty", "difficulty_ribbon"):
         return fval > 1.0
+    if key == "open_interest":
+        return fval > 0
+    if key == "hash_rate":
+        return 50 <= fval <= 5000
     if key.endswith("_pct"):
         return fval > 0
     return True
@@ -904,8 +908,12 @@ def _finalize_snapshot_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Enrich from disk store, repair known bad values, refresh indicator catalog."""
-    _enrich_snapshot_cells(cells, refresh=refresh)
-    _repair_snapshot_cells(cells)
+    if not fast_path:
+        _enrich_snapshot_cells(cells, refresh=refresh)
+    try:
+        _repair_snapshot_cells(cells)
+    except Exception:
+        pass
     errors: list[str] = []
     stale_count = 0
     for key, cell in cells.items():
@@ -936,7 +944,7 @@ def _finalize_snapshot_payload(
 def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     from server import get_fear_greed_payload
 
-    cache_key = "btc:bundle:snapshot:v8"
+    cache_key = "btc:bundle:snapshot:v9"
     fast_source = (
         "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
         "Coin Metrics · Santiment store"
@@ -1292,9 +1300,15 @@ def get_miner_payload(
             errors.append(f"{key}: {data['error']}")
 
     snapshot = charts.get("blockchair_stats") or {}
+    snap = (snapshot.get("series") or [{}])[0].get("snapshot") if snapshot.get("series") else None
+    if isinstance(snap, dict) and snap.get("hashrate_24h") is not None:
+        snap = dict(snap)
+        raw_hr = snap.get("hashrate_24h")
+        snap["hashrate_24h_raw"] = raw_hr
+        snap["hashrate_24h"] = normalize_hash_rate_ehs(raw_hr)
     payload = {
         "charts": charts,
-        "snapshot": (snapshot.get("series") or [{}])[0].get("snapshot") if snapshot.get("series") else None,
+        "snapshot": snap,
         "timespan": timespan,
         "fetchedAt": _now_iso(),
         "errors": sorted(set(errors)),

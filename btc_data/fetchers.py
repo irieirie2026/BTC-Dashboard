@@ -709,21 +709,43 @@ def fetch_coingecko_dominance(*, refresh: bool = False) -> dict[str, Any]:
 
 
 def fetch_binance_open_interest(*, refresh: bool = False) -> dict[str, Any]:
-    cache_key = "btc:binance:oi:v1"
+    cache_key = "btc:binance:oi:v2"
     if not refresh:
         cached = cache_get(cache_key, ttl=120)
-        if cached is not None:
+        if cached is not None and cached.get("value"):
             return {**cached, "fromCache": True}
 
-    raw = fetch_json("https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCUSDT", timeout=20)
-    oi = float(raw.get("openInterest", 0))
+    errors: list[str] = []
+    oi = None
+    source = "Binance Futures"
+    try:
+        raw = fetch_json(
+            "https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCUSDT",
+            timeout=12,
+        )
+        oi = float(raw.get("openInterest") or 0) or None
+    except Exception as exc:
+        errors.append(f"binance: {exc}")
+    if not oi:
+        try:
+            raw = fetch_json(
+                "https://www.okx.com/api/v5/public/open-interest?instId=BTC-USDT-SWAP",
+                timeout=12,
+            )
+            row = ((raw.get("data") or [None])[0]) or {}
+            oi = float(row.get("oiCcy") or row.get("oi") or 0) or None
+            source = "OKX"
+        except Exception as exc:
+            errors.append(f"okx: {exc}")
     payload = {
         "value": oi,
-        "source": "Binance Futures",
+        "source": source,
         "fetchedAt": _now_iso(),
         "fromCache": False,
+        "error": None if oi else ("; ".join(errors) or "OI unavailable"),
     }
-    cache_set(cache_key, payload)
+    if oi:
+        cache_set(cache_key, payload)
     return payload
 
 

@@ -277,12 +277,20 @@ def dispatch_api(path, query, body: dict | None = None):
                 refresh=refresh,
             )
         if sub == "liquidity":
-            return md["liquidity"](
-                entity=(query.get("entity") or ["WLD"])[0],
-                year=_int_param("year"),
-                overlay=_bool_param("overlay"),
-                refresh=refresh,
-            )
+            try:
+                return md["liquidity"](
+                    entity=(query.get("entity") or ["WLD"])[0],
+                    year=_int_param("year"),
+                    overlay=_bool_param("overlay"),
+                    refresh=refresh,
+                )
+            except Exception as exc:
+                return {
+                    "error": str(exc)[:200],
+                    "entity": (query.get("entity") or ["WLD"])[0],
+                    "global": {"series": []},
+                    "partial": True,
+                }
         raise ValueError(f"Unknown macro drivers endpoint: {sub}")
 
     if path.startswith("/api/macro/"):
@@ -465,10 +473,11 @@ def dispatch_api(path, query, body: dict | None = None):
                 return btc["snapshot"](refresh=refresh)
             except Exception as exc:
                 return {
-                    "error": str(exc),
+                    "error": str(exc)[:200],
                     "cells": {},
                     "fetchedAt": None,
-                    "sourceChain": "snapshot-error",
+                    "sourceChain": "Store-first snapshot",
+                    "partial": True,
                 }
         if sub == "meta":
             return btc["meta"](refresh=refresh)

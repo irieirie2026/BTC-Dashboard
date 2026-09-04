@@ -84,6 +84,37 @@ async function spotFetchKlines(interval, limit = 1000, endTime) {
 }
 
 async function spotFetchAllDaily(maxRequests = 20) {
+  try {
+    const res = await fetch("/api/stats/btc-history", { cache: "no-store" });
+    const data = await res.json();
+    const days = data.days || [];
+    if (res.ok && days.length > 30) {
+      return spotDedupeBars(
+        days
+          .map((d) => {
+            const t = Date.parse(d.date || d.time);
+            if (!Number.isFinite(t) || !Number.isFinite(Number(d.close))) return null;
+            return {
+              time: Math.floor(t / 1000),
+              open: Number(d.open ?? d.close),
+              high: Number(d.high ?? d.close),
+              low: Number(d.low ?? d.close),
+              close: Number(d.close),
+            };
+          })
+          .filter(Boolean),
+      );
+    }
+  } catch (_) {
+    /* fall through */
+  }
+  try {
+    const bundled = await window.marketFetchKlines?.("1d", 1000);
+    const raw = bundled?.klines || [];
+    if (raw.length > 30) return spotDedupeBars(raw.map(spotKlineToBar));
+  } catch (_) {
+    /* fall through */
+  }
   const chunks = [];
   let endTime;
   for (let i = 0; i < maxRequests; i++) {

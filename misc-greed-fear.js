@@ -288,9 +288,11 @@ function fngRenderHistory(series) {
 
 function fngRenderAll() {
   if (!fngData) return;
-  fngRenderHero(fngData.latest);
+  const latest = fngData.latest;
+  if (latest?.value != null) window.__fngLatest = Number(latest.value);
+  fngRenderHero(latest);
   fngRenderZones();
-  fngRenderGauge(fngData.latest);
+  fngRenderGauge(latest);
   fngRenderHistory(fngData.series);
 }
 
