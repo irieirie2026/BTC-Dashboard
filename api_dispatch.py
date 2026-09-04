@@ -452,13 +452,24 @@ def dispatch_api(path, query, body: dict | None = None):
         return get_fear_greed_payload(refresh=refresh)
 
     if path == "/api/misc/btc" or path.startswith("/api/misc/btc/"):
-        btc = _btc_indicators_api()
+        try:
+            btc = _btc_indicators_api()
+        except ImportError as exc:
+            return {"error": f"BTC indicators unavailable: {exc}", "cells": {}, "models": []}
         sub = path[len("/api/misc/btc") :].strip("/") or "snapshot"
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         if refresh:
             btc["clear"]()
         if sub in ("", "snapshot"):
-            return btc["snapshot"](refresh=refresh)
+            try:
+                return btc["snapshot"](refresh=refresh)
+            except Exception as exc:
+                return {
+                    "error": str(exc),
+                    "cells": {},
+                    "fetchedAt": None,
+                    "sourceChain": "snapshot-error",
+                }
         if sub == "meta":
             return btc["meta"](refresh=refresh)
         if sub == "distribution":
@@ -612,9 +623,45 @@ def dispatch_api(path, query, body: dict | None = None):
             return get_timeseries_model_payload(sub, days=days, refresh=refresh)
         models_raw = (query.get("models") or [""])[0]
         models = [m.strip() for m in models_raw.split(",") if m.strip()] or None
-        return get_timeseries_suite_payload(
-            days=days, models=models, refresh=refresh
+        try:
+            return get_timeseries_suite_payload(
+                days=days, models=models, refresh=refresh
+            )
+        except Exception as exc:
+            return {
+                "error": str(exc)[:240],
+                "models": [],
+                "daysRequested": days,
+            }
+
+    if path == "/api/market" or path.startswith("/api/market/"):
+        from market_feed import (
+            get_eth_daily,
+            get_klines,
+            get_perp_snapshot,
+            get_spot_bundle,
+            get_spot_quote,
         )
+
+        refresh = _query_refresh(query)
+        sub = path[len("/api/market") :].strip("/") or "quote"
+        if sub in ("", "quote", "ticker"):
+            return get_spot_quote(refresh=refresh)
+        if sub in ("spot", "bundle"):
+            return get_spot_bundle(refresh=refresh)
+        if sub == "klines":
+            interval = (query.get("interval") or ["1m"])[0]
+            try:
+                limit = int((query.get("limit") or ["500"])[0])
+            except (TypeError, ValueError):
+                limit = 500
+            product = (query.get("product") or ["BTC-USD"])[0]
+            return get_klines(interval=interval, limit=limit, product=product, refresh=refresh)
+        if sub in ("eth", "eth-daily"):
+            return get_eth_daily(refresh=refresh)
+        if sub == "perp":
+            return get_perp_snapshot(refresh=refresh)
+        return {"error": f"Unknown market endpoint: {sub}", "venues": ["Coinbase", "Kraken", "OKX"]}
 
     if path == "/api/options":
         return get_options_payload(refresh=_query_refresh(query))

@@ -112,7 +112,7 @@ def _blockchain_chart(name: str, *, timespan: str = "1year") -> list[dict]:
 
 
 def get_misc_metrics_payload(*, refresh: bool = False) -> dict:
-    cache_key = "misc:metrics:v2"
+    cache_key = "misc:metrics:v3"
     if not refresh:
         cached = cache_get(cache_key, ttl=CACHE_TTL)
         if cached:
@@ -249,6 +249,11 @@ def get_misc_metrics_payload(*, refresh: bool = False) -> dict:
 
     nvt = None
     nvt_spark: list[float] = []
+    if vol_chart and price:
+        med = sorted(abs(r["value"]) for r in vol_chart if r.get("value"))
+        mid = med[len(med) // 2] if med else 0.0
+        if 0 < mid < 1e7:  # BTC units, not USD
+            vol_chart = [{**r, "value": float(r["value"]) * price} for r in vol_chart]
     if mcap and tx_chart and vol_chart:
         tx_by_date = {r["date"]: r["value"] for r in tx_chart}
         vol_by_date = {r["date"]: r["value"] for r in vol_chart}

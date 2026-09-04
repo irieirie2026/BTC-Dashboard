@@ -779,9 +779,10 @@ CHART_INFO: dict[str, dict[str, Any]] = {
         ),
         "hoverBands": [
             {"gte": 75, "label": "Extreme Greed — euphoria risk"},
-            {"gte": 56, "label": "Greed — bullish sentiment"},
-            {"lte": 24, "label": "Extreme Fear — capitulation zone"},
-            {"lte": 44, "label": "Fear — cautious market"},
+            {"gte": 56, "lt": 75, "label": "Greed — bullish sentiment"},
+            {"gte": 45, "lt": 56, "label": "Neutral sentiment"},
+            {"gte": 25, "lt": 45, "label": "Fear — cautious market"},
+            {"lt": 25, "label": "Extreme Fear — capitulation zone"},
         ],
         "source": "Alternative.me",
     },

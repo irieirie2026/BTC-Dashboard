@@ -5185,6 +5185,7 @@ function initVolatilityModule() {
   screen.dataset.volBound = "true";
 
   volApplyPrefsToControls();
+  volRenderModelPicker(VOL_FALLBACK_CATALOG);
   volLoadCatalog();
 
   volEl("vol-run-selected")?.addEventListener("click", () => volRun(true, { allModels: false }));

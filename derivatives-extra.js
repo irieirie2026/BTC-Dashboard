@@ -64,7 +64,7 @@ function parseOptionSymbol(symbol) {
     if (mon == null) return null;
     return {
       symbol,
-      expiry: Date.UTC(2000 + parseInt(deribit[3], 10), mon, parseInt(deribit[1], 10)),
+      expiry: Date.UTC(2000 + parseInt(deribit[3], 10), mon, parseInt(deribit[1], 10), 8, 0, 0),
       strike: parseInt(deribit[4], 10),
       side: deribit[5],
     };
@@ -410,8 +410,17 @@ async function fetchOptionsBundle() {
 
     const chain = contracts
       .map((c) => {
-        const parsed = parseOptionSymbol(c.instrument_name || c.symbol || "");
-        if (!parsed) return null;
+        const parsed = parseOptionSymbol(c.instrument_name || c.symbol || "") || (
+          c.strike != null
+            ? {
+                symbol: c.instrument_name || c.symbol,
+                expiry: c.expiration_timestamp || c.expirationTimestamp,
+                strike: parseFloat(c.strike),
+                side: (c.option_type || c.type || "").toString().charAt(0).toUpperCase() === "P" ? "P" : "C",
+              }
+            : null
+        );
+        if (!parsed || !parsed.strike) return null;
         const iv = parseFloat(c.mark_iv);
         return {
           ...parsed,
@@ -432,7 +441,7 @@ async function fetchOptionsBundle() {
     const expiries = Object.keys(byExpiry)
       .map(Number)
       .sort((a, b) => a - b)
-      .filter((e) => e > Date.now());
+      .filter((e) => Number.isFinite(e) && e + 8 * 3600 * 1000 > Date.now());
 
     function atmIvForExpiry(expiry) {
       const opts = byExpiry[expiry] || [];
@@ -457,7 +466,13 @@ async function fetchOptionsBundle() {
       atmIv: atmIvForExpiry(exp),
     }));
 
-    const nearestExpiry = expiries[0];
+    const nearestExpiry =
+      expiries[0] ||
+      Object.keys(byExpiry)
+        .map(Number)
+        .filter(Number.isFinite)
+        .sort((a, b) => a - b)
+        .pop();
     const smileExpiry =
       expiries.find((e) => {
         const opts = byExpiry[e];

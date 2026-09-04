@@ -34,8 +34,15 @@ function fmtLarge(n) {
 }
 
 function fmtHashrateGhs(ghs) {
-  const eh = Number(ghs) / 1e9;
-  if (Number.isNaN(eh)) return "—";
+  const n = Number(ghs);
+  if (!Number.isFinite(n) || n <= 0) return "—";
+  let eh = n;
+  if (n >= 1e18) eh = n / 1e18;
+  else if (n >= 1e12) eh = n / 1e9;
+  else if (n >= 1e8) eh = n / 1e6;
+  else if (n >= 1e5) eh = n / 1e3;
+  else eh = n / 1e9;
+  if (!Number.isFinite(eh) || eh <= 0) return "—";
   return eh >= 100 ? eh.toFixed(1) + " EH/s" : eh.toFixed(2) + " EH/s";
 }
 

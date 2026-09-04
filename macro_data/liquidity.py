@@ -551,6 +551,23 @@ def get_liquidity_payload(
         if cached is not None:
             return cached
 
+    try:
+        return _build_liquidity_payload(entity=entity, year=year, overlay=overlay, refresh=refresh, cache_key=cache_key)
+    except Exception as exc:
+        stale = cache_get(cache_key, ttl=86400 * 14)
+        if stale is not None:
+            return {**stale, "stale": True, "error": str(exc)[:160], "fromCache": True}
+        raise
+
+
+def _build_liquidity_payload(
+    *,
+    entity: str,
+    year: int | None,
+    overlay: bool,
+    refresh: bool,
+    cache_key: str,
+) -> dict[str, Any]:
     store = _load_component_store(refresh=refresh)
     countries = fetch_countries(refresh=refresh)
     years = _years_list()
