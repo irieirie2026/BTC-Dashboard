@@ -543,11 +543,18 @@ def dispatch_api(path, query, body: dict | None = None):
         return get_correlation_payload(refresh=refresh, period=period)
 
     if path == "/api/stats/volatility" or path.startswith("/api/stats/volatility/"):
-        from volatility_models import (
-            get_volatility_model_payload,
-            get_volatility_suite_payload,
-            list_volatility_catalog,
-        )
+        try:
+            from volatility_models import (
+                get_volatility_model_payload,
+                get_volatility_suite_payload,
+                list_volatility_catalog,
+            )
+        except ImportError as exc:
+            return {
+                "error": f"Volatility module unavailable: {exc}",
+                "catalog": [],
+                "models": [],
+            }
 
         refresh = _query_refresh(query)
         days_raw = (query.get("days") or ["1095"])[0]
@@ -582,10 +589,16 @@ def dispatch_api(path, query, body: dict | None = None):
         )
 
     if path == "/api/stats/timeseries" or path.startswith("/api/stats/timeseries/"):
-        from timeseries_models import (
-            get_timeseries_model_payload,
-            get_timeseries_suite_payload,
-        )
+        try:
+            from timeseries_models import (
+                get_timeseries_model_payload,
+                get_timeseries_suite_payload,
+            )
+        except ImportError as exc:
+            return {
+                "error": f"Time series module unavailable: {exc}",
+                "models": [],
+            }
 
         refresh = _query_refresh(query)
         days_raw = (query.get("days") or ["3650"])[0]

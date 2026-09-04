@@ -9,6 +9,27 @@ const VOL_PREFS_KEY = "vol-suite-prefs-v4";
 /** Desk defaults: 5Y sample + Student-t innovations (see #vol-est-why). */
 const VOL_DESK_DAYS = "1825";
 const VOL_DESK_DIST = "t";
+const VOL_FALLBACK_CATALOG = [
+  { id: "arch11", name: "ARCH(1)", family: "core", blurb: "Lagged squared residuals only.", defaultOn: false, requiresArch: true },
+  { id: "garch11", name: "GARCH(1,1)", family: "core", blurb: "Workhorse conditional variance.", defaultOn: true, requiresArch: true },
+  { id: "garch12", name: "GARCH(1,2)", family: "core", blurb: "Extra MA lag on variance.", defaultOn: false, requiresArch: true },
+  { id: "garch21", name: "GARCH(2,1)", family: "core", blurb: "Extra AR lag on variance.", defaultOn: false, requiresArch: true },
+  { id: "egarch11", name: "EGARCH(1,1)", family: "asymmetric", blurb: "Log variance + leverage.", defaultOn: true, requiresArch: true },
+  { id: "gjr11", name: "GJR-GARCH(1,1)", family: "asymmetric", blurb: "Asymmetric news impact.", defaultOn: true, requiresArch: true },
+  { id: "aparch11", name: "APARCH(1,1)", family: "asymmetric", blurb: "Power + leverage.", defaultOn: true, requiresArch: true },
+  { id: "figarch11", name: "FIGARCH(1,d,1)", family: "long_memory", blurb: "Fractional persistence.", defaultOn: true, requiresArch: true },
+  { id: "arch2", name: "ARCH(2)", family: "core", blurb: "Two ARCH lags.", defaultOn: false, requiresArch: true },
+  { id: "arch5", name: "ARCH(5)", family: "core", blurb: "Five ARCH lags.", defaultOn: false, requiresArch: true },
+  { id: "garch22", name: "GARCH(2,2)", family: "core", blurb: "Richer GARCH orders.", defaultOn: false, requiresArch: true },
+  { id: "egarch12", name: "EGARCH(1,2)", family: "asymmetric", blurb: "EGARCH extra MA.", defaultOn: false, requiresArch: true },
+  { id: "egarch21", name: "EGARCH(2,1)", family: "asymmetric", blurb: "EGARCH extra AR.", defaultOn: false, requiresArch: true },
+  { id: "gjr12", name: "GJR-GARCH(1,2)", family: "asymmetric", blurb: "GJR extra MA.", defaultOn: false, requiresArch: true },
+  { id: "gjr21", name: "GJR-GARCH(2,1)", family: "asymmetric", blurb: "GJR extra AR.", defaultOn: false, requiresArch: true },
+  { id: "aparch12", name: "APARCH(1,2)", family: "asymmetric", blurb: "APARCH extra MA.", defaultOn: false, requiresArch: true },
+  { id: "harch", name: "HARCH", family: "long_memory", blurb: "Heterogeneous ARCH.", defaultOn: false, requiresArch: true },
+  { id: "ewma", name: "EWMA (RiskMetrics)", family: "benchmark", blurb: "λ=0.94 variance smoother.", defaultOn: true, requiresArch: false },
+  { id: "har_rv", name: "HAR-RV", family: "benchmark", blurb: "Daily/weekly/monthly RV.", defaultOn: true, requiresArch: false },
+];
 
 let volSuite = null;
 let volSelectedId = null;
@@ -156,18 +177,45 @@ function volRenderModelPicker(catalog) {
   volUpdatePickerMeta();
 }
 
+function volCatalogFromSuite(data) {
+  if (Array.isArray(data?.catalog) && data.catalog.length) return data.catalog;
+  if (volCatalog.length) return volCatalog;
+  if (Array.isArray(data?.models) && data.models.length) {
+    return data.models.map((m) => ({
+      id: m.id,
+      name: m.name,
+      family: m.family || "other",
+      blurb: m.blurb || "",
+      whyBtc: m.whyBtc || "",
+      requiresArch: !!m.requiresArch,
+      defaultOn: true,
+    }));
+  }
+  return VOL_FALLBACK_CATALOG;
+}
+
 async function volLoadCatalog() {
   try {
-    const res = await fetch(`${VOL_API}/catalog`, { cache: "no-store" });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok && Array.isArray(data.catalog)) {
-      volRenderModelPicker(data.catalog);
-      return data.catalog;
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), 12000);
+    try {
+      const res = await fetch(`${VOL_API}/catalog`, {
+        cache: "no-store",
+        signal: ac.signal,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && Array.isArray(data.catalog) && data.catalog.length) {
+        volRenderModelPicker(data.catalog);
+        return data.catalog;
+      }
+    } finally {
+      clearTimeout(timer);
     }
   } catch (err) {
     console.warn("[volatility] catalog", err);
   }
-  return null;
+  if (!volCatalog.length) volRenderModelPicker(VOL_FALLBACK_CATALOG);
+  return volCatalog;
 }
 
 function volFmtPct(x, d = 1) {
@@ -233,7 +281,7 @@ async function volFetchSuite(force = false, opts = {}) {
   const res = await fetch(url, { cache: "no-store" });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || data.message || `Volatility ${res.status}`);
-  if (Array.isArray(data.catalog)) volRenderModelPicker(data.catalog);
+  volRenderModelPicker(volCatalogFromSuite(data));
   // Re-apply selection after re-render of picker
   if (models.length) volSetCheckedModels(models);
   return data;
@@ -3418,7 +3466,7 @@ function volModelProductHtml({
     `√(mean of daily variances over the horizon) × √365. Compare this to Deribit ATM IV for ~that DTE.</li>` +
     `<li><strong>Live book:</strong> ${
       nInst
-        ? `${nInst} BTC option instruments · ${nExp} expiries · weekly ${volEscape(wCode)} · monthly ${volEscape(mCode)}`
+        ? `${nInst} listed Deribit BTC contracts (full option chain) · ${nExp} expiries · weekly ${volEscape(wCode)} · monthly ${volEscape(mCode)}. Suggested tickets below are a shortlist of structures, not every listed instrument.`
         : "not loaded — tickets fall back to synthesized Friday names (higher error risk)"
     }</li>` +
     `<li><strong>Live ATM IV vs term RV:</strong> ${
@@ -3715,7 +3763,7 @@ function volBuildDeribitTradePlan(suite, chain = null) {
       `<p class="vol-plan-why">Shown <strong>best first</strong> by composite score. ` +
       `Each leg is snapped to the <strong>live Deribit instrument list</strong> (same book as Options Strategy). ` +
       `Pricing is a <strong>USD-linear BS proxy</strong> (Deribit BTC options are inverse). ` +
-      `Missing names are blocked from dry-run. Book: <strong>${listedN} listed</strong>` +
+      `Missing names are blocked from dry-run. Suggested book: <strong>${tickets.length} tickets</strong> · <strong>${listedN} listed legs</strong>` +
       (missN ? ` · <strong class="vol-ticket-sell">${missN} missing</strong>` : "") +
       `${chain?.indexPrice ? ` · index $${Number(chain.indexPrice).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : " · chain unavailable — names are estimates"}.</p>` +
       volTicketsSummaryTableHtml(tickets) +

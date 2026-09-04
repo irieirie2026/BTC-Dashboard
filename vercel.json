@@ -57,7 +57,7 @@
   "functions": {
     "api/handler.py": {
       "maxDuration": 60,
-      "includeFiles": "{server.py,api_dispatch.py,law_data.py,home_tts.py,super_summary.py,super_summary_paywall.py,requirements.txt,cache/**,btc_data/**,macro_data/**,data/**,cross_market*.py,macro_drivers*.py,global_macro*.py,equity_insights.py,btc_indicators_api.py}",
+      "includeFiles": "{server.py,api_dispatch.py,law_data.py,home_tts.py,super_summary.py,super_summary_paywall.py,timeseries_models.py,volatility_models.py,defi_models.py,requirements.txt,cache/**,btc_data/**,macro_data/**,data/**,cross_market*.py,macro_drivers*.py,global_macro*.py,equity_insights.py,btc_indicators_api.py}",
       "excludeFiles": "{.git/**,tests/**,__tests__/**,**/*.test.py,**/test_*.py,fixtures/**,static/**,assets/**,*.command,**/*.js,**/*.html,**/*.css,**/*.md}"
     }
   }

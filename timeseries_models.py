@@ -65,9 +65,24 @@ BT_HORIZONS = (1, 7, 30)
 # - Then origins are spaced every `step` days across the rest of the sample
 # - Cap keeps full suite runtime bounded (many models × re-fits per origin)
 BT_MIN_TRAIN = 365
-BT_TARGET_ORIGINS = 96  # aim for ~this many origins on long samples
-BT_MAX_ORIGINS = 120
+BT_TARGET_ORIGINS = 28  # aim for ~this many origins on mid samples
+BT_MAX_ORIGINS = 40
 BT_MIN_STEP = 7  # at least weekly spacing
+# Statsmodels / Prophet refits per origin blow the Vercel 60s budget on 10Y
+_HEAVY_BACKTEST_IDS = frozenset(
+    {
+        "prophet",
+        "sarima_w",
+        "arima212",
+        "ets_aaa",
+        "hw_add",
+        "uc_cycle",
+        "arimax",
+        "var2",
+        "svar",
+        "vecm",
+    }
+)
 
 
 def _now_iso() -> str:
@@ -1618,6 +1633,17 @@ def _path_to_price_forecasts(
 # Backtest
 # ---------------------------------------------------------------------------
 
+def _origin_budget(n: int) -> tuple[int, int]:
+    """Keep full-suite runtime inside typical 60s serverless limits."""
+    if n >= 2800:  # ~10Y
+        return 8, 8
+    if n >= 1600:  # ~5Y
+        return 16, 16
+    if n >= 900:
+        return 24, 28
+    return BT_TARGET_ORIGINS, BT_MAX_ORIGINS
+
+
 def _backtest_origins(n: int) -> tuple[list[int], dict[str, Any]]:
     """Build expanding-window origin indices (not every day — thinned for speed)."""
     min_train = min(BT_MIN_TRAIN, max(120, n // 3))
@@ -1630,12 +1656,13 @@ def _backtest_origins(n: int) -> tuple[list[int], dict[str, Any]]:
             "note": "sample too short after warm-up and forecast hold-out",
         }
     span = last_origin - min_train
+    target, max_origins = _origin_budget(n)
     # Space origins so long samples get more OOS points (not a fixed 28)
-    step = max(BT_MIN_STEP, int(math.ceil(span / float(BT_TARGET_ORIGINS))))
+    step = max(BT_MIN_STEP, int(math.ceil(span / float(target))))
     # If that still exceeds hard cap, widen the step
     n_est = span // step + 1
-    if n_est > BT_MAX_ORIGINS:
-        step = max(BT_MIN_STEP, int(math.ceil(span / float(BT_MAX_ORIGINS))))
+    if n_est > max_origins:
+        step = max(BT_MIN_STEP, int(math.ceil(span / float(max_origins))))
     origins = list(range(min_train, last_origin + 1, step))
     if origins[-1] != last_origin:
         origins.append(last_origin)
@@ -1653,8 +1680,8 @@ def _backtest_origins(n: int) -> tuple[list[int], dict[str, Any]]:
         "span": span,
         "note": (
             f"Expanding window: warm-up {min_train}d, then one origin every {step}d "
-            f"through the sample (not daily). Longer estimation ranges increase N OOS "
-            f"up to ~{BT_MAX_ORIGINS}."
+            f"through the sample (not daily). Longer estimation ranges keep N OOS "
+            f"capped (~{_origin_budget(n)[1]}) so the suite can finish in time."
         ),
     }
 
@@ -1848,7 +1875,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v7:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v8:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:
@@ -1888,11 +1915,18 @@ def get_timeseries_suite_payload(
             fit = {"ok": False, "error": str(exc)[:240]}
 
         bt: dict[str, Any] = {"ok": False}
-        if fit.get("ok"):
+        skip_bt = cat["id"] in _HEAVY_BACKTEST_IDS and len(data["close"]) >= 2000
+        if fit.get("ok") and not skip_bt:
             try:
                 bt = _backtest_model(cat["id"], data, macro)
             except Exception as exc:
                 bt = {"ok": False, "error": str(exc)[:160]}
+        elif skip_bt:
+            bt = {
+                "ok": False,
+                "skipped": True,
+                "error": "OOS backtest skipped on long windows for this model (time budget)",
+            }
 
         row = {
             "id": cat["id"],

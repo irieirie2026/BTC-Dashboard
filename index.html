@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=228" />
+    <link rel="stylesheet" href="styles.css?v=230" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
     <!-- Bundled home motto (Grok Luna) — same clip every time; no live TTS / browser voice -->
     <link rel="preload" href="assets/home-motto.mp3" as="audio" type="audio/mpeg" />
@@ -1111,9 +1111,7 @@
             </div>
             <div id="options-strategy-root" class="options-strategy-root"></div>
             <p id="options-strategy-fallback" class="options-strategy-fallback" hidden>
-              Strategy builder failed to load. From the dashboard root run
-              <code>npm run install:strategy && npm run build:strategy</code>
-              then refresh.
+              Loading strategy builder…
             </p>
           </section>
         </div>
@@ -3315,8 +3313,41 @@
       </div>
 
       <div id="dashboard-defi" class="dashboard-view" hidden>
-        <div class="menu-screen" data-l1="defi" data-l2="wrapped" data-l3="overview">
+        <div class="menu-screen" data-l1="defi" data-l2="strategies" data-l3="overview">
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-strategies-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-strategies-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-strategies-primer"></section>
+          <section class="panel" id="defi-trade-plan-panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-plan-section">BTC DeFi strategies</h2>
+              <span class="panel-meta" id="defi-strategies-update">DeFi Llama · live pools</span>
+            </div>
+            <div class="vol-trade-plan-toolbar">
+              <label class="vol-adv-toggle">
+                <input type="checkbox" id="defi-show-advanced" checked />
+                Show next-step ideas and paper examples
+              </label>
+            </div>
+            <p class="vol-plan-why">Best-scored ideas first. Click a row to read the steps in plain English. Paper examples include the numbers we assumed — they are lessons, not orders.</p>
+            <div id="defi-trade-plan-host">
+              <div class="vol-summary-wrap">
+                <table class="deriv-table defi-markets-table defi-summary-table">
+                  <thead id="defi-strategies-table-head"></thead>
+                  <tbody id="defi-strategies-table-body"></tbody>
+                </table>
+              </div>
+              <div id="defi-ticket-detail" class="defi-ticket-detail" aria-live="polite"></div>
+            </div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
+            <div class="stats-commentary" id="defi-strategies-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="wrapped" data-l3="overview" hidden>
           <section class="deriv-hero-strip defi-hero-strip" id="defi-wrapped-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-wrapped-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-wrapped-primer"></section>
           <section class="panel">
             <div class="panel-header">
               <h2 data-help-key="defi-protocols-table">Wrapped BTC</h2>
@@ -3324,8 +3355,20 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <thead id="defi-wrapped-table-head"></thead>
                 <tbody id="defi-wrapped-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-wrapped-pegs">
+            <div class="panel-header">
+              <h2 data-help-key="defi-peg-panel">Peg vs spot</h2>
+              <span class="panel-meta">coins.llama.fi</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead><tr><th>Wrapper</th><th>Price</th><th>vs BTC</th></tr></thead>
+                <tbody id="defi-wrapped-pegs-body"></tbody>
               </table>
             </div>
           </section>
@@ -3337,12 +3380,14 @@
             <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-wrapped-chart" height="140"></canvas></div>
           </section>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-wrapped-commentary"><p>Loading…</p></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="defi" data-l2="stables" data-l3="overview" hidden>
           <section class="deriv-hero-strip defi-hero-strip" id="defi-stables-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-stables-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-stables-primer"></section>
           <section class="panel">
             <div class="panel-header">
               <h2 data-help-key="defi-stables-table">Stablecoins</h2>
@@ -3350,7 +3395,7 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">Name</th><th data-help-key="defi-col-mcap">Market Cap</th><th data-help-key="defi-col-price">Price</th><th data-help-key="defi-col-change7d">7d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <thead id="defi-stables-table-head"></thead>
                 <tbody id="defi-stables-table-body"></tbody>
               </table>
             </div>
@@ -3372,20 +3417,22 @@
             </section>
           </div>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-stables-commentary"><p>Loading…</p></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="defi" data-l2="bridges" data-l3="overview" hidden>
           <section class="deriv-hero-strip defi-hero-strip" id="defi-bridges-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-bridges-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-bridges-primer"></section>
           <section class="panel">
             <div class="panel-header">
-              <h2 data-help-key="defi-protocols-table">BTC Bridges</h2>
+              <h2 data-help-key="defi-bridges-table">BTC Bridges</h2>
               <span class="panel-meta" id="defi-bridges-update">DeFi Llama</span>
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
+                <thead id="defi-bridges-table-head"></thead>
                 <tbody id="defi-bridges-table-body"></tbody>
               </table>
             </div>
@@ -3398,12 +3445,14 @@
             <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-bridges-chart" height="140"></canvas></div>
           </section>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-bridges-commentary"><p>Loading…</p></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="defi" data-l2="lending" data-l3="overview" hidden>
           <section class="deriv-hero-strip defi-hero-strip" id="defi-lending-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-lending-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-lending-primer"></section>
           <section class="panel">
             <div class="panel-header">
               <h2 data-help-key="defi-lending-table">BTC Lending Pools</h2>
@@ -3411,46 +3460,97 @@
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-chain">Chain</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-apy">APY</th><th data-help-key="defi-col-change7d">7d APY %</th></tr></thead>
+                <thead id="defi-lending-table-head"></thead>
                 <tbody id="defi-lending-table-body"></tbody>
               </table>
             </div>
           </section>
+          <section class="panel" id="defi-lending-chart-wrap">
+            <div class="panel-header">
+              <h2 data-help-key="defi-apy-chart" id="defi-lending-chart-title">APY</h2>
+              <span class="panel-meta">Top pool · Llama chart</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-lending-chart" height="140"></canvas></div>
+          </section>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-lending-commentary"><p>Loading…</p></div>
           </section>
         </div>
-        <div class="menu-screen" data-l1="defi" data-l2="liquidity" data-l3="overview" hidden>
-          <section class="deriv-hero-strip defi-hero-strip" id="defi-liquidity-heroes"></section>
+        <div class="menu-screen" data-l1="defi" data-l2="borrowing" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-borrowing-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-borrowing-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-borrowing-primer"></section>
           <section class="panel">
             <div class="panel-header">
-              <h2 data-help-key="defi-liquidity-table">DEX Liquidity</h2>
-              <span class="panel-meta" id="defi-liquidity-update">DeFi Llama DEX</span>
+              <h2 data-help-key="defi-borrowing-table">BTC Borrow markets</h2>
+              <span class="panel-meta" id="defi-borrowing-update">DeFi Llama lend/borrow</span>
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">DEX</th><th data-help-key="defi-col-volume24h">24h Volume</th><th data-help-key="defi-col-change1d">1d %</th><th data-help-key="defi-col-change7d-vol">7d %</th><th data-help-key="defi-col-chains">Chains</th></tr></thead>
-                <tbody id="defi-liquidity-table-body"></tbody>
+                <thead id="defi-borrowing-table-head"></thead>
+                <tbody id="defi-borrowing-table-body"></tbody>
               </table>
             </div>
           </section>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
+            <div class="stats-commentary" id="defi-borrowing-commentary"><p>Loading…</p></div>
+          </section>
+        </div>
+        <div class="menu-screen" data-l1="defi" data-l2="liquidity" data-l3="overview" hidden>
+          <section class="deriv-hero-strip defi-hero-strip" id="defi-liquidity-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-liquidity-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-liquidity-primer"></section>
+          <section class="panel">
+            <div class="panel-header">
+              <h2 data-help-key="defi-liquidity-table">BTC DEX Liquidity</h2>
+              <span class="panel-meta" id="defi-liquidity-update">DeFi Llama Yields</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead id="defi-liquidity-table-head"></thead>
+                <tbody id="defi-liquidity-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-liquidity-chart-wrap">
+            <div class="panel-header">
+              <h2 data-help-key="defi-apy-chart" id="defi-liquidity-chart-title">APY</h2>
+              <span class="panel-meta">Top BTC pair · Llama chart</span>
+            </div>
+            <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-liquidity-chart" height="140"></canvas></div>
+          </section>
+          <section class="panel stats-commentary-panel">
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-liquidity-commentary"><p>Loading…</p></div>
           </section>
         </div>
         <div class="menu-screen" data-l1="defi" data-l2="staking" data-l3="overview" hidden>
           <section class="deriv-hero-strip defi-hero-strip" id="defi-staking-heroes"></section>
+          <section class="deriv-hero-strip defi-hero-strip defi-risk-kpis" id="defi-staking-riskkpis" hidden></section>
+          <section class="vol-trade-plan defi-primer" id="defi-staking-primer"></section>
           <section class="panel">
             <div class="panel-header">
-              <h2 data-help-key="defi-staking-table">BTC Staking</h2>
+              <h2 data-help-key="defi-staking-table">BTC restaking / LST protocols</h2>
               <span class="panel-meta" id="defi-staking-update">DeFi Llama</span>
             </div>
             <div class="deriv-table-wrap">
               <table class="deriv-table defi-markets-table">
-                <thead><tr><th data-help-key="defi-col-protocol">Protocol</th><th data-help-key="defi-col-chain">Chain</th><th data-help-key="defi-col-tvl">TVL</th><th data-help-key="defi-col-apy">APY</th><th data-help-key="defi-col-change1d">Change</th></tr></thead>
+                <thead id="defi-staking-table-head"></thead>
                 <tbody id="defi-staking-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel" id="defi-staking-pools-wrap" hidden>
+            <div class="panel-header">
+              <h2 data-help-key="defi-staking-pools">Live yield pools</h2>
+              <span class="panel-meta">Separate from protocol TVL</span>
+            </div>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table defi-markets-table">
+                <thead id="defi-staking-pools-head"></thead>
+                <tbody id="defi-staking-pools-body"></tbody>
               </table>
             </div>
           </section>
@@ -3462,7 +3562,7 @@
             <div class="deriv-chart-wrap deriv-chart-wrap--compact"><canvas id="defi-staking-chart" height="140"></canvas></div>
           </section>
           <section class="panel stats-commentary-panel">
-            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Market Analysis</h2></div>
+            <div class="panel-header"><h2 data-help-key="defi-market-analysis">Desk read</h2></div>
             <div class="stats-commentary" id="defi-staking-commentary"><p>Loading…</p></div>
           </section>
         </div>
@@ -5436,27 +5536,27 @@
     <script src="swr-cache.js?v=6"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=177"></script>
-    <script src="home.js?v=19"></script>
-    <script src="dashboard.js?v=75"></script>
+    <script src="help.js?v=181"></script>
+    <script src="home.js?v=21"></script>
+    <script src="dashboard.js?v=77"></script>
     <script src="etf.js?v=12"></script>
-    <script src="treasury.js?v=13"></script>
+    <script src="treasury.js?v=14"></script>
     <script src="derivatives-extra.js?v=13"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
-    <script src="options-strategy.js?v=2"></script>
+    <script src="options-strategy.js?v=3"></script>
     <script src="stats.js?v=27"></script>
-    <script src="stats-volatility.js?v=32"></script>
-    <script src="stats-timeseries.js?v=16"></script>
+    <script src="stats-volatility.js?v=33"></script>
+    <script src="stats-timeseries.js?v=17"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
-    <script src="defi.js?v=3"></script>
+    <script src="defi.js?v=8"></script>
     <script src="exchanges.js?v=6"></script>
     <script src="macro.js?v=4"></script>
     <script src="macro-drivers.js?v=34"></script>
     <script src="onchain.js?v=2"></script>
     <script src="news.js?v=3"></script>
-    <script src="misc-metrics.js?v=3"></script>
+    <script src="misc-metrics.js?v=4"></script>
     <script src="misc-calendar.js?v=3"></script>
     <script src="misc-whales.js?v=2"></script>
     <script src="misc-greed-fear.js?v=4"></script>
@@ -5471,7 +5571,7 @@
     <script src="law.js?v=26"></script>
     <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
-    <script src="prediction-markets.js?v=10"></script>
+    <script src="prediction-markets.js?v=11"></script>
     <script src="cross-market-engine.js?v=12"></script>
     <script src="cross-market-ws.js?v=4"></script>
     <script src="cross-market-charts.js?v=20"></script>

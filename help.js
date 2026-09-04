@@ -1773,8 +1773,92 @@ const METRIC_HELP = {
     body: "Recent Yahoo Finance headlines for the currently selected company only — updates when you load a different ticker from your watchlist. Sorted by publish time.",
   },
   "defi-protocols-table": {
-    title: "BTC Protocols",
-    body: "Wrapped and bridged Bitcoin representations tracked by DeFi Llama — wBTC, cbBTC, tBTC, LBTC, and related issuers. TVL is USD value locked in each protocol.",
+    title: "Wrapped BTC",
+    body: "Bitcoin <strong>representations</strong> you hold as collateral — custodial (WBTC, cbBTC), threshold (tBTC), native L2 (sBTC), and yield-bearing receipts (LBTC, SolvBTC). Not the same as movement bridges. TVL is USD locked in each issuer. Peg vs spot is in basis points.",
+  },
+  "defi-bridges-table": {
+    title: "BTC Bridges",
+    body: "Cross-chain <strong>movement</strong> venues (THORChain, Across, Stargate, …). Wrap issuers are listed under Wrapped BTC, not here. TVL is capital sitting in the router, not 24h volume (Llama’s volume API is paid).",
+  },
+  "defi-peg-panel": {
+    title: "Peg vs spot",
+    body: "Wrapper price minus BTC spot, in basis points, from coins.llama.fi. Tight peg is necessary but not sufficient — you still take issuer and contract risk.",
+  },
+  "defi-plan-section": {
+    title: "BTC DeFi strategies",
+    body: "Beginner recipes for bitcoin on DeFi. Click a row for plain-English steps. Paper rows are worked examples with our numbers (loop 1.0→1.4 WBTC, three-hop bridge, fake-farm checklist) — not live size. Cash APY ranks the list; restaked bitcoin is not a 32% coupon.",
+  },
+  "defi-sum-family": {
+    title: "Family",
+    body: "Inventory = hold a wrap. Lending = supply. LP = AMM fees and IL. Restake = Babylon/LBTC stack. Leverage = borrow or loop. Warning = do not.",
+  },
+  "defi-risk-stack": {
+    title: "Risk stack",
+    body: "Heuristic 0–10 marks on peg, contract, oracle, liquidity, yield quality, IL, chain, bridge hop, admin/custody, and hack history (Llama). Weighted to a 0–100 fragility score. Higher = more fragile. Not a rating agency.",
+  },
+  "defi-col-risk": {
+    title: "Risk",
+    body: "Letter band and mini stack of the ten risk layers. Hover a cell for the layer name. Score is fragility (higher is worse).",
+  },
+  "defi-col-peg": {
+    title: "Peg",
+    body: "Distance from the reference (BTC spot or $1) in basis points. ≥40–50 bps is stress, not noise.",
+  },
+  "defi-col-kind": {
+    title: "Model",
+    body: "How the asset or venue is designed: custodial, threshold, native L2, yield wrap, or movement router.",
+  },
+  "defi-col-audit": {
+    title: "Audits",
+    body: "DeFi Llama audit count (0–3). Zero means unknown or unaudited in their schema — verify yourself.",
+  },
+  "defi-col-apy-split": {
+    title: "Base / reward",
+    body: "Organic supply/swap APY vs token emissions. If rewards dominate, you are farming emissions.",
+  },
+  "defi-col-apy-mean": {
+    title: "30d mean APY",
+    body: "Llama trailing 30-day average. A live APY far above this is often farm heat.",
+  },
+  "defi-col-il": {
+    title: "IL",
+    body: "Impermanent-loss flag from Llama (yes/no) and single vs multi-asset exposure.",
+  },
+  "defi-apy-chart": {
+    title: "APY history",
+    body: "DeFi Llama yield chart for the leading pool on this screen.",
+  },
+  "defi-staking-pools": {
+    title: "Staking yield pools",
+    body: "Live Llama yield pools tagged to Babylon/Lombard/Solv-style projects — separate from protocol TVL so the two are not mixed.",
+  },
+  "defi-hero-risk": {
+    title: "Protocol risk KPI",
+    body: "Median or worst fragility on the current list, peg stress in bps, or count of historical hack name-matches.",
+  },
+  "defi-hero-strategy": {
+    title: "Strategy hero",
+    body: "Count of live tickets, top composite, or median risk across non-paper strategies.",
+  },
+  "defi-sum-rank": {
+    title: "Rank",
+    body: "1 = best composite in this suggestion list.",
+  },
+  "defi-sum-trade": {
+    title: "Strategy",
+    body: "Structure name. PAPER means warning / process-only — do not size from it.",
+  },
+  "defi-sum-style": {
+    title: "Style",
+    body: "Core = junior-sized, defined risk. Advanced = leverage, isolated markets, Pendle. Genius = loops and do-nots.",
+  },
+  "defi-sum-grade": {
+    title: "Grade",
+    body: "Letter band on composite score (A … D).",
+  },
+  "defi-sum-score": {
+    title: "Composite",
+    body: "45% attractiveness (APY/structure) + 55% process (defined risk, lower fragility). Sorts the list.",
   },
   "defi-tvl-chart": {
     title: "TVL History",
@@ -1794,7 +1878,35 @@ const METRIC_HELP = {
   },
   "defi-lending-table": {
     title: "BTC Lending Pools",
-    body: "BTC-denominated lending markets from DeFi Llama Yields — collateral and supply pools for WBTC, cbBTC, and related tokens across chains.",
+    body: "Supply-side money markets for WBTC / cbBTC / tBTC. APY is cash supply yield. Restaked LBTC is under Staking — we do not print Llama’s 0.32 field as 32%.",
+  },
+  "defi-borrowing-table": {
+    title: "BTC Borrow markets",
+    body: "Same venues, borrow side: borrowed USD, utilization, LTV, and borrow APY (what you pay). From DeFi Llama lend/borrow. Stay well below LTV; liquidation is the risk.",
+  },
+  "defi-hero-borrow": {
+    title: "Borrow hero",
+    body: "Total BTC-collateral borrowed, cheapest borrow APY, or median LTV on the current list.",
+  },
+  "defi-col-borrowed": {
+    title: "Borrowed",
+    body: "USD currently borrowed of this asset on the market.",
+  },
+  "defi-col-supply": {
+    title: "Supplied",
+    body: "USD supplied as collateral/liquidity in the market.",
+  },
+  "defi-col-util": {
+    title: "Utilization",
+    body: "Borrowed ÷ supplied. High util pushes borrow rates up and makes exits harder.",
+  },
+  "defi-col-ltv": {
+    title: "LTV",
+    body: "Maximum loan-to-value. A 73% LTV means $73 borrow per $100 collateral at the cap — do not sit there.",
+  },
+  "defi-col-borrow-apy": {
+    title: "Borrow APY",
+    body: "Interest you pay to borrow. Net = borrow APY minus borrow rewards if any.",
   },
   "defi-liquidity-table": {
     title: "DEX Liquidity",
@@ -1806,7 +1918,7 @@ const METRIC_HELP = {
   },
   "defi-lightning-table": {
     title: "Lightning Network",
-    body: "Latest Lightning Network statistics from mempool.space — channel capacity, node count, and fee metrics for Bitcoin's L2 payment layer.",
+    body: "Lightning lives under <strong>On-chain → Lightning</strong>, not DeFi. DeFi here is wrapped BTC, bridges, lending, and strategies.",
   },
   "defi-col-protocol": {
     title: "Protocol",
@@ -1841,8 +1953,8 @@ const METRIC_HELP = {
     body: "Blockchain network where the lending or staking pool is deployed.",
   },
   "defi-col-apy": {
-    title: "APY",
-    body: "Annualized yield from supplying or staking BTC representations in the pool.",
+    title: "Cash APY",
+    body: "Yield used to rank. For Aave-style pools this is supply APY. If Llama prints a large ‘base’ on a restaked receipt (e.g. 32% on LBTC), we show a cash stub (~1%) and keep the headline as a footnote — that is points/emissions, not a BTC coupon. Uni v3 high APY is fee APY, path-dependent.",
   },
   "defi-col-volume24h": {
     title: "24h Volume",

@@ -3,7 +3,7 @@
 Sources:
   - CoinGecko: /global, /coins/bitcoin, /coins/bitcoin/market_chart, /coins/ethereum/market_chart
   - Mempool.space: hashrate, mempool, fees/recommended, difficulty-adjustment, blocks/fees
-  - Blockchain.info: ticker, stats, charts/n-transactions, charts/estimated-transaction-volume
+  - Blockchain.info: ticker, stats, charts/n-transactions, charts/estimated-transaction-volume-usd
   - Alternative.me: Fear & Greed Index
 
 Route: GET /api/misc/metrics?refresh=1
@@ -112,7 +112,7 @@ def _blockchain_chart(name: str, *, timespan: str = "1year") -> list[dict]:
 
 
 def get_misc_metrics_payload(*, refresh: bool = False) -> dict:
-    cache_key = "misc:metrics:v1"
+    cache_key = "misc:metrics:v2"
     if not refresh:
         cached = cache_get(cache_key, ttl=CACHE_TTL)
         if cached:
@@ -224,10 +224,28 @@ def get_misc_metrics_payload(*, refresh: bool = False) -> dict:
     chain_stats: dict = {}
     try:
         tx_chart = _blockchain_chart("n-transactions", timespan="1year")
-        vol_chart = _blockchain_chart("estimated-transaction-volume", timespan="1year")
         chain_stats = _fetch_json("https://api.blockchain.info/stats?format=json")
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
         errors.append(f"blockchain.info: {exc}")
+    try:
+        vol_chart = _blockchain_chart(
+            "estimated-transaction-volume-usd", timespan="1year"
+        )
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError):
+        vol_chart = []
+    if not vol_chart:
+        try:
+            vol_btc = _blockchain_chart(
+                "estimated-transaction-volume", timespan="1year"
+            )
+            px = price or 0.0
+            vol_chart = [
+                {**r, "value": float(r["value"]) * px}
+                for r in vol_btc
+                if px > 0
+            ]
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
+            errors.append(f"blockchain.info volume: {exc}")
 
     nvt = None
     nvt_spark: list[float] = []
@@ -246,6 +264,10 @@ def get_misc_metrics_payload(*, refresh: bool = False) -> dict:
             vol_usd = vol_by_date.get(d)
             if tx_n and vol_usd and vol_usd > 0:
                 nvt = mcap / vol_usd
+        # Guard against BTC-denominated volume slipping through (mcap/~1e5 BTC)
+        if nvt is not None and nvt > 5000:
+            nvt = None
+            nvt_spark = []
 
     # --- Mempool.space ---
     mempool_raw: dict = {}

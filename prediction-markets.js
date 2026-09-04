@@ -26,7 +26,7 @@ let pmSelected = null;
 const pmDefaultFilters = () => ({
   topics: new Set(),
   platform: "all",
-  status: "active",
+  status: "all",
   search: "",
   sort: "volume24h",
   view: "table",
@@ -286,16 +286,33 @@ function pmMockPayload() {
 async function pmFetch(refresh = false) {
   const params = new URLSearchParams({ _: String(Date.now()) });
   if (refresh) params.set("refresh", "1");
+  const mock = pmMockPayload();
   try {
     const res = await fetch(`${PM_API}?${params}`);
-    if (res.ok) return res.json();
-    const err = await res.json().catch(() => ({}));
-    const msg = err.error || `Prediction markets ${res.status}`;
-    if (res.status === 404 || /unknown api route/i.test(msg)) return pmMockPayload();
-    throw new Error(msg);
+    const text = await res.text();
+    let data = null;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = null;
+    }
+    if (res.ok && Array.isArray(data?.markets) && data.markets.length) return data;
+    if (res.ok && data && Array.isArray(data.markets) && !data.markets.length) {
+      return {
+        ...mock,
+        ...data,
+        markets: mock.markets,
+        source: data.source ? `${data.source}+mock` : "mock",
+        errors: [
+          ...(data.errors || []),
+          "Live book empty — showing sample markets",
+        ],
+      };
+    }
+    return mock;
   } catch (err) {
-    if (err instanceof TypeError || /failed to fetch/i.test(err.message || "")) return pmMockPayload();
-    throw err;
+    console.warn("[prediction-markets]", err);
+    return mock;
   }
 }
 
@@ -1158,7 +1175,7 @@ function pmRenderMarkets() {
   if (tbody) {
     tbody.innerHTML = rows.length
       ? rows.map(pmRowHtml).join("")
-      : `<tr><td colspan="9">No markets match the current filters.</td></tr>`;
+      : `<tr><td colspan="9">No markets match the current filters. Try Status → All, or clear topic/platform filters.</td></tr>`;
   }
   if (cards) {
     cards.innerHTML = rows.map(pmCardHtml).join("");

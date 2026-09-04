@@ -84,7 +84,7 @@ const HOME_SECTIONS = [
     icon: "◇",
     accent: "#a855f7",
     accentDim: "rgba(168, 85, 247, 0.18)",
-    blurb: "Wrapped BTC, stablecoins, bridges, lending, liquidity pools, and staking yields.",
+    blurb: "BTC DeFi strategies, protocol risk, wrapped pegs, bridges, lending, borrowing, and staking.",
   },
   {
     id: "macro",

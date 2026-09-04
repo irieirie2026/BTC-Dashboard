@@ -231,7 +231,7 @@ async function mmBuildClientPayload() {
     }
   };
 
-  const [globalRaw, btcCoin, marketChart, ethChart, fngRaw, txChart, volChart, mempoolRaw, feesRec, hashrate3d] =
+  const [globalRaw, btcCoin, marketChart, ethChart, fngRaw, txChart, volUsdChart, mempoolRaw, feesRec, hashrate3d] =
     await Promise.all([
       safe("coingecko global", () => mmFetchJson("https://api.coingecko.com/api/v3/global")),
       safe("coingecko bitcoin", () => mmFetchJson("https://api.coingecko.com/api/v3/coins/bitcoin")),
@@ -247,7 +247,7 @@ async function mmBuildClientPayload() {
       ),
       safe("fear-greed", () => mmFetchJson("https://api.alternative.me/fng/?limit=10")),
       safe("blockchain tx", () => mmFetchBlockchainChart("n-transactions", "1year")),
-      safe("blockchain vol", () => mmFetchBlockchainChart("estimated-transaction-volume", "1year")),
+      safe("blockchain vol", () => mmFetchBlockchainChart("estimated-transaction-volume-usd", "1year")),
       safe("mempool", () => mmFetchJson("https://mempool.space/api/mempool")),
       safe("fees", () => mmFetchJson("https://mempool.space/api/v1/fees/recommended")),
       safe("hashrate", () => mmFetchJson("https://mempool.space/api/v1/mining/hashrate/3d")),
@@ -256,6 +256,18 @@ async function mmBuildClientPayload() {
   const domPct = globalRaw?.data?.market_cap_percentage?.btc ?? null;
   const price = btcCoin?.market_data?.current_price?.usd ?? null;
   const mcap = btcCoin?.market_data?.market_cap?.usd ?? null;
+  let volChart = volUsdChart;
+  if (!volChart?.values?.length && price) {
+    const volBtc = await safe("blockchain vol btc", () =>
+      mmFetchBlockchainChart("estimated-transaction-volume", "1year"),
+    );
+    if (volBtc?.values?.length) {
+      volChart = {
+        ...volBtc,
+        values: volBtc.values.map((v) => ({ ...v, y: Number(v.y) * price })),
+      };
+    }
+  }
   const prices = (marketChart?.prices || []).map((p) => p[1]).filter((v) => v != null);
 
   let domSpark = [];
@@ -339,6 +351,12 @@ async function mmBuildClientPayload() {
       const d = common[common.length - 1];
       const volUsd = volByDate[d];
       if (volUsd > 0) nvt = mcap / volUsd;
+    }
+    // BTC-denominated volume yields millions; real NVT is typically tens–low hundreds
+    if (nvt != null && nvt > 5000) {
+      nvt = price && nvt ? nvt / price : null;
+      if (nvt != null && nvt > 5000) nvt = null;
+      nvtSpark.length = 0;
     }
   }
 

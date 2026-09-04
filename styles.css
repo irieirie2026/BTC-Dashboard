@@ -10836,6 +10836,191 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   line-height: 1.25;
 }
 
+#dashboard-defi .vol-trade-plan,
+#dashboard-defi .vol-plan-kicker,
+#dashboard-defi .vol-plan-stance,
+#dashboard-defi .vol-plan-why,
+#dashboard-defi .vol-plan-list,
+#dashboard-defi .vol-plan-disclaimer,
+#dashboard-defi .vol-ticket,
+#dashboard-defi .vol-ticket-intent,
+#dashboard-defi .vol-ticket-meta,
+#dashboard-defi .vol-ticket-scoreline {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.defi-primer {
+  margin: 0.25rem 0 0.85rem;
+}
+
+.defi-apy-head {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.defi-risk-kpis {
+  margin-top: -0.35rem;
+}
+
+.defi-risk-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.defi-risk-grade {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  min-width: 1.6rem;
+}
+.defi-risk-grade--hi { color: #34d399; }
+.defi-risk-grade--mid { color: #fbbf24; }
+.defi-risk-grade--lo { color: #f87171; }
+
+.defi-risk-strip {
+  display: flex;
+  height: 8px;
+  width: 4.6rem;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.7);
+}
+.defi-risk-cell {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.defi-risk-stack {
+  margin: 0.55rem 0 0.7rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  background: rgba(15, 23, 42, 0.55);
+}
+.defi-risk-stack-head {
+  margin-bottom: 0.4rem;
+  color: #cbd5e1;
+}
+.defi-risk-layer {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr 2.2rem;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.22rem;
+}
+.defi-risk-layer-k {
+  color: #94a3b8;
+  text-transform: capitalize;
+  font-size: 0.85em;
+}
+.defi-risk-layer-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.15);
+  overflow: hidden;
+}
+.defi-risk-layer-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #34d399, #fbbf24, #f87171);
+}
+.defi-risk-hack {
+  margin: 0.4rem 0 0;
+  color: #fca5a5;
+}
+
+.defi-plan-why {
+  margin: 0 0 0.65rem;
+  color: #94a3b8;
+}
+
+.defi-summary-table td:last-child,
+.defi-summary-table td:nth-last-child(2) {
+  white-space: normal;
+}
+
+.defi-summary-row { cursor: pointer; }
+.defi-summary-row:hover { background: rgba(192, 132, 252, 0.08); }
+.defi-summary-row--best { background: rgba(192, 132, 252, 0.08); }
+.defi-summary-row--sel,
+.defi-summary-row--sel:hover {
+  background: rgba(192, 132, 252, 0.16);
+  outline: 1px solid rgba(192, 132, 252, 0.35);
+}
+
+.defi-ticket-detail { margin-top: 0.85rem; }
+.defi-ticket {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem 0.85rem;
+  background: rgba(2, 6, 23, 0.45);
+}
+.defi-ticket--best { border-color: rgba(192, 132, 252, 0.4); }
+.defi-ticket-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.75rem;
+  margin-bottom: 0.45rem;
+}
+.defi-ticket-title { font-weight: 700; color: #e2e8f0; }
+.defi-ticket-scoreline { margin: 0 0 0.45rem; color: #94a3b8; }
+.defi-ticket-intent { margin: 0 0 0.45rem; }
+.defi-ticket-meta { margin: 0 0 0.5rem; padding-left: 1.1rem; }
+.defi-ticket-meta li { margin-bottom: 0.25rem; }
+.defi-ticket-legs-wrap { overflow-x: auto; margin: 0.4rem 0; }
+.defi-ticket-legs { width: 100%; border-collapse: collapse; }
+.defi-ticket-legs th,
+.defi-ticket-legs td {
+  text-align: left;
+  padding: 0.25rem 0.4rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+.defi-ticket-badge {
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+}
+.defi-ticket-badge--paper {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.18);
+}
+.defi-ticket-badge--rank1 {
+  color: #e9d5ff;
+  background: rgba(168, 85, 247, 0.28);
+}
+.defi-rank-hi { color: #34d399; }
+.defi-rank-lo { color: #f87171; }
+.defi-ticket-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+.defi-execute-btn {
+  appearance: none;
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  background: rgba(88, 28, 135, 0.35);
+  color: #f3e8ff;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.defi-execute-hint { color: #64748b; }
+.defi-em-log { margin-top: 0.4rem; }
+.defi-em-log-line { color: #94a3b8; margin-bottom: 0.25rem; }
+
 #dashboard-tradfi .deriv-chart-wrap canvas,
 #dashboard-defi .deriv-chart-wrap canvas {
   height: 140px;

@@ -2274,7 +2274,23 @@ async function tsRun(force = true) {
   if (force) q.set("refresh", "1");
   try {
     const res = await fetch(`${TS_API}?${q}`, { cache: "no-store" });
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      const snippet = (text || "").replace(/\s+/g, " ").slice(0, 160);
+      const timedOut =
+        res.status === 504 ||
+        res.status === 502 ||
+        /an error occurred/i.test(text || "") ||
+        /timeout|timed out/i.test(text || "");
+      throw new Error(
+        timedOut
+          ? "Run timed out before JSON returned (host HTML error). Try 2Y or 5Y — 10Y now uses a thinner backtest so a retry should finish."
+          : `Time series API returned non-JSON (${res.status}): ${snippet || "empty body"}`,
+      );
+    }
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     tsFinishProgress(
       true,

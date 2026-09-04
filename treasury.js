@@ -12,6 +12,32 @@ const DOMINANCE_COLORS = {
   XRP: "trs-dominance-seg--xrp",
 };
 
+function parseCompactBtc(label) {
+  if (label == null) return null;
+  const m = String(label)
+    .trim()
+    .replace(/,/g, "")
+    .match(/^([\d.]+)\s*([KMB])?$/i);
+  if (!m) return null;
+  let n = Number(m[1]);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  const suf = (m[2] || "").toUpperCase();
+  if (suf === "K") n *= 1e3;
+  else if (suf === "M") n *= 1e6;
+  else if (suf === "B") n *= 1e9;
+  return n;
+}
+
+function summaryPct21m(summary) {
+  const raw = Number(summary?.pct21m);
+  if (Number.isFinite(raw) && raw > 0.001) return raw;
+  const fromLabel = parseCompactBtc(summary?.totalBtcLabel);
+  if (fromLabel) return (fromLabel / 21_000_000) * 100;
+  const fromTotal = Number(summary?.totalBtc);
+  if (Number.isFinite(fromTotal) && fromTotal > 0) return (fromTotal / 21_000_000) * 100;
+  return Number.isFinite(raw) ? raw : null;
+}
+
 function formatMnav(n) {
   if (n == null || Number.isNaN(n)) return "";
   return "[" + n.toFixed(2) + "]";
@@ -512,25 +538,34 @@ function renderTreasurySummaryCharts() {
   const byCountry = aggregateByCountry(companies);
   const mnavBins = buildMnavHistogram(companies);
 
+  const pct21m = summaryPct21m(summary);
   const supplyMeta = document.getElementById("trs-supply-pct-meta");
-  if (supplyMeta && summary?.pct21m != null) {
+  if (supplyMeta && pct21m != null) {
     supplyMeta.textContent =
-      summary.pct21m.toFixed(2) + "% of max supply · " + (summary.totalBtcLabel || "");
+      pct21m.toFixed(2) + "% of max supply · " + (summary.totalBtcLabel || "");
   }
 
   const topMeta = document.getElementById("trs-top-holders-meta");
   if (topMeta) {
-    topMeta.textContent = co()?.isBarOutlier(topHolders.map((r) => r.btc))
-      ? `${topHolders[0].label} scale break · ranks 2–15 on separate axis`
-      : "Top 15 public companies by BTC balance";
+    if (!topHolders.length) {
+      topMeta.textContent = "Company list unavailable — headline total still shown above";
+    } else {
+      topMeta.textContent = co()?.isBarOutlier(topHolders.map((r) => r.btc))
+        ? `${topHolders[0].label} scale break · ranks 2–15 on separate axis`
+        : "Top 15 public companies by BTC balance";
+    }
   }
 
   const countryMeta = document.getElementById("trs-country-chart-meta");
   if (countryMeta) {
-    const countryVals = byCountry.map((r) => r.btc);
-    countryMeta.textContent = co()?.isBarOutlier(countryVals)
-      ? `${byCountry[0].name || byCountry[0].code} scale break · others on separate axis`
-      : "Corporate BTC by country of incorporation";
+    if (!byCountry.length) {
+      countryMeta.textContent = "Geographic split unavailable until company rows load";
+    } else {
+      const countryVals = byCountry.map((r) => r.btc);
+      countryMeta.textContent = co()?.isBarOutlier(countryVals)
+        ? `${byCountry[0].name || byCountry[0].code} scale break · others on separate axis`
+        : "Corporate BTC by country of incorporation";
+    }
   }
 
   scheduleChartDraw(document.getElementById("trs-top-holders-chart"), (w, h) =>
@@ -540,7 +575,7 @@ function renderTreasurySummaryCharts() {
     drawTreasuryCountryChart(byCountry, w, h),
   );
   scheduleChartDraw(document.getElementById("trs-supply-chart"), (w, h) =>
-    drawTreasurySupplyChart(summary?.pct21m, summary?.totalBtcLabel, w, h),
+    drawTreasurySupplyChart(pct21m, summary?.totalBtcLabel, w, h),
   );
   scheduleChartDraw(document.getElementById("trs-mnav-chart"), (w, h) =>
     drawTreasuryMnavChart(mnavBins, w, h),

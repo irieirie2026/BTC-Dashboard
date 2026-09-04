@@ -303,18 +303,55 @@ def _resolve_bt_value(arr, ref, depth=0, cache=None):
 
 
 def _bt_num(value):
-    if value is None:
+    """Coerce BitcoinTreasuries numeric fields (plain, BigDecimal, or nested dict)."""
+    try:
+        if value is None:
+            return None
+        if isinstance(value, bool):
+            return None
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            s = value.strip().replace(",", "").replace(" ", "")
+            if not s:
+                return None
+            return float(s)
+        if isinstance(value, dict):
+            for key in ("display_value", "native", "value", "btc", "amount", "balance"):
+                if key in value and value[key] is not None:
+                    nested = _bt_num(value[key])
+                    if nested is not None:
+                        return nested
+            return None
+        if isinstance(value, list) and len(value) == 2 and value[0] == "BigDecimal":
+            return float(value[1])
         return None
-    if isinstance(value, (int, float)):
-        return float(value)
-    if isinstance(value, dict):
-        raw = value.get("display_value", value.get("native", value.get("value")))
-        if isinstance(raw, list) and raw and raw[0] == "BigDecimal":
-            return float(raw[1])
-        return float(raw) if raw is not None else None
-    if isinstance(value, list) and len(value) == 2 and value[0] == "BigDecimal":
-        return float(value[1])
-    return None
+    except (TypeError, ValueError, KeyError, IndexError, OverflowError):
+        return None
+
+
+def _parse_compact_btc(label):
+    """Parse homepage labels like '1.270M' / '640K' into BTC."""
+    if label is None:
+        return None
+    s = str(label).strip().replace(",", "").replace(" ", "")
+    if not s:
+        return None
+    m = re.match(r"^([\d.]+)\s*([KMB])?$", s, re.I)
+    if not m:
+        return _bt_num(s)
+    try:
+        n = float(m.group(1))
+    except ValueError:
+        return None
+    suf = (m.group(2) or "").upper()
+    if suf == "K":
+        n *= 1_000.0
+    elif suf == "M":
+        n *= 1_000_000.0
+    elif suf == "B":
+        n *= 1_000_000_000.0
+    return n if n > 0 else None
 
 
 def _bt_parse_map(raw):
@@ -339,14 +376,27 @@ def _bt_parse_quotes(quotes_raw):
 
 
 def _bt_normalize_company(ent, btc_price):
-    if not isinstance(ent, dict) or ent.get("type") != "PUBLIC_COMPANY":
+    if not isinstance(ent, dict):
+        return None
+    ent_type = str(ent.get("type") or "").upper()
+    if any(
+        tag in ent_type
+        for tag in ("ETF", "GOVERNMENT", "NATION", "COUNTRY", "PRIVATE", "FUND", "DAO")
+    ):
+        return None
+    if (
+        ent_type
+        and ent_type not in ("PUBLIC_COMPANY", "COMPANY", "PUBLIC", "DATCO", "TREASURY")
+        and not (ent.get("ticker") or ent.get("slug") or ent.get("name"))
+    ):
         return None
 
     raw_btc = ent.get("btc_balance")
-    if isinstance(raw_btc, dict):
-        return None
+    if raw_btc is None:
+        raw_btc = ent.get("btc") or ent.get("total_btc") or ent.get("bitcoin_balance")
     btc = _bt_num(raw_btc)
-    if btc is None or btc <= 0 or btc > 900_000:
+    # Strategy / large DATCOs can exceed 900k; 2.5M still filters garbage
+    if btc is None or btc <= 0 or btc > 2_500_000:
         return None
 
     ticker = ent.get("ticker") or {}
@@ -362,8 +412,7 @@ def _bt_normalize_company(ent, btc_price):
 
     usd = btc * btc_price if btc_price else None
     mnav = round(mcap / usd, 2) if mcap and usd else None
-    ch7 = ent.get("btc_balance_change_7d")
-    ch7n = _bt_num(ch7) if isinstance(ch7, (int, float)) else None
+    ch7n = _bt_num(ent.get("btc_balance_change_7d"))
 
     return {
         "name": ent.get("name"),
@@ -517,6 +566,20 @@ def parse_bitcointreasuries(_html=""):
     holders = [c for c in companies if c["btc"] > 0]
     total_btc = sum(c["btc"] for c in holders)
     total_usd = sum(c.get("usd") or 0 for c in holders)
+    homepage_btc = _parse_compact_btc(homepage_summary.get("totalBtcLabel"))
+    if total_btc <= 0 and homepage_btc:
+        total_btc = homepage_btc
+        if btc_price:
+            total_usd = total_btc * btc_price
+        elif homepage_summary.get("totalUsdLabel"):
+            usd_n = _parse_compact_btc(
+                str(homepage_summary.get("totalUsdLabel") or "").replace("$", "")
+            )
+            if usd_n:
+                total_usd = usd_n
+    # Hero label and share-of-21M must use the same headline total
+    pct_btc = homepage_btc or total_btc
+    pct21m = (pct_btc / 21_000_000.0) * 100.0 if pct_btc else 0.0
 
     strategy = next((c for c in companies if c.get("slug") == "strategy"), None)
 
@@ -597,7 +660,7 @@ def parse_bitcointreasuries(_html=""):
             "totalUsdLabel": homepage_summary.get("totalUsdLabel")
             or f"${total_usd / 1e9:.2f}B",
             "count": homepage_summary.get("count") or len(holders),
-            "pct21m": (total_btc / 21_000_000) * 100,
+            "pct21m": pct21m,
             "btcPriceLabel": homepage_summary.get("btcPriceLabel"),
             "btcDominanceLabel": homepage_summary.get("btcDominanceLabel"),
             "assetDominance": asset_dominance,
@@ -3022,66 +3085,6 @@ def get_fear_greed_payload(*, refresh: bool = False) -> dict:
     return data
 
 
-DEFILLAMA_API = "https://api.llama.fi"
-STABLECOINS_API = "https://stablecoins.llama.fi"
-COINS_API = "https://coins.llama.fi"
-YIELDS_API = "https://yields.llama.fi"
-WRAPPED_BTC_SLUGS = [
-    "wbtc",
-    "coinbase-bridge",
-    "function-fbtc",
-    "lombard-lbtc",
-    "solvbtc",
-    "lorenzo-enzobtc",
-    "tbtc",
-    "bedrock-unibtc",
-    "stacks-sbtc",
-    "lombard-btc.b",
-    "gtbtc",
-]
-
-BRIDGE_BTC_SLUGS = [
-    "wbtc",
-    "coinbase-bridge",
-    "function-fbtc",
-    "solvbtc",
-    "lorenzo-enzobtc",
-    "lombard-lbtc",
-    "tbtc",
-    "stacks-sbtc",
-    "lombard-btc.b",
-    "bedrock-unibtc",
-    "nexo-btc",
-    "exsat-staking-btc",
-]
-
-STAKING_BTC_SLUGS = [
-    "babylon-protocol",
-    "lombard-lbtc",
-    "lorenzo-enzobtc",
-    "bedrock-unibtc",
-    "solvbtc",
-    "function-fbtc",
-    "gtbtc",
-    "solvbtc-lsts",
-    "lombard-vaults",
-]
-
-BTC_BRIDGE_CATEGORIES = {
-    "Bridge",
-    "Decentralized BTC",
-    "Restaked BTC",
-    "Anchor BTC",
-}
-
-WRAPPED_BTC_PRICES = {
-    "BTC": "coingecko:bitcoin",
-    "WBTC": "ethereum:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-    "cbBTC": "base:0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
-    "tBTC": "ethereum:0x18084fba233a19d1c4999ca9f9d64e9e4f61e4ec",
-}
-
-
 def fetch_json(url, timeout=60):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -4160,506 +4163,10 @@ def get_exchanges_payload(section, *, refresh=False):
     return data
 
 
-def _downsample_points(points, max_points=160):
-    if len(points) <= max_points:
-        return points
-    step = max(1, len(points) // max_points)
-    sampled = points[::step]
-    if sampled[-1] != points[-1]:
-        sampled.append(points[-1])
-    return sampled
-
-
-def _stable_usd_value(value):
-    if value is None:
-        return None
-    if isinstance(value, dict):
-        return _as_float(value.get("peggedUSD"))
-    return _as_float(value)
-
-
-def _stable_circulating(asset):
-    return _stable_usd_value(asset.get("circulating"))
-
-
-def _fmt_usd_short(value):
-    if value is None:
-        return None
-    value = float(value)
-    if abs(value) >= 1e12:
-        return round(value / 1e12, 2)
-    if abs(value) >= 1e9:
-        return round(value / 1e9, 2)
-    if abs(value) >= 1e6:
-        return round(value / 1e6, 2)
-    return round(value, 2)
-
-
-def get_defillama_protocols():
-    key = "defillama:protocols"
-    cached = _cget(key, CACHE_TTL)
-    if cached is not None:
-        return cached
-
-    data = fetch_json(f"{DEFILLAMA_API}/protocols")
-    by_slug = {p.get("slug"): p for p in data if p.get("slug")}
-    payload = {"list": data, "by_slug": by_slug}
-    _cset(key, payload, CACHE_TTL)
-    return payload
-
-
-def _protocol_row(protocol):
-    chains = protocol.get("chains") or []
-    chain_label = ", ".join(chains[:3])
-    if len(chains) > 3:
-        chain_label += f" +{len(chains) - 3}"
-    return {
-        "name": protocol.get("name"),
-        "slug": protocol.get("slug"),
-        "symbol": protocol.get("symbol"),
-        "category": protocol.get("category"),
-        "tvl": _as_float(protocol.get("tvl")),
-        "change1d": _as_float(protocol.get("change_1d")),
-        "change7d": _as_float(protocol.get("change_7d")),
-        "chains": chain_label or "—",
-    }
-
-
-def _protocols_for_slugs(slugs):
-    store = get_defillama_protocols()
-    rows = []
-    for slug in slugs:
-        protocol = store["by_slug"].get(slug)
-        if protocol:
-            rows.append(_protocol_row(protocol))
-    rows.sort(key=lambda r: r.get("tvl") or 0, reverse=True)
-    return rows
-
-
-def _heroes_from_protocol_rows(rows, value_key="tvl"):
-    heroes = []
-    for row in rows[:4]:
-        heroes.append({
-            "name": row.get("name"),
-            "value": row.get(value_key),
-            "changePct": row.get("change1d"),
-            "sub": row.get("category") or row.get("chains") or "",
-        })
-    return heroes
-
-
-def _protocol_tvl_chart(slug):
-    data = fetch_json(f"{DEFILLAMA_API}/protocol/{slug}")
-    points = []
-    for row in data.get("tvl") or []:
-        ts = row.get("date")
-        val = row.get("totalLiquidityUSD")
-        if ts is None or val is None:
-            continue
-        points.append({
-            "date": time.strftime("%Y-%m-%d", time.gmtime(int(ts))),
-            "close": _as_float(val),
-        })
-    return _downsample_points(points)
-
-
-def _fetch_wrapped_btc_prices():
-    ids = ",".join(WRAPPED_BTC_PRICES.values())
-    data = fetch_json(f"{COINS_API}/prices/current/{ids}")
-    coins = data.get("coins") or {}
-    rows = []
-    for label, coin_id in WRAPPED_BTC_PRICES.items():
-        quote = coins.get(coin_id) or {}
-        rows.append({
-            "name": label,
-            "symbol": quote.get("symbol") or label,
-            "price": _as_float(quote.get("price")),
-            "confidence": quote.get("confidence"),
-        })
-    return rows
-
-
-def _fetch_defi_wrapped():
-    rows = _protocols_for_slugs(WRAPPED_BTC_SLUGS)
-    prices = _fetch_wrapped_btc_prices()
-    total_tvl = sum(r.get("tvl") or 0 for r in rows)
-    chart = _protocol_tvl_chart("wbtc")
-
-    return {
-        "section": "wrapped",
-        "title": "Wrapped BTC",
-        "heroes": [
-            {
-                "name": "Total Wrapped TVL",
-                "value": total_tvl,
-                "changePct": None,
-                "sub": f"{len(rows)} tracked representations",
-            },
-            *_heroes_from_protocol_rows(rows),
-        ][:4],
-        "table": rows,
-        "prices": prices,
-        "chart": {"points": chart, "label": "WBTC TVL (USD)"},
-        "chartLabel": "WBTC TVL (USD)",
-        "tableMode": "protocol",
-        "source": "DeFi Llama · coins.llama.fi",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-def _fetch_defi_stables():
-    data = fetch_json(f"{STABLECOINS_API}/stablecoins?includePrices=true")
-    assets = data.get("peggedAssets") or []
-    usd_assets = [
-        a for a in assets
-        if (a.get("pegType") or "").upper() == "PEGGEDUSD"
-    ]
-    usd_assets.sort(key=_stable_circulating, reverse=True)
-
-    total_mcap = sum(_stable_circulating(a) or 0 for a in usd_assets)
-    top = usd_assets[:15]
-
-    table = []
-    for asset in top:
-        mcap = _stable_circulating(asset) or 0
-        prev_week = _stable_usd_value(asset.get("circulatingPrevWeek"))
-        change7d = None
-        if prev_week and prev_week > 0:
-            change7d = ((mcap - prev_week) / prev_week) * 100
-        table.append({
-            "name": asset.get("name"),
-            "symbol": asset.get("symbol"),
-            "mcap": mcap,
-            "price": _stable_usd_value(asset.get("price")),
-            "change7d": change7d,
-            "chains": len(asset.get("chains") or []),
-        })
-
-    heroes = []
-    for asset in usd_assets[:3]:
-        mcap = _stable_circulating(asset) or 0
-        share = (mcap / total_mcap * 100) if total_mcap else None
-        sub = asset.get("name") or ""
-        if share is not None:
-            sub = f"{sub} · {share:.1f}% share"
-        heroes.append({
-            "name": asset.get("symbol") or asset.get("name"),
-            "value": mcap,
-            "changePct": share,
-            "sub": sub,
-        })
-    heroes.insert(0, {
-        "name": "Total Stablecoin MCap",
-        "value": total_mcap,
-        "changePct": None,
-        "sub": f"{len(usd_assets)} USD-pegged assets",
-    })
-    heroes = heroes[:4]
-
-    history = fetch_json(f"{STABLECOINS_API}/stablecoincharts/all")
-    mcap_points = []
-    for row in history or []:
-        ts = row.get("date")
-        circ = row.get("totalCirculatingUSD") or row.get("totalCirculating") or {}
-        val = _as_float(circ.get("peggedUSD") if isinstance(circ, dict) else circ)
-        if ts is None or val is None:
-            continue
-        mcap_points.append({
-            "date": time.strftime("%Y-%m-%d", time.gmtime(int(ts))),
-            "close": val,
-        })
-    mcap_points = _downsample_points(mcap_points)
-
-    dominance = []
-    for asset in usd_assets[:8]:
-        mcap = _stable_circulating(asset) or 0
-        if not total_mcap:
-            continue
-        dominance.append({
-            "name": asset.get("symbol") or asset.get("name"),
-            "share": (mcap / total_mcap) * 100,
-            "mcap": mcap,
-        })
-
-    return {
-        "section": "stables",
-        "title": "Stablecoins",
-        "heroes": heroes,
-        "table": table,
-        "chart": {"points": mcap_points, "label": "Total Stablecoin Market Cap"},
-        "chartLabel": "Total Stablecoin Market Cap",
-        "chart2": {"items": dominance, "label": "Dominance (Top 8)"},
-        "chart2Label": "Dominance (Top 8)",
-        "tableMode": "stables",
-        "source": "DeFi Llama Stablecoins",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-def _fetch_defi_bridges():
-    rows = _protocols_for_slugs(BRIDGE_BTC_SLUGS)
-    store = get_defillama_protocols()
-    if len(rows) < 8:
-        seen = {r["slug"] for r in rows}
-        extras = []
-        for protocol in store["list"]:
-            slug = protocol.get("slug")
-            if slug in seen:
-                continue
-            name = (protocol.get("name") or "").lower()
-            category = protocol.get("category") or ""
-            if "btc" in name or category in BTC_BRIDGE_CATEGORIES:
-                extras.append(_protocol_row(protocol))
-        extras.sort(key=lambda r: r.get("tvl") or 0, reverse=True)
-        for row in extras:
-            if row["slug"] not in seen:
-                rows.append(row)
-                seen.add(row["slug"])
-        rows.sort(key=lambda r: r.get("tvl") or 0, reverse=True)
-
-    total_tvl = sum(r.get("tvl") or 0 for r in rows)
-    chart_slug = rows[0]["slug"] if rows else "wbtc"
-    chart = _protocol_tvl_chart(chart_slug)
-
-    return {
-        "section": "bridges",
-        "title": "BTC Bridges",
-        "heroes": [
-            {
-                "name": "Bridge TVL (tracked)",
-                "value": total_tvl,
-                "changePct": None,
-                "sub": f"{len(rows)} BTC bridge protocols",
-            },
-            *_heroes_from_protocol_rows(rows),
-        ][:4],
-        "table": rows[:15],
-        "chart": {"points": chart, "label": f"{rows[0]['name']} TVL" if rows else "Bridge TVL"},
-        "chartLabel": f"{rows[0]['name']} TVL" if rows else "Bridge TVL",
-        "tableMode": "protocol",
-        "source": "DeFi Llama",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-def _btc_yield_pools():
-    key = "defillama:btc-yields"
-    cached = _cget(key, CACHE_TTL)
-    if cached is not None:
-        return cached
-
-    data = fetch_json(f"{YIELDS_API}/pools")
-    pools = data.get("data") or []
-    btc_pools = []
-    for pool in pools:
-        blob = " ".join([
-            str(pool.get("symbol") or ""),
-            str(pool.get("project") or ""),
-            str(pool.get("poolMeta") or ""),
-            " ".join(pool.get("underlyingTokens") or []),
-        ]).lower()
-        if "btc" in blob or "wbtc" in blob or "cbbtc" in blob or "lbtc" in blob:
-            btc_pools.append(pool)
-
-    _cset(key, btc_pools, CACHE_TTL)
-    return btc_pools
-
-
-def _fetch_defi_lending():
-    pools = _btc_yield_pools()
-    lending = [
-        p for p in pools
-        if (p.get("apy") or 0) >= 0 and "btc" in (p.get("symbol") or "").lower()
-    ]
-    lending.sort(key=lambda p: p.get("tvlUsd") or 0, reverse=True)
-
-    table = []
-    for pool in lending[:15]:
-        table.append({
-            "name": pool.get("project"),
-            "symbol": pool.get("symbol"),
-            "tvl": _as_float(pool.get("tvlUsd")),
-            "apy": _as_float(pool.get("apy")),
-            "chain": pool.get("chain"),
-            "change7d": _as_float(pool.get("apyPct7D")),
-        })
-
-    heroes = []
-    for pool in lending[:3]:
-        heroes.append({
-            "name": f"{pool.get('project')} {pool.get('symbol')}",
-            "value": _as_float(pool.get("tvlUsd")),
-            "changePct": _as_float(pool.get("apyPct7D")),
-            "sub": f"{pool.get('chain')} · APY {(_as_float(pool.get('apy')) or 0) * 100:.2f}%",
-        })
-    total_tvl = sum(_as_float(p.get("tvlUsd")) or 0 for p in lending)
-    heroes.insert(0, {
-        "name": "BTC Lending TVL",
-        "value": total_tvl,
-        "changePct": None,
-        "sub": f"{len(lending)} BTC lending pools",
-    })
-    heroes = heroes[:4]
-
-    chart_points = []
-    top = lending[0] if lending else None
-    if top:
-        chart_points = [{
-            "date": "Now",
-            "close": _as_float(top.get("tvlUsd")),
-        }]
-
-    return {
-        "section": "lending",
-        "title": "BTC Lending",
-        "heroes": heroes,
-        "table": table,
-        "chart": {"points": chart_points, "label": "Top pool TVL snapshot"},
-        "chartLabel": f"{top.get('project')} {top.get('symbol')} TVL" if top else "Lending TVL",
-        "tableMode": "lending",
-        "source": "DeFi Llama Yields",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-def _fetch_defi_liquidity():
-    data = fetch_json(
-        f"{DEFILLAMA_API}/overview/dexs"
-        "?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true"
-        "&dataType=dailyVolume"
-    )
-    protocols = data.get("protocols") or []
-    rows = []
-    for protocol in protocols:
-        rows.append({
-            "name": protocol.get("displayName") or protocol.get("name"),
-            "slug": protocol.get("slug") or protocol.get("module"),
-            "volume24h": _as_float(protocol.get("total24h")),
-            "change1d": _as_float(protocol.get("change_1d")),
-            "change7d": _as_float(protocol.get("change_7d")),
-            "chains": ", ".join((protocol.get("chains") or [])[:3]) or "—",
-        })
-    rows.sort(key=lambda r: r.get("volume24h") or 0, reverse=True)
-
-    heroes = []
-    for row in rows[:3]:
-        heroes.append({
-            "name": row.get("name"),
-            "value": row.get("volume24h"),
-            "changePct": row.get("change1d"),
-            "sub": "24h DEX volume · WBTC pairs",
-        })
-    total_vol = sum(r.get("volume24h") or 0 for r in rows[:20])
-    heroes.insert(0, {
-        "name": "Top-20 DEX Volume",
-        "value": total_vol,
-        "changePct": None,
-        "sub": "BTC liquidity routes via WBTC/cbBTC pools",
-    })
-    heroes = heroes[:4]
-
-    return {
-        "section": "liquidity",
-        "title": "DEX Liquidity",
-        "heroes": heroes,
-        "table": rows[:15],
-        "chart": {"points": [], "label": "24h volume snapshot"},
-        "chartLabel": "DEX 24h Volume (table)",
-        "tableMode": "liquidity",
-        "source": "DeFi Llama DEX overview",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-def _fetch_defi_staking():
-    rows = _protocols_for_slugs(STAKING_BTC_SLUGS)
-    store = get_defillama_protocols()
-    seen = {r["slug"] for r in rows}
-    for protocol in store["list"]:
-        slug = protocol.get("slug")
-        if slug in seen:
-            continue
-        category = protocol.get("category") or ""
-        name = (protocol.get("name") or "").lower()
-        if category in {"Restaked BTC", "Anchor BTC"} or (
-            "btc" in name and category in {"Liquid Staking", "Restaking"}
-        ):
-            rows.append(_protocol_row(protocol))
-            seen.add(slug)
-    rows.sort(key=lambda r: r.get("tvl") or 0, reverse=True)
-
-    pools = _btc_yield_pools()
-    stake_pools = sorted(
-        [p for p in pools if (p.get("apy") or 0) > 0],
-        key=lambda p: p.get("tvlUsd") or 0,
-        reverse=True,
-    )[:5]
-
-    total_tvl = sum(r.get("tvl") or 0 for r in rows)
-    heroes = [{
-        "name": "BTC Staking TVL",
-        "value": total_tvl,
-        "changePct": None,
-        "sub": "Restaking · liquid staking · yield",
-    }]
-    heroes.extend(_heroes_from_protocol_rows(rows))
-    heroes = heroes[:4]
-
-    chart_slug = rows[0]["slug"] if rows else "babylon-protocol"
-    chart = _protocol_tvl_chart(chart_slug) if rows else []
-
-    table = rows[:12]
-    for pool in stake_pools:
-        if len(table) >= 15:
-            break
-        table.append({
-            "name": pool.get("project"),
-            "symbol": pool.get("symbol"),
-            "tvl": _as_float(pool.get("tvlUsd")),
-            "apy": _as_float(pool.get("apy")),
-            "chain": pool.get("chain"),
-            "category": "Yield pool",
-        })
-
-    return {
-        "section": "staking",
-        "title": "BTC Staking",
-        "heroes": heroes,
-        "table": table[:15],
-        "chart": {
-            "points": chart,
-            "label": f"{rows[0]['name']} TVL" if rows else "Staking TVL",
-        },
-        "chartLabel": f"{rows[0]['name']} TVL" if rows else "Staking TVL",
-        "tableMode": "staking",
-        "source": "DeFi Llama · Yields",
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    }
-
-
-DEFI_FETCHERS = {
-    "wrapped": _fetch_defi_wrapped,
-    "stables": _fetch_defi_stables,
-    "bridges": _fetch_defi_bridges,
-    "lending": _fetch_defi_lending,
-    "staking": _fetch_defi_staking,
-    "liquidity": _fetch_defi_liquidity,
-}
-
-
 def get_defi_payload(section, *, refresh=False):
-    fetcher = DEFI_FETCHERS.get(section)
-    if not fetcher:
-        raise ValueError(f"Unknown DeFi section: {section}")
+    from defi_models import get_defi_payload as _inner
+    return _inner(section, refresh=refresh)
 
-    key = f"defi:{section}"
-    cached = _cget(key, CACHE_TTL, refresh=refresh)
-    if cached is not None:
-        return cached
-
-    data = fetcher()
-    _cset(key, data, CACHE_TTL)
-    return data
 
 
 class Handler(SimpleHTTPRequestHandler):
