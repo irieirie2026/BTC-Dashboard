@@ -52,7 +52,7 @@ def _cache_set(key: str, val: dict[str, Any]) -> dict[str, Any]:
     return val
 
 
-def _fetch_json(url: str, *, timeout: int = 8) -> Any:
+def _fetch_json(url: str, *, timeout: float = 8) -> Any:
     req = urllib.request.Request(
         url,
         headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
@@ -354,6 +354,141 @@ def get_eth_daily(*, refresh: bool = False) -> dict[str, Any]:
     return _cache_set(key, payload)
 
 
+def _post_json(url: str, payload: dict[str, Any], *, timeout: float = 3.5) -> Any:
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8", errors="replace"))
+
+
+def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
+    tick = _fetch_json(
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT-SWAP", timeout=timeout
+    )
+    row = (tick.get("data") or [None])[0] or {}
+    last = _f(row.get("last"))
+    if last is None:
+        return None
+    mark = _f(row.get("markPx") or row.get("last"))
+    index = _f(row.get("idxPx")) or last
+    funding = _f(row.get("fundingRate"))
+    oi = None
+    ls = None
+    try:
+        oi_raw = _fetch_json(
+            "https://www.okx.com/api/v5/public/open-interest?instId=BTC-USDT-SWAP",
+            timeout=timeout,
+        )
+        oi_row = (oi_raw.get("data") or [None])[0] or {}
+        oi = _f(oi_row.get("oiCcy") or oi_row.get("oi"))
+    except Exception:
+        pass
+    if funding is None:
+        try:
+            fr = _fetch_json(
+                "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP",
+                timeout=timeout,
+            )
+            funding = _f(((fr.get("data") or [None])[0] or {}).get("fundingRate"))
+        except Exception:
+            funding = None
+    try:
+        ls_raw = _fetch_json(
+            "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio"
+            "?ccy=BTC&period=1H",
+            timeout=timeout,
+        )
+        ls_row = (ls_raw.get("data") or [None])[0] or {}
+        if isinstance(ls_row, dict):
+            ls = _f(ls_row.get("longShortRatio"))
+        elif isinstance(ls_row, list) and len(ls_row) > 1:
+            ls = _f(ls_row[1])
+    except Exception:
+        pass
+    return {
+        "venue": "OKX",
+        "fallback": True,
+        "lastPrice": last,
+        "markPrice": mark,
+        "indexPrice": index,
+        "openInterest": oi,
+        "fundingRate": funding,
+        "longShortRatio": ls,
+        "highPrice": _f(row.get("high24h")),
+        "lowPrice": _f(row.get("low24h")),
+        "volume": _f(row.get("vol24h")),
+        "quoteVolume": _f(row.get("volCcy24h")),
+    }
+
+
+def _hl_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
+    raw = _post_json(
+        "https://api.hyperliquid.xyz/info",
+        {"type": "metaAndAssetCtxs"},
+        timeout=timeout,
+    )
+    if not isinstance(raw, list) or len(raw) < 2:
+        return None
+    universe = (raw[0] or {}).get("universe") or []
+    ctxs = raw[1] or []
+    idx = next((i for i, u in enumerate(universe) if str(u.get("name") or "") == "BTC"), None)
+    if idx is None or idx >= len(ctxs):
+        return None
+    ctx = ctxs[idx] or {}
+    mark = _f(ctx.get("markPx"))
+    if mark is None:
+        return None
+    oracle = _f(ctx.get("oraclePx")) or mark
+    return {
+        "venue": "Hyperliquid",
+        "fallback": True,
+        "lastPrice": mark,
+        "markPrice": mark,
+        "indexPrice": oracle,
+        "openInterest": _f(ctx.get("openInterest")),
+        "fundingRate": _f(ctx.get("funding")),
+        "longShortRatio": None,
+        "highPrice": _f(ctx.get("dayNtlVlm")),
+        "lowPrice": None,
+        "volume": _f(ctx.get("dayNtlVlm")),
+        "quoteVolume": _f(ctx.get("dayNtlVlm")),
+    }
+
+
+def _bybit_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
+    raw = _fetch_json(
+        "https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT",
+        timeout=timeout,
+    )
+    row = ((raw.get("result") or {}).get("list") or [None])[0] or {}
+    last = _f(row.get("lastPrice"))
+    if last is None:
+        return None
+    return {
+        "venue": "Bybit",
+        "fallback": True,
+        "lastPrice": last,
+        "markPrice": _f(row.get("markPrice")) or last,
+        "indexPrice": _f(row.get("indexPrice")) or last,
+        "openInterest": _f(row.get("openInterest")),
+        "fundingRate": _f(row.get("fundingRate")),
+        "longShortRatio": None,
+        "highPrice": _f(row.get("highPrice24h")),
+        "lowPrice": _f(row.get("lowPrice24h")),
+        "volume": _f(row.get("volume24h")),
+        "quoteVolume": _f(row.get("turnover24h")),
+    }
+
+
 def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     key = "market:perp:v1"
     if not refresh:
@@ -363,65 +498,66 @@ def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
             return cached
     errors: list[str] = []
     out: dict[str, Any] = {"fetchedAt": _now_iso()}
-    try:
-        tick = _fetch_json("https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT-SWAP")
-        row = (tick.get("data") or [None])[0] or {}
-        oi = _fetch_json("https://www.okx.com/api/v5/public/open-interest?instId=BTC-USDT-SWAP")
-        oi_row = (oi.get("data") or [None])[0] or {}
-        ls = _fetch_json(
-            "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio"
-            "?instId=BTC-USDT-SWAP&period=1H"
-        )
-        ls_row = (ls.get("data") or [None])[0] or {}
-        last = _f(row.get("last"))
-        mark = _f(row.get("markPx") or row.get("last"))
-        funding = _f(row.get("fundingRate"))
-        if funding is None:
-            try:
-                fr = _fetch_json(
-                    "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP"
-                )
-                funding = _f(((fr.get("data") or [None])[0] or {}).get("fundingRate"))
-            except Exception:
-                funding = None
-        out.update({
-            "venue": "OKX",
-            "lastPrice": last,
-            "markPrice": mark,
-            "indexPrice": _f(row.get("idxPx")) or last,
-            "openInterest": _f(oi_row.get("oiCcy") or oi_row.get("oi")),
-            "fundingRate": funding,
-            "longShortRatio": _f(ls_row.get("longShortRatio") or (ls_row[1] if isinstance(ls_row, list) and len(ls_row) > 1 else None)),
-            "highPrice": _f(row.get("high24h")),
-            "lowPrice": _f(row.get("low24h")),
-            "volume": _f(row.get("vol24h")),
-            "quoteVolume": _f(row.get("volCcy24h")),
-        })
-        return _cache_set(key, {**out, "errors": errors})
-    except Exception as exc:
-        errors.append(f"okx perp: {exc}")
-    try:
-        raw = _fetch_json("https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT")
-        row = ((raw.get("result") or {}).get("list") or [None])[0] or {}
-        last = _f(row.get("lastPrice"))
-        out.update({
-            "venue": "Bybit",
-            "lastPrice": last,
-            "markPrice": _f(row.get("markPrice")) or last,
-            "indexPrice": _f(row.get("indexPrice")) or last,
-            "openInterest": _f(row.get("openInterest")),
-            "fundingRate": _f(row.get("fundingRate")),
-            "highPrice": _f(row.get("highPrice24h")),
-            "lowPrice": _f(row.get("lowPrice24h")),
-            "volume": _f(row.get("volume24h")),
-            "quoteVolume": _f(row.get("turnover24h")),
-        })
-        return _cache_set(key, {**out, "errors": errors})
-    except Exception as exc:
-        errors.append(f"bybit perp: {exc}")
+    for name, fn in (("okx", _okx_perp), ("hyperliquid", _hl_perp), ("bybit", _bybit_perp)):
+        try:
+            row = fn(timeout=3.5)
+            if row and row.get("lastPrice"):
+                out.update(row)
+                out["errors"] = errors
+                return _cache_set(key, out)
+        except Exception as exc:
+            errors.append(f"{name} perp: {exc}")
     out["error"] = "Perp venues failed"
     out["errors"] = errors
     return out
+
+
+def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
+    """Dated BTC futures from OKX when Binance USD-M is blocked."""
+    key = "market:futures:v1"
+    if not refresh:
+        cached = _cache_get(key)
+        if cached:
+            cached["fromCache"] = True
+            return cached
+    errors: list[str] = []
+    perp = get_perp_snapshot(refresh=refresh)
+    contracts: list[dict[str, Any]] = []
+    try:
+        raw = _fetch_json(
+            "https://www.okx.com/api/v5/market/tickers?instType=FUTURES", timeout=3.5
+        )
+        rows = raw.get("data") or []
+        for row in rows:
+            inst = str(row.get("instId") or "")
+            if not inst.startswith("BTC-USD-") or "SWAP" in inst or "XPERP" in inst or "_UM" in inst:
+                continue
+            last = _f(row.get("last"))
+            mark = _f(row.get("markPx") or last)
+            if last is None:
+                continue
+            contracts.append({
+                "symbol": inst,
+                "last": last,
+                "mark": mark,
+                "index": _f(row.get("idxPx")) or (perp.get("indexPrice") if isinstance(perp, dict) else None),
+                "volume": _f(row.get("vol24h")),
+                "openInterest": _f(row.get("oiCcy") or row.get("oi")),
+            })
+    except Exception as exc:
+        errors.append(f"okx futures: {exc}")
+    payload = {
+        "venue": "OKX",
+        "fallback": True,
+        "fetchedAt": _now_iso(),
+        "perp": perp if isinstance(perp, dict) else {},
+        "contracts": contracts[:12],
+        "errors": errors + (perp.get("errors") if isinstance(perp, dict) else []),
+    }
+    if perp.get("lastPrice") or contracts:
+        return _cache_set(key, payload)
+    payload["error"] = "Futures venues failed"
+    return payload
 
 
 def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:

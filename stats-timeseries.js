@@ -4,12 +4,37 @@
  */
 
 const TS_API = "/api/stats/timeseries";
+const TS_SUITE_CACHE_KEY = "ts-last-suite-v1";
 
 let tsSuite = null;
 let tsSelectedId = null;
 let tsBusy = false;
 
 const tsEl = (id) => document.getElementById(id);
+
+function tsPersistSuite(suite) {
+  if (!suite?.models?.length) return;
+  try {
+    localStorage.setItem(
+      TS_SUITE_CACHE_KEY,
+      JSON.stringify({ savedAt: Date.now(), fetchedAt: suite.asOf || new Date().toISOString(), data: suite }),
+    );
+  } catch {
+    /* quota */
+  }
+}
+
+function tsLoadPersistedSuite() {
+  try {
+    const raw = localStorage.getItem(TS_SUITE_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.data?.models?.length) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
 
 function tsEscape(s) {
   return String(s ?? "")
@@ -2297,6 +2322,7 @@ async function tsRun(force = true) {
       `${data.models?.length || 0} models · ${data.nObs ?? "—"} obs · rendering…`,
     );
     tsSuite = data;
+    tsPersistSuite(data);
     tsSelectedId =
       data.selection?.selectedId ||
       data.bestByHit7d ||
@@ -2355,6 +2381,22 @@ function initTimeSeriesModule() {
     }
   });
   tsUpdateRangeInfo();
+  const cached = tsLoadPersistedSuite();
+  if (cached?.data && !tsSuite) {
+    tsSuite = { ...cached.data, fromCache: true };
+    tsSelectedId =
+      tsSuite.selection?.selectedId ||
+      tsSuite.bestByHit7d ||
+      tsSuite.summary?.bestModelId ||
+      tsSuite.models?.[0]?.id ||
+      null;
+    tsRenderKpis(tsSuite);
+    tsRenderTable(tsSuite);
+    tsRenderDetail(tsSelectedModel(tsSuite), tsSuite);
+    tsDrawAll(tsSuite);
+    const meta = tsEl("ts-suite-meta");
+    if (meta) meta.textContent = `Last-good models · as_of ${cached.fetchedAt || tsSuite.asOf || "—"} · stale until Run`;
+  }
   window.decorateHelpLabels?.(screen);
 }
 

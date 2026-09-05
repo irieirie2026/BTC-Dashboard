@@ -651,6 +651,7 @@ def dispatch_api(path, query, body: dict | None = None):
     if path == "/api/market" or path.startswith("/api/market/"):
         from market_feed import (
             get_eth_daily,
+            get_futures_snapshot,
             get_klines,
             get_perp_snapshot,
             get_spot_bundle,
@@ -675,6 +676,8 @@ def dispatch_api(path, query, body: dict | None = None):
             return get_eth_daily(refresh=refresh)
         if sub == "perp":
             return get_perp_snapshot(refresh=refresh)
+        if sub in ("futures", "delivery"):
+            return get_futures_snapshot(refresh=refresh)
         return {"error": f"Unknown market endpoint: {sub}", "venues": ["Coinbase", "Kraken", "OKX"]}
 
     if path == "/api/options":

@@ -16,6 +16,31 @@ from macro_data.cache import cache_get, cache_set
 from btc_data.config import BGEOMETRICS_TTL, BITINFO_TTL
 
 USER_AGENT = "Mozilla/5.0 (compatible; BTCDashboard/1.0)"
+MINER_REVENUE_BTC_MAX = 2000.0
+
+
+def normalize_miner_revenue_btc(raw: Any, btc_price: Any = None) -> float | None:
+    """Blockchain.info miners-revenue is USD. Never return >2000 BTC/day."""
+    try:
+        n = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if n != n or n <= 0:
+        return None
+    btc = n
+    if n > MINER_REVENUE_BTC_MAX:
+        try:
+            px = float(btc_price)
+        except (TypeError, ValueError):
+            px = 0.0
+        if px <= 0:
+            return None
+        btc = n / px
+    if btc <= 0 or btc > MINER_REVENUE_BTC_MAX:
+        return None
+    return btc
+
+
 BROWSER_UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

@@ -53,12 +53,18 @@ function changeClass(n) {
 }
 
 async function fetchMacroSection(section) {
-  const res = await fetch(`/api/macro/${section}`);
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Macro ${section} ${res.status}`);
+  const ac = new AbortController();
+  const kill = setTimeout(() => ac.abort(), 12000);
+  try {
+    const res = await fetch(`/api/macro/${section}`, { cache: "no-store", signal: ac.signal });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Macro ${section} ${res.status}`);
+    }
+    return await res.json();
+  } finally {
+    clearTimeout(kill);
   }
-  return res.json();
 }
 
 function buildMacroCommentary(data) {

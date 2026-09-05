@@ -333,7 +333,8 @@ async function mdFetchJson(path, force = false) {
   if (force) params.set("refresh", "1");
   const url = `/api/macro/drivers/${path.split("?")[0]}?${params}`;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 180_000);
+  const isLiquidity = path.split("?")[0].startsWith("liquidity");
+  const timeout = setTimeout(() => controller.abort(), isLiquidity ? 12_000 : 45_000);
   try {
     const res = await fetch(url, { cache: "no-store", signal: controller.signal });
     if (!res.ok) throw new Error((await res.text()).slice(0, 200) || `HTTP ${res.status}`);
@@ -1637,10 +1638,21 @@ async function loadMacroLiquidity(force = false) {
         result = await fetcher();
       }
     } catch (err) {
-      if (!mdLiquidity?.global?.series?.length) {
-        mdLqShowError(err?.message || "Liquidity load failed — try Refresh liquidity");
+      const persisted = swr?.loadPersisted?.(key);
+      if (persisted?.data && mdLqValidatePayload(persisted.data)) {
+        result = persisted.data;
+        lqFromCache = true;
+        mdLqShowError("Showing last-good liquidity · stale");
+      } else if (!mdLiquidity?.global?.series?.length) {
+        mdLqShowError("No liquidity series (timeout or invalid payload)");
+        const body = mdEl("md-lq-table-body");
+        if (body) body.innerHTML = '<tr><td colspan="7">No liquidity series available</td></tr>';
+        const globalEl = mdEl("md-lq-global-chart");
+        if (globalEl) mdLqClearChart(globalEl, "No liquidity series — try Refresh");
+        return null;
+      } else {
+        return mdLiquidity;
       }
-      throw err;
     }
 
     if (result) mdLiquidity = result;
