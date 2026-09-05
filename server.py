@@ -833,6 +833,32 @@ def _fetch_json_url(url):
         return json.loads(resp.read().decode("utf-8", errors="replace"))
 
 
+def _fetch_deribit_dvol():
+    """BTC DVOL as percent (e.g. 37.3). Index name is btcdvol_usdc, not btc_dvol."""
+    try:
+        raw = _fetch_json_url(f"{DERIBIT_API}/get_index_price?index_name=btcdvol_usdc")
+        n = float((raw.get("result") or {}).get("index_price") or 0)
+        if n > 0:
+            return n
+    except Exception:
+        pass
+    try:
+        now_ms = int(time.time() * 1000)
+        start_ms = now_ms - 4 * 3600 * 1000
+        raw = _fetch_json_url(
+            f"{DERIBIT_API}/get_volatility_index_data?currency=BTC&resolution=3600"
+            f"&start_timestamp={start_ms}&end_timestamp={now_ms}"
+        )
+        rows = (raw.get("result") or {}).get("data") or []
+        if rows:
+            close = float(rows[-1][4])
+            if close > 0:
+                return close
+    except Exception:
+        pass
+    return None
+
+
 def _fetch_options_payload(_html=""):
     summary = _fetch_json_url(
         f"{DERIBIT_API}/get_book_summary_by_currency?currency=BTC&kind=option"
@@ -854,18 +880,10 @@ def _fetch_options_payload(_html=""):
                 "option_type": "C" if opt_type == "call" else "P",
             }
         contracts.append(row)
-    dvol = None
-    try:
-        dvol_raw = _fetch_json_url(
-            "https://www.deribit.com/api/v2/public/get_index_price?index_name=btc_dvol"
-        )
-        dvol = float((dvol_raw.get("result") or {}).get("index_price") or 0) or None
-    except Exception:
-        dvol = None
     return {
         "contracts": contracts,
         "index": index.get("result", {}),
-        "dvol": dvol,
+        "dvol": _fetch_deribit_dvol(),
         "dvolTenor": "30d",
         "dvolSource": "Deribit DVOL",
         "source": "deribit.com",
