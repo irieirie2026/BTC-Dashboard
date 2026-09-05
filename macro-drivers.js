@@ -1549,8 +1549,12 @@ function mdLqRenderAll(opts = {}) {
       window.DashboardSWR?.formatPanelMeta({
         fetchedAt: mdLiquidity.fetchedAt,
         source: mdLiquidity.source,
-        fromCache: opts.fromCache,
+        fromCache: opts.fromCache || mdLiquidity.fromCache,
+        stale: mdLiquidity.stale,
       }) || mdLiquidity.source;
+    if (mdLiquidity.stale || mdLiquidity.fromCache) {
+      upd.textContent += " · stale last-good";
+    }
   }
   mdLqPopulateFilters();
   mdLqRenderBreadcrumb();

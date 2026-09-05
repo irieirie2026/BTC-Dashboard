@@ -688,4 +688,28 @@ def _build_liquidity_payload(
     }
 
     cache_set(cache_key, payload, ttl=_LIQUIDITY_CACHE_TTL)
+    try:
+        slim = {
+            "entity": payload.get("entity"),
+            "year": payload.get("year"),
+            "label": payload.get("label"),
+            "formula": payload.get("formula"),
+            "methodology": payload.get("methodology"),
+            "components": payload.get("components"),
+            "global": payload.get("global"),
+            "monthly": None,
+            "regional": (payload.get("regional") or [])[:8],
+            "countries": (payload.get("countries") or [])[:40],
+            "entities": payload.get("entities"),
+            "derived": payload.get("derived"),
+            "meta": payload.get("meta"),
+            "fetchedAt": payload.get("fetchedAt"),
+            "source": payload.get("source"),
+            "stale": True,
+            "fromCache": True,
+        }
+        _LAST_GOOD.parent.mkdir(parents=True, exist_ok=True)
+        _LAST_GOOD.write_text(json.dumps(slim), encoding="utf-8")
+    except OSError:
+        pass
     return payload

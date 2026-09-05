@@ -859,6 +859,96 @@ def _fetch_deribit_dvol():
     return None
 
 
+def _utc_day_ms(ms: int) -> int:
+    dt = datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc)
+    midnight = datetime(dt.year, dt.month, dt.day, tzinfo=timezone.utc)
+    return int(midnight.timestamp() * 1000)
+
+
+def _options_strike_stats(contracts, index_price=None):
+    """Max pain + top strikes from Deribit book summary (OI-weighted)."""
+    from collections import defaultdict
+
+    by: dict[int, list] = defaultdict(list)
+    now = int(time.time() * 1000)
+    for c in contracts:
+        if not isinstance(c, dict):
+            continue
+        try:
+            strike = float(c.get("strike"))
+            exp = int(c.get("expiration_timestamp") or 0)
+        except (TypeError, ValueError):
+            continue
+        if strike <= 0 or exp <= 0:
+            continue
+        if exp < 1e12:
+            exp = int(exp * 1000)
+        side = str(c.get("option_type") or "C")[:1].upper()
+        if side not in ("C", "P"):
+            side = "C"
+        day = _utc_day_ms(exp)
+        by[day].append(
+            {
+                "strike": strike,
+                "side": side,
+                "oi": float(c.get("open_interest") or 0),
+                "vol": float(c.get("volume") or 0),
+            }
+        )
+    days = sorted(d for d in by if d + 86_400_000 > now)
+    if not days:
+        days = sorted(by)
+    nearest = days[0] if days else None
+    pain_rows = list(by.get(nearest) or [])
+    if len({r["strike"] for r in pain_rows}) < 4:
+        pain_rows = [r for rows in by.values() for r in rows]
+    strikes = sorted({r["strike"] for r in pain_rows})
+    max_pain = None
+    min_pain = None
+    for test in strikes:
+        pain = 0.0
+        for r in pain_rows:
+            w = r["oi"] or r["vol"] or 0.001
+            if r["side"] == "C":
+                pain += w * max(0.0, test - r["strike"])
+            else:
+                pain += w * max(0.0, r["strike"] - test)
+        if min_pain is None or pain < min_pain:
+            min_pain = pain
+            max_pain = test
+    agg: dict[float, dict] = {}
+    for rows in by.values():
+        for r in rows:
+            slot = agg.setdefault(
+                r["strike"],
+                {"strike": r["strike"], "callOi": 0.0, "putOi": 0.0, "call": 0.0, "put": 0.0},
+            )
+            if r["side"] == "C":
+                slot["callOi"] += r["oi"]
+                slot["call"] += r["vol"]
+            else:
+                slot["putOi"] += r["oi"]
+                slot["put"] += r["vol"]
+    top = sorted(
+        (
+            {
+                **v,
+                "totalOi": v["callOi"] + v["putOi"],
+                "total": v["call"] + v["put"],
+            }
+            for v in agg.values()
+        ),
+        key=lambda x: x["totalOi"],
+        reverse=True,
+    )[:12]
+    return {
+        "maxPainStrike": max_pain,
+        "topStrikes": top,
+        "nearestExpiry": nearest,
+        "indexPrice": index_price,
+    }
+
+
 def _fetch_options_payload(_html=""):
     summary = _fetch_json_url(
         f"{DERIBIT_API}/get_book_summary_by_currency?currency=BTC&kind=option"
@@ -880,12 +970,21 @@ def _fetch_options_payload(_html=""):
                 "option_type": "C" if opt_type == "call" else "P",
             }
         contracts.append(row)
+    idx = index.get("result") or {}
+    try:
+        index_px = float(idx.get("index_price") or idx.get("indexPrice") or 0) or None
+    except (TypeError, ValueError):
+        index_px = None
+    surface = _options_strike_stats(contracts, index_px)
     return {
         "contracts": contracts,
-        "index": index.get("result", {}),
+        "index": idx,
         "dvol": _fetch_deribit_dvol(),
         "dvolTenor": "30d",
         "dvolSource": "Deribit DVOL",
+        "maxPainStrike": surface.get("maxPainStrike"),
+        "topStrikes": surface.get("topStrikes") or [],
+        "nearestExpiry": surface.get("nearestExpiry"),
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }

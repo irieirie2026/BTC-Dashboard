@@ -821,7 +821,8 @@ async function loadFuturesData() {
     await swr.runSWR({
       key: "derivatives:futures",
       l1: "derivatives",
-      source: "Binance",
+      source: "OKX fallback",
+      updateHeader: false,
       fetch: async () => {
         try {
         const ac = new AbortController();
@@ -986,10 +987,16 @@ async function loadFuturesData() {
     });
   } catch (err) {
     console.error("Failed to load futures data:", err);
-    if (!futuresMarketState.price) {
-      setConnectionStatus("disconnected", "futures-status");
-      setFuturesPanelMeta({ state: "error", source: futuresVenue && futuresVenue !== "binance" ? futuresVenue.toUpperCase() + " fallback" : "Binance" });
+    if (futuresMarketState.price) {
+      const v = (futuresVenue && futuresVenue !== "binance") ? futuresVenue.toUpperCase() + " fallback" : "OKX fallback";
+      setFuturesPanelMeta({ fetchedAt: new Date().toISOString(), source: v });
+      return;
     }
+    setConnectionStatus("disconnected", "futures-status");
+    setFuturesPanelMeta({
+      state: "error",
+      source: futuresVenue && futuresVenue !== "binance" ? futuresVenue.toUpperCase() + " fallback" : "OKX",
+    });
   }
 }
 
@@ -1043,6 +1050,7 @@ function connectFutures() {
 
   futuresWs.onclose = () => {
     if (futuresVenue && futuresVenue !== "binance") return;
+    if (futuresMarketState.price) return;
     setConnectionStatus("disconnected", "futures-status");
     futuresReconnectTimer = setTimeout(connectFutures, 8000);
   };

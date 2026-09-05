@@ -14,11 +14,18 @@ let derivativesExtraReady = false;
 const dxEl = (id) => document.getElementById(id);
 
 function fmtPrice(n, d = 2) {
-  if (n == null || Number.isNaN(n)) return "—";
-  return Number(n).toLocaleString("en-US", {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return "—";
+  return v.toLocaleString("en-US", {
     minimumFractionDigits: d,
     maximumFractionDigits: d,
   });
+}
+
+function fmtStrike(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v) || v <= 0) return "—";
+  return "$" + Math.round(v).toLocaleString("en-US");
 }
 
 function fmtPct(n, d = 2) {
@@ -333,7 +340,8 @@ async function loadDeliveryFutures() {
     await swr.runSWR({
       key: "derivatives:delivery",
       l1: "derivatives",
-      source: "Binance",
+      source: "OKX fallback",
+      updateHeader: false,
       fetch: fetchDeliveryBundle,
       render: (data, opts = {}) => {
         const src = data?.venueLabel || data?.venue || "Binance";
@@ -356,7 +364,7 @@ async function loadDeliveryFutures() {
     });
   } catch (err) {
     console.error("Delivery futures load failed:", err);
-    if (updateEl && !deliveryData) updateEl.textContent = "Unavailable · Binance";
+    if (updateEl && !deliveryData) updateEl.textContent = "Unavailable · OKX";
   }
 }
 
@@ -541,7 +549,7 @@ async function fetchOptionsBundle() {
     const expiries = Object.keys(byExpiry)
       .map(Number)
       .sort((a, b) => a - b)
-      .filter((e) => Number.isFinite(e) && e + 8 * 3600 * 1000 > Date.now());
+      .filter((e) => Number.isFinite(e) && e + 36 * 3600 * 1000 > Date.now());
 
     function atmIvForExpiry(expiry) {
       const opts = byExpiry[expiry] || [];
@@ -671,7 +679,7 @@ async function fetchOptionsBundle() {
       .reduce((s, o) => s + o.volume, 0);
     const pcRatio = callOi > 0 ? putOi / callOi : callVol > 0 ? putVol / callVol : null;
 
-    const topStrikes = strikes
+    let topStrikes = strikes
       .map((s) => ({
         strike: s,
         call: volByStrike[s].call,
@@ -683,6 +691,24 @@ async function fetchOptionsBundle() {
       }))
       .sort((a, b) => b.totalOi - a.totalOi)
       .slice(0, 12);
+
+    if (Array.isArray(payload.topStrikes) && payload.topStrikes.length) {
+      const serverTop = payload.topStrikes
+        .map((r) => ({
+          strike: Number(r.strike),
+          call: Number(r.call) || 0,
+          put: Number(r.put) || 0,
+          callOi: Number(r.callOi) || 0,
+          putOi: Number(r.putOi) || 0,
+          totalOi: Number(r.totalOi) || 0,
+          total: Number(r.total) || 0,
+        }))
+        .filter((r) => Number.isFinite(r.strike) && r.strike > 0);
+      if (serverTop.length) topStrikes = serverTop;
+    }
+    if (Number.isFinite(Number(payload.maxPainStrike)) && Number(payload.maxPainStrike) > 0) {
+      maxPainStrike = Number(payload.maxPainStrike);
+    }
 
     const topOiStrikes = [...topStrikes]
       .sort((a, b) => b.totalOi - a.totalOi)
@@ -826,7 +852,7 @@ function renderOptionsOiScreen() {
   );
   set(
     "opt-max-pain",
-    Number.isFinite(Number(d.maxPainStrike)) ? "$" + fmtPrice(d.maxPainStrike, 0) : "—",
+    fmtStrike(d.maxPainStrike),
   );
   set("opt-total-oi", fmtVol(d.totalOi) + " contracts");
   set("opt-total-vol", fmtVol(d.callVol + d.putVol) + " contracts");
@@ -856,7 +882,7 @@ function renderOptionsOiScreen() {
       tbody.innerHTML = d.topStrikes
         .map(
           (r) => `<tr>
-        <td class="mono">$${fmtPrice(r.strike, 0)}</td>
+        <td class="mono">${fmtStrike(r.strike)}</td>
         <td class="mono positive">${fmtVol(r.callOi)}</td>
         <td class="mono negative">${fmtVol(r.putOi)}</td>
         <td class="mono">${fmtVol(r.totalOi)}</td>
@@ -981,8 +1007,8 @@ function drawVolSmileChart(opts, spot) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
   ctx.textAlign = "center";
-  ctx.fillText(fmtPrice(minK, 0), pad.left, h - 8);
-  ctx.fillText(fmtPrice(maxK, 0), w - pad.right, h - 8);
+  ctx.fillText(fmtStrike(minK), pad.left, h - 8);
+  ctx.fillText(fmtStrike(maxK), w - pad.right, h - 8);
 }
 
 function drawDeliveryOiChart(contracts) {
@@ -1067,7 +1093,7 @@ function drawStrikeVolChart(topStrikes, spot) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 32, left: 56 };
+  const pad = { top: 16, right: 16, bottom: 32, left: 88 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -1107,7 +1133,7 @@ function drawStrikeVolChart(topStrikes, spot) {
     ctx.fillStyle = "#7d8799";
     ctx.font = "10px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
-    ctx.fillText("$" + fmtPrice(r.strike, 0), pad.left - 6, y + bodyH / 2 + 3);
+    ctx.fillText(fmtStrike(r.strike), pad.left - 6, y + bodyH / 2 + 3);
   });
 }
 
@@ -1135,7 +1161,7 @@ function drawOiStrikeChart(topStrikes, spot) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 32, left: 56 };
+  const pad = { top: 16, right: 16, bottom: 32, left: 88 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -1175,7 +1201,7 @@ function drawOiStrikeChart(topStrikes, spot) {
     ctx.fillStyle = "#7d8799";
     ctx.font = "10px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
-    ctx.fillText("$" + fmtPrice(r.strike, 0), pad.left - 6, y + bodyH / 2 + 3);
+    ctx.fillText(fmtStrike(r.strike), pad.left - 6, y + bodyH / 2 + 3);
   });
 }
 
