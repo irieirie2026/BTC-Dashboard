@@ -42,7 +42,8 @@ function fmtHashrateGhs(ghs) {
   else if (n >= 1e8) eh = n / 1e6;
   else if (n >= 1e5) eh = n / 1e3;
   else eh = n / 1e9;
-  if (!Number.isFinite(eh) || eh <= 0) return "—";
+  while (eh > 5000 && eh / 1000 >= 50) eh /= 1000;
+  if (!Number.isFinite(eh) || eh < 50 || eh > 5000) return "—";
   return eh >= 100 ? eh.toFixed(1) + " EH/s" : eh.toFixed(2) + " EH/s";
 }
 

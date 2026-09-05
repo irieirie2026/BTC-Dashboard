@@ -842,6 +842,8 @@ def normalize_hash_rate_ehs(
         scaled = val * 1e6
         if 50 <= scaled <= 5000:
             val = scaled
+    while val > 5000 and val / 1000 >= 50:
+        val = val / 1000
     if 50 <= val <= 5000:
         return val
     return None

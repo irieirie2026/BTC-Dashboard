@@ -7,6 +7,7 @@ const VOL_API = "/api/stats/volatility";
 const VOL_ANN = 365;
 const VOL_PREFS_KEY = "vol-suite-prefs-v4";
 const VOL_SUITE_CACHE_KEY = "vol-last-suite-v1";
+const VOL_IV_CACHE_KEY = "vol-last-iv-v1";
 /** Desk defaults: 5Y sample + Student-t innovations (see #vol-est-why). */
 const VOL_DESK_DAYS = "1825";
 const VOL_DESK_DIST = "t";
@@ -414,6 +415,65 @@ function volSetLiveIvKpis(suite, chain) {
         spot != null ? `$${Number(spot).toLocaleString("en-US", { maximumFractionDigits: 0 })}` : "—"
       }. Cond. vol is last daily close; IV is live.`;
   }
+  try {
+    const dvolStore = dvol != null && dvol > 3 ? dvol / 100 : dvol;
+    localStorage.setItem(
+      VOL_IV_CACHE_KEY,
+      JSON.stringify({
+        savedAt: Date.now(),
+        dvol: dvolStore,
+        atm7,
+        atm30,
+        asOf: chain?.fetchedAt || new Date().toISOString(),
+      }),
+    );
+  } catch {
+    /* quota */
+  }
+}
+
+function volPaintCachedIv() {
+  const set = (id, text) => {
+    const n = volEl(id);
+    if (n) n.textContent = text;
+  };
+  let cached = null;
+  try {
+    cached = JSON.parse(localStorage.getItem(VOL_IV_CACHE_KEY) || "null");
+  } catch {
+    cached = null;
+  }
+  if (cached?.dvol != null) {
+    const d = Number(cached.dvol);
+    const dec = d > 3 ? d / 100 : d;
+    set("vol-kpi-dvol", volFmtPct(dec, 1));
+    const sub = volEl("vol-kpi-dvol-sub");
+    if (sub) {
+      sub.textContent =
+        `Deribit DVOL · 30d · as_of ${String(cached.asOf || "").slice(0, 16)} · stale until Run`;
+    }
+  }
+  fetch("/api/options", { cache: "no-store" })
+    .then((r) => r.json())
+    .then((p) => {
+      let dvol = Number(p?.dvol);
+      if (!Number.isFinite(dvol) || dvol <= 0) return;
+      if (dvol > 3) dvol /= 100;
+      set("vol-kpi-dvol", volFmtPct(dvol, 1));
+      const sub = volEl("vol-kpi-dvol-sub");
+      if (sub) {
+        sub.textContent = `Deribit DVOL · 30d · as_of ${p.fetchedAt || new Date().toISOString()}`;
+      }
+      try {
+        localStorage.setItem(
+          VOL_IV_CACHE_KEY,
+          JSON.stringify({ savedAt: Date.now(), dvol, asOf: p.fetchedAt || new Date().toISOString() }),
+        );
+      } catch {
+        /* quota */
+      }
+    })
+    .catch(() => {});
 }
 
 function volRenderTable(suite) {
@@ -5248,6 +5308,7 @@ function initVolatilityModule() {
       meta.textContent = `Last-good models · as_of ${cached.fetchedAt || volSuite.asOf || "—"} · stale until Run`;
     }
   }
+  volPaintCachedIv();
 
   volEl("vol-run-selected")?.addEventListener("click", () => volRun(true, { allModels: false }));
   volEl("vol-run-all")?.addEventListener("click", () => volRun(true, { allModels: true }));

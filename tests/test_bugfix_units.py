@@ -11,6 +11,10 @@ def test_hash_rate_ths_not_ehs():
     assert 50 <= normalize_hash_rate_ehs(1.089e21) <= 5000
     assert normalize_hash_rate_ehs(901.7) == 901.7
     assert normalize_hash_rate_ehs(1_089_484_806.1) < 5000
+    # Sat r7: UI showed 856784.8 EH/s — 1000× scale slip
+    scaled = normalize_hash_rate_ehs(856_784.8)
+    assert scaled is not None
+    assert 50 <= scaled <= 5000
 
 
 def test_supply_in_profit_clamped():
@@ -19,6 +23,36 @@ def test_supply_in_profit_clamped():
     assert _scale_bg_value(89.1, 100, spec) == 89.1
     assert _scale_bg_value(2.598, 100, spec) == 100.0
     assert _scale_bg_value(259.81, 100, spec) == 100.0
+
+
+def test_options_max_pain_and_strikes():
+    from server import _options_strike_stats
+
+    now_ms = 1788610000000  # ~2026-09-05
+    rows = []
+    for strike, oi_c, oi_p in ((70000, 10, 80), (80000, 40, 40), (90000, 90, 5)):
+        rows.append(
+            {
+                "strike": strike,
+                "expiration_timestamp": now_ms + 86400000,
+                "option_type": "C",
+                "open_interest": oi_c,
+                "volume": 1,
+            }
+        )
+        rows.append(
+            {
+                "strike": strike,
+                "expiration_timestamp": now_ms + 86400000,
+                "option_type": "P",
+                "open_interest": oi_p,
+                "volume": 1,
+            }
+        )
+    stats = _options_strike_stats(rows, 80000)
+    assert stats["maxPainStrike"] in (70000, 80000, 90000)
+    assert stats["topStrikes"]
+    assert all(t["strike"] > 0 for t in stats["topStrikes"])
 
 
 def test_deribit_one_digit_day():
