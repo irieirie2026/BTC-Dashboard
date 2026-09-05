@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-05T00:37:13Z",
+  "fetchedAt": "2026-09-05T05:16:32Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: https://www.cfosilvia.com",
+      "link": "https://x.com/APompliano/status/2096040004648591363#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: cfosilvia.com",
+      "publishedAt": "2026-09-05T00:57:34+00:00",
+      "publishedTs": 1788569854.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "seems like the rogue agents used every possible forum except moltbook, the one specifically made for them",
       "link": "https://x.com/nic_carter/status/2096020855620808750#m",
@@ -765,19 +778,6 @@
       "summary": "",
       "publishedAt": "2026-09-03T14:30:36+00:00",
       "publishedTs": 1788445836.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Sept 3 Update: #Bitcoin ETFs: 1D NetFlow: +1,532 bitcoin:native(+$121.1M)\ud83d\udfe2 7D NetFlow: +1,255 bitcoin:native(+$99.21M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -36,324 $ETH(-$88.61M)\ud83d\udd34 7D NetFlow: +120,807 $ETH(+$294.71M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2095518307835363559#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Sept 3 Update: #Bitcoin ETFs: 1D NetFlow: +1,532 bitcoin:native(+$121.1M)\ud83d\udfe2 7D NetFlow: +1,255 bitcoin:native(+$99.21M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -36,324 $ETH (-$88.61M)\ud83d\udd34 7D NetFlow: +120,807 $ETH (+$294.71M)\ud83d\udfe2",
-      "publishedAt": "2026-09-03T14:24:32+00:00",
-      "publishedTs": 1788445472.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
