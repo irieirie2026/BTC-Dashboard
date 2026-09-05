@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-05T16:33:03Z",
+  "fetchedAt": "2026-09-05T18:47:14Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: U.S. \ud83c\uddfa\ud83c\uddf8 Bitcoin ETFs saw $986.8 million in inflow this week \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2096292784516817257#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-05T17:42:01+00:00",
+      "publishedTs": 1788630121.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "2x TikTok ETF",
       "link": "https://x.com/EricBalchunas/status/2096274579429687763#m",
@@ -804,19 +817,6 @@
       "summary": "Bears, this is your stop. Video",
       "publishedAt": "2026-09-03T14:48:24+00:00",
       "publishedTs": 1788446904.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Bitcoin ETFs saw $101.1 million in net inflows yesterday \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2095519837170680153#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-03T14:30:36+00:00",
-      "publishedTs": 1788445836.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
