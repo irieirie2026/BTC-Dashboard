@@ -1018,7 +1018,7 @@ const METRIC_HELP = {
   },
   "opt-atm-iv": {
     title: "ATM Implied Volatility",
-    body: "Mark implied volatility of the at-the-money option at the nearest expiry. ATM IV is the market's baseline expectation of near-term price movement. Rising ATM IV often precedes larger realized swings.",
+    body: "Deribit <strong>mark IV</strong> of the at-the-money option on the <strong>nearest expiry</strong> (tenor shown under the number). This is not Deribit DVOL (a 30-day vol index) and not a GARCH/HAR forecast. Stats → Volatility DVOL/ATM chips are labeled separately so they are not comparable as a bare “ATM IV”.",
   },
   "opt-skew": {
     title: "25Δ Volatility Skew",

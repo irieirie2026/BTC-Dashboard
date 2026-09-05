@@ -6,6 +6,7 @@
 const VOL_API = "/api/stats/volatility";
 const VOL_ANN = 365;
 const VOL_PREFS_KEY = "vol-suite-prefs-v4";
+const VOL_SUITE_CACHE_KEY = "vol-last-suite-v1";
 /** Desk defaults: 5Y sample + Student-t innovations (see #vol-est-why). */
 const VOL_DESK_DAYS = "1825";
 const VOL_DESK_DIST = "t";
@@ -237,6 +238,30 @@ function volStars(p) {
   if (p < 0.05) return "**";
   if (p < 0.1) return "*";
   return "";
+}
+
+function volPersistSuite(suite) {
+  if (!suite?.models?.length) return;
+  try {
+    localStorage.setItem(
+      VOL_SUITE_CACHE_KEY,
+      JSON.stringify({ savedAt: Date.now(), fetchedAt: suite.asOf || new Date().toISOString(), data: suite }),
+    );
+  } catch {
+    /* quota */
+  }
+}
+
+function volLoadPersistedSuite() {
+  try {
+    const raw = localStorage.getItem(VOL_SUITE_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.data?.models?.length) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
 }
 
 function volEscape(s) {
@@ -5113,6 +5138,7 @@ async function volRun(force = false, opts = {}) {
     }
     const suite = await volFetchSuite(force, opts);
     volSuite = suite;
+    volPersistSuite(suite);
     volSelectedId =
       suite.bestByQlike ||
       suite.summary?.markModelId ||
@@ -5203,6 +5229,25 @@ function initVolatilityModule() {
   volApplyPrefsToControls();
   volRenderModelPicker(VOL_FALLBACK_CATALOG);
   volLoadCatalog();
+  const cached = volLoadPersistedSuite();
+  if (cached?.data && !volSuite) {
+    volSuite = { ...cached.data, fromCache: true };
+    volSelectedId =
+      volSuite.bestByQlike ||
+      volSuite.summary?.markModelId ||
+      volSuite.bestByAic ||
+      volSuite.models?.find((m) => m.status === "ok")?.id ||
+      null;
+    volSetKpis(volSuite);
+    volRenderTable(volSuite);
+    volRenderGuide(volSuite);
+    volRenderDetail(volSuite.detail);
+    volDrawAll(volSuite);
+    const meta = volEl("vol-suite-meta");
+    if (meta) {
+      meta.textContent = `Last-good models · as_of ${cached.fetchedAt || volSuite.asOf || "—"} · stale until Run`;
+    }
+  }
 
   volEl("vol-run-selected")?.addEventListener("click", () => volRun(true, { allModels: false }));
   volEl("vol-run-all")?.addEventListener("click", () => volRun(true, { allModels: true }));

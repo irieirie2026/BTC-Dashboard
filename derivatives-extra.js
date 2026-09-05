@@ -44,6 +44,21 @@ function daysToExpiry(ts) {
   return Math.max((ts - Date.now()) / 86400000, 0.5);
 }
 
+function expiryDayKey(ms) {
+  const n = Number(ms);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  const d = new Date(n);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+}
+
+function markIvDecimal(raw) {
+  const iv = parseFloat(raw);
+  if (!Number.isFinite(iv) || iv <= 0) return null;
+  if (iv > 3 && iv < 500) return iv / 100;
+  if (iv <= 3) return iv;
+  return null;
+}
+
 function expiryLabel(ts) {
   return new Date(ts).toLocaleDateString("en-US", {
     month: "short",
@@ -86,19 +101,82 @@ function parseOptionSymbol(symbol) {
   return null;
 }
 
-async function fetchJson(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(url + " " + res.status);
-  return res.json();
+async function fetchJson(url, ms = 8000) {
+  const ac = new AbortController();
+  const kill = setTimeout(() => ac.abort(), ms);
+  try {
+    const res = await fetch(url, { cache: "no-store", signal: ac.signal });
+    if (!res.ok) throw new Error(url + " " + res.status);
+    return await res.json();
+  } finally {
+    clearTimeout(kill);
+  }
+}
+
+function deliveryFromFallback(snap) {
+  const perp = snap.perp || snap;
+  const last = Number(perp.lastPrice || perp.last);
+  const mark = Number(perp.markPrice || perp.mark || last);
+  const index = Number(perp.indexPrice || perp.index || mark);
+  const contracts = (snap.contracts || []).map((c) => {
+    const cLast = Number(c.last);
+    const cMark = Number(c.mark || cLast);
+    const cIndex = Number(c.index || index);
+    const basis = cMark - cIndex;
+    const basisPct = cIndex ? (basis / cIndex) * 100 : 0;
+    return {
+      symbol: c.symbol,
+      margin: "USDT",
+      type: "Dated",
+      last: cLast,
+      mark: cMark,
+      basisPct,
+      annBasisPct: basisPct,
+      openInterest: c.openInterest,
+      volume: c.volume,
+      deliveryDate: null,
+      daysToExpiry: null,
+    };
+  });
+  const venue = snap.venue || perp.venue || "OKX";
+  return {
+    indexPrice: index,
+    perp: {
+      symbol: "BTC-USDT-SWAP",
+      margin: "USDT",
+      type: "Perpetual",
+      last,
+      mark,
+      basisPct: index ? ((mark - index) / index) * 100 : 0,
+      annBasisPct: 0,
+      openInterest: perp.openInterest,
+      volume: perp.volume || perp.quoteVolume,
+      deliveryDate: null,
+      daysToExpiry: 0,
+    },
+    contracts,
+    coinContracts: [],
+    curvePoints: [],
+    fetchedAt: snap.fetchedAt || new Date().toISOString(),
+    venue,
+    venueLabel: venue + " fallback",
+  };
 }
 
 async function fetchDeliveryBundle() {
+  try {
+    const ac = new AbortController();
+    const kill = setTimeout(() => ac.abort(), 3500);
     const [exchange, tickers, marks, perpTicker] = await Promise.all([
-      fetchJson(`${FAPI}/fapi/v1/exchangeInfo`),
-      fetchJson(`${FAPI}/fapi/v1/ticker/24hr`),
-      fetchJson(`${FAPI}/fapi/v1/premiumIndex`),
-      fetchJson(`${FAPI}/fapi/v1/ticker/24hr?symbol=BTCUSDT`),
+      fetch(`${FAPI}/fapi/v1/exchangeInfo`, { signal: ac.signal }).then((r) => {
+        if (!r.ok) throw new Error("binance exchangeInfo");
+        return r.json();
+      }),
+      fetch(`${FAPI}/fapi/v1/ticker/24hr`, { signal: ac.signal }).then((r) => r.json()),
+      fetch(`${FAPI}/fapi/v1/premiumIndex`, { signal: ac.signal }).then((r) => r.json()),
+      fetch(`${FAPI}/fapi/v1/ticker/24hr?symbol=BTCUSDT`, { signal: ac.signal }).then((r) => r.json()),
     ]);
+    clearTimeout(kill);
 
     const tickerMap = Object.fromEntries(tickers.map((t) => [t.symbol, t]));
     const markMap = Object.fromEntries(marks.map((m) => [m.symbol, m]));
@@ -229,7 +307,21 @@ async function fetchDeliveryBundle() {
         })),
       ],
       fetchedAt: new Date().toISOString(),
+      venue: "Binance",
+      venueLabel: "Binance",
     };
+  } catch (binanceErr) {
+    let snap = null;
+    try {
+      snap = await fetchJson("/api/market/futures", 6000);
+    } catch (_) {
+      snap = null;
+    }
+    if (!snap || (!snap.perp?.lastPrice && !snap.contracts?.length && !snap.lastPrice)) {
+      throw binanceErr;
+    }
+    return deliveryFromFallback(snap.lastPrice ? { perp: snap, venue: snap.venue } : snap);
+  }
 }
 
 async function loadDeliveryFutures() {
@@ -244,8 +336,9 @@ async function loadDeliveryFutures() {
       source: "Binance",
       fetch: fetchDeliveryBundle,
       render: (data, opts = {}) => {
+        const src = data?.venueLabel || data?.venue || "Binance";
         if (opts.loading) {
-          if (updateEl) updateEl.textContent = "Loading…";
+          if (updateEl) updateEl.textContent = "Loading… · " + src;
           return;
         }
         deliveryData = data;
@@ -253,7 +346,7 @@ async function loadDeliveryFutures() {
         if (updateEl) {
           updateEl.textContent = swr.formatPanelMeta({
             fetchedAt: data.fetchedAt,
-            source: "Binance",
+            source: src,
             stale: opts.stale,
             refreshing: opts.refreshing,
             refreshFailed: opts.refreshFailed,
@@ -263,7 +356,7 @@ async function loadDeliveryFutures() {
     });
   } catch (err) {
     console.error("Delivery futures load failed:", err);
-    if (updateEl && !deliveryData) updateEl.textContent = "Unavailable";
+    if (updateEl && !deliveryData) updateEl.textContent = "Unavailable · Binance";
   }
 }
 
@@ -427,10 +520,9 @@ async function fetchOptionsBundle() {
         if (Number.isFinite(expiry) && expiry > 0 && expiry < 1e12) expiry *= 1000;
         parsed.expiry = expiry;
         parsed.strike = Number(parsed.strike);
-        const iv = parseFloat(c.mark_iv);
         return {
           ...parsed,
-          markIv: iv > 0 && iv < 300 ? iv / 100 : null,
+          markIv: markIvDecimal(c.mark_iv ?? c.markIv ?? c.iv),
           markPrice: parseFloat(c.mark_price || 0),
           volume: parseFloat(c.volume || 0),
           openInterest: parseFloat(c.open_interest || 0),
@@ -440,8 +532,10 @@ async function fetchOptionsBundle() {
 
     const byExpiry = {};
     chain.forEach((o) => {
-      if (!byExpiry[o.expiry]) byExpiry[o.expiry] = [];
-      byExpiry[o.expiry].push(o);
+      const key = expiryDayKey(o.expiry) || o.expiry;
+      o.expiry = key;
+      if (!byExpiry[key]) byExpiry[key] = [];
+      byExpiry[key].push(o);
     });
 
     const expiries = Object.keys(byExpiry)
@@ -537,7 +631,15 @@ async function fetchOptionsBundle() {
 
     let maxPainStrike = null;
     let minPain = Infinity;
-    const painOpts = byExpiry[nearestExpiry] || [];
+    let painOpts = byExpiry[nearestExpiry] || [];
+    if (painOpts.length < 4) {
+      const richest = Object.values(byExpiry).sort(
+        (a, b) =>
+          b.reduce((s, o) => s + (o.openInterest || 0), 0) -
+          a.reduce((s, o) => s + (o.openInterest || 0), 0),
+      )[0];
+      if (richest?.length) painOpts = richest;
+    }
     const painStrikes = [...new Set(painOpts.map((o) => o.strike))].sort(
       (a, b) => a - b,
     );
@@ -586,9 +688,19 @@ async function fetchOptionsBundle() {
       .sort((a, b) => b.totalOi - a.totalOi)
       .slice(0, 10);
 
+    const dvolRaw = parseFloat(payload.dvol);
+    const dvol = Number.isFinite(dvolRaw) && dvolRaw > 0
+      ? (dvolRaw > 3 ? dvolRaw / 100 : dvolRaw)
+      : null;
+    const atmDte = nearestExpiry ? daysToExpiry(nearestExpiry) : null;
     return {
       indexPrice,
       atmIv,
+      atmIvLabel: nearestExpiry
+        ? `Deribit ATM mark IV · nearest expiry ${expiryLabel(nearestExpiry)} · ${atmDte.toFixed(0)}d`
+        : "Deribit ATM mark IV · nearest expiry",
+      dvol,
+      dvolLabel: "Deribit DVOL · 30d vol index",
       ivHigh,
       ivLow,
       skew25,
@@ -660,6 +772,12 @@ function renderOptionsVolScreen() {
   };
 
   set("opt-iv-index", fmtIv(d.atmIv));
+  const atmSub = dxEl("opt-iv-atm-sub") || document.querySelector('[data-help-key="opt-atm-iv"]')?.parentElement?.querySelector(".deriv-hero-sub");
+  if (atmSub) atmSub.textContent = d.atmIvLabel || "Deribit ATM mark IV · nearest expiry";
+  const dvolEl = dxEl("opt-dvol");
+  if (dvolEl) dvolEl.textContent = fmtIv(d.dvol);
+  const dvolSub = dxEl("opt-dvol-sub");
+  if (dvolSub) dvolSub.textContent = d.dvolLabel || "Deribit DVOL · 30d";
   set(
     "opt-iv-skew",
     d.skew25 != null
@@ -732,17 +850,21 @@ function renderOptionsOiScreen() {
 
   const tbody = dxEl("options-strikes-body");
   if (tbody) {
-    tbody.innerHTML = d.topStrikes
-      .map(
-        (r) => `<tr>
+    if (!d.topStrikes?.length) {
+      tbody.innerHTML = '<tr><td colspan="5">No strike OI in this snapshot</td></tr>';
+    } else {
+      tbody.innerHTML = d.topStrikes
+        .map(
+          (r) => `<tr>
         <td class="mono">$${fmtPrice(r.strike, 0)}</td>
         <td class="mono positive">${fmtVol(r.callOi)}</td>
         <td class="mono negative">${fmtVol(r.putOi)}</td>
         <td class="mono">${fmtVol(r.totalOi)}</td>
         <td class="mono">${fmtVol(r.total)}</td>
       </tr>`,
-      )
-      .join("");
+        )
+        .join("");
+    }
   }
 
   drawStrikeVolChart(d.topStrikes, d.indexPrice);

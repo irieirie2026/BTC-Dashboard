@@ -66,25 +66,35 @@ function fmtBtc(n, digits = 4) {
   });
 }
 
+function normalizeMinerRevenueBtc(raw, btcPrice) {
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  let btc = n;
+  if (n > 2000) {
+    if (!(btcPrice > 0)) return null;
+    btc = n / btcPrice;
+  }
+  if (!(btc > 0) || btc > 2000) return null;
+  return btc;
+}
+
 function fmtMinerRevenue(raw, btcPrice) {
   const n = Number(raw);
-  if (!Number.isFinite(n) || n <= 0) return { value: "—", sub: "Latest daily estimate" };
-  // Blockchain.info miners-revenue is USD. Values > ~2k cannot be BTC/day.
-  if (n > 2000) {
-    const usd = n;
-    const btc = btcPrice > 0 ? usd / btcPrice : null;
-    if (btc != null && btc < 2000) {
+  const btc = normalizeMinerRevenueBtc(raw, btcPrice);
+  if (btc == null) {
+    if (Number.isFinite(n) && n > 2000) {
       return {
-        value: btc.toFixed(0) + " BTC/day",
-        sub: "$" + (usd / 1e6).toFixed(1) + "M USD · Blockchain.info",
+        value: "—",
+        sub: "Miner revenue rejected (>2000 BTC/day after USD convert)",
       };
     }
-    return {
-      value: "$" + (usd >= 1e6 ? (usd / 1e6).toFixed(1) + "M" : usd.toFixed(0)) + "/day",
-      sub: "Blockchain.info miner revenue (USD)",
-    };
+    return { value: "—", sub: "Latest daily estimate" };
   }
-  return { value: n.toFixed(1) + " BTC/day", sub: "Latest daily estimate" };
+  const usdNote =
+    n > 2000
+      ? "$" + (n / 1e6).toFixed(1) + "M USD · Blockchain.info"
+      : "Blockchain.info · BTC/day";
+  return { value: btc.toFixed(1) + " BTC/day", sub: usdNote };
 }
 
 function fmtPct(n, d = 2) {

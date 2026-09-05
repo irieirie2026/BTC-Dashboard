@@ -854,9 +854,20 @@ def _fetch_options_payload(_html=""):
                 "option_type": "C" if opt_type == "call" else "P",
             }
         contracts.append(row)
+    dvol = None
+    try:
+        dvol_raw = _fetch_json_url(
+            "https://www.deribit.com/api/v2/public/get_index_price?index_name=btc_dvol"
+        )
+        dvol = float((dvol_raw.get("result") or {}).get("index_price") or 0) or None
+    except Exception:
+        dvol = None
     return {
         "contracts": contracts,
         "index": index.get("result", {}),
+        "dvol": dvol,
+        "dvolTenor": "30d",
+        "dvolSource": "Deribit DVOL",
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }

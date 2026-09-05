@@ -757,6 +757,62 @@ function applyFuturesBundle(bundle) {
   refreshFuturesGrid();
 }
 
+async function fetchJsonTimeout(url, ms = 3500) {
+  const ac = new AbortController();
+  const kill = setTimeout(() => ac.abort(), ms);
+  try {
+    const res = await fetch(url, { cache: "no-store", signal: ac.signal });
+    if (!res.ok) throw new Error(`${url} ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(kill);
+  }
+}
+
+function perpBundleFromSnapshot(perp) {
+  const venue = perp.venue || "OKX";
+  const ls = perp.longShortRatio;
+  return {
+    marketState: {
+      price: perp.lastPrice,
+      openPrice: perp.lastPrice,
+      high: perp.highPrice,
+      low: perp.lowPrice,
+      volume: perp.volume,
+      quoteVolume: perp.quoteVolume,
+      openInterest: perp.openInterest,
+      mark: perp.markPrice,
+      index: perp.indexPrice,
+      fundingRate: perp.fundingRate,
+      nextFundingTime: null,
+    },
+    sentimentItems: [
+      {
+        label: "Open Interest",
+        helpKey: "open-interest",
+        value: perp.openInterest != null ? formatBtc(perp.openInterest) : "—",
+        sub: venue + " swap",
+      },
+      {
+        label: "Funding 8h",
+        helpKey: "funding-rate",
+        value: perp.fundingRate != null ? formatFundingRate(perp.fundingRate) : "—",
+        sub: venue,
+      },
+      {
+        label: "Long/Short",
+        helpKey: "global-ls",
+        value: ls != null ? formatRatio(ls) : "—",
+        sub: "Account ratio",
+        valueClass: ls > 1 ? "positive" : ls < 1 ? "negative" : "",
+      },
+    ],
+    fetchedAt: perp.fetchedAt || new Date().toISOString(),
+    venue,
+    venueLabel: venue + " fallback",
+  };
+}
+
 async function loadFuturesData() {
   const swr = window.DashboardSWR;
   if (!swr) return;
@@ -765,7 +821,7 @@ async function loadFuturesData() {
     await swr.runSWR({
       key: "derivatives:futures",
       l1: "derivatives",
-      source: "Binance / OKX",
+      source: "Binance",
       fetch: async () => {
         try {
         const ac = new AbortController();
@@ -815,6 +871,7 @@ async function loadFuturesData() {
         const takerSignal =
           takerRatio > 1.05 ? "positive" : takerRatio < 0.95 ? "negative" : "";
 
+        futuresVenue = "binance";
         return {
           marketState: {
             price,
@@ -865,57 +922,62 @@ async function loadFuturesData() {
           ],
           fetchedAt: new Date().toISOString(),
           venue: "Binance",
+          venueLabel: "Binance",
         };
       } catch (binanceErr) {
-        const perp = await fetch("/api/market/perp", { cache: "no-store" }).then((r) => r.json());
+        let perp = null;
+        try {
+          perp = await fetchJsonTimeout("/api/market/perp", 6000);
+        } catch (_) {
+          perp = null;
+        }
+        if (!perp?.lastPrice) {
+          try {
+            const tick = await fetchJsonTimeout(
+              "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT-SWAP",
+              3500,
+            );
+            const row = (tick.data || [])[0] || {};
+            perp = {
+              venue: "OKX",
+              lastPrice: parseFloat(row.last),
+              markPrice: parseFloat(row.markPx || row.last),
+              indexPrice: parseFloat(row.idxPx || row.last),
+              fundingRate: parseFloat(row.fundingRate),
+              highPrice: parseFloat(row.high24h),
+              lowPrice: parseFloat(row.low24h),
+              volume: parseFloat(row.vol24h),
+              quoteVolume: parseFloat(row.volCcy24h),
+              fetchedAt: new Date().toISOString(),
+            };
+          } catch (_) {
+            throw binanceErr;
+          }
+        }
         if (!perp?.lastPrice) throw binanceErr;
-        futuresVenue = perp.venue || "OKX";
-        const ls = perp.longShortRatio;
-        return {
-          marketState: {
-            price: perp.lastPrice,
-            openPrice: perp.lastPrice,
-            high: perp.highPrice,
-            low: perp.lowPrice,
-            volume: perp.volume,
-            quoteVolume: perp.quoteVolume,
-            openInterest: perp.openInterest,
-            mark: perp.markPrice,
-            index: perp.indexPrice,
-            fundingRate: perp.fundingRate,
-            nextFundingTime: null,
-          },
-          sentimentItems: [
-            {
-              label: "Open Interest",
-              helpKey: "open-interest",
-              value: perp.openInterest != null ? formatBtc(perp.openInterest) : "—",
-              sub: (perp.venue || "OKX") + " swap",
-            },
-            {
-              label: "Long/Short",
-              helpKey: "global-ls",
-              value: ls != null ? formatRatio(ls) : "—",
-              sub: "Account ratio",
-              valueClass: ls > 1 ? "positive" : ls < 1 ? "negative" : "",
-            },
-          ],
-          fetchedAt: perp.fetchedAt || new Date().toISOString(),
-          venue: perp.venue || "OKX",
-        };
+        futuresVenue = (perp.venue || "OKX").toLowerCase();
+        return perpBundleFromSnapshot(perp);
       }
       },
       render: (data, opts = {}) => {
+        const src = data?.venueLabel || (data?.venue && data.venue !== "Binance" ? data.venue + " fallback" : data?.venue) || "Binance";
         if (opts.loading) {
-          setFuturesPanelMeta({ state: "loading", source: data?.venue || "Binance" });
+          setFuturesPanelMeta({ state: "loading", source: src });
           return;
         }
         applyFuturesBundle(data);
-        futuresVenue = data.venue || futuresVenue;
+        futuresVenue = (data.venue || futuresVenue || "okx").toLowerCase();
         if (data.marketState?.price) setConnectionStatus("connected", "futures-status");
         setFuturesPanelMeta({
           fetchedAt: data.fetchedAt,
-          source: data.venue || "Binance",
+          source: src,
+          stale: opts.stale,
+          refreshing: opts.refreshing,
+          refreshFailed: opts.refreshFailed,
+        });
+        window.DashboardSWR?.setHeaderStamp?.("derivatives", {
+          fetchedAt: data.fetchedAt,
+          source: src,
           stale: opts.stale,
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,
@@ -925,7 +987,8 @@ async function loadFuturesData() {
   } catch (err) {
     console.error("Failed to load futures data:", err);
     if (!futuresMarketState.price) {
-      setFuturesPanelMeta({ state: "error", source: futuresVenue || "OKX" });
+      setConnectionStatus("disconnected", "futures-status");
+      setFuturesPanelMeta({ state: "error", source: futuresVenue && futuresVenue !== "binance" ? futuresVenue.toUpperCase() + " fallback" : "Binance" });
     }
   }
 }
@@ -964,6 +1027,7 @@ function connectFutures() {
     futuresWs = new WebSocket(FUTURES_WS_URL);
   } catch (_) {
     futuresVenue = "okx";
+    loadFuturesData();
     return;
   }
 
@@ -978,11 +1042,20 @@ function connectFutures() {
   futuresWs.onmessage = handleFuturesMessage;
 
   futuresWs.onclose = () => {
+    if (futuresVenue && futuresVenue !== "binance") return;
     setConnectionStatus("disconnected", "futures-status");
-    futuresReconnectTimer = setTimeout(connectFutures, 3000);
+    futuresReconnectTimer = setTimeout(connectFutures, 8000);
   };
 
-  futuresWs.onerror = () => futuresWs.close();
+  futuresWs.onerror = () => {
+    futuresVenue = "okx";
+    try {
+      futuresWs.close();
+    } catch (_) {
+      /* ignore */
+    }
+    loadFuturesData();
+  };
 }
 
 function applySpotBundle(bundle) {

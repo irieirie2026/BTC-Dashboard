@@ -40,11 +40,20 @@ def test_ts_5y_origin_budget():
 
 
 def test_miner_revenue_usd_not_btc():
+    from btc_data.fetchers import normalize_miner_revenue_btc
+
     usd = 45_858_668.8
     price = 81_000
-    btc = usd / price
+    btc = normalize_miner_revenue_btc(usd, price)
+    assert btc is not None
     assert 400 < btc < 800
-    assert usd > 2000
+    # Sat 5 Sep absurd card: 39.7M USD printed as BTC/day
+    absurd = normalize_miner_revenue_btc(39_753_685.1, 79_600)
+    assert absurd is not None
+    assert absurd < 2000
+    assert normalize_miner_revenue_btc(39_753_685.1, None) is None
+    assert normalize_miner_revenue_btc(565.4, 80_000) == 565.4
+    assert normalize_miner_revenue_btc(5000, 1) is None  # still >2k BTC after convert
 
 
 def test_datco_allows_public_company():

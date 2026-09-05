@@ -153,12 +153,18 @@ function heroValue(hero, section) {
 }
 
 async function fetchDefiSection(section) {
-  const res = await fetch(`/api/defi/${section}`);
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `DeFi ${section} ${res.status}`);
+  const ac = new AbortController();
+  const kill = setTimeout(() => ac.abort(), 12000);
+  try {
+    const res = await fetch(`/api/defi/${section}`, { cache: "no-store", signal: ac.signal });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `DeFi ${section} ${res.status}`);
+    }
+    return await res.json();
+  } finally {
+    clearTimeout(kill);
   }
-  return res.json();
 }
 
 function defiRiskMini(risk) {
@@ -1039,7 +1045,15 @@ async function loadDefiSection(section) {
     console.error("DeFi load failed:", section, err);
     const commentary = dfEl(`defi-${section}-commentary`);
     if (commentary && !defiCache[section]) {
-      commentary.innerHTML = `<p>Failed to load ${section} data. Is server.py running?</p>`;
+      commentary.innerHTML = `<p>DeFi data unavailable (timeout or empty). Not loading forever.</p>`;
+    }
+    const body = dfEl(`defi-${section}-table-body`);
+    if (body && !defiCache[section]) {
+      body.innerHTML = '<tr><td colspan="8">No DeFi rows — request timed out or failed</td></tr>';
+    }
+    const updateEl = dfEl(`defi-${section}-update`);
+    if (updateEl && !defiCache[section]) {
+      updateEl.textContent = "Unavailable · DeFi Llama";
     }
   }
 }

@@ -2992,10 +2992,11 @@ def _outlook_commentary(
         )
         best = arbitrage[0]
         lock_tag = "locked" if best.get("locked") else "RV"
+        fee_bit = ""
+        if best.get("feesPct") is not None:
+            fee_bit = f", fees ~{float(best.get('feesPct') or 0):.1f}%"
         lines.append(
-            f"Top ({best['edgePct']:.1f}% net, {lock_tag}"
-            f"{f', fees ~{best.get('feesPct', 0):.1f}%' if best.get('feesPct') is not None else ''}): "
-            f"{best['action']}"
+            f"Top ({best['edgePct']:.1f}% net, {lock_tag}{fee_bit}): {best['action']}"
         )
     else:
         lines.append(
