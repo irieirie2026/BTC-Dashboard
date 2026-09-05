@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-05T05:16:32Z",
+  "fetchedAt": "2026-09-05T09:58:53Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Bye-bye, \u20bfears.",
+      "link": "https://x.com/saylor/status/2096147642774437985#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bye-bye, \u20bfears. Video",
+      "publishedAt": "2026-09-05T08:05:17+00:00",
+      "publishedTs": 1788595517.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: https://www.cfosilvia.com",
       "link": "https://x.com/APompliano/status/2096040004648591363#m",
@@ -989,19 +1002,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Game. Set. \u20bfitcoin.",
-      "link": "https://x.com/saylor/status/2095047682913939676#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Game. Set. \u20bfitcoin. Video",
-      "publishedAt": "2026-09-02T07:14:26+00:00",
-      "publishedTs": 1788333266.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "RNS Announcement: Bitcoin Purchase The Smarter Web Company announces the purchase of additional Bitcoin as part of \"The 10 Year Plan\" which includes an ongoing treasury policy of acquiring Bitcoin. Please read the RNS on our website (link in comments). LSE: #SWC | OTCQB: $TSWCF |",
