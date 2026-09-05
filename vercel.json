@@ -52,7 +52,8 @@
       "source": "/law/:slug((?!.*\\.).*)",
       "destination": "/index.html"
     },
-    { "source": "/api/(.*)", "destination": "/api/handler?path=$1" }
+    { "source": "/api/(.*)", "destination": "/api/handler?path=$1" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "functions": {
     "api/handler.py": {

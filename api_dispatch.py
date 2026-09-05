@@ -648,6 +648,17 @@ def dispatch_api(path, query, body: dict | None = None):
                 "daysRequested": days,
             }
 
+    if path == "/api/desk-walk":
+        from bot_walk import run_walk
+
+        critical = (query.get("full") or ["0"])[0] not in ("1", "true", "yes")
+        return run_walk(
+            base="https://btc-dashboard-bay.vercel.app",
+            timeout=8.0 if critical else 12.0,
+            pages=not critical,
+            critical_only=critical,
+        )
+
     if path == "/api/market" or path.startswith("/api/market/"):
         from market_feed import (
             get_eth_daily,
