@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-06T16:44:07Z",
+  "fetchedAt": "2026-09-06T18:51:06Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
+      "link": "https://x.com/BitcoinMagazine/status/2096647712888205778#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Market here: polymarket.com/event/what-pr\u2026",
+      "publishedAt": "2026-09-06T17:12:23+00:00",
+      "publishedTs": 1788714743.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: There's now a 72% chance Bitcoin will be above $82,500 this month, according to Polymarket\u2060.com \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2096644040070512913#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-06T16:57:47+00:00",
+      "publishedTs": 1788713867.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "I'm not a Fed, but... I have no qualms coordinating with Feds when I cross paths with a threat actor who is in need of a serious smackdown.",
       "link": "https://x.com/lopp/status/2096613062820204966#m",
@@ -820,32 +846,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "JUST IN: Bitcoin surges to $81,002 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2095537433404146128#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-03T15:40:31+00:00",
-      "publishedTs": 1788450031.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: $80,139 Bitcoin \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2095524360907784674#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-03T14:48:35+00:00",
-      "publishedTs": 1788446915.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Bears, this is your stop.",
