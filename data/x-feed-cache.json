@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-09-06T21:02:51Z",
+  "fetchedAt": "2026-09-06T23:29:23Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "For a Country that dominates in every sport it cares about - and Americans definitely care about tennis - it seems extremely unusual that no American man has won a slam in 23 years. And none of this \u201cbest athletes don\u2019t play tennis\u201d crap. Several American tennis pros are freakish",
+      "link": "https://x.com/nic_carter/status/2096736321976861111#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "For a Country that dominates in every sport it cares about - and Americans definitely care about tennis - it seems extremely unusual that no American man has won a slam in 23 years. And none of this \u201cbest athletes don\u2019t play tennis\u201d crap. Several American tennis pros are freakish",
+      "publishedAt": "2026-09-06T23:04:29+00:00",
+      "publishedTs": 1788735869.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "WOOF",
+      "link": "https://x.com/JSeyff/status/2096736195443040353#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "WOOF Liquid Network \ud83c\udf0a (@Liquid_BTC) We are aware of a security incident on @Liquid_BTC . Purported white-hat hackers have withdrawn ~4,000 BTC (~$320 million) from the Liquid Federation wallet. The @Blockstream team is working on contacting them on-chain with a signed message. Wh",
+      "publishedAt": "2026-09-06T23:03:59+00:00",
+      "publishedTs": 1788735839.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Hackers have stolen ~4,000 Bitcoin worth $320 million from the Liquid Network \ud83d\udea8 The hackers claim to be white hat hackers, and said to \u201ccontact us on chain\u201d \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2096735264496345528#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-06T23:00:17+00:00",
+      "publishedTs": 1788735617.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "What\u2019s the best explanation for why the USA hasn\u2019t produced a truly elite men\u2019s tennis player in 20 years?",
+      "link": "https://x.com/nic_carter/status/2096733094933897518#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-06T22:51:39+00:00",
+      "publishedTs": 1788735099.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream\u2019s Liquid Network Federation Reserves https://bitcoinmagazine.com/news/alleged-white-hat-hackers-withdraw-4000-bitcoin-from-blockstreams-liquid-network-federation-reserves via @bitcoinmagazine",
+      "link": "https://x.com/JuanSGalt/status/2096724537874206842#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream\u2019s Liquid Network Federation Reserves bitcoinmagazine.com/news/all\u2026 via @bitcoinmagazine",
+      "publishedAt": "2026-09-06T22:17:39+00:00",
+      "publishedTs": 1788733059.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "I seriously doubt it's a coincidence that the Liquid bridge got drained just a couple days after Astra dropped. Looks like the Liquid functionary codebase hasn't been touched in 2 years, which isn't a good sign. https://x.com/lopp/status/2085341618320867590",
       "link": "https://x.com/lopp/status/2096685013450264941#m",
@@ -822,32 +887,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin futures here: https://polymarket.com/perps",
-      "link": "https://x.com/BitcoinMagazine/status/2095556878331707507#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Bitcoin futures here: polymarket.com/perps",
-      "publishedAt": "2026-09-03T16:57:48+00:00",
-      "publishedTs": 1788454668.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: World's largest prediction market Polymarket\u2060.com launches perpetual Bitcoin futures trading with up to 20x leverage \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2095552824016785504#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: World's largest prediction market Polymarket\u2060.com launches perpetual Bitcoin futures trading with up to 20x leverage \ud83d\ude80 Video",
-      "publishedAt": "2026-09-03T16:41:41+00:00",
-      "publishedTs": 1788453701.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The value of Bitcoin doesn't seem to be going up today, but rather the value of the dollar appears to be going down.",
       "link": "https://x.com/lopp/status/2095549644889563500#m",
       "source": "@lopp",
@@ -1392,32 +1431,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "this stuff is super complicated and most people are new to the state/local/federal tax analysis so of course headlines like \"datacenters get massive tax waivers\" are compelling. ordinary people _feel_ that they're being cheated by big tech. they read about massive waivers (always",
-      "link": "https://x.com/nic_carter/status/2093395769818538279#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "this stuff is super complicated and most people are new to the state/local/federal tax analysis so of course headlines like \"datacenters get massive tax waivers\" are compelling. ordinary people _feel_ that they're being cheated by big tech. they read about massive waivers (always",
-      "publishedAt": "2026-08-28T17:50:19+00:00",
-      "publishedTs": 1787939419.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "So that Americans will continue to win for generations to come. https://x.com/i/article/2092305472627851264",
-      "link": "https://x.com/12Palehorse/status/2093368505303179458#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "So that Americans will continue to win for generations to come. nitter.perennialte.ch/i/article/209230547262\u2026",
-      "publishedAt": "2026-08-28T16:01:59+00:00",
-      "publishedTs": 1787932919.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "*IRAN BEGINS LAYING MINES IN STRAIT OF HORMUZ: CNN",
