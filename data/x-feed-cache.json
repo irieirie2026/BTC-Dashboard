@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-06T18:51:06Z",
+  "fetchedAt": "2026-09-06T21:02:51Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "I seriously doubt it's a coincidence that the Liquid bridge got drained just a couple days after Astra dropped. Looks like the Liquid functionary codebase hasn't been touched in 2 years, which isn't a good sign. https://x.com/lopp/status/2085341618320867590",
+      "link": "https://x.com/lopp/status/2096685013450264941#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I seriously doubt it's a coincidence that the Liquid bridge got drained just a couple days after Astra dropped. Looks like the Liquid functionary codebase hasn't been touched in 2 years, which isn't a good sign. nitter.perennialte.ch/lopp/status/2085341618\u2026 Jameson Lopp (@lopp) T",
+      "publishedAt": "2026-09-06T19:40:36+00:00",
+      "publishedTs": 1788723636.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It looks like ~4,000 BTC just moved from the Liquid Network bridge all at once with an OP Return saying, \"we are whitehats. contact us on chain\". TXID: c103de95817b43f2df635ec6f35ff126ca26a7c6d20570c4b01866b2b3e69a19",
+      "link": "https://x.com/Rob1Ham/status/2096671192228741515#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "It looks like ~4,000 BTC just moved from the Liquid Network bridge all at once with an OP Return saying, \"we are whitehats. contact us on chain\". TXID: c103de95817b43f2df635ec6f35ff126ca26a7c6d20570c4b01866b2b3e69a19 \u2234FreeSamourai\u2234 (@ErgoBTC) Liquid got got? Liquid Pegout tx 4000",
+      "publishedAt": "2026-09-06T18:45:41+00:00",
+      "publishedTs": 1788720341.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
       "link": "https://x.com/BitcoinMagazine/status/2096647712888205778#m",
@@ -1363,32 +1389,6 @@
       "summary": "Glassbox is a neat new tool to help you understand how uniquely identifiable of a \"fingerprint\" your browser is leaving when it visits a web site and provides guidance for how to better blend into the crowd. glassbox.codecanary.org/",
       "publishedAt": "2026-08-30T14:48:34+00:00",
       "publishedTs": 1788101314.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "I just clanked out 2,500 lines of code while eating breakfast. Then I'll have a couple other clankers review the code and suggest improvements. The bottleneck to my productivity now is finding another human to peer review it. https://x.com/callebtc/status/2094055926013509980",
-      "link": "https://x.com/lopp/status/2094062875690123405#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "I just clanked out 2,500 lines of code while eating breakfast. Then I'll have a couple other clankers review the code and suggest improvements. The bottleneck to my productivity now is finding another human to peer review it. nitter.perennialte.ch/callebtc/status/209405\u2026 dr. call",
-      "publishedAt": "2026-08-30T14:01:10+00:00",
-      "publishedTs": 1788098470.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Oh hell naw.",
-      "link": "https://x.com/lopp/status/2094039549697544638#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-08-30T12:28:28+00:00",
-      "publishedTs": 1788092908.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
