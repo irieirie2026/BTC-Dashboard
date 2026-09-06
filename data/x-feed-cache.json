@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-06T05:30:22Z",
+  "fetchedAt": "2026-09-06T10:17:30Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Run like your money depends on it.",
+      "link": "https://x.com/saylor/status/2096509437414388179#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Run like your money depends on it. Video",
+      "publishedAt": "2026-09-06T08:02:55+00:00",
+      "publishedTs": 1788681775.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "7 miner wallets woke up after 16.5 years of inactivity and moved 350 $BTC ($28M) 6 hours ago. These miners earned the 350 $BTC from mining in March 2010. Wallets: 1LqKzBmdLGfEmvQPvzRQYBsb1VuBLFMeJ8 1Q9oY6c8T3KyjzrT7NVgx6qcoPXc3fU1R1 15VmQyGwCwiDmTk1e9jn2RbfGBLpusSJeP 18fXbAhW4apo",
       "link": "https://x.com/lookonchain/status/2096401602802598387#m",
@@ -1015,19 +1028,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "LATEST: \u26a1 Bitfinex Securities has listed five tokenized notes tracking Strategy, Strategy's STRC, Metaplanet, H100 Group and Capital B shares, tradable against USD, USDT and Bitcoin for eligible non-US investors.",
-      "link": "https://x.com/CoinMarketCap/status/2095069512169058598#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-09-02T08:41:10+00:00",
-      "publishedTs": 1788338470.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Every 2,016 blocks, the Bitcoin network measures how much the world has changed and adjusts its difficulty without changing its promise. Faster chips, cheaper energy, and more miners make the network stronger instead of making more bitcoin.",
