@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-06T00:34:38Z",
+  "fetchedAt": "2026-09-06T05:30:22Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "7 miner wallets woke up after 16.5 years of inactivity and moved 350 $BTC ($28M) 6 hours ago. These miners earned the 350 $BTC from mining in March 2010. Wallets: 1LqKzBmdLGfEmvQPvzRQYBsb1VuBLFMeJ8 1Q9oY6c8T3KyjzrT7NVgx6qcoPXc3fU1R1 15VmQyGwCwiDmTk1e9jn2RbfGBLpusSJeP 18fXbAhW4apo",
+      "link": "https://x.com/lookonchain/status/2096401602802598387#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "7 miner wallets woke up after 16.5 years of inactivity and moved 350 $BTC ($28M) 6 hours ago. These miners earned the 350 $BTC from mining in March 2010. Wallets: 1LqKzBmdLGfEmvQPvzRQYBsb1VuBLFMeJ8 1Q9oY6c8T3KyjzrT7NVgx6qcoPXc3fU1R1 15VmQyGwCwiDmTk1e9jn2RbfGBLpusSJeP 18fXbAhW4apo",
+      "publishedAt": "2026-09-06T00:54:26+00:00",
+      "publishedTs": 1788656066.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: U.S. \ud83c\uddfa\ud83c\uddf8 Bitcoin ETFs saw $986.8 million in inflow this week \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2096292784516817257#m",
