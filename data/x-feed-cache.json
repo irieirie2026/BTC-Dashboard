@@ -1,7 +1,85 @@
 {
-  "fetchedAt": "2026-09-08T14:53:36Z",
+  "fetchedAt": "2026-09-08T18:19:09Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: Bitcoin crosses the golden cross formation, which previously led to the $126,200 all-time high in May 2025 \ud83d\udc40 Bullish! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2097385016065921272#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-08T18:02:10+00:00",
+      "publishedTs": 1788890530.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "LLMs are just a stochastic parrot right",
+      "link": "https://x.com/nic_carter/status/2097382440431927788#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "LLMs are just a stochastic parrot right OpenAI (@OpenAI) We\u2019re sharing a solution to the Navier-Stokes Millennium Prize Problem, one of the deepest problems at the frontier of mathematics. The proof was produced by a group of agents, using an OpenAI next-generation model signific",
+      "publishedAt": "2026-09-08T17:51:55+00:00",
+      "publishedTs": 1788889915.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Welcome Back to The Hurdle Rate Episode 73: The Billion Dollar Wall In this week's Hurdle Rate, the crew discusses $SATA hitting $999 million outstanding, Strategy $MSTR doubling its $STRC repurchase facility to $2 billion, and Strive $ASST adding another 1,000+ bitcoin:native. B",
+      "link": "https://x.com/HurdleRatePod/status/2097363253378916755#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Welcome Back to The Hurdle Rate Episode 73: The Billion Dollar Wall In this week's Hurdle Rate, the crew discusses $SATA hitting $999 million outstanding, Strategy $MSTR doubling its $STRC repurchase facility to $2 billion, and Strive $ASST adding another 1,000+ bitcoin:native. B",
+      "publishedAt": "2026-09-08T16:35:41+00:00",
+      "publishedTs": 1788885341.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Crypto super PAC network Fairshake launches national TV ad calling out big banks for trying to kill the Clarity Act \ud83d\udc40 \"TELL CONGRESS PASS THE BIPARTISAN CLARITY ACT\"",
+      "link": "https://x.com/BitcoinMagazine/status/2097363152333599195#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Crypto super PAC network Fairshake launches national TV ad calling out big banks for trying to kill the Clarity Act \ud83d\udc40 \"TELL CONGRESS PASS THE BIPARTISAN CLARITY ACT\" Video",
+      "publishedAt": "2026-09-08T16:35:17+00:00",
+      "publishedTs": 1788885317.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin had a great run over the last 30 days. But investors are not selling their public stocks to buy bitcoin, rather they are converting stablecoins into bitcoin which suggests there is much more appreciation to come.",
+      "link": "https://x.com/APompliano/status/2097362692319171052#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Bitcoin had a great run over the last 30 days. But investors are not selling their public stocks to buy bitcoin, rather they are converting stablecoins into bitcoin which suggests there is much more appreciation to come. Video",
+      "publishedAt": "2026-09-08T16:33:27+00:00",
+      "publishedTs": 1788885207.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Crypto super PAC network Fairshake will launch national TV ads to gain support for the Clarity Act \ud83d\udc40 \ud83c\uddfa\ud83c\uddf8 \u201cThe AARP endorses provisions of the bipartisan Clarity Act\u201d",
+      "link": "https://x.com/BitcoinMagazine/status/2097340854398529949#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Crypto super PAC network Fairshake will launch national TV ads to gain support for the Clarity Act \ud83d\udc40 \ud83c\uddfa\ud83c\uddf8 \u201cThe AARP endorses provisions of the bipartisan Clarity Act\u201d Video",
+      "publishedAt": "2026-09-08T15:06:41+00:00",
+      "publishedTs": 1788880001.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Bloomberg's James Seyffart on why ETF flows are a mirror, not a signal \"They're just a piece of the pie. Honestly, they reflect what's going on in the broader market more than anything. There was a time where you got an ETF on an underlying asset and that actually moved the marke",
       "link": "https://x.com/scottmelker/status/2097333449535504749#m",
@@ -27,6 +105,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "This free course balances theory, application & implementation covering classical techniques involving symmetric and public key cryptography to more immediate topics such as blockchain, zero-knowledge proofs, and quantum cryptography. https://learn.saylor.org/course/cs260",
+      "link": "https://x.com/saylordotorg/status/2097327943315870149#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "This free course balances theory, application &amp; implementation covering classical techniques involving symmetric and public key cryptography to more immediate topics such as blockchain, zero-knowledge proofs, and quantum cryptography. learn.saylor.org/course/cs26\u2026",
+      "publishedAt": "2026-09-08T14:15:22+00:00",
+      "publishedTs": 1788876922.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "It's also about fees. Comes back to out Fee of Dreams meme Lower it and They Will Come (altho caveat is it has to be in an ETF to matter)",
@@ -66,6 +157,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "\u20bfuild in Cyber Manhattan",
+      "link": "https://x.com/LaDoger/status/2097319252004897221#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "\u20bfuild in Cyber Manhattan Video",
+      "publishedAt": "2026-09-08T13:40:50+00:00",
+      "publishedTs": 1788874850.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 U.S. Senate will hold a procedural cloture vote on the Clarity Act one week from today. Senator Cynthia Lummis says if they fail to pass it next week, \"we will not get another realistic shot at this before the end of the decade\" \ud83d\udc40 Pass it \ud83d\udc4f",
@@ -237,6 +341,19 @@
       "isRetweet": false
     },
     {
+      "title": "What if portfolio managers return from their month-long vacation in the Hamptons tomorrow, see Bitcoin\u2019s recent strength, and start aggressively acquiring more? A question worth considering\u2026",
+      "link": "https://x.com/APompliano/status/2097107039096824110#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-09-07T23:37:35+00:00",
+      "publishedTs": 1788824255.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "\u20bfasic Math",
       "link": "https://x.com/LaDoger/status/2097091598915969258#m",
       "source": "@saylor",
@@ -263,6 +380,19 @@
       "isRetweet": true
     },
     {
+      "title": "New tutorial! This time, we're setting up Bitcoin multisig with @CasaHODL. In this video, I explain how to: - Set up a 2-of-3 vault with a @Trezor Safe 5 and @Ledger Nano S Plus - Back up your keys and wallet data - Send and receive bitcoin - Recover your wallet in Sparrow, witho",
+      "link": "https://x.com/Bart_Mol/status/2097064588642849121#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "New tutorial! This time, we're setting up Bitcoin multisig with @CasaHODL . In this video, I explain how to: - Set up a 2-of-3 vault with a @Trezor Safe 5 and @Ledger Nano S Plus - Back up your keys and wallet data - Send and receive bitcoin - Recover your wallet in Sparrow, with",
+      "publishedAt": "2026-09-07T20:48:54+00:00",
+      "publishedTs": 1788814134.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "600 BTC is quite the tip hahaha. I have no idea what would be a standard acceptable bounty though? Still \u2026 cold card victims would probably gladly give up 15% of their BTC to get back the other 85%. Doubt there\u2019d even be any questions \ud83e\udd37\ud83c\udffc\u200d\u2642\ufe0f",
       "link": "https://x.com/JSeyff/status/2097043968663929343#m",
       "source": "@JSeyff",
@@ -271,6 +401,32 @@
       "summary": "600 BTC is quite the tip hahaha. I have no idea what would be a standard acceptable bounty though? Still \u2026 cold card victims would probably gladly give up 15% of their BTC to get back the other 85%. Doubt there\u2019d even be any questions \ud83e\udd37\ud83c\udffc\u200d\u2642\ufe0f Alex Thorn (@intangiblecoins) \ud83d\udea8\ud83d\udca7 LIQUID",
       "publishedAt": "2026-09-07T19:26:57+00:00",
       "publishedTs": 1788809217.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "In a discussion about making transaction fees mandatory, Satoshi Nakamoto proposed 16 years ago limiting the amount of free transaction space before charging, but never reducing that allowance to zero. The transaction fee is what stops people from spamming the network.",
+      "link": "https://x.com/DocumentingBTC/status/2097034734660399203#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-07T18:50:16+00:00",
+      "publishedTs": 1788807016.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "An Internet forum user 16 years ago measured their computer\u2019s electricity use and estimated it would take approximately two weeks to produce a Bitcoin block. With the block mining subsidy then 50 bitcoin, their estimated electricity cost was $5.68, which they called \u201ca net loser\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2097033951655178377#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-07T18:47:09+00:00",
+      "publishedTs": 1788806829.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -302,6 +458,19 @@
       "isRetweet": false
     },
     {
+      "title": "Entering Day 39",
+      "link": "https://x.com/Rob1Ham/status/2096969021149065238#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Entering Day 39 Rob Hamilton \ud83d\udfe5 (@Rob1Ham) Entering Day 6 \u2014 http://nitter.perennialte.ch/Rob1Ham/status/2084820415021527403#m",
+      "publishedAt": "2026-09-07T14:29:09+00:00",
+      "publishedTs": 1788791349.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Sept 7 Update: #Bitcoin ETFs: 1D NetFlow: +2,038 bitcoin:native(+$161.83M)\ud83d\udfe2 7D NetFlow: +11,093 bitcoin:native(+$880.76M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: +22,023 $ETH(+$55.04M)\ud83d\udfe2 7D NetFlow: +64,879 $ETH(+$162.16M)\ud83d\udfe2",
       "link": "https://x.com/lookonchain/status/2096962205505999044#m",
       "source": "@lookonchain",
@@ -315,6 +484,19 @@
       "isRetweet": false
     },
     {
+      "title": "Jordi Visser thinks the rise of AI agents is an argument for investors to buy bitcoin & crypto. He says the debasement trade is compelling, but the fact that AI agents need to transact value in milliseconds is too big to ignore now. Do you agree with @jvisserlabs?",
+      "link": "https://x.com/APompliano/status/2096959795559268455#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Jordi Visser thinks the rise of AI agents is an argument for investors to buy bitcoin &amp; crypto. He says the debasement trade is compelling, but the fact that AI agents need to transact value in milliseconds is too big to ignore now. Do you agree with @jvisserlabs ? Video Anth",
+      "publishedAt": "2026-09-07T13:52:29+00:00",
+      "publishedTs": 1788789149.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin \ud83d\udc40 \u201cWall-breaking season at Strive.\u201d",
       "link": "https://x.com/BitcoinMagazine/status/2096958588551913695#m",
       "source": "@BitcoinMagazine",
@@ -323,6 +505,19 @@
       "summary": "",
       "publishedAt": "2026-09-07T13:47:41+00:00",
       "publishedTs": 1788788861.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "In the 7 months before this post I contributed 300 lines of code to Casa repositories. In the 1 month after this post I've contributed 50,000 lines of code - mostly tests, integrity checks, and security tooling. https://x.com/lopp/status/2084695423076151780",
+      "link": "https://x.com/lopp/status/2096949084279988309#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "In the 7 months before this post I contributed 300 lines of code to Casa repositories. In the 1 month after this post I've contributed 50,000 lines of code - mostly tests, integrity checks, and security tooling. nitter.perennialte.ch/lopp/status/2084695423\u2026 Jameson Lopp (@lopp) T",
+      "publishedAt": "2026-09-07T13:09:55+00:00",
+      "publishedTs": 1788786595.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -471,6 +666,32 @@
       "isRetweet": true
     },
     {
+      "title": "I seriously doubt it's a coincidence that the Liquid bridge got drained just a couple days after Astra dropped. Looks like the Liquid functionary codebase hasn't been touched in 2 years, which isn't a good sign. https://x.com/lopp/status/2085341618320867590",
+      "link": "https://x.com/lopp/status/2096685013450264941#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "I seriously doubt it's a coincidence that the Liquid bridge got drained just a couple days after Astra dropped. Looks like the Liquid functionary codebase hasn't been touched in 2 years, which isn't a good sign. nitter.perennialte.ch/lopp/status/2085341618\u2026 Jameson Lopp (@lopp) T",
+      "publishedAt": "2026-09-06T19:40:36+00:00",
+      "publishedTs": 1788723636.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It looks like ~4,000 BTC just moved from the Liquid Network bridge all at once with an OP Return saying, \"we are whitehats. contact us on chain\". TXID: c103de95817b43f2df635ec6f35ff126ca26a7c6d20570c4b01866b2b3e69a19",
+      "link": "https://x.com/Rob1Ham/status/2096671192228741515#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "It looks like ~4,000 BTC just moved from the Liquid Network bridge all at once with an OP Return saying, \"we are whitehats. contact us on chain\". TXID: c103de95817b43f2df635ec6f35ff126ca26a7c6d20570c4b01866b2b3e69a19 \u2234FreeSamourai\u2234 (@ErgoBTC) Liquid got got? Liquid Pegout tx 4000",
+      "publishedAt": "2026-09-06T18:45:41+00:00",
+      "publishedTs": 1788720341.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "Market here: https://polymarket.com/event/what-price-will-bitcoin-hit-in-september-2026",
       "link": "https://x.com/BitcoinMagazine/status/2096647712888205778#m",
       "source": "@BitcoinMagazine",
@@ -492,6 +713,32 @@
       "summary": "",
       "publishedAt": "2026-09-06T16:57:47+00:00",
       "publishedTs": 1788713867.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I'm not a Fed, but... I have no qualms coordinating with Feds when I cross paths with a threat actor who is in need of a serious smackdown.",
+      "link": "https://x.com/lopp/status/2096613062820204966#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-06T14:54:42+00:00",
+      "publishedTs": 1788706482.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "An Internet forum user predicted that $7 per bitcoin was a \u201cbubble\u201d because of technical analysis on a chart. There\u2019s a lesson there.",
+      "link": "https://x.com/DocumentingBTC/status/2096571030772781506#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-06T12:07:40+00:00",
+      "publishedTs": 1788696460.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -601,6 +848,19 @@
       "isRetweet": false
     },
     {
+      "title": "I spoke with @jvisserlabs to understand why rising interest rates may not derail the AI-driven economy, bitcoin's path to new highs, and how AI agents are already reshaping markets, business management, and crypto adoption. We also cover tokenization, portfolio allocation, and wh",
+      "link": "https://x.com/APompliano/status/2096225121815970279#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I spoke with @jvisserlabs to understand why rising interest rates may not derail the AI-driven economy, bitcoin's path to new highs, and how AI agents are already reshaping markets, business management, and crypto adoption. We also cover tokenization, portfolio allocation, and wh",
+      "publishedAt": "2026-09-05T13:13:09+00:00",
+      "publishedTs": 1788613989.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Fiat is free fall. Bitcoin is the parachute.",
       "link": "https://x.com/AlexesNakamoto/status/2096213618782081221#m",
       "source": "@saylor",
@@ -625,6 +885,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: https://www.cfosilvia.com",
+      "link": "https://x.com/APompliano/status/2096040004648591363#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: cfosilvia.com",
+      "publishedAt": "2026-09-05T00:57:34+00:00",
+      "publishedTs": 1788569854.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "seems like the rogue agents used every possible forum except moltbook, the one specifically made for them",
@@ -926,19 +1199,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: BlackRock spot #Bitcoin ETF IBIT had $453 million in inflows yesterday.",
-      "link": "https://x.com/BitcoinMagazine/status/2095858077014638654#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-04T12:54:39+00:00",
-      "publishedTs": 1788526479.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "A company can own a large percentage of all bitcoin while owning zero percent of Bitcoin.",
       "link": "https://x.com/DocumentingBTC/status/2095853959101517911#m",
       "source": "@DocumentingBTC",
@@ -952,40 +1212,14 @@
       "isRetweet": false
     },
     {
-      "title": "In America, you don\u2019t need a license to discuss Bitcoin, advocate for it, or publicly recommend owning it. Bitcoin is a commodity, not a security. Fraud and manipulation are illegal. Bitcoin advocacy is free speech.",
-      "link": "https://x.com/saylor/status/2095820138012447121#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "title": "If Bernie Sanders and Greg Casar had any clue, they'd be proposing something more akin to Asimov's Three Laws of Robotics rather than an ineffective ban on strong AI. IBM already foresaw how to approach the problem of machine intelligence 45 years ago...",
+      "link": "https://x.com/lopp/status/2095849318624206880#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
       "summary": "",
-      "publishedAt": "2026-09-04T10:23:54+00:00",
-      "publishedTs": 1788517434.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JOHNNY \u20bf WICK \ud83d\udc3b",
-      "link": "https://x.com/AlexesNakamoto/status/2095814719097421940#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "JOHNNY \u20bf WICK \ud83d\udc3b Video",
-      "publishedAt": "2026-09-04T10:02:22+00:00",
-      "publishedTs": 1788516142.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "JUST IN: Major U.S. law enforcement organization National Sheriffs\u2019 Association no longer opposes The Clarity Act \ud83d\udc40 \u201cWe believe the most appropriate course is to step back and allow the legislative process to proceed to establish a\u2026much needed regulatory framework.\u201d \ud83c\uddfa\ud83c\uddf8",
-      "link": "https://x.com/BitcoinMagazine/status/2095813271991333031#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-04T09:56:37+00:00",
-      "publishedTs": 1788515797.0,
+      "publishedAt": "2026-09-04T12:19:51+00:00",
+      "publishedTs": 1788524391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -999,32 +1233,6 @@
       "summary": "",
       "publishedAt": "2026-09-04T02:43:48+00:00",
       "publishedTs": 1788489828.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "We\u2019re not traders. We don\u2019t speculate or try to time the market. We don\u2019t do technical analysis or draw lines on charts. bitcoin:native is going up forever. There\u2019s only one @Strategy. Buy and hodl.",
-      "link": "https://x.com/CJ_Bitcoin/status/2095648667638038584#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We\u2019re not traders. We don\u2019t speculate or try to time the market. We don\u2019t do technical analysis or draw lines on charts. bitcoin:native is going up forever. There\u2019s only one @Strategy . Buy and hodl.",
-      "publishedAt": "2026-09-03T23:02:32+00:00",
-      "publishedTs": 1788476552.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "BREAKING: Bitcoin rockets to $82,016! \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2095626351503970555#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-03T21:33:51+00:00",
-      "publishedTs": 1788471231.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1064,6 +1272,32 @@
       "summary": "",
       "publishedAt": "2026-09-03T19:37:24+00:00",
       "publishedTs": 1788464244.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Hey @grok can legislation be used to effectively block the advancement of technological progress? \ud83d\ude43 https://x.com/WatcherGuru/status/2095567788051984638",
+      "link": "https://x.com/lopp/status/2095574219580932470#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Hey @grok can legislation be used to effectively block the advancement of technological progress? \ud83d\ude43 nitter.perennialte.ch/WatcherGuru/status/209\u2026 Watcher.Guru (@WatcherGuru) JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Bernie Sanders introduces bill to permanently ban AI that exceeds human intelligence. ",
+      "publishedAt": "2026-09-03T18:06:42+00:00",
+      "publishedTs": 1788458802.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The value of Bitcoin doesn't seem to be going up today, but rather the value of the dollar appears to be going down.",
+      "link": "https://x.com/lopp/status/2095549644889563500#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-03T16:29:03+00:00",
+      "publishedTs": 1788452943.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1134,6 +1368,45 @@
       "isRetweet": false
     },
     {
+      "title": "x.com/i/article/209517356207\u2026",
+      "link": "https://x.com/valkenburgh/status/2095174279956431269#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "nitter.perennialte.ch/i/article/209517356207\u2026",
+      "publishedAt": "2026-09-02T15:37:29+00:00",
+      "publishedTs": 1788363449.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "\ud83d\udd34 LIVE AT 11AM ET AI + Social Engineering = Bitcoin Scams Are About To Get 10x WORSE @lopp and @BeccaAmilee join us for a conversation all Bitcoiners need to hear to better protect themselves in this new era. Set notifications: https://youtube.com/live/j9Cgr-JnkkA",
+      "link": "https://x.com/BitcoinNewsCom/status/2095151729620726208#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "\ud83d\udd34 LIVE AT 11AM ET AI + Social Engineering = Bitcoin Scams Are About To Get 10x WORSE @lopp and @BeccaAmilee join us for a conversation all Bitcoiners need to hear to better protect themselves in this new era. Set notifications: youtube.com/live/j9Cgr-JnkkA",
+      "publishedAt": "2026-09-02T14:07:53+00:00",
+      "publishedTs": 1788358073.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Dropbox provided me with a list of files downloaded from my compromised account. It was a single file: IMPORTANT.rtf Here are the contents of the file. It must have been quite disappointing \ud83d\ude07 https://x.com/lopp/status/2094801655485137106",
+      "link": "https://x.com/lopp/status/2095118262103106026#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Dropbox provided me with a list of files downloaded from my compromised account. It was a single file: IMPORTANT.rtf Here are the contents of the file. It must have been quite disappointing \ud83d\ude07 nitter.perennialte.ch/lopp/status/2094801655\u2026 Jameson Lopp (@lopp) My dropbox account wa",
+      "publishedAt": "2026-09-02T11:54:53+00:00",
+      "publishedTs": 1788350093.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Every 2,016 blocks, the Bitcoin network measures how much the world has changed and adjusts its difficulty without changing its promise. Faster chips, cheaper energy, and more miners make the network stronger instead of making more bitcoin.",
       "link": "https://x.com/DocumentingBTC/status/2094956655087624234#m",
       "source": "@DocumentingBTC",
@@ -1142,6 +1415,45 @@
       "summary": "",
       "publishedAt": "2026-09-02T01:12:43+00:00",
       "publishedTs": 1788311563.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This Dropbox breach is going to result in lost funds. It's why you never save pictures or files of your seed phrases and private keys in the cloud (or a device synced to the cloud).",
+      "link": "https://x.com/forwardsecrecy/status/2094875955059986665#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "This Dropbox breach is going to result in lost funds. It's why you never save pictures or files of your seed phrases and private keys in the cloud (or a device synced to the cloud). Jameson Lopp (@lopp) One reason I suspect the Dropbox breach may be massive is because I didn't ge",
+      "publishedAt": "2026-09-01T19:52:03+00:00",
+      "publishedTs": 1788292323.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "One reason I suspect the Dropbox breach may be massive is because I didn't get a login email notification when my account was accessed. Turns out, unlike every other login notification I've received from them, it went to spam. Likely due to a large uptick in their send volume...",
+      "link": "https://x.com/lopp/status/2094874991363789051#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-01T19:48:13+00:00",
+      "publishedTs": 1788292093.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "After several rewrites of our pentest harness last month, I have a full run down to $100 in 2 hours. Incremental runs that skip unchanged files are even faster and cheaper. A C C E L E R A T E https://x.com/lopp/status/2084695423076151780",
+      "link": "https://x.com/lopp/status/2094871045849178595#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "After several rewrites of our pentest harness last month, I have a full run down to $100 in 2 hours. Incremental runs that skip unchanged files are even faster and cheaper. A C C E L E R A T E nitter.perennialte.ch/lopp/status/2084695423\u2026 Jameson Lopp (@lopp) To give some perspec",
+      "publishedAt": "2026-09-01T19:32:32+00:00",
+      "publishedTs": 1788291152.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1160,17 +1472,43 @@
       "isRetweet": false
     },
     {
-      "title": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
-      "link": "https://x.com/seanjudgeciv/status/2094811677954802118#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "F\u00e9lix has built a remarkable business by starting with one of the most important financial needs for millions of Latinos in the US: sending money home. The opportunity goes far beyond remittances and we believe @Felixpago has the potential to build a new generation of financial s",
-      "publishedAt": "2026-09-01T15:36:38+00:00",
-      "publishedTs": 1788276998.0,
+      "title": "Busy morning in cybersecurity land: * Potentially massive Dropbox account compromise * Fake BitKey desktop software phishing email * X password reset email deluge * Protonmail outage",
+      "link": "https://x.com/lopp/status/2094825940090057033#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-01T16:33:18+00:00",
+      "publishedTs": 1788280398.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": true
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon!",
+      "link": "https://x.com/lopp/status/2094807737200730178#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon! Video",
+      "publishedAt": "2026-09-01T15:20:58+00:00",
+      "publishedTs": 1788276058.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "My dropbox account was compromised via this vulnerability. Thankfully I encrypt my files locally before uploading to dropbox! https://x.com/9to5mac/status/2094770956912775372 https://blog.lopp.net/how-to-securely-back-up-data-to-cloud-storage/",
+      "link": "https://x.com/lopp/status/2094801655485137106#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "My dropbox account was compromised via this vulnerability. Thankfully I encrypt my files locally before uploading to dropbox! nitter.perennialte.ch/9to5mac/status/2094770\u2026 blog.lopp.net/how-to-securel\u2026 9to5Mac (@9to5mac) Dropbox breach seemingly caused by egregious authentication",
+      "publishedAt": "2026-09-01T14:56:48+00:00",
+      "publishedTs": 1788274608.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Bitcoin mining can travel to the source of electricity instead of requiring electricity to travel to industry. Energy infrastructure can begin earning before the roads, factories, and cities that may eventually grow around it.",
@@ -1212,6 +1550,19 @@
       "isRetweet": false
     },
     {
+      "title": "The software industry is entering into a security debt crisis, though many have yet to realize it. The exploitation of a slew of Bitcoin projects was just the canary in the coal mine.",
+      "link": "https://x.com/lopp/status/2094499013659636176#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-08-31T18:54:13+00:00",
+      "publishedTs": 1788202453.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "A Bitcoin address can amazingly be created on a computer that has never touched the internet.",
       "link": "https://x.com/DocumentingBTC/status/2094488679595086112#m",
       "source": "@DocumentingBTC",
@@ -1246,45 +1597,6 @@
       "summary": "",
       "publishedAt": "2026-08-31T17:35:03+00:00",
       "publishedTs": 1788197703.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day in history, 16 years ago, a user complained while mining bitcoin at home with their desktop computer, \u201cI just can\u2019t wait one month to see 50 bitcoins\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2094470640560492632#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-31T17:01:28+00:00",
-      "publishedTs": 1788195688.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfREAKING: Strategy buys additional 4,603 bitcoins and now holds $65,760,000,000 worth.",
-      "link": "https://x.com/DocumentingBTC/status/2094419404599574749#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-08-31T13:37:53+00:00",
-      "publishedTs": 1788183473.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Bill Gates says, \u201cI wouldn\u2019t choose crypto\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2094400622753649004#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Bill Gates says, \u201cI wouldn\u2019t choose crypto\u201d Video",
-      "publishedAt": "2026-08-31T12:23:15+00:00",
-      "publishedTs": 1788178995.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
