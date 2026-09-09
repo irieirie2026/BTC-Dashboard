@@ -1,14 +1,40 @@
 {
-  "fetchedAt": "2026-09-08T23:50:24Z",
+  "fetchedAt": "2026-09-09T03:10:22Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
-      "title": "\ud83d\udea8New Scam Alert\ud83d\udea8 Threat actors are sending out emails directing people to a \"mandatory security update\" site for Liquid Network that tries to trick you into downloading and running a malicious .exe file. /cc @Liquid_BTC",
+      "title": "Someone created a new wallet (0xcfe2), deposited 11.9M $USDC into #Hyperliquid, then opened a 20x long on 500 bitcoin:native($39.44M). Liquidation Price: $55,570.76 https://hypurrscan.io/address/0xcfe2729438475c5eb9e8e6da6b314a0b9e2d8fb3#perps",
+      "link": "https://x.com/lookonchain/status/2097506315996397930#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Someone created a new wallet (0xcfe2), deposited 11.9M $USDC into #Hyperliquid , then opened a 20x long on 500 bitcoin:native($39.44M). Liquidation Price: $55,570.76 hypurrscan.io/address/0xcfe2\u2026",
+      "publishedAt": "2026-09-09T02:04:10+00:00",
+      "publishedTs": 1788919450.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "New 'Fed' ETFs to bet on: --Whether the FOMC will increase, decrease or maintain the target for the federal funds rate at a particular FOMC meeting; --The number of times the FOMC will increase or decrease the target for the federal funds rate in a calendar year; --The size of an",
+      "link": "https://x.com/EricBalchunas/status/2097476073353052553#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "New 'Fed' ETFs to bet on: --Whether the FOMC will increase, decrease or maintain the target for the federal funds rate at a particular FOMC meeting; --The number of times the FOMC will increase or decrease the target for the federal funds rate in a calendar year; --The size of an",
+      "publishedAt": "2026-09-09T00:03:59+00:00",
+      "publishedTs": 1788912239.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Pinned: \ud83d\udea8New Scam Alert\ud83d\udea8 Threat actors are sending out emails directing people to a \"mandatory security update\" site for Liquid Network that tries to trick you into downloading and running a malicious .exe file. /cc @Liquid_BTC",
       "link": "https://x.com/lopp/status/2097457863635415062#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
+      "summary": "\ud83d\udea8New Scam Alert\ud83d\udea8 Threat actors are sending out emails directing people to a \"mandatory security update\" site for Liquid Network that tries to trick you into downloading and running a malicious .exe file. /cc @Liquid_BTC",
       "publishedAt": "2026-09-08T22:51:38+00:00",
       "publishedTs": 1788907898.0,
       "category": "x",
@@ -1511,7 +1537,7 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon!",
+      "title": "SNEAK PEEK: I've been speaking with the social engineers who pose as Google support agents to better understand their operation. @CasaHODL will be publishing a full report soon!",
       "link": "https://x.com/lopp/status/2094807737200730178#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
