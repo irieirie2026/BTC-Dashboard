@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-10T05:36:55Z",
+  "fetchedAt": "2026-09-10T10:39:10Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
@@ -703,19 +703,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Sept 8 Update: #Bitcoin ETFs: 1D NetFlow: +398 $BTC(+$31.07M)\ud83d\udfe2 7D NetFlow: +8,937 $BTC(+$698.42M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -19,667 $ETH(-$48.34M)\ud83d\udd34 7D NetFlow: +15,939 $ETH(+$39.18M)\ud83d\udfe2",
-      "link": "https://x.com/lookonchain/status/2097328074904019070#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Sept 8 Update: #Bitcoin ETFs: 1D NetFlow: +398 $BTC (+$31.07M)\ud83d\udfe2 7D NetFlow: +8,937 $BTC (+$698.42M)\ud83d\udfe2 #Ethereum ETFs: 1D NetFlow: -19,667 $ETH (-$48.34M)\ud83d\udd34 7D NetFlow: +15,939 $ETH (+$39.18M)\ud83d\udfe2",
-      "publishedAt": "2026-09-08T14:15:54+00:00",
-      "publishedTs": 1788876954.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "This free course balances theory, application & implementation covering classical techniques involving symmetric and public key cryptography to more immediate topics such as blockchain, zero-knowledge proofs, and quantum cryptography. https://learn.saylor.org/course/cs260",
