@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-10T23:43:44Z",
+  "fetchedAt": "2026-09-11T03:05:25Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Gambler 0x396d opened a 40x long on 911.55 $BTC ($70.08M) 10 hours ago. Liquidation price: $76,308.6 This gambler has made 80 $BTC trades recently, winning 92.5% of them. https://hyperbot.network/trader/0x396dc3e4d1051837bb559810d2b1ea7977775899",
+      "link": "https://x.com/lookonchain/status/2098220579837071694#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Gambler 0x396d opened a 40x long on 911.55 $BTC ($70.08M) 10 hours ago. Liquidation price: $76,308.6 This gambler has made 80 $BTC trades recently, winning 92.5% of them. hyperbot.network/trader/0x39\u2026",
+      "publishedAt": "2026-09-11T01:22:23+00:00",
+      "publishedTs": 1789089743.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\ud83d\udea8 BMTV is going LIVE next Monday at 9:30 AM ET RSVP and tune in \ud83d\udc47 Youtube: https://youtube.com/live/0FZBdtoiYf8?feature=share Rumble: https://rumble.com/v7fcj4s-bitcoin-macro-clarity-act-look-ahead-bmtv-sep.-14-2026.html X: https://x.com/i/broadcasts/1XxygwVNXydGM?s=20",
       "link": "https://x.com/watchbmtv/status/2098180708246192386#m",
@@ -14,19 +27,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Scientists coded the entire brain of a fly into a computer program. Then a developer gave the fly brain $100 to trade bitcoin. Dopamine neurons stimulate when the fly makes profit. Neuron activity controls buy and sells to make trades. Yes, it\u2019s real.",
-      "link": "https://x.com/DocumentingBTC/status/2098176364893385169#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Scientists coded the entire brain of a fly into a computer program. Then a developer gave the fly brain $100 to trade bitcoin. Dopamine neurons stimulate when the fly makes profit. Neuron activity controls buy and sells to make trades. Yes, it\u2019s real. Video",
-      "publishedAt": "2026-09-10T22:26:42+00:00",
-      "publishedTs": 1789079202.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "JUST IN: Coinbase CEO Brian Armstrong says the Clarity Act \"is right on the finish line.\" \ud83d\udc40 \"The rest of the G20 have already gotten legislation like this live so it's time for the U.S. to do it\" \ud83c\uddfa\ud83c\uddf8",
@@ -835,19 +835,6 @@
       "isRetweet": true
     },
     {
-      "title": "Someone created a new wallet (0xcfe2), deposited 11.9M $USDC into #Hyperliquid, then opened a 20x long on 500 bitcoin:native($39.44M). Liquidation Price: $55,570.76 https://hypurrscan.io/address/0xcfe2729438475c5eb9e8e6da6b314a0b9e2d8fb3#perps",
-      "link": "https://x.com/lookonchain/status/2097506315996397930#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Someone created a new wallet (0xcfe2), deposited 11.9M $USDC into #Hyperliquid , then opened a 20x long on 500 bitcoin:native($39.44M). Liquidation Price: $55,570.76 hypurrscan.io/address/0xcfe2\u2026",
-      "publishedAt": "2026-09-09T02:04:10+00:00",
-      "publishedTs": 1788919450.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "\ud83d\udea8New Scam Alert\ud83d\udea8 Threat actors are sending out emails directing people to a \"mandatory security update\" site for Liquid Network that tries to trick you into downloading and running a malicious .exe file. /cc @Liquid_BTC",
       "link": "https://x.com/lopp/status/2097457863635415062#m",
       "source": "@lopp",
@@ -1571,6 +1558,19 @@
       "summary": "",
       "publishedAt": "2026-08-31T23:36:21+00:00",
       "publishedTs": 1788219381.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The world had to judge Bitcoin before it could ever judge its anonymous inventor. That may be the most important fact in all of computer science.",
+      "link": "https://x.com/DocumentingBTC/status/2094545212920004781#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-08-31T21:57:48+00:00",
+      "publishedTs": 1788213468.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
