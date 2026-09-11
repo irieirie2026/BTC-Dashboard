@@ -1,7 +1,59 @@
 {
-  "fetchedAt": "2026-09-11T08:34:41Z",
+  "fetchedAt": "2026-09-11T13:14:44Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Pinned: 25 years ago I was sitting in band class, watching thousands of my fellow citizens die on live TV. Little did I know that the horrors had only just begun. https://blog.lopp.net/reflections-on-9-11/",
+      "link": "https://x.com/lopp/status/2098385720616386713#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "25 years ago I was sitting in band class, watching thousands of my fellow citizens die on live TV. Little did I know that the horrors had only just begun. blog.lopp.net/reflections-on\u2026",
+      "publishedAt": "2026-09-11T12:18:36+00:00",
+      "publishedTs": 1789129116.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Researchers simulated an entire fruit fly brain in software. A few days later, a developer gave the coded fruit fly brain $100 to trade bitcoin. Neural activity determines when it buys and sells, and profitable trades stimulate its dopamine neurons.",
+      "link": "https://x.com/DocumentingBTC/status/2098380447998763180#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Researchers simulated an entire fruit fly brain in software. A few days later, a developer gave the coded fruit fly brain $100 to trade bitcoin. Neural activity determines when it buys and sells, and profitable trades stimulate its dopamine neurons. Video",
+      "publishedAt": "2026-09-11T11:57:39+00:00",
+      "publishedTs": 1789127859.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Just buy Bitcoin.",
+      "link": "https://x.com/saylor/status/2098375716882546807#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Just buy Bitcoin. Video",
+      "publishedAt": "2026-09-11T11:38:51+00:00",
+      "publishedTs": 1789126731.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This whale (0xedcd), who happened to long $ETH right before the market surged and made over $10M, is now shorting $BTC! He opened a 4x short on 640 $BTC ($49.33M). https://x.com/lookonchain/status/2090239389318410280",
+      "link": "https://x.com/lookonchain/status/2098352895209161041#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "This whale (0xedcd), who happened to long $ETH right before the market surged and made over $10M, is now shorting $BTC ! He opened a 4x short on 640 $BTC ($49.33M). nitter.perennialte.ch/lookonchain/status/209\u2026 Lookonchain (@lookonchain) What a coincidence! 13 hours ago, a whale ",
+      "publishedAt": "2026-09-11T10:08:10+00:00",
+      "publishedTs": 1789121290.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Gambler 0x396d opened a 40x long on 911.55 $BTC ($70.08M) 10 hours ago. Liquidation price: $76,308.6 This gambler has made 80 $BTC trades recently, winning 92.5% of them. https://hyperbot.network/trader/0x396dc3e4d1051837bb559810d2b1ea7977775899",
       "link": "https://x.com/lookonchain/status/2098220579837071694#m",
@@ -328,19 +380,6 @@
       "isRetweet": false
     },
     {
-      "title": "Wall Street Journal Business publishes new essay titled \u201cBitcoin\u2019s Overlooked Promise: Freedom\u201d",
-      "link": "https://x.com/DocumentingBTC/status/2098020437275914393#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-09-10T12:07:06+00:00",
-      "publishedTs": 1789042026.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Buy Bitcoin. Save yourself the trip.",
       "link": "https://x.com/saylor/status/2098020313091002745#m",
       "source": "@saylor",
@@ -471,12 +510,12 @@
       "isRetweet": false
     },
     {
-      "title": "Pinned: \ud83d\udea8Scam Alert\ud83d\udea8 Threat actors may have compromised the email provider(s) used by Trezor and BitBox; malicious emails claiming both have bad RNGs that require security updates are being sent and the emails don't appear to be spoofed. No such security advisory has been issued!",
+      "title": "\ud83d\udea8Scam Alert\ud83d\udea8 Threat actors may have compromised the email provider(s) used by Trezor and BitBox; malicious emails claiming both have bad RNGs that require security updates are being sent and the emails don't appear to be spoofed. No such security advisory has been issued!",
       "link": "https://x.com/lopp/status/2097786466248114570#m",
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "\ud83d\udea8Scam Alert\ud83d\udea8 Threat actors may have compromised the email provider(s) used by Trezor and BitBox; malicious emails claiming both have bad RNGs that require security updates are being sent and the emails don't appear to be spoofed. No such security advisory has been issued!",
+      "summary": "",
       "publishedAt": "2026-09-09T20:37:23+00:00",
       "publishedTs": 1788986243.0,
       "category": "x",
@@ -1212,19 +1251,6 @@
       "isRetweet": false
     },
     {
-      "title": "Capital gravitates toward Bitcoin.",
-      "link": "https://x.com/saylor/status/2096942497268166673#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Capital gravitates toward Bitcoin. Video",
-      "publishedAt": "2026-09-07T12:43:45+00:00",
-      "publishedTs": 1788785025.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "WOOF",
       "link": "https://x.com/JSeyff/status/2096736195443040353#m",
       "source": "@JSeyff",
@@ -1298,19 +1324,6 @@
       "summary": "Seinfeld Bitcoin Highlights \ud83c\udfac\u20bf A montage of all the Seinfeld Bitcoin clips so far! If you\u2019ve been enjoying them, please retweet and follow. More on the way. Video",
       "publishedAt": "2026-09-05T16:45:00+00:00",
       "publishedTs": 1788626700.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: https://www.cfosilvia.com",
-      "link": "https://x.com/APompliano/status/2096040004648591363#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "I used to have a big spreadsheet to track my finances. Bitcoin, stocks, real estate, private investments, etc. Every tab was another month. It sucked, so we built @cfosilvia to use AI to manage my finances. 20,000+ investors use it now. Try it free: cfosilvia.com",
-      "publishedAt": "2026-09-05T00:57:34+00:00",
-      "publishedTs": 1788569854.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1496,19 +1509,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "x.com/i/article/209517356207\u2026",
-      "link": "https://x.com/valkenburgh/status/2095174279956431269#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "nitter.perennialte.ch/i/article/209517356207\u2026",
-      "publishedAt": "2026-09-02T15:37:29+00:00",
-      "publishedTs": 1788363449.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Every 2,016 blocks, the Bitcoin network measures how much the world has changed and adjusts its difficulty without changing its promise. Faster chips, cheaper energy, and more miners make the network stronger instead of making more bitcoin.",
