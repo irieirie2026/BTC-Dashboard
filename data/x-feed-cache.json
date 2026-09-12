@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-09-12T05:37:58Z",
+  "fetchedAt": "2026-09-12T10:07:59Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "\u20bfuild something extraordinary.",
+      "link": "https://x.com/saylor/status/2098691840518062481#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "\u20bfuild something extraordinary. Video",
+      "publishedAt": "2026-09-12T08:35:01+00:00",
+      "publishedTs": 1789202101.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "A whale has spent 85.42M $USDC to buy 1,075.6 $BTC at an average price of $79,412 over the past 4 days! https://thorchain.net/address/bc1qe2p8s96ruu9txg6q9uzdem3ezhagr5ywt678zz https://thorchain.net/address/bc1qacj96ylgyc3xhcyx4l9z4r4s88pqm4x7v9ewrw",
+      "link": "https://x.com/lookonchain/status/2098662371510350052#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "A whale has spent 85.42M $USDC to buy 1,075.6 $BTC at an average price of $79,412 over the past 4 days! thorchain.net/address/bc1qe2\u2026 thorchain.net/address/bc1qac\u2026",
+      "publishedAt": "2026-09-12T06:37:55+00:00",
+      "publishedTs": 1789195075.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "This week at Bitcoin Magazine \ud83d\udcf0 - Bitcoin ETFs - Liquid hack - Strive - Fairshake's ads - Golden cross - Capital \u20bf - Block & OCC - Bitcoin & WSJ - US debt buyback - iPhone in BTC - NCA ad in WSJ - Brian Armstrong - New CLARITY ACT & updates - Boyaa - U.K. & crypto - UniCredit - C",
       "link": "https://x.com/theonlyposted/status/2098546034762768770#m",
@@ -11,6 +37,19 @@
       "summary": "This week at Bitcoin Magazine \ud83d\udcf0 - Bitcoin ETFs - Liquid hack - Strive - Fairshake's ads - Golden cross - Capital \u20bf - Block & OCC - Bitcoin & WSJ - US debt buyback - iPhone in BTC - NCA ad in WSJ - Brian Armstrong - New CLARITY ACT & updates - Boyaa - U.K. & crypto - UniCredit - C",
       "publishedAt": "2026-09-11T22:55:38+00:00",
       "publishedTs": 1789167338.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Study Bitcoin",
+      "link": "https://x.com/Kluckies_/status/2098521022555181208#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-09-11T21:16:15+00:00",
+      "publishedTs": 1789161375.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1121,19 +1160,6 @@
       "isRetweet": true
     },
     {
-      "title": "\u20bfuild in Cyber Manhattan",
-      "link": "https://x.com/LaDoger/status/2097319252004897221#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "\u20bfuild in Cyber Manhattan Video",
-      "publishedAt": "2026-09-08T13:40:50+00:00",
-      "publishedTs": 1788874850.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Hanging out with Scott and crew this AM",
       "link": "https://x.com/JSeyff/status/2097312419630505984#m",
       "source": "@JSeyff",
@@ -1145,19 +1171,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Strive acquired an additional 1,375 BTC for $109M at an average cost of $79,281 per bitcoin, bringing total holdings to \u20bf24,531. 70% of the capital raised last week came from $SATA, which now has $999M notional outstanding. Time to break the billion-dollar wall. $ASST $SATA",
-      "link": "https://x.com/ColeMacro/status/2097295352051401160#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Strive acquired an additional 1,375 BTC for $109M at an average cost of $79,281 per bitcoin, bringing total holdings to \u20bf24,531. 70% of the capital raised last week came from $SATA , which now has $999M notional outstanding. Time to break the billion-dollar wall. $ASST $SATA",
-      "publishedAt": "2026-09-08T12:05:52+00:00",
-      "publishedTs": 1788869152.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Staked Tron ETF coming to market from @CanaryFunds. tron:native $TRXS",
