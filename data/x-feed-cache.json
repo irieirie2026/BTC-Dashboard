@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-12T10:07:59Z",
+  "fetchedAt": "2026-09-12T13:53:11Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "When someone asks me how it's going, my first thought is:",
+      "link": "https://x.com/lopp/status/2098764819222429879#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-09-12T13:25:00+00:00",
+      "publishedTs": 1789219500.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "\u20bfuild something extraordinary.",
       "link": "https://x.com/saylor/status/2098691840518062481#m",
@@ -1342,19 +1355,6 @@
       "isRetweet": true
     },
     {
-      "title": "Defiance attenpting first fully private company ETF (was bound to happen) via swaps tied to perps linked to private cos. Even tho that sounds crazy I bet many would still prefer it to an interval fund (which you can\u2019t get on brokerage anyway). Nice catch from @syouth1",
-      "link": "https://x.com/EricBalchunas/status/2095999598095470746#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Defiance attenpting first fully private company ETF (was bound to happen) via swaps tied to perps linked to private cos. Even tho that sounds crazy I bet many would still prefer it to an interval fund (which you can\u2019t get on brokerage anyway). Nice catch from @syouth1 Jeffrey Pta",
-      "publishedAt": "2026-09-04T22:17:00+00:00",
-      "publishedTs": 1788560220.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "Every serious attempt to hack Bitcoin becomes adversarial research financed by the attacker.",
       "link": "https://x.com/DocumentingBTC/status/2095952651414315454#m",
       "source": "@DocumentingBTC",
@@ -1389,19 +1389,6 @@
       "summary": "",
       "publishedAt": "2026-09-04T12:38:17+00:00",
       "publishedTs": 1788525497.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "If Bernie Sanders and Greg Casar had any clue, they'd be proposing something more akin to Asimov's Three Laws of Robotics rather than an ineffective ban on strong AI. IBM already foresaw how to approach the problem of machine intelligence 45 years ago...",
-      "link": "https://x.com/lopp/status/2095849318624206880#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-09-04T12:19:51+00:00",
-      "publishedTs": 1788524391.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
