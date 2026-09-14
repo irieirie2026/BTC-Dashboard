@@ -1,7 +1,46 @@
 {
-  "fetchedAt": "2026-09-14T00:43:59Z",
+  "fetchedAt": "2026-09-14T05:48:06Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "The simulated fly brain is now mining bitcoin",
+      "link": "https://x.com/DocumentingBTC/status/2099323668425793769#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "The simulated fly brain is now mining bitcoin Video",
+      "publishedAt": "2026-09-14T02:25:40+00:00",
+      "publishedTs": 1789352740.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senate Republicans release the latest Clarity Act draft with White House approved ethics language ahead of Tuesday\u2019s vote \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2099319671933513928#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-09-14T02:09:47+00:00",
+      "publishedTs": 1789351787.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "AI will be aligned to what pays it the most bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2099310553025957955#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-14T01:33:33+00:00",
+      "publishedTs": 1789349613.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Dave McCormick says \"On Tuesday, the Senate should vote to move the CLARITY Act forward.\" Pass it \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2099252145560170925#m",
@@ -40,6 +79,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "The world's #1 AI Safety Researcher, Amanda Askell (Head of Personality Alignment at Anthropic) wrote in favor of using AI to automate racial collective punishment, saying: - \"[Discriminating against white students] may be desirable ... to correct for historical injustices\"",
+      "link": "https://x.com/fentasyl/status/2099224787516018864#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "The world's #1 AI Safety Researcher, Amanda Askell (Head of Personality Alignment at Anthropic) wrote in favor of using AI to automate racial collective punishment, saying: - \"[Discriminating against white students] may be desirable ... to correct for historical injustices\" ~~dat",
+      "publishedAt": "2026-09-13T19:52:45+00:00",
+      "publishedTs": 1789329165.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "a day in the life of a bitcoin security researcher",
@@ -1134,19 +1186,6 @@
       "isRetweet": true
     },
     {
-      "title": "Trump announced yesterday that he is going to give out $5,000 stimulus checks. The more money he hands out, the higher bitcoin, gold, and land will go.",
-      "link": "https://x.com/APompliano/status/2098015669493129565#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "",
-      "publishedAt": "2026-09-10T11:48:09+00:00",
-      "publishedTs": 1789040889.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "There is no second best.",
       "link": "https://x.com/TylerDurden/status/2097991046370357704#m",
       "source": "@saylor",
@@ -1158,19 +1197,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Jacob Coxon is a more astroturfed industry plant than Bobbi Althoff and Sombr put together",
-      "link": "https://x.com/nic_carter/status/2097889239258071092#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-09-10T03:25:46+00:00",
-      "publishedTs": 1789010746.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "\ud83d\udea8Scam Alert\ud83d\udea8 Threat actors may have compromised the email provider(s) used by Trezor and BitBox; malicious emails claiming both have bad RNGs that require security updates are being sent and the emails don't appear to be spoofed. No such security advisory has been issued!",
@@ -1467,32 +1493,6 @@
       "summary": "",
       "publishedAt": "2026-09-04T02:43:48+00:00",
       "publishedTs": 1788489828.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "On this day history, 16 years ago, a user complained about their electricity bill of $230 for mining 28.21 bitcoin using their home computer. Those bitcoins would now be worth $2,300,300.",
-      "link": "https://x.com/DocumentingBTC/status/2095617625820705122#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-09-03T20:59:11+00:00",
-      "publishedTs": 1788469151.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Buying bitcoin might be only way to invest in human progress without guessing who creates it.",
-      "link": "https://x.com/DocumentingBTC/status/2095598248643764578#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "",
-      "publishedAt": "2026-09-03T19:42:11+00:00",
-      "publishedTs": 1788464531.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
