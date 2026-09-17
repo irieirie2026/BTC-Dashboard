@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-17T05:45:47Z",
+  "fetchedAt": "2026-09-17T11:00:46Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
@@ -729,6 +729,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "AMA with @flop_labs Arthur Hayes\u6c0f(@CryptoHayes)\u304c\u624b\u639b\u3051\u308b\u6ce8\u76ee\u306eAI\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u5411\u3051\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u306b\u3064\u3044\u3066\u4e00\u7dd2\u306b\u5b66\u3073\u307e\u3057\u3087\u3046\ud83d\udc69\u200d\ud83c\udf93\ud83e\ude84 @SOU_BTC \u3055\u3093\u3082\u51fa\u6f14\ud83d\udc4f \ud83c\udf81 1000 $ FLOP \u00d7 5 \ud83e\ude75 RT/LIKE \ud83d\uddd3\ufe0f 9/17 21:00- Join\u261e https://discord.gg/kudasaijp https://x.com/i/broadcasts/1RJjpbWeYvgKw",
+      "link": "https://x.com/kudasai_japan/status/2099864601789878492#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "AMA with @flop_labs Arthur Hayes\u6c0f( @CryptoHayes )\u304c\u624b\u639b\u3051\u308b\u6ce8\u76ee\u306eAI\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u5411\u3051\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u306b\u3064\u3044\u3066\u4e00\u7dd2\u306b\u5b66\u3073\u307e\u3057\u3087\u3046\ud83d\udc69\u200d\ud83c\udf93\ud83e\ude84 @SOU_BTC \u3055\u3093\u3082\u51fa\u6f14\ud83d\udc4f \ud83c\udf81 1000 $ FLOP \u00d7 5 \ud83e\ude75 RT/LIKE \ud83d\uddd3\ufe0f 9/17 21:00- Join\u261e discord.gg/kudasaijp nitter.perennialte.ch/i/broadcasts/1RJjpbWeY\u2026",
+      "publishedAt": "2026-09-15T14:15:09+00:00",
+      "publishedTs": 1789481709.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Microsoft Patch Tuesday. July: new record of 570 vulnerabilities. August: new record of 620 vulnerabilities. September: new record of 972 vulnerabilities (112 critical!) https://x.com/lopp/status/2085341618320867590",
