@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-09-16T21:10:03Z",
+  "fetchedAt": "2026-09-17T05:45:47Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "WATCH: @IIICapital of @Strive - Why Bitcoin may be set up for an \"explosive bull market\" From @watchbmtv \ud83d\udc47 https://youtu.be/u-WNafsPZnQ?si=J3GoglLErUkfzli0",
+      "link": "https://x.com/BitcoinMagazine/status/2100339396482302371#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: @IIICapital of @Strive - Why Bitcoin may be set up for an \"explosive bull market\" From @watchbmtv \ud83d\udc47 youtu.be/u-WNafsPZnQ?si=J3Go\u2026",
+      "publishedAt": "2026-09-16T21:41:49+00:00",
+      "publishedTs": 1789594909.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 U.S. House Financial Services Committee advances the Strategic Bitcoin Reserve bill \ud83d\ude80",
       "link": "https://x.com/BitcoinMagazine/status/2100325832304590952#m",
@@ -42,19 +55,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 CFTC Chairman Mike Selig says \"The outcome of yesterday's Senate vote was unfortunate\", regarding the Clarity Act. \"The U.S. is and will remain the crypto capital of the world. The CFTC is locked in and ready to ship its rules for the new frontier of finance\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2100308353217913164#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-16T19:38:27+00:00",
-      "publishedTs": 1789587507.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "WATCH: @DeatonforSenate - Why Bitcoin is the solution to mass money printing \ud83d\udc4f From @watchbmtv \ud83d\udc47 https://youtu.be/hGtyEGd9rMs?si=glXt7IxY24TeSRPr",
       "link": "https://x.com/BitcoinMagazine/status/2100300823464948103#m",
       "source": "@BitcoinMagazine",
@@ -63,6 +63,19 @@
       "summary": "WATCH: @DeatonforSenate - Why Bitcoin is the solution to mass money printing \ud83d\udc4f From @watchbmtv \ud83d\udc47 youtu.be/hGtyEGd9rMs?si=glXt\u2026",
       "publishedAt": "2026-09-16T19:08:32+00:00",
       "publishedTs": 1789585712.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Seinfeld clips, except they are about bitcoin \ud83e\udd23",
+      "link": "https://x.com/DocumentingBTC/status/2100297894238548210#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Seinfeld clips, except they are about bitcoin \ud83e\udd23 Video",
+      "publishedAt": "2026-09-16T18:56:54+00:00",
+      "publishedTs": 1789585014.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -81,6 +94,45 @@
       "isRetweet": false
     },
     {
+      "title": "The CLARITY Act failed yesterday. But when a bill goes down, somebody always finds a way to go up. \ud83d\udfe2 UP 1. Banks 2. Elizabeth Warren 3. SEC and CFTC 4. Trump family's crypto ventures 5. Mitch McConnell (literally got up) \ud83d\udd34 DOWN 1. Consumers 2. Republicans 3. Democrats",
+      "link": "https://x.com/watchbmtv/status/2100291903480811551#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "The CLARITY Act failed yesterday. But when a bill goes down, somebody always finds a way to go up. \ud83d\udfe2 UP 1. Banks 2. Elizabeth Warren 3. SEC and CFTC 4. Trump family's crypto ventures 5. Mitch McConnell (literally got up) \ud83d\udd34 DOWN 1. Consumers 2. Republicans 3. Democrats Video",
+      "publishedAt": "2026-09-16T18:33:05+00:00",
+      "publishedTs": 1789583585.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "When you hold bitcoin, you are holding the door open for the generation walking in after you.",
+      "link": "https://x.com/DocumentingBTC/status/2100287161807331583#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-16T18:14:15+00:00",
+      "publishedTs": 1789582455.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "User posts their dream scenario, \u201cIf for any instance bitcoin went up to $1,000, I would sell\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2100284776150168036#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-16T18:04:46+00:00",
+      "publishedTs": 1789581886.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "BREAKING: \ud83c\uddfa\ud83c\uddf8 Federal Reserve officially hikes rates by 25 bps.",
       "link": "https://x.com/BitcoinMagazine/status/2100283669373952045#m",
       "source": "@BitcoinMagazine",
@@ -89,6 +141,19 @@
       "summary": "",
       "publishedAt": "2026-09-16T18:00:22+00:00",
       "publishedTs": 1789581622.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin gives ordinary people the hope and confidence to attempt extraordinary lives.",
+      "link": "https://x.com/DocumentingBTC/status/2100283330197344282#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-16T17:59:01+00:00",
+      "publishedTs": 1789581541.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -159,6 +224,19 @@
       "isRetweet": false
     },
     {
+      "title": "Strive's Joe Burnett on how he gets to $11 million per Bitcoin by 2036: \ud83d\udccc Global wealth doubles to $2 quadrillion \ud83d\udccc Bitcoin takes a 10-12% share of the pie \"I don't think that that necessarily requires a collapse in the US dollar or any sort of extreme circumstances.\"",
+      "link": "https://x.com/watchbmtv/status/2100257753079980363#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Strive's Joe Burnett on how he gets to $11 million per Bitcoin by 2036: \ud83d\udccc Global wealth doubles to $2 quadrillion \ud83d\udccc Bitcoin takes a 10-12% share of the pie \"I don't think that that necessarily requires a collapse in the US dollar or any sort of extreme circumstances.\" Video",
+      "publishedAt": "2026-09-16T16:17:23+00:00",
+      "publishedTs": 1789575443.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "My thanks go to everyone who put so much effort into the CLARITY Act\u2014 across the Administration, Congress, investors, and innovators. Our collective conviction that America must continue to lead is indispensable. I have been unequivocal: with or without legislation, we will act d",
       "link": "https://x.com/SECPaulSAtkins/status/2100256253645668860#m",
       "source": "@saylor",
@@ -198,6 +276,32 @@
       "isRetweet": false
     },
     {
+      "title": "I wrote a short story about a world where AI is superintelligent but professional cartels bar us from using it for anything useful: https://x.com/nic_carter/status/2091556059575906311",
+      "link": "https://x.com/nic_carter/status/2100248709875339645#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "I wrote a short story about a world where AI is superintelligent but professional cartels bar us from using it for anything useful: nitter.perennialte.ch/nic_carter/status/2091\u2026 nic carter (@nic_carter) Human in the Loop | A short story about the AI aligned future x.com/i/article",
+      "publishedAt": "2026-09-16T15:41:27+00:00",
+      "publishedTs": 1789573287.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Of all the professionals who are being obsoleted by AI, I think medical professionals are taking it the worst. They\u2019re in complete denial that machines might be better than them and still berate you for talking to \u201cDr Google\u201d",
+      "link": "https://x.com/nic_carter/status/2100248237336592655#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-16T15:39:35+00:00",
+      "publishedTs": 1789573175.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "JUST IN: Morgan Creek Capital CEO Mark Yusko says Bitcoin's fair value is $105,000 based on Metcalfe's Law \ud83d\ude80 Bullish!",
       "link": "https://x.com/BitcoinMagazine/status/2100246582696317388#m",
       "source": "@BitcoinMagazine",
@@ -222,6 +326,32 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "rigorously analyzing the world game theoreticically according to incentives UNLESS it in any way implicates a company building AI, in which case I take a completely benign approach and happily assume the best",
+      "link": "https://x.com/nic_carter/status/2100238291245170939#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-16T15:00:03+00:00",
+      "publishedTs": 1789570803.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "If OpenAI can use an example of their own negligence and failed security practices to push for regulation that benefits them, it stands to reason that they will manufacture more \"incidents\". They are highly incentivized to",
+      "link": "https://x.com/nic_carter/status/2100237753036194180#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "If OpenAI can use an example of their own negligence and failed security practices to push for regulation that benefits them, it stands to reason that they will manufacture more \"incidents\". They are highly incentivized to Andrew Curran (@AndrewCurran_) OpenAI's Chris Lehane in P",
+      "publishedAt": "2026-09-16T14:57:55+00:00",
+      "publishedTs": 1789570675.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US House Chairman French Hill introduces the Strategic Bitcoin Reserve bill to Congress for markup this morning: \"This bill establishes a strategic Bitcoin reserve and a separate digital asset stockpile within the Department of Treasury for federally held Bitcoin\"",
@@ -250,6 +380,19 @@
       "isRetweet": true
     },
     {
+      "title": "Turkey ETF down bad as local stocks there triggered circuit breaker as ppl have liquidity concerns after some money market funds there saying they were unable to meet redemption requests (which seems weird, what were they holding?)",
+      "link": "https://x.com/EricBalchunas/status/2100218875199561744#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-09-16T13:42:54+00:00",
+      "publishedTs": 1789566174.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Pinned: LIVE: Fed Rates, Risk Assets, Digital Infrastructure | BMTV Sep. 16, 2026 https://x.com/i/broadcasts/1yGBePBoDdrKN",
       "link": "https://x.com/BitcoinMagazine/status/2100216221170085987#m",
       "source": "@BitcoinMagazine",
@@ -276,6 +419,19 @@
       "isRetweet": true
     },
     {
+      "title": "Morgan Stanley is going to convert $10b worth of Muni mutual funds into ETFs. Looks like that\u2019s what this filing was.",
+      "link": "https://x.com/EricBalchunas/status/2100195630593257899#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Morgan Stanley is going to convert $10b worth of Muni mutual funds into ETFs. Looks like that\u2019s what this filing was. Eric Balchunas (@EricBalchunas) Morgan Stanley with the rare ETF filing, this one for a slew of Eaton Vance state muni ETFs which are curr in CEF or MF form only.",
+      "publishedAt": "2026-09-16T12:10:32+00:00",
+      "publishedTs": 1789560632.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "With CLARITY stalled, I expect the SEC, CFTC, and Treasury to advance rules under existing law, banks to expand Bitcoin custody and loans against it, and more capital to favor Bitcoin and digital credit. GENIUS supports stablecoin adoption. Progress need not wait for Congress.",
       "link": "https://x.com/saylor/status/2100184378298994891#m",
       "source": "@saylor",
@@ -284,6 +440,19 @@
       "summary": "",
       "publishedAt": "2026-09-16T11:25:49+00:00",
       "publishedTs": 1789557949.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The endless allure of $TLT (the fav ETF of ppl who like to overthink things) in effect as traders pour $7b in ahead of Fed. This thing largely burns cash but once in a while it goes into jackpot mode. Here's clip of @NateGeraci on ETF IQ on why it's just not worth the risk",
+      "link": "https://x.com/EricBalchunas/status/2100180763878519121#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "The endless allure of $TLT (the fav ETF of ppl who like to overthink things) in effect as traders pour $7b in ahead of Fed. This thing largely burns cash but once in a while it goes into jackpot mode. Here's clip of @NateGeraci on ETF IQ on why it's just not worth the risk Video",
+      "publishedAt": "2026-09-16T11:11:28+00:00",
+      "publishedTs": 1789557088.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -315,27 +484,105 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Bill Hagerty says \"America should be the leader in cryptocurrency...Democrats are ceding the ground to our foreign adversaries.\" \"The American people deserve better, and now they know where Democrats stand after a year of back and forth...\"",
-      "link": "https://x.com/BitcoinMagazine/status/2099969335670268136#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-09-15T21:11:19+00:00",
-      "publishedTs": 1789506679.0,
+      "title": "one thing that has struck me throughout this entire saga is that Dario in particular has a lot of magical beliefs - he thinks the world runs like model UN. that AI safety could be handed over \"to the right group of countries\" - he thinks he can tell the US military what to do - h",
+      "link": "https://x.com/nic_carter/status/2100037879586079134#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "one thing that has struck me throughout this entire saga is that Dario in particular has a lot of magical beliefs - he thinks the world runs like model UN. that AI safety could be handed over \"to the right group of countries\" - he thinks he can tell the US military what to do - h",
+      "publishedAt": "2026-09-16T01:43:41+00:00",
+      "publishedTs": 1789523021.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Senator Cynthia Lummis says \"Senate Democrats proved they were never truly serious about protecting consumers and preserving American leadership.\" They \"handed China and every one of our foreign competitors exactly what they wanted.\" \ud83d\udc40",
-      "link": "https://x.com/BitcoinMagazine/status/2099951466391670920#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
+      "title": "the METR thing is the most farcical and unserious thing the people at Anthropic have ever come up with. via @segyges https://www.verysane.ai/p/is-metr-a-meaningful-check-on-anthropic",
+      "link": "https://x.com/nic_carter/status/2100036574784245863#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "the METR thing is the most farcical and unserious thing the people at Anthropic have ever come up with. via @segyges verysane.ai/p/is-metr-a-mean\u2026",
+      "publishedAt": "2026-09-16T01:38:30+00:00",
+      "publishedTs": 1789522710.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Zuck pretty handily dismantles Dario's talking points here: - people want models that are *aligned with them* (subtly punches back at Anthropic's normative constitutional approach) - labs already face liability if they screw up, so incentives to release aligned models is already ",
+      "link": "https://x.com/nic_carter/status/2100001920198779321#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Zuck pretty handily dismantles Dario's talking points here: - people want models that are *aligned with them* (subtly punches back at Anthropic's normative constitutional approach) - labs already face liability if they screw up, so incentives to release aligned models is already ",
+      "publishedAt": "2026-09-15T23:20:48+00:00",
+      "publishedTs": 1789514448.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Can't wait for the Will the President Publicly Insult the Fed Chair in the Next 30 Days Yes/No ETFs",
+      "link": "https://x.com/EricBalchunas/status/2099973544587169823#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Can't wait for the Will the President Publicly Insult the Fed Chair in the Next 30 Days Yes/No ETFs Polymarket Money (@PolymarketMoney) JUST IN: There is a 32% chance President Trump will \u201cpublicly insult Kevin Warsh\u201d by September 30. Odds were 10% a week ago. \u2014 http://nitter.per",
+      "publishedAt": "2026-09-15T21:28:03+00:00",
+      "publishedTs": 1789507683.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Morgan Stanley with the rare ETF filing, this one for a slew of Eaton Vance state muni ETFs which are curr in CEF or MF form only. These should do well imo esp if fee is at Inst class or lower.",
+      "link": "https://x.com/EricBalchunas/status/2099972950157844975#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
       "summary": "",
-      "publishedAt": "2026-09-15T20:00:19+00:00",
-      "publishedTs": 1789502419.0,
+      "publishedAt": "2026-09-15T21:25:41+00:00",
+      "publishedTs": 1789507541.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "also, sidenote but the lack of cultural knowledge of Aum Shinrikyo in the west is wild to me. they were a massive cult in Japan in the 80s and 90s and had insane resources at their disposal and committed a ton of grisly murders and assassinated various politicians and somehow sur",
+      "link": "https://x.com/nic_carter/status/2099961612052430949#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "also, sidenote but the lack of cultural knowledge of Aum Shinrikyo in the west is wild to me. they were a massive cult in Japan in the 80s and 90s and had insane resources at their disposal and committed a ton of grisly murders and assassinated various politicians and somehow sur",
+      "publishedAt": "2026-09-15T20:40:38+00:00",
+      "publishedTs": 1789504838.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "there's a lot of discussion about bioweapons in the AI safety context but not a lot of empirical data being presented. here's what I'm wondering: - even if an AI model were cooperative, what would it take for a non-state terrorist actor to synthesize a bioweapon or novel pathogen",
+      "link": "https://x.com/nic_carter/status/2099960829877620974#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "there's a lot of discussion about bioweapons in the AI safety context but not a lot of empirical data being presented. here's what I'm wondering: - even if an AI model were cooperative, what would it take for a non-state terrorist actor to synthesize a bioweapon or novel pathogen",
+      "publishedAt": "2026-09-15T20:37:31+00:00",
+      "publishedTs": 1789504651.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "User loses 2 bitcoin and posts \u201cOh well\u2026\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2099939118520148218#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-15T19:11:15+00:00",
+      "publishedTs": 1789499475.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -367,14 +614,40 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin doesn\u2019t need the Clarity Act because bitcoin already has clarity.",
-      "link": "https://x.com/APompliano/status/2099932735926304810#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
+      "title": "x.com/openrouter/status/2099\u2026",
+      "link": "https://x.com/nic_carter/status/2099927977119138277#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "nitter.perennialte.ch/openrouter/status/2099\u2026 OpenRouter (@OpenRouter) OpenRouter users spent more on OpenAI models than on Anthropic models last week. This hasn't happened for more than 2.5 years \u2014 http://nitter.perennialte.ch/OpenRouter/status/2099898254905549220#m",
+      "publishedAt": "2026-09-15T18:26:59+00:00",
+      "publishedTs": 1789496819.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "all these companies are cooked because they are selling a commodity for wildly inflated prices because they wager that you are too lazy to go through the insanely annoying process of switching every couple years no longer! with AI the consumer levels the playing field. screw you,",
+      "link": "https://x.com/nic_carter/status/2099924878954537048#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "all these companies are cooked because they are selling a commodity for wildly inflated prices because they wager that you are too lazy to go through the insanely annoying process of switching every couple years no longer! with AI the consumer levels the playing field. screw you,",
+      "publishedAt": "2026-09-15T18:14:40+00:00",
+      "publishedTs": 1789496080.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "User writes a panicked post, \u201cI now have 150 BTC. Since then I haven\u2019t generated a single bitcoin!!!!\u201d",
+      "link": "https://x.com/DocumentingBTC/status/2099916299681817031#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
       "summary": "",
-      "publishedAt": "2026-09-15T18:45:53+00:00",
-      "publishedTs": 1789497953.0,
+      "publishedAt": "2026-09-15T17:40:35+00:00",
+      "publishedTs": 1789494035.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -393,6 +666,45 @@
       "isRetweet": true
     },
     {
+      "title": "\"ETFs should come with a drink ticket and a players card at this point.. There's been so many leveraged ETF closures this year that Spirit Halloween is going to open up temporary locations in the vacant tickers.\" - @SGHWealthMgmt w/ a colorful rant against hot sauce on ETF IQ yes",
+      "link": "https://x.com/EricBalchunas/status/2099899629105983511#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "\"ETFs should come with a drink ticket and a players card at this point.. There's been so many leveraged ETF closures this year that Spirit Halloween is going to open up temporary locations in the vacant tickers.\" - @SGHWealthMgmt w/ a colorful rant against hot sauce on ETF IQ yes",
+      "publishedAt": "2026-09-15T16:34:20+00:00",
+      "publishedTs": 1789490060.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "AI makes this stuff so easy, that's another thing. it was way way easier with AI to walk me through everything, what options to pick etc. otherwise I would have never done it due to frictions this stuff doesn't get captured in GDP, it's pure consumer surplus.",
+      "link": "https://x.com/nic_carter/status/2099887822555521379#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-15T15:47:25+00:00",
+      "publishedTs": 1789487245.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "I switched my auto insurance (two cars and a motorcycle) from Geico to State Farm and it went from $10,411/year to $3,838/year (with better coverage at State Farm) no agenda with this post I just want to tell you shop your insurance and dont trust Geico. they absolutely suck",
+      "link": "https://x.com/nic_carter/status/2099885503646417255#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-15T15:38:12+00:00",
+      "publishedTs": 1789486692.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Digital Credit has arrived in Brazil. \ud83c\udde7\ud83c\uddf7",
       "link": "https://x.com/saylor/status/2099880831779008837#m",
       "source": "@saylor",
@@ -401,6 +713,19 @@
       "summary": "Digital Credit has arrived in Brazil. \ud83c\udde7\ud83c\uddf7 OranjeBTC (@ORANJEBTC) Hoje, 15 de setembro, a partir das 10:00, chega \u00e0 B3 o DIGY11. O primeiro ETF da nova economia digital, que re\u00fane renda global com prote\u00e7\u00e3o cambial, paga mensalmente na sua conta e liquidez di\u00e1ria. Saiba tudo sobre o",
       "publishedAt": "2026-09-15T15:19:38+00:00",
       "publishedTs": 1789485578.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Princeton University researcher writes on September 15th, 2016, \u201cBitcoin\u2019s history deserves to be better preserved\u201d because the important developer chat logs are being deleted and lost",
+      "link": "https://x.com/DocumentingBTC/status/2099872815134449694#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-15T14:47:47+00:00",
+      "publishedTs": 1789483667.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -458,6 +783,45 @@
       "isRetweet": false
     },
     {
+      "title": "The \u201cBitcoin Apocalypse\u201d was price crashing to $5 per bitcoin, wrote users on September 15th, 2011",
+      "link": "https://x.com/DocumentingBTC/status/2099841815180448099#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-15T12:44:36+00:00",
+      "publishedTs": 1789476276.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Here's a look at ETF issuers by the % of their assets held internally (aka BYOA). Nuveen, AB and FlexShares have most but almost everyone does it a little. No judging at this point as the Terrordome is brutal and you need to apply every weapon you have to try and survive, esp new",
+      "link": "https://x.com/EricBalchunas/status/2099823882475622866#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Here's a look at ETF issuers by the % of their assets held internally (aka BYOA). Nuveen, AB and FlexShares have most but almost everyone does it a little. No judging at this point as the Terrordome is brutal and you need to apply every weapon you have to try and survive, esp new",
+      "publishedAt": "2026-09-15T11:33:21+00:00",
+      "publishedTs": 1789472001.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "ETFs are coming to market with more assets lined up as evidenced by UC's massive $2.5b seeding of $UCGB and Proshares' $IQMM as the avg size of an ETF on Day One has about doubled over the past five years vs historical norm. I'm hearing the same thing from white label issuers- ca",
+      "link": "https://x.com/EricBalchunas/status/2099823077462872185#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "ETFs are coming to market with more assets lined up as evidenced by UC's massive $2.5b seeding of $UCGB and Proshares' $IQMM as the avg size of an ETF on Day One has about doubled over the past five years vs historical norm. I'm hearing the same thing from white label issuers- ca",
+      "publishedAt": "2026-09-15T11:30:09+00:00",
+      "publishedTs": 1789471809.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "Liquid assets are \u20bfetter.",
       "link": "https://x.com/saylor/status/2099819157936037964#m",
       "source": "@saylor",
@@ -482,6 +846,58 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "read all the way through to the end",
+      "link": "https://x.com/nic_carter/status/2099646488989114663#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-14T23:48:27+00:00",
+      "publishedTs": 1789429707.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "this is a must read essay on AI job displacement and why open weight models matter courtesy of a deepseek kernel engineer",
+      "link": "https://x.com/nic_carter/status/2099645060962808254#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "this is a must read essay on AI job displacement and why open weight models matter courtesy of a deepseek kernel engineer Teortaxes\u25b6\ufe0f (DeepSeek \u63a8\u7279\ud83d\udc0b\u94c1\u7c89 2023 \u2013 \u221e) (@teortaxesTex) Full text (translated by Astra-xhigh, I'm out of everything else): I Have No Choice but to Bury My Talen",
+      "publishedAt": "2026-09-14T23:42:46+00:00",
+      "publishedTs": 1789429366.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "\"how could millionaire EAs secretly want an overturning of the social order?\" part of the appeal is moral status. the anointed gain tremendous moral currency in the form of righteousness. and power. listen to Dario talk about how Safety is too important to be entrusted to the US ",
+      "link": "https://x.com/nic_carter/status/2099615626645877165#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "\"how could millionaire EAs secretly want an overturning of the social order?\" part of the appeal is moral status. the anointed gain tremendous moral currency in the form of righteousness. and power. listen to Dario talk about how Safety is too important to be entrusted to the US ",
+      "publishedAt": "2026-09-14T21:45:49+00:00",
+      "publishedTs": 1789422349.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "a lot of people \u2013 maybe most people \u2013 secretly yearn for the apocalypse as manifestation of status anxiety this conceit has many faces \u2013 marxism, climate fear, AI x-risk, prepper culture, anti capitalism \u2013 but it's the same psychological phenomenon. secular millenarianism",
+      "link": "https://x.com/nic_carter/status/2099612435686543381#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-09-14T21:33:08+00:00",
+      "publishedTs": 1789421588.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Strategy\u2019s USD Assets now cover 3.9 years of annual interest and dividends. $MSTR $STRC",
@@ -510,19 +926,6 @@
       "isRetweet": true
     },
     {
-      "title": "If AI is half as deflationary as it appears to be, then the government will be forced to print more money to counteract the headwind. If the government prints more money, then assets like bitcoin, gold, and land will rapidly appreciate in price. Even though people don\u2019t talk abou",
-      "link": "https://x.com/APompliano/status/2099563740727288027#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "If AI is half as deflationary as it appears to be, then the government will be forced to print more money to counteract the headwind. If the government prints more money, then assets like bitcoin, gold, and land will rapidly appreciate in price. Even though people don\u2019t talk abou",
-      "publishedAt": "2026-09-14T18:19:38+00:00",
-      "publishedTs": 1789409978.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The $STRC Investor Guide explains Strategy\u2019s flagship Digital Credit instrument\u2014a variable-rate cumulative perpetual preferred stock\u2014covering dividends, seniority, liquidity, reserves, buybacks, tax treatment, credit metrics, comparisons, and risks. https://www.strategy.com/strc/",
       "link": "https://x.com/saylor/status/2099555209772961885#m",
       "source": "@saylor",
@@ -531,6 +934,32 @@
       "summary": "The $STRC Investor Guide explains Strategy\u2019s flagship Digital Credit instrument\u2014a variable-rate cumulative perpetual preferred stock\u2014covering dividends, seniority, liquidity, reserves, buybacks, tax treatment, credit metrics, comparisons, and risks. strategy.com/strc/brief",
       "publishedAt": "2026-09-14T17:45:44+00:00",
       "publishedTs": 1789407944.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Good lineup for ETF IQ today: @NateGeraci on ETF M&A, $BWET and crypto, @SGHWealthMgmt on \"greed and loathing in Las Vegas\" @isabelletanlee on hourly rebal leveraged ETFs, Drill down into $HAPI and Tema's @paisitfwd live from FUTURE PROOF. Starts Noon est on BBG TV or stream link",
+      "link": "https://x.com/EricBalchunas/status/2099522197807079915#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Good lineup for ETF IQ today: @NateGeraci on ETF M&A, $BWET and crypto, @SGHWealthMgmt on \"greed and loathing in Las Vegas\" @isabelletanlee on hourly rebal leveraged ETFs, Drill down into $HAPI and Tema's @paisitfwd live from FUTURE PROOF. Starts Noon est on BBG TV or stream link",
+      "publishedAt": "2026-09-14T15:34:33+00:00",
+      "publishedTs": 1789400073.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Mining a full bitcoin every month using your gaming computer\u2019s graphics card is not \u201cprofitable\u201d says users on September 14, 2011",
+      "link": "https://x.com/DocumentingBTC/status/2099515887673856467#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-14T15:09:29+00:00",
+      "publishedTs": 1789398569.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -549,6 +978,19 @@
       "isRetweet": true
     },
     {
+      "title": "The sexual ideology of our time is mass market obscenity juxtaposed against the repression of any ordinary expression of sexuality",
+      "link": "https://x.com/nic_carter/status/2099509646058836223#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "The sexual ideology of our time is mass market obscenity juxtaposed against the repression of any ordinary expression of sexuality Ethan (@WHT3BYW3DN3SD4Y) End these millennial restaurants immediately \u2014 http://nitter.perennialte.ch/WHT3BYW3DN3SD4Y/status/2099245627158790579#m",
+      "publishedAt": "2026-09-14T14:44:41+00:00",
+      "publishedTs": 1789397081.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "The latest weekly 8-K results from @Strategy and @Strive are LIVE on http://TreasuryTracker.net! $MSTR \ud83d\udd34 Repurchased 1,420,467 $STRC shares (~$139M) \ud83d\udd34 $1.05B preferred + $1.0B $MSTR buyback capacity remaining \ud83d\udd34 $5.1B USD Reserve + $1.3B cash $ASST \ud83d\udd35 Acquired 469 $BTC at ~$77,954/",
       "link": "https://x.com/apyx_fi/status/2099487478243541180#m",
       "source": "@saylor",
@@ -562,14 +1004,27 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin doesn\u2019t need the Clarity Act because bitcoin already has clarity. But if Clarity passes, bitcoin is going much higher.",
-      "link": "https://x.com/APompliano/status/2099478891815473652#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "",
-      "publishedAt": "2026-09-14T12:42:28+00:00",
-      "publishedTs": 1789389748.0,
+      "title": "If you read accounts of researchers at Chinese frontier labs, they are mainly concerned with real, salient, near-term risks from AI, not some vague future \"existential risk\": they talk mainly about job loss, AI-augmented hacking, more prosaic alignment failures like models misbeh",
+      "link": "https://x.com/nic_carter/status/2099484160821727736#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "If you read accounts of researchers at Chinese frontier labs, they are mainly concerned with real, salient, near-term risks from AI, not some vague future \"existential risk\": they talk mainly about job loss, AI-augmented hacking, more prosaic alignment failures like models misbeh",
+      "publishedAt": "2026-09-14T13:03:25+00:00",
+      "publishedTs": 1789391005.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "One thing the p_doomers have no answer to, and have never given a good answer to, is how they intend to bring about a global safety regime. X-risk likelihood must contemplate the **least safe model over a capability threshold**, not the safest frontier model. (If your toddler fin",
+      "link": "https://x.com/nic_carter/status/2099480593876529256#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "One thing the p_doomers have no answer to, and have never given a good answer to, is how they intend to bring about a global safety regime. X-risk likelihood must contemplate the **least safe model over a capability threshold**, not the safest frontier model. (If your toddler fin",
+      "publishedAt": "2026-09-14T12:49:14+00:00",
+      "publishedTs": 1789390154.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -601,6 +1056,45 @@
       "isRetweet": true
     },
     {
+      "title": "AI will be aligned to what pays it the most bitcoin.",
+      "link": "https://x.com/DocumentingBTC/status/2099310553025957955#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-14T01:33:33+00:00",
+      "publishedTs": 1789349613.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This delivery driver keeps their customer\u2019s pizza warm with a homemade bitcoin mining computer",
+      "link": "https://x.com/DocumentingBTC/status/2099234063563317278#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-13T20:29:37+00:00",
+      "publishedTs": 1789331377.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "On this day in history, 7 years ago, the first essay was published exploring how Bitcoin might function in an interplanetary civilization. Bitcoin miners on Mars can compete with miners on Earth.",
+      "link": "https://x.com/DocumentingBTC/status/2099230205374050801#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-13T20:14:17+00:00",
+      "publishedTs": 1789330457.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "a day in the life of a bitcoin security researcher",
       "link": "https://x.com/stutxo/status/2099215623457034652#m",
       "source": "@lopp",
@@ -627,6 +1121,19 @@
       "isRetweet": false
     },
     {
+      "title": "User buys an entire bitcoin for each of their cousins as a Christmas gift, but is worried they will think it\u2019s worthless because no one understands it",
+      "link": "https://x.com/DocumentingBTC/status/2099162963512836296#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-13T15:47:05+00:00",
+      "publishedTs": 1789314425.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "TSA agent took the bait today and asked me \"what is freedom?\" Taken aback by the vagueness of the question, I responded \"that's complicated, but it's the opposite of what we're doing right now.\"",
       "link": "https://x.com/lopp/status/2099151014699880878#m",
       "source": "@lopp",
@@ -640,6 +1147,19 @@
       "isRetweet": false
     },
     {
+      "title": "The AI Turing test: Can a machine could imitate a person? The AI Bitcoin test: Can a machine create enough genuine value to pay for its own computation without lying, stealing, or being subsidized?",
+      "link": "https://x.com/DocumentingBTC/status/2099132297467281464#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-13T13:45:14+00:00",
+      "publishedTs": 1789307114.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "The threats resulting from AI acceleration are real, but I don't think asking people to slow down is a sufficient solution. Instead, these companies should be spending more of the resources helping the rest of the world catch up and harden their defenses.",
       "link": "https://x.com/lopp/status/2099119647903633553#m",
       "source": "@lopp",
@@ -648,6 +1168,58 @@
       "summary": "",
       "publishedAt": "2026-09-13T12:54:58+00:00",
       "publishedTs": 1789304098.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin updates more like a language than an app.",
+      "link": "https://x.com/DocumentingBTC/status/2098931371985043847#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-13T00:26:49+00:00",
+      "publishedTs": 1789259209.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is the most unique cryptocurrency because the blockchain cannot manufacture the resource that secures it. Bitcoin must reach outside itself, to energy, hardware, and time, to protect it. The security is anchored by something the database cannot simply vote into existence.",
+      "link": "https://x.com/DocumentingBTC/status/2098875841828585777#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-12T20:46:10+00:00",
+      "publishedTs": 1789245970.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The breakthrough of Bitcoin mining is exporting the value of electricity without moving electrons.",
+      "link": "https://x.com/DocumentingBTC/status/2098805014906978592#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-12T16:04:44+00:00",
+      "publishedTs": 1789229084.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Satoshi Nakamoto posts, \u201cIf the only library is closed source, then there\u2019s a project to make an open source one\u201d \u2014 September 12, 2010",
+      "link": "https://x.com/DocumentingBTC/status/2098797183130603617#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-12T15:33:36+00:00",
+      "publishedTs": 1789227216.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -687,6 +1259,19 @@
       "summary": "I'm publishing this not just because it's the 25th anniversary, but because 30% of Americans living today were born after 9/11 and never knew the Before Times. \"Never Forget\" rings hollow to those who had no memories to lose in the first place. nitter.perennialte.ch/lopp/status/2",
       "publishedAt": "2026-09-11T13:59:35+00:00",
       "publishedTs": 1789135175.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This user sold their bitcoin when it was worth $13 because they wanted to buy at a lower price of $1",
+      "link": "https://x.com/DocumentingBTC/status/2098402469403349410#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "",
+      "publishedAt": "2026-09-11T13:25:09+00:00",
+      "publishedTs": 1789133109.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -744,6 +1329,19 @@
       "isRetweet": false
     },
     {
+      "title": "Model Bitcoin Price -------------------------------- iPhone 3 \u20bf29,900 iPhone 4 \u20bf2,857 iPhone 5 \u20bf16.6 iPhone 6 \u20bf2.17 iPhone 7 \u20bf1.28 iPhone 8 \u20bf0.24 iPhone X \u20bf0.16 iPhone 11 \u20bf0.14 iPhone 12 \u20bf0.06 iPhone 13 \u20bf0.02 iPhone 14 \u20bf0.03 iPhone 15 \u20bf0.03 iPhone 16 \u20bf0.014 iPhone 17 \u20bf0.007 iPhon",
+      "link": "https://x.com/DocumentingBTC/status/2098031841345208468#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Model Bitcoin Price -------------------------------- iPhone 3 \u20bf29,900 iPhone 4 \u20bf2,857 iPhone 5 \u20bf16.6 iPhone 6 \u20bf2.17 iPhone 7 \u20bf1.28 iPhone 8 \u20bf0.24 iPhone X \u20bf0.16 iPhone 11 \u20bf0.14 iPhone 12 \u20bf0.06 iPhone 13 \u20bf0.02 iPhone 14 \u20bf0.03 iPhone 15 \u20bf0.03 iPhone 16 \u20bf0.014 iPhone 17 \u20bf0.007 iPhon",
+      "publishedAt": "2026-09-10T12:52:25+00:00",
+      "publishedTs": 1789044745.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
       "title": "\ud83d\udea8Scam Alert\ud83d\udea8 Threat actors may have compromised the email provider(s) used by Trezor and BitBox; malicious emails claiming both have bad RNGs that require security updates are being sent and the emails don't appear to be spoofed. No such security advisory has been issued!",
       "link": "https://x.com/lopp/status/2097786466248114570#m",
       "source": "@lopp",
@@ -768,6 +1366,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "We\u2019re excited to have @CryptoHayes joining us at the 9th Annual Black Blockchain Summit! Join us at Howard University, Sept 25\u201326, 2026 \ud83c\udf9f\ufe0f Tickets : https://BlackBlockchainSummit.com #crypto #bitcoin #blacktech #web3 #HBCUtech Blockchain",
+      "link": "https://x.com/BlkBlockchainDC/status/2097715926472774137#m",
+      "source": "@CryptoHayes",
+      "authorName": "Arthur Hayes",
+      "authorRole": "BitMEX co-founder \u00b7 macro",
+      "summary": "We\u2019re excited to have @CryptoHayes joining us at the 9th Annual Black Blockchain Summit! Join us at Howard University, Sept 25\u201326, 2026 \ud83c\udf9f\ufe0f Tickets : BlackBlockchainSummit.com #crypto #bitcoin #blacktech #web3 #HBCUtech Blockchain",
+      "publishedAt": "2026-09-09T15:57:05+00:00",
+      "publishedTs": 1788969425.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "This one goes out to my fellow devs who are clanking out code at an accelerated pace. https://suno.com/song/14a9c6d3-84d1-4ace-9853-45699f230f52",
