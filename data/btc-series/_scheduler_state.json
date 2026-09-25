@@ -6,6 +6,15 @@
       "ok": true,
       "points": 365,
       "error": null,
+      "fetchedAt": "2026-09-25T07:58:30Z",
+      "at": "2026-09-25T07:58:30Z"
+    },
+    {
+      "metricId": "exchange_inflow",
+      "source": "coinmetrics",
+      "ok": true,
+      "points": 365,
+      "error": null,
       "fetchedAt": "2026-08-23T10:45:29Z",
       "at": "2026-08-23T10:45:29Z"
     },
@@ -506,7 +515,7 @@
     }
   ],
   "lastSourceFetch": {
-    "coinmetrics": "2026-08-23T10:45:29Z",
+    "coinmetrics": "2026-09-25T07:58:30Z",
     "bgeometrics": "2026-07-31T07:03:56Z",
     "blockchain": "2026-07-31T14:50:40Z",
     "mempool": "2026-07-31T18:23:50Z",
@@ -515,12 +524,12 @@
   },
   "errors": {},
   "lastSourceFetchMono": {
-    "coinmetrics": 2159.495467789,
+    "coinmetrics": 2465.923549675,
     "bgeometrics": 31840.77339525,
     "blockchain": 59845.092844208,
     "mempool": 72636.1237675,
     "blockchair": 72637.502406875,
     "santiment": 3305.148262208
   },
-  "updatedAt": "2026-08-23T10:45:29Z"
+  "updatedAt": "2026-09-25T07:58:30Z"
 }
