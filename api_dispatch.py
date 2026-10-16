@@ -20,6 +20,7 @@ from server import (
     get_stats_btc_history_payload,
     get_tradfi_payload,
     get_treasury_payload,
+    TRADFI_SECTIONS,
 )
 
 
@@ -50,6 +51,7 @@ def _macro_drivers_api():
         get_meta_payload,
         get_series_payload,
         get_snapshot_payload,
+        get_us_fred_payload,
     )
 
     return {
@@ -60,6 +62,7 @@ def _macro_drivers_api():
         "meta": get_meta_payload,
         "series": get_series_payload,
         "snapshot": get_snapshot_payload,
+        "us": get_us_fred_payload,
     }
 
 
@@ -182,6 +185,9 @@ def dispatch_api(path, query, body: dict | None = None):
             start, end = period_to_dates(period, None, None)
         return get_equity_company_payload(symbol, peers, start, end, period, refresh=refresh)
 
+    if path == "/api/tradfi":
+        return {"sections": list(TRADFI_SECTIONS)}
+
     if path.startswith("/api/tradfi/"):
         refresh = _query_refresh(query)
         section = path[len("/api/tradfi/") :].strip("/")
@@ -219,7 +225,7 @@ def dispatch_api(path, query, body: dict | None = None):
 
     if path == "/api/macro/drivers" or path.startswith("/api/macro/drivers/"):
         md = _macro_drivers_api()
-        sub = path[len("/api/macro/drivers") :].strip("/") or "snapshot"
+        sub = path[len("/api/macro/drivers") :].strip("/")
         refresh = (query.get("refresh") or ["0"])[0] in ("1", "true", "yes")
         if refresh:
             md["clear"]()
@@ -236,7 +242,9 @@ def dispatch_api(path, query, body: dict | None = None):
                 return default
             return str(raw).lower() in ("1", "true", "yes")
 
-        if sub in ("", "snapshot"):
+        if sub == "":
+            return md["us"](refresh=refresh)
+        if sub == "snapshot":
             return md["snapshot"](
                 year=_int_param("year"),
                 region=(query.get("region") or [""])[0],
@@ -653,7 +661,7 @@ def dispatch_api(path, query, body: dict | None = None):
 
         critical = (query.get("full") or ["0"])[0] not in ("1", "true", "yes")
         return run_walk(
-            base="https://btc-dashboard-bay.vercel.app",
+            base="http://127.0.0.1:5173",
             timeout=8.0 if critical else 12.0,
             pages=not critical,
             critical_only=critical,
@@ -661,9 +669,11 @@ def dispatch_api(path, query, body: dict | None = None):
 
     if path == "/api/market" or path.startswith("/api/market/"):
         from market_feed import (
+            get_depth,
             get_eth_daily,
             get_futures_snapshot,
             get_klines,
+            get_liquidations,
             get_perp_snapshot,
             get_spot_bundle,
             get_spot_quote,
@@ -683,10 +693,18 @@ def dispatch_api(path, query, body: dict | None = None):
                 limit = 500
             product = (query.get("product") or ["BTC-USD"])[0]
             return get_klines(interval=interval, limit=limit, product=product, refresh=refresh)
+        if sub == "depth":
+            try:
+                depth_limit = int((query.get("limit") or ["20"])[0])
+            except (TypeError, ValueError):
+                depth_limit = 20
+            return get_depth(limit=depth_limit, refresh=refresh)
         if sub in ("eth", "eth-daily"):
             return get_eth_daily(refresh=refresh)
         if sub == "perp":
             return get_perp_snapshot(refresh=refresh)
+        if sub in ("liquidations", "liq"):
+            return get_liquidations(refresh=refresh)
         if sub in ("futures", "delivery"):
             return get_futures_snapshot(refresh=refresh)
         return {"error": f"Unknown market endpoint: {sub}", "venues": ["Coinbase", "Kraken", "OKX"]}

@@ -66,7 +66,7 @@ BGEOMETRICS_SERIES: dict[str, dict[str, Any]] = {
     "bitcoin_dominance": {"path": "bitcoin-dominance", "value_key": "bitcoinDominance"},
     "nupl": {"path": "nupl", "value_key": "nupl"},
     "sopr": {"path": "sopr", "value_key": "sopr"},
-    "supply_in_profit": {"path": "profit-loss", "value_key": "profitLoss", "scale": 100},
+    "supply_in_profit": {"path": "supply-in-profit-pct", "value_key": "supplyInProfitPct"},
     "etf_flow_btc": {"path": "etf-flow-btc", "value_key": "etfFlow"},
     # Valuation Models extensions
     "btc_price": {"path": "btc-price", "value_key": "btcPrice"},
@@ -270,9 +270,83 @@ def fetch_bgeometrics_kpi_bundle(*, refresh: bool = False) -> dict[str, dict[str
     return out
 
 
-def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, Any]:
+# profit-loss is a ratio. Use it only when supply-in-profit-pct is missing.
+_SUPPLY_IN_PROFIT_RATIO_SPEC = {"path": "profit-loss", "value_key": "profitLoss"}
+
+
+def _bg_endpoint_missing(exc: urllib.error.HTTPError | None = None, message: str = "") -> bool:
+    if exc is not None and getattr(exc, "code", None) == 404:
+        return True
+    text = (message or "").lower()
+    return "not found" in text or "does not exist" in text
+
+
+def _profit_ratio_to_pct(raw: Any) -> float | None:
+    """percent = 100 * r / (1 + r) for a positive profit/loss ratio."""
+    try:
+        r = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if r > 0:
+        return 100.0 * r / (1.0 + r)
+    return None
+
+
+def _convert_profit_ratio_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    series = payload.get("series")
+    converted: list[dict] = []
+    if isinstance(series, list):
+        for pt in series:
+            if not isinstance(pt, dict):
+                continue
+            pct = _profit_ratio_to_pct(pt.get("value"))
+            if pct is None:
+                continue
+            converted.append({**pt, "value": pct})
+    latest = converted[-1] if converted else None
+    if latest is None and isinstance(payload.get("latest"), dict):
+        pct = _profit_ratio_to_pct(payload["latest"].get("value"))
+        if pct is not None:
+            latest = {**payload["latest"], "value": pct}
+    out = {**payload, "latest": latest}
+    if isinstance(series, list):
+        out["series"] = converted
+    return out
+
+
+def _supply_profit_ratio_fallback(kind: str, *, refresh: bool) -> dict[str, Any] | None:
+    """Fetch profit-loss and convert to a percent when the pct endpoint is missing."""
+    if kind == "series":
+        payload = fetch_bgeometrics_series(
+            "supply_in_profit",
+            refresh=refresh,
+            spec_override=_SUPPLY_IN_PROFIT_RATIO_SPEC,
+            cache_suffix=":profit-loss",
+        )
+        if not payload.get("series"):
+            return None
+        return _convert_profit_ratio_payload(payload)
+    payload = fetch_bgeometrics_last(
+        "supply_in_profit",
+        refresh=refresh,
+        spec_override=_SUPPLY_IN_PROFIT_RATIO_SPEC,
+        cache_suffix=":profit-loss",
+    )
+    latest = payload.get("latest")
+    if not isinstance(latest, dict) or latest.get("value") is None:
+        return None
+    return _convert_profit_ratio_payload(payload)
+
+
+def fetch_bgeometrics_last(
+    metric: str,
+    *,
+    refresh: bool = False,
+    spec_override: dict[str, Any] | None = None,
+    cache_suffix: str = "",
+) -> dict[str, Any]:
     """Latest value only — uses /last to minimize API quota (for snapshot KPIs)."""
-    spec = _bgeometrics_endpoint(metric)
+    spec = spec_override or _bgeometrics_endpoint(metric)
     if not spec:
         return {
             "latest": None,
@@ -290,7 +364,8 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
         }
 
     token = bgeometrics_token()
-    cache_key = f"btc:bg:last:v2:{metric}:{'auth' if token else 'free'}"
+    suffix = cache_suffix or (":override" if spec_override else "")
+    cache_key = f"btc:bg:last:v2:{metric}{suffix}:{'auth' if token else 'free'}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
@@ -302,6 +377,11 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
         raw = fetch_json(url, timeout=45, headers=headers)
     except urllib.error.HTTPError as exc:
         msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
+        if spec_override is None and metric == "supply_in_profit" and _bg_endpoint_missing(exc, msg):
+            converted = _supply_profit_ratio_fallback("last", refresh=refresh)
+            if converted is not None:
+                cache_set(cache_key, converted)
+                return converted
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         cached = _bgeometrics_stale_last(stale, note=msg)
         if cached:
@@ -317,6 +397,11 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
     if isinstance(raw, dict) and raw.get("error"):
         err = raw["error"]
         msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
+        if spec_override is None and metric == "supply_in_profit" and _bg_endpoint_missing(None, msg):
+            converted = _supply_profit_ratio_fallback("last", refresh=refresh)
+            if converted is not None:
+                cache_set(cache_key, converted)
+                return converted
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         cached = _bgeometrics_stale_last(stale, note=msg)
         if cached:
@@ -336,8 +421,14 @@ def fetch_bgeometrics_last(metric: str, *, refresh: bool = False) -> dict[str, A
     return payload
 
 
-def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str, Any]:
-    spec = _bgeometrics_endpoint(metric)
+def fetch_bgeometrics_series(
+    metric: str,
+    *,
+    refresh: bool = False,
+    spec_override: dict[str, Any] | None = None,
+    cache_suffix: str = "",
+) -> dict[str, Any]:
+    spec = spec_override or _bgeometrics_endpoint(metric)
     if not spec:
         return {
             "series": [],
@@ -357,7 +448,8 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
         }
 
     token = bgeometrics_token()
-    cache_key = f"btc:bg:v2:{metric}:{'auth' if token else 'free'}"
+    suffix = cache_suffix or (":override" if spec_override else "")
+    cache_key = f"btc:bg:v2:{metric}{suffix}:{'auth' if token else 'free'}"
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
@@ -369,6 +461,11 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
         raw = fetch_json(url, timeout=60, headers=headers)
     except urllib.error.HTTPError as exc:
         msg = _friendly_bgeometrics_error(exc, _parse_bgeometrics_http_error(exc))
+        if spec_override is None and metric == "supply_in_profit" and _bg_endpoint_missing(exc, msg):
+            converted = _supply_profit_ratio_fallback("series", refresh=refresh)
+            if converted is not None:
+                cache_set(cache_key, converted)
+                return converted
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         cached = _bgeometrics_stale_series(stale, note=msg)
         if cached:
@@ -384,6 +481,11 @@ def fetch_bgeometrics_series(metric: str, *, refresh: bool = False) -> dict[str,
     if isinstance(raw, dict) and raw.get("error"):
         err = raw["error"]
         msg = err.get("message", str(err)) if isinstance(err, dict) else str(err)
+        if spec_override is None and metric == "supply_in_profit" and _bg_endpoint_missing(None, msg):
+            converted = _supply_profit_ratio_fallback("series", refresh=refresh)
+            if converted is not None:
+                cache_set(cache_key, converted)
+                return converted
         stale = cache_get(cache_key, ttl=BGEOMETRICS_TTL * 7)
         cached = _bgeometrics_stale_series(stale, note=msg)
         if cached:
@@ -426,15 +528,15 @@ def _hashribbons_signal_value(raw: Any) -> float | None:
 
 
 def _scale_bg_value(raw: float, scale: float, spec: dict[str, Any]) -> float:
-    """Apply optional scale; clamp percent metrics to 0–100."""
-    metric = str(spec.get("path") or spec.get("value_key") or "")
-    is_pct = spec.get("scale") == 100 or "profit" in metric or metric.endswith("pct")
-    if is_pct:
-        if 0 <= raw <= 1.5:
-            return min(100.0, raw * 100.0)
-        if 10 <= raw <= 100:
-            return float(raw)
-        return 100.0
+    """Apply spec scale. A scale of 100 only expands a 0–1 fraction.
+
+    Do not treat "profit" in the path as a unit fraction that becomes 100.
+    """
+    wants_pct = spec.get("scale") == 100 or scale == 100
+    if wants_pct:
+        if 0 <= raw <= 1:
+            return raw * 100.0
+        return float(raw)
     return raw * scale
 
 

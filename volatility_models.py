@@ -392,7 +392,7 @@ MODEL_CATALOG: list[dict[str, Any]] = [
             "const": "Mean return.",
             "nu": "Student-t df.",
         },
-        "arch": {"vol": "HARCH", "lags": [1, 5, 22]},
+        "arch": {"vol": "HARCH", "p": [1, 5, 22]},
     },
     {
         "id": "ewma",
@@ -462,6 +462,31 @@ BT_HORIZONS = (1, 7, 14, 30)
 
 def _now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def _iso_day(value: Any) -> Any:
+    """YYYY-MM-DD when a start/end stamp is epoch milliseconds (n > 1e11)."""
+    if value is None or isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        s = value.strip()
+        if not s or not s.lstrip("-").replace(".", "", 1).isdigit():
+            return value
+        try:
+            n = float(s)
+        except ValueError:
+            return value
+    else:
+        try:
+            n = float(value)
+        except (TypeError, ValueError):
+            return value
+    if not math.isfinite(n) or abs(n) <= 1e11:
+        return value
+    try:
+        return time.strftime("%Y-%m-%d", time.gmtime(n / 1000.0))
+    except (OverflowError, OSError, ValueError):
+        return value
 
 
 def _cache_get(key: str) -> dict[str, Any] | None:
@@ -944,6 +969,11 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
                     "Install with: pip install arch"
                 )
                 out["fallbackFrom"] = catalog["name"]
+                # One shared GARCH(1,1) fit must not rank under another catalog name.
+                out["logLikelihood"] = None
+                out["aic"] = None
+                out["bic"] = None
+                out["hqic"] = None
             return out
         return {"ok": False, "error": "Model requires arch package"}
 
@@ -960,14 +990,14 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
     }
     dist_key = dist_map.get((dist or "t").lower(), "t")
     try:
-        # HARCH uses lags= instead of p/q
-        if kwargs.get("vol") == "HARCH" and "lags" in kwargs:
+        # arch `lags` is the mean lag. HARCH horizons belong in vol p, not the mean.
+        if str(kwargs.get("vol") or "").upper() == "HARCH":
             am = arch_model(
                 y,
                 mean="Constant",
                 dist=dist_key,
                 vol="HARCH",
-                lags=list(kwargs["lags"]),
+                p=[1, 5, 22],
             )
         else:
             am = arch_model(y, mean="Constant", dist=dist_key, **kwargs)
@@ -975,9 +1005,9 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
     except Exception as exc:
         # Retry with normal dist
         try:
-            if kwargs.get("vol") == "HARCH" and "lags" in kwargs:
+            if str(kwargs.get("vol") or "").upper() == "HARCH":
                 am = arch_model(
-                    y, mean="Constant", dist="normal", vol="HARCH", lags=list(kwargs["lags"])
+                    y, mean="Constant", dist="normal", vol="HARCH", p=[1, 5, 22]
                 )
             else:
                 am = arch_model(y, mean="Constant", dist="normal", **kwargs)
@@ -1454,7 +1484,7 @@ def get_volatility_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Estimate catalog of models and return comparison + series for UI."""
-    key = f"vol:suite:v5:{days}:{dist}:{','.join(models or [])}"
+    key = f"vol:suite:v6:{days}:{dist}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1664,8 +1694,8 @@ def get_volatility_suite_payload(
         "asOf": _now_iso(),
         "pair": data["pair"],
         "source": data["source"],
-        "startDate": data["startDate"],
-        "endDate": data["endDate"],
+        "startDate": _iso_day(data["startDate"]),
+        "endDate": _iso_day(data["endDate"]),
         "nObs": data["n"],
         "daysRequested": days,
         "distribution": dist,

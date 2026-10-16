@@ -17,12 +17,17 @@ def test_hash_rate_ths_not_ehs():
     assert 50 <= scaled <= 5000
 
 
-def test_supply_in_profit_clamped():
-    spec = {"path": "profit-loss", "scale": 100, "value_key": "profitLoss"}
-    assert _scale_bg_value(0.89, 100, spec) == 89.0
-    assert _scale_bg_value(89.1, 100, spec) == 89.1
-    assert _scale_bg_value(2.598, 100, spec) == 100.0
-    assert _scale_bg_value(259.81, 100, spec) == 100.0
+def test_supply_in_profit_not_forced_to_100():
+    # Scale 100 expands a 0–1 fraction only. A raw profit/loss ratio stays a ratio.
+    ratio_spec = {"path": "profit-loss", "scale": 100, "value_key": "profitLoss"}
+    assert _scale_bg_value(0.89, 100, ratio_spec) == 89.0
+    assert _scale_bg_value(89.1, 100, ratio_spec) == 89.1
+    assert _scale_bg_value(2.598, 100, ratio_spec) == 2.598
+    assert _scale_bg_value(259.81, 100, ratio_spec) == 259.81
+    plain_ratio = {"path": "profit-loss", "value_key": "profitLoss"}
+    assert _scale_bg_value(2.598, 1, plain_ratio) == 2.598
+    pct_spec = {"path": "supply-in-profit-pct", "value_key": "supplyInProfitPct"}
+    assert _scale_bg_value(69.22, 1, pct_spec) == 69.22
 
 
 def test_options_max_pain_and_strikes():

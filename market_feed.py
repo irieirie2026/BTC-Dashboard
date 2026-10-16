@@ -236,8 +236,78 @@ def _coinbase_candles(product: str, gran: int, limit: int) -> list[list]:
     return rows[-limit:]
 
 
-def _kraken_ohlc(interval_min: int, limit: int) -> list[list]:
-    raw = _fetch_json(f"https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval={interval_min}")
+def _kraken_pair(product: str) -> str:
+    return "ETHUSD" if str(product or "").upper().startswith("ETH") else "XBTUSD"
+
+
+def _okx_inst(product: str) -> str:
+    base = "ETH" if str(product or "").upper().startswith("ETH") else "BTC"
+    return f"{base}-USDT"
+
+
+def _bybit_symbol(product: str) -> str:
+    base = "ETH" if str(product or "").upper().startswith("ETH") else "BTC"
+    return f"{base}USDT"
+
+
+_OKX_BAR = {
+    "1m": "1m", "5m": "5m", "15m": "15m", "1h": "1H", "4h": "4H",
+    "6h": "6H", "1d": "1D", "1D": "1D", "1w": "1W", "1W": "1W",
+}
+_BYBIT_IV = {
+    "1m": "1", "5m": "5", "15m": "15", "1h": "60", "4h": "240",
+    "6h": "360", "1d": "D", "1D": "D", "1w": "W", "1W": "W",
+}
+
+
+def _okx_candles(product: str, interval: str, limit: int) -> list[list]:
+    bar = _OKX_BAR.get(interval)
+    if not bar:
+        return []
+    gran = GRANULARITY.get(interval, 60)
+    raw = _fetch_json(
+        "https://www.okx.com/api/v5/market/candles?"
+        + urllib.parse.urlencode({
+            "instId": _okx_inst(product),
+            "bar": bar,
+            "limit": str(min(limit, 300)),
+        })
+    )
+    rows = []
+    for item in reversed(raw.get("data") or []):
+        if not isinstance(item, (list, tuple)) or len(item) < 6:
+            continue
+        ts, o, h, low, c, vol = item[:6]
+        rows.append(_binance_kline_row(int(float(ts)), float(o), float(h), float(low), float(c), float(vol), gran))
+    return rows[-limit:]
+
+
+def _bybit_candles(product: str, interval: str, limit: int) -> list[list]:
+    iv = _BYBIT_IV.get(interval)
+    if not iv:
+        return []
+    gran = GRANULARITY.get(interval, 60)
+    raw = _fetch_json(
+        "https://api.bybit.com/v5/market/kline?"
+        + urllib.parse.urlencode({
+            "category": "spot",
+            "symbol": _bybit_symbol(product),
+            "interval": iv,
+            "limit": str(min(limit, 1000)),
+        })
+    )
+    series = (raw.get("result") or {}).get("list") or []
+    rows = []
+    for item in reversed(series):
+        if not isinstance(item, (list, tuple)) or len(item) < 6:
+            continue
+        ts, o, h, low, c, vol = item[:6]
+        rows.append(_binance_kline_row(int(float(ts)), float(o), float(h), float(low), float(c), float(vol), gran))
+    return rows[-limit:]
+
+
+def _kraken_ohlc(interval_min: int, limit: int, pair: str = "XBTUSD") -> list[list]:
+    raw = _fetch_json(f"https://api.kraken.com/0/public/OHLC?pair={pair}&interval={interval_min}")
     result = raw.get("result") or {}
     series = None
     for k, v in result.items():
@@ -268,25 +338,44 @@ def get_klines(*, interval: str = "1m", limit: int = 500, product: str = "BTC-US
     errors: list[str] = []
     klines: list[list] = []
     venue = None
-    try:
-        klines = _coinbase_candles(product, gran if gran in (60, 300, 900, 3600, 21600, 86400) else 3600, limit)
-        venue = "Coinbase"
-    except Exception as exc:
-        errors.append(f"coinbase: {exc}")
+    # 4h and 1w are not Coinbase granularities. OKX and Bybit cover those bars.
+    if gran in (60, 300, 900, 3600, 21600, 86400):
+        try:
+            klines = _coinbase_candles(product, gran, limit)
+            venue = "Coinbase"
+        except Exception as exc:
+            errors.append(f"coinbase: {exc}")
+    if len(klines) < 10:
+        try:
+            alt = _okx_candles(product, interval, limit)
+            if len(alt) >= 10:
+                klines = alt
+                venue = "OKX"
+        except Exception as exc:
+            errors.append(f"okx: {exc}")
+    if len(klines) < 10:
+        try:
+            alt = _bybit_candles(product, interval, limit)
+            if len(alt) >= 10:
+                klines = alt
+                venue = "Bybit"
+        except Exception as exc:
+            errors.append(f"bybit: {exc}")
     if len(klines) < 10:
         try:
             mins = max(1, gran // 60)
             if mins not in (1, 5, 15, 60, 240, 1440, 10080):
                 mins = 60
-            klines = _kraken_ohlc(mins, limit)
+            klines = _kraken_ohlc(mins, limit, _kraken_pair(product))
             venue = "Kraken"
         except Exception as exc:
             errors.append(f"kraken: {exc}")
     if len(klines) < 10:
+        symbol = "ETHUSDT" if str(product).upper().startswith("ETH") else "BTCUSDT"
         try:
             raw = _fetch_json(
                 "https://api.binance.com/api/v3/klines?"
-                + urllib.parse.urlencode({"symbol": "BTCUSDT", "interval": interval, "limit": limit})
+                + urllib.parse.urlencode({"symbol": symbol, "interval": interval, "limit": limit})
             )
             if isinstance(raw, list) and raw:
                 klines = raw
@@ -378,9 +467,27 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
     last = _f(row.get("last"))
     if last is None:
         return None
-    mark = _f(row.get("markPx") or row.get("last"))
-    index = _f(row.get("idxPx")) or last
-    funding = _f(row.get("fundingRate"))
+    # The ticker payload has no mark or index. Those live on their own endpoints.
+    mark = None
+    index = None
+    funding = None
+    next_funding = None
+    try:
+        mark_raw = _fetch_json(
+            "https://www.okx.com/api/v5/public/mark-price?instId=BTC-USDT-SWAP",
+            timeout=timeout,
+        )
+        mark = _f(((mark_raw.get("data") or [None])[0] or {}).get("markPx"))
+    except Exception:
+        mark = None
+    try:
+        idx_raw = _fetch_json(
+            "https://www.okx.com/api/v5/market/index-tickers?instId=BTC-USDT",
+            timeout=timeout,
+        )
+        index = _f(((idx_raw.get("data") or [None])[0] or {}).get("idxPx"))
+    except Exception:
+        index = None
     oi = None
     ls = None
     try:
@@ -392,15 +499,30 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         oi = _f(oi_row.get("oiCcy") or oi_row.get("oi"))
     except Exception:
         pass
-    if funding is None:
+    try:
+        fr = _fetch_json(
+            "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP",
+            timeout=timeout,
+        )
+        fr_row = (fr.get("data") or [None])[0] or {}
+        funding = _f(fr_row.get("fundingRate"))
+        # fundingTime is the next settlement; nextFundingTime is the one after.
+        nxt = fr_row.get("fundingTime") or fr_row.get("nextFundingTime")
         try:
-            fr = _fetch_json(
-                "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP",
-                timeout=timeout,
-            )
-            funding = _f(((fr.get("data") or [None])[0] or {}).get("fundingRate"))
-        except Exception:
-            funding = None
+            nxt_i = int(nxt) if nxt is not None else None
+        except (TypeError, ValueError):
+            nxt_i = None
+        if nxt_i and nxt_i < 1_000_000_000_000:
+            nxt_i *= 1000
+        if nxt_i and nxt_i < time.time() * 1000:
+            alt = fr_row.get("nextFundingTime")
+            try:
+                nxt_i = int(alt) if alt is not None else nxt_i
+            except (TypeError, ValueError):
+                pass
+        next_funding = nxt_i
+    except Exception:
+        funding = None
     try:
         ls_raw = _fetch_json(
             "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio"
@@ -414,6 +536,9 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
             ls = _f(ls_row[1])
     except Exception:
         pass
+    # USDT-swap volCcy24h is BTC. vol24h is contracts (ctVal 0.01). Notional is BTC * last.
+    btc_vol = _f(row.get("volCcy24h"))
+    quote_vol = (btc_vol * last) if btc_vol and last else None
     return {
         "venue": "OKX",
         "fallback": True,
@@ -422,11 +547,12 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "indexPrice": index,
         "openInterest": oi,
         "fundingRate": funding,
+        "nextFundingTime": next_funding,
         "longShortRatio": ls,
         "highPrice": _f(row.get("high24h")),
         "lowPrice": _f(row.get("low24h")),
-        "volume": _f(row.get("vol24h")),
-        "quoteVolume": _f(row.get("volCcy24h")),
+        "volume": btc_vol,
+        "quoteVolume": quote_vol,
     }
 
 
@@ -489,6 +615,67 @@ def _bybit_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
     }
 
 
+def get_liquidations(*, refresh: bool = False) -> dict[str, Any]:
+    """Recent BTC swap liquidations. OKX public liquidation-orders, then Bybit."""
+    key = "market:liquidations:v1"
+    if not refresh:
+        cached = _cache_get(key)
+        if cached:
+            cached["fromCache"] = True
+            return cached
+    errors: list[str] = []
+    rows: list[dict[str, Any]] = []
+    venue = None
+    try:
+        raw = _fetch_json(
+            "https://www.okx.com/api/v5/public/liquidation-orders"
+            "?instType=SWAP&uly=BTC-USDT&state=filled",
+            timeout=6,
+        )
+        for bucket in raw.get("data") or []:
+            if not isinstance(bucket, dict):
+                continue
+            inst = bucket.get("instId") or "BTC-USDT-SWAP"
+            for det in bucket.get("details") or []:
+                if not isinstance(det, dict):
+                    continue
+                sz = _f(det.get("sz"))
+                px = _f(det.get("bkPx"))
+                # USDT-margined BTC swap ctVal is 0.01 BTC.
+                btc = (sz * 0.01) if sz is not None else None
+                ts = det.get("ts")
+                try:
+                    ts_i = int(ts) if ts is not None else None
+                except (TypeError, ValueError):
+                    ts_i = None
+                rows.append({
+                    "instId": inst,
+                    "side": det.get("side"),
+                    "posSide": det.get("posSide"),
+                    "price": px,
+                    "contracts": sz,
+                    "btc": btc,
+                    "notional": (btc * px) if btc and px else None,
+                    "time": ts_i,
+                })
+        if rows:
+            venue = "OKX"
+    except Exception as exc:
+        errors.append(f"okx: {exc}")
+    rows.sort(key=lambda r: r.get("time") or 0, reverse=True)
+    payload = {
+        "venue": venue or "OKX",
+        "rows": rows[:40],
+        "count": len(rows[:40]),
+        "errors": errors,
+        "fetchedAt": _now_iso(),
+    }
+    if errors and not rows:
+        payload["error"] = errors[0]
+        return payload
+    return _cache_set(key, payload)
+
+
 def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     key = "market:perp:v1"
     if not refresh:
@@ -512,77 +699,375 @@ def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     return out
 
 
+_FUT_MON = {
+    "JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
+    "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12,
+}
+
+
+def _expiry_ms_from_code(token: str) -> int | None:
+    import re
+    m = re.match(r"(\d{1,2})([A-Z]{3})(\d{2})$", (token or "").upper())
+    if not m:
+        return None
+    mon = _FUT_MON.get(m.group(2))
+    if not mon:
+        return None
+    year = 2000 + int(m.group(3))
+    day = int(m.group(1))
+    try:
+        return int(datetime(year, mon, day, 8, tzinfo=timezone.utc).timestamp() * 1000)
+    except ValueError:
+        return None
+
+
+def _days_to(exp_ms: int | None) -> float | None:
+    if not exp_ms:
+        return None
+    return max(0.0, (exp_ms - time.time() * 1000) / 86_400_000)
+
+
+def _basis_fields(mark: float | None, index: float | None, days: float | None) -> tuple[float | None, float | None]:
+    if not mark or not index:
+        return None, None
+    pct = (mark - index) / index * 100.0
+    ann = (pct / days * 365.0) if days and days > 0.05 else pct
+    return pct, ann
+
+
+def _contract_row(
+    symbol: str,
+    *,
+    margin: str,
+    last: float | None,
+    mark: float | None,
+    index: float | None,
+    oi: float | None,
+    volume: float | None,
+    exp_ms: int | None,
+) -> dict[str, Any] | None:
+    if last is None and mark is None:
+        return None
+    last_px = last if last is not None else mark
+    mark_px = mark if mark is not None else last_px
+    days = _days_to(exp_ms)
+    basis, ann = _basis_fields(mark_px, index, days)
+    return {
+        "symbol": symbol,
+        "type": "Dated",
+        "margin": margin,
+        "last": last_px,
+        "mark": mark_px,
+        "index": index,
+        "basisPct": basis,
+        "annBasisPct": ann,
+        "openInterest": oi,
+        "volume": volume,
+        "deliveryDate": exp_ms,
+        "daysToExpiry": days,
+    }
+
+
+def _fetch_okx_dated(index_hint: float | None) -> tuple[list[dict], list[dict], float | None, list[str]]:
+    errors: list[str] = []
+    usdt: list[dict] = []
+    coin: list[dict] = []
+    index = index_hint
+    try:
+        tickers = _fetch_json("https://www.okx.com/api/v5/market/tickers?instType=FUTURES", timeout=4)
+        marks = _fetch_json("https://www.okx.com/api/v5/public/mark-price?instType=FUTURES", timeout=4)
+        instruments = _fetch_json(
+            "https://www.okx.com/api/v5/public/instruments?instType=FUTURES&uly=BTC-USD",
+            timeout=4,
+        )
+        oi_raw = _fetch_json(
+            "https://www.okx.com/api/v5/public/open-interest?instType=FUTURES&uly=BTC-USD",
+            timeout=4,
+        )
+        try:
+            oi_um = _fetch_json(
+                "https://www.okx.com/api/v5/public/open-interest?instType=FUTURES&uly=BTC-USDT",
+                timeout=4,
+            )
+        except Exception:
+            oi_um = {"data": []}
+        idx_raw = _fetch_json("https://www.okx.com/api/v5/market/index-tickers?instId=BTC-USD", timeout=4)
+        index = _f(((idx_raw.get("data") or [None])[0] or {}).get("idxPx")) or index
+    except Exception as exc:
+        return [], [], index, [f"okx futures: {exc}"]
+
+    mark_map = {r.get("instId"): _f(r.get("markPx")) for r in (marks.get("data") or []) if isinstance(r, dict)}
+    inst_map = {r.get("instId"): r for r in (instruments.get("data") or []) if isinstance(r, dict)}
+    oi_map = {}
+    for r in (oi_raw.get("data") or []) + (oi_um.get("data") or []):
+        if isinstance(r, dict):
+            oi_map[r.get("instId")] = _f(r.get("oiCcy") or r.get("oi"))
+    for row in tickers.get("data") or []:
+        if not isinstance(row, dict):
+            continue
+        inst = str(row.get("instId") or "")
+        if not (inst.startswith("BTC-USD-") or inst.startswith("BTC-USD_UM-")):
+            continue
+        if "SWAP" in inst:
+            continue
+        meta = inst_map.get(inst) or {}
+        try:
+            exp_ms = int(meta.get("expTime") or 0) or None
+        except (TypeError, ValueError):
+            exp_ms = None
+        last = _f(row.get("last"))
+        mark = mark_map.get(inst) or last
+        btc_vol = _f(row.get("volCcy24h"))
+        margin = "USDT" if "_UM" in inst else "COIN"
+        built = _contract_row(
+            inst, margin=margin, last=last, mark=mark, index=index,
+            oi=oi_map.get(inst), volume=btc_vol, exp_ms=exp_ms,
+        )
+        if not built:
+            continue
+        (usdt if margin == "USDT" else coin).append(built)
+    usdt.sort(key=lambda c: c.get("deliveryDate") or 0)
+    coin.sort(key=lambda c: c.get("deliveryDate") or 0)
+    return usdt, coin, index, errors
+
+
+def _fetch_deribit_dated(index_hint: float | None) -> tuple[list[dict], float | None, list[str]]:
+    try:
+        raw = _fetch_json(
+            "https://www.deribit.com/api/v2/public/get_book_summary_by_currency?currency=BTC&kind=future",
+            timeout=6,
+        )
+    except Exception as exc:
+        return [], index_hint, [f"deribit futures: {exc}"]
+    out = []
+    index = index_hint
+    for row in raw.get("result") or []:
+        if not isinstance(row, dict):
+            continue
+        name = str(row.get("instrument_name") or "")
+        if not name.startswith("BTC-") or name.endswith("PERPETUAL"):
+            continue
+        exp_ms = _expiry_ms_from_code(name.split("-", 1)[-1])
+        est = _f(row.get("estimated_delivery_price"))
+        if est and est > 1000:
+            index = est
+        last = _f(row.get("last"))
+        mark = _f(row.get("mark_price")) or last
+        px = est or index or index_hint
+        oi_usd = _f(row.get("open_interest"))
+        # Inverse book summary quotes open interest in USD.
+        oi_btc = (oi_usd / px) if oi_usd and px and px > 1000 else oi_usd
+        built = _contract_row(
+            name, margin="COIN", last=last, mark=mark, index=px,
+            oi=oi_btc, volume=_f(row.get("volume")), exp_ms=exp_ms,
+        )
+        if built:
+            out.append(built)
+    out.sort(key=lambda c: c.get("deliveryDate") or 0)
+    return out, index, []
+
+
+def _fetch_bybit_dated(index_hint: float | None) -> tuple[list[dict], dict | None, list[str]]:
+    try:
+        raw = _fetch_json(
+            "https://api.bybit.com/v5/market/tickers?category=inverse&baseCoin=BTC",
+            timeout=4,
+        )
+    except Exception as exc:
+        return [], None, [f"bybit futures: {exc}"]
+    out = []
+    perp = None
+    for row in ((raw.get("result") or {}).get("list") or []):
+        if not isinstance(row, dict):
+            continue
+        symbol = str(row.get("symbol") or "")
+        if not symbol.startswith("BTC"):
+            continue
+        try:
+            delivery = int(row.get("deliveryTime") or 0)
+        except (TypeError, ValueError):
+            delivery = 0
+        last = _f(row.get("lastPrice"))
+        mark = _f(row.get("markPrice")) or last
+        index = _f(row.get("indexPrice")) or index_hint
+        oi_usd = _f(row.get("openInterest"))
+        oi_btc = (oi_usd / index) if oi_usd and index else None
+        if delivery <= 0:
+            perp = {
+                "venue": "Bybit",
+                "lastPrice": last,
+                "markPrice": mark,
+                "indexPrice": index,
+                "openInterest": oi_btc,
+                "fundingRate": _f(row.get("fundingRate")),
+                "volume": _f(row.get("volume24h")),
+                "quoteVolume": _f(row.get("turnover24h")),
+            }
+            continue
+        built = _contract_row(
+            symbol, margin="COIN", last=last, mark=mark, index=index,
+            oi=oi_btc, volume=_f(row.get("volume24h")), exp_ms=delivery,
+        )
+        if built:
+            out.append(built)
+    out.sort(key=lambda c: c.get("deliveryDate") or 0)
+    return out, perp, []
+
+
 def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
-    """Dated BTC futures from OKX when Binance USD-M is blocked."""
-    key = "market:futures:v1"
+    """Dated BTC futures from OKX, Deribit, and Bybit."""
+    key = "market:futures:v2"
+    if not refresh:
+        cached = _cache_get(key)
+        if cached:
+            cached["fromCache"] = True
+            return cached
+    from concurrent.futures import ThreadPoolExecutor
+
+    errors: list[str] = []
+    perp = get_perp_snapshot(refresh=refresh)
+    index_hint = _f(perp.get("indexPrice")) if isinstance(perp, dict) else None
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        okx_f = pool.submit(_fetch_okx_dated, index_hint)
+        deribit_f = pool.submit(_fetch_deribit_dated, index_hint)
+        bybit_f = pool.submit(_fetch_bybit_dated, index_hint)
+        usdt, coin, okx_index, okx_err = okx_f.result()
+        deribit, deribit_index, deribit_err = deribit_f.result()
+        bybit, bybit_perp, bybit_err = bybit_f.result()
+    errors.extend(okx_err + deribit_err + bybit_err)
+    index = okx_index or deribit_index or index_hint
+    if isinstance(perp, dict) and index and not perp.get("indexPrice"):
+        perp["indexPrice"] = index
+    coin_contracts = (coin or []) + (deribit or []) + (bybit or [])
+    coin_contracts.sort(key=lambda c: c.get("deliveryDate") or 0)
+    curve_src = (usdt or coin_contracts)[:8]
+    curve = [{"label": "Perp", "days": 0, "basis": 0, "annBasis": 0}]
+    for c in curve_src:
+        if c.get("daysToExpiry") is None:
+            continue
+        curve.append({
+            "label": c["symbol"],
+            "days": c["daysToExpiry"],
+            "basis": c.get("basisPct") or 0,
+            "annBasis": c.get("annBasisPct") or 0,
+        })
+    venues = []
+    if usdt or coin:
+        venues.append("OKX")
+    if deribit:
+        venues.append("Deribit")
+    if bybit or bybit_perp:
+        venues.append("Bybit")
+    if isinstance(perp, dict) and perp.get("venue") and perp.get("lastPrice"):
+        if perp["venue"] not in venues:
+            venues.insert(0, perp["venue"])
+    payload = {
+        "venue": "+".join(venues) or "OKX",
+        "fallback": True,
+        "fetchedAt": _now_iso(),
+        "indexPrice": index,
+        "perp": perp if isinstance(perp, dict) else {},
+        "contracts": (usdt or [])[:12],
+        "coinContracts": coin_contracts[:12],
+        "curvePoints": curve,
+        "errors": errors + (perp.get("errors") if isinstance(perp, dict) else []),
+    }
+    if (isinstance(perp, dict) and perp.get("lastPrice")) or usdt or coin_contracts:
+        return _cache_set(key, payload)
+    payload["error"] = "Futures venues failed"
+    return payload
+
+
+def _book_levels(rows, limit: int) -> list[list[str]]:
+    out: list[list[str]] = []
+    for row in rows or []:
+        if not isinstance(row, (list, tuple)) or len(row) < 2:
+            continue
+        price, qty = _f(row[0]), _f(row[1])
+        if price is None or qty is None or price <= 0 or qty <= 0:
+            continue
+        out.append([str(price), str(qty)])
+        if len(out) >= limit:
+            break
+    return out
+
+
+def get_depth(*, limit: int = 20, refresh: bool = False) -> dict[str, Any]:
+    limit = max(5, min(int(limit or 20), 50))
+    key = f"market:depth:v1:{limit}"
     if not refresh:
         cached = _cache_get(key)
         if cached:
             cached["fromCache"] = True
             return cached
     errors: list[str] = []
-    perp = get_perp_snapshot(refresh=refresh)
-    contracts: list[dict[str, Any]] = []
-    try:
+
+    def _okx():
         raw = _fetch_json(
-            "https://www.okx.com/api/v5/market/tickers?instType=FUTURES", timeout=3.5
+            f"https://www.okx.com/api/v5/market/books?instId=BTC-USDT&sz={limit}",
+            timeout=4,
         )
-        rows = raw.get("data") or []
-        for row in rows:
-            inst = str(row.get("instId") or "")
-            if not inst.startswith("BTC-USD-") or "SWAP" in inst or "XPERP" in inst or "_UM" in inst:
-                continue
-            last = _f(row.get("last"))
-            mark = _f(row.get("markPx") or last)
-            if last is None:
-                continue
-            contracts.append({
-                "symbol": inst,
-                "last": last,
-                "mark": mark,
-                "index": _f(row.get("idxPx")) or (perp.get("indexPrice") if isinstance(perp, dict) else None),
-                "volume": _f(row.get("vol24h")),
-                "openInterest": _f(row.get("oiCcy") or row.get("oi")),
-            })
-    except Exception as exc:
-        errors.append(f"okx futures: {exc}")
-    payload = {
-        "venue": "OKX",
-        "fallback": True,
+        book = (raw.get("data") or [None])[0] or {}
+        return _book_levels(book.get("bids"), limit), _book_levels(book.get("asks"), limit), "OKX"
+
+    def _coinbase():
+        raw = _fetch_json(
+            "https://api.exchange.coinbase.com/products/BTC-USD/book?level=2",
+            timeout=4,
+        )
+        return _book_levels(raw.get("bids"), limit), _book_levels(raw.get("asks"), limit), "Coinbase"
+
+    def _kraken():
+        raw = _fetch_json(
+            "https://api.kraken.com/0/public/Depth?pair=XBTUSD&count=20",
+            timeout=4,
+        )
+        result = raw.get("result") or {}
+        book = next((v for k, v in result.items() if k != "last" and isinstance(v, dict)), {})
+        return _book_levels(book.get("bids"), limit), _book_levels(book.get("asks"), limit), "Kraken"
+
+    def _bybit():
+        raw = _fetch_json(
+            f"https://api.bybit.com/v5/market/orderbook?category=spot&symbol=BTCUSDT&limit={limit}",
+            timeout=4,
+        )
+        book = raw.get("result") or {}
+        return _book_levels(book.get("b"), limit), _book_levels(book.get("a"), limit), "Bybit"
+
+    for name, fn in (("okx", _okx), ("coinbase", _coinbase), ("kraken", _kraken), ("bybit", _bybit)):
+        try:
+            bids, asks, venue = fn()
+            if len(bids) >= 5 and len(asks) >= 5:
+                return _cache_set(key, {
+                    "bids": bids,
+                    "asks": asks,
+                    "venue": venue,
+                    "fetchedAt": _now_iso(),
+                    "errors": errors,
+                })
+        except Exception as exc:
+            errors.append(f"{name} depth: {exc}")
+    return {
+        "bids": [],
+        "asks": [],
+        "venue": None,
+        "error": "Depth unavailable",
+        "errors": errors,
         "fetchedAt": _now_iso(),
-        "perp": perp if isinstance(perp, dict) else {},
-        "contracts": contracts[:12],
-        "errors": errors + (perp.get("errors") if isinstance(perp, dict) else []),
     }
-    if perp.get("lastPrice") or contracts:
-        return _cache_set(key, payload)
-    payload["error"] = "Futures venues failed"
-    return payload
 
 
 def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
     quote = get_spot_quote(refresh=refresh)
     klines = get_klines(interval="1m", limit=500, refresh=refresh)
+    depth = get_depth(limit=20, refresh=refresh)
     ticker = quote.get("ticker") or {}
-    bid = _f(ticker.get("bidPrice"))
-    ask = _f(ticker.get("askPrice"))
-    depth = {
-        "bids": [[str(bid), "1"]] if bid else [],
-        "asks": [[str(ask), "1"]] if ask else [],
-    }
-    try:
-        book = _fetch_json("https://api.exchange.coinbase.com/products/BTC-USD/book?level=2")
-        bids = [[str(p), str(q)] for p, q, *_ in (book.get("bids") or [])[:20]]
-        asks = [[str(p), str(q)] for p, q, *_ in (book.get("asks") or [])[:20]]
-        if len(bids) >= 5 and len(asks) >= 5:
-            depth = {"bids": bids, "asks": asks}
-    except Exception:
-        pass
     return {
         "ticker": ticker,
         "klines": klines.get("klines") or [],
-        "depth": depth,
+        "depth": {"bids": depth.get("bids") or [], "asks": depth.get("asks") or []},
+        "depthVenue": depth.get("venue"),
         "venue": quote.get("venue") or klines.get("venue"),
         "fetchedAt": _now_iso(),
-        "errors": (quote.get("errors") or []) + (klines.get("errors") or []),
+        "errors": (quote.get("errors") or []) + (klines.get("errors") or []) + (depth.get("errors") or []),
     }

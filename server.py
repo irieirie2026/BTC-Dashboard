@@ -7,7 +7,7 @@ import re
 import time
 import urllib.error
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FutTimeout
 from urllib.parse import parse_qs, urlparse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -98,9 +98,9 @@ NITTER_MIRROR_HOSTS = (
 )
 
 
-def fetch_html(url):
+def fetch_html(url, timeout=30):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
@@ -546,22 +546,30 @@ def _parse_homepage_companies(html, btc_price):
     if not html:
         return []
     out = []
-    for m in re.finditer(
-        r'href="/public-companies/([a-z0-9-]+)"[^>]*>\s*([^<]{2,80})\s*</a>',
-        html,
-        re.I,
-    ):
-        slug, name = m.group(1), re.sub(r"\s+", " ", m.group(2)).strip()
-        chunk = html[m.end() : m.end() + 1200]
-        btc_m = re.search(
-            r"([\d][\d,]*(?:\.\d+)?)\s*(?:BTC|₿)", chunk, re.I
-        ) or re.search(r">\s*([\d][\d,]*(?:\.\d+)?)\s*<", chunk)
-        btc = None
-        if btc_m:
-            btc = _bt_num(btc_m.group(1))
-        if btc is None or btc <= 0:
+    seen = set()
+    # Table rows: name link, ticker in its own span, BTC in the primary cell.
+    for row in re.finditer(r"<tr\b[^>]*>(.*?)</tr>", html, re.S | re.I):
+        chunk = row.group(1)
+        m = re.search(
+            r'href="/public-companies/([a-z0-9-]+)"[^>]*>\s*([^<]{2,80})',
+            chunk,
+            re.I,
+        )
+        if not m:
             continue
-        ticker_m = re.search(r"\b([A-Z]{1,5})\b", chunk)
+        slug = m.group(1)
+        if slug in seen:
+            continue
+        name = re.sub(r"\s+", " ", m.group(2)).strip()
+        ticker_m = re.search(r"<span>([A-Z][A-Z0-9.\-]{0,7})</span>", chunk)
+        btc_m = re.search(
+            r'class="text-primary[^"]*"[^>]*>\s*([\d][\d,]*(?:\.\d+)?)',
+            chunk,
+        )
+        btc = _bt_num(btc_m.group(1)) if btc_m else None
+        if btc is None or btc <= 0 or btc > 2_500_000:
+            continue
+        seen.add(slug)
         out.append(
             {
                 "name": name,
@@ -582,14 +590,23 @@ def parse_bitcointreasuries(_html=""):
     homepage_html = fetch_html(BT_HOME_URL)
     homepage_summary = _parse_homepage_summary(homepage_html)
     payload = _fetch_bt_json(BT_DATA_URL)
-    nodes = payload.get("nodes", [])
-    if len(nodes) < 2:
+    nodes = payload.get("nodes") or []
+    # The feed sometimes leads with null slots. Only dict nodes carry a data array,
+    # and a single array now holds both the meta root and the entity graph.
+    data_nodes = [
+        n for n in nodes
+        if isinstance(n, dict) and isinstance(n.get("data"), list)
+    ]
+    if not data_nodes:
         raise ValueError("Unexpected bitcointreasuries.net payload")
 
-    meta_arr = nodes[0]["data"]
-    data_arr = nodes[1]["data"]
-    meta_root = meta_arr[0] if meta_arr else {}
-    data_root = data_arr[0] if data_arr else {}
+    if len(data_nodes) >= 2:
+        meta_arr = data_nodes[0]["data"]
+        data_arr = data_nodes[1]["data"]
+    else:
+        meta_arr = data_arr = data_nodes[0]["data"]
+    meta_root = meta_arr[0] if meta_arr and isinstance(meta_arr[0], dict) else {}
+    data_root = data_arr[0] if data_arr and isinstance(data_arr[0], dict) else {}
 
     metrics = _resolve_bt_value(
         meta_arr, meta_root.get("initialBitcoinMetrics"), cache={}
@@ -677,10 +694,13 @@ def parse_bitcointreasuries(_html=""):
     strategy_extras = {}
     try:
         strategy_payload = _fetch_bt_json(BT_STRATEGY_URL)
-        s_nodes = strategy_payload.get("nodes", [])
-        if len(s_nodes) >= 2:
-            s_arr = s_nodes[1]["data"]
-            s_root = s_arr[0] if s_arr else {}
+        s_nodes = [
+            n for n in (strategy_payload.get("nodes") or [])
+            if isinstance(n, dict) and isinstance(n.get("data"), list)
+        ]
+        if s_nodes:
+            s_arr = s_nodes[-1]["data"]
+            s_root = s_arr[0] if s_arr and isinstance(s_arr[0], dict) else {}
             peers = (
                 _resolve_bt_value(s_arr, s_root.get("peerHolders"), cache={}) or []
             )
@@ -985,6 +1005,7 @@ def _fetch_options_payload(_html=""):
         "maxPainStrike": surface.get("maxPainStrike"),
         "topStrikes": surface.get("topStrikes") or [],
         "nearestExpiry": surface.get("nearestExpiry"),
+        "indexPrice": index_px,
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -2339,12 +2360,14 @@ MACRO_SECTIONS = {
         "priceMode": "fx",
     },
     "liquidity": {
-        "title": "Liquidity",
-        "heroes": ["TLT", "HYG", "LQD", "^VIX"],
-        "table": ["SHY", "IEF", "XLF", "SPY", "QQQ", "GLD"],
-        "chart": "TLT",
-        "chartLabel": "20+ Year Treasuries (TLT)",
+        "title": "Net Liquidity",
+        "heroes": [],
+        "table": [],
+        "chart": "NETLIQ",
+        "chartLabel": "Fed net liquidity (USD billions)",
         "priceMode": "price",
+        "unit": "USD billions",
+        "formula": "net = WALCL/1000 - RRPONTSYD - WTREGEN",
     },
     "risk": {
         "title": "Risk Sentiment",
@@ -2373,10 +2396,120 @@ MACRO_SECTIONS = {
 }
 
 
+def _asof_backward(obs, dates):
+    """Last observation on or before each date. Dates and obs are YYYY-MM-DD ascending."""
+    out = {}
+    j = 0
+    last = None
+    n = len(obs)
+    for day in dates:
+        while j < n and obs[j][0] <= day:
+            last = obs[j][1]
+            j += 1
+        out[day] = last
+    return out
+
+
+def _fetch_fed_net_liquidity(cfg):
+    """WALCL (millions → billions) minus RRP and TGA, aligned on WALCL dates."""
+    from macro_data.fred_csv import fetch_fred_csv
+
+    series_ids = ("WALCL", "RRPONTSYD", "WTREGEN")
+    fetched = {}
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        for sid, obs in zip(series_ids, pool.map(fetch_fred_csv, series_ids)):
+            fetched[sid] = sorted(obs or [], key=lambda row: row[0])
+
+    walcl = fetched["WALCL"]
+    dates = [day for day, _ in walcl]
+    rrp_at = _asof_backward(fetched["RRPONTSYD"], dates)
+    tga_at = _asof_backward(fetched["WTREGEN"], dates)
+
+    points = []
+    for day, raw in walcl:
+        rrp = rrp_at.get(day)
+        tga = tga_at.get(day)
+        if raw is None or rrp is None or tga is None:
+            continue
+        walcl_b = raw / 1000.0
+        net = walcl_b - rrp - tga
+        points.append(
+            {
+                "date": day,
+                "walcl": round(walcl_b, 4),
+                "rrp": round(float(rrp), 4),
+                "tga": round(float(tga), 4),
+                "net": round(net, 4),
+            }
+        )
+
+    latest = points[-1] if points else None
+    prev = points[-2] if len(points) > 1 else None
+
+    def _quote(name, symbol, key):
+        price = latest.get(key) if latest else None
+        change = None
+        change_pct = None
+        base = prev.get(key) if prev else None
+        if price is not None and base not in (None, 0):
+            change = price - base
+            change_pct = (change / base) * 100.0
+        return {
+            "symbol": symbol,
+            "name": name,
+            "price": price,
+            "change": change,
+            "changePct": change_pct,
+            "currency": "USD",
+        }
+
+    rows = []
+    if latest:
+        rows = [
+            _quote("Net liquidity", "NET", "net"),
+            _quote("Fed assets (WALCL)", "WALCL", "walcl"),
+            _quote("Reverse repo (RRP)", "RRP", "rrp"),
+            _quote("Treasury General Account", "TGA", "tga"),
+        ]
+
+    formula = cfg.get("formula") or "net = WALCL/1000 - RRPONTSYD - WTREGEN"
+    unit = cfg.get("unit") or "USD billions"
+    label = cfg.get("chartLabel") or "Fed net liquidity (USD billions)"
+    chart_points = [
+        {
+            "date": row["date"],
+            "close": row["net"],
+            "walcl": row["walcl"],
+            "rrp": row["rrp"],
+            "tga": row["tga"],
+            "net": row["net"],
+        }
+        for row in points
+    ]
+    return {
+        "section": "liquidity",
+        "title": cfg.get("title") or "Net Liquidity",
+        "priceMode": cfg.get("priceMode") or "price",
+        "heroes": rows,
+        "table": rows,
+        "chart": {"symbol": "NETLIQ", "label": label, "points": chart_points},
+        "chartLabel": label,
+        "points": points,
+        "latest": latest,
+        "unit": unit,
+        "formula": formula,
+        "source": "FRED",
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+
+
 def _fetch_macro_section(section):
     cfg = MACRO_SECTIONS.get(section)
     if not cfg:
         raise ValueError(f"Unknown Macro section: {section}")
+
+    if section == "liquidity":
+        return _fetch_fed_net_liquidity(cfg)
 
     symbols = list(dict.fromkeys(cfg["heroes"] + cfg["table"]))
     quotes = fetch_yahoo_quotes(symbols)
@@ -3087,6 +3220,11 @@ def _classify_news_article(article):
     return best_cat
 
 
+def _fetch_one_news_feed(source, url):
+    xml_text = fetch_html(url, timeout=6)
+    return source, _parse_rss_feed(xml_text, source)
+
+
 def _fetch_all_news_articles():
     key = "news:all-articles"
     cached = _cget(key, CACHE_TTL)
@@ -3095,23 +3233,38 @@ def _fetch_all_news_articles():
 
     seen = set()
     articles = []
-    for source, url in NEWS_FEEDS:
-        try:
-            xml_text = fetch_html(url)
-        except Exception:
-            continue
-        for item in _parse_rss_feed(xml_text, source):
-            if not _is_bitcoin_article(item):
+    errors = []
+    pool = ThreadPoolExecutor(max_workers=4)
+    futs = {pool.submit(_fetch_one_news_feed, source, url): source for source, url in NEWS_FEEDS}
+    try:
+        for fut in as_completed(futs, timeout=8):
+            source = futs[fut]
+            try:
+                _source, items = fut.result()
+            except Exception as exc:
+                errors.append(f"{source}: {exc}")
                 continue
-            link = item["link"]
-            if link in seen:
-                continue
-            seen.add(link)
-            item["category"] = _classify_news_article(item)
-            articles.append(item)
+            for item in items:
+                if not _is_bitcoin_article(item):
+                    continue
+                link = item["link"]
+                if link in seen:
+                    continue
+                seen.add(link)
+                item["category"] = _classify_news_article(item)
+                articles.append(item)
+    except FutTimeout:
+        for fut, source in futs.items():
+            if not fut.done():
+                errors.append(f"{source}: timeout")
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
 
     articles.sort(key=lambda a: a.get("publishedTs") or 0, reverse=True)
-    _cset(key, articles, CACHE_TTL)
+    if articles:
+        _cset(key, articles, CACHE_TTL)
+    elif errors:
+        return []
     return articles
 
 
@@ -3508,7 +3661,11 @@ def _fetch_okx_perp():
         "index": index,
         "basisPct": basis_pct,
         "changePct": _ex_pct_change(price, open_p),
-        "volume": _ex_float(t.get("volCcy24h")),
+        "volume": (
+            _ex_float(t.get("volCcy24h")) * _ex_float(t.get("last"))
+            if _ex_float(t.get("volCcy24h")) and _ex_float(t.get("last"))
+            else None
+        ),
         "fundingRate": funding,
     }
 
@@ -3617,7 +3774,7 @@ def _fetch_htx_spot():
         "type": "spot",
         "price": price,
         "changePct": _ex_pct_change(price, open_p),
-        "volume": _ex_float(tick.get("amount")),
+        "volume": _ex_float(tick.get("vol")),
         "bid": _ex_float(bid[0] if isinstance(bid, list) else bid),
         "ask": _ex_float(ask[0] if isinstance(ask, list) else ask),
         "high": _ex_float(tick.get("high")),
@@ -3725,13 +3882,13 @@ def _fetch_bitget_spot():
 def _fetch_mexc_spot():
     data = fetch_json("https://api.mexc.com/api/v3/ticker/24hr?symbol=BTCUSDT")
     price = _ex_float(data.get("lastPrice"))
-    open_p = _ex_float(data.get("prevClosePrice"))
+    open_p = _ex_float(data.get("openPrice")) or _ex_float(data.get("prevClosePrice"))
     return {
         "exchange": "MEXC",
         "pair": "BTC/USDT",
         "type": "spot",
         "price": price,
-        "changePct": _ex_float(data.get("priceChangePercent")) or _ex_pct_change(price, open_p),
+        "changePct": _ex_pct_change(price, open_p),
         "volume": _ex_float(data.get("quoteVolume")),
         "bid": _ex_float(data.get("bidPrice")),
         "ask": _ex_float(data.get("askPrice")),
@@ -3959,11 +4116,35 @@ def _fetch_gate_perp():
     }
 
 
-def _fetch_all_exchange_data():
-    key = "exchanges:raw:v2"
-    cached = _cget(key, CACHE_TTL)
-    if cached is not None:
-        return cached
+def _run_venue_fetchers(fetchers, timeout=10):
+    rows = []
+    errors = []
+    pool = ThreadPoolExecutor(max_workers=8)
+    futs = {pool.submit(fn): fn for fn in fetchers}
+    try:
+        for fut in as_completed(futs, timeout=timeout):
+            fn = futs[fut]
+            try:
+                row = fut.result()
+                if row and row.get("price") is not None:
+                    rows.append(row)
+            except Exception as exc:
+                errors.append(f"{fn.__name__}: {exc}")
+    except FutTimeout:
+        for fut, fn in futs.items():
+            if not fut.done():
+                errors.append(f"{fn.__name__}: timeout")
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+    return rows, errors
+
+
+def _fetch_all_exchange_data(refresh=False):
+    key = "exchanges:raw:v3"
+    if not refresh:
+        cached = _cget(key, CACHE_TTL)
+        if cached is not None:
+            return cached
 
     spot_fetchers = [
         _fetch_binance_spot,
@@ -3993,27 +4174,17 @@ def _fetch_all_exchange_data():
         _fetch_gate_perp,
     ]
 
-    spot = []
-    perp = []
-    errors = []
+    spot, spot_errors = _run_venue_fetchers(spot_fetchers)
+    perp, perp_errors = _run_venue_fetchers(perp_fetchers)
+    errors = spot_errors + perp_errors
 
-    for fn in spot_fetchers:
-        try:
-            row = fn()
-            if row and row.get("price") is not None:
-                spot.append(row)
-        except Exception as exc:
-            errors.append(f"{fn.__name__}: {exc}")
-
-    for fn in perp_fetchers:
-        try:
-            row = fn()
-            if row and row.get("price") is not None:
-                perp.append(row)
-        except Exception as exc:
-            errors.append(f"{fn.__name__}: {exc}")
-
-    data = {"spot": spot, "perp": perp, "errors": errors}
+    data = {
+        "spot": spot,
+        "perp": perp,
+        "errors": errors,
+        "spotErrors": spot_errors,
+        "perpErrors": perp_errors,
+    }
     _cset(key, data, CACHE_TTL)
     return data
 
@@ -4165,7 +4336,8 @@ def _build_exchanges_overview(spot, perp, errors):
                 f"{'contango / long-biased' if pos >= len(perp) / 2 else 'mixed funding skew'}.",
             )
     if errors:
-        lines.append(f"Partial data: {len(errors)} venue fetch(es) failed.")
+        named = ", ".join(e.split(":", 1)[0].removeprefix("_fetch_") for e in errors[:8])
+        lines.append(f"Partial data: {len(errors)} venue fetch(es) failed ({named}).")
     lines.append(
         "Roadmap: depth ladders, arb matrix, exchange in/out flows — extend as you build out this hub.",
     )
@@ -4277,7 +4449,7 @@ def _build_exchanges_perp(perp, errors):
                     f"mark ${row.get('price'):,.2f}.",
                 )
     if errors:
-        lines.append(f"Partial perp data — {len(errors)} spot fetch error(s) in pipeline.")
+        lines.append(f"Partial perp data — {len(errors)} perp fetch error(s).")
     lines.append("Roadmap: OI breakdown, basis time series, cross-venue funding arb — extend as needed.")
     return heroes[:4], table, lines
 
@@ -4350,24 +4522,26 @@ def _build_exchanges_volume(spot, perp, errors):
     return heroes[:4], table, lines
 
 
-def _fetch_exchanges_section(section):
+def _fetch_exchanges_section(section, *, refresh=False):
     cfg = EXCHANGES_CATEGORIES.get(section)
     if not cfg:
         raise ValueError(f"Unknown Exchanges section: {section}")
 
-    raw = _fetch_all_exchange_data()
+    raw = _fetch_all_exchange_data(refresh=refresh)
     spot = raw.get("spot") or []
     perp = raw.get("perp") or []
     errors = raw.get("errors") or []
+    spot_errors = raw.get("spotErrors") if raw.get("spotErrors") is not None else errors
+    perp_errors = raw.get("perpErrors") if raw.get("perpErrors") is not None else errors
 
     if section == "overview":
         heroes, table, commentary = _build_exchanges_overview(spot, perp, errors)
         columns = ["exchange", "pair", "price", "changePct", "spreadVsMedian", "volume"]
     elif section == "spot":
-        heroes, table, commentary = _build_exchanges_spot(spot, errors)
+        heroes, table, commentary = _build_exchanges_spot(spot, spot_errors)
         columns = ["exchange", "pair", "price", "bid", "ask", "spread", "changePct", "high", "low", "volume"]
     elif section == "perp":
-        heroes, table, commentary = _build_exchanges_perp(perp, errors)
+        heroes, table, commentary = _build_exchanges_perp(perp, perp_errors)
         columns = ["exchange", "pair", "price", "basisPct", "fundingPct", "changePct", "volume"]
     else:
         heroes, table, commentary = _build_exchanges_volume(spot, perp, errors)
@@ -4392,7 +4566,7 @@ def get_exchanges_payload(section, *, refresh=False):
     cached = _cget(key, CACHE_TTL, refresh=refresh)
     if cached is not None:
         return cached
-    data = _fetch_exchanges_section(section)
+    data = _fetch_exchanges_section(section, refresh=refresh)
     _cset(key, data, CACHE_TTL)
     return data
 
@@ -4499,16 +4673,28 @@ def _warm_btc_series() -> None:
 
 if __name__ == "__main__":
     port = 5173
+    host = (os.environ.get("HOST") or "127.0.0.1").strip() or "127.0.0.1"
     try:
-        server = ThreadingHTTPServer(("", port), Handler)
+        server = ThreadingHTTPServer((host, port), Handler)
     except OSError as exc:
-        if exc.errno == 48:  # Address already in use
-            print(f"Port {port} is already in use — dashboard likely running at http://localhost:{port}")
+        if exc.errno in (48, 98):  # Address already in use (macOS, Linux)
+            print(f"Port {port} is already in use — dashboard likely running at http://{host}:{port}")
             raise SystemExit(0)
         raise
     import threading
 
     threading.Thread(target=_warm_macro_caches, daemon=True).start()
     threading.Thread(target=_warm_btc_series, daemon=True).start()
-    print(f"Serving at http://localhost:{port}")
+
+    def _warm_whales() -> None:
+        try:
+            from macro_data.misc_whales import get_misc_whales_payload
+
+            get_misc_whales_payload()
+            print("Whale cache warmed")
+        except Exception as exc:
+            print(f"Whale cache warm skipped: {exc}")
+
+    threading.Thread(target=_warm_whales, daemon=True).start()
+    print(f"Serving at http://{host}:{port}")
     server.serve_forever()

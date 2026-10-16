@@ -341,3 +341,70 @@ def get_liquidity_map_api_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     return get_liquidity_map_payload(metric=metric, year=year, refresh=refresh)
+
+
+# US overview series. YoY uses a 12-observation lag: (v_t / v_{t-12} - 1) * 100.
+_US_FRED_SPECS = (
+    {"id": "CPIAUCSL", "label": "CPI YoY", "unit": "%", "transform": "yoy"},
+    {"id": "PCEPILFE", "label": "Core PCE YoY", "unit": "%", "transform": "yoy"},
+    {"id": "UNRATE", "label": "Unemployment", "unit": "%", "transform": "level"},
+    {"id": "DGS2", "label": "2-Year", "unit": "%", "transform": "level"},
+    {"id": "DGS10", "label": "10-Year", "unit": "%", "transform": "level"},
+    {"id": "DFII5", "label": "5y Real", "unit": "%", "transform": "level"},
+    {"id": "DFII10", "label": "10y Real", "unit": "%", "transform": "level"},
+)
+
+
+def _fred_display_points(obs: list[tuple[str, float]], transform: str) -> list[dict[str, Any]]:
+    rows = sorted(obs, key=lambda item: item[0])
+    if transform != "yoy":
+        return [{"date": date, "value": round(float(value), 4)} for date, value in rows]
+    points: list[dict[str, Any]] = []
+    for i in range(12, len(rows)):
+        prev = rows[i - 12][1]
+        if not prev:
+            continue
+        yoy = (rows[i][1] / prev - 1.0) * 100.0
+        points.append({"date": rows[i][0], "value": round(yoy, 4)})
+    return points
+
+
+def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
+    """US macro drivers from the public FRED CSV (no API key)."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    from macro_data.fred_csv import fetch_fred_csv
+
+    ids = [spec["id"] for spec in _US_FRED_SPECS]
+    fetched: dict[str, list[tuple[str, float]]] = {}
+    with ThreadPoolExecutor(max_workers=len(ids)) as pool:
+        for sid, obs in zip(ids, pool.map(lambda sid: fetch_fred_csv(sid, refresh=refresh), ids)):
+            fetched[sid] = obs or []
+
+    series: dict[str, Any] = {}
+    latest: dict[str, Any] = {}
+    for spec in _US_FRED_SPECS:
+        points = _fred_display_points(fetched.get(spec["id"]) or [], spec["transform"])
+        series[spec["id"]] = {
+            "id": spec["id"],
+            "label": spec["label"],
+            "unit": spec["unit"],
+            "transform": spec["transform"],
+            "points": points,
+        }
+        last = points[-1] if points else None
+        latest[spec["id"]] = {
+            "id": spec["id"],
+            "label": spec["label"],
+            "unit": spec["unit"],
+            "date": last["date"] if last else None,
+            "value": last["value"] if last else None,
+        }
+
+    return {
+        "country": "US",
+        "source": "FRED",
+        "series": series,
+        "latest": latest,
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }

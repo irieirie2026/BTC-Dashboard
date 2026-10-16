@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import calendar
 import time
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable
@@ -150,6 +151,74 @@ def _finalize_series_payload(indicator: str, data: dict[str, Any]) -> dict[str, 
         if out.get("latest") is None:
             out["latest"] = out["series"][-1]
     return out
+
+
+# Response window only. Never trim the widest series stored under data/btc-series/.
+_TIMESPAN_DAYS = {
+    "30days": 30,
+    "60days": 60,
+    "90days": 90,
+    "1year": 365,
+    "2years": 730,
+    "4years": 1460,
+    "all": None,
+}
+
+
+def _series_point_seconds(point: dict[str, Any]) -> int | None:
+    """Unix seconds for a series point. Millisecond stamps are scaled down."""
+    ts = point.get("timestamp")
+    if ts is not None and ts != "":
+        try:
+            n = float(ts)
+        except (TypeError, ValueError):
+            n = None
+        if n is not None and n == n:
+            sec = int(n)
+            if sec > 10_000_000_000:
+                sec //= 1000
+            return sec
+    date = str(point.get("date") or "")[:10]
+    if not date:
+        return None
+    try:
+        return int(calendar.timegm(time.strptime(date, "%Y-%m-%d")))
+    except (ValueError, OverflowError):
+        return None
+
+
+def _apply_timespan(payload: dict[str, Any], timespan: str) -> dict[str, Any]:
+    """Filter a response copy by timespan and recompute latest. Does not persist."""
+    span = timespan or "all"
+    out = {**payload, "timespan": span}
+    days = _TIMESPAN_DAYS.get(span) if span in _TIMESPAN_DAYS else None
+    series = payload.get("series")
+    if not days or not isinstance(series, list):
+        return out
+    cutoff = int(time.time()) - days * 86400
+    filtered: list[dict] = []
+    for point in series:
+        if not isinstance(point, dict):
+            continue
+        ts = _series_point_seconds(point)
+        if ts is None or ts >= cutoff:
+            filtered.append(point)
+    out["series"] = filtered
+    out["latest"] = filtered[-1] if filtered else None
+    return out
+
+
+def _apply_timespan_to_charts(payload: dict[str, Any], timespan: str) -> dict[str, Any]:
+    """Slice each chart on a bundle response. Stored series stay at full width."""
+    span = timespan or "all"
+    charts = payload.get("charts")
+    if not isinstance(charts, dict):
+        return {**payload, "timespan": span}
+    sliced = {
+        key: _apply_timespan(chart, span) if isinstance(chart, dict) else chart
+        for key, chart in charts.items()
+    }
+    return {**payload, "charts": sliced, "timespan": span}
 
 
 def _indicator_list() -> list[dict]:
@@ -1143,7 +1212,7 @@ def get_flows_payload(*, timespan: str = "all", refresh: bool = False) -> dict[s
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
-            return {**cached, "fromCache": True}
+            return _apply_timespan_to_charts({**cached, "fromCache": True}, timespan)
 
     charts: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
@@ -1173,6 +1242,7 @@ def get_flows_payload(*, timespan: str = "all", refresh: bool = False) -> dict[s
         "chartInfo": CHART_INFO,
         "sourceChain": "Coin Metrics Community + BGeometrics (sequential)",
     }
+    payload = _apply_timespan_to_charts(payload, timespan)
     cache_set(cache_key, payload)
     return payload
 
@@ -1182,7 +1252,7 @@ def get_network_payload(*, timespan: str = "all", refresh: bool = False) -> dict
     if not refresh:
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
-            return {**cached, "fromCache": True}
+            return _apply_timespan_to_charts({**cached, "fromCache": True}, timespan)
 
     charts: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
@@ -1206,6 +1276,7 @@ def get_network_payload(*, timespan: str = "all", refresh: bool = False) -> dict
         "chartInfo": CHART_INFO,
         "sourceChain": "Coin Metrics Community + Mempool.space",
     }
+    payload = _apply_timespan_to_charts(payload, timespan)
     cache_set(cache_key, payload)
     return payload
 
@@ -1256,7 +1327,7 @@ def get_intelligence_payload(
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
             cached = _rehydrate_bundle_charts(cached, INTELLIGENCE_SERIES_KEYS)
-            return {**cached, "fromCache": True}
+            return _apply_timespan_to_charts({**cached, "fromCache": True}, timespan)
 
     charts: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
@@ -1277,6 +1348,7 @@ def get_intelligence_payload(
         "chartInfo": CHART_INFO,
         "sourceChain": "BGeometrics + Santiment · store-first",
     }
+    payload = _apply_timespan_to_charts(payload, timespan)
     cache_set(cache_key, payload)
     return payload
 
@@ -1291,7 +1363,7 @@ def get_miner_payload(
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
             cached = _rehydrate_bundle_charts(cached, MINER_SERIES_KEYS)
-            return {**cached, "fromCache": True}
+            return _apply_timespan_to_charts({**cached, "fromCache": True}, timespan)
 
     charts: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
@@ -1326,6 +1398,7 @@ def get_miner_payload(
         "chartInfo": CHART_INFO,
         "sourceChain": "BGeometrics + Blockchain.info + Blockchair · store-first",
     }
+    payload = _apply_timespan_to_charts(payload, timespan)
     cache_set(cache_key, payload)
     return payload
 
@@ -1341,7 +1414,7 @@ def get_valuation_payload(
         cached = cache_get(cache_key, ttl=BGEOMETRICS_TTL)
         if cached is not None:
             cached = _rehydrate_bundle_charts(cached, VALUATION_SERIES_KEYS)
-            return {**cached, "fromCache": True}
+            return _apply_timespan_to_charts({**cached, "fromCache": True}, timespan)
 
     charts: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
@@ -1365,11 +1438,12 @@ def get_valuation_payload(
         "chartInfo": CHART_INFO,
         "sourceChain": "BGeometrics · bitcoin-data.com (sequential fetch)",
     }
+    payload = _apply_timespan_to_charts(payload, timespan)
     cache_set(cache_key, payload)
     return payload
 
 
-def get_series_payload(
+def _series_payload_unsliced(
     indicator: str,
     *,
     timespan: str = "all",
@@ -1483,6 +1557,17 @@ def get_series_payload(
             "error": str(exc),
             "fetchedAt": _now_iso(),
         })
+
+
+def get_series_payload(
+    indicator: str,
+    *,
+    timespan: str = "all",
+    refresh: bool = False,
+) -> dict[str, Any]:
+    """Serve a series. Timespan filters this response only, not the on-disk store."""
+    payload = _series_payload_unsliced(indicator, timespan=timespan, refresh=refresh)
+    return _apply_timespan(payload, timespan)
 
 
 def get_valuation_models_meta_payload(*, refresh: bool = False) -> dict[str, Any]:

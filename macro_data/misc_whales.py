@@ -257,8 +257,7 @@ def get_misc_whales_payload(*, refresh: bool = False) -> dict:
     except Exception as exc:
         errors.append(f"price: {exc}")
 
-    exchanges: list[dict] = []
-    for entry in EXCHANGE_ADDRESSES:
+    def _one_exchange(entry: dict) -> dict:
         addr = entry["address"]
         row = {
             **entry,
@@ -268,11 +267,12 @@ def get_misc_whales_payload(*, refresh: bool = False) -> dict:
             "net24hBtc": None,
             "txCount24h": None,
             "updatedAt": updated_at,
+            "error": None,
         }
         try:
-            summary = _fetch_json(f"{MEMPOOL}/address/{addr}")
+            summary = _fetch_json(f"{MEMPOOL}/address/{addr}", timeout=4)
             row["balanceBtc"] = round(_balance_btc(summary.get("chain_stats") or {}), 4)
-            txs = _fetch_json(f"{MEMPOOL}/address/{addr}/txs/chain")
+            txs = _fetch_json(f"{MEMPOOL}/address/{addr}/txs/chain", timeout=4)
             if isinstance(txs, list):
                 flows = _address_flows(txs, addr, cutoff=cutoff_24h)
                 row["inflow24hBtc"] = flows["inflowBtc"]
@@ -280,8 +280,28 @@ def get_misc_whales_payload(*, refresh: bool = False) -> dict:
                 row["net24hBtc"] = round(flows["inflowBtc"] - flows["outflowBtc"], 4)
                 row["txCount24h"] = flows["txCount24h"]
         except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError, TypeError, ValueError) as exc:
-            errors.append(f"{entry['label']}: {exc}")
-        exchanges.append(row)
+            row["error"] = f"{entry['label']}: {exc}"
+        return row
+
+    from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FutTimeout
+
+    exchanges = []
+    pool = ThreadPoolExecutor(max_workers=6)
+    futs = [pool.submit(_one_exchange, entry) for entry in EXCHANGE_ADDRESSES]
+    try:
+        for fut in as_completed(futs, timeout=10):
+            row = fut.result()
+            if row.get("error"):
+                errors.append(row["error"])
+            exchanges.append(row)
+    except FutTimeout:
+        errors.append("exchange wallets: timeout")
+        for fut in futs:
+            if fut.done():
+                continue
+            fut.cancel()
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
 
     feed: list[dict] = []
 

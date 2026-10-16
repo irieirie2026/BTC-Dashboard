@@ -89,6 +89,17 @@ def _deserialize(raw: str) -> tuple[float, Any] | None:
         return None
 
 
+def get(key: str, default: Any = None, *, ttl: int = DEFAULT_TTL) -> Any:
+    """Module-level cache read. Returns ``default`` when the key is missing."""
+    value = get_cache_service().get(key, ttl=ttl)
+    return default if value is None else value
+
+
+def set(key: str, data: Any, ttl: int = DEFAULT_TTL) -> None:
+    """Module-level cache write. ``ttl`` may be passed positionally or by name."""
+    get_cache_service().set(key, data, ttl=ttl)
+
+
 class CacheService:
     """Central cache facade."""
 

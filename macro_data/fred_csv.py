@@ -15,12 +15,13 @@ _FRED_CSV = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 def fetch_fred_csv(series_id: str, *, refresh: bool = False) -> list[tuple[str, float]]:
     """
     Returns ascending (YYYY-MM-DD, value) pairs for a FRED series.
-    Cached on disk via macro_data.cache.
+    Only a non-empty parse is cached. Failures return [] and do not write the cache.
     """
     cache_key = f"fred:csv:{series_id}"
     if not refresh:
         cached = cache_get(cache_key)
-        if cached is not None:
+        # Empty lists were previously cached on failure — treat them as a miss.
+        if cached:
             return [(row[0], float(row[1])) for row in cached]
 
     import requests
@@ -29,11 +30,9 @@ def fetch_fred_csv(series_id: str, *, refresh: bool = False) -> list[tuple[str, 
     try:
         resp = requests.get(url, headers=_HEADERS, timeout=60)
         if resp.status_code != 200:
-            cache_set(cache_key, [])
             return []
         text = resp.text.strip()
-        if not text or text.startswith("<!DOCTYPE"):
-            cache_set(cache_key, [])
+        if not text or text.startswith("<!DOCTYPE") or text.lower().startswith("<html"):
             return []
         reader = csv.DictReader(io.StringIO(text))
         out: list[tuple[str, float]] = []
@@ -46,8 +45,13 @@ def fetch_fred_csv(series_id: str, *, refresh: bool = False) -> list[tuple[str, 
                 out.append((date, float(raw)))
             except ValueError:
                 continue
-        cache_set(cache_key, out)
-        return out
     except Exception:
-        cache_set(cache_key, [])
         return []
+
+    if not out:
+        return []
+    try:
+        cache_set(cache_key, out)
+    except Exception:
+        pass
+    return out

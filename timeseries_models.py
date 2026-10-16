@@ -68,21 +68,6 @@ BT_MIN_TRAIN = 365
 BT_TARGET_ORIGINS = 28  # aim for ~this many origins on mid samples
 BT_MAX_ORIGINS = 40
 BT_MIN_STEP = 7  # at least weekly spacing
-# Statsmodels / Prophet refits per origin blow the Vercel 60s budget on 10Y
-_HEAVY_BACKTEST_IDS = frozenset(
-    {
-        "prophet",
-        "sarima_w",
-        "arima212",
-        "ets_aaa",
-        "hw_add",
-        "uc_cycle",
-        "arimax",
-        "var2",
-        "svar",
-        "vecm",
-    }
-)
 
 
 def _now_iso() -> str:
@@ -835,6 +820,17 @@ def _holt_logp(logp: np.ndarray, h: int, alpha: float = 0.3, beta: float = 0.1) 
     }
 
 
+def _apply_holt_fallback(
+    logp: np.ndarray, h: int, warning: str, reason: str
+) -> tuple[list[float], dict]:
+    """NumPy Holt when Holt-Winters / ETS / Prophet is missing or the fit raises."""
+    path, meta = _holt_logp(logp, h)
+    meta["warning"] = warning
+    meta["fallbackReason"] = reason
+    meta["engine"] = "numpy-holt-fallback"
+    return path, meta
+
+
 def _theta_method(logp: np.ndarray, h: int) -> tuple[list[float], dict]:
     n = len(logp)
     t = np.arange(n, dtype=float)
@@ -1407,38 +1403,83 @@ def _forecast_returns_path(
         return _holt_logp(logp, h)
 
     if model_id == "hw_add":
-        if SM_AVAILABLE:
-            try:
-                return _statsmodels_holt_hw(logp, h, seasonal=True)
-            except Exception:
-                pass
-        path, meta = _holt_logp(logp, h)
-        meta["warning"] = "statsmodels unavailable — Holt fallback for Holt-Winters"
-        return path, meta
+        if not SM_AVAILABLE or ExponentialSmoothing is None:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                "statsmodels missing — Holt fallback for Holt-Winters",
+                "statsmodels missing",
+            )
+        try:
+            return _statsmodels_holt_hw(logp, h, seasonal=True)
+        except ImportError as exc:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"ImportError: {exc} — statsmodels missing — Holt fallback for Holt-Winters",
+                "statsmodels missing",
+            )
+        except Exception as exc:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"seasonal fit failed ({type(exc).__name__}: {str(exc)[:160]}) — Holt fallback for Holt-Winters",
+                "seasonal fit failed",
+            )
 
     if model_id == "ets_aaa":
-        if SM_AVAILABLE:
-            try:
-                return _statsmodels_holt_hw(logp, h, seasonal=True)
-            except Exception:
-                pass
-        path, meta = _holt_logp(logp, h)
-        meta["warning"] = "ETS(A,A,A) fallback to Holt (statsmodels seasonal fit failed)"
-        meta["engine"] = "numpy-holt-fallback"
-        return path, meta
+        if not SM_AVAILABLE or ExponentialSmoothing is None:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                "statsmodels missing — Holt fallback for ETS weekly",
+                "statsmodels missing",
+            )
+        try:
+            return _statsmodels_holt_hw(logp, h, seasonal=True)
+        except ImportError as exc:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"ImportError: {exc} — statsmodels missing — Holt fallback for ETS weekly",
+                "statsmodels missing",
+            )
+        except Exception as exc:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"seasonal fit failed ({type(exc).__name__}: {str(exc)[:160]}) — Holt fallback for ETS weekly",
+                "seasonal fit failed",
+            )
 
     if model_id == "theta":
         return _theta_method(logp, h)
 
     if model_id == "prophet":
         dates = data.get("dates") or []
+        if not PROPHET_AVAILABLE or Prophet is None:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                "prophet not installed — Holt fallback",
+                "prophet not installed",
+            )
         try:
             return _prophet_path(logp, dates, h)
+        except ImportError as exc:
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"ImportError: {exc} — prophet not installed — Holt fallback",
+                "prophet not installed",
+            )
         except Exception as exc:
-            path, meta = _holt_logp(logp, h)
-            meta["warning"] = f"Prophet unavailable/failed ({str(exc)[:100]}) — Holt fallback"
-            meta["engine"] = "numpy-holt-fallback"
-            return path, meta
+            return _apply_holt_fallback(
+                logp,
+                h,
+                f"Prophet fit failed ({type(exc).__name__}: {str(exc)[:160]}) — Holt fallback",
+                "prophet fit failed",
+            )
 
     if model_id == "ridge_lags":
         return _ridge_lags(rets, h)
@@ -1866,6 +1907,20 @@ def _fit_model(
 # Suite API
 # ---------------------------------------------------------------------------
 
+def _comparable_ic(row: dict[str, Any], key: str) -> float | None:
+    """Univariate AIC/BIC only. VAR/VECM likelihoods are a different scale."""
+    if row.get("kind") in ("var", "vecm") or row.get("icComparable") is False:
+        return None
+    v = row.get(key)
+    if v is None:
+        return None
+    try:
+        fv = float(v)
+    except (TypeError, ValueError):
+        return None
+    return fv if math.isfinite(fv) else None
+
+
 def get_timeseries_suite_payload(
     *,
     days: int = 3650,
@@ -1873,7 +1928,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v8:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v9:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:
@@ -1906,8 +1961,6 @@ def get_timeseries_suite_payload(
 
     results = []
     deadline = time.time() + 48.0
-    n_obs = len(data["close"])
-    skip_all_bt = n_obs >= 1600
     for cat in catalog:
         if time.time() > deadline:
             results.append({
@@ -1926,20 +1979,11 @@ def get_timeseries_suite_payload(
             fit = {"ok": False, "error": str(exc)[:240]}
 
         bt: dict[str, Any] = {"ok": False}
-        skip_bt = skip_all_bt or (
-            cat["id"] in _HEAVY_BACKTEST_IDS and n_obs >= 900
-        )
-        if fit.get("ok") and not skip_bt:
+        if fit.get("ok"):
             try:
                 bt = _backtest_model(cat["id"], data, macro)
             except Exception as exc:
                 bt = {"ok": False, "error": str(exc)[:160]}
-        elif skip_bt:
-            bt = {
-                "ok": False,
-                "skipped": True,
-                "error": "OOS backtest skipped on long windows for this model (time budget)",
-            }
 
         row = {
             "id": cat["id"],
@@ -1952,9 +1996,16 @@ def get_timeseries_suite_payload(
             "status": "ok" if fit.get("ok") else "failed",
             "error": fit.get("error"),
             "warning": fit.get("warning"),
+            "fallbackReason": fit.get("fallbackReason"),
             "engine": fit.get("engine"),
             "aic": fit.get("aic"),
             "bic": fit.get("bic"),
+            "icComparable": cat["kind"] not in ("var", "vecm"),
+            "icNote": (
+                "VAR/VECM likelihoods are multivariate and not comparable to univariate AIC/BIC."
+                if cat["kind"] in ("var", "vecm")
+                else None
+            ),
             "nParams": fit.get("nParams"),
             "logLikelihood": fit.get("logLikelihood"),
             "forecast1d": fit.get("forecast1d"),
@@ -1966,6 +2017,8 @@ def get_timeseries_suite_payload(
             "lastPrice": fit.get("lastPrice") or float(data["close"][-1]),
             "backtest": {
                 "ok": bt.get("ok"),
+                "error": bt.get("error"),
+                "skipped": bool(bt.get("skipped")),
                 "meanRmseRet": bt.get("meanRmseRet"),
                 "nOrigins": bt.get("nOrigins"),
                 "originStepDays": bt.get("originStepDays"),
@@ -2039,8 +2092,8 @@ def get_timeseries_suite_payload(
     best_hit1 = _best_by(lambda r: _h_metric(r, 1, "dirHitRate"), lower=False)
     best_hit7 = _best_by(lambda r: _h_metric(r, 7, "dirHitRate"), lower=False)
     best_hit30 = _best_by(lambda r: _h_metric(r, 30, "dirHitRate"), lower=False)
-    best_aic = _best_by(lambda r: r.get("aic") if r.get("aic") is not None else None)
-    best_bic = _best_by(lambda r: r.get("bic") if r.get("bic") is not None else None)
+    best_aic = _best_by(lambda r: _comparable_ic(r, "aic"))
+    best_bic = _best_by(lambda r: _comparable_ic(r, "bic"))
 
     # Desk mark: directional hit primary (7d), with RMSE/MAE/AIC/BIC tie-breaks
     def _pick_primary() -> tuple[dict | None, list[str]]:
@@ -2052,19 +2105,19 @@ def get_timeseries_suite_payload(
             hit30 = _h_metric(r, 30, "dirHitRate")
             rmse7 = _h_metric(r, 7, "rmseRet")
             mae7 = _h_metric(r, 7, "maeRet")
-            aic = r.get("aic")
-            bic = r.get("bic")
+            aic = _comparable_ic(r, "aic")
+            bic = _comparable_ic(r, "bic")
             if hit7 is None and hit1 is None and hit30 is None:
                 continue
-            # Sort key: higher hit7, then hit1, hit30; lower rmse/mae/aic/bic
+            # Sort key: higher hit7, then hit1, hit30; lower rmse/mae, then univariate AIC/BIC
             key = (
                 -(hit7 if hit7 is not None else -1.0),
                 -(hit1 if hit1 is not None else -1.0),
                 -(hit30 if hit30 is not None else -1.0),
                 rmse7 if rmse7 is not None else 1e9,
                 mae7 if mae7 is not None else 1e9,
-                float(aic) if aic is not None and math.isfinite(float(aic)) else 1e18,
-                float(bic) if bic is not None and math.isfinite(float(bic)) else 1e18,
+                aic if aic is not None else 1e18,
+                bic if bic is not None else 1e18,
             )
             scored.append((key, r))
         if not scored:
@@ -2270,7 +2323,7 @@ def get_timeseries_suite_payload(
             "primaryHorizon": 7,
             "rule": (
                 "Maximize OOS directional hit rate at 7d; break ties with 1d/30d hit, "
-                "then lower 7d RMSE, MAE, AIC, BIC."
+                "then lower 7d RMSE, MAE, then univariate AIC/BIC (VAR/VECM excluded)."
             ),
             "selectedId": detail_row["id"] if detail_row else None,
             "selectedName": detail_row["name"] if detail_row else None,

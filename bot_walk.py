@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Walk the live dashboard the way a Grok bot should: open pages, hit APIs, report errors.
 
-  python3 bot_walk.py --base https://btc-dashboard-bay.vercel.app --out walk-report.json
+  python3 bot_walk.py --base http://127.0.0.1:5173 --out walk-report.json
 
 Bots can instead GET /api/desk-walk (critical probes + page list + error signatures).
 """
@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 USER_AGENT = "btc-dashboard-bot-walk/1.0"
-DEFAULT_BASE = "https://btc-dashboard-bay.vercel.app"
+DEFAULT_BASE = "http://127.0.0.1:5173"
 
 # Deep links a bot should open (SPA). Wait ≤15s. Then look for ERROR_SIGNATURES.
 PAGES: list[dict[str, str]] = [
