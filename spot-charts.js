@@ -1,7 +1,6 @@
-/** Markets → Spot price — multi-timeframe + full-history log chart (Binance BTCUSDT) */
+/** Markets → Spot price — multi-timeframe + full-history log chart */
 
 const SPOT_SYMBOL = "BTCUSDT";
-const SPOT_REST = "https://api.binance.com/api/v3";
 
 const SPOT_TF = {
   "1m": { interval: "1m", limit: 1000, label: "1m", live: true },
@@ -61,22 +60,7 @@ function spotDedupeBars(bars) {
   return [...byTime.values()].sort((a, b) => a.time - b.time);
 }
 
-async function spotFetchKlines(interval, limit = 1000, endTime) {
-  const params = new URLSearchParams({
-    symbol: SPOT_SYMBOL,
-    interval,
-    limit: String(Math.min(limit, 1000)),
-  });
-  if (endTime) params.set("endTime", String(endTime));
-  try {
-    const res = await fetch(`${SPOT_REST}/klines?${params}`);
-    if (res.ok) {
-      const raw = await res.json();
-      if (Array.isArray(raw) && raw.length) return spotDedupeBars(raw.map(spotKlineToBar));
-    }
-  } catch (_) {
-    /* Binance blocked — same-origin proxy */
-  }
+async function spotFetchKlines(interval, limit = 1000) {
   const bundled = await window.marketFetchKlines?.(interval, limit);
   const raw = bundled?.klines || [];
   if (!raw.length) throw new Error("Klines unavailable");
@@ -112,31 +96,10 @@ async function spotFetchAllDaily(maxRequests = 20) {
   } catch (_) {
     /* fall through */
   }
-  try {
-    const bundled = await window.marketFetchKlines?.("1d", 1000);
-    const raw = bundled?.klines || [];
-    if (raw.length > 30) return spotDedupeBars(raw.map(spotKlineToBar));
-  } catch (_) {
-    /* fall through */
-  }
-  const chunks = [];
-  let endTime;
-  for (let i = 0; i < maxRequests; i++) {
-    const params = new URLSearchParams({
-      symbol: SPOT_SYMBOL,
-      interval: "1d",
-      limit: "1000",
-    });
-    if (endTime) params.set("endTime", String(endTime));
-    const res = await fetch(`${SPOT_REST}/klines?${params}`);
-    if (!res.ok) break;
-    const batch = await res.json();
-    if (!Array.isArray(batch) || !batch.length) break;
-    chunks.unshift(...batch);
-    endTime = batch[0][0] - 1;
-    if (batch.length < 1000) break;
-  }
-  return spotDedupeBars(chunks.map(spotKlineToBar));
+  const bundled = await window.marketFetchKlines?.("1d", 1000);
+  const raw = bundled?.klines || [];
+  if (raw.length > 30) return spotDedupeBars(raw.map(spotKlineToBar));
+  return [];
 }
 
 function spotMainTimeLabel(bar) {

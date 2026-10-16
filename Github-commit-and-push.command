@@ -119,9 +119,9 @@ if [ "$NEEDS_PUSH" -eq 1 ]; then
         echo "✅ Successfully pushed to GitHub!"
         git log -1 --oneline
         echo ""
-        echo "Vercel will auto-deploy from main in ~1–2 min."
-        echo "Check: https://btc-dashboard-bay.vercel.app/misc/cross-market"
-        echo "Asset check: https://btc-dashboard-bay.vercel.app/cross-market-charts.js (should be 200)"
+        echo "Local server: http://127.0.0.1:5173"
+        echo "Check: http://127.0.0.1:5173/misc/cross-market"
+        echo "Asset check: http://127.0.0.1:5173/cross-market-charts.js (should be 200)"
     else
         echo ""
         echo "❌ Push failed. You may need to authenticate or fix credentials."

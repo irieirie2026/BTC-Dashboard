@@ -1,5 +1,3 @@
-const FAPI = "https://fapi.binance.com";
-const DAPI = "https://dapi.binance.com";
 const OPTIONS_API = "/api/options";
 
 const DELIVERY_POLL_MS = 60_000;
@@ -13,7 +11,7 @@ let derivativesExtraReady = false;
 
 const dxEl = (id) => document.getElementById(id);
 
-function fmtPrice(n, d = 2) {
+function dxFmtPrice(n, d = 2) {
   const v = Number(n);
   if (!Number.isFinite(v)) return "—";
   return v.toLocaleString("en-US", {
@@ -108,7 +106,7 @@ function parseOptionSymbol(symbol) {
   return null;
 }
 
-async function fetchJson(url, ms = 8000) {
+async function dxFetchJson(url, ms = 8000) {
   const ac = new AbortController();
   const kill = setTimeout(() => ac.abort(), ms);
   try {
@@ -120,41 +118,64 @@ async function fetchJson(url, ms = 8000) {
   }
 }
 
+function deliveryMapContract(c, index) {
+  const cLast = Number(c.last);
+  const cMark = Number(c.mark || cLast);
+  const cIndex = Number(c.index || index);
+  const basisPct = Number.isFinite(Number(c.basisPct))
+    ? Number(c.basisPct)
+    : (cIndex ? ((cMark - cIndex) / cIndex) * 100 : 0);
+  const days = Number(c.daysToExpiry);
+  const ann = Number.isFinite(Number(c.annBasisPct))
+    ? Number(c.annBasisPct)
+    : (Number.isFinite(days) && days > 0.05 ? (basisPct / days) * 365 : basisPct);
+  return {
+    symbol: c.symbol,
+    margin: c.margin || "USDT",
+    type: c.type || "Dated",
+    last: cLast,
+    mark: cMark,
+    index: Number.isFinite(cIndex) ? cIndex : null,
+    basisPct,
+    annBasisPct: ann,
+    openInterest: c.openInterest,
+    volume: c.volume,
+    deliveryDate: c.deliveryDate ?? null,
+    daysToExpiry: Number.isFinite(days) ? days : null,
+  };
+}
+
 function deliveryFromFallback(snap) {
   const perp = snap.perp || snap;
   const last = Number(perp.lastPrice || perp.last);
   const mark = Number(perp.markPrice || perp.mark || last);
-  const index = Number(perp.indexPrice || perp.index || mark);
-  const contracts = (snap.contracts || []).map((c) => {
-    const cLast = Number(c.last);
-    const cMark = Number(c.mark || cLast);
-    const cIndex = Number(c.index || index);
-    const basis = cMark - cIndex;
-    const basisPct = cIndex ? (basis / cIndex) * 100 : 0;
-    return {
-      symbol: c.symbol,
-      margin: "USDT",
-      type: "Dated",
-      last: cLast,
-      mark: cMark,
-      basisPct,
-      annBasisPct: basisPct,
-      openInterest: c.openInterest,
-      volume: c.volume,
-      deliveryDate: null,
-      daysToExpiry: null,
-    };
-  });
+  const index = Number(snap.indexPrice || perp.indexPrice || perp.index);
+  const contracts = (snap.contracts || []).map((c) => deliveryMapContract(c, index));
+  const coinContracts = (snap.coinContracts || []).map((c) => deliveryMapContract(c, index));
   const venue = snap.venue || perp.venue || "OKX";
+  const curvePoints = Array.isArray(snap.curvePoints) && snap.curvePoints.length
+    ? snap.curvePoints
+    : [
+        { label: "Perp", days: 0, basis: 0, annBasis: 0 },
+        ...[...contracts, ...coinContracts]
+          .filter((c) => Number.isFinite(c.daysToExpiry))
+          .map((c) => ({
+            label: c.symbol,
+            days: c.daysToExpiry,
+            basis: c.basisPct,
+            annBasis: c.annBasisPct,
+          })),
+      ];
   return {
-    indexPrice: index,
+    indexPrice: Number.isFinite(index) ? index : null,
     perp: {
       symbol: "BTC-USDT-SWAP",
       margin: "USDT",
       type: "Perpetual",
       last,
       mark,
-      basisPct: index ? ((mark - index) / index) * 100 : 0,
+      index: Number.isFinite(index) ? index : null,
+      basisPct: Number.isFinite(index) && index ? ((mark - index) / index) * 100 : 0,
       annBasisPct: 0,
       openInterest: perp.openInterest,
       volume: perp.volume || perp.quoteVolume,
@@ -162,172 +183,24 @@ function deliveryFromFallback(snap) {
       daysToExpiry: 0,
     },
     contracts,
-    coinContracts: [],
-    curvePoints: [],
+    coinContracts,
+    curvePoints,
     fetchedAt: snap.fetchedAt || new Date().toISOString(),
     venue,
-    venueLabel: venue + " fallback",
+    venueLabel: venue,
   };
 }
 
 async function fetchDeliveryBundle() {
+  // Binance fapi/dapi is blocked in the browser. Dated futures come from the server proxy.
   try {
-    const ac = new AbortController();
-    const kill = setTimeout(() => ac.abort(), 3500);
-    const [exchange, tickers, marks, perpTicker] = await Promise.all([
-      fetch(`${FAPI}/fapi/v1/exchangeInfo`, { signal: ac.signal }).then((r) => {
-        if (!r.ok) throw new Error("binance exchangeInfo");
-        return r.json();
-      }),
-      fetch(`${FAPI}/fapi/v1/ticker/24hr`, { signal: ac.signal }).then((r) => r.json()),
-      fetch(`${FAPI}/fapi/v1/premiumIndex`, { signal: ac.signal }).then((r) => r.json()),
-      fetch(`${FAPI}/fapi/v1/ticker/24hr?symbol=BTCUSDT`, { signal: ac.signal }).then((r) => r.json()),
-    ]);
-    clearTimeout(kill);
-
-    const tickerMap = Object.fromEntries(tickers.map((t) => [t.symbol, t]));
-    const markMap = Object.fromEntries(marks.map((m) => [m.symbol, m]));
-
-    const perpMark = markMap.BTCUSDT;
-    const indexPrice = perpMark ? parseFloat(perpMark.indexPrice) : null;
-
-    const contracts = exchange.symbols
-      .filter(
-        (s) =>
-          s.pair === "BTCUSDT" &&
-          s.status === "TRADING" &&
-          s.contractType !== "PERPETUAL",
-      )
-      .map((s) => {
-        const t = tickerMap[s.symbol] || {};
-        const m = markMap[s.symbol] || {};
-        const mark = parseFloat(m.markPrice || t.lastPrice || 0);
-        const index = parseFloat(m.indexPrice || indexPrice || mark);
-        const basis = index ? ((mark - index) / index) * 100 : 0;
-        const dte = daysToExpiry(s.deliveryDate);
-        return {
-          symbol: s.symbol,
-          type: s.contractType.replace(/_/g, " "),
-          deliveryDate: s.deliveryDate,
-          daysToExpiry: dte,
-          last: parseFloat(t.lastPrice || mark),
-          mark,
-          index,
-          basisPct: basis,
-          annBasisPct: (basis / dte) * 365,
-          volume: parseFloat(t.volume || 0),
-          quoteVolume: parseFloat(t.quoteVolume || 0),
-          margin: "USDT-M",
-        };
-      })
-      .sort((a, b) => a.deliveryDate - b.deliveryDate);
-
-    let coinContracts = [];
-    try {
-      const [dEx, dTickers, dMarks] = await Promise.all([
-        fetchJson(`${DAPI}/dapi/v1/exchangeInfo`),
-        fetchJson(`${DAPI}/dapi/v1/ticker/24hr`),
-        fetchJson(`${DAPI}/dapi/v1/premiumIndex`),
-      ]);
-      const dTickerMap = Object.fromEntries(dTickers.map((t) => [t.symbol, t]));
-      const dMarkMap = Object.fromEntries(dMarks.map((m) => [m.symbol, m]));
-      coinContracts = dEx.symbols
-        .filter(
-          (s) =>
-            s.pair === "BTCUSD" &&
-            s.status === "TRADING" &&
-            s.contractType !== "PERPETUAL",
-        )
-        .map((s) => {
-          const t = dTickerMap[s.symbol] || {};
-          const m = dMarkMap[s.symbol] || {};
-          const mark = parseFloat(m.markPrice || t.lastPrice || 0);
-          const index = parseFloat(m.indexPrice || indexPrice || mark);
-          const basis = index ? ((mark - index) / index) * 100 : 0;
-          const dte = daysToExpiry(s.deliveryDate);
-          return {
-            symbol: s.symbol,
-            type: s.contractType.replace(/_/g, " "),
-            deliveryDate: s.deliveryDate,
-            daysToExpiry: dte,
-            last: parseFloat(t.lastPrice || mark),
-            mark,
-            index,
-            basisPct: basis,
-            annBasisPct: (basis / dte) * 365,
-            volume: parseFloat(t.volume || 0),
-            quoteVolume: parseFloat(t.baseVolume || 0) * mark,
-            margin: "COIN-M",
-          };
-        });
-    } catch (_) {
-      coinContracts = [];
+    const snap = await dxFetchJson("/api/market/futures", 12000);
+    if (!snap || (!snap.perp?.lastPrice && !(snap.contracts || []).length && !(snap.coinContracts || []).length)) {
+      throw new Error(snap?.error || "Futures venues failed");
     }
-
-    const oiSymbols = ["BTCUSDT", ...contracts.map((c) => c.symbol)];
-    const oiRows = await Promise.all(
-      oiSymbols.map(async (sym) => {
-        try {
-          const oi = await fetchJson(
-            `${FAPI}/fapi/v1/openInterest?symbol=${sym}`,
-          );
-          return { symbol: sym, oi: parseFloat(oi.openInterest) };
-        } catch {
-          return { symbol: sym, oi: null };
-        }
-      }),
-    );
-    const oiMap = Object.fromEntries(oiRows.map((r) => [r.symbol, r.oi]));
-
-    contracts.forEach((c) => {
-      c.openInterest = oiMap[c.symbol];
-    });
-
-    const perp = {
-      symbol: "BTCUSDT",
-      type: "PERPETUAL",
-      deliveryDate: null,
-      daysToExpiry: 0,
-      last: parseFloat(perpTicker.lastPrice),
-      mark: parseFloat(perpMark?.markPrice || perpTicker.lastPrice),
-      index: indexPrice,
-      basisPct: 0,
-      annBasisPct: 0,
-      volume: parseFloat(perpTicker.volume),
-      quoteVolume: parseFloat(perpTicker.quoteVolume),
-      openInterest: oiMap.BTCUSDT ?? null,
-      margin: "USDT-M",
-    };
-
-    return {
-      indexPrice,
-      perp,
-      contracts,
-      coinContracts,
-      curvePoints: [
-        { label: "Perp", days: 0, basis: 0, annBasis: 0 },
-        ...contracts.map((c) => ({
-          label: c.symbol.replace("BTCUSDT_", ""),
-          days: c.daysToExpiry,
-          basis: c.basisPct,
-          annBasis: c.annBasisPct,
-        })),
-      ],
-      fetchedAt: new Date().toISOString(),
-      venue: "Binance",
-      venueLabel: "Binance",
-    };
-  } catch (binanceErr) {
-    let snap = null;
-    try {
-      snap = await fetchJson("/api/market/futures", 6000);
-    } catch (_) {
-      snap = null;
-    }
-    if (!snap || (!snap.perp?.lastPrice && !snap.contracts?.length && !snap.lastPrice)) {
-      throw binanceErr;
-    }
-    return deliveryFromFallback(snap.lastPrice ? { perp: snap, venue: snap.venue } : snap);
+    return deliveryFromFallback(snap);
+  } catch (err) {
+    throw err;
   }
 }
 
@@ -393,8 +266,8 @@ function renderDeliveryScreen() {
     if (cls) node.className = cls;
   };
 
-  set("delivery-index", indexPrice ? "$" + fmtPrice(indexPrice) : "—");
-  set("delivery-perp", "$" + fmtPrice(perp.last));
+  set("delivery-index", indexPrice ? "$" + dxFmtPrice(indexPrice) : "—");
+  set("delivery-perp", "$" + dxFmtPrice(perp.last));
   set("delivery-curve-shape", curveShape);
   set(
     "delivery-nearest-basis",
@@ -426,8 +299,8 @@ function renderDeliveryScreen() {
           <td>${c.margin}</td>
           <td>${c.type}</td>
           <td>${exp}</td>
-          <td class="mono">$${fmtPrice(c.last)}</td>
-          <td class="mono">$${fmtPrice(c.mark)}</td>
+          <td class="mono">$${dxFmtPrice(c.last)}</td>
+          <td class="mono">$${dxFmtPrice(c.mark)}</td>
           <td class="mono ${basisCls}">${fmtPct(c.basisPct, 3)}</td>
           <td class="mono ${basisCls}">${c.daysToExpiry ? fmtPct(c.annBasisPct, 2) : "—"}</td>
           <td class="mono">${c.openInterest != null ? fmtVol(c.openInterest) + " BTC" : "—"}</td>
@@ -438,7 +311,7 @@ function renderDeliveryScreen() {
   }
 
   drawDeliveryCurveChart(curvePoints);
-  drawDeliveryOiChart([perp, ...contracts]);
+  drawDeliveryOiChart([perp, ...contracts, ...(deliveryData.coinContracts || [])]);
 }
 
 function drawDeliveryCurveChart(points) {
@@ -505,11 +378,17 @@ function drawDeliveryCurveChart(points) {
 }
 
 async function fetchOptionsBundle() {
-    const payload = await fetchJson(OPTIONS_API);
+    const payload = await dxFetchJson(OPTIONS_API);
     const contracts = payload.contracts || [];
-    const indexPrice = parseFloat(
-      payload.index?.index_price || payload.index?.indexPrice || 0,
-    );
+    const underlying = (payload.contracts || []).map((c) =>
+      parseFloat(c.underlying_price || c.estimated_delivery_price),
+    ).find((n) => Number.isFinite(n) && n > 1000);
+    const indexPrice = [
+      payload.indexPrice,
+      payload.index?.index_price,
+      payload.index?.indexPrice,
+      underlying,
+    ].map((n) => parseFloat(n)).find((n) => Number.isFinite(n) && n > 0) || null;
 
     const chain = contracts
       .map((c) => {
@@ -818,8 +697,9 @@ function renderOptionsVolScreen() {
 
   const spotSub = dxEl("opt-iv-spot-sub");
   if (spotSub) {
-    spotSub.textContent = d.indexPrice
-      ? "Spot $" + fmtPrice(d.indexPrice, 0) + " · Deribit"
+    const spotPx = Number(d.indexPrice);
+    spotSub.textContent = Number.isFinite(spotPx) && spotPx > 0
+      ? "Spot $" + dxFmtPrice(spotPx, 0) + " · Deribit"
       : "Deribit BTC";
   }
 
@@ -1155,6 +1035,8 @@ function drawOiStrikeChart(topStrikes, spot) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  // A hidden panel reports 0×0. Writing that onto the canvas clears its height attribute.
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
@@ -1228,7 +1110,7 @@ function initDerivativesExtra() {
   window.addEventListener("resize", () => {
     if (deliveryData) {
       drawDeliveryCurveChart(deliveryData.curvePoints);
-      drawDeliveryOiChart([deliveryData.perp, ...deliveryData.contracts]);
+      drawDeliveryOiChart([deliveryData.perp, ...deliveryData.contracts, ...(deliveryData.coinContracts || [])]);
     }
     if (optionsData) {
       drawIvTermChart(optionsData.ivTerm);
@@ -1242,7 +1124,7 @@ function initDerivativesExtra() {
 window.refreshDeliveryCurve = function () {
   if (deliveryData) {
     drawDeliveryCurveChart(deliveryData.curvePoints);
-    drawDeliveryOiChart([deliveryData.perp, ...deliveryData.contracts]);
+    drawDeliveryOiChart([deliveryData.perp, ...deliveryData.contracts, ...(deliveryData.coinContracts || [])]);
   } else loadDeliveryFutures();
 };
 
@@ -1252,6 +1134,42 @@ window.refreshOptionsVolCharts = function () {
     drawVolSmileChart(optionsData.smileOpts, optionsData.indexPrice);
   } else loadOptionsData();
 };
+
+async function loadLiquidations() {
+  const body = document.getElementById("liq-body");
+  const meta = document.getElementById("liq-update");
+  try {
+    const res = await fetch("/api/market/liquidations", { cache: "no-store" });
+    const data = await res.json();
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    if (meta) {
+      meta.textContent = `${data.venue || "OKX"}${data.fetchedAt ? " · " + data.fetchedAt : ""}`;
+    }
+    if (!body) return;
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="6">${data.error || "No recent filled liquidations."}</td></tr>`;
+      return;
+    }
+    body.innerHTML = rows.map((r) => {
+      const t = r.time ? new Date(r.time).toISOString().slice(5, 16).replace("T", " ") : "—";
+      const side = [r.side, r.posSide].filter(Boolean).join(" · ");
+      const btc = Number.isFinite(Number(r.btc)) ? Number(r.btc).toFixed(4) : "—";
+      const notional = Number.isFinite(Number(r.notional)) ? "$" + dxFmtPrice(r.notional, 0) : "—";
+      return `<tr>
+        <td class="mono">${t}</td>
+        <td>${r.instId || "—"}</td>
+        <td>${side || "—"}</td>
+        <td class="mono">${dxFmtPrice(r.price)}</td>
+        <td class="mono">${btc}</td>
+        <td class="mono">${notional}</td>
+      </tr>`;
+    }).join("");
+  } catch (_) {
+    if (body) body.innerHTML = '<tr><td colspan="6">Liquidations unavailable</td></tr>';
+  }
+}
+
+window.loadLiquidations = loadLiquidations;
 
 window.refreshOptionsOiCharts = function () {
   if (optionsData) {

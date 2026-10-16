@@ -1525,6 +1525,12 @@ body[data-l1="home"] .logo-icon::before {
   line-height: 1.5;
 }
 
+.home-version {
+  font-family: var(--mono);
+  color: #ff6b6b;
+  letter-spacing: 0.04em;
+}
+
 /* —— Misc (parking lot) —— */
 .misc-page {
   display: flex;
@@ -9448,8 +9454,10 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
 }
 
 #delivery-curve-chart,
+#delivery-oi-chart,
 #options-iv-term-chart,
-#options-smile-chart {
+#options-smile-chart,
+#options-oi-strike-chart {
   height: 220px;
 }
 
@@ -11447,8 +11455,10 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   }
 
   #delivery-curve-chart,
+  #delivery-oi-chart,
   #options-iv-term-chart,
   #options-smile-chart,
+  #options-oi-strike-chart,
   #options-strike-chart {
     height: 180px;
   }

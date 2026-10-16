@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Public dashboard — Grok / researcher crawlers welcome.
-# Live app: https://btc-dashboard-bay.vercel.app
+# Live app: http://127.0.0.1:5173

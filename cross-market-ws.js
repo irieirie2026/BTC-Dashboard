@@ -16,23 +16,6 @@ const XMWS = (() => {
     onTick?.({ exchange, price, source, at: Date.now(), ccy: extra.ccy });
   }
 
-  function connectBinance() {
-    const key = "Binance";
-    if (sockets.has(key)) return;
-    try {
-      const ws = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
-      ws.onmessage = (ev) => {
-        const px = parseFloat(JSON.parse(ev.data).p);
-        emit("Binance", px);
-      };
-      ws.onclose = () => {
-        sockets.delete(key);
-        if (active) setTimeout(connectBinance, 5000);
-      };
-      sockets.set(key, ws);
-    } catch { /* optional */ }
-  }
-
   function connectCoinbase() {
     const key = "Coinbase";
     if (sockets.has(key)) return;
@@ -271,7 +254,6 @@ const XMWS = (() => {
   function start() {
     if (active) return;
     active = true;
-    connectBinance();
     connectCoinbase();
     connectKraken();
     connectOkx();

@@ -637,18 +637,9 @@ async function marketFetchJson(url, timeoutMs = 4000) {
   }
 }
 
-window.marketFetchKlines = async function marketFetchKlines(interval, limit = 500) {
-  try {
-    const raw = await marketFetchJson(
-      `https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=${encodeURIComponent(interval)}&limit=${limit}`,
-      3500,
-    );
-    if (Array.isArray(raw) && raw.length > 5) return { klines: raw, venue: "Binance" };
-  } catch (_) {
-    /* geo-blocked or timeout */
-  }
+window.marketFetchKlines = async function marketFetchKlines(interval, limit = 500, product = "BTC-USD") {
   const data = await marketFetchJson(
-    `/api/market/klines?interval=${encodeURIComponent(interval)}&limit=${limit}`,
+    `/api/market/klines?interval=${encodeURIComponent(interval)}&limit=${limit}&product=${encodeURIComponent(product)}`,
     15000,
   );
   const klines = data.klines || data;
@@ -657,15 +648,6 @@ window.marketFetchKlines = async function marketFetchKlines(interval, limit = 50
 };
 
 window.marketFetchQuote = async function marketFetchQuote() {
-  try {
-    const raw = await marketFetchJson(
-      "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT",
-      3500,
-    );
-    if (raw && raw.lastPrice) return { ticker: raw, venue: "Binance" };
-  } catch (_) {
-    /* fall through */
-  }
   const data = await marketFetchJson("/api/market/quote", 12000);
   if (!data?.ticker?.lastPrice) throw new Error(data?.error || "Quote unavailable");
   return { ticker: data.ticker, venue: data.venue || "proxy" };

@@ -8,6 +8,7 @@ const MD_COMMENTARY_KEY = "macro:drivers-commentary:v1";
 
 let mdMeta = null;
 let mdSnapshot = null;
+let mdUsDrivers = null;
 let mdMapData = null;
 let mdLiquidity = null;
 let mdLqMapData = null;
@@ -378,7 +379,7 @@ async function mdLoadSnapshot(force = false) {
     render: (data, opts = {}) => {
       if (opts.fromCache) mdSnapshotFromCache = true;
       if (opts.loading) {
-        const body = mdEl("md-table-body");
+        const body = mdEl("md-table-body-eco");
         if (body) body.innerHTML = '<tr><td colspan="12">Loading snapshot…</td></tr>';
       }
     },
@@ -488,12 +489,86 @@ function mdPopulateFilters() {
 function mdRenderMeta(opts = {}) {
   const el = mdEl("macro-drivers-update");
   if (!el) return;
+  const us = mdActiveTab === "overview" && mdUsDrivers;
   el.textContent =
     window.DashboardSWR?.formatPanelMeta({
-      fetchedAt: mdSnapshot?.fetchedAt || mdMeta?.fetchedAt,
-      source: mdMeta?.source || "WB → IMF WEO → OECD EO → Eurostat → DBnomics",
+      fetchedAt: us ? mdUsDrivers.fetchedAt : (mdSnapshot?.fetchedAt || mdMeta?.fetchedAt),
+      source: us ? "FRED" : (mdMeta?.source || "WB → IMF WEO → OECD EO → Eurostat → DBnomics"),
       fromCache: opts.fromCache,
-    }) || mdMeta?.source || "—";
+    }) || (us ? "FRED" : mdMeta?.source) || "—";
+}
+
+function mdUsLatestRows(data) {
+  const latest = data?.latest;
+  if (Array.isArray(latest)) return latest;
+  if (!latest || typeof latest !== "object") return [];
+  const series = data.series;
+  const order = Array.isArray(series)
+    ? series.map((item) => item.id).filter(Boolean)
+    : series && typeof series === "object"
+      ? Object.keys(series)
+      : Object.keys(latest);
+  return order.map((id) => ({ id, ...(latest[id] || {}) }));
+}
+
+function mdRenderUsOverview(data) {
+  const head = mdEl("md-table-head");
+  const body = mdEl("md-table-body");
+  if (!body) return;
+  const rows = mdUsLatestRows(data);
+  if (head) {
+    head.innerHTML =
+      "<tr><th>Series</th><th>FRED</th><th class=\"mono\">Latest</th><th>As of</th><th>Unit</th></tr>";
+  }
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="5">No US FRED series</td></tr>';
+    return;
+  }
+  body.innerHTML = rows
+    .map((row) => {
+      const val =
+        row.value == null || Number.isNaN(Number(row.value)) ? "—" : Number(row.value).toFixed(2);
+      return `<tr><td>${row.label || row.id || "—"}</td><td class="mono">${row.id || "—"}</td><td class="mono">${val}</td><td class="mono">${row.date || "—"}</td><td>${row.unit || "%"}</td></tr>`;
+    })
+    .join("");
+}
+
+async function mdLoadUsDrivers(force = false) {
+  const swr = window.DashboardSWR;
+  const fetchUs = () => mdFetchJson("", force);
+  if (!swr) {
+    mdUsDrivers = await fetchUs();
+    mdRenderUsOverview(mdUsDrivers);
+    return mdUsDrivers;
+  }
+  const result = await swr.runSWR({
+    key: "macro:drivers:us-fred:v1",
+    l1: "macro",
+    source: "FRED",
+    persist: true,
+    revalidate: force,
+    updateHeader: false,
+    validate: (data) => !!(data && data.country === "US" && data.source === "FRED" && data.latest),
+    fetch: fetchUs,
+    render: (data, opts = {}) => {
+      if (opts.loading && !data) {
+        const body = mdEl("md-table-body");
+        if (body && !mdUsDrivers) {
+          body.innerHTML = '<tr><td colspan="5">Loading US macro series…</td></tr>';
+        }
+        return;
+      }
+      if (!data?.latest) return;
+      mdUsDrivers = data;
+      mdRenderUsOverview(data);
+    },
+  });
+  if (result?.latest) mdUsDrivers = result;
+  if (!mdUsDrivers) {
+    const body = mdEl("md-table-body");
+    if (body) body.innerHTML = '<tr><td colspan="5">US macro series unavailable</td></tr>';
+  }
+  return mdUsDrivers;
 }
 
 function mdRenderKpis() {
@@ -551,14 +626,9 @@ function mdRenderTableBody(bodyId, headId, cols, year) {
 }
 
 function mdRenderTable() {
+  if (mdUsDrivers) mdRenderUsOverview(mdUsDrivers);
   if (!mdSnapshot) return;
   const year = mdState.year || mdSnapshot.year;
-  mdRenderTableBody(
-    "md-table-body",
-    "md-table-head",
-    mdRowIndicators(null, "overview"),
-    year,
-  );
   mdRenderTableBody(
     "md-table-body-eco",
     "md-table-head-eco",
@@ -731,7 +801,7 @@ function mdShowTab(tab) {
     btn.classList.toggle("active", btn.dataset.mdEco === mdEconomyTab);
   });
   const titles = {
-    overview: "Global snapshot",
+    overview: "US macro drivers",
     growth: "Growth & Income",
     prices: "Prices & Stability",
     trade: "Trade & Investment",
@@ -743,7 +813,7 @@ function mdShowTab(tab) {
       mdActiveTab === "economy"
         ? titles[mdEconomyTab] || "Economy"
         : mdActiveTab === "overview"
-          ? "Global snapshot"
+          ? "US macro drivers"
           : titleEl.textContent;
   }
   mdUpdateControlVisibility();
@@ -1845,16 +1915,37 @@ async function loadMacroDrivers(force = false, tab) {
 
   mdInflight = (async () => {
     Object.assign(mdState, mdLoadSettings());
-    await mdLoadMeta(force);
-    await mdLoadSnapshot(force);
+    const usTask = mdLoadUsDrivers(force).catch((err) => {
+      const body = mdEl("md-table-body");
+      if (body && !mdUsDrivers) {
+        body.innerHTML = `<tr><td colspan="5">${err?.message || "US macro series unavailable"}</td></tr>`;
+      }
+      return null;
+    });
+    let snapErr = null;
+    try {
+      await mdLoadMeta(force);
+      await mdLoadSnapshot(force);
+    } catch (err) {
+      snapErr = err;
+    }
+    await usTask;
     mdActivateTab(mdActiveTab);
-    mdRenderAll({ fromCache: mdSnapshotFromCache });
+    if (mdMeta && mdSnapshot) mdRenderAll({ fromCache: mdSnapshotFromCache });
+    else if (mdUsDrivers) mdRenderUsOverview(mdUsDrivers);
+    if (snapErr && !mdSnapshot) {
+      const eco = mdEl("md-table-body-eco");
+      if (eco) eco.innerHTML = `<tr><td colspan="12">${snapErr.message || "Load failed"}</td></tr>`;
+      if (!mdUsDrivers) throw snapErr;
+    }
   })()
     .catch((err) => {
       const body = mdEl("md-table-body");
-      if (body) body.innerHTML = `<tr><td colspan="12">${err?.message || "Load failed"}</td></tr>`;
+      if (body && !mdUsDrivers) {
+        body.innerHTML = `<tr><td colspan="5">${err?.message || "Load failed"}</td></tr>`;
+      }
       const upd = mdEl("macro-drivers-update");
-      if (upd) upd.textContent = "Load failed";
+      if (upd && !mdUsDrivers) upd.textContent = "Load failed";
       throw err;
     })
     .finally(() => {

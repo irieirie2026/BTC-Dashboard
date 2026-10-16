@@ -285,6 +285,12 @@ const MENU_TREE = {
             accent: "#fb923c",
             accentDim: "rgba(251, 146, 60, 0.18)",
           },
+          liquidations: {
+            label: "Liquidations",
+            accent: "#f6465d",
+            accentDim: "rgba(246, 70, 93, 0.18)",
+            onShow: () => window.loadLiquidations?.(),
+          },
         },
       },
       futures: {
@@ -1902,8 +1908,10 @@ const MenuController = {
     this.l2 = l2;
     this.l3 = activeL3;
 
-    localStorage.setItem(MENU_L2_KEY, l2);
-    localStorage.setItem(MENU_L3_KEY, activeL3);
+    try {
+      localStorage.setItem(MENU_L2_KEY, l2);
+      localStorage.setItem(MENU_L3_KEY, activeL3);
+    } catch (_) {}
 
     if (l1 === "market" && l2 === "indicators") {
       window.setActiveIndicatorTimeframe?.(activeL3);
@@ -1927,7 +1935,7 @@ const MenuController = {
     updateBreadcrumb(l1, l2, activeL3);
     runOnShow(l1, l2, activeL3);
     if (l1 === "onchain") {
-      setTimeout(() => window.refreshOnchainCharts?.(activeL2), 200);
+      setTimeout(() => window.refreshOnchainCharts?.(l2), 200);
     }
     requestAnimationFrame(() => scrollActiveTabIntoView(3));
   },
@@ -1938,7 +1946,9 @@ const MenuController = {
     if (!activeL2) return;
 
     this.l2 = activeL2;
-    localStorage.setItem(MENU_L2_KEY, activeL2);
+    try {
+      localStorage.setItem(MENU_L2_KEY, activeL2);
+    } catch (_) {}
 
     renderLevelNav("menu-l2-slot", 2, l1, null, activeL2, (id) =>
       this.setLevel2(id),
@@ -1974,11 +1984,15 @@ const MenuController = {
     if (!l1Node(l1)) return;
     this.l1 = l1;
 
-    const savedL2 = localStorage.getItem(MENU_L2_KEY);
-    const savedL3 = localStorage.getItem(MENU_L3_KEY);
+    let savedL2 = null;
+    let savedL3 = null;
+    try {
+      savedL2 = localStorage.getItem(MENU_L2_KEY);
+      savedL3 = localStorage.getItem(MENU_L3_KEY);
+    } catch (_) {
+      /* private mode / quota */
+    }
     const activeL2 = normalizeL2(l1, savedL2);
-
-    localStorage.setItem(MENU_L1_KEY, l1);
 
     document.querySelectorAll(".dash-tab--l1").forEach((tab) => {
       tab.classList.toggle("active", tab.dataset.dashboard === l1);
@@ -1987,6 +2001,15 @@ const MenuController = {
     document.querySelectorAll(".dashboard-view").forEach((view) => {
       view.hidden = view.id !== `dashboard-${l1}`;
     });
+
+    try {
+      localStorage.setItem(MENU_L1_KEY, l1);
+    } catch (_) {
+      /* a full quota must not block the tab */
+    }
+    try {
+      syncSectionUrl(l1);
+    } catch (_) {}
 
     const meta = DASHBOARD_META[l1] || DASHBOARD_META.market;
     const subtitle = document.querySelector(".subtitle");
@@ -2121,14 +2144,33 @@ function isAppRootPath(path) {
   );
 }
 
+function sectionPathFor(l1) {
+  if (!l1 || l1 === "home") return "/";
+  return `/${l1}`;
+}
+
+/** Keep the address bar on the open desk so a reload does not depend on `/`. */
+function syncSectionUrl(l1) {
+  if (!window.history?.replaceState) return;
+  const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
+  const next = sectionPathFor(l1);
+  if (l1 && l1 !== "home" && (path === next || path.startsWith(`${next}/`))) return;
+  if ((!l1 || l1 === "home") && isAppRootPath(path)) return;
+  window.history.replaceState({}, "", next);
+}
+
 function bootstrapPathMenu() {
   const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
-  // Always open the Home deck on root entry — do not restore last L1 tab.
+  // `/` is the SPA shell. Forcing Home here sent every reload (and any
+  // mid-session document reload) back to Home even while a desk was open.
   if (isAppRootPath(path)) {
-    localStorage.setItem(MENU_L1_KEY, "home");
-    localStorage.setItem(MENU_L2_KEY, "landing");
-    localStorage.removeItem(MENU_L3_KEY);
-    localStorage.removeItem(MENU_L4_KEY);
+    const saved = localStorage.getItem(MENU_L1_KEY);
+    if (!saved || !MENU_TREE[saved]) {
+      localStorage.setItem(MENU_L1_KEY, "home");
+      localStorage.setItem(MENU_L2_KEY, "landing");
+      localStorage.removeItem(MENU_L3_KEY);
+      localStorage.removeItem(MENU_L4_KEY);
+    }
     return;
   }
   if (path === "/misc" || path === "/misc/metrics") {
@@ -2249,6 +2291,11 @@ function bootstrapPathMenu() {
     }
     localStorage.removeItem(MENU_L3_KEY);
     localStorage.removeItem(MENU_L4_KEY);
+  } else {
+    const top = path.split("/").filter(Boolean)[0];
+    if (top && MENU_TREE[top]) {
+      localStorage.setItem(MENU_L1_KEY, top);
+    }
   }
 }
 
@@ -2291,6 +2338,13 @@ function initDashboardSwitcher() {
   migrateMiscMenu();
   migrateValuationMenu();
   bootstrapPathMenu();
+  // A leftover service worker (none is registered by this app) can reload
+  // the document on its own timer and land the user back on whatever `/` opens.
+  if (navigator.serviceWorker?.getRegistrations) {
+    navigator.serviceWorker.getRegistrations().then((regs) => {
+      regs.forEach((reg) => reg.unregister());
+    }).catch(() => {});
+  }
   window.addEventListener("orientationchange", scheduleOrientationRefresh);
 
   const tree = document.getElementById("menu-tree");

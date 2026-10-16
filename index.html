@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <!-- Root-absolute asset resolution when deep-linked (e.g. /law/united-states) -->
     <base href="/" />
-    <link rel="icon" type="image/png" sizes="32x32" href="https://btc-dashboard-bay.vercel.app/favicon-32.png?v=8" />
-    <link rel="apple-touch-icon" href="https://btc-dashboard-bay.vercel.app/apple-touch-icon.png?v=8" sizes="180x180" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=8" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=8" sizes="180x180" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b0e11" />
     <meta name="description" content="The Buccaneers — live Bitcoin dashboards: spot market, on-chain, valuation, derivatives, macro, TradFi, and more." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Buccaneers" />
-    <meta property="og:url" content="https://btc-dashboard-bay.vercel.app/" />
+    <meta property="og:url" content="/" />
     <meta property="og:title" content="The Buccaneers — BTC Command Center" />
     <meta property="og:description" content="Navigate spot markets, on-chain metrics, valuation, derivatives, macro drivers, and TradFi — all from one bridge." />
-    <meta property="og:image" content="https://btc-dashboard-bay.vercel.app/assets/og-banner.jpg" />
-    <meta property="og:image:secure_url" content="https://btc-dashboard-bay.vercel.app/assets/og-banner.jpg" />
+    <meta property="og:image" content="/assets/og-banner.jpg" />
+    <meta property="og:image:secure_url" content="/assets/og-banner.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -23,8 +23,8 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="The Buccaneers — BTC Command Center" />
     <meta name="twitter:description" content="Live Bitcoin dashboards: market, on-chain, valuation, macro, and more." />
-    <meta name="twitter:image" content="https://btc-dashboard-bay.vercel.app/assets/og-banner.jpg" />
-    <link rel="canonical" href="https://btc-dashboard-bay.vercel.app/" />
+    <meta name="twitter:image" content="/assets/og-banner.jpg" />
+    <link rel="canonical" href="/" />
     <title>The Buccaneers — BTC Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=230" />
+    <link rel="stylesheet" href="styles.css?v=232" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
     <!-- Bundled home motto (Grok Luna) — same clip every time; no live TTS / browser voice -->
     <link rel="preload" href="assets/home-motto.mp3" as="audio" type="audio/mpeg" />
@@ -141,6 +141,7 @@
                   <button type="button" class="home-sound-toggle" id="home-sound-toggle" aria-pressed="true">🔊 Buccaneers</button>
                 </div>
                 <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
+                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.0</span><span class="home-banner-chip-lbl">Version</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">14</span><span class="home-banner-chip-lbl">Dashboards</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Law</span><span class="home-banner-chip-lbl">70+ countries</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Arbs</span><span class="home-banner-chip-lbl">PM + Deribit</span></li>
@@ -181,7 +182,7 @@
               <div id="home-section-grid" class="home-section-grid" role="list"></div>
             </section>
             <footer class="home-footer">
-              <p>For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
+              <p><span class="home-version">Version <span data-app-version>1.1.0</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
             </footer>
           </div>
         </div>
@@ -901,10 +902,37 @@
           <section class="panel futures-panel">
             <div class="panel-header">
               <h2>Sentiment & Positioning</h2>
-              <span class="panel-meta">Open interest · funding · long/short ratio</span>
+              <span class="panel-meta" id="futures-sentiment-update">Open interest · funding · long/short ratio</span>
             </div>
             <span id="fut-funding-countdown" hidden></span>
             <div class="chain-grid" id="futures-grid"></div>
+          </section>
+        </div>
+
+        <div class="menu-screen" data-l1="derivatives" data-l2="perp" data-l3="liquidations" hidden>
+          <section class="panel futures-panel">
+            <div class="panel-header">
+              <h2>Liquidations</h2>
+              <span class="panel-meta" id="liq-update">OKX public tape</span>
+            </div>
+            <p class="panel-note">Filled BTC-USDT swap liquidations from the OKX public feed. Contract size is 0.01 BTC.</p>
+            <div class="deriv-table-wrap">
+              <table class="deriv-table" aria-label="Recent BTC liquidations">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Contract</th>
+                    <th>Side</th>
+                    <th class="mono">Price</th>
+                    <th class="mono">BTC</th>
+                    <th class="mono">Notional</th>
+                  </tr>
+                </thead>
+                <tbody id="liq-body">
+                  <tr><td colspan="6">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
           </section>
         </div>
 
@@ -5537,51 +5565,52 @@
     <div id="metric-tooltip" class="metric-tooltip" role="tooltip" hidden></div>
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <div id="xm-heat-tooltip" class="xm-heat-tooltip" role="tooltip" hidden></div>
-    <script src="chart-utils.js?v=7"></script>
+    <script src="chart-utils.js?v=8"></script>
     <script src="swr-cache.js?v=7"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
     <script src="help.js?v=182"></script>
-    <script src="home.js?v=21"></script>
-    <script src="dashboard.js?v=77"></script>
+    <script src="version.js?v=2"></script>
+    <script src="home.js?v=22"></script>
+    <script src="dashboard.js?v=79"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=15"></script>
-    <script src="derivatives-extra.js?v=17"></script>
+    <script src="derivatives-extra.js?v=21"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=3"></script>
-    <script src="stats.js?v=28"></script>
-    <script src="stats-volatility.js?v=37"></script>
-    <script src="stats-timeseries.js?v=18"></script>
+    <script src="stats.js?v=30"></script>
+    <script src="stats-volatility.js?v=38"></script>
+    <script src="stats-timeseries.js?v=19"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
     <script src="defi.js?v=9"></script>
     <script src="exchanges.js?v=6"></script>
-    <script src="macro.js?v=5"></script>
-    <script src="macro-drivers.js?v=37"></script>
+    <script src="macro.js?v=6"></script>
+    <script src="macro-drivers.js?v=38"></script>
     <script src="onchain.js?v=6"></script>
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=5"></script>
     <script src="misc-calendar.js?v=3"></script>
-    <script src="misc-whales.js?v=2"></script>
+    <script src="misc-whales.js?v=3"></script>
     <script src="misc-greed-fear.js?v=5"></script>
     <script src="misc-bitcoin-valuation-models.js?v=11"></script>
-    <script src="misc-bitcoin.js?v=37"></script>
+    <script src="misc-bitcoin.js?v=38"></script>
     <script src="valuation-cycle.js?v=12"></script>
     <script src="super-summary.js?v=19"></script>
     <script src="patternDetection.js?v=10"></script>
     <script src="indicators.js?v=7"></script>
-    <script src="chart-patterns.js?v=16"></script>
+    <script src="chart-patterns.js?v=17"></script>
 
     <script src="law.js?v=26"></script>
     <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
     <script src="prediction-markets.js?v=12"></script>
     <script src="cross-market-engine.js?v=12"></script>
-    <script src="cross-market-ws.js?v=4"></script>
+    <script src="cross-market-ws.js?v=5"></script>
     <script src="cross-market-charts.js?v=20"></script>
-    <script src="cross-market.js?v=28"></script>
-    <script src="spot-charts.js?v=7"></script>
-    <script src="app.js?v=26"></script>
+    <script src="cross-market.js?v=29"></script>
+    <script src="spot-charts.js?v=8"></script>
+    <script src="app.js?v=28"></script>
   </body>
 </html>

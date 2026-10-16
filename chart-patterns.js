@@ -1,7 +1,6 @@
-/** Chart Patterns — Binance OHLCV + lightweight-charts + client-side detection */
+/** Chart Patterns — daily BTC/USD history + lightweight-charts + client-side detection */
 
 const CP_SYMBOL = "BTCUSDT";
-const CP_REST = "https://api.binance.com/api/v3";
 
 const CP_TF = {
   d: { interval: "1d", label: "D", bars: 1825 },
@@ -477,39 +476,68 @@ function cpSpreadMarkers(markers) {
   return markers;
 }
 
+function cpDayToKline(d) {
+  let t = d.date ?? d.time;
+  if (typeof t === "string") t = Date.parse(t);
+  t = Number(t);
+  if (!Number.isFinite(t) || t <= 0) return null;
+  if (t < 1e12) t *= 1000;
+  const o = Number(d.open ?? d.close);
+  const h = Number(d.high ?? d.close);
+  const l = Number(d.low ?? d.close);
+  const c = Number(d.close);
+  const v = Number(d.volume ?? 0);
+  if (![o, h, l, c].every((n) => Number.isFinite(n))) return null;
+  return [t, String(o), String(h), String(l), String(c), String(v)];
+}
+
+function cpAggregateKlines(days, tfKey) {
+  if (tfKey === "d") return days;
+  const buckets = new Map();
+  for (const k of days) {
+    const dt = new Date(k[0]);
+    let key;
+    if (tfKey === "w") {
+      const utc = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
+      const day = utc.getUTCDay() || 7;
+      utc.setUTCDate(utc.getUTCDate() - day + 1);
+      key = utc.getTime();
+    } else {
+      key = Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), 1);
+    }
+    const prev = buckets.get(key);
+    if (!prev) {
+      buckets.set(key, [key, k[1], k[2], k[3], k[4], k[5]]);
+      continue;
+    }
+    prev[2] = String(Math.max(parseFloat(prev[2]), parseFloat(k[2])));
+    prev[3] = String(Math.min(parseFloat(prev[3]), parseFloat(k[3])));
+    prev[4] = k[4];
+    prev[5] = String((parseFloat(prev[5]) || 0) + (parseFloat(k[5]) || 0));
+  }
+  return [...buckets.values()].sort((a, b) => a[0] - b[0]);
+}
+
 async function cpFetchKlines(tfKey) {
   const cfg = CP_TF[tfKey];
   if (!cfg) throw new Error("Unknown timeframe");
-
-  const all = [];
-  let endTime;
-  const chunk = 1000;
-
-  while (all.length < cfg.bars) {
-    const remain = cfg.bars - all.length;
-    const limit = Math.min(chunk, remain);
-    let url = `${CP_REST}/klines?symbol=${CP_SYMBOL}&interval=${cfg.interval}&limit=${limit}`;
-    if (endTime) url += `&endTime=${endTime}`;
-    let batch;
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Binance ${res.status}`);
-      batch = await res.json();
-    } catch (err) {
-      if (endTime) throw err;
-      const bundled = await window.marketFetchKlines?.(cfg.interval, limit);
-      batch = bundled?.klines || [];
-    }
-    if (!Array.isArray(batch)) {
-      throw new Error(batch?.msg || "Invalid kline response");
-    }
-    if (!batch.length) break;
-    all.unshift(...batch);
-    endTime = batch[0][0] - 1;
-    if (batch.length < limit) break;
+  let rows = [];
+  try {
+    const res = await fetch("/api/stats/btc-history", { cache: "no-store" });
+    const data = await res.json();
+    const days = (data.days || []).map(cpDayToKline).filter(Boolean);
+    rows = cpAggregateKlines(days, tfKey);
+  } catch (_) {
+    rows = [];
   }
-
-  return all.slice(-cfg.bars);
+  if (rows.length < 30 && window.marketFetchKlines) {
+    const interval = tfKey === "w" ? "1w" : "1d";
+    const bundled = await window.marketFetchKlines(interval, Math.min(cfg.bars, 1000));
+    const raw = bundled?.klines || [];
+    rows = tfKey === "m" ? cpAggregateKlines(raw, "m") : raw;
+  }
+  if (!rows.length) throw new Error("Klines unavailable");
+  return rows.slice(-cfg.bars);
 }
 
 function cpSetLoading(on, msg) {
@@ -1477,7 +1505,7 @@ async function cpLoadTimeframe(tfKey) {
   cpSetLoading(true, `Loading ${cfg.label} BTC/USDT…`);
 
   const meta = cpEl("cp-meta");
-  if (meta) meta.textContent = `${cfg.label} · Binance BTC/USDT · pattern scan`;
+  if (meta) meta.textContent = `${cfg.label} · BTC/USD · pattern scan`;
 
   try {
     if (!window.LightweightCharts) throw new Error("Chart library not loaded");

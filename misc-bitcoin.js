@@ -266,11 +266,18 @@ function mbChartInfo(key) {
   };
 }
 
+function mbSupplyInProfitPct(n) {
+  // Stored profit/loss ratio×100 (about 103–146) is not a percent.
+  // pct = 100 * (n/100) / (1 + n/100). Values already in 0–100 stay.
+  if (n > 100) return (100 * (n / 100)) / (1 + (n / 100));
+  return n;
+}
+
 function mbNormalizeScore(key, val) {
   const n = Number(val);
   if (!Number.isFinite(n)) return n;
   if (key === "fear_greed" && n > 0 && n <= 1) return n * 100;
-  if (key === "supply_in_profit" && n > 100) return 100;
+  if (key === "supply_in_profit") return mbSupplyInProfitPct(n);
   return n;
 }
 
@@ -618,10 +625,12 @@ function mbSeriesLatestFromCache(key) {
     if (!series?.length) continue;
     for (let i = series.length - 1; i >= 0; i -= 1) {
       const v = Number(series[i]?.value);
-      if (Number.isFinite(v)) return v;
+      if (Number.isFinite(v)) return key === "supply_in_profit" ? mbSupplyInProfitPct(v) : v;
     }
   }
-  return mbSeriesLatestValue(mbCachedSeries(key, 1));
+  const cachedLatest = mbSeriesLatestValue(mbCachedSeries(key, 1));
+  if (key === "supply_in_profit" && Number.isFinite(cachedLatest)) return mbSupplyInProfitPct(cachedLatest);
+  return cachedLatest;
 }
 
 function mbIsValidSnapshotValue(key, val) {
@@ -648,7 +657,11 @@ function mbSanitizeMetricValue(key, val) {
     if (fromSeries != null && fromSeries >= 50 && fromSeries <= 5000) return fromSeries;
     return null;
   }
-  if (key === "supply_in_profit" && n > 100) return 100;
+  if (key === "supply_in_profit") {
+    const pct = mbSupplyInProfitPct(n);
+    if (!mbIsValidSnapshotValue(key, pct)) return null;
+    return pct;
+  }
   if (key === "fear_greed" && n > 0 && n <= 1) return n * 100;
   if (!mbIsValidSnapshotValue(key, n)) return null;
   return n;
@@ -2716,9 +2729,12 @@ function mbSeriesToPlotly(series, color = "#f59e0b", indicator = "", opts = {}) 
     .filter(({ p, ms }) => p.value != null && Number.isFinite(Number(p.value)) && ms != null);
   if (!pts.length) return null;
   const x = pts.map(({ ms }) => new Date(ms));
-  const y = pts.map(({ p }) => Number(p.value));
-  const customdata = pts.map(({ p }) => {
-    const val = Number(p.value);
+  const y = pts.map(({ p }) => {
+    const n = Number(p.value);
+    return indicator === "supply_in_profit" ? mbSupplyInProfitPct(n) : n;
+  });
+  const customdata = pts.map(({ p }, i) => {
+    const val = y[i];
     return [
       mbFmtValue(val, ind.format),
       mbReadingFor(indicator, val),
@@ -4622,7 +4638,14 @@ function mbRenderCommentaryEl(id, lines, forwardOpts = null) {
 }
 
 function mbIntelSeriesContext(key, chartData, opts = {}) {
-  const series = mbFilterSeriesByTimespan(chartData?.series || [], mbState.timespan);
+  let series = mbFilterSeriesByTimespan(chartData?.series || [], mbState.timespan);
+  if (key === "supply_in_profit") {
+    series = series.map((p) => {
+      const n = Number(p?.value);
+      if (!Number.isFinite(n) || n <= 100) return p;
+      return { ...p, value: mbSupplyInProfitPct(n) };
+    });
+  }
   const latest = mbSeriesLatestValue(series);
   if (latest == null) return null;
   const meta = mbIndicatorMeta(key);

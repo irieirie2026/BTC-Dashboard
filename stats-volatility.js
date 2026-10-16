@@ -36,6 +36,9 @@ const VOL_FALLBACK_CATALOG = [
 let volSuite = null;
 let volSelectedId = null;
 let volBusy = false;
+/** Run-all clicked while a selected (not all-models) estimation is in flight. */
+let volPendingAll = null;
+let volRunIsAll = false;
 /** Full catalog from /catalog or last suite (for picker UI). */
 let volCatalog = [];
 
@@ -341,10 +344,15 @@ function volSetKpis(suite) {
     "vol-kpi-cond-sub",
     markName ? `${markName} · last daily close` : "QLIKE mark · last close",
   );
-  const t7 =
-    s.forecastTerm7d != null ? volFmtPct(s.forecastTerm7d, 1) : volFmtPct(s.forecast7d, 1);
-  const t30 =
-    s.forecastTerm30d != null ? volFmtPct(s.forecastTerm30d, 1) : volFmtPct(s.forecast30d, 1);
+  let term7 = s.forecastTerm7d != null ? Number(s.forecastTerm7d) : null;
+  let term30 = s.forecastTerm30d != null ? Number(s.forecastTerm30d) : null;
+  if (!Number.isFinite(term7)) {
+    const derived = volMarkTermRv(suite?.detail || {}, s);
+    if (Number.isFinite(derived.term7)) term7 = derived.term7;
+    if (!Number.isFinite(term30) && Number.isFinite(derived.term30)) term30 = derived.term30;
+  }
+  const t7 = Number.isFinite(term7) ? volFmtPct(term7, 1) : volFmtPct(s.forecast7d, 1);
+  const t30 = Number.isFinite(term30) ? volFmtPct(term30, 1) : volFmtPct(s.forecast30d, 1);
   const f1 = s.forecast1d != null ? volFmtPct(s.forecast1d, 1) : "—";
   set("vol-kpi-fcast", `${t7} / ${t30}`);
   const fcastSub = volEl("vol-kpi-fcast")?.parentElement?.querySelector(".deriv-hero-sub");
@@ -403,7 +411,14 @@ function volSetLiveIvKpis(suite, chain) {
       ? `${g7 != null ? volFmtPct(g7, 1) : "—"} / ${g30 != null ? volFmtPct(g30, 1) : "—"}`
       : "—";
   set("vol-kpi-ivgap", gapTxt);
-  set("vol-kpi-ivgap-sub", g7 != null || g30 != null ? "positive = IV rich vs model" : "7d / 30d gap");
+  if (!chain) {
+    set("vol-kpi-ivgap-sub", "stale · Deribit chain unavailable");
+  } else {
+    set(
+      "vol-kpi-ivgap-sub",
+      g7 != null || g30 != null ? "positive = IV rich vs model" : "7d / 30d gap",
+    );
+  }
   const suiteAsOf = suite?.asOf ? String(suite.asOf).replace("T", " ").slice(0, 16) + " UTC" : "—";
   const chainAsOf = chain?.fetchedAt
     ? new Date(chain.fetchedAt).toISOString().replace("T", " ").slice(0, 16) + " UTC"
@@ -595,6 +610,20 @@ function volRenderTable(suite) {
   window.decorateHelpLabels?.(screen || volEl("vol-compare-table"));
 }
 
+/** Suite header / commentary dates. Epoch ms uses statsFmtDate; ISO stays a day string. */
+function volFmtSuiteDate(v) {
+  if (v == null || v === "") return "";
+  const raw = typeof v === "string" ? v.trim() : v;
+  let n = NaN;
+  if (typeof raw === "number") n = raw;
+  else if (typeof raw === "string" && /^-?\d+(\.\d+)?$/.test(raw)) n = Number(raw);
+  if (Number.isFinite(n) && Math.abs(n) > 1e11) {
+    if (typeof window.statsFmtDate === "function") return window.statsFmtDate(n);
+    return volFmtAxisDate(n, false);
+  }
+  return volFmtAxisDate(raw, false);
+}
+
 /** Desk commentary for the full estimation run (bottom of page). */
 function volBuildRunCommentary(suite) {
   const models = suite.models || [];
@@ -606,7 +635,7 @@ function volBuildRunCommentary(suite) {
 
   const range =
     suite.startDate && suite.endDate
-      ? `${suite.startDate} → ${suite.endDate}`
+      ? `${volFmtSuiteDate(suite.startDate)} → ${volFmtSuiteDate(suite.endDate)}`
       : "selected sample";
   lines.push(
     `This run covers <strong>${suite.nObs ?? "—"}</strong> daily log returns on ` +
@@ -5174,8 +5203,16 @@ function volExportCsv(suite) {
  * @param {{ allModels?: boolean }} opts
  */
 async function volRun(force = false, opts = {}) {
-  if (volBusy) return;
+  if (volBusy) {
+    const busyMeta = volEl("vol-suite-meta");
+    if (busyMeta) busyMeta.textContent = "Estimation already running";
+    if (opts.allModels && !volRunIsAll) {
+      volPendingAll = { force: !!force, opts: { allModels: true } };
+    }
+    return;
+  }
   volBusy = true;
+  volRunIsAll = !!opts.allModels;
   const btnSel = volEl("vol-run-selected");
   const btnAll = volEl("vol-run-all");
   const meta = volEl("vol-suite-meta");
@@ -5216,7 +5253,9 @@ async function volRun(force = false, opts = {}) {
       const nSel = (suite.selectedModelIds || suite.models || []).length;
       meta.textContent = [
         suite.pair || "BTC",
-        suite.startDate && suite.endDate ? `${suite.startDate} → ${suite.endDate}` : "",
+        suite.startDate && suite.endDate
+          ? `${volFmtSuiteDate(suite.startDate)} → ${volFmtSuiteDate(suite.endDate)}`
+          : "",
         `${suite.nObs || "—"} obs`,
         `${nSel} models`,
         `dist=${suite.distribution || "t"}`,
@@ -5266,6 +5305,7 @@ async function volRun(force = false, opts = {}) {
     }
   } finally {
     volBusy = false;
+    volRunIsAll = false;
     if (btnSel) {
       btnSel.disabled = false;
       btnSel.textContent = prevSel || "Run selected";
@@ -5274,6 +5314,9 @@ async function volRun(force = false, opts = {}) {
       btnAll.disabled = false;
       btnAll.textContent = prevAll || "Run all";
     }
+    const pending = volPendingAll;
+    volPendingAll = null;
+    if (pending) void volRun(pending.force, pending.opts);
   }
 }
 
@@ -5307,6 +5350,7 @@ function initVolatilityModule() {
     if (meta) {
       meta.textContent = `Last-good models · as_of ${cached.fetchedAt || volSuite.asOf || "—"} · stale until Run`;
     }
+    volRenderRunCommentary(volSuite);
   }
   volPaintCachedIv();
 

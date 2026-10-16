@@ -640,10 +640,10 @@ function mwRenderProxyCards(data) {
       <p class="mm-card__desc">${mwEscape(d.description || "")}</p>
     </article>
     <article class="mm-card mw-proxy-card">
-      <h3 class="mm-card__title" data-help-key="mw-flow-dir">Exchange flow (sample)</h3>
-      <p class="mm-card__value mono">→ex ${lt.toExchangeCount24h ?? "—"} · ex→ ${lt.fromExchangeCount24h ?? "—"}</p>
-      <p class="mm-card__sub">Labeled wallet touches · 24h sample</p>
-      <p class="mm-card__desc">Counts transfers whose dominant side hits a wallet in this panel’s label set. Not full exchange coverage.</p>
+      <h3 class="mm-card__title" data-help-key="mw-flow-dir">Exchange flow (tracked wallets)</h3>
+      <p class="mm-card__value mono">In ${data.exchangeNet?.inflow24hBtc != null ? mwFmtBtc(data.exchangeNet.inflow24hBtc, 1) : "—"} · Out ${data.exchangeNet?.outflow24hBtc != null ? mwFmtBtc(data.exchangeNet.outflow24hBtc, 1) : "—"} BTC</p>
+      <p class="mm-card__sub">Same labeled wallets as Tracked net flow</p>
+      <p class="mm-card__desc">Large-tx sample counts (last blocks, not the wallet sum): →ex ${lt.toExchangeCount24h ?? "—"} · ex→ ${lt.fromExchangeCount24h ?? "—"}.</p>
     </article>
     <article class="mm-card mw-proxy-card">
       <h3 class="mm-card__title" data-help-key="mw-rich-100">Addresses &gt;100 BTC</h3>

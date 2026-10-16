@@ -3,7 +3,6 @@
 const XM_POLL_MS = 5_000;
 const XM_REST_POLL_MS = 3_000;
 const XM_REST_STALE_MS = 15_000;
-const XM_BINANCE_REST = "https://api.binance.com/api/v3";
 const XM_API = "/api/cross-market/snapshot";
 const XM_NEWS_API = "/api/cross-market/news";
 const XM_ALERT_API = "/api/cross-market/alert";
@@ -14,11 +13,6 @@ const XM_TOASTS_ENABLED = false;
 
 /** Public CEX endpoints (same pattern as app.js — works from the browser). */
 const XM_BROWSER_SOURCES = [
-  {
-    exchange: "Binance", pair: "BTC/USDT", market: "spot",
-    url: `${XM_BINANCE_REST}/ticker/24hr?symbol=BTCUSDT`,
-    parse: (d) => parseFloat(d.lastPrice),
-  },
   {
     exchange: "Coinbase", pair: "BTC/USD", market: "spot",
     url: "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
@@ -128,21 +122,6 @@ const XM_BROWSER_SOURCES = [
 ];
 
 const XM_BROWSER_PERP = [
-  {
-    exchange: "Binance", pair: "BTC/USDT Perp", market: "perp",
-    url: "https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT",
-    parse: (d) => {
-      const mark = parseFloat(d?.markPrice);
-      const index = parseFloat(d?.indexPrice);
-      if (!Number.isFinite(mark)) return null;
-      return {
-        price: mark,
-        basisPct: mark && index ? ((mark - index) / index) * 100 : null,
-        fundingRate: Number.isFinite(parseFloat(d?.lastFundingRate))
-          ? parseFloat(d.lastFundingRate) * 100 : null,
-      };
-    },
-  },
   {
     exchange: "Bybit", pair: "BTC/USDT Perp", market: "perp",
     url: "https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT",
@@ -640,10 +619,17 @@ function xmBuildFromExchanges(spotPayload, perpPayload) {
   });
 }
 
-async function xmFetchBinanceRest() {
-  const data = await xmFetchJson(`${XM_BINANCE_REST}/ticker/price?symbol=BTCUSDT`);
-  const px = parseFloat(data?.price);
-  return Number.isFinite(px) && px > 0 ? px : null;
+async function xmFetchProxySpot() {
+  const data = await xmFetchJson("/api/market/quote");
+  const px = parseFloat(data?.ticker?.lastPrice);
+  if (!Number.isFinite(px) || px <= 0) return null;
+  return { price: px, venue: data.venue || data.ticker?.venue || "Spot" };
+}
+
+async function xmAnchorPrice() {
+  const dom = xmReadDomSpotPrice();
+  if (Number.isFinite(dom) && dom > 0) return { price: dom, venue: "Spot" };
+  return xmFetchProxySpot();
 }
 
 async function xmBrowserFetchVenue(def) {
@@ -703,9 +689,11 @@ async function xmTryBrowserVenues() {
   ]);
   let venues = xmApplyFxToVenues(results.filter(Boolean), fx);
 
-  if (!venues.some((v) => v.exchange === "Binance")) {
-    const anchor = xmReadDomSpotPrice() || await xmFetchBinanceRest();
-    if (anchor) venues.unshift(xmMapVenue("Binance", "BTC/USDT", anchor, "spot", "anchor"));
+  if (!venues.some((v) => v.exchange === "Binance" || v.exchange === "Spot")) {
+    const anchor = await xmAnchorPrice();
+    if (anchor?.price) {
+      venues.unshift(xmMapVenue(anchor.venue || "Spot", "BTC/USD", anchor.price, "spot", "anchor"));
+    }
   }
 
   if (venues.length < 2) return null;
@@ -746,10 +734,10 @@ async function xmTryExchangesBridge() {
 }
 
 async function xmTryAnchorOnly() {
-  const anchor = xmReadDomSpotPrice() || await xmFetchBinanceRest();
-  if (!anchor || Math.abs(anchor - XM_DEMO_REF) < 400) return null;
+  const anchor = await xmAnchorPrice();
+  if (!anchor?.price || Math.abs(anchor.price - XM_DEMO_REF) < 400) return null;
   const snap = xmPackSnapshot(
-    [xmMapVenue("Binance", "BTC/USDT", anchor, "spot", "anchor")],
+    [xmMapVenue(anchor.venue || "Spot", "BTC/USD", anchor.price, "spot", "anchor")],
     "anchor",
   );
   xmLastFetchNote = "dashboard spot anchor";
@@ -1131,8 +1119,8 @@ async function xmLoad() {
     if (!result) {
       xmError = "Could not fetch live prices — check network connection";
       if (!xmData) {
-        const anchor = xmReadDomSpotPrice() || await xmFetchBinanceRest();
-        if (anchor) xmPatchBinancePrice(anchor);
+        const anchor = await xmAnchorPrice();
+        if (anchor?.price) xmPatchVenuePrice(anchor.venue || "Spot", anchor.price);
       }
       xmRenderStatus();
       return;
@@ -1145,8 +1133,8 @@ async function xmLoad() {
     xmLoadNews("market", true);
   } catch (err) {
     xmError = err.message || "Failed to load cross-market data";
-    const anchor = xmReadDomSpotPrice() || await xmFetchBinanceRest();
-    if (anchor) xmPatchBinancePrice(anchor);
+    const anchor = await xmAnchorPrice();
+    if (anchor?.price) xmPatchVenuePrice(anchor.venue || "Spot", anchor.price);
     xmRenderStatus();
   } finally {
     xmLoading = false;

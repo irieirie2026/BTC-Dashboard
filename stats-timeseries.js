@@ -584,6 +584,31 @@ function tsFamilyAbbr(family) {
   return { short: (family || "?").slice(0, 1).toUpperCase(), title: family || "—" };
 }
 
+function tsShortFallback(m) {
+  if (m?.fallbackReason) return String(m.fallbackReason);
+  const w = String(m?.warning || "");
+  const low = w.toLowerCase();
+  if (low.includes("prophet not installed")) return "prophet not installed";
+  if (low.includes("seasonal fit failed")) return "seasonal fit failed";
+  if (
+    low.includes("statsmodels missing") ||
+    low.includes("statsmodels unavailable") ||
+    low.includes("statsmodels not")
+  ) {
+    return "statsmodels missing";
+  }
+  const head = w.split("—")[0].trim();
+  if (!head) return "fallback";
+  return head.length > 48 ? `${head.slice(0, 46)}…` : head;
+}
+
+function tsStatusTitle(m) {
+  if (m?.warning) return String(m.warning);
+  if (m?.backtest?.error) return String(m.backtest.error);
+  if (m?.error) return String(m.error);
+  return "";
+}
+
 function tsHorizonRow(m, suite, hz) {
   const isBest = m.id === suite[hz.bestHit];
   const isDesk =
@@ -591,17 +616,31 @@ function tsHorizonRow(m, suite, hz) {
   const sel = m.id === tsSelectedId ? " vol-row--selected" : "";
   const bestCls = isBest ? " vol-row--best-hit ts-row--best" : "";
   const deskCls = isDesk && !isBest ? " vol-row--desk-mark" : "";
-  const status = m.status === "ok" ? (m.warning ? "fallback" : "ok") : "failed";
-  const errTitle = m.error ? ` title="${tsEscape(m.error)}"` : "";
+  const statusKind = m.status === "ok" ? (m.warning ? "fallback" : "ok") : "failed";
+  const statusLabel =
+    statusKind === "fallback" ? `FALLBACK · ${tsShortFallback(m)}` : statusKind;
+  const statusTitle = tsStatusTitle(m);
+  const errTitle = statusTitle ? ` title="${tsEscape(statusTitle)}"` : "";
+  const btErr = m.backtest?.error ? String(m.backtest.error) : "";
+  const dashTitle = (text) => (text === "—" && btErr ? ` title="${tsEscape(btErr)}"` : "");
   const nOrig = m.backtest?.horizons?.[String(hz.h)]?.n;
   const fam = tsFamilyAbbr(m.family);
   const hit = tsBtH(m, hz.h, "dirHitRate");
+  const hitTxt = tsHitPct(m, hz.h);
+  const rmseTxt = tsRmse(m, hz.h);
+  const maeTxt = tsMae(m, hz.h);
+  const rmsePxTxt = tsRmsePx(m, hz.h);
+  const mapeTxt = tsMape(m, hz.h);
+  const nTxt = tsNOos(m, hz.h);
   const hitCls =
     hit != null && hit >= 0.55
       ? " ts-hit--good"
       : hit != null && hit < 0.5
         ? " ts-hit--weak"
         : "";
+  const hitTitle =
+    hitTxt === "—" && btErr ? btErr : "Directional hit rate (primary accuracy metric)";
+  const icTitle = m.icComparable === false && m.icNote ? ` title="${tsEscape(m.icNote)}"` : "";
   const bestLabel = isBest
     ? ` <span class="ts-best-inline" title="Best OOS directional hit at ${hz.label}">BEST HIT ${hz.label}</span>`
     : isDesk && hz.h === 7
@@ -613,17 +652,17 @@ function tsHorizonRow(m, suite, hz) {
     <td class="mono vol-td-num ts-td-num">${tsFmtPx(m[hz.fcKey], 0)}</td>
     <td class="mono vol-td-num ts-td-num">${tsFmtRet(m[hz.retKey], 2)}</td>
     <td class="mono vol-td-num ts-td-num">${tsDeltaVsLast(m, suite, hz.fcKey)}</td>
-    <td class="mono vol-td-num ts-td-num ts-td-hit${hitCls}" title="Directional hit rate (primary accuracy metric)">${tsHitPct(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsRmse(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsMae(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsRmsePx(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsMape(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsNOos(m, hz.h)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsFmtNum(m.aic, 1)}</td>
-    <td class="mono vol-td-num ts-td-num">${tsFmtNum(m.bic, 1)}</td>
+    <td class="mono vol-td-num ts-td-num ts-td-hit${hitCls}" title="${tsEscape(hitTitle)}">${hitTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${dashTitle(rmseTxt)}>${rmseTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${dashTitle(maeTxt)}>${maeTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${dashTitle(rmsePxTxt)}>${rmsePxTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${dashTitle(mapeTxt)}>${mapeTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${dashTitle(nTxt)}>${nTxt}</td>
+    <td class="mono vol-td-num ts-td-num"${icTitle}>${tsFmtNum(m.aic, 1)}</td>
+    <td class="mono vol-td-num ts-td-num"${icTitle}>${tsFmtNum(m.bic, 1)}</td>
     <td class="mono vol-td-num ts-td-num">${m.nParams ?? "—"}</td>
-    <td class="vol-td-text ts-td-status"${errTitle}><span class="vol-status vol-status--${status}">${tsEscape(status)}</span></td>
-    <td class="vol-td-rank ts-td-rank" title="${nOrig != null ? `${nOrig} OOS origins` : ""}">${tsHorizonRankHtml(m, suite, hz)}</td>
+    <td class="vol-td-text ts-td-status"${errTitle}><span class="vol-status vol-status--${statusKind}">${tsEscape(statusLabel)}</span></td>
+    <td class="vol-td-rank ts-td-rank" title="${tsEscape(nOrig != null ? `${nOrig} OOS origins` : btErr)}">${tsHorizonRankHtml(m, suite, hz)}</td>
   </tr>`;
 }
 
@@ -730,6 +769,7 @@ function tsRenderDetail(m, suite) {
          <p class="vol-eq-note">${tsEscape(m.blurb || "")}</p>
          ${m.whyBtc ? `<p class="vol-eq-note"><strong>BTC:</strong> ${tsEscape(m.whyBtc)}</p>` : ""}
          ${m.warning ? `<p class="vol-warn">${tsEscape(m.warning)}</p>` : ""}
+         ${m.icNote ? `<p class="vol-eq-note">${tsEscape(m.icNote)}</p>` : ""}
          ${m.error ? `<p class="vol-warn">${tsEscape(m.error)}</p>` : ""}`
       : "—";
   }

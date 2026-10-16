@@ -738,7 +738,16 @@ function bindHomeCards() {
   }
 }
 
+function applyAppVersion() {
+  const version = window.APP_VERSION;
+  if (!version) return;
+  document.querySelectorAll("[data-app-version]").forEach((el) => {
+    el.textContent = version;
+  });
+}
+
 function initHomePage() {
+  applyAppVersion();
   renderHomeCards();
   renderHomeHighlights();
   bindHomeCards();
@@ -765,6 +774,8 @@ window.homePlayUiClick = homePlayUiClick;
 window.homeBootAudioEarly = homeBootAudioEarly;
 // back-compat alias
 window.homePlayPirateJingle = homePlayBuccaneersJingle;
+
+applyAppVersion();
 
 // Start UI click sounds + early boot immediately when this script loads
 homeBindGlobalUiSounds();

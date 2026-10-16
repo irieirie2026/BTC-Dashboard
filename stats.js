@@ -1,4 +1,4 @@
-const BINANCE_KLINES = "https://api.binance.com/api/v3/klines";
+
 const STATS_BTC_HISTORY_API = "/api/stats/btc-history";
 const STATS_PAIR = "BTC/USD";
 const STATS_SOURCE = "Bitstamp";
@@ -238,8 +238,12 @@ function computeVarBlock(returns) {
   const tail99 = returns.filter((r) => r <= var99);
   const cvar95 = tail95.length ? mean(tail95) : var95;
   const cvar99 = tail99.length ? mean(tail99) : var99;
-  const param95 = mu - 1.645 * sigma;
-  const param99 = mu - 2.326 * sigma;
+  const param95 = mu - 1.6448536269514722 * sigma;
+  const param99 = mu - 2.3263478740408408 * sigma;
+  const normalPdf = (z) => Math.exp(-0.5 * z * z) / Math.sqrt(2 * Math.PI);
+  // Left-tail normal expected shortfall: μ − σ φ(z_α) / α
+  const paramCvar95 = mu - sigma * normalPdf(1.6448536269514722) / 0.05;
+  const paramCvar99 = mu - sigma * normalPdf(2.3263478740408408) / 0.01;
 
   const rollingVar95 = rollingWindow(returns, TRADING_DAYS, returns.map((_, i) => i), (slice) => ({
     var95: percentile(slice, 5),
@@ -255,7 +259,7 @@ function computeVarBlock(returns) {
     mu,
     sigma,
     historical: { var95, var99, cvar95, cvar99 },
-    parametric: { var95: param95, var99: param99 },
+    parametric: { var95: param95, var99: param99, cvar95: paramCvar95, cvar99: paramCvar99 },
     rollingVar95,
     breaches,
     fullVar95: var95,
@@ -284,7 +288,8 @@ function computeSteadyState(transProb) {
     }
     pi = next;
   }
-  return pi;
+  const total = pi.reduce((a, b) => a + b, 0) || 1;
+  return pi.map((p) => p / total);
 }
 
 function computeMarkov(returns, dates) {
@@ -958,14 +963,13 @@ async function fetchKlines(symbol) {
       const data = await res.json();
       if (res.ok && Array.isArray(data.days) && data.days.length) return data.days;
     } catch (_) {
-      /* fall through to Binance */
+      /* fall through */
     }
   }
-  const url =
-    `${BINANCE_KLINES}?symbol=${symbol}&interval=${STATS_INTERVAL}&limit=${ETH_STATS_LIMIT}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Binance klines " + symbol + " " + res.status);
-  const raw = await res.json();
+  const product = symbol.startsWith("ETH") ? "ETH-USD" : "BTC-USD";
+  const bundled = await window.marketFetchKlines?.("1d", ETH_STATS_LIMIT || 300, product);
+  const raw = bundled?.klines || [];
+  if (!raw.length) throw new Error("Daily klines unavailable for " + symbol);
   return raw.map((k) => ({
     date: k[0],
     open: parseFloat(k[1]),
@@ -1322,8 +1326,8 @@ function renderVarScreen() {
       <td>Parametric (normal)</td>
       <td class="mono negative">${statsFmtPct(v.parametric.var95, 2)}</td>
       <td class="mono negative">${statsFmtPct(v.parametric.var99, 2)}</td>
-      <td class="mono">—</td>
-      <td class="mono">—</td>
+      <td class="mono negative">${statsFmtPct(v.parametric.cvar95, 2)}</td>
+      <td class="mono negative">${statsFmtPct(v.parametric.cvar99, 2)}</td>
     </tr>`;
   }
 
@@ -1600,15 +1604,18 @@ function buildMarkovCommentary(s) {
       `tend to ${m.persistence > 0.55 ? "cluster rather than flip daily" : "shift frequently"}.`,
   );
 
-  const topSteady = m.steadyState
-    .map((p, i) => ({ label: m.stateDefs[i].label, p }))
-    .sort((a, b) => b.p - a.p)[0];
-  lines.push(
-    `Long-run steady-state distribution: ${m.stateDefs
-      .map((d, i) => `${d.label} ${(m.steadyState[i] * 100).toFixed(1)}%`)
-      .join(" · ")}. ` +
-      `${topSteady.label} dominates the ergodic mix (${(topSteady.p * 100).toFixed(1)}%).`,
-  );
+  const steadyShown = m.steadyState.map((p, i) => ({
+    label: m.stateDefs[i].label,
+    p,
+    shown: Math.round(p * 1000) / 10,
+  }));
+  const topShown = Math.max(...steadyShown.map((r) => r.shown));
+  const leaders = steadyShown.filter((r) => r.shown === topShown);
+  const steadyLine = steadyShown.map((r) => `${r.label} ${r.shown.toFixed(1)}%`).join(" · ");
+  const steadyVerdict = leaders.length === 1
+    ? `${leaders[0].label} dominates the ergodic mix (${leaders[0].shown.toFixed(1)}%).`
+    : `No state dominates — ${leaders.map((r) => r.label).join(", ")} share the ergodic mix at ${topShown.toFixed(1)}%.`;
+  lines.push(`Long-run steady-state distribution: ${steadyLine}. ${steadyVerdict}`);
 
   const bullOcc = m.occupancy[2];
   const bearOcc = m.occupancy[0];
@@ -1746,8 +1753,8 @@ function buildPowerLawCommentary(s) {
   lines.push(
     `Giovanni Santostasi's Bitcoin Power Law Theory (PLT) models long-run price as ` +
       `A × (days since the Jan 3, 2009 Genesis Block)^n with A ≈ 10⁻¹⁶·⁴⁹³ and n ≈ 5.68 ` +
-      `(source: bitcoinpower.law). Over ${pl.sampleDays} daily closes (${statsFmtDate(s.startDate)} → ` +
-      `${statsFmtDate(s.endDate)}), log–log regression R² is ${(pl.fit.r2 * 100).toFixed(2)}%.`,
+      `(source: bitcoinpower.law). Over ${pl.sampleDays} daily closes (${statsFmtDate(pl.points[0]?.date)} → ` +
+      `${statsFmtDate(pl.last?.date)}), log–log regression R² is ${(pl.fit.r2 * 100).toFixed(2)}%.`,
   );
 
   lines.push(
