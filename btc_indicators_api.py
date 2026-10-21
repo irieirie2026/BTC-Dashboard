@@ -122,6 +122,7 @@ def _series_supported(indicator: str) -> bool:
         "puell_multiple",
         "exchange_netflow",
         "active_addresses",
+        "san_daily_active_addresses",
         "hash_rate",
         "market_price",
         "fear_greed",
@@ -713,9 +714,10 @@ def _repair_snapshot_cells(cells: dict[str, dict]) -> None:
         bitinfo = cache_get("btc:bitinfo:snapshot:v1", ttl=BITINFO_TTL) or {}
         fixed = bitinfo.get(bitinfo_key)
         if _snapshot_value_usable(wealth_key, fixed):
+            wealth_sources = bitinfo.get("wealthSources") or {}
             cells[wealth_key] = _cell(
                 fixed,
-                "BitInfoCharts",
+                wealth_sources.get(bitinfo_key) or bitinfo.get("wealthSource") or bitinfo.get("source") or "BitInfoCharts",
                 {
                     "fetchedAt": bitinfo.get("fetchedAt"),
                     "stale": bitinfo.get("stale"),
@@ -788,10 +790,15 @@ def _assemble_snapshot_cells(
     if bitinfo.get("stale"):
         bitinfo_extra["stale"] = True
 
+    wealth_sources = bitinfo.get("wealthSources") or {}
+
+    def _wealth_source(key: str) -> str:
+        return wealth_sources.get(key) or bitinfo.get("wealthSource") or bitinfo.get("source") or "BitInfoCharts"
+
     return {
-        "rich_top100_pct": _cell(bitinfo.get("rich_top100_pct"), "BitInfoCharts", bitinfo_extra),
-        "rich_top1000_pct": _cell(bitinfo.get("rich_top1000_pct"), "BitInfoCharts", bitinfo_extra),
-        "wealth_top10_pct": _cell(bitinfo.get("wealth_top10_pct"), "BitInfoCharts", bitinfo_extra),
+        "rich_top100_pct": _cell(bitinfo.get("rich_top100_pct"), _wealth_source("rich_top100_pct"), bitinfo_extra),
+        "rich_top1000_pct": _cell(bitinfo.get("rich_top1000_pct"), _wealth_source("rich_top1000_pct"), bitinfo_extra),
+        "wealth_top10_pct": _cell(bitinfo.get("wealth_top10_pct"), _wealth_source("wealth_top10_pct"), bitinfo_extra),
         "active_addresses": _cell(
             bitinfo.get("active_addresses_24h") or (active_chart.get("latest") or {}).get("value"),
             "BitInfoCharts" if bitinfo.get("active_addresses_24h") else "Blockchain.info",
@@ -900,7 +907,7 @@ def _assemble_snapshot_cells(
         ),
         "btc_dominance": _cell(
             dominance.get("value"),
-            "CoinGecko",
+            dominance.get("source") or "CoinGecko",
             {
                 "fetchedAt": dominance.get("fetchedAt"),
                 "error": dominance.get("error"),
@@ -915,7 +922,7 @@ def _build_fast_snapshot_cells() -> dict[str, dict]:
 
     bitinfo = cache_get("btc:bitinfo:snapshot:v1", ttl=BITINFO_TTL) or {}
     dominance = cache_get("btc:coingecko:dominance:v1", ttl=3600) or {}
-    oi = cache_get("btc:binance:oi:v1", ttl=900) or {}
+    oi = cache_get("btc:binance:oi:v2", ttl=900) or {}
     mempool = cache_get("btc:mempool:fees:v1", ttl=900) or {}
     puell = cache_get("btc:puell:computed:v1", ttl=86400) or {}
     fng = legacy_cache_get("misc:fear-greed", 14400) or {}
@@ -1020,10 +1027,121 @@ def _finalize_snapshot_payload(
     }
 
 
+_SNAPSHOT_LIVE_KEYS = (
+    "rich_top100_pct",
+    "rich_top1000_pct",
+    "wealth_top10_pct",
+    "exchange_netflow",
+    "hodl_waves_1y_plus",
+    "fear_greed",
+    "open_interest",
+    "btc_dominance",
+)
+
+
+def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
+    """Live-fetch the eight cells the cold cache path otherwise leaves null."""
+    from server import get_fear_greed_payload
+
+    need = {key for key in _SNAPSHOT_LIVE_KEYS if _cell_value_missing(key, cells.get(key))}
+    if not need:
+        return cells
+    jobs: dict[str, Callable] = {}
+    if need & {"rich_top100_pct", "rich_top1000_pct", "wealth_top10_pct"}:
+        jobs["bitinfo"] = lambda: fetch_bitinfo_snapshot(refresh=True)
+    if "exchange_netflow" in need:
+        jobs["netflow"] = lambda: _fetch_netflow_snapshot(refresh=True)
+    if "hodl_waves_1y_plus" in need:
+        jobs["hodl"] = lambda: _fetch_bg_kpi_snapshot(refresh=True)
+    if "fear_greed" in need:
+        jobs["fng"] = lambda: get_fear_greed_payload(refresh=True)
+    if "open_interest" in need:
+        jobs["oi"] = lambda: fetch_binance_open_interest(refresh=True)
+    if "btc_dominance" in need:
+        jobs["dom"] = lambda: fetch_coingecko_dominance(refresh=True)
+
+    data: dict[str, Any] = {}
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        futures = {key: pool.submit(fn) for key, fn in jobs.items()}
+        for key, fut in futures.items():
+            try:
+                data[key] = fut.result(timeout=25)
+            except Exception as exc:
+                data[key] = {"error": str(exc), "fetchedAt": _now_iso()}
+
+    bitinfo = data.get("bitinfo") or {}
+    if bitinfo:
+        extra = {"fetchedAt": bitinfo.get("fetchedAt")}
+        if bitinfo.get("error"):
+            extra["error"] = bitinfo.get("error")
+        wealth_sources = bitinfo.get("wealthSources") or {}
+        for key in ("rich_top100_pct", "rich_top1000_pct", "wealth_top10_pct"):
+            if key not in need:
+                continue
+            src = wealth_sources.get(key) or bitinfo.get("wealthSource") or bitinfo.get("source") or "BitInfoCharts"
+            if bitinfo.get(key) is not None:
+                cells[key] = _cell(bitinfo.get(key), src, extra)
+            elif bitinfo.get("error"):
+                cells[key] = _cell(None, src, {**extra, "error": bitinfo.get("error")})
+
+    netflow = data.get("netflow") or {}
+    if "exchange_netflow" in need and (netflow.get("latest") or {}).get("value") is not None:
+        cells["exchange_netflow"] = _cell(
+            (netflow.get("latest") or {}).get("value"),
+            "Coin Metrics Community",
+            {"fetchedAt": netflow.get("fetchedAt"), "error": netflow.get("error")},
+        )
+
+    hodl_body = (data.get("hodl") or {}).get("hodl_waves") or {}
+    hodl_1y = _hodl_waves_1y_plus(hodl_body) if hodl_body else None
+    if hodl_1y is None and isinstance(hodl_body.get("latest"), dict):
+        latest_val = hodl_body["latest"].get("value")
+        if latest_val is not None:
+            try:
+                hodl_1y = float(latest_val)
+            except (TypeError, ValueError):
+                hodl_1y = None
+    if "hodl_waves_1y_plus" in need and hodl_1y is not None:
+        cells["hodl_waves_1y_plus"] = _cell(
+            hodl_1y,
+            hodl_body.get("source") or "BGeometrics",
+            {"fetchedAt": hodl_body.get("fetchedAt")},
+        )
+
+    fng = data.get("fng") or {}
+    fng_val = (fng.get("latest") or {}).get("value")
+    if "fear_greed" in need and fng_val is not None:
+        cells["fear_greed"] = _cell(
+            fng_val,
+            "Alternative.me",
+            {
+                "fetchedAt": fng.get("fetchedAt"),
+                "classification": (fng.get("latest") or {}).get("classification"),
+            },
+        )
+
+    oi = data.get("oi") or {}
+    if "open_interest" in need and oi.get("value"):
+        cells["open_interest"] = _cell(
+            oi.get("value"),
+            oi.get("source") or "Binance Futures",
+            {"fetchedAt": oi.get("fetchedAt"), "error": oi.get("error")},
+        )
+
+    dominance = data.get("dom") or {}
+    if "btc_dominance" in need and dominance.get("value") is not None:
+        cells["btc_dominance"] = _cell(
+            dominance.get("value"),
+            dominance.get("source") or "CoinGecko",
+            {"fetchedAt": dominance.get("fetchedAt"), "error": dominance.get("error")},
+        )
+    return cells
+
+
 def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     from server import get_fear_greed_payload
 
-    cache_key = "btc:bundle:snapshot:v9"
+    cache_key = "btc:bundle:snapshot:v10"
     fast_source = (
         "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
         "Coin Metrics · Santiment store"
@@ -1032,14 +1150,16 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
         cached = cache_get(cache_key, ttl=300)
         if cached is not None:
             cells = dict(cached.get("cells") or {})
-            return _finalize_snapshot_payload(
-                cells,
-                source_chain=cached.get("sourceChain") or fast_source,
-                fast_path=cached.get("fastPath", True),
-                from_cache=True,
-                refresh=False,
-            )
+            if not any(_cell_value_missing(key, cells.get(key)) for key in _SNAPSHOT_LIVE_KEYS):
+                return _finalize_snapshot_payload(
+                    cells,
+                    source_chain=cached.get("sourceChain") or fast_source,
+                    fast_path=cached.get("fastPath", True),
+                    from_cache=True,
+                    refresh=False,
+                )
         cells = _build_fast_snapshot_cells()
+        cells = _fill_missing_snapshot_cells(cells)
         payload = _finalize_snapshot_payload(
             cells,
             source_chain=fast_source,
@@ -1484,6 +1604,7 @@ def _series_payload_unsliced(
 
         bc_map = {
             "active_addresses": "n-unique-addresses",
+            "san_daily_active_addresses": "n-unique-addresses",
             "hash_rate": "hash-rate",
             "market_price": "market-price",
         }
@@ -1495,6 +1616,16 @@ def _series_payload_unsliced(
                 timespan,
                 refresh=refresh,
             )
+            if indicator == "san_daily_active_addresses":
+                data = {
+                    **data,
+                    "source": (
+                        "Blockchain.info · n-unique-addresses "
+                        "(free daily active addresses)"
+                    ),
+                    "aliasOf": "active_addresses",
+                    "note": "Santiment daily_active_addresses requires a key; this series is the free unique-address count.",
+                }
             return _finalize_series_payload(indicator, data)
 
         if indicator == "fear_greed":

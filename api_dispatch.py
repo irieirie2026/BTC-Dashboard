@@ -218,6 +218,34 @@ def dispatch_api(path, query, body: dict | None = None):
             refresh=refresh,
         )
 
+    if path in ("/api/defi", "/api/stables", "/api/wrappers"):
+        refresh = _query_refresh(query)
+        if path == "/api/stables":
+            return get_defi_payload("stables", refresh=refresh)
+        if path == "/api/wrappers":
+            return get_defi_payload("wrapped", refresh=refresh)
+        return {
+            "section": "index",
+            "title": "DeFi",
+            "source": "DeFiLlama",
+            "sections": [
+                "wrapped",
+                "stables",
+                "bridges",
+                "lending",
+                "borrowing",
+                "liquidity",
+                "staking",
+                "strategies",
+            ],
+            "routes": {
+                "stables": "/api/stables",
+                "wrappers": "/api/wrappers",
+                "wrapped": "/api/defi/wrapped",
+                "liquidity": "/api/defi/liquidity",
+            },
+        }
+
     if path.startswith("/api/defi/"):
         section = path[len("/api/defi/") :].strip("/")
         refresh = _query_refresh(query)

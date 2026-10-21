@@ -191,17 +191,21 @@ def _binance_ticker() -> dict[str, Any] | None:
 
 
 def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
+    global _last_quote_venue
     key = "market:quote:v1"
     if not refresh:
         cached = _cache_get(key)
         if cached:
             cached["fromCache"] = True
+            if cached.get("venue"):
+                _last_quote_venue = cached.get("venue")
             return cached
     errors: list[str] = []
     for fn in (_coinbase_ticker, _kraken_ticker, _okx_ticker, _bitstamp_ticker, _binance_ticker):
         try:
             ticker = fn()
             if ticker and _f(ticker.get("lastPrice")):
+                _last_quote_venue = ticker.get("venue")
                 payload = {
                     "ticker": ticker,
                     "venue": ticker.get("venue"),
@@ -916,7 +920,7 @@ def _fetch_bybit_dated(index_hint: float | None) -> tuple[list[dict], dict | Non
 
 def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     """Dated BTC futures from OKX, Deribit, and Bybit."""
-    key = "market:futures:v2"
+    key = "market:futures:v3"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -935,7 +939,8 @@ def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
         deribit, deribit_index, deribit_err = deribit_f.result()
         bybit, bybit_perp, bybit_err = bybit_f.result()
     errors.extend(okx_err + deribit_err + bybit_err)
-    index = okx_index or deribit_index or index_hint
+    # Spot composite on Futures uses the same OKX BTC-USDT index as the Perp tab.
+    index = index_hint or okx_index or deribit_index
     if isinstance(perp, dict) and index and not perp.get("indexPrice"):
         perp["indexPrice"] = index
     coin_contracts = (coin or []) + (deribit or []) + (bybit or [])
@@ -992,9 +997,13 @@ def _book_levels(rows, limit: int) -> list[list[str]]:
     return out
 
 
-def get_depth(*, limit: int = 20, refresh: bool = False) -> dict[str, Any]:
-    limit = max(5, min(int(limit or 20), 50))
-    key = f"market:depth:v1:{limit}"
+_last_quote_venue: str | None = None
+
+
+def get_depth(*, limit: int = 20, refresh: bool = False, prefer: str | None = None) -> dict[str, Any]:
+    limit = max(5, min(int(limit or 20), 100))
+    pref_key = (prefer or _last_quote_venue or "any").strip().lower() or "any"
+    key = f"market:depth:v2:{limit}:{pref_key}"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1034,7 +1043,11 @@ def get_depth(*, limit: int = 20, refresh: bool = False) -> dict[str, Any]:
         book = raw.get("result") or {}
         return _book_levels(book.get("b"), limit), _book_levels(book.get("a"), limit), "Bybit"
 
-    for name, fn in (("okx", _okx), ("coinbase", _coinbase), ("kraken", _kraken), ("bybit", _bybit)):
+    fetchers = [("okx", _okx), ("coinbase", _coinbase), ("kraken", _kraken), ("bybit", _bybit)]
+    pref = (prefer or _last_quote_venue or "").strip().lower()
+    if pref:
+        fetchers.sort(key=lambda item: 0 if pref.startswith(item[0]) or item[0] in pref else 1)
+    for name, fn in fetchers:
         try:
             bids, asks, venue = fn()
             if len(bids) >= 5 and len(asks) >= 5:
@@ -1057,15 +1070,54 @@ def get_depth(*, limit: int = 20, refresh: bool = False) -> dict[str, Any]:
     }
 
 
+def _pin_book_top(levels: list, price: float | None, *, bids: bool) -> list:
+    """Make row 0 the ticker price and drop levels that would sort back above it."""
+    rows: list[list[float]] = []
+    for row in levels or []:
+        if not isinstance(row, (list, tuple)) or len(row) < 2:
+            continue
+        px, qty = _f(row[0]), _f(row[1])
+        if px is None or qty is None or px <= 0 or qty <= 0:
+            continue
+        rows.append([px, qty])
+    if price is None or price <= 0 or not rows:
+        return [list(row) for row in (levels or [])]
+    top_qty = rows[0][1]
+    if bids:
+        rest = [row for row in rows[1:] if row[0] < price]
+    else:
+        rest = [row for row in rows[1:] if row[0] > price]
+    pinned = [[price, top_qty], *rest][: len(rows)]
+    return [[str(px), str(qty)] for px, qty in pinned]
+
+
+def _depth_aligned_to_ticker(depth: dict[str, Any], ticker: dict[str, Any], quote_venue: str | None) -> dict[str, Any]:
+    depth_venue = (depth.get("venue") or "").strip().lower()
+    want = (quote_venue or ticker.get("venue") or "").strip().lower()
+    if depth_venue and want and depth_venue != want:
+        return depth
+    return {
+        **depth,
+        "bids": _pin_book_top(depth.get("bids") or [], _f(ticker.get("bidPrice")), bids=True),
+        "asks": _pin_book_top(depth.get("asks") or [], _f(ticker.get("askPrice")), bids=False),
+    }
+
+
 def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
     quote = get_spot_quote(refresh=refresh)
     klines = get_klines(interval="1m", limit=500, refresh=refresh)
-    depth = get_depth(limit=20, refresh=refresh)
+    # Extra levels so pinning the ticker top still leaves a 20-row ladder.
+    depth = get_depth(limit=80, refresh=refresh, prefer=quote.get("venue"))
     ticker = quote.get("ticker") or {}
+    if ticker:
+        depth = _depth_aligned_to_ticker(depth, ticker, quote.get("venue"))
     return {
         "ticker": ticker,
         "klines": klines.get("klines") or [],
-        "depth": {"bids": depth.get("bids") or [], "asks": depth.get("asks") or []},
+        "depth": {
+            "bids": (depth.get("bids") or [])[:20],
+            "asks": (depth.get("asks") or [])[:20],
+        },
         "depthVenue": depth.get("venue"),
         "venue": quote.get("venue") or klines.get("venue"),
         "fetchedAt": _now_iso(),

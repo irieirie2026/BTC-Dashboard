@@ -1928,7 +1928,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v9:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v10:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:
@@ -2238,9 +2238,36 @@ def get_timeseries_suite_payload(
         )
         return pick, reasons
 
-    detail_row, selection_reasons = _pick_primary()
+    def _oos_n(row: dict, horizon: str = "7") -> int | None:
+        try:
+            raw_n = ((row.get("backtest") or {}).get("horizons") or {}).get(horizon, {}).get("n")
+            return int(raw_n) if raw_n is not None else None
+        except (TypeError, ValueError):
+            return None
+
+    oos_ns = [n for n in (_oos_n(r) for r in ok_rows) if n is not None]
+    oos_n7 = max(oos_ns) if oos_ns else 0
+    insufficient_sample = oos_n7 < 30
+    if insufficient_sample:
+        detail_row = None
+        selection_reasons = [
+            "insufficient sample",
+            (
+                f"7d expanding-window origins N={oos_n7}. "
+                "Desk mark requires N_OOS ≥ 30 before ranking."
+            ),
+        ]
+        selection_badges = []
+        best_rmse1 = best_rmse7 = best_rmse30 = None
+        best_mae1 = best_mae7 = best_mae30 = None
+        best_mape1 = best_mape7 = best_mape30 = None
+        best_hit1 = best_hit7 = best_hit30 = None
+        best_aic = None
+        best_bic = None
+    else:
+        detail_row, selection_reasons = _pick_primary()
     selection_badges: list[str] = []
-    if detail_row:
+    if detail_row and not insufficient_sample:
         for bid, label in (
             (best_hit1, "HIT1"),
             (best_hit7, "HIT7"),
@@ -2325,8 +2352,11 @@ def get_timeseries_suite_payload(
                 "Maximize OOS directional hit rate at 7d; break ties with 1d/30d hit, "
                 "then lower 7d RMSE, MAE, then univariate AIC/BIC (VAR/VECM excluded)."
             ),
-            "selectedId": detail_row["id"] if detail_row else None,
-            "selectedName": detail_row["name"] if detail_row else None,
+            "selectedId": None if insufficient_sample else (detail_row["id"] if detail_row else None),
+            "selectedName": "insufficient sample" if insufficient_sample else (detail_row["name"] if detail_row else None),
+            "label": "insufficient sample" if insufficient_sample else None,
+            "insufficientSample": insufficient_sample,
+            "nOos7": oos_n7,
             "reasons": selection_reasons,
             "badges": selection_badges,
             "metrics": {
@@ -2352,9 +2382,13 @@ def get_timeseries_suite_payload(
         },
         "summary": {
             "lastPrice": float(data["close"][-1]),
-            "bestModelName": detail_row["name"] if detail_row else None,
-            "bestModelId": detail_row["id"] if detail_row else None,
-            "selectionRule": "dirHitRate@7d (+ RMSE/MAE/AIC/BIC ties)",
+            "bestModelName": None if insufficient_sample else (detail_row["name"] if detail_row else None),
+            "bestModelId": None if insufficient_sample else (detail_row["id"] if detail_row else None),
+            "selectionRule": (
+                "insufficient sample"
+                if insufficient_sample
+                else "dirHitRate@7d (+ RMSE/MAE/AIC/BIC ties)"
+            ),
             "forecast1d": detail_row.get("forecast1d") if detail_row else None,
             "forecast7d": detail_row.get("forecast7d") if detail_row else None,
             "forecast30d": detail_row.get("forecast30d") if detail_row else None,
@@ -2403,8 +2437,9 @@ def get_timeseries_suite_payload(
             "ADF": "Augmented Dickey-Fuller on returns — reject unit root ⇒ stationary returns.",
             "SVAR": "Structural VAR with recursive (Cholesky) identification.",
             "Selection": (
-                "Desk mark maximizes 7d OOS hit rate; ties break on 1d/30d hit, then RMSE, "
-                "MAE, AIC, BIC. In-sample criteria never outrank OOS direction."
+                "Desk mark maximizes 7d OOS hit rate only when N_OOS ≥ 30; otherwise the "
+                "label is insufficient sample and no model is ranked. Ties break on 1d/30d "
+                "hit, then RMSE, MAE, AIC, BIC. VAR/VECM stay out of the AIC comparison."
             ),
         },
         "fromCache": False,

@@ -17,19 +17,41 @@ def _now_iso() -> str:
 
 
 def _load_events() -> list[dict]:
-    raw = cache_service.get(cross_market_events(), default=[])
+    # Write TTL is 30 days. The read must use the same window or 7d/30d history disappears.
+    raw = cache_service.get(cross_market_events(), default=[], ttl=MAX_AGE_SEC)
     return raw if isinstance(raw, list) else []
+
+
+def _event_ts_ms(event: dict) -> float | None:
+    ts = event.get("ts")
+    if isinstance(ts, str):
+        text = ts.strip()
+        if text.isdigit():
+            ts = float(text)
+        else:
+            try:
+                ts = datetime.fromisoformat(text.replace("Z", "+00:00")).timestamp()
+            except ValueError:
+                ts = None
+    if ts is None:
+        recorded = event.get("recordedAt")
+        if isinstance(recorded, str) and recorded.strip():
+            try:
+                ts = datetime.fromisoformat(recorded.strip().replace("Z", "+00:00")).timestamp()
+            except ValueError:
+                return None
+    if isinstance(ts, (int, float)):
+        return float(ts) if ts > 1e12 else float(ts) * 1000
+    return None
 
 
 def _prune(events: list[dict]) -> list[dict]:
     cutoff = time.time() - MAX_AGE_SEC
     out = []
     for e in events:
-        ts = e.get("ts")
-        if isinstance(ts, (int, float)):
-            ts_sec = ts / 1000 if ts > 1e12 else ts
-            if ts_sec < cutoff:
-                continue
+        ts_ms = _event_ts_ms(e)
+        if ts_ms is not None and (ts_ms / 1000) < cutoff:
+            continue
         out.append(e)
     return out[-MAX_EVENTS:]
 
@@ -44,6 +66,10 @@ def append_events(new_events: list[dict]) -> dict:
         row = dict(e)
         if "recordedAt" not in row:
             row["recordedAt"] = _now_iso()
+        if row.get("ts") is None:
+            stamped = _event_ts_ms(row)
+            if stamped is not None:
+                row["ts"] = stamped
         events.append(row)
     events = _prune(events)
     cache_service.set(cross_market_events(), events, ttl=MAX_AGE_SEC)
@@ -57,11 +83,8 @@ def get_history(*, days: int = 7, limit: int = 2000) -> dict:
     events = _load_events()
     filtered = []
     for e in reversed(events):
-        ts = e.get("ts")
-        if ts is None:
-            continue
-        ts_ms = ts if ts > 1e12 else ts * 1000
-        if ts_ms < cutoff_ms:
+        ts_ms = _event_ts_ms(e)
+        if ts_ms is None or ts_ms < cutoff_ms:
             continue
         filtered.append(e)
         if len(filtered) >= limit:

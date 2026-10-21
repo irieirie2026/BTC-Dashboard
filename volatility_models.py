@@ -979,7 +979,20 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
 
     # arch expects percent returns often
     y = returns * 100.0
-    kwargs = dict(catalog["arch"])
+    kwargs = dict(catalog.get("arch") or {})
+    orders = catalog.get("orders") or {}
+    # Scalar orders come from the catalog so p is not dropped by a kwargs collision.
+    if isinstance(orders.get("p"), int):
+        kwargs["p"] = int(orders["p"])
+    if isinstance(orders.get("o"), int):
+        kwargs["o"] = int(orders["o"])
+    if isinstance(orders.get("q"), int):
+        kwargs["q"] = int(orders["q"])
+    fit_orders = {
+        "p": kwargs.get("p"),
+        "o": int(kwargs.get("o") or 0),
+        "q": int(kwargs.get("q") or 0),
+    }
     dist_map = {
         "normal": "normal",
         "t": "t",
@@ -1000,7 +1013,16 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
                 p=[1, 5, 22],
             )
         else:
-            am = arch_model(y, mean="Constant", dist=dist_key, **kwargs)
+            am = arch_model(
+                y,
+                mean="Constant",
+                dist=dist_key,
+                vol=kwargs.get("vol") or "GARCH",
+                p=kwargs.get("p", 1),
+                o=int(kwargs.get("o") or 0),
+                q=int(kwargs.get("q") or 0),
+                power=float(kwargs.get("power") or 2.0),
+            )
         res = am.fit(disp="off", show_warning=False)
     except Exception as exc:
         # Retry with normal dist
@@ -1010,7 +1032,16 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
                     y, mean="Constant", dist="normal", vol="HARCH", p=[1, 5, 22]
                 )
             else:
-                am = arch_model(y, mean="Constant", dist="normal", **kwargs)
+                am = arch_model(
+                    y,
+                    mean="Constant",
+                    dist="normal",
+                    vol=kwargs.get("vol") or "GARCH",
+                    p=kwargs.get("p", 1),
+                    o=int(kwargs.get("o") or 0),
+                    q=int(kwargs.get("q") or 0),
+                    power=float(kwargs.get("power") or 2.0),
+                )
             res = am.fit(disp="off", show_warning=False)
         except Exception as exc2:
             return {"ok": False, "error": str(exc2)[:240]}
@@ -1105,6 +1136,7 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
         "engine": "arch",
         "archLmProxy": abs(acf1),
         "distribution": dist_key,
+        "orders": fit_orders,
     }
 
 
@@ -1484,7 +1516,7 @@ def get_volatility_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Estimate catalog of models and return comparison + series for UI."""
-    key = f"vol:suite:v6:{days}:{dist}:{','.join(models or [])}"
+    key = f"vol:suite:v7:{days}:{dist}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1540,6 +1572,7 @@ def get_volatility_suite_payload(
             "icNote": fit.get("icNote"),
             "rSquared": fit.get("rSquared"),
             "nParams": fit.get("nParams"),
+            "orders": fit.get("orders") or m.get("orders"),
             "persistence": fit.get("persistence"),
             "halfLifeDays": fit.get("halfLifeDays"),
             "unconditionalVolAnn": fit.get("unconditionalVolAnn"),

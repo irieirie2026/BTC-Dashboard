@@ -699,37 +699,176 @@ def compute_puell_multiple(*, refresh: bool = False) -> dict[str, Any]:
     return payload
 
 
+_WEALTH_KEYS = ("wealth_top10_pct", "rich_top100_pct", "rich_top1000_pct")
+_SOCHAIN_CHARTS_URL = "https://sochain.com/btc/charts"
+_SOCHAIN_RICH_URL = "https://sochain.com/btc/rich-list"
+_SOCHAIN_HOLDER_RE = re.compile(
+    r'class="holder-k">\s*Top\s+([\d,]+)\s*</span>.*?class="holder-v">\s*([\d.]+)\s*%',
+    re.S,
+)
+_SOCHAIN_RICH_RE = re.compile(
+    r'>([\d.]+)\s*%</span></b>\s*<span>\s*held by the top\s+([\d,]+)',
+    re.S | re.I,
+)
+
+
+def _accept_holder_shares(shares: dict[str, float]) -> dict[str, float]:
+    """Keep published supply shares. Reject a set that is out of order."""
+    clean: dict[str, float] = {}
+    for key, value in shares.items():
+        try:
+            pct = float(value)
+        except (TypeError, ValueError):
+            continue
+        if pct == pct and 0 < pct < 100:
+            clean[key] = pct
+    top10 = clean.get("wealth_top10_pct")
+    top100 = clean.get("rich_top100_pct")
+    top1000 = clean.get("rich_top1000_pct")
+    if top10 is not None and top100 is not None and top10 >= top100:
+        return {}
+    if top100 is not None and top1000 is not None and top100 >= top1000:
+        return {}
+    if top10 is not None and top1000 is not None and top10 >= top1000:
+        return {}
+    return clean
+
+
+def _parse_sochain_holder_shares(html: str) -> dict[str, float]:
+    found: dict[str, float] = {}
+    for match in _SOCHAIN_HOLDER_RE.finditer(html or ""):
+        try:
+            n = int(match.group(1).replace(",", ""))
+            pct = float(match.group(2))
+        except ValueError:
+            continue
+        if n == 10:
+            found["wealth_top10_pct"] = pct
+        elif n == 100:
+            found["rich_top100_pct"] = pct
+        elif n == 1000:
+            found["rich_top1000_pct"] = pct
+    accepted = _accept_holder_shares(found)
+    if accepted:
+        return accepted
+    for match in _SOCHAIN_RICH_RE.finditer(html or ""):
+        try:
+            pct = float(match.group(1))
+            n = int(match.group(2).replace(",", ""))
+        except ValueError:
+            continue
+        if n == 10:
+            found["wealth_top10_pct"] = pct
+        elif n == 100:
+            found["rich_top100_pct"] = pct
+    return _accept_holder_shares(found)
+
+
+def fetch_sochain_holder_shares() -> dict[str, Any]:
+    """Public SoChain pages. No API key. Charts has top 10 / 100 / 1,000."""
+    errors: list[str] = []
+    shares: dict[str, float] = {}
+    for url in (_SOCHAIN_CHARTS_URL, _SOCHAIN_RICH_URL):
+        if all(key in shares for key in _WEALTH_KEYS):
+            break
+        try:
+            html = fetch_html(url, timeout=20)
+        except Exception as exc:
+            errors.append(str(exc))
+            continue
+        for key, value in _parse_sochain_holder_shares(html).items():
+            shares.setdefault(key, value)
+    return {
+        "shares": shares,
+        "source": "SoChain",
+        "error": "; ".join(errors) if errors and not shares else None,
+        "fetchedAt": _now_iso(),
+    }
+
+
 def fetch_bitinfo_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     cache_key = "btc:bitinfo:snapshot:v1"
     if not refresh:
         cached = cache_get(cache_key, ttl=BITINFO_TTL)
-        if cached is not None:
+        if isinstance(cached, dict) and any(cached.get(key) is not None for key in _WEALTH_KEYS):
             return {**cached, "fromCache": True}
 
-    html = fetch_html("https://bitinfocharts.com/bitcoin/")
-    wealth = re.search(
-        r'id="tdid18"[^>]*>\s*([\d.]+%)\s*/\s*([\d.]+%)\s*/\s*([\d.]+%)\s*/\s*([\d.]+%)',
-        html,
-    )
-    top100 = re.search(
-        r'id="tdid17"[^>]*>.*?([\d,]+)\s*BTC.*?([\d.]+)%\s*Total',
-        html,
-        re.S,
-    )
-    active = re.search(r'id="tdid20"[^>]*>\s*([\d,]+)', html)
-    hashrate = re.search(r"([\d.]+)\s*Z(?:</abbr>)?\s*hash/s", html, re.I)
+    snapshot: dict[str, Any] | None = None
+    bitinfo_error: str | None = None
+    try:
+        html = fetch_html("https://bitinfocharts.com/bitcoin/")
+        wealth = re.search(
+            r'id="tdid18"[^>]*>\s*([\d.]+%)\s*/\s*([\d.]+%)\s*/\s*([\d.]+%)\s*/\s*([\d.]+%)',
+            html,
+        )
+        top100 = re.search(
+            r'id="tdid17"[^>]*>.*?([\d,]+)\s*BTC.*?([\d.]+)%\s*Total',
+            html,
+            re.S,
+        )
+        active = re.search(r'id="tdid20"[^>]*>\s*([\d,]+)', html)
+        hashrate = re.search(r"([\d.]+)\s*Z(?:</abbr>)?\s*hash/s", html, re.I)
+        snapshot = {
+            "wealth_top10_pct": _pct_float(wealth.group(1)) if wealth else None,
+            "rich_top100_pct": _pct_float(wealth.group(2)) if wealth else (_pct_float(top100.group(2)) if top100 else None),
+            "rich_top1000_pct": _pct_float(wealth.group(3)) if wealth else None,
+            "wealth_top10000_pct": _pct_float(wealth.group(4)) if wealth else None,
+            "top100_btc": _int_commas(top100.group(1)) if top100 else None,
+            "active_addresses_24h": _int_commas(active.group(1)) if active else None,
+            "hash_rate_zhs": float(hashrate.group(1)) if hashrate else None,
+            "source": "BitInfoCharts",
+            "wealthSources": {},
+            "fetchedAt": _now_iso(),
+        }
+    except Exception as exc:
+        bitinfo_error = str(exc)
 
-    snapshot = {
-        "wealth_top10_pct": _pct_float(wealth.group(1)) if wealth else None,
-        "rich_top100_pct": _pct_float(wealth.group(2)) if wealth else (_pct_float(top100.group(2)) if top100 else None),
-        "rich_top1000_pct": _pct_float(wealth.group(3)) if wealth else None,
-        "wealth_top10000_pct": _pct_float(wealth.group(4)) if wealth else None,
-        "top100_btc": _int_commas(top100.group(1)) if top100 else None,
-        "active_addresses_24h": _int_commas(active.group(1)) if active else None,
-        "hash_rate_zhs": float(hashrate.group(1)) if hashrate else None,
-        "source": "BitInfoCharts",
-        "fetchedAt": _now_iso(),
-    }
+    if snapshot is None:
+        snapshot = {
+            "wealth_top10_pct": None,
+            "rich_top100_pct": None,
+            "rich_top1000_pct": None,
+            "wealth_top10000_pct": None,
+            "top100_btc": None,
+            "active_addresses_24h": None,
+            "hash_rate_zhs": None,
+            "source": "BitInfoCharts",
+            "wealthSources": {},
+            "fetchedAt": _now_iso(),
+        }
+
+    wealth_sources: dict[str, str] = {}
+    for key in _WEALTH_KEYS:
+        if snapshot.get(key) is not None:
+            wealth_sources[key] = "BitInfoCharts"
+    if any(snapshot.get(key) is None for key in _WEALTH_KEYS):
+        sochain = fetch_sochain_holder_shares()
+        for key, value in (sochain.get("shares") or {}).items():
+            if key in _WEALTH_KEYS and snapshot.get(key) is None and value is not None:
+                snapshot[key] = value
+                wealth_sources[key] = "SoChain"
+        if sochain.get("error") and any(snapshot.get(key) is None for key in _WEALTH_KEYS):
+            snapshot["error"] = sochain["error"]
+    if bitinfo_error and any(wealth_sources.get(key) != "BitInfoCharts" for key in _WEALTH_KEYS):
+        snapshot["bitinfoError"] = bitinfo_error
+    if bitinfo_error and not any(snapshot.get(key) is not None for key in _WEALTH_KEYS):
+        snapshot["error"] = bitinfo_error
+    snapshot["wealthSources"] = wealth_sources
+    if wealth_sources and set(wealth_sources.values()) == {"SoChain"}:
+        snapshot["source"] = "SoChain"
+        snapshot["wealthSource"] = "SoChain"
+    elif "SoChain" in wealth_sources.values():
+        snapshot["wealthSource"] = "SoChain"
+    else:
+        snapshot["wealthSource"] = "BitInfoCharts"
+
+    has_value = any(snapshot.get(key) is not None for key in (
+        *_WEALTH_KEYS, "hash_rate_zhs", "active_addresses_24h", "top100_btc",
+    ))
+    if not has_value:
+        snapshot["fromCache"] = False
+        snapshot["error"] = snapshot.get("error") or bitinfo_error or "holder shares unavailable"
+        return snapshot
     cache_set(cache_key, snapshot)
     return {**snapshot, "fromCache": False}
 
@@ -823,15 +962,31 @@ def fetch_coingecko_dominance(*, refresh: bool = False) -> dict[str, Any]:
         if cached is not None:
             return {**cached, "fromCache": True}
 
-    raw = fetch_json("https://api.coingecko.com/api/v3/global", timeout=30)
-    pct = raw.get("data", {}).get("market_cap_percentage", {}).get("btc")
+    pct = None
+    source = "CoinGecko"
+    error = None
+    try:
+        raw = fetch_json("https://api.coingecko.com/api/v3/global", timeout=20)
+        pct = raw.get("data", {}).get("market_cap_percentage", {}).get("btc")
+    except Exception as exc:
+        error = f"coingecko: {exc}"
+    if pct is None:
+        try:
+            raw = fetch_json("https://api.coinpaprika.com/v1/global", timeout=20)
+            pct = raw.get("bitcoin_dominance_percentage")
+            source = "CoinPaprika"
+            error = None
+        except Exception as exc:
+            error = f"{error or 'coingecko failed'}; coinpaprika: {exc}"
     payload = {
         "value": float(pct) if pct is not None else None,
-        "source": "CoinGecko",
+        "source": source,
         "fetchedAt": _now_iso(),
         "fromCache": False,
+        "error": error,
     }
-    cache_set(cache_key, payload)
+    if payload["value"] is not None:
+        cache_set(cache_key, payload)
     return payload
 
 

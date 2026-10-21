@@ -97,7 +97,11 @@ def read_series_cached(metric_id: str, *, ttl: int) -> dict[str, Any] | None:
 
 def write_series(metric_id: str, payload: dict[str, Any], *, ttl: int | None = None) -> bool:
     body = _series_body(metric_id, payload)
-    cache_ttl = ttl if ttl is not None else int(os.environ.get("CACHE_TTL_MACRO", "86400"))
+    if ttl is not None:
+        cache_ttl = ttl
+    else:
+        raw_ttl = (os.environ.get("CACHE_TTL_MACRO") or "").strip()
+        cache_ttl = int(raw_ttl) if raw_ttl.isdigit() else 86400
     sync_series_to_cache(metric_id, body, ttl=cache_ttl)
 
     if not _disk_ok():

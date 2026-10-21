@@ -1401,7 +1401,10 @@ def _question_tokens(question: str) -> set[str]:
 def _strike_values(question: str) -> set[int]:
     strikes: set[int] = set()
     for m in re.finditer(r"\$?\s*([\d,]+)\s*(k|000)?", question, re.I):
-        num = int(m.group(1).replace(",", ""))
+        digits = (m.group(1) or "").replace(",", "").strip()
+        if not digits or not digits.isdigit():
+            continue
+        num = int(digits)
         suffix = (m.group(2) or "").lower()
         if suffix in ("k", "000") or num < 1000:
             num = num * 1000 if num < 1000 else num
