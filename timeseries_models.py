@@ -1001,12 +1001,20 @@ def _statsmodels_arima_path(
     res = model.fit()
     fc = res.forecast(steps=h)
     path_log = [float(x) for x in np.asarray(fc).ravel()]
-    last = float(logp[-1])
-    path_ret = []
-    prev = last
-    for lv in path_log:
-        path_ret.append(float(lv - prev))
-        prev = float(lv)
+    # d=0 forecasts are already in the input's units. ARMA is fit on daily
+    # log returns, so differencing them again mixed a return with a price level
+    # and printed a ~1% "daily" move. Integrated models (d≥1) are log prices.
+    if int(order[1]) == 0:
+        path_ret = list(path_log)
+        series_units = "returns"
+    else:
+        last = float(logp[-1])
+        path_ret = []
+        prev = last
+        for lv in path_log:
+            path_ret.append(float(lv - prev))
+            prev = float(lv)
+        series_units = "log-price"
     params = []
     try:
         for name, val in res.params.items():
@@ -1021,6 +1029,7 @@ def _statsmodels_arima_path(
         "logLikelihood": float(res.llf) if hasattr(res, "llf") else None,
         "engine": "statsmodels-arima",
         "forecastLogp": path_log,
+        "seriesUnits": series_units,
     }
 
 
@@ -1358,8 +1367,13 @@ def _forecast_returns_path(
         if SM_AVAILABLE:
             try:
                 return _statsmodels_arima_path(rets, (1, 0, 1), h)
-            except Exception:
-                pass
+            except Exception as exc:
+                path, meta = _arma11_numpy(rets, h)
+                meta["warning"] = (
+                    f"statsmodels ARMA failed ({type(exc).__name__}: {str(exc)[:160]}) — numpy ARMA"
+                )
+                meta["fallbackReason"] = "statsmodels ARMA failed"
+                return path, meta
         return _arma11_numpy(rets, h)
 
     if model_id == "arima111":
@@ -1501,8 +1515,13 @@ def _forecast_returns_path(
     if model_id == "ll_kalman":
         try:
             return _uc_kalman_path(logp, h, "local_level")
-        except Exception:
-            return _numpy_local_level(logp, h)
+        except Exception as exc:
+            path, meta = _numpy_local_level(logp, h)
+            meta["warning"] = (
+                f"Kalman local level failed ({type(exc).__name__}: {str(exc)[:160]}) — numpy local level"
+            )
+            meta["fallbackReason"] = "kalman fit failed"
+            return path, meta
 
     if model_id == "llt_kalman":
         try:
@@ -1928,7 +1947,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v11:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v12:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:
@@ -1959,31 +1978,34 @@ def get_timeseries_suite_payload(
         want = set(models)
         catalog = [c for c in MODEL_CATALOG if c["id"] in want] or MODEL_CATALOG
 
-    results = []
-    deadline = time.time() + 48.0
+    # Fit every catalog model first. A backtest budget must not mark a model
+    # failed before it has a forecast — that is what left the last 11 models
+    # (Theta through VECM) as "suite time budget" while the first 13 ran.
+    fits: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for cat in catalog:
-        if time.time() > deadline:
-            results.append({
-                "id": cat["id"],
-                "name": cat["name"],
-                "family": cat["family"],
-                "kind": cat["kind"],
-                "status": "failed",
-                "error": "Suite time budget — forecasts for earlier models still returned",
-            })
-            continue
         fit: dict[str, Any]
         try:
             fit = _fit_model(cat, data, macro)
         except Exception as exc:
             fit = {"ok": False, "error": str(exc)[:240]}
+        fits.append((cat, fit))
 
+    bt_deadline = time.time() + 55.0
+    results = []
+    for cat, fit in fits:
         bt: dict[str, Any] = {"ok": False}
         if fit.get("ok"):
-            try:
-                bt = _backtest_model(cat["id"], data, macro)
-            except Exception as exc:
-                bt = {"ok": False, "error": str(exc)[:160]}
+            if time.time() > bt_deadline:
+                bt = {
+                    "ok": False,
+                    "skipped": True,
+                    "error": "Backtest skipped — suite time budget. The forecast above still ran.",
+                }
+            else:
+                try:
+                    bt = _backtest_model(cat["id"], data, macro)
+                except Exception as exc:
+                    bt = {"ok": False, "error": str(exc)[:160]}
 
         row = {
             "id": cat["id"],

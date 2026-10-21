@@ -800,6 +800,15 @@ function mbSeriesAvgLastDays(series, days, excludeLatest = true) {
   return vals.reduce((sum, v) => sum + v, 0) / vals.length;
 }
 
+function mbSeriesAsOf(series) {
+  if (!series?.length) return null;
+  for (let i = series.length - 1; i >= 0; i -= 1) {
+    const ms = mbSeriesPointMs(series[i]);
+    if (ms != null) return ms;
+  }
+  return null;
+}
+
 function mbSeriesLatestValue(series) {
   if (!series?.length) return null;
   for (let i = series.length - 1; i >= 0; i -= 1) {
@@ -3885,10 +3894,15 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
   const live = `Live reading: ${mbFmtValue(latest, fmt)}${trend}${trendPhrase ? ` — ${trendPhrase}` : ""}.`;
 
   switch (key) {
-    case "active_addresses":
+    case "active_addresses": {
+      const asOfMs = mbSeriesAsOf(series);
+      const lagMs = asOfMs != null ? Date.now() - asOfMs : 0;
+      const asOfLabel = asOfMs != null ? new Date(asOfMs).toISOString().slice(0, 10) : null;
+      const lead = asOfLabel && lagMs > 36 * 3600 * 1000
+        ? `As of ${asOfLabel} · source lag, not a live print. Last observation ${mbFmtValue(latest, fmt)}${trend}. `
+        : live + " ";
       return [
-        live
-        + " "
+        lead
         + (pct90 != null && pct90 >= 5
           ? "Broader base-layer participation than recent norms — supportive for adoption narratives (remember: Layer-2 activity is off-chain)."
           : pct90 != null && pct90 <= -5
@@ -3897,6 +3911,7 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
         "Practical use: treat this as a usage regime gauge, not unique users. A quiet L1 with busy fees elsewhere can still mean demand shifted to Lightning or other layers.",
         reading || "",
       ];
+    }
     case "hash_rate":
       return [
         live

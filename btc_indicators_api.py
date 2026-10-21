@@ -424,14 +424,22 @@ def _enrich_framework_snapshot_cells(cells: dict[str, dict], *, refresh: bool = 
     from btc_data.valuation_models import TAB_MODELS, _fetch_model_series, get_tab_bundle
 
     for tab, model_ids in TAB_MODELS.items():
-        bundle = get_tab_bundle(tab, refresh=refresh) if refresh else None
+        bundle = None
+        if refresh:
+            try:
+                bundle = get_tab_bundle(tab, refresh=refresh)
+            except Exception:
+                bundle = None
         for model_id in model_ids:
             if not _cell_value_missing(model_id, cells.get(model_id)):
                 continue
             meta = INDICATORS.get(model_id, {})
             data: dict[str, Any] = {}
             if refresh:
-                data = _fetch_model_series(model_id, refresh=True)
+                try:
+                    data = _fetch_model_series(model_id, refresh=True)
+                except Exception as exc:
+                    data = {"series": [], "error": str(exc)[:200]}
             elif bundle:
                 data = (bundle.get("charts") or {}).get(model_id) or {}
             if not data.get("series") and not refresh:

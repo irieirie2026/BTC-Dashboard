@@ -170,15 +170,22 @@ function updateDepth(data) {
     formatPrice(spread) + " (" + spreadPct.toFixed(4) + "%)";
   $("book-mid").textContent = formatPrice(mid);
   const bookVenue = data?.venue ? String(data.venue) : "";
+  const bookWhen = data?.fetchedAt ? String(data.fetchedAt).replace("T", " ").replace(".000Z", "Z") : "";
   const ladderMeta = document.getElementById("book-ladder-meta");
   if (ladderMeta) {
-    ladderMeta.textContent = bookVenue ? `Depth · 20 levels · ${bookVenue}` : "Depth · 20 levels";
+    ladderMeta.textContent = [
+      "Depth · 20 levels",
+      bookVenue || null,
+      bookWhen || null,
+    ].filter(Boolean).join(" · ");
   }
   const depthMeta = document.getElementById("book-depth-meta");
   if (depthMeta) {
-    depthMeta.textContent = bookVenue
-      ? `Cumulative volume · 20 levels · ${bookVenue}`
-      : "Cumulative volume · 20 levels";
+    depthMeta.textContent = [
+      "Cumulative volume · 20 levels",
+      bookVenue || null,
+      bookWhen || null,
+    ].filter(Boolean).join(" · ");
   }
   $("spread-bid").textContent = formatPrice(bestBid);
   $("spread-ask").textContent = formatPrice(bestAsk);
@@ -783,13 +790,13 @@ function perpBundleFromSnapshot(perp) {
     },
     sentimentItems: [
       {
-        label: "Open Interest",
+        label: venue + " open interest",
         helpKey: "open-interest",
         value: perp.openInterest != null ? formatBtc(perp.openInterest) : "—",
         sub: venue + " swap",
       },
       {
-        label: "Funding 8h",
+        label: venue + " funding 8h",
         helpKey: "funding-rate",
         value: perp.fundingRate != null ? formatFundingRate(perp.fundingRate) : "—",
         sub: venue,
@@ -955,6 +962,7 @@ function applySpotBundle(bundle) {
     bids: (depth?.bids || []).slice(0, 20),
     asks: (depth?.asks || []).slice(0, 20),
     venue: bundle.depthVenue || depth?.venue || null,
+    fetchedAt: depth?.fetchedAt || bundle.fetchedAt || null,
   });
   if (bundle.depthVenue) rememberBookAnchor(depth?.bids?.[0]?.[0], depth?.asks?.[0]?.[0], bundle.depthVenue);
 }
@@ -1063,6 +1071,7 @@ async function refreshProxiedDepth() {
       bids: (aligned.bids || []).slice(0, 20),
       asks: (aligned.asks || []).slice(0, 20),
       venue: depth.venue,
+      fetchedAt: depth.fetchedAt || null,
     });
     rememberBookAnchor(aligned.bids?.[0]?.[0], aligned.asks?.[0]?.[0], depth.venue);
   } catch (_) {

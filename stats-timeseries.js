@@ -897,11 +897,20 @@ function tsBuildCommentary(suite) {
       `macro (SPX/DXY) <strong>${suite.macroAvailable ? "yes" : "no"}</strong>` +
       `${suite.fromCache ? " · cached" : " · fresh"}.`,
   );
+  const failBits = failed.map((m) => {
+    const why = m.error || m.fallbackReason || m.warning || "no error text";
+    return `${tsEscape(m.name)}: ${tsEscape(why)}`;
+  });
+  const fell = ok.filter((m) => m.fallbackReason || (m.warning && /fallback|not installed|failed/i.test(String(m.warning))));
+  const fallBits = fell.map((m) => {
+    const why = m.fallbackReason || m.warning || m.error || "fallback";
+    return `${tsEscape(m.name)}: ${tsEscape(why)}`;
+  });
   lines.push(
     `<strong>${ok.length}</strong>/${models.length} models ok` +
-      (failed.length
-        ? `; failed: ${failed.map((m) => tsEscape(m.name)).join(", ")}.`
-        : "."),
+      (failBits.length ? `. Failed — ${failBits.join("; ")}` : "") +
+      (fallBits.length ? `. Fallback — ${fallBits.join("; ")}` : "") +
+      ".",
   );
   {
     const markName = suite.selection?.selectedName || s.bestModelName;

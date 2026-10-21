@@ -465,15 +465,28 @@ function volCachedDvol() {
   }
 }
 
+function volTerm30FromSuite(suite) {
+  if (!suite) return null;
+  const s = suite.summary || {};
+  const mark = (suite.models || []).find((m) => m.id === (s.markModelId || suite.bestByQlike));
+  const derived = volMarkTermRv(mark || {}, s);
+  const term30 = derived.term30;
+  if (term30 != null && Number.isFinite(Number(term30))) return Number(term30);
+  if (s.forecastTerm30d != null && Number.isFinite(Number(s.forecastTerm30d))) return Number(s.forecastTerm30d);
+  if (s.forecast30d != null && Number.isFinite(Number(s.forecast30d))) return Number(s.forecast30d);
+  return null;
+}
+
 function volPaintDvolGap(dvolDecimal) {
-  if (dvolDecimal == null || !volSuite) return;
+  const dvol = dvolDecimal != null && Number.isFinite(Number(dvolDecimal)) ? Number(dvolDecimal) : volCachedDvol();
+  if (dvol == null || !volSuite) return;
+  const dec = dvol > 3 ? dvol / 100 : dvol;
+  const term30 = volTerm30FromSuite(volSuite);
+  if (term30 == null) return;
+  const gap = dec - term30;
   const node = volEl("vol-kpi-ivgap");
-  if (node && node.textContent && node.textContent !== "—") return;
-  const s = volSuite.summary || {};
-  const mark = (volSuite.models || []).find((m) => m.id === (s.markModelId || volSuite.bestByQlike));
-  const { term30 } = volMarkTermRv(mark || {}, s);
-  if (term30 == null || !Number.isFinite(Number(term30))) return;
-  const gap = Number(dvolDecimal) - Number(term30);
+  const current = (node?.textContent || "").trim();
+  if (current && current !== "—" && !current.startsWith("—")) return;
   if (node) node.textContent = `— / ${volFmtPct(gap, 1)}`;
   const sub = volEl("vol-kpi-ivgap-sub");
   if (sub) sub.textContent = "DVOL − 30d term RV";
@@ -600,7 +613,9 @@ function volRenderTable(suite) {
       return `<tr class="vol-row${sel}${best}" data-vol-id="${volEscape(m.id)}" tabindex="0" role="button">
         <td class="vol-td-text vol-td-model">${volEscape(m.name)}</td>
         <td class="vol-td-text">${volEscape(m.family)}</td>
-        <td class="mono vol-td-num"${m.warning ? ` title="${volEscape(m.warning)}"` : ""}>${volFmtNum(m.logLikelihood, 4)}</td>
+        <td class="mono vol-td-num"${m.warning ? ` title="${volEscape(m.warning)}"` : ""}>${volFmtNum(m.logLikelihood, 4)}${
+          m.warning ? `<span class="vol-cell-note">${volEscape(m.warning)}</span>` : ""
+        }</td>
         <td class="mono vol-td-num">${aicCell}</td>
         <td class="mono vol-td-num">${bicCell}</td>
         <td class="mono vol-td-num">${qlikeFmt(m)}</td>

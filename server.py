@@ -1017,9 +1017,16 @@ def _fetch_options_payload(_html=""):
 def get_options_payload(*, refresh=False):
     cached = _cget("options", CACHE_TTL, refresh=refresh)
     if cached is not None:
-        return cached
+        out = dict(cached)
+        age = _iso_age_sec(out.get("fetchedAt"))
+        out["ageSec"] = age
+        out["stale"] = age is None or age > 120
+        return out
     data = _fetch_options_payload()
     _cset("options", data, CACHE_TTL)
+    data = dict(data)
+    data["ageSec"] = 0
+    data["stale"] = False
     return data
 
 
@@ -4230,6 +4237,70 @@ def _fetch_gate_perp():
     }
 
 
+_VENUE_LABELS = {
+    "_fetch_binance_spot": ("Binance", "BTC/USDT", "spot"),
+    "_fetch_coinbase_spot": ("Coinbase", "BTC/USD", "spot"),
+    "_fetch_kraken_spot": ("Kraken", "BTC/USD", "spot"),
+    "_fetch_okx_spot": ("OKX", "BTC/USDT", "spot"),
+    "_fetch_bybit_spot": ("Bybit", "BTC/USDT", "spot"),
+    "_fetch_bitfinex_spot": ("Bitfinex", "BTC/USD", "spot"),
+    "_fetch_kucoin_spot": ("KuCoin", "BTC/USDT", "spot"),
+    "_fetch_htx_spot": ("HTX", "BTC/USDT", "spot"),
+    "_fetch_gemini_spot": ("Gemini", "BTC/USD", "spot"),
+    "_fetch_bitstamp_spot": ("Bitstamp", "BTC/USD", "spot"),
+    "_fetch_bitget_spot": ("Bitget", "BTC/USDT", "spot"),
+    "_fetch_mexc_spot": ("MEXC", "BTC/USDT", "spot"),
+    "_fetch_cryptocom_spot": ("Crypto.com", "BTC/USDT", "spot"),
+    "_fetch_gate_spot": ("Gate.io", "BTC/USDT", "spot"),
+    "_fetch_binance_perp": ("Binance", "BTC/USDT Perp", "perp"),
+    "_fetch_okx_perp": ("OKX", "BTC/USDT Swap", "perp"),
+    "_fetch_bybit_perp": ("Bybit", "BTC/USDT Perp", "perp"),
+    "_fetch_kucoin_perp": ("KuCoin", "BTC/USDT Perp", "perp"),
+    "_fetch_htx_perp": ("HTX", "BTC/USDT Perp", "perp"),
+    "_fetch_bitget_perp": ("Bitget", "BTC/USDT Perp", "perp"),
+    "_fetch_deribit_perp": ("Deribit", "BTC-PERPETUAL", "perp"),
+    "_fetch_mexc_perp": ("MEXC", "BTC/USDT Perp", "perp"),
+    "_fetch_gate_perp": ("Gate.io", "BTC/USDT Perp", "perp"),
+}
+
+
+def _http_status(exc):
+    code = getattr(exc, "code", None)
+    if code is None:
+        resp = getattr(exc, "response", None)
+        code = getattr(resp, "status_code", None) if resp is not None else None
+    try:
+        if code is not None:
+            return int(code)
+    except (TypeError, ValueError):
+        pass
+    text = str(exc)
+    for token in ("451", "403"):
+        if token in text:
+            return int(token)
+    return None
+
+
+def _geo_blocked(exc):
+    """451/403 from this host. An SSL failure is not a geo-block."""
+    return _http_status(exc) in (403, 451)
+
+
+def _geo_placeholder(fn):
+    meta = _VENUE_LABELS.get(getattr(fn, "__name__", ""))
+    if not meta:
+        return None
+    exchange, pair, kind = meta
+    return {
+        "exchange": exchange,
+        "pair": pair,
+        "type": kind,
+        "price": None,
+        "status": "UNAVAILABLE (geo-blocked)",
+        "unavailable": True,
+    }
+
+
 def _run_venue_fetchers(fetchers, timeout=10):
     rows = []
     errors = []
@@ -4242,7 +4313,14 @@ def _run_venue_fetchers(fetchers, timeout=10):
                 row = fut.result()
                 if row and row.get("price") is not None:
                     rows.append(row)
+                elif row and row.get("unavailable"):
+                    rows.append(row)
             except Exception as exc:
+                if _geo_blocked(exc):
+                    placeholder = _geo_placeholder(fn)
+                    if placeholder:
+                        rows.append(placeholder)
+                        continue
                 errors.append(f"{fn.__name__}: {exc}")
     except FutTimeout:
         for fut, fn in futs.items():
@@ -4254,7 +4332,7 @@ def _run_venue_fetchers(fetchers, timeout=10):
 
 
 def _fetch_all_exchange_data(refresh=False):
-    key = "exchanges:raw:v4"
+    key = "exchanges:raw:v5"
     if not refresh:
         cached = _cget(key, CACHE_TTL)
         if cached is not None:
@@ -4352,7 +4430,11 @@ def _build_exchanges_chart(section, table):
         }
 
     if section == "spot":
-        rows = sorted(table, key=lambda x: x.get("volume") or 0, reverse=True)[:10]
+        rows = sorted(
+            [r for r in table if not r.get("unavailable")],
+            key=lambda x: x.get("volume") or 0,
+            reverse=True,
+        )[:10]
         return {
             "title": "Spot 24h Volume",
             "signed": False,
@@ -4368,7 +4450,7 @@ def _build_exchanges_chart(section, table):
 
     if section == "perp":
         rows = sorted(
-            [r for r in table if r.get("fundingPct") is not None],
+            [r for r in table if r.get("fundingPct") is not None and not r.get("unavailable")],
             key=lambda x: abs(x.get("fundingPct") or 0),
             reverse=True,
         )[:8]
@@ -4385,7 +4467,11 @@ def _build_exchanges_chart(section, table):
             ],
         }
 
-    rows = sorted(table, key=lambda x: x.get("sharePct") or 0, reverse=True)[:10]
+    rows = sorted(
+        [r for r in table if not r.get("unavailable") and r.get("sharePct") is not None],
+        key=lambda x: x.get("sharePct") or 0,
+        reverse=True,
+    )[:10]
     return {
         "title": "Volume Share",
         "signed": False,
@@ -4404,20 +4490,29 @@ def _exchange_error_names(errors):
     return ", ".join(e.split(":", 1)[0].removeprefix("_fetch_") for e in (errors or [])) or "none"
 
 
+def _live_rows(rows):
+    return [r for r in (rows or []) if r.get("price") is not None and not r.get("unavailable")]
+
+
 def _build_exchanges_overview(spot, perp, errors, spot_errors=None, perp_errors=None):
-    prices = [r["price"] for r in spot if r.get("price") is not None]
-    med = _median(prices)
-    high_row = max(spot, key=lambda r: r.get("price") or 0) if spot else None
-    low_row = min(spot, key=lambda r: r.get("price") or float("inf")) if spot else None
+    from market_feed import spot_median_from_rows
+
+    live = _live_rows(spot)
+    comp = spot_median_from_rows(live)
+    med = comp.get("median")
+    high_row = max(live, key=lambda r: r.get("price") or 0) if live else None
+    low_row = min(live, key=lambda r: r.get("price") or float("inf")) if live else None
     spread = None
     if high_row and low_row and high_row.get("price") and low_row.get("price"):
         spread = high_row["price"] - low_row["price"]
-    total_vol = sum(r.get("volume") or 0 for r in spot)
+    total_vol = sum(r.get("volume") or 0 for r in live)
 
     table = []
-    for r in sorted(spot, key=lambda x: x.get("price") or 0, reverse=True):
+    ordered = sorted(live, key=lambda x: x.get("price") or 0, reverse=True)
+    ordered += [r for r in spot if r.get("unavailable")]
+    for r in ordered:
         dist = None
-        if med and r.get("price") is not None:
+        if med and r.get("price") is not None and not r.get("unavailable"):
             dist = (r["price"] - med) / med * 100
         table.append({
             "exchange": r.get("exchange"),
@@ -4427,10 +4522,16 @@ def _build_exchanges_overview(spot, perp, errors, spot_errors=None, perp_errors=
             "volume": r.get("volume"),
             "spreadVsMedian": dist,
             "type": "spot",
+            "status": r.get("status"),
+            "unavailable": bool(r.get("unavailable")),
         })
 
     heroes = [
-        {"name": "Median Spot", "value": f"${med:,.2f}" if med else "—", "sub": f"{len(spot)} venues"},
+        {
+            "name": "Median Spot",
+            "value": f"${med:,.2f}" if med else "—",
+            "sub": comp.get("label") or f"{len(live)} venues",
+        },
         {"name": "Cross Spread", "value": f"${spread:,.2f}" if spread is not None else "—", "sub": "High − low spot"},
         {"name": "Leader", "value": high_row.get("exchange") if high_row else "—", "sub": f"${high_row.get('price'):,.2f}" if high_row and high_row.get("price") else ""},
         {"name": "24h Spot Vol", "value": _fmt_usd(total_vol), "sub": "Quote volume sum"},
@@ -4441,9 +4542,9 @@ def _build_exchanges_overview(spot, perp, errors, spot_errors=None, perp_errors=
         lines.append("No exchange spot data available. Public APIs may be temporarily unreachable.")
     else:
         lines.append(
-            f"Cross-exchange spot: {len(spot)} venues reporting · median ${med:,.2f} · "
+            f"Cross-exchange spot: {comp.get('label') or str(len(live)) + ' venues'} · "
             f"spread ${spread:,.2f} ({(spread / med * 100):.3f}% of median)." if spread and med else
-            f"Cross-exchange spot: {len(spot)} venues reporting.",
+            f"Cross-exchange spot: {len(live)} live venues.",
         )
         if high_row and low_row:
             lines.append(
@@ -4470,8 +4571,11 @@ def _build_exchanges_overview(spot, perp, errors, spot_errors=None, perp_errors=
 
 
 def _build_exchanges_spot(spot, errors):
+    live = _live_rows(spot)
     table = []
-    for r in sorted(spot, key=lambda x: x.get("volume") or 0, reverse=True):
+    ordered = sorted(live, key=lambda x: x.get("volume") or 0, reverse=True)
+    ordered += [r for r in spot if r.get("unavailable")]
+    for r in ordered:
         spread_ba = None
         if r.get("bid") and r.get("ask"):
             spread_ba = r["ask"] - r["bid"]
@@ -4487,12 +4591,14 @@ def _build_exchanges_spot(spot, errors):
             "low": r.get("low"),
             "volume": r.get("volume"),
             "type": "spot",
+            "status": r.get("status"),
+            "unavailable": bool(r.get("unavailable")),
         })
 
-    total_vol = sum(r.get("volume") or 0 for r in spot)
+    total_vol = sum(r.get("volume") or 0 for r in live)
     top = table[0] if table else None
     heroes = [
-        {"name": "Venues", "value": len(spot), "sub": "Spot BTC pairs"},
+        {"name": "Venues", "value": len(live), "sub": "Live spot BTC pairs"},
         {"name": "Top Volume", "value": top.get("exchange") if top else "—", "sub": _fmt_usd(top.get("volume")) if top else ""},
         {"name": "Aggregate Vol", "value": _fmt_usd(total_vol), "sub": "24h quote vol"},
     ]
@@ -4510,7 +4616,7 @@ def _build_exchanges_spot(spot, errors):
     if not spot:
         lines.append("Spot venue data unavailable.")
     else:
-        lines.append(f"Spot liquidity across {len(spot)} exchanges · aggregate 24h volume {_fmt_usd(total_vol)}.")
+        lines.append(f"Spot liquidity across {len(live)} live exchanges · aggregate 24h volume {_fmt_usd(total_vol)}.")
         if top:
             lines.append(f"Highest spot volume: {top.get('exchange')} ({_fmt_usd(top.get('volume'))}).")
     if errors:
@@ -4520,8 +4626,9 @@ def _build_exchanges_spot(spot, errors):
 
 
 def _build_exchanges_perp(perp, errors):
+    live = _live_rows(perp)
     table = []
-    for r in perp:
+    for r in list(live) + [row for row in perp if row.get("unavailable")]:
         fr = r.get("fundingRate")
         fr_pct = fr * 100 if fr is not None else None
         table.append({
@@ -4536,21 +4643,23 @@ def _build_exchanges_perp(perp, errors):
             "fundingPct": fr_pct,
             "volume": r.get("volume"),
             "type": "perp",
+            "status": r.get("status"),
+            "unavailable": bool(r.get("unavailable")),
         })
 
-    pos = [p for p in perp if (p.get("fundingRate") or 0) > 0]
+    pos = [p for p in live if (p.get("fundingRate") or 0) > 0]
     avg_fund = None
-    rates = [p["fundingRate"] for p in perp if p.get("fundingRate") is not None]
+    rates = [p["fundingRate"] for p in live if p.get("fundingRate") is not None]
     if rates:
         avg_fund = sum(rates) / len(rates)
 
     heroes = [
-        {"name": "Perp Venues", "value": len(perp), "sub": "BTC linear swaps"},
+        {"name": "Perp Venues", "value": len(live), "sub": "Live BTC linear swaps"},
         {"name": "Avg Funding", "value": f"{avg_fund * 100:.4f}%" if avg_fund is not None else "—", "sub": "Last published rate"},
-        {"name": "Positive Funding", "value": f"{len(pos)}/{len(perp)}" if perp else "—", "sub": "Longs pay shorts"},
+        {"name": "Positive Funding", "value": f"{len(pos)}/{len(live)}" if live else "—", "sub": "Longs pay shorts"},
     ]
-    if perp:
-        extreme = max(perp, key=lambda p: abs(p.get("fundingRate") or 0))
+    if live:
+        extreme = max(live, key=lambda p: abs(p.get("fundingRate") or 0))
         rate = extreme.get("fundingRate") or 0
         # 0.05% per interval. A normal 0.005% print is the highest rate, not an extreme.
         hero_name = "Extreme Funding" if abs(rate) >= 0.0005 else "Highest Funding"
@@ -4561,15 +4670,15 @@ def _build_exchanges_perp(perp, errors):
         })
 
     lines = []
-    if not perp:
+    if not live:
         lines.append("No perp venue data available.")
     else:
         lines.append(
-            f"Perp snapshot: {len(perp)} venues · average funding "
+            f"Perp snapshot: {len(live)} live venues · average funding "
             f"{avg_fund * 100:.4f}%." if avg_fund is not None else
-            f"Perp snapshot: {len(perp)} venues.",
+            f"Perp snapshot: {len(live)} live venues.",
         )
-        for row in sorted(perp, key=lambda x: abs(x.get("fundingRate") or 0), reverse=True)[:2]:
+        for row in sorted(live, key=lambda x: abs(x.get("fundingRate") or 0), reverse=True)[:2]:
             fr = row.get("fundingRate")
             if fr is not None:
                 lines.append(
@@ -4589,8 +4698,10 @@ def _build_exchanges_volume(spot, perp, errors):
     for r in perp:
         combined.append({**r, "market": "Perp"})
 
-    total = sum(r.get("volume") or 0 for r in combined)
-    ranked = sorted(combined, key=lambda x: x.get("volume") or 0, reverse=True)
+    live_combined = [r for r in combined if not r.get("unavailable") and r.get("price") is not None]
+    blocked = [r for r in combined if r.get("unavailable")]
+    total = sum(r.get("volume") or 0 for r in live_combined)
+    ranked = sorted(live_combined, key=lambda x: x.get("volume") or 0, reverse=True)
 
     table = []
     for r in ranked:
@@ -4604,6 +4715,19 @@ def _build_exchanges_volume(spot, perp, errors):
             "sharePct": share,
             "price": r.get("price"),
             "type": r.get("type"),
+            "unavailable": False,
+        })
+    for r in blocked:
+        table.append({
+            "exchange": r.get("exchange"),
+            "pair": r.get("pair"),
+            "market": r.get("market"),
+            "volume": None,
+            "sharePct": None,
+            "price": None,
+            "type": r.get("type"),
+            "status": r.get("status") or "UNAVAILABLE (geo-blocked)",
+            "unavailable": True,
         })
 
     heroes = []
@@ -4658,6 +4782,8 @@ def _fetch_exchanges_section(section, *, refresh=False):
     raw = _fetch_all_exchange_data(refresh=refresh)
     spot = raw.get("spot") or []
     perp = raw.get("perp") or []
+    live_spot = _live_rows(spot)
+    live_perp = _live_rows(perp)
     errors = raw.get("errors") or []
     spot_errors = raw.get("spotErrors") if raw.get("spotErrors") is not None else errors
     perp_errors = raw.get("perpErrors") if raw.get("perpErrors") is not None else errors
@@ -4685,7 +4811,10 @@ def _fetch_exchanges_section(section, *, refresh=False):
         "columns": columns,
         "chart": _build_exchanges_chart(section, table),
         "commentary": commentary,
-        "venueCount": len(spot) + len(perp),
+        "venueCount": len(live_spot) if section in ("overview", "spot") else len(live_perp),
+        "spotVenueCount": len(live_spot),
+        "perpVenueCount": len(live_perp),
+        "venueCountLabel": f"{len(live_spot)} spot · {len(live_perp)} perp",
         "source": "Public exchange APIs · live scaffold",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "errors": errors,
@@ -4915,11 +5044,44 @@ if __name__ == "__main__":
             note_whale_warm_start()
             try:
                 get_misc_whales_payload(refresh=True, from_warm=True)
-                print("Whale cache warmed")
+                print("Whale cache warmed", flush=True)
             except Exception as exc:
-                print(f"Whale cache warm skipped: {exc}")
+                print(f"Whale cache warm skipped: {exc}", flush=True)
             finally:
                 note_whale_warm_done()
+            try:
+                from macro_data.misc_metrics import get_misc_metrics_payload
+
+                get_misc_metrics_payload(refresh=True)
+                print("Metrics cache warmed", flush=True)
+            except Exception as exc:
+                print(f"Metrics cache warm skipped: {exc}", flush=True)
+            try:
+                from btc_indicators_api import get_snapshot_payload
+
+                get_snapshot_payload(refresh=True)
+                print("Snapshot cache warmed", flush=True)
+            except Exception as exc:
+                print(f"Snapshot cache warm skipped: {exc}", flush=True)
+            try:
+                get_options_payload(refresh=True)
+                print("Options cache warmed", flush=True)
+            except Exception as exc:
+                print(f"Options cache warm skipped: {exc}", flush=True)
+            try:
+                from market_feed import get_futures_snapshot, get_perp_snapshot
+
+                get_perp_snapshot(refresh=True)
+                print("Perp cache warmed", flush=True)
+                get_futures_snapshot(refresh=True)
+                print("Futures cache warmed", flush=True)
+            except Exception as exc:
+                print(f"Futures cache warm skipped: {exc}", flush=True)
+            try:
+                _write_all_exchange_sections()
+                print("Exchanges cache warmed", flush=True)
+            except Exception as exc:
+                print(f"Exchanges cache warm skipped: {exc}", flush=True)
             if first:
                 _warm_macro_caches()
                 _warm_btc_series()

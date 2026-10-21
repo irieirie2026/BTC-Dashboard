@@ -54,6 +54,11 @@ function isExNumericCol(col) {
 }
 
 function fmtExCell(col, row) {
+  if (row?.unavailable) {
+    if (col === "price") return row.status || "UNAVAILABLE (geo-blocked)";
+    if (col === "exchange" || col === "pair" || col === "market") return row[col] || "—";
+    return "—";
+  }
   const v = row[col];
   if (v == null || v === "") return "—";
   if (col === "price" || col === "bid" || col === "ask" || col === "high" || col === "low" || col === "spread") {

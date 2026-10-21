@@ -58,7 +58,10 @@ function heroDisplay(hero) {
 }
 
 async function fetchNewsSection(section) {
-  const res = await fetch(`/api/news/${section}`);
+  const res = await fetch(`/api/news/${section}`, {
+    cache: "no-store",
+    signal: AbortSignal.timeout(20000),
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || `News ${section} ${res.status}`);
@@ -186,6 +189,24 @@ async function loadNewsSection(section) {
     });
   } catch (err) {
     console.error("News load failed:", section, err);
+    const failedAt = newsCache[section]?.fetchedAt || null;
+    const failedText =
+      window.DashboardSWR?.formatPanelMeta({
+        fetchedAt: failedAt,
+        source: "RSS",
+        stale: !!failedAt,
+        refreshFailed: true,
+        state: failedAt ? undefined : "error",
+      }) || "update failed";
+    const updateEl = nwEl(`news-${section}-update`);
+    if (updateEl) updateEl.textContent = failedText;
+    window.DashboardSWR?.setHeaderStamp?.("news", {
+      fetchedAt: failedAt,
+      source: "RSS",
+      stale: !!failedAt,
+      refreshFailed: !!failedAt,
+      state: failedAt ? undefined : "error",
+    });
     const commentary = nwEl(`news-${section}-commentary`);
     if (commentary && !newsCache[section]) {
       commentary.innerHTML = `<p>Failed to load ${section} news. Is server.py running?</p>`;

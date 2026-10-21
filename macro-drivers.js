@@ -526,9 +526,11 @@ function mdRenderUsOverview(data) {
   }
   body.innerHTML = rows
     .map((row) => {
-      const val =
-        row.value == null || Number.isNaN(Number(row.value)) ? "—" : Number(row.value).toFixed(2);
-      return `<tr><td>${row.label || row.id || "—"}</td><td class="mono">${row.id || "—"}</td><td class="mono">${val}</td><td class="mono">${row.date || "—"}</td><td>${row.unit || "%"}</td></tr>`;
+      const missing = row.value == null || Number.isNaN(Number(row.value));
+      const val = missing ? (row.status || "NO DATA") : Number(row.value).toFixed(2);
+      const asOf = missing ? (row.reason || "NO DATA") : (row.date || "—");
+      const name = row.id ? `${row.label || row.id} · ${row.id}` : (row.label || "—");
+      return `<tr><td>${name}</td><td class="mono">${row.id || "—"}</td><td class="mono">${val}</td><td class="mono">${asOf}</td><td>${row.unit || "%"}</td></tr>`;
     })
     .join("");
 }

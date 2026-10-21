@@ -26,6 +26,17 @@ function formatFetchedTime(fetchedAt) {
   return d.toLocaleTimeString("en-US", { hour12: false });
 }
 
+function formatFetchedAge(fetchedAt) {
+  if (!fetchedAt) return "";
+  const d = new Date(fetchedAt);
+  if (Number.isNaN(d.getTime())) return "";
+  const sec = Math.max(0, Math.round((Date.now() - d.getTime()) / 1000));
+  if (sec < 90) return "";
+  if (sec < 3600) return `${Math.max(1, Math.round(sec / 60))} min old`;
+  if (sec < 86400) return `${Math.max(1, Math.round(sec / 3600))} h old`;
+  return `${Math.max(1, Math.round(sec / 86400))} d old`;
+}
+
 function loadPersisted(key) {
   try {
     const raw = localStorage.getItem(SWR_PERSIST_PREFIX + key);
@@ -85,12 +96,16 @@ function persistPayload(key, data, fetchedAt) {
 
 function formatPanelMeta(opts = {}) {
   const time = formatFetchedTime(opts.fetchedAt);
+  const age = formatFetchedAge(opts.fetchedAt);
+  const ageBit = age ? ` · ${age}` : "";
+  const staleBit = age ? " · STALE" : "";
   const source = opts.source ? ` · ${opts.source}` : "";
-  if (opts.refreshFailed) return `Saved ${time}${source} · update failed`;
-  if (opts.stale && opts.refreshing) return `Saved ${time}${source} · updating…`;
+  if (opts.refreshFailed) return `Saved ${time}${ageBit}${staleBit}${source} · update failed`;
+  if (opts.stale && opts.refreshing) return `Saved ${time}${ageBit}${staleBit}${source} · updating…`;
   if (opts.state === "loading") return `Loading…${source}`;
   if (opts.state === "error") return `Unavailable${source}`;
-  if (opts.fromCache) return `Cached ${time}${source}`;
+  if (opts.fromCache || opts.stale) return `Cached ${time}${ageBit}${staleBit}${source}`;
+  if (age) return `Updated ${time}${ageBit} · STALE${source}`;
   return `Updated ${time}${source}`;
 }
 

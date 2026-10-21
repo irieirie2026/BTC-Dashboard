@@ -382,26 +382,30 @@ def _fred_display_points(obs: list[tuple[str, float]], transform: str) -> list[d
 
 def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
     """US macro drivers from the public FRED CSV (no API key)."""
-    from concurrent.futures import ThreadPoolExecutor
+    from macro_data.fred_csv import fetch_fred_csv, fred_last_error
 
-    from macro_data.fred_csv import fetch_fred_csv
-
-    ids = [spec["id"] for spec in _US_FRED_SPECS]
+    # One series at a time. A parallel fan-out is what this host resets.
     fetched: dict[str, list[tuple[str, float]]] = {}
-    with ThreadPoolExecutor(max_workers=len(ids)) as pool:
-        for sid, obs in zip(ids, pool.map(lambda sid: fetch_fred_csv(sid, refresh=refresh), ids)):
-            fetched[sid] = obs or []
+    for spec in _US_FRED_SPECS:
+        sid = spec["id"]
+        try:
+            fetched[sid] = fetch_fred_csv(sid, refresh=refresh) or []
+        except Exception:
+            fetched[sid] = []
 
     series: dict[str, Any] = {}
     latest: dict[str, Any] = {}
     for spec in _US_FRED_SPECS:
         points = _fred_display_points(fetched.get(spec["id"]) or [], spec["transform"])
+        reason = None if points else (fred_last_error(spec["id"]) or "FRED returned no observations")
         series[spec["id"]] = {
             "id": spec["id"],
             "label": spec["label"],
             "unit": spec["unit"],
             "transform": spec["transform"],
             "points": points,
+            "status": "ok" if points else "NO DATA",
+            "reason": reason,
         }
         last = points[-1] if points else None
         latest[spec["id"]] = {
@@ -410,12 +414,23 @@ def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
             "unit": spec["unit"],
             "date": last["date"] if last else None,
             "value": last["value"] if last else None,
+            "status": "ok" if last else "NO DATA",
+            "reason": reason,
         }
 
+    fetched_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    for spec in _US_FRED_SPECS:
+        row = latest[spec["id"]]
+        print(
+            f"FRED {spec['id']} status={row['status']} value={row['value']} "
+            f"date={row['date']} points={len(series[spec['id']]['points'])} "
+            f"reason={row['reason']}",
+            flush=True,
+        )
     return {
         "country": "US",
         "source": "FRED",
         "series": series,
         "latest": latest,
-        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "fetchedAt": fetched_at,
     }

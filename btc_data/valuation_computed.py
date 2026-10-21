@@ -43,6 +43,20 @@ def _days_since_genesis(ts: int) -> float:
     return max(1.0, (ts - PL_GENESIS_TS) / 86400.0)
 
 
+def _unix_seconds(ts) -> int | None:
+    """Accept int, float, and scientific-notation strings such as '1.6663104E9'."""
+    try:
+        n = float(ts)
+    except (TypeError, ValueError):
+        return None
+    if n != n or n <= 0:
+        return None
+    sec = int(n)
+    if sec > 10_000_000_000:
+        sec //= 1000
+    return sec
+
+
 def _sma(values: list[float | None], window: int) -> list[float | None]:
     out: list[float | None] = []
     for i in range(len(values)):
@@ -157,9 +171,10 @@ def compute_power_law(price_series: list[dict]) -> dict[str, Any]:
     for pt in price_series:
         ts = pt.get("timestamp")
         price = pt.get("value")
-        if price is None or not ts:
+        sec = _unix_seconds(ts)
+        if price is None or sec is None:
             continue
-        days = _days_since_genesis(int(ts))
+        days = _days_since_genesis(sec)
         fair = PL_A * math.pow(days, PL_N)
         ratio = float(price) / fair if fair > 0 else None
         out.append({
@@ -221,11 +236,15 @@ def compute_pi_cycle(price_series: list[dict]) -> dict[str, Any]:
 
 def compute_rainbow(price_series: list[dict]) -> dict[str, Any]:
     """Log-linear regression bands on price (educational rainbow chart)."""
-    valid = [(i, p) for i, p in enumerate(price_series) if p.get("value") and p.get("timestamp")]
+    valid = [
+        (i, p)
+        for i, p in enumerate(price_series)
+        if p.get("value") and _unix_seconds(p.get("timestamp"))
+    ]
     if len(valid) < 30:
         return series_to_chart([], source="Computed", note="Insufficient price history")
 
-    xs = [math.log(_days_since_genesis(int(p["timestamp"]))) for _, p in valid]
+    xs = [math.log(_days_since_genesis(_unix_seconds(p["timestamp"]))) for _, p in valid]
     ys = [math.log(float(p["value"])) for _, p in valid]
     n = len(xs)
     mean_x = sum(xs) / n
@@ -238,7 +257,7 @@ def compute_rainbow(price_series: list[dict]) -> dict[str, Any]:
     out: list[dict] = []
     bands: list[dict] = []
     for _, pt in valid:
-        days = _days_since_genesis(int(pt["timestamp"]))
+        days = _days_since_genesis(_unix_seconds(pt["timestamp"]))
         log_fair = a + b * math.log(days)
         fair = math.exp(log_fair)
         price = float(pt["value"])

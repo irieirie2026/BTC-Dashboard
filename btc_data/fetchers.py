@@ -577,6 +577,23 @@ def _extract_bgeometrics_value(row: dict, spec: dict[str, Any]) -> float | None:
     return None
 
 
+def _coerce_unix(ts):
+    """int(), or float() for scientific-notation stamps such as '1.6663104E9'."""
+    if ts is None or isinstance(ts, bool):
+        return ts
+    if isinstance(ts, int):
+        return ts
+    if isinstance(ts, float):
+        return int(ts)
+    text = str(ts).strip()
+    if not text:
+        return None
+    try:
+        return int(text) if text.isdigit() else int(float(text))
+    except (TypeError, ValueError):
+        return None
+
+
 def _normalize_bgeometrics(raw: Any, spec: dict[str, Any]) -> list[dict]:
     if isinstance(raw, dict):
         if raw.get("error"):
@@ -588,8 +605,7 @@ def _normalize_bgeometrics(raw: Any, spec: dict[str, Any]) -> list[dict]:
         if val is not None:
             ts = raw.get("unixTs") or raw.get("t") or raw.get("timestamp")
             date = raw.get("d") or raw.get("date")
-            if isinstance(ts, str) and ts.isdigit():
-                ts = int(ts)
+            ts = _coerce_unix(ts)
             return [{"timestamp": ts, "date": str(date or "")[:10], "value": val}]
 
     if isinstance(raw, list):
@@ -600,8 +616,7 @@ def _normalize_bgeometrics(raw: Any, spec: dict[str, Any]) -> list[dict]:
             val = _extract_bgeometrics_value(row, spec)
             ts = row.get("unixTs") or row.get("t") or row.get("timestamp")
             date = row.get("d") or row.get("date")
-            if isinstance(ts, str) and str(ts).isdigit():
-                ts = int(ts)
+            ts = _coerce_unix(ts)
             if ts is None and date:
                 try:
                     ts = int(time.mktime(time.strptime(str(date)[:10], "%Y-%m-%d")))

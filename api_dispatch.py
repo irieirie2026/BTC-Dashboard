@@ -439,9 +439,11 @@ def dispatch_api(path, query, body: dict | None = None):
             return append_events(events or [])
         days_raw = (query.get("days") or ["7"])[0]
         limit_raw = (query.get("limit") or ["2000"])[0]
+        window_raw = (query.get("window") or [None])[0]
         return get_history(
             days=int(days_raw) if str(days_raw).isdigit() else 7,
             limit=int(limit_raw) if str(limit_raw).isdigit() else 2000,
+            window=window_raw,
         )
 
     if path == "/api/cross-market/sample":

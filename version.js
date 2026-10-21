@@ -11,5 +11,6 @@
  * 1.1.0 adds the liquidations tape and repairs the r9 desks.
  * 1.1.1 repairs the r10 desks: liquidity units, snapshot cells, exchanges, and DeFi routes.
  * 1.1.2 repairs the r11 desks.
+ * 1.1.3 repairs the r12 desks.
  */
-window.APP_VERSION = "1.1.2";
+window.APP_VERSION = "1.1.3";

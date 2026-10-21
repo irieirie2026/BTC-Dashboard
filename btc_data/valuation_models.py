@@ -543,7 +543,10 @@ def get_tab_bundle(tab: str, *, refresh: bool = False) -> dict[str, Any]:
     charts: dict[str, dict] = {}
     errors: list[str] = []
     for model_id in TAB_MODELS[tab]:
-        data = _fetch_model_series(model_id, refresh=refresh)
+        try:
+            data = _fetch_model_series(model_id, refresh=refresh)
+        except Exception as exc:
+            data = {"series": [], "error": str(exc)[:200], "fetchedAt": _now_iso()}
         charts[model_id] = _chart_payload(model_id, data)
         if data.get("error") and not data.get("series"):
             errors.append(f"{model_id}: {data['error']}")

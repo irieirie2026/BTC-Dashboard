@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import time
 from datetime import datetime, timezone
 
@@ -56,6 +57,43 @@ def _prune(events: list[dict]) -> list[dict]:
     return out[-MAX_EVENTS:]
 
 
+def _coarse_z(event: dict):
+    raw = event.get("z")
+    if raw is None:
+        raw = event.get("devSigma")
+    if raw is None:
+        raw = event.get("delta")
+    try:
+        return round(float(raw), 1)
+    except (TypeError, ValueError):
+        return ""
+
+
+def _dedupe_key(event: dict) -> tuple:
+    """Same venue, type, and rounded shock inside a 5-minute bucket is one event."""
+    ts_ms = _event_ts_ms(event) or 0
+    bucket = int(ts_ms // 300_000)
+    venue = str(event.get("venue") or event.get("premiumId") or event.get("exchange") or "")
+    kind = str(event.get("type") or event.get("title") or "")
+    return (venue, kind, _coarse_z(event), bucket)
+
+
+def _parse_window(window: str | None, days: int) -> int:
+    """Honour window=7d|30d|24h and days. The store itself only keeps 30 days."""
+    if window:
+        text = str(window).strip().lower()
+        if text.endswith("h") and text[:-1].isdigit():
+            hours = max(1, min(24 * 30, int(text[:-1])))
+            return max(1, min(30, int(math.ceil(hours / 24.0))))
+        if text.endswith("d") and text[:-1].isdigit():
+            return max(1, min(30, int(text[:-1])))
+    try:
+        parsed = int(days or 7)
+    except (TypeError, ValueError):
+        parsed = 7
+    return max(1, min(30, parsed))
+
+
 def append_events(new_events: list[dict]) -> dict:
     if not new_events:
         return {"appended": 0, "total": len(_load_events())}
@@ -76,16 +114,25 @@ def append_events(new_events: list[dict]) -> dict:
     return {"appended": len(new_events), "total": len(events)}
 
 
-def get_history(*, days: int = 7, limit: int = 2000) -> dict:
-    days = max(1, min(30, int(days or 7)))
+def get_history(*, days: int = 7, limit: int = 2000, window: str | None = None) -> dict:
+    days = _parse_window(window, days)
+    # days is the time window. It is not an event cap.
     limit = max(1, min(5000, int(limit or 2000)))
     cutoff_ms = (time.time() - days * 86400) * 1000
+    if window and str(window).strip().lower().endswith("h"):
+        hours = int(str(window).strip().lower()[:-1] or "24")
+        cutoff_ms = (time.time() - max(1, hours) * 3600) * 1000
     events = _load_events()
     filtered = []
+    seen: set[tuple] = set()
     for e in reversed(events):
         ts_ms = _event_ts_ms(e)
         if ts_ms is None or ts_ms < cutoff_ms:
             continue
+        key = _dedupe_key(e)
+        if key in seen:
+            continue
+        seen.add(key)
         filtered.append(e)
         if len(filtered) >= limit:
             break
@@ -93,6 +140,7 @@ def get_history(*, days: int = 7, limit: int = 2000) -> dict:
     empty = len(filtered) == 0
     return {
         "days": days,
+        "window": window,
         "count": len(filtered),
         "events": filtered,
         "empty": empty,

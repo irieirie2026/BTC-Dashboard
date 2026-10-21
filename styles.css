@@ -14948,6 +14948,16 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   font-variant-numeric: tabular-nums;
 }
 
+.vol-cell-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: left;
+  white-space: normal;
+  color: var(--muted, #9aa3b2);
+}
+
 #vol-compare-table .vol-th-text,
 #vol-compare-table .vol-td-text,
 #vol-params-table .vol-th-text,

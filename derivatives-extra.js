@@ -142,6 +142,7 @@ function deliveryMapContract(c, index) {
     volume: c.volume,
     deliveryDate: c.deliveryDate ?? null,
     daysToExpiry: Number.isFinite(days) ? days : null,
+    venue: c.venue || null,
   };
 }
 
@@ -170,6 +171,7 @@ function deliveryFromFallback(snap) {
     indexPrice: Number.isFinite(index) ? index : null,
     perp: {
       symbol: "BTC-USDT-SWAP",
+      venue: perp.venue || venue,
       margin: "USDT",
       type: "Perpetual",
       last,
@@ -248,7 +250,7 @@ function renderDeliveryScreen() {
   if (!deliveryData) return;
   const { indexPrice, perp, contracts, curvePoints } = deliveryData;
 
-  const nearest = contracts[0];
+  const nearest = dxNearestDated([...(contracts || []), ...(deliveryData.coinContracts || [])]);
   const curveShape =
     contracts.length >= 2
       ? contracts[contracts.length - 1].basisPct > contracts[0].basisPct
@@ -278,6 +280,8 @@ function renderDeliveryScreen() {
     curveMeta.textContent = kind + " · annualized basis % · days to expiry";
   }
   set("delivery-perp", "$" + dxFmtPrice(perp.last));
+  const perpSub = dxEl("delivery-perp-sub");
+  if (perpSub) perpSub.textContent = (perp.venue || deliveryData.venue || "Perp") + " perpetual";
   set("delivery-curve-shape", curveShape);
   set(
     "delivery-nearest-basis",
@@ -289,7 +293,10 @@ function renderDeliveryScreen() {
   const nearestSub = dxEl("delivery-nearest-sub");
   if (nearestSub) {
     nearestSub.textContent = nearest
-      ? nearest.symbol.replace("BTCUSDT_", "") +
+      ? dxMarginLabel(nearest.margin) +
+        " · " +
+        (nearest.venue ? nearest.venue + " · " : "") +
+        nearest.symbol.replace("BTCUSDT_", "") +
         " · " +
         expiryLabel(nearest.deliveryDate)
       : "—";
@@ -305,8 +312,9 @@ function renderDeliveryScreen() {
         const exp = c.deliveryDate
           ? expiryLabel(c.deliveryDate) + " (" + c.daysToExpiry.toFixed(0) + "d)"
           : "—";
+        const who = c.venue ? `${c.venue} · ` : "";
         return `<tr>
-          <td class="mono">${c.symbol}</td>
+          <td class="mono">${who}${c.symbol}</td>
           <td>${dxMarginLabel(c.margin)}</td>
           <td>${c.type}</td>
           <td>${exp}</td>
@@ -332,11 +340,30 @@ function dxMarginLabel(margin) {
   return margin || "—";
 }
 
+function dxExpiryDay(c) {
+  const ms = Number(c?.deliveryDate);
+  if (!Number.isFinite(ms) || ms <= 0) return String(c?.symbol || "");
+  return new Date(ms).toISOString().slice(0, 10);
+}
+
+function dxNearestDated(rows) {
+  const dated = (rows || []).filter((c) => {
+    const days = Number(c?.daysToExpiry);
+    return c && Number.isFinite(days) && days > 0 && c.deliveryDate;
+  });
+  dated.sort(
+    (a, b) =>
+      Number(a.daysToExpiry) - Number(b.daysToExpiry) ||
+      Number(a.deliveryDate) - Number(b.deliveryDate),
+  );
+  return dated[0] || null;
+}
+
 function dxDedupeContracts(rows) {
   const best = new Map();
   for (const c of rows || []) {
     if (!c) continue;
-    const key = `${c.margin}|${c.deliveryDate || c.symbol}`;
+    const key = `${c.margin}|${dxExpiryDay(c)}`;
     const prev = best.get(key);
     if (!prev || (Number(c.openInterest) || 0) > (Number(prev.openInterest) || 0)) best.set(key, c);
   }
@@ -676,6 +703,7 @@ async function loadOptionsData() {
       key: "derivatives:options",
       l1: "derivatives",
       source: "Deribit BTC",
+      updateHeader: false,
       fetch: fetchOptionsBundle,
       render: (data, opts = {}) => {
         if (opts.loading) {
@@ -880,9 +908,18 @@ function drawIvTermChart(term) {
   ctx.font = "10px IBM Plex Mono, monospace";
   ctx.fillText(maxIv.toFixed(0) + "%", pad.left - 6, pad.top + 10);
   ctx.fillText(minIv.toFixed(0) + "%", pad.left - 6, h - pad.bottom);
-  drawTimeAxisLabels(ctx, w, h, pad, valid.length, (i) =>
-    fmtChartDate(valid[i].expiry),
-  );
+  // Ticks sit on the expiry's DTE, not on an even index. Even spacing
+  // put the date labels under the wrong contracts.
+  ctx.textAlign = "center";
+  const step = Math.max(1, Math.ceil(valid.length / 6));
+  valid.forEach((t, i) => {
+    if (i % step !== 0 && i !== valid.length - 1) return;
+    const x = pad.left + (t.days / maxDays) * chartW;
+    const label = t.expiry
+      ? `${fmtChartDate(t.expiry, true)} · ${Math.round(t.days)}d`
+      : `${Math.round(t.days)}d`;
+    ctx.fillText(label, x, h - 8);
+  });
 }
 
 function drawVolSmileChart(opts, spot) {

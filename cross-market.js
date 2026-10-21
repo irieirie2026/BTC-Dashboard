@@ -1350,6 +1350,34 @@ function xmRenderPropagation() {
   window.XMCharts?.renderPropGraph?.(p);
 }
 
+async function xmLoadHistory() {
+  const el = xmEl("xm-history");
+  const meta = xmEl("xm-history-meta");
+  if (!el) return;
+  try {
+    const res = await fetch("/api/cross-market/history?window=7d&limit=40", { cache: "no-store" });
+    const data = await res.json();
+    const events = Array.isArray(data?.events) ? data.events : [];
+    if (meta) {
+      meta.textContent = data?.empty
+        ? (data.emptyReason || "No events in this window")
+        : `${data.count ?? events.length} events · window ${data.window || data.days + "d"}`;
+    }
+    if (!events.length) {
+      el.innerHTML = `<p class="xm-muted">${data?.emptyReason || "No cross-market events in this window."}</p>`;
+      return;
+    }
+    el.innerHTML = events.slice(-12).reverse().map((evt) => {
+      const when = evt.ts ? new Date(evt.ts).toLocaleString() : (evt.recordedAt || "");
+      const title = evt.title || `${evt.venue || evt.premiumId || "venue"} ${evt.type || "event"}`;
+      return `<div class="xm-alert"><time class="mono">${when}</time><strong>${title}</strong><span>${evt.venue || ""} ${evt.type || ""}</span></div>`;
+    }).join("");
+  } catch (err) {
+    if (meta) meta.textContent = "History unavailable";
+    el.innerHTML = `<p class="xm-muted">History unavailable (${err.message || "fetch failed"}).</p>`;
+  }
+}
+
 function xmRenderAlerts() {
   const el = xmEl("xm-alerts");
   if (!el) return;
@@ -1825,6 +1853,7 @@ function initCrossMarket() {
     xmRenderMeta();
   }
   xmLoad();
+  xmLoadHistory();
 }
 
 window.initCrossMarket = initCrossMarket;

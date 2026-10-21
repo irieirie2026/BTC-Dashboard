@@ -36,12 +36,12 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _cache_get(key: str) -> dict[str, Any] | None:
+def _cache_get(key: str, ttl: float | None = None) -> dict[str, Any] | None:
     hit = _CACHE.get(key)
     if not hit:
         return None
     ts, val = hit
-    if time.time() - ts > CACHE_TTL:
+    if time.time() - ts > (CACHE_TTL if ttl is None else ttl):
         _CACHE.pop(key, None)
         return None
     return dict(val)
@@ -190,32 +190,89 @@ def _binance_ticker() -> dict[str, Any] | None:
     return row
 
 
+def spot_median_from_rows(rows: list[dict] | None) -> dict[str, Any]:
+    """One median of live spot lasts. Unavailable and blank prices are left out."""
+    names: list[str] = []
+    prices: list[float] = []
+    for row in rows or []:
+        if not isinstance(row, dict) or row.get("unavailable"):
+            continue
+        raw = row.get("lastPrice") if row.get("lastPrice") not in (None, "") else row.get("price")
+        px = _f(raw)
+        name = row.get("venue") or row.get("exchange")
+        if px is None or not name:
+            continue
+        prices.append(px)
+        names.append(str(name))
+    if not prices:
+        return {"median": None, "venueCount": 0, "venues": [], "label": None}
+    ordered = sorted(prices)
+    mid = len(ordered) // 2
+    median = ordered[mid] if len(ordered) % 2 else (ordered[mid - 1] + ordered[mid]) / 2.0
+    label = f"Median · {len(names)} venues ({', '.join(names)})"
+    return {"median": float(median), "venueCount": len(names), "venues": names, "label": label}
+
+
+def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
+    """Live spot rows from the exchanges desk, so both cards share one median."""
+    try:
+        from server import _fetch_all_exchange_data
+
+        raw = _fetch_all_exchange_data(refresh=refresh)
+    except Exception:
+        return []
+    if not isinstance(raw, dict):
+        return []
+    out = []
+    for row in raw.get("spot") or []:
+        if isinstance(row, dict) and row.get("price") is not None and not row.get("unavailable"):
+            out.append(row)
+    return out
+
+
 def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     """Median last of every live spot venue. The book venue stays OKX."""
     global _last_quote_venue
-    key = "market:quote:v2"
+    key = "market:quote:v3"
     if not refresh:
         cached = _cache_get(key)
         if cached:
             cached["fromCache"] = True
             _last_quote_venue = "OKX"
             return cached
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-
-    fns = (_coinbase_ticker, _kraken_ticker, _okx_ticker, _bitstamp_ticker, _binance_ticker)
-    rows: list[dict[str, Any]] = []
     errors: list[str] = []
-    with ThreadPoolExecutor(max_workers=len(fns)) as pool:
-        futs = {pool.submit(fn): fn.__name__ for fn in fns}
-        for fut in as_completed(futs):
-            name = futs[fut]
-            try:
-                ticker = fut.result()
-                if ticker and _f(ticker.get("lastPrice")):
-                    rows.append(ticker)
-            except Exception as exc:
-                errors.append(f"{name}: {exc}")
-    if not rows:
+    exchange_rows = _exchange_spot_rows(refresh=False)
+    rows: list[dict[str, Any]] = []
+    if len(exchange_rows) >= 3:
+        for row in exchange_rows:
+            rows.append({
+                "venue": row.get("exchange"),
+                "lastPrice": row.get("price"),
+                "openPrice": row.get("price"),
+                "highPrice": row.get("high") or row.get("price"),
+                "lowPrice": row.get("low") or row.get("price"),
+                "volume": row.get("volume") or 0,
+                "quoteVolume": row.get("volume") or 0,
+                "bidPrice": row.get("bid") or row.get("price"),
+                "askPrice": row.get("ask") or row.get("price"),
+                "priceChangePercent": row.get("changePct") or 0,
+            })
+    else:
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        fns = (_coinbase_ticker, _kraken_ticker, _okx_ticker, _bitstamp_ticker, _binance_ticker)
+        with ThreadPoolExecutor(max_workers=len(fns)) as pool:
+            futs = {pool.submit(fn): fn.__name__ for fn in fns}
+            for fut in as_completed(futs):
+                name = futs[fut]
+                try:
+                    ticker = fut.result()
+                    if ticker and _f(ticker.get("lastPrice")):
+                        rows.append(ticker)
+                except Exception as exc:
+                    errors.append(f"{name}: {exc}")
+    comp = spot_median_from_rows(rows)
+    if not rows or comp["median"] is None:
         return {
             "ticker": None,
             "venue": None,
@@ -223,15 +280,13 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
             "errors": errors,
             "fetchedAt": _now_iso(),
         }
-    prices = sorted(p for p in (_f(t.get("lastPrice")) for t in rows) if p)
-    mid = len(prices) // 2
-    median = prices[mid] if len(prices) % 2 else (prices[mid - 1] + prices[mid]) / 2.0
-    names = [str(t.get("venue")) for t in rows if t.get("venue")]
+    median = comp["median"]
+    names = comp["venues"]
     base = min(rows, key=lambda t: abs((_f(t.get("lastPrice")) or median) - median))
     ticker = dict(base)
     ticker["lastPrice"] = f"{median:.2f}"
     ticker["pair"] = "BTC composite"
-    label = f"Median · {len(names)} venues ({', '.join(names)})"
+    label = comp["label"]
     ticker["venue"] = label
     # Depth must not follow the composite label. The ladder is one venue.
     _last_quote_venue = "OKX"
@@ -239,6 +294,7 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
         "ticker": ticker,
         "venue": label,
         "venues": names,
+        "venueCount": comp["venueCount"],
         "medianLast": median,
         "fetchedAt": _now_iso(),
         "errors": errors,
@@ -780,6 +836,7 @@ def _contract_row(
     oi: float | None,
     volume: float | None,
     exp_ms: int | None,
+    venue: str | None = None,
 ) -> dict[str, Any] | None:
     if last is None and mark is None:
         return None
@@ -800,6 +857,7 @@ def _contract_row(
         "volume": volume,
         "deliveryDate": exp_ms,
         "daysToExpiry": days,
+        "venue": venue,
     }
 
 
@@ -856,7 +914,7 @@ def _fetch_okx_dated(index_hint: float | None) -> tuple[list[dict], list[dict], 
         margin = "USDT" if "_UM" in inst else "COIN"
         built = _contract_row(
             inst, margin=margin, last=last, mark=mark, index=index,
-            oi=oi_map.get(inst), volume=btc_vol, exp_ms=exp_ms,
+            oi=oi_map.get(inst), volume=btc_vol, exp_ms=exp_ms, venue="OKX",
         )
         if not built:
             continue
@@ -894,7 +952,7 @@ def _fetch_deribit_dated(index_hint: float | None) -> tuple[list[dict], float | 
         oi_btc = (oi_usd / px) if oi_usd and px and px > 1000 else oi_usd
         built = _contract_row(
             name, margin="COIN", last=last, mark=mark, index=px,
-            oi=oi_btc, volume=_f(row.get("volume")), exp_ms=exp_ms,
+            oi=oi_btc, volume=_f(row.get("volume")), exp_ms=exp_ms, venue="Deribit",
         )
         if built:
             out.append(built)
@@ -941,7 +999,7 @@ def _fetch_bybit_dated(index_hint: float | None) -> tuple[list[dict], dict | Non
             continue
         built = _contract_row(
             symbol, margin="COIN", last=last, mark=mark, index=index,
-            oi=oi_btc, volume=_f(row.get("volume24h")), exp_ms=delivery,
+            oi=oi_btc, volume=_f(row.get("volume24h")), exp_ms=delivery, venue="Bybit",
         )
         if built:
             out.append(built)
@@ -949,14 +1007,26 @@ def _fetch_bybit_dated(index_hint: float | None) -> tuple[list[dict], dict | Non
     return out, perp, []
 
 
+def _expiry_day(row: dict) -> str:
+    """Calendar day in UTC. Same expiry with two timestamps is one contract."""
+    ms = row.get("deliveryDate")
+    try:
+        ms_f = float(ms)
+    except (TypeError, ValueError):
+        ms_f = 0.0
+    if ms_f > 0:
+        return datetime.fromtimestamp(ms_f / 1000.0, tz=timezone.utc).strftime("%Y-%m-%d")
+    return str(row.get("symbol") or "")
+
+
 def _dedupe_contracts(rows: list[dict]) -> list[dict]:
-    """One row per margin and expiry. Keep the higher open interest."""
+    """One row per margin and calendar expiry. Keep the higher open interest."""
     best: dict[tuple, dict] = {}
     order: list[tuple] = []
     for row in rows or []:
         if not isinstance(row, dict):
             continue
-        key = (row.get("margin"), row.get("deliveryDate") or row.get("symbol"))
+        key = (row.get("margin"), _expiry_day(row))
         prev = best.get(key)
         if prev is None:
             best[key] = row
@@ -982,7 +1052,7 @@ def _curve_tick_label(row: dict) -> str:
 
 def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     """Dated BTC futures from OKX, Deribit, and Bybit."""
-    key = "market:futures:v4"
+    key = "market:futures:v5"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1083,9 +1153,10 @@ _last_quote_venue: str | None = None
 def get_depth(*, limit: int = 20, refresh: bool = False, prefer: str | None = None) -> dict[str, Any]:
     limit = max(5, min(int(limit or 20), 100))
     pref_key = (prefer or _last_quote_venue or "any").strip().lower() or "any"
-    key = f"market:depth:v2:{limit}:{pref_key}"
+    key = f"market:depth:v3:{limit}:{pref_key}"
+    # Shorter than the ladder poll so samples a few seconds apart are new fetches.
     if not refresh:
-        cached = _cache_get(key)
+        cached = _cache_get(key, ttl=6)
         if cached:
             cached["fromCache"] = True
             return cached
@@ -1196,6 +1267,7 @@ def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
             "bids": (depth.get("bids") or [])[:20],
             "asks": (depth.get("asks") or [])[:20],
             "venue": depth.get("venue"),
+            "fetchedAt": depth.get("fetchedAt"),
         },
         "depthVenue": depth.get("venue"),
         "venue": quote.get("venue") or klines.get("venue"),
