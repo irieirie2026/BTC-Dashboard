@@ -297,13 +297,22 @@ function renderExchangesScreen(section, data, opts = {}) {
 
   const updateEl = exEl(`exchanges-${section}-update`);
   if (updateEl) {
-    updateEl.textContent = window.DashboardSWR?.formatPanelMeta({
+    const stale = !!(opts.stale || data.stale);
+    const refreshing = !!(opts.refreshing || data.refreshing);
+    let meta = window.DashboardSWR?.formatPanelMeta({
       fetchedAt: data.fetchedAt,
       source: data.source || "Exchange APIs",
-      stale: opts.stale,
-      refreshing: opts.refreshing,
+      stale,
+      refreshing,
       refreshFailed: opts.refreshFailed,
     }) || "—";
+    if (Number.isFinite(Number(data.ageSec))) {
+      const mins = Math.max(0, Math.round(Number(data.ageSec) / 60));
+      const age = mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}m old` : `${mins}m old`;
+      meta = stale ? meta.replace("updating…", `${age} · updating…`) : `${meta} · ${age}`;
+      if (stale && !meta.includes(age)) meta = `${meta} · ${age}`;
+    }
+    updateEl.textContent = meta;
     updateEl.classList.toggle(
       "header-meta--stale",
       !!(opts.stale && (opts.refreshing || opts.refreshFailed)),
@@ -343,6 +352,19 @@ async function loadExchangesSection(section) {
         renderExchangesScreen(section, data, opts);
       },
     });
+    let latest = exchangesCache[section];
+    let tries = 0;
+    while (latest?.refreshing && tries < 6 && exchangesActiveSection === section) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      if (exchangesActiveSection !== section) break;
+      const fresh = await fetchExchangesSection(section);
+      renderExchangesScreen(section, fresh, {
+        stale: !!fresh.stale,
+        refreshing: !!fresh.refreshing,
+      });
+      latest = fresh;
+      tries += 1;
+    }
   } catch (err) {
     console.error("Exchanges load failed:", section, err);
     const commentary = exEl(`exchanges-${section}-commentary`);

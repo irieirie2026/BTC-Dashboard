@@ -9,7 +9,7 @@ function fmtChartDate(value, compact = false) {
   return d.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
-    year: "2-digit",
+    year: "numeric",
   });
 }
 

@@ -29,12 +29,12 @@ function parseCompactBtc(label) {
 }
 
 function summaryPct21m(summary) {
+  const fromTotal = Number(summary?.totalBtc);
+  if (Number.isFinite(fromTotal) && fromTotal > 0) return (fromTotal / 21_000_000) * 100;
   const raw = Number(summary?.pct21m);
   if (Number.isFinite(raw) && raw > 0.001) return raw;
   const fromLabel = parseCompactBtc(summary?.totalBtcLabel);
   if (fromLabel) return (fromLabel / 21_000_000) * 100;
-  const fromTotal = Number(summary?.totalBtc);
-  if (Number.isFinite(fromTotal) && fromTotal > 0) return (fromTotal / 21_000_000) * 100;
   return Number.isFinite(raw) ? raw : null;
 }
 

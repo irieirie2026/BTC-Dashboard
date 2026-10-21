@@ -9,6 +9,7 @@ const TS_SUITE_CACHE_KEY = "ts-last-suite-v1";
 let tsSuite = null;
 let tsSelectedId = null;
 let tsBusy = false;
+let tsPendingForce = false;
 
 const tsEl = (id) => document.getElementById(id);
 
@@ -268,9 +269,16 @@ function tsRenderKpis(suite) {
 
   // Best = directional hit leaders (primary accuracy focus)
   const mark = suite.selection?.selectedName || s.bestModelName || s.bestHit7Name || "—";
-  set("ts-kpi-best", mark);
+  const insufficient =
+    suite.selection?.insufficientSample ||
+    suite.selection?.label === "insufficient sample" ||
+    suite.summary?.selectionRule === "insufficient sample";
+  set("ts-kpi-best", insufficient ? "insufficient sample" : mark);
   const bsub = tsEl("ts-kpi-best-sub");
-  if (bsub) {
+  if (insufficient && bsub) {
+    const n = suite.selection?.nOos7;
+    bsub.textContent = n != null ? `N_OOS=${n} · need ≥ 30` : "N_OOS below 30";
+  } else if (bsub) {
     const h1 = tsHitLeaderName(suite, 1);
     const h7 = tsHitLeaderName(suite, 7);
     const h30 = tsHitLeaderName(suite, 30);
@@ -2323,14 +2331,15 @@ function tsFinishProgress(ok, message) {
 }
 
 async function tsRun(force = true) {
-  if (tsBusy) return;
+  if (tsBusy) {
+    if (force) tsPendingForce = true;
+    return;
+  }
   tsBusy = true;
+  tsPendingForce = false;
   const btn = tsEl("ts-run-all");
   const prev = btn?.textContent;
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = "Running…";
-  }
+  if (btn) btn.textContent = "Running…";
   const days = String(tsRangeDays());
   tsUpdateRangeInfo();
   tsStartProgress(Number(days));
@@ -2357,6 +2366,7 @@ async function tsRun(force = true) {
       );
     }
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+    if (tsPendingForce && !force) return;
     tsFinishProgress(
       true,
       `${data.models?.length || 0} models · ${data.nObs ?? "—"} obs · rendering…`,
@@ -2379,6 +2389,7 @@ async function tsRun(force = true) {
     tsDrawAll(data);
     tsUpdateRangeInfo();
   } catch (err) {
+    if (tsPendingForce && !force) return;
     console.error("[ts suite]", err);
     tsFinishProgress(false, err.message || "Request failed");
     const host = tsEl("ts-run-commentary");
@@ -2393,9 +2404,10 @@ async function tsRun(force = true) {
     });
   } finally {
     tsBusy = false;
-    if (btn) {
-      btn.disabled = false;
-      if (prev) btn.textContent = prev;
+    if (btn && prev) btn.textContent = prev;
+    if (tsPendingForce) {
+      tsPendingForce = false;
+      void tsRun(true);
     }
   }
 }

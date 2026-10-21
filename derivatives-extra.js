@@ -321,19 +321,20 @@ function drawDeliveryCurveChart(points) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  const pad = { top: 18, right: 28, bottom: 44, left: 64 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
   ctx.clearRect(0, 0, w, h);
 
-  const curvePts = points.filter((p) => p.days >= 0);
+  const curvePts = points.filter((p) => p.days >= 0).slice().sort((a, b) => a.days - b.days);
   const maxDays = Math.max(...curvePts.map((p) => p.days), 1);
   const values = curvePts.map((p) => p.annBasis);
   const maxAbs = Math.max(...values.map(Math.abs), 0.5);
@@ -366,14 +367,20 @@ function drawDeliveryCurveChart(points) {
   });
 
   ctx.fillStyle = "#7d8799";
-  ctx.font = "10px IBM Plex Mono, monospace";
+  ctx.font = "12px IBM Plex Mono, monospace";
   ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 6, pad.top + 10);
-  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 6, h - pad.bottom);
+  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 8, pad.top + 12);
+  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 8, h - pad.bottom);
   ctx.textAlign = "center";
   curvePts.forEach((p) => {
     const x = pad.left + (p.days / maxDays) * chartW;
-    ctx.fillText(p.label, x, h - 8);
+    const label = String(p.label || "");
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x - 36, h - pad.bottom, 72, pad.bottom);
+    ctx.clip();
+    ctx.fillText(label, x, h - 16);
+    ctx.restore();
   });
 }
 
@@ -909,13 +916,14 @@ function drawDeliveryOiChart(contracts) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 32, left: 56 };
+  const pad = { top: 16, right: 72, bottom: 28, left: 96 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -934,28 +942,22 @@ function drawDeliveryOiChart(contracts) {
     const color = r.margin === "COIN-M" ? "rgba(251, 191, 36, 0.75)" : "rgba(14, 203, 129, 0.75)";
     let valueX;
 
-    if (outlier && i === outlierIdx) {
-      valueX = co.drawBrokenHBar(ctx, {
-        x0: pad.left,
-        y,
-        bodyH,
-        chartW,
-        colorStart: color,
-        colorEnd: color,
-      });
-    } else {
-      const barW = (r.oi / scaleMax) * chartW;
-      ctx.fillStyle = color;
-      ctx.fillRect(pad.left, y, barW, bodyH);
-      valueX = pad.left + barW;
-    }
+    const barW = outlier && i === outlierIdx ? chartW * 0.92 : (r.oi / scaleMax) * chartW;
+    ctx.fillStyle = color;
+    ctx.fillRect(pad.left, y, barW, bodyH);
+    valueX = pad.left + barW;
 
     ctx.fillStyle = "#7d8799";
-    ctx.font = "10px IBM Plex Mono, monospace";
+    ctx.font = "12px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
-    ctx.fillText(r.label, pad.left - 6, y + bodyH / 2 + 3);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, y - 1, pad.left - 4, bodyH + 2);
+    ctx.clip();
+    ctx.fillText(r.label, pad.left - 8, y + bodyH / 2 + 4);
+    ctx.restore();
     ctx.textAlign = "left";
-    ctx.fillText(fmtVol(r.oi) + " BTC", valueX + 6, y + bodyH / 2 + 3);
+    ctx.fillText(fmtVol(r.oi) + " BTC", Math.min(valueX + 6, w - pad.right), y + bodyH / 2 + 4);
   });
 }
 
@@ -1031,7 +1033,7 @@ function drawOiStrikeChart(topStrikes, spot) {
   const canvas = dxEl("options-oi-strike-chart");
   if (!canvas || !topStrikes.length) return;
 
-  const ordered = [...topStrikes].reverse();
+  const ordered = [...topStrikes].sort((a, b) => Number(a.strike) - Number(b.strike));
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();

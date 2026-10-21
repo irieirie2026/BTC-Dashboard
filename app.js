@@ -50,6 +50,20 @@ function formatBtc(n) {
   });
 }
 
+function formatBookQty(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return "—";
+  const abs = Math.abs(v);
+  if (abs > 0 && abs < 0.0001) {
+    return Math.round(v * 1e8).toLocaleString("en-US") + " sats";
+  }
+  const digits = abs < 1 ? 6 : 4;
+  return v.toLocaleString("en-US", {
+    minimumFractionDigits: 4,
+    maximumFractionDigits: digits,
+  });
+}
+
 function setConnectionStatus(state, elId = "connection-status") {
   const ids =
     elId === "futures-status"
@@ -288,8 +302,8 @@ function renderOrderBookLadder(bids, asks) {
       const pct = (level.qty / maxBidQty) * 100;
       return `<div class="book-row bid">
         <div class="depth-bar" style="width:${pct}%"></div>
-        <span>${formatBtc(level.total)}</span>
-        <span>${formatBtc(level.qty)}</span>
+        <span>${formatBookQty(level.total)}</span>
+        <span>${formatBookQty(level.qty)}</span>
         <span class="price">${formatPrice(level.price)}</span>
       </div>`;
     })
@@ -301,8 +315,8 @@ function renderOrderBookLadder(bids, asks) {
       return `<div class="book-row ask">
         <div class="depth-bar" style="width:${pct}%"></div>
         <span class="price">${formatPrice(level.price)}</span>
-        <span>${formatBtc(level.qty)}</span>
-        <span>${formatBtc(level.total)}</span>
+        <span>${formatBookQty(level.qty)}</span>
+        <span>${formatBookQty(level.total)}</span>
       </div>`;
     })
     .join("");
@@ -335,12 +349,27 @@ function mapCoinbaseTicker(msg) {
     q: (parseFloat(msg.volume_24h) || 0) * (parseFloat(msg.price) || 0),
     w: msg.price,
   });
-  // A ticker print is one level. Leave a full ladder from /api/market/depth alone.
-  if (msg.best_bid && msg.best_ask && lastBids.length < 5) {
-    updateDepth({
-      bids: [[parseFloat(msg.best_bid), parseFloat(msg.best_bid_size) || 0]],
-      asks: [[parseFloat(msg.best_ask), parseFloat(msg.best_ask_size) || 0]],
-    });
+  // Header bid/ask and the ladder top stay on this same ticker print.
+  if (msg.best_bid && msg.best_ask) {
+    const bidPx = parseFloat(msg.best_bid);
+    const askPx = parseFloat(msg.best_ask);
+    const bidSz = parseFloat(msg.best_bid_size) || 0;
+    const askSz = parseFloat(msg.best_ask_size) || 0;
+    rememberBookAnchor(bidPx, askPx);
+    if (lastBids.length >= 5 && lastAsks.length >= 5) {
+      const bids = lastBids.map((row) => [row[0], row[1]]);
+      const asks = lastAsks.map((row) => [row[0], row[1]]);
+      const bidQty = bidSz || bids[0][1];
+      const askQty = askSz || asks[0][1];
+      const pinnedBids = [[bidPx, bidQty], ...bids.slice(1).filter((row) => row[0] < bidPx)];
+      const pinnedAsks = [[askPx, askQty], ...asks.slice(1).filter((row) => row[0] > askPx)];
+      updateDepth({ bids: pinnedBids, asks: pinnedAsks });
+    } else {
+      updateDepth({
+        bids: [[bidPx, bidSz]],
+        asks: [[askPx, askSz]],
+      });
+    }
   }
 }
 
@@ -869,6 +898,22 @@ function connectFutures() {
   // Perp quotes are polled from /api/market/perp. The Binance futures socket is blocked in the browser.
 }
 
+function alignBookToTicker(depth, ticker) {
+  if (!depth || !ticker) return depth;
+  const bid = parseFloat(ticker.bidPrice);
+  const ask = parseFloat(ticker.askPrice);
+  if (!(bid > 0) || !(ask > 0)) return depth;
+  const bids = (depth.bids || []).map((row) => [parseFloat(row[0]), parseFloat(row[1])]);
+  const asks = (depth.asks || []).map((row) => [parseFloat(row[0]), parseFloat(row[1])]);
+  if (!bids.length || !asks.length) return depth;
+  const bidQty = Number.isFinite(bids[0][1]) ? bids[0][1] : 0;
+  const askQty = Number.isFinite(asks[0][1]) ? asks[0][1] : 0;
+  const pinnedBids = [[bid, bidQty], ...bids.slice(1).filter((row) => row[0] < bid && row[0] > 0 && row[1] > 0)];
+  const pinnedAsks = [[ask, askQty], ...asks.slice(1).filter((row) => row[0] > ask && row[1] > 0)];
+  rememberBookAnchor(bid, ask);
+  return { ...depth, bids: pinnedBids.slice(0, 20), asks: pinnedAsks.slice(0, 20) };
+}
+
 function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
 
@@ -883,7 +928,11 @@ function applySpotBundle(bundle) {
   });
 
   window.SpotCharts?.applyInitialKlines?.(klines);
-  updateDepth(depth);
+  const sameVenue =
+    !bundle.depthVenue ||
+    !bundle.venue ||
+    String(bundle.depthVenue).toLowerCase() === String(bundle.venue).toLowerCase();
+  updateDepth(sameVenue ? alignBookToTicker(depth, ticker) : depth);
 }
 
 async function loadInitialData() {
@@ -901,13 +950,21 @@ async function loadInitialData() {
           fetch("/api/market/depth?limit=20", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
         ]);
         if (!bundle?.ticker?.lastPrice) throw new Error(bundle?.error || "Spot feed unavailable");
-        const book = depth?.bids?.length >= 5 && depth?.asks?.length >= 5
-          ? depth
-          : (bundle.depth || { bids: [], asks: [] });
+        const bundleBook = bundle.depth || { bids: [], asks: [] };
+        const venuesMatch =
+          bundle.depthVenue &&
+          bundle.venue &&
+          String(bundle.depthVenue).toLowerCase() === String(bundle.venue).toLowerCase();
+        const book = venuesMatch && bundleBook.bids?.length >= 5
+          ? { ...bundleBook, venue: bundle.depthVenue }
+          : (depth?.bids?.length >= 5 && depth?.asks?.length >= 5
+            ? depth
+            : bundleBook);
         return {
           ticker: bundle.ticker,
           klines: bundle.klines || [],
           depth: book,
+          depthVenue: book.venue || bundle.depthVenue || null,
           fetchedAt: bundle.fetchedAt || new Date().toISOString(),
           venue: bundle.venue || depth?.venue || "proxy",
         };
@@ -956,10 +1013,25 @@ loadFuturesData();
 loadFuturesIndicators();
 connect();
 
+let bookAnchor = null;
+
+function rememberBookAnchor(bid, ask) {
+  const b = parseFloat(bid);
+  const a = parseFloat(ask);
+  if (b > 0 && a > 0) bookAnchor = { bid: b, ask: a };
+}
+
 async function refreshProxiedDepth() {
   try {
-    const depth = await fetch("/api/market/depth?limit=20", { cache: "no-store" }).then((r) => r.json());
-    if (depth?.bids?.length >= 5 && depth?.asks?.length >= 5) updateDepth(depth);
+    const depth = await fetch("/api/market/depth?limit=40", { cache: "no-store" }).then((r) => r.json());
+    if (!(depth?.bids?.length >= 5 && depth?.asks?.length >= 5)) return;
+    const aligned = bookAnchor
+      ? alignBookToTicker(depth, { bidPrice: bookAnchor.bid, askPrice: bookAnchor.ask })
+      : depth;
+    updateDepth({
+      bids: (aligned.bids || []).slice(0, 20),
+      asks: (aligned.asks || []).slice(0, 20),
+    });
   } catch (_) {
     /* keep the last ladder */
   }

@@ -619,7 +619,23 @@ function volFmtSuiteDate(v) {
   else if (typeof raw === "string" && /^-?\d+(\.\d+)?$/.test(raw)) n = Number(raw);
   if (Number.isFinite(n) && Math.abs(n) > 1e11) {
     if (typeof window.statsFmtDate === "function") return window.statsFmtDate(n);
-    return volFmtAxisDate(n, false);
+    return new Date(n).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+  if (typeof raw === "string" && /^\d{4}-\d{2}-\d{2}/.test(raw)) {
+    const iso = raw.length === 10 ? `${raw}T00:00:00Z` : raw;
+    const d = new Date(iso);
+    if (!Number.isNaN(d.getTime())) {
+      return d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      });
+    }
   }
   return volFmtAxisDate(raw, false);
 }
@@ -5205,9 +5221,11 @@ function volExportCsv(suite) {
 async function volRun(force = false, opts = {}) {
   if (volBusy) {
     const busyMeta = volEl("vol-suite-meta");
-    if (busyMeta) busyMeta.textContent = "Estimation already running";
-    if (opts.allModels && !volRunIsAll) {
-      volPendingAll = { force: !!force, opts: { allModels: true } };
+    if (force) {
+      volPendingAll = { force: true, opts: { ...opts, allModels: !!opts.allModels } };
+      if (busyMeta) busyMeta.textContent = "Refresh queued…";
+    } else if (busyMeta) {
+      busyMeta.textContent = "Estimation already running";
     }
     return;
   }
@@ -5219,21 +5237,17 @@ async function volRun(force = false, opts = {}) {
   const prevSel = btnSel?.textContent;
   const prevAll = btnAll?.textContent;
   try {
-    if (btnSel) {
-      btnSel.disabled = true;
-      if (opts.allModels) btnSel.textContent = "Estimating…";
-      else btnSel.textContent = "Estimating…";
-    }
-    if (btnAll) {
-      btnAll.disabled = true;
-      btnAll.textContent = opts.allModels ? "Estimating all…" : "Estimating…";
-    }
+    if (btnSel) btnSel.textContent = "Estimating…";
+    if (btnAll) btnAll.textContent = opts.allModels ? "Estimating all…" : "Estimating…";
     if (meta) {
       meta.textContent = opts.allModels
         ? "Running full catalog…"
         : "Running selected models…";
     }
     const suite = await volFetchSuite(force, opts);
+    if (volPendingAll && !force) {
+      return;
+    }
     volSuite = suite;
     volPersistSuite(suite);
     volSelectedId =
@@ -5306,14 +5320,8 @@ async function volRun(force = false, opts = {}) {
   } finally {
     volBusy = false;
     volRunIsAll = false;
-    if (btnSel) {
-      btnSel.disabled = false;
-      btnSel.textContent = prevSel || "Run selected";
-    }
-    if (btnAll) {
-      btnAll.disabled = false;
-      btnAll.textContent = prevAll || "Run all";
-    }
+    if (btnSel) btnSel.textContent = prevSel || "Run selected";
+    if (btnAll) btnAll.textContent = prevAll || "Run all";
     const pending = volPendingAll;
     volPendingAll = null;
     if (pending) void volRun(pending.force, pending.opts);
