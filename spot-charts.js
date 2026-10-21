@@ -22,6 +22,7 @@ let spotHistoryScale = "log";
 let spotHistoryRange = "all";
 let spotHistoryControlsBound = false;
 let spotPollTimer = null;
+let spotKlineVenue = "";
 
 const spotEl = (id) => document.getElementById(id);
 
@@ -62,6 +63,7 @@ function spotDedupeBars(bars) {
 
 async function spotFetchKlines(interval, limit = 1000) {
   const bundled = await window.marketFetchKlines?.(interval, limit);
+  if (bundled?.venue) spotKlineVenue = String(bundled.venue);
   const raw = bundled?.klines || [];
   if (!raw.length) throw new Error("Klines unavailable");
   return spotDedupeBars(raw.map(spotKlineToBar));
@@ -476,13 +478,29 @@ function spotUpdateHistoryMeta() {
   meta.textContent = `${scaleLabel} · ${rangeLabel} · ${spotFmtDate(firstMs)} → ${spotFmtDate(lastMs)} (${years.toFixed(1)} yr) · scroll/drag/dbl-click reset`;
 }
 
-function spotUpdateMeta(tf, bars) {
-  const cfg = SPOT_TF[tf];
-  const meta = spotEl("spot-chart-meta");
+function spotSetChartLabel(text) {
   const label = spotEl("spot-chart-label");
+  if (!label) return;
+  if (label.dataset.helpDecorated && window.labelWithHelp) {
+    label.innerHTML = window.labelWithHelp(text, "spot-chart");
+  } else {
+    label.textContent = text;
+  }
+}
+
+function spotChartTitle(tf, bars) {
+  const cfg = SPOT_TF[tf];
+  const name = cfg?.label || tf;
+  const venue = spotKlineVenue ? ` · ${spotKlineVenue}` : "";
+  if (!bars.length) return `${name}${venue}`;
+  return `${name} candles${venue}`;
+}
+
+function spotUpdateMeta(tf, bars) {
+  const meta = spotEl("spot-chart-meta");
   if (!bars.length) {
     if (meta) meta.textContent = "No data";
-    if (label) label.textContent = `${cfg?.label || tf} · Binance BTC/USDT`;
+    spotSetChartLabel(spotChartTitle(tf, bars));
     return;
   }
   const firstMs = bars[0].time * 1000;
@@ -500,9 +518,7 @@ function spotUpdateMeta(tf, bars) {
   if (meta) {
     meta.textContent = `${bars.length.toLocaleString()} bars · ${spotFmtDate(firstMs)} → ${spotFmtDate(lastMs)} (${range})`;
   }
-  if (label) {
-    label.textContent = `${cfg?.label || tf} candles · Binance BTC/USDT`;
-  }
+  spotSetChartLabel(spotChartTitle(tf, bars));
 }
 
 function spotSetTfActive(tf) {
@@ -534,7 +550,8 @@ async function spotLoadTimeframe(tf, options = {}) {
   }
 }
 
-function spotApplyInitialKlines(klines) {
+function spotApplyInitialKlines(klines, venue) {
+  if (venue) spotKlineVenue = String(venue);
   if (!Array.isArray(klines) || !klines.length) return;
   const bars = spotDedupeBars(klines.map(spotKlineToBar));
   spotBars = bars;

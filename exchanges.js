@@ -291,6 +291,18 @@ function renderExchangesChart(section, data) {
   );
 }
 
+function exchangeAgeLabel(data) {
+  const t = data?.fetchedAt ? Date.parse(data.fetchedAt) : NaN;
+  const sec = Number.isFinite(t)
+    ? Math.max(0, Math.round((Date.now() - t) / 1000))
+    : (Number.isFinite(Number(data?.ageSec)) && data.ageSec != null ? Number(data.ageSec) : NaN);
+  if (!Number.isFinite(sec)) return "";
+  const mins = Math.round(sec / 60);
+  if (mins < 1) return "under 1 min old";
+  if (mins < 60) return `${mins} min old`;
+  return `${Math.floor(mins / 60)} h ${mins % 60} min old`;
+}
+
 function renderExchangesScreen(section, data, opts = {}) {
   if (!data) return;
   exchangesCache[section] = data;
@@ -306,9 +318,8 @@ function renderExchangesScreen(section, data, opts = {}) {
       refreshing,
       refreshFailed: opts.refreshFailed,
     }) || "—";
-    if (Number.isFinite(Number(data.ageSec))) {
-      const mins = Math.max(0, Math.round(Number(data.ageSec) / 60));
-      const age = mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}m old` : `${mins}m old`;
+    const age = exchangeAgeLabel(data);
+    if (age) {
       meta = stale ? meta.replace("updating…", `${age} · updating…`) : `${meta} · ${age}`;
       if (stale && !meta.includes(age)) meta = `${meta} · ${age}`;
     }

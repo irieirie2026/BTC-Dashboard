@@ -429,6 +429,9 @@ const TS_HORIZONS = [
 ];
 
 function tsHorizonRankHtml(m, suite, hz) {
+  if (suite?.selection?.insufficientSample) {
+    return `<span class="vol-rank-empty">—</span>`;
+  }
   const bits = [];
   const isHitBest = m.id === suite[hz.bestHit];
   const isRmseBest = m.id === suite[hz.bestRmse];

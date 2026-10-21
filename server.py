@@ -2549,7 +2549,8 @@ MACRO_SECTION_CACHE_TTL = 3 * 24 * 3600  # 3 days — Yahoo quotes; refresh on r
 
 
 def get_macro_payload(section, *, refresh=False):
-    key = f"macro:{section}"
+    # v2 drops a pre-scale body that stored WTREGEN in millions for three days.
+    key = "macro:liquidity:v2" if section == "liquidity" else f"macro:{section}"
     cached = _cget(key, MACRO_SECTION_CACHE_TTL, refresh=refresh)
     # An empty FRED assemble is a timeout, not a reading. Do not keep it for 3 days.
     if cached is not None and not (section == "liquidity" and not cached.get("points")):
@@ -3584,25 +3585,15 @@ def _fetch_binance_spot():
 
 
 def _fetch_binance_perp():
-    hosts = (
-        "https://data-api.binance.vision",
-        "https://fapi.binance.com",
-    )
-    last_exc = None
-    prem = None
-    ticker = None
-    for host in hosts:
-        try:
-            prem = _fetch_json_browser(f"{host}/fapi/v1/premiumIndex?symbol=BTCUSDT", timeout=8)
-            ticker = _fetch_json_browser(f"{host}/fapi/v1/ticker/24hr?symbol=BTCUSDT", timeout=8)
-            if prem and ticker:
-                break
-        except Exception as exc:
-            last_exc = exc
-            prem = None
-            ticker = None
+    # data-api.binance.vision has no /fapi routes (HTTP 404) and burns the venue budget.
+    host = "https://fapi.binance.com"
+    try:
+        prem = _fetch_json_browser(f"{host}/fapi/v1/premiumIndex?symbol=BTCUSDT", timeout=8)
+        ticker = _fetch_json_browser(f"{host}/fapi/v1/ticker/24hr?symbol=BTCUSDT", timeout=8)
+    except Exception as exc:
+        raise RuntimeError(f"binance perp unavailable: {exc}") from exc
     if not prem or not ticker:
-        raise RuntimeError(f"binance perp unavailable: {last_exc}")
+        raise RuntimeError("binance perp unavailable: empty body")
     mark = _ex_float(prem.get("markPrice"))
     index = _ex_float(prem.get("indexPrice"))
     price = mark or _ex_float(ticker.get("lastPrice"))
@@ -3758,15 +3749,26 @@ def _fetch_okx_perp():
     }
 
 
+def _bybit_ticker_row(category):
+    """Bybit first, then the bytick mirror. Do not invent a price if both fail."""
+    hosts = ("https://api.bybit.com", "https://api.bytick.com")
+    last_exc = None
+    for host in hosts:
+        try:
+            data = _fetch_json_browser(
+                f"{host}/v5/market/tickers?category={category}&symbol=BTCUSDT",
+                timeout=8,
+            )
+            rows = (data.get("result") or {}).get("list") or []
+            if rows:
+                return rows[0]
+        except Exception as exc:
+            last_exc = exc
+    raise RuntimeError(f"bybit {category} unavailable: {last_exc}")
+
+
 def _fetch_bybit_spot():
-    data = _fetch_json_browser(
-        "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT",
-        timeout=8,
-    )
-    rows = (data.get("result") or {}).get("list") or []
-    if not rows:
-        return None
-    t = rows[0]
+    t = _bybit_ticker_row("spot")
     price = _ex_float(t.get("lastPrice"))
     open_p = _ex_float(t.get("prevPrice24h"))
     return {
@@ -3784,14 +3786,7 @@ def _fetch_bybit_spot():
 
 
 def _fetch_bybit_perp():
-    data = _fetch_json_browser(
-        "https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT",
-        timeout=8,
-    )
-    rows = (data.get("result") or {}).get("list") or []
-    if not rows:
-        return None
-    t = rows[0]
+    t = _bybit_ticker_row("linear")
     price = _ex_float(t.get("markPrice")) or _ex_float(t.get("lastPrice"))
     index = _ex_float(t.get("indexPrice"))
     open_p = _ex_float(t.get("prevPrice24h"))
@@ -4259,7 +4254,7 @@ def _run_venue_fetchers(fetchers, timeout=10):
 
 
 def _fetch_all_exchange_data(refresh=False):
-    key = "exchanges:raw:v3"
+    key = "exchanges:raw:v4"
     if not refresh:
         cached = _cget(key, CACHE_TTL)
         if cached is not None:
@@ -4556,10 +4551,13 @@ def _build_exchanges_perp(perp, errors):
     ]
     if perp:
         extreme = max(perp, key=lambda p: abs(p.get("fundingRate") or 0))
+        rate = extreme.get("fundingRate") or 0
+        # 0.05% per interval. A normal 0.005% print is the highest rate, not an extreme.
+        hero_name = "Extreme Funding" if abs(rate) >= 0.0005 else "Highest Funding"
         heroes.append({
-            "name": "Extreme Funding",
+            "name": hero_name,
             "value": extreme.get("exchange"),
-            "sub": f"{(extreme.get('fundingRate') or 0) * 100:.4f}%",
+            "sub": f"{rate * 100:.4f}%",
         })
 
     lines = []
@@ -4579,7 +4577,7 @@ def _build_exchanges_perp(perp, errors):
                     f"mark ${row.get('price'):,.2f}.",
                 )
     if errors:
-        lines.append(f"Partial perp data — {len(errors)} perp fetch error(s).")
+        lines.append(f"Perp: {len(errors)} failed ({_exchange_error_names(errors)}).")
     lines.append("Roadmap: OI breakdown, basis time series, cross-venue funding arb — extend as needed.")
     return heroes[:4], table, lines
 
@@ -4697,12 +4695,24 @@ def _fetch_exchanges_section(section, *, refresh=False):
 
 
 def _iso_age_sec(stamp):
+    """Age in seconds. Accepts Z, offsets, and fractional seconds. None if unparseable."""
     if not stamp or not isinstance(stamp, str):
         return None
-    try:
-        parsed = datetime.strptime(stamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-    except ValueError:
+    text = stamp.strip()
+    if not text:
         return None
+    parsed = None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        parsed = None
+    if parsed is None:
+        try:
+            parsed = datetime.strptime(text, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
     return max(0, int(time.time() - parsed.timestamp()))
 
 
@@ -4892,16 +4902,29 @@ if __name__ == "__main__":
     import threading
 
     def _warm_startup_caches() -> None:
-        # One thread, whales first, so Python 3.14's import lock does not skip the whale key.
-        try:
-            from macro_data.misc_whales import get_misc_whales_payload
+        # One thread. Whales refresh on a timer; macro and series run once on the first pass.
+        # Parallel warm threads deadlock Python 3.14's import lock.
+        from macro_data.misc_whales import (
+            get_misc_whales_payload,
+            note_whale_warm_done,
+            note_whale_warm_start,
+        )
 
-            get_misc_whales_payload()
-            print("Whale cache warmed")
-        except Exception as exc:
-            print(f"Whale cache warm skipped: {exc}")
-        _warm_macro_caches()
-        _warm_btc_series()
+        first = True
+        while True:
+            note_whale_warm_start()
+            try:
+                get_misc_whales_payload(refresh=True, from_warm=True)
+                print("Whale cache warmed")
+            except Exception as exc:
+                print(f"Whale cache warm skipped: {exc}")
+            finally:
+                note_whale_warm_done()
+            if first:
+                _warm_macro_caches()
+                _warm_btc_series()
+                first = False
+            time.sleep(90)
 
     threading.Thread(target=_warm_startup_caches, daemon=True).start()
     print(f"Serving at http://{host}:{port}")

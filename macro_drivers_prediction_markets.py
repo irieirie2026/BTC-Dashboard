@@ -2846,6 +2846,27 @@ def _section_outlook(markets: list[dict], section: str) -> dict:
     return _build_outlook(subset)
 
 
+def _pick_btc_100k(price_markets: list[dict]) -> dict | None:
+    matches = [
+        m
+        for m in price_markets
+        if re.search(r"100[,.]?000|100k", m.get("question") or "", re.I)
+    ]
+    if not matches:
+        return None
+    return max(matches, key=lambda m: m.get("volume24h") or 0)
+
+
+def _btc100k_caption(market: dict | None) -> str:
+    if not market:
+        return "Implied probability"
+    question = (market.get("question") or "BTC > $100k").strip()
+    end = market.get("endDate") or ""
+    if end:
+        return f"{question} · expires {str(end)[:10]}"
+    return question
+
+
 def _section_heroes(markets: list[dict], section: str) -> list[dict]:
     subset = [m for m in markets if m.get("section") == section]
     vol = sum(m.get("volume24h") or 0 for m in subset)
@@ -2856,7 +2877,7 @@ def _section_heroes(markets: list[dict], section: str) -> list[dict]:
             {
                 "name": "BTC > $100k",
                 "value": f"{outlook['btc100kProb']:.0f}%" if outlook.get("btc100kProb") is not None else "—",
-                "sub": "Implied probability",
+                "sub": outlook.get("btc100kCaption") or "Implied probability",
             },
             {"name": "Price markets", "value": str(len(subset)), "sub": "Active"},
             {"name": "24h volume", "value": _fmt_usd(vol), "sub": "Section total"},
@@ -2889,10 +2910,8 @@ def _section_heroes(markets: list[dict], section: str) -> list[dict]:
 def _build_outlook(markets: list[dict]) -> dict:
     active = _active_markets(markets)
     price_markets = [m for m in active if m.get("category") == "price-targets"]
-    above_100 = next(
-        (m for m in price_markets if re.search(r"100[,.]?000|100k", m.get("question", ""), re.I)),
-        None,
-    )
+    above_100 = _pick_btc_100k(price_markets)
+    btc100k_caption = _btc100k_caption(above_100)
     bullish = [m for m in price_markets if (m.get("yesProb") or 0) >= 50]
     avg_yes = (
         sum(m.get("yesProb") or 0 for m in price_markets) / len(price_markets)
@@ -2920,7 +2939,9 @@ def _build_outlook(markets: list[dict]) -> dict:
     elif deribit_scan.get("status") == "no_live_pm":
         headline = "PM↔Deribit idle · live prediction feed unavailable"
     elif above_100:
-        headline = f"BTC > $100k implied: {above_100['yesProb']:.0f}% · fee-aware arb scan clear"
+        headline = (
+            f"{above_100['yesProb']:.0f}% · {btc100k_caption} · fee-aware arb scan clear"
+        )
     elif avg_yes is not None:
         headline = f"Avg BTC price-market Yes: {avg_yes:.0f}% · arb scan clear"
 
@@ -2933,6 +2954,9 @@ def _build_outlook(markets: list[dict]) -> dict:
     return {
         "headline": headline,
         "btc100kProb": above_100["yesProb"] if above_100 else None,
+        "btc100kQuestion": above_100.get("question") if above_100 else None,
+        "btc100kEndDate": (str(above_100.get("endDate"))[:10] if above_100 and above_100.get("endDate") else None),
+        "btc100kCaption": btc100k_caption if above_100 else None,
         "bullishCount": len(bullish),
         "activeMarkets": len(active),
         "totalVolume24h": sum(m.get("volume24h") or 0 for m in active),
@@ -2954,9 +2978,10 @@ def _outlook_commentary(
     active = _active_markets(markets)
 
     if above_100:
+        end = above_100.get("endDate") or "unspecified expiry"
         lines.append(
-            f"Benchmark: {above_100['yesProb']:.0f}% implied probability BTC reaches $100k "
-            f"({above_100['platform'].title()}) — primary cycle sentiment gauge."
+            f"Benchmark: {above_100['yesProb']:.0f}% Yes on “{above_100.get('question')}” "
+            f"({above_100['platform'].title()}, expires {str(end)[:10]})."
         )
 
     if signals:
@@ -3100,7 +3125,7 @@ def _cache_set(key: str, payload: dict) -> None:
 
 
 def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = False) -> dict:
-    cache_key = "prediction-markets:mock" if mock_only else "prediction-markets:live"
+    cache_key = "prediction-markets:mock" if mock_only else "prediction-markets:live:v2"
     cached = _cache_get(cache_key, refresh)
     if cached is not None:
         return cached
@@ -3219,7 +3244,7 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
             {
                 "name": "BTC > $100k",
                 "value": f"{outlook['btc100kProb']:.0f}%" if outlook.get("btc100kProb") is not None else "—",
-                "sub": "Implied probability",
+                "sub": outlook.get("btc100kCaption") or "Implied probability",
             },
             {
                 "name": "Arb opportunities",

@@ -185,6 +185,9 @@ function deliveryFromFallback(snap) {
     contracts,
     coinContracts,
     curvePoints,
+    curveMargin: snap.curveMargin || null,
+    curveLabel: snap.curveLabel || null,
+    indexSource: snap.indexSource || (perp.venue ? `${perp.venue} index` : "Index"),
     fetchedAt: snap.fetchedAt || new Date().toISOString(),
     venue,
     venueLabel: venue,
@@ -213,11 +216,11 @@ async function loadDeliveryFutures() {
     await swr.runSWR({
       key: "derivatives:delivery",
       l1: "derivatives",
-      source: "OKX fallback",
+      source: "Futures venues",
       updateHeader: false,
       fetch: fetchDeliveryBundle,
       render: (data, opts = {}) => {
-        const src = data?.venueLabel || data?.venue || "Binance";
+        const src = data?.venue || data?.venueLabel || "Futures venues";
         if (opts.loading) {
           if (updateEl) updateEl.textContent = "Loading… · " + src;
           return;
@@ -267,6 +270,13 @@ function renderDeliveryScreen() {
   };
 
   set("delivery-index", indexPrice ? "$" + dxFmtPrice(indexPrice) : "—");
+  const indexSub = dxEl("delivery-index-sub");
+  if (indexSub) indexSub.textContent = deliveryData.indexSource || "Index";
+  const curveMeta = dxEl("delivery-curve-meta");
+  if (curveMeta) {
+    const kind = deliveryData.curveLabel || "USDT margin";
+    curveMeta.textContent = kind + " · annualized basis % · days to expiry";
+  }
   set("delivery-perp", "$" + dxFmtPrice(perp.last));
   set("delivery-curve-shape", curveShape);
   set(
@@ -287,7 +297,8 @@ function renderDeliveryScreen() {
 
   const tbody = dxEl("delivery-contracts-body");
   if (tbody) {
-    const rows = [perp, ...contracts, ...deliveryData.coinContracts];
+    const dated = dxDedupeContracts([...(contracts || []), ...(deliveryData.coinContracts || [])]);
+    const rows = [perp, ...dated];
     tbody.innerHTML = rows
       .map((c) => {
         const basisCls = c.basisPct >= 0 ? "positive" : "negative";
@@ -296,7 +307,7 @@ function renderDeliveryScreen() {
           : "—";
         return `<tr>
           <td class="mono">${c.symbol}</td>
-          <td>${c.margin}</td>
+          <td>${dxMarginLabel(c.margin)}</td>
           <td>${c.type}</td>
           <td>${exp}</td>
           <td class="mono">$${dxFmtPrice(c.last)}</td>
@@ -311,7 +322,32 @@ function renderDeliveryScreen() {
   }
 
   drawDeliveryCurveChart(curvePoints);
-  drawDeliveryOiChart([perp, ...contracts, ...(deliveryData.coinContracts || [])]);
+  drawDeliveryOiChart([perp, ...dxDedupeContracts([...(contracts || []), ...(deliveryData.coinContracts || [])])]);
+}
+
+function dxMarginLabel(margin) {
+  const s = String(margin || "").toUpperCase();
+  if (s.startsWith("COIN")) return "COIN-M";
+  if (s.startsWith("USDT")) return "USDT-M";
+  return margin || "—";
+}
+
+function dxDedupeContracts(rows) {
+  const best = new Map();
+  for (const c of rows || []) {
+    if (!c) continue;
+    const key = `${c.margin}|${c.deliveryDate || c.symbol}`;
+    const prev = best.get(key);
+    if (!prev || (Number(c.openInterest) || 0) > (Number(prev.openInterest) || 0)) best.set(key, c);
+  }
+  return [...best.values()].sort((a, b) => (Number(a.deliveryDate) || 0) - (Number(b.deliveryDate) || 0));
+}
+
+function dxShortOiLabel(c) {
+  const margin = String(c.margin || "").toUpperCase().startsWith("COIN") ? "COIN" : "USDT";
+  if (!c.deliveryDate || c.type === "Perpetual" || c.type === "PERPETUAL") return margin + " perp";
+  const days = Number(c.daysToExpiry);
+  return Number.isFinite(days) ? `${margin} ${Math.round(days)}d` : margin;
 }
 
 function drawDeliveryCurveChart(points) {
@@ -328,7 +364,7 @@ function drawDeliveryCurveChart(points) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 28, bottom: 44, left: 64 };
+  const pad = { top: 18, right: 28, bottom: 56, left: 104 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -375,12 +411,7 @@ function drawDeliveryCurveChart(points) {
   curvePts.forEach((p) => {
     const x = pad.left + (p.days / maxDays) * chartW;
     const label = String(p.label || "");
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(x - 36, h - pad.bottom, 72, pad.bottom);
-    ctx.clip();
-    ctx.fillText(label, x, h - 16);
-    ctx.restore();
+    ctx.fillText(label, x, h - 18);
   });
 }
 
@@ -630,6 +661,7 @@ async function fetchOptionsBundle() {
       putOi,
       totalOi: callOi + putOi,
       fetchedAt: new Date().toISOString(),
+      source: payload.source || "Deribit",
     };
 }
 
@@ -663,6 +695,18 @@ async function loadOptionsData() {
         });
         if (volUpdate) volUpdate.textContent = stamp;
         if (oiUpdate) oiUpdate.textContent = stamp;
+        const optionsVisible = document.querySelector(
+          '#dashboard-derivatives .menu-screen[data-l2="options"]:not([hidden])',
+        );
+        if (optionsVisible) {
+          swr.setHeaderStamp("derivatives", {
+            fetchedAt: data.fetchedAt,
+            source: data.source || "Deribit",
+            stale: opts.stale,
+            refreshing: opts.refreshing,
+            refreshFailed: opts.refreshFailed,
+          });
+        }
       },
     });
   } catch (err) {
@@ -905,7 +949,7 @@ function drawDeliveryOiChart(contracts) {
   const rows = contracts
     .filter((c) => c.openInterest != null && c.openInterest > 0)
     .map((c) => ({
-      label: c.type === "PERPETUAL" ? "Perp" : c.symbol.replace(/BTCUSDT_|BTCUSD_/g, ""),
+      label: dxShortOiLabel(c),
       oi: c.openInterest,
       margin: c.margin,
     }))
@@ -923,7 +967,7 @@ function drawDeliveryOiChart(contracts) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 72, bottom: 28, left: 96 };
+  const pad = { top: 16, right: 72, bottom: 28, left: 128 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -939,7 +983,9 @@ function drawDeliveryOiChart(contracts) {
 
   rows.forEach((r, i) => {
     const y = pad.top + i * barH + (barH - bodyH) / 2;
-    const color = r.margin === "COIN-M" ? "rgba(251, 191, 36, 0.75)" : "rgba(14, 203, 129, 0.75)";
+    const color = String(r.margin || "").toUpperCase().startsWith("COIN")
+      ? "rgba(251, 191, 36, 0.75)"
+      : "rgba(14, 203, 129, 0.75)";
     let valueX;
 
     const barW = outlier && i === outlierIdx ? chartW * 0.92 : (r.oi / scaleMax) * chartW;
@@ -950,12 +996,7 @@ function drawDeliveryOiChart(contracts) {
     ctx.fillStyle = "#7d8799";
     ctx.font = "12px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0, y - 1, pad.left - 4, bodyH + 2);
-    ctx.clip();
     ctx.fillText(r.label, pad.left - 8, y + bodyH / 2 + 4);
-    ctx.restore();
     ctx.textAlign = "left";
     ctx.fillText(fmtVol(r.oi) + " BTC", Math.min(valueX + 6, w - pad.right), y + bodyH / 2 + 4);
   });
@@ -965,7 +1006,7 @@ function drawStrikeVolChart(topStrikes, spot) {
   const canvas = dxEl("options-strike-chart");
   if (!canvas || !topStrikes.length) return;
 
-  const ordered = [...topStrikes].reverse();
+  const ordered = [...topStrikes].sort((a, b) => Number(a.strike) - Number(b.strike));
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();

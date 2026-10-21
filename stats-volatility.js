@@ -375,6 +375,7 @@ function volSetKpis(suite) {
   set("vol-kpi-persist", `${pers} · ${hl}`);
   set("vol-kpi-unc", volFmtPct(s.unconditionalVolAnn, 1));
   set("vol-kpi-regime", s.regime || "—");
+  volPaintDvolGap(volCachedDvol());
 }
 
 function volSetLiveIvKpis(suite, chain) {
@@ -405,18 +406,23 @@ function volSetLiveIvKpis(suite, chain) {
         : "Run to load book",
   );
   const g7 = atm7 != null && term7 != null ? atm7 - term7 : null;
-  const g30 = atm30 != null && term30 != null ? atm30 - term30 : null;
+  let g30 = atm30 != null && term30 != null ? atm30 - term30 : null;
+  let gapSub = "7d / 30d gap";
+  if (g7 == null && g30 == null && dvol != null && term30 != null) {
+    g30 = dvol - term30;
+    gapSub = "DVOL − 30d term RV";
+  }
   const gapTxt =
     g7 != null || g30 != null
       ? `${g7 != null ? volFmtPct(g7, 1) : "—"} / ${g30 != null ? volFmtPct(g30, 1) : "—"}`
       : "—";
   set("vol-kpi-ivgap", gapTxt);
   if (!chain) {
-    set("vol-kpi-ivgap-sub", "stale · Deribit chain unavailable");
+    set("vol-kpi-ivgap-sub", g30 != null ? gapSub : "stale · Deribit chain unavailable");
   } else {
     set(
       "vol-kpi-ivgap-sub",
-      g7 != null || g30 != null ? "positive = IV rich vs model" : "7d / 30d gap",
+      g7 != null || g30 != null ? (g7 != null ? "positive = IV rich vs model" : gapSub) : "7d / 30d gap",
     );
   }
   const suiteAsOf = suite?.asOf ? String(suite.asOf).replace("T", " ").slice(0, 16) + " UTC" : "—";
@@ -445,6 +451,32 @@ function volSetLiveIvKpis(suite, chain) {
   } catch {
     /* quota */
   }
+}
+
+function volCachedDvol() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(VOL_IV_CACHE_KEY) || "null");
+    if (cached?.dvol == null) return null;
+    const d = Number(cached.dvol);
+    if (!Number.isFinite(d) || d <= 0) return null;
+    return d > 3 ? d / 100 : d;
+  } catch {
+    return null;
+  }
+}
+
+function volPaintDvolGap(dvolDecimal) {
+  if (dvolDecimal == null || !volSuite) return;
+  const node = volEl("vol-kpi-ivgap");
+  if (node && node.textContent && node.textContent !== "—") return;
+  const s = volSuite.summary || {};
+  const mark = (volSuite.models || []).find((m) => m.id === (s.markModelId || volSuite.bestByQlike));
+  const { term30 } = volMarkTermRv(mark || {}, s);
+  if (term30 == null || !Number.isFinite(Number(term30))) return;
+  const gap = Number(dvolDecimal) - Number(term30);
+  if (node) node.textContent = `— / ${volFmtPct(gap, 1)}`;
+  const sub = volEl("vol-kpi-ivgap-sub");
+  if (sub) sub.textContent = "DVOL − 30d term RV";
 }
 
 function volPaintCachedIv() {
@@ -479,6 +511,7 @@ function volPaintCachedIv() {
       if (sub) {
         sub.textContent = `Deribit DVOL · 30d · as_of ${p.fetchedAt || new Date().toISOString()}`;
       }
+      volPaintDvolGap(dvol);
       try {
         localStorage.setItem(
           VOL_IV_CACHE_KEY,
@@ -567,7 +600,7 @@ function volRenderTable(suite) {
       return `<tr class="vol-row${sel}${best}" data-vol-id="${volEscape(m.id)}" tabindex="0" role="button">
         <td class="vol-td-text vol-td-model">${volEscape(m.name)}</td>
         <td class="vol-td-text">${volEscape(m.family)}</td>
-        <td class="mono vol-td-num">${volFmtNum(m.logLikelihood, 2)}</td>
+        <td class="mono vol-td-num"${m.warning ? ` title="${volEscape(m.warning)}"` : ""}>${volFmtNum(m.logLikelihood, 4)}</td>
         <td class="mono vol-td-num">${aicCell}</td>
         <td class="mono vol-td-num">${bicCell}</td>
         <td class="mono vol-td-num">${qlikeFmt(m)}</td>

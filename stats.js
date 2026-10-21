@@ -2044,7 +2044,7 @@ function renderPowerLawScreen() {
   const updateEl = stEl("pl-update");
   if (updateEl) {
     updateEl.textContent =
-      `Santostasi PLT · R² ${(pl.fit.r2 * 100).toFixed(1)}% · Updated ` +
+      `Santostasi PLT · ${Number(pl.sampleDays || 0).toLocaleString()} daily closes · R² ${(pl.fit.r2 * 100).toFixed(1)}% · Updated ` +
       new Date().toLocaleTimeString("en-US", { hour12: false });
   }
 
@@ -2052,6 +2052,7 @@ function renderPowerLawScreen() {
   if (paramsBody) {
     paramsBody.innerHTML = `
       <tr><td>Genesis Block</td><td class="mono">2009-01-03</td></tr>
+      <tr><td>Daily closes</td><td class="mono">${Number(pl.sampleDays || 0).toLocaleString()}</td></tr>
       <tr><td>Days since Genesis</td><td class="mono">${Math.round(pl.last.days).toLocaleString()}</td></tr>
       <tr><td>Constant A</td><td class="mono">10⁻¹⁶·⁴⁹³ (${pl.constants.A.toExponential(3)})</td></tr>
       <tr><td>Exponent n</td><td class="mono">${pl.constants.n}</td></tr>

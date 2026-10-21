@@ -2,7 +2,7 @@
 
 from btc_data.fetchers import normalize_hash_rate_ehs, _scale_bg_value
 from server import _parse_deribit_option_name, _parse_compact_btc, _bt_num
-from timeseries_models import _origin_budget
+from timeseries_models import _backtest_origins, _origin_budget
 from cross_market import _robust_median
 
 
@@ -74,8 +74,12 @@ def test_datco_compact_and_dict():
 
 
 def test_ts_5y_origin_budget():
-    assert _origin_budget(1825) == (8, 8)
-    assert _origin_budget(3650) == (8, 8)
+    assert _origin_budget(1825) == (36, 40)
+    assert _origin_budget(3650) == (36, 40)
+    origins_5, _meta5 = _backtest_origins(1825)
+    origins_10, _meta10 = _backtest_origins(3650)
+    assert len(origins_5) >= 30
+    assert len(origins_10) >= 30
 
 
 def test_miner_revenue_usd_not_btc():

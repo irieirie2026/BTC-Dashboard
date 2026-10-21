@@ -109,7 +109,7 @@ function buildMacroCommentary(data) {
     dollar:
       "A stronger dollar (DXY) often weighs on BTC and risk assets priced in USD — inverse correlation is common in risk-off regimes.",
     liquidity:
-      "Net liquidity is Fed assets minus overnight reverse repo minus the Treasury General Account (WALCL/1000 − RRP − TGA, USD billions). Expansions in that residual have historically supported BTC.",
+      "Net liquidity is Fed assets minus overnight reverse repo minus the Treasury General Account (WALCL/1000 − RRPONTSYD − WTREGEN/1000, USD billions). Expansions in that residual have historically supported BTC.",
     risk:
       "VIX and credit spreads flag risk appetite; BTC trades as a high-beta asset during macro stress and recovery phases.",
     inflation:

@@ -11,6 +11,7 @@ Surfaces:
 from __future__ import annotations
 
 import json
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -21,6 +22,17 @@ from macro_data.cache import cache_get, cache_set
 MEMPOOL = "https://mempool.space/api"
 USER_AGENT = "BTC-Dashboard/1.0 (+misc-whales)"
 CACHE_TTL = 120
+# Cleared while the startup thread is fetching. HTTP misses wait on it; the warm thread does not.
+_whale_warm_ready = threading.Event()
+_whale_warm_ready.set()
+
+
+def note_whale_warm_start() -> None:
+    _whale_warm_ready.clear()
+
+
+def note_whale_warm_done() -> None:
+    _whale_warm_ready.set()
 # Notable transfers start here; "whale" marketing threshold is higher
 NOTABLE_BTC = 10.0
 WHALE_BTC = 100.0
@@ -238,12 +250,18 @@ def _btc_usd() -> float | None:
     return None
 
 
-def get_misc_whales_payload(*, refresh: bool = False) -> dict:
+def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -> dict:
     cache_key = "misc:whales:v3"
     if not refresh:
         cached = cache_get(cache_key, ttl=CACHE_TTL)
         if cached:
             return {**cached, "fromCache": True}
+        # A cold request waits for the warm thread instead of starting a second 10s fetch.
+        if not from_warm and not _whale_warm_ready.is_set():
+            _whale_warm_ready.wait(12)
+            cached = cache_get(cache_key, ttl=CACHE_TTL)
+            if cached:
+                return {**cached, "fromCache": True}
 
     errors: list[str] = []
     updated_at = _now_iso()

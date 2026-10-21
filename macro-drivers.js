@@ -542,7 +542,7 @@ async function mdLoadUsDrivers(force = false) {
     return mdUsDrivers;
   }
   const result = await swr.runSWR({
-    key: "macro:drivers:us-fred:v1",
+    key: "macro:drivers:us-fred:v2",
     l1: "macro",
     source: "FRED",
     persist: true,

@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=232" />
+    <link rel="stylesheet" href="styles.css?v=233" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
     <!-- Bundled home motto (Grok Luna) — same clip every time; no live TTS / browser voice -->
     <link rel="preload" href="assets/home-motto.mp3" as="audio" type="audio/mpeg" />
@@ -78,7 +78,7 @@
             <span class="logo-icon">₿</span>
             <div>
               <h1>BTC / USDT</h1>
-              <p class="subtitle">Binance Spot & Futures · Real-time</p>
+              <p class="subtitle" id="spot-subtitle">Median spot composite · Real-time</p>
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@
                   <button type="button" class="home-sound-toggle" id="home-sound-toggle" aria-pressed="true">🔊 Buccaneers</button>
                 </div>
                 <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
-                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.1</span><span class="home-banner-chip-lbl">Version</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.2</span><span class="home-banner-chip-lbl">Version</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">14</span><span class="home-banner-chip-lbl">Dashboards</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Law</span><span class="home-banner-chip-lbl">70+ countries</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Arbs</span><span class="home-banner-chip-lbl">PM + Deribit</span></li>
@@ -182,7 +182,7 @@
               <div id="home-section-grid" class="home-section-grid" role="list"></div>
             </section>
             <footer class="home-footer">
-              <p><span class="home-version">Version <span data-app-version>1.1.1</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
+              <p><span class="home-version">Version <span data-app-version>1.1.2</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
             </footer>
           </div>
         </div>
@@ -252,7 +252,7 @@
               </div>
               <canvas id="spot-chart" height="200" aria-label="BTC/USDT candlestick chart"></canvas>
             </div>
-            <span class="chart-label" id="spot-chart-label" data-help-key="spot-chart">1m candles · Binance BTC/USDT</span>
+            <span class="chart-label" id="spot-chart-label" data-help-key="spot-chart">1m candles</span>
           </div>
         </div>
       </section>
@@ -428,7 +428,7 @@
         <section class="panel order-book">
           <div class="panel-header">
             <h2>Depth Chart</h2>
-            <span class="panel-meta">Cumulative volume · 20 levels</span>
+            <span class="panel-meta" id="book-depth-meta">Cumulative volume · 20 levels</span>
           </div>
           <div class="book-body book-body--depth">
             <div class="depth-chart-wrap">
@@ -460,7 +460,7 @@
         <section class="panel order-book">
           <div class="panel-header">
             <h2>Bid / Ask Ladder</h2>
-            <span class="panel-meta">Depth · 20 levels</span>
+            <span class="panel-meta" id="book-ladder-meta">Depth · 20 levels</span>
           </div>
           <div class="book-body book-body--ladder">
             <div class="book-ladder">
@@ -887,7 +887,7 @@
               <div class="futures-price-block">
                 <span class="futures-label" data-help-key="fut-index-price">Index Price</span>
                 <span class="futures-value" id="fut-index">—</span>
-                <span class="futures-sub">Spot composite</span>
+                <span class="futures-sub" id="fut-index-sub">Index</span>
               </div>
               <div class="futures-price-block">
                 <span class="futures-label" data-help-key="fut-basis">Basis</span>
@@ -960,7 +960,7 @@
             <article class="deriv-hero-block">
               <span class="deriv-hero-label">Index Price</span>
               <span class="deriv-hero-value" id="delivery-index">—</span>
-              <span class="deriv-hero-sub">Spot composite</span>
+              <span class="deriv-hero-sub" id="delivery-index-sub">Index</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label">Perp Last</span>
@@ -981,7 +981,7 @@
           <section class="panel">
             <div class="panel-header">
               <h2>Term Structure</h2>
-              <span class="panel-meta">Annualized basis % · days to expiry</span>
+              <span class="panel-meta" id="delivery-curve-meta">USDT margin · annualized basis % · days to expiry</span>
             </div>
             <div class="deriv-chart-wrap">
               <canvas id="delivery-curve-chart" height="220"></canvas>
@@ -5570,24 +5570,24 @@
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
     <script src="help.js?v=182"></script>
-    <script src="version.js?v=3"></script>
+    <script src="version.js?v=4"></script>
     <script src="home.js?v=22"></script>
-    <script src="dashboard.js?v=79"></script>
+    <script src="dashboard.js?v=80"></script>
     <script src="etf.js?v=12"></script>
     <script src="treasury.js?v=16"></script>
-    <script src="derivatives-extra.js?v=22"></script>
+    <script src="derivatives-extra.js?v=23"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=3"></script>
-    <script src="stats.js?v=30"></script>
-    <script src="stats-volatility.js?v=40"></script>
-    <script src="stats-timeseries.js?v=22"></script>
+    <script src="stats.js?v=31"></script>
+    <script src="stats-volatility.js?v=41"></script>
+    <script src="stats-timeseries.js?v=23"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
     <script src="defi.js?v=9"></script>
-    <script src="exchanges.js?v=7"></script>
-    <script src="macro.js?v=6"></script>
-    <script src="macro-drivers.js?v=38"></script>
+    <script src="exchanges.js?v=8"></script>
+    <script src="macro.js?v=7"></script>
+    <script src="macro-drivers.js?v=39"></script>
     <script src="onchain.js?v=6"></script>
     <script src="news.js?v=3"></script>
     <script src="misc-metrics.js?v=5"></script>
@@ -5605,12 +5605,12 @@
     <script src="law.js?v=26"></script>
     <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
-    <script src="prediction-markets.js?v=12"></script>
+    <script src="prediction-markets.js?v=13"></script>
     <script src="cross-market-engine.js?v=12"></script>
     <script src="cross-market-ws.js?v=5"></script>
     <script src="cross-market-charts.js?v=20"></script>
     <script src="cross-market.js?v=29"></script>
-    <script src="spot-charts.js?v=8"></script>
-    <script src="app.js?v=31"></script>
+    <script src="spot-charts.js?v=9"></script>
+    <script src="app.js?v=33"></script>
   </body>
 </html>

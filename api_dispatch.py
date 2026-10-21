@@ -820,7 +820,7 @@ def send_json(handler, status, payload):
         handler.send_response(status)
         handler.send_header("Content-Type", "application/json")
         handler.send_header("Access-Control-Allow-Origin", "*")
-        handler.send_header("Cache-Control", "public, max-age=300")
+        handler.send_header("Cache-Control", "no-store")
         handler.end_headers()
         handler.wfile.write(body)
     except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):

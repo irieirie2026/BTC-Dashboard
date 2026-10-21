@@ -9400,6 +9400,10 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   margin-bottom: 0.5rem;
 }
 
+#vol-kpi-strip {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
 @media (max-width: 900px) {
   .deriv-hero-strip {
     grid-template-columns: repeat(2, 1fr);

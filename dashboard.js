@@ -1193,7 +1193,7 @@ const DASHBOARD_META = {
   },
   market: {
     title: "BTC / USDT",
-    subtitle: "Binance Spot · Real-time",
+    subtitle: "Median spot composite · Real-time",
     pageTitle: "BTC/USDT — Live Market",
   },
   onchain: {
@@ -2014,7 +2014,12 @@ const MenuController = {
     const meta = DASHBOARD_META[l1] || DASHBOARD_META.market;
     const subtitle = document.querySelector(".subtitle");
     const title = document.querySelector(".logo h1");
-    if (subtitle) subtitle.textContent = meta.subtitle;
+    if (subtitle) {
+      subtitle.textContent =
+        l1 === "market" && window.spotCompositeLabel
+          ? window.spotCompositeLabel
+          : meta.subtitle;
+    }
     if (title) title.textContent = meta.title;
     document.title = meta.pageTitle;
 
@@ -2161,16 +2166,12 @@ function syncSectionUrl(l1) {
 
 function bootstrapPathMenu() {
   const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
-  // `/` is the SPA shell. Forcing Home here sent every reload (and any
-  // mid-session document reload) back to Home even while a desk was open.
+  // `/` opens Home. A reload of `/derivatives` (or any other desk path) keeps that desk.
   if (isAppRootPath(path)) {
-    const saved = localStorage.getItem(MENU_L1_KEY);
-    if (!saved || !MENU_TREE[saved]) {
-      localStorage.setItem(MENU_L1_KEY, "home");
-      localStorage.setItem(MENU_L2_KEY, "landing");
-      localStorage.removeItem(MENU_L3_KEY);
-      localStorage.removeItem(MENU_L4_KEY);
-    }
+    localStorage.setItem(MENU_L1_KEY, "home");
+    localStorage.setItem(MENU_L2_KEY, "landing");
+    localStorage.removeItem(MENU_L3_KEY);
+    localStorage.removeItem(MENU_L4_KEY);
     return;
   }
   if (path === "/misc" || path === "/misc/metrics") {

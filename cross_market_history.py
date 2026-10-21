@@ -90,9 +90,17 @@ def get_history(*, days: int = 7, limit: int = 2000) -> dict:
         if len(filtered) >= limit:
             break
     filtered.reverse()
+    empty = len(filtered) == 0
     return {
         "days": days,
         "count": len(filtered),
         "events": filtered,
+        "empty": empty,
+        "emptyReason": (
+            "No cross-market events in this window. Events are written when the desk "
+            "detects a high-severity venue shock. Open Cross-Market and leave it running."
+            if empty
+            else None
+        ),
         "updatedAt": _now_iso(),
     }

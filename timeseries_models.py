@@ -1675,9 +1675,9 @@ def _path_to_price_forecasts(
 # ---------------------------------------------------------------------------
 
 def _origin_budget(n: int) -> tuple[int, int]:
-    """Keep full-suite runtime inside typical 60s serverless limits."""
-    if n >= 1600:  # 5Y and 10Y — forecasts first; thin OOS
-        return 8, 8
+    """Enough expanding origins for N_OOS ≥ 30, still capped so the suite can finish."""
+    if n >= 1600:  # 5Y and 10Y — weekly minimum step, about 36 origins
+        return 36, 40
     if n >= 900:
         return 16, 16
     return BT_TARGET_ORIGINS, BT_MAX_ORIGINS
@@ -1719,8 +1719,8 @@ def _backtest_origins(n: int) -> tuple[list[int], dict[str, Any]]:
         "span": span,
         "note": (
             f"Expanding window: warm-up {min_train}d, then one origin every {step}d "
-            f"through the sample (not daily). Longer estimation ranges keep N OOS "
-            f"capped (~{_origin_budget(n)[1]}) so the suite can finish in time."
+            f"(minimum step {BT_MIN_STEP}d) through the sample. Target N_OOS ≥ 30. "
+            f"Hard cap {_origin_budget(n)[1]} origins so the suite can finish."
         ),
     }
 
@@ -1928,7 +1928,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v10:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v11:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:

@@ -1036,11 +1036,12 @@ _SNAPSHOT_LIVE_KEYS = (
     "fear_greed",
     "open_interest",
     "btc_dominance",
+    "mempool_fees",
 )
 
 
 def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
-    """Live-fetch the eight cells the cold cache path otherwise leaves null."""
+    """Live-fetch snapshot cells the cold cache path otherwise leaves null."""
     from server import get_fear_greed_payload
 
     need = {key for key in _SNAPSHOT_LIVE_KEYS if _cell_value_missing(key, cells.get(key))}
@@ -1059,6 +1060,8 @@ def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
         jobs["oi"] = lambda: fetch_binance_open_interest(refresh=True)
     if "btc_dominance" in need:
         jobs["dom"] = lambda: fetch_coingecko_dominance(refresh=True)
+    if "mempool_fees" in need:
+        jobs["mempool"] = lambda: fetch_mempool_fees(refresh=True)
 
     data: dict[str, Any] = {}
     with ThreadPoolExecutor(max_workers=6) as pool:
@@ -1135,13 +1138,28 @@ def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
             dominance.get("source") or "CoinGecko",
             {"fetchedAt": dominance.get("fetchedAt"), "error": dominance.get("error")},
         )
+
+    mempool = data.get("mempool") or {}
+    # A real 0 sat/vB fee is a reading. Only a missing value is a hole.
+    if "mempool_fees" in need and mempool.get("value") is not None:
+        cells["mempool_fees"] = _cell(
+            mempool.get("value"),
+            "Mempool.space",
+            {
+                "fetchedAt": mempool.get("fetchedAt"),
+                "error": mempool.get("error"),
+                "fastFee": mempool.get("fast_fee"),
+                "hourFee": mempool.get("hour_fee"),
+                "mempoolCount": mempool.get("mempool_count"),
+            },
+        )
     return cells
 
 
 def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     from server import get_fear_greed_payload
 
-    cache_key = "btc:bundle:snapshot:v10"
+    cache_key = "btc:bundle:snapshot:v11"
     fast_source = (
         "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
         "Coin Metrics · Santiment store"

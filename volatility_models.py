@@ -934,6 +934,41 @@ def _fit_ewma(data: dict[str, Any], lam: float = 0.94) -> dict[str, Any]:
     }
 
 
+def _garch_starting_values(am, y):
+    """Lift extra alpha/beta lags off the zero bound so q can actually be estimated.
+
+    arch's model-level starting_values() is not ready before the first fit.
+    """
+    y = np.asarray(y, dtype=float)
+    resids = y - float(np.mean(y))
+    vnames = list(am.volatility.parameter_names())
+    vsv = np.asarray(am.volatility.starting_values(resids), dtype=float).copy()
+    for i, name in enumerate(vnames):
+        low = str(name).lower()
+        if low.startswith("alpha[") and not low.endswith("[1]"):
+            vsv[i] = max(float(vsv[i]), 0.04)
+        if low.startswith("beta[") and not low.endswith("[1]"):
+            vsv[i] = max(float(vsv[i]), 0.20)
+    lag_idx = [i for i, n in enumerate(vnames) if str(n).lower().startswith(("alpha", "beta"))]
+    mass = sum(float(vsv[i]) for i in lag_idx)
+    if mass >= 0.98 and mass > 0:
+        scale = 0.92 / mass
+        for i in lag_idx:
+            vsv[i] *= scale
+    dsv = np.asarray(am.distribution.starting_values(resids), dtype=float)
+    return np.concatenate([np.array([float(np.mean(y))]), vsv, dsv])
+
+
+def _fit_prepared(am, y, *, use_starts: bool):
+    fit_kw = {"disp": "off", "show_warning": False, "options": {"maxiter": 500}}
+    if use_starts:
+        try:
+            return am.fit(starting_values=_garch_starting_values(am, y), **fit_kw)
+        except Exception:
+            return am.fit(**fit_kw)
+    return am.fit(**fit_kw)
+
+
 def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist: str) -> dict[str, Any]:
     if catalog["id"] == "har_rv":
         return _fit_har(data)
@@ -1023,7 +1058,8 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
                 q=int(kwargs.get("q") or 0),
                 power=float(kwargs.get("power") or 2.0),
             )
-        res = am.fit(disp="off", show_warning=False)
+        use_starts = str(kwargs.get("vol") or "GARCH").upper() == "GARCH"
+        res = _fit_prepared(am, y, use_starts=use_starts)
     except Exception as exc:
         # Retry with normal dist
         try:
@@ -1042,7 +1078,8 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
                     q=int(kwargs.get("q") or 0),
                     power=float(kwargs.get("power") or 2.0),
                 )
-            res = am.fit(disp="off", show_warning=False)
+            use_starts = str(kwargs.get("vol") or "GARCH").upper() == "GARCH"
+            res = _fit_prepared(am, y, use_starts=use_starts)
         except Exception as exc2:
             return {"ok": False, "error": str(exc2)[:240]}
 
@@ -1072,20 +1109,42 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
     cond = np.asarray(res.conditional_volatility, dtype=float) / 100.0
     std_resid = np.asarray(res.std_resid, dtype=float)
 
-    # Persistence heuristics
+    # Persistence heuristics. Plain GARCH sums every alpha and beta lag.
     pmap = {str(k).lower(): float(v) for k, v in res.params.items()}
     alpha = pmap.get("alpha[1]") or pmap.get("alpha") or 0.0
     beta = pmap.get("beta[1]") or pmap.get("beta") or 0.0
     gamma = pmap.get("gamma[1]") or pmap.get("gamma") or 0.0
+    alpha_sum = sum(v for k, v in pmap.items() if k.startswith("alpha"))
+    beta_sum = sum(v for k, v in pmap.items() if k.startswith("beta"))
+    gamma_sum = sum(v for k, v in pmap.items() if k.startswith("gamma"))
+    vol_name = str(kwargs.get("vol") or "").upper()
     pers = None
-    if "egarch" in catalog["id"]:
+    if "egarch" in catalog["id"] or vol_name == "EGARCH":
         pers = abs(beta) if beta else None
     elif "gjr" in catalog["id"]:
-        pers = alpha + beta + 0.5 * gamma
+        pers = (alpha_sum or alpha) + (beta_sum or beta) + 0.5 * (gamma_sum or gamma)
+    elif vol_name == "HARCH" or "harch" in catalog["id"]:
+        pers = alpha + beta if (alpha or beta) else None
+    elif vol_name == "GARCH" or str(catalog["id"]).startswith("garch"):
+        pers = alpha_sum + beta_sum if (alpha_sum or beta_sum) else None
     else:
         pers = alpha + beta if (alpha or beta) else None
     if pers is not None and pers >= 1:
         pers = min(pers, 0.999)
+
+    bound = [
+        name
+        for name, est in pmap.items()
+        if (name.startswith("alpha[") or name.startswith("beta["))
+        and not name.endswith("[1]")
+        and abs(est) < 1e-8
+    ]
+    order_note = None
+    if bound and vol_name == "GARCH":
+        order_note = (
+            f"Orders p={fit_orders.get('p')} q={fit_orders.get('q')} were fit. "
+            f"{', '.join(bound)} at the zero bound, so this likelihood matches the nested smaller order."
+        )
 
     # Forecasts (1..30)
     forecasts = []
@@ -1137,6 +1196,7 @@ def _fit_arch(model_id: str, catalog: dict[str, Any], data: dict[str, Any], dist
         "archLmProxy": abs(acf1),
         "distribution": dist_key,
         "orders": fit_orders,
+        "warning": order_note,
     }
 
 
@@ -1516,7 +1576,7 @@ def get_volatility_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Estimate catalog of models and return comparison + series for UI."""
-    key = f"vol:suite:v7:{days}:{dist}:{','.join(models or [])}"
+    key = f"vol:suite:v8:{days}:{dist}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached:

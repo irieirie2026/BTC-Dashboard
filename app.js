@@ -169,6 +169,17 @@ function updateDepth(data) {
   $("spread").textContent =
     formatPrice(spread) + " (" + spreadPct.toFixed(4) + "%)";
   $("book-mid").textContent = formatPrice(mid);
+  const bookVenue = data?.venue ? String(data.venue) : "";
+  const ladderMeta = document.getElementById("book-ladder-meta");
+  if (ladderMeta) {
+    ladderMeta.textContent = bookVenue ? `Depth · 20 levels · ${bookVenue}` : "Depth · 20 levels";
+  }
+  const depthMeta = document.getElementById("book-depth-meta");
+  if (depthMeta) {
+    depthMeta.textContent = bookVenue
+      ? `Cumulative volume · 20 levels · ${bookVenue}`
+      : "Cumulative volume · 20 levels";
+  }
   $("spread-bid").textContent = formatPrice(bestBid);
   $("spread-ask").textContent = formatPrice(bestAsk);
 
@@ -349,28 +360,7 @@ function mapCoinbaseTicker(msg) {
     q: (parseFloat(msg.volume_24h) || 0) * (parseFloat(msg.price) || 0),
     w: msg.price,
   });
-  // Header bid/ask and the ladder top stay on this same ticker print.
-  if (msg.best_bid && msg.best_ask) {
-    const bidPx = parseFloat(msg.best_bid);
-    const askPx = parseFloat(msg.best_ask);
-    const bidSz = parseFloat(msg.best_bid_size) || 0;
-    const askSz = parseFloat(msg.best_ask_size) || 0;
-    rememberBookAnchor(bidPx, askPx);
-    if (lastBids.length >= 5 && lastAsks.length >= 5) {
-      const bids = lastBids.map((row) => [row[0], row[1]]);
-      const asks = lastAsks.map((row) => [row[0], row[1]]);
-      const bidQty = bidSz || bids[0][1];
-      const askQty = askSz || asks[0][1];
-      const pinnedBids = [[bidPx, bidQty], ...bids.slice(1).filter((row) => row[0] < bidPx)];
-      const pinnedAsks = [[askPx, askQty], ...asks.slice(1).filter((row) => row[0] > askPx)];
-      updateDepth({ bids: pinnedBids, asks: pinnedAsks });
-    } else {
-      updateDepth({
-        bids: [[bidPx, bidSz]],
-        asks: [[askPx, askSz]],
-      });
-    }
-  }
+  // The Coinbase ticker is one bid and one ask. It must not replace the 20-level book.
 }
 
 function connectCoinbase() {
@@ -755,6 +745,8 @@ function applyFuturesBundle(bundle) {
   updateFuturesHero(state.price, state.openPrice);
   $("fut-mark").textContent = Number.isFinite(state.mark) ? formatPrice(state.mark) : "—";
   $("fut-index").textContent = Number.isFinite(state.index) ? formatPrice(state.index) : "—";
+  const indexSub = document.getElementById("fut-index-sub");
+  if (indexSub) indexSub.textContent = bundle.indexSource || "Index";
   updateFuturesBasis(state.mark, state.index);
   updateFundingCountdown();
   refreshFuturesGrid();
@@ -812,7 +804,8 @@ function perpBundleFromSnapshot(perp) {
     ],
     fetchedAt: perp.fetchedAt || new Date().toISOString(),
     venue,
-    venueLabel: venue + " fallback",
+    venueLabel: venue,
+    indexSource: perp.indexSource || (venue ? `${venue} index` : "Index"),
   };
 }
 
@@ -840,6 +833,9 @@ async function loadFuturesData() {
         }
         applyFuturesBundle(data);
         futuresVenue = (data.venue || futuresVenue || "okx").toLowerCase();
+        const optionsOpen = document.querySelector(
+          '#dashboard-derivatives .menu-screen[data-l2="options"]:not([hidden]), #dashboard-derivatives .menu-screen[data-l2="volatility"]:not([hidden])',
+        );
         if (data.marketState?.price) setConnectionStatus("connected", "futures-status");
         setFuturesPanelMeta({
           fetchedAt: data.fetchedAt,
@@ -848,13 +844,15 @@ async function loadFuturesData() {
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,
         });
-        window.DashboardSWR?.setHeaderStamp?.("derivatives", {
-          fetchedAt: data.fetchedAt,
-          source: src,
-          stale: opts.stale,
-          refreshing: opts.refreshing,
-          refreshFailed: opts.refreshFailed,
-        });
+        if (!optionsOpen) {
+          window.DashboardSWR?.setHeaderStamp?.("derivatives", {
+            fetchedAt: data.fetchedAt,
+            source: src,
+            stale: opts.stale,
+            refreshing: opts.refreshing,
+            refreshFailed: opts.refreshFailed,
+          });
+        }
       },
     });
   } catch (err) {
@@ -900,22 +898,46 @@ function connectFutures() {
 
 function alignBookToTicker(depth, ticker) {
   if (!depth || !ticker) return depth;
+  const bookVenue = String(depth.venue || "").toLowerCase();
+  const tickVenue = String(ticker.venue || "").toLowerCase();
+  if (!bookVenue || !tickVenue || bookVenue !== tickVenue) return depth;
   const bid = parseFloat(ticker.bidPrice);
   const ask = parseFloat(ticker.askPrice);
   if (!(bid > 0) || !(ask > 0)) return depth;
   const bids = (depth.bids || []).map((row) => [parseFloat(row[0]), parseFloat(row[1])]);
   const asks = (depth.asks || []).map((row) => [parseFloat(row[0]), parseFloat(row[1])]);
-  if (!bids.length || !asks.length) return depth;
+  if (bids.length < 20 || asks.length < 20) return depth;
+  const bestBid = bids[0][0];
+  const bestAsk = asks[0][0];
+  if (!(bestBid > 0) || !(bestAsk > 0)) return depth;
+  if (Math.abs(bid - bestBid) / bestBid > 0.002) return depth;
+  if (Math.abs(ask - bestAsk) / bestAsk > 0.002) return depth;
   const bidQty = Number.isFinite(bids[0][1]) ? bids[0][1] : 0;
   const askQty = Number.isFinite(asks[0][1]) ? asks[0][1] : 0;
   const pinnedBids = [[bid, bidQty], ...bids.slice(1).filter((row) => row[0] < bid && row[0] > 0 && row[1] > 0)];
   const pinnedAsks = [[ask, askQty], ...asks.slice(1).filter((row) => row[0] > ask && row[1] > 0)];
-  rememberBookAnchor(bid, ask);
+  if (pinnedBids.length < 20 || pinnedAsks.length < 20) return depth;
+  rememberBookAnchor(bid, ask, depth.venue);
   return { ...depth, bids: pinnedBids.slice(0, 20), asks: pinnedAsks.slice(0, 20) };
 }
 
 function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
+  const venueLabel = bundle.venue || ticker?.venue || "Median spot composite";
+  window.spotCompositeLabel = venueLabel;
+  const sub = document.querySelector(".subtitle");
+  if (sub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
+    sub.textContent = venueLabel;
+  }
+  const chartLabel = document.getElementById("spot-chart-label");
+  if (chartLabel && bundle.klineVenue) {
+    const text = `1m candles · ${bundle.klineVenue}`;
+    if (chartLabel.dataset.helpDecorated && window.labelWithHelp) {
+      chartLabel.innerHTML = window.labelWithHelp(text, "spot-chart");
+    } else {
+      chartLabel.textContent = text;
+    }
+  }
 
   updateTicker({
     c: ticker.lastPrice,
@@ -927,12 +949,14 @@ function applySpotBundle(bundle) {
     w: ticker.weightedAvgPrice,
   });
 
-  window.SpotCharts?.applyInitialKlines?.(klines);
-  const sameVenue =
-    !bundle.depthVenue ||
-    !bundle.venue ||
-    String(bundle.depthVenue).toLowerCase() === String(bundle.venue).toLowerCase();
-  updateDepth(sameVenue ? alignBookToTicker(depth, ticker) : depth);
+  window.SpotCharts?.applyInitialKlines?.(klines, bundle.klineVenue);
+  // The median last is not pinned onto another venue's book.
+  updateDepth({
+    bids: (depth?.bids || []).slice(0, 20),
+    asks: (depth?.asks || []).slice(0, 20),
+    venue: bundle.depthVenue || depth?.venue || null,
+  });
+  if (bundle.depthVenue) rememberBookAnchor(depth?.bids?.[0]?.[0], depth?.asks?.[0]?.[0], bundle.depthVenue);
 }
 
 async function loadInitialData() {
@@ -951,22 +975,21 @@ async function loadInitialData() {
         ]);
         if (!bundle?.ticker?.lastPrice) throw new Error(bundle?.error || "Spot feed unavailable");
         const bundleBook = bundle.depth || { bids: [], asks: [] };
-        const venuesMatch =
-          bundle.depthVenue &&
-          bundle.venue &&
-          String(bundle.depthVenue).toLowerCase() === String(bundle.venue).toLowerCase();
-        const book = venuesMatch && bundleBook.bids?.length >= 5
-          ? { ...bundleBook, venue: bundle.depthVenue }
-          : (depth?.bids?.length >= 5 && depth?.asks?.length >= 5
-            ? depth
-            : bundleBook);
+        const depthBook =
+          depth?.bids?.length >= 20 && depth?.asks?.length >= 20 ? depth : null;
+        const bundled =
+          bundleBook.bids?.length >= 20 && bundleBook.asks?.length >= 20
+            ? { ...bundleBook, venue: bundle.depthVenue || bundleBook.venue }
+            : null;
+        const book = depthBook || bundled || bundleBook;
         return {
           ticker: bundle.ticker,
           klines: bundle.klines || [],
           depth: book,
           depthVenue: book.venue || bundle.depthVenue || null,
+          klineVenue: bundle.klineVenue || null,
           fetchedAt: bundle.fetchedAt || new Date().toISOString(),
-          venue: bundle.venue || depth?.venue || "proxy",
+          venue: bundle.venue || "Median spot composite",
         };
       },
       render: (data, opts = {}) => {
@@ -1015,23 +1038,33 @@ connect();
 
 let bookAnchor = null;
 
-function rememberBookAnchor(bid, ask) {
+function rememberBookAnchor(bid, ask, venue) {
   const b = parseFloat(bid);
   const a = parseFloat(ask);
-  if (b > 0 && a > 0) bookAnchor = { bid: b, ask: a };
+  if (b > 0 && a > 0) bookAnchor = { bid: b, ask: a, venue: venue || bookAnchor?.venue || null };
 }
 
 async function refreshProxiedDepth() {
   try {
     const depth = await fetch("/api/market/depth?limit=40", { cache: "no-store" }).then((r) => r.json());
-    if (!(depth?.bids?.length >= 5 && depth?.asks?.length >= 5)) return;
-    const aligned = bookAnchor
-      ? alignBookToTicker(depth, { bidPrice: bookAnchor.bid, askPrice: bookAnchor.ask })
+    if (!(depth?.bids?.length >= 20 && depth?.asks?.length >= 20)) return;
+    const sameVenue =
+      bookAnchor?.venue &&
+      depth.venue &&
+      String(bookAnchor.venue).toLowerCase() === String(depth.venue).toLowerCase();
+    const aligned = sameVenue
+      ? alignBookToTicker(depth, {
+          bidPrice: bookAnchor.bid,
+          askPrice: bookAnchor.ask,
+          venue: bookAnchor.venue,
+        })
       : depth;
     updateDepth({
       bids: (aligned.bids || []).slice(0, 20),
       asks: (aligned.asks || []).slice(0, 20),
+      venue: depth.venue,
     });
+    rememberBookAnchor(aligned.bids?.[0]?.[0], aligned.asks?.[0]?.[0], depth.venue);
   } catch (_) {
     /* keep the last ladder */
   }

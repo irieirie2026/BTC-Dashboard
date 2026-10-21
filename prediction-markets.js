@@ -177,7 +177,7 @@ function pmMockPayload() {
     errors: [],
     markets,
     heroes: [
-      { name: "BTC > $100k", value: "58%", sub: "Implied probability" },
+      { name: "BTC > $100k", value: "58%", sub: "Will Bitcoin reach $100,000 before 2027? · expires 2026-12-31" },
       { name: "Active markets", value: String(markets.filter((m) => m.active).length), sub: "Filtered universe" },
       { name: "24h volume", value: pmFmtUsd(markets.reduce((s, m) => s + (m.volume24h || 0), 0)), sub: "Combined" },
       { name: "Platforms", value: "2", sub: "Polymarket + Kalshi" },

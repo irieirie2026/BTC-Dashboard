@@ -343,9 +343,10 @@ def get_liquidity_map_api_payload(
     return get_liquidity_map_payload(metric=metric, year=year, refresh=refresh)
 
 
-# US overview series. YoY uses a 12-observation lag: (v_t / v_{t-12} - 1) * 100.
+# US overview series. CPI-U NSA is the BLS headline. CPIAUCSL is the SA index and will not match it.
+# YoY uses the same calendar month a year earlier: (v_t / v_{t-12m} - 1) * 100.
 _US_FRED_SPECS = (
-    {"id": "CPIAUCSL", "label": "CPI YoY", "unit": "%", "transform": "yoy"},
+    {"id": "CPIAUCNS", "label": "CPI-U NSA YoY (BLS headline)", "unit": "%", "transform": "yoy"},
     {"id": "PCEPILFE", "label": "Core PCE YoY", "unit": "%", "transform": "yoy"},
     {"id": "UNRATE", "label": "Unemployment", "unit": "%", "transform": "level"},
     {"id": "DGS2", "label": "2-Year", "unit": "%", "transform": "level"},
@@ -359,13 +360,23 @@ def _fred_display_points(obs: list[tuple[str, float]], transform: str) -> list[d
     rows = sorted(obs, key=lambda item: item[0])
     if transform != "yoy":
         return [{"date": date, "value": round(float(value), 4)} for date, value in rows]
+    by_month: dict[str, float] = {}
+    for date, value in rows:
+        by_month[str(date)[:7]] = float(value)
     points: list[dict[str, Any]] = []
-    for i in range(12, len(rows)):
-        prev = rows[i - 12][1]
+    for date, value in rows:
+        ym = str(date)[:7]
+        if len(ym) < 7 or ym[4] != "-":
+            continue
+        try:
+            prev_key = f"{int(ym[:4]) - 1}-{ym[5:7]}"
+        except ValueError:
+            continue
+        prev = by_month.get(prev_key)
         if not prev:
             continue
-        yoy = (rows[i][1] / prev - 1.0) * 100.0
-        points.append({"date": rows[i][0], "value": round(yoy, 4)})
+        yoy = (float(value) / prev - 1.0) * 100.0
+        points.append({"date": date, "value": round(yoy, 4)})
     return points
 
 

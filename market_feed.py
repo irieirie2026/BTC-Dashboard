@@ -1,7 +1,7 @@
 """Multi-venue BTC/ETH market proxy — Binance is often blocked in-browser.
 
 Same-origin JSON for spot ticker, klines (Binance-shaped), ETH daily, and perp OI.
-Venues tried in order: Coinbase, Kraken, OKX, Bitstamp, then Binance.
+The spot card is the median last of the live venues. The order book stays on one venue.
 """
 
 from __future__ import annotations
@@ -191,31 +191,59 @@ def _binance_ticker() -> dict[str, Any] | None:
 
 
 def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
+    """Median last of every live spot venue. The book venue stays OKX."""
     global _last_quote_venue
-    key = "market:quote:v1"
+    key = "market:quote:v2"
     if not refresh:
         cached = _cache_get(key)
         if cached:
             cached["fromCache"] = True
-            if cached.get("venue"):
-                _last_quote_venue = cached.get("venue")
+            _last_quote_venue = "OKX"
             return cached
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    fns = (_coinbase_ticker, _kraken_ticker, _okx_ticker, _bitstamp_ticker, _binance_ticker)
+    rows: list[dict[str, Any]] = []
     errors: list[str] = []
-    for fn in (_coinbase_ticker, _kraken_ticker, _okx_ticker, _bitstamp_ticker, _binance_ticker):
-        try:
-            ticker = fn()
-            if ticker and _f(ticker.get("lastPrice")):
-                _last_quote_venue = ticker.get("venue")
-                payload = {
-                    "ticker": ticker,
-                    "venue": ticker.get("venue"),
-                    "fetchedAt": _now_iso(),
-                    "errors": errors,
-                }
-                return _cache_set(key, payload)
-        except Exception as exc:
-            errors.append(f"{fn.__name__}: {exc}")
-    return {"ticker": None, "venue": None, "error": "All venues failed", "errors": errors, "fetchedAt": _now_iso()}
+    with ThreadPoolExecutor(max_workers=len(fns)) as pool:
+        futs = {pool.submit(fn): fn.__name__ for fn in fns}
+        for fut in as_completed(futs):
+            name = futs[fut]
+            try:
+                ticker = fut.result()
+                if ticker and _f(ticker.get("lastPrice")):
+                    rows.append(ticker)
+            except Exception as exc:
+                errors.append(f"{name}: {exc}")
+    if not rows:
+        return {
+            "ticker": None,
+            "venue": None,
+            "error": "All venues failed",
+            "errors": errors,
+            "fetchedAt": _now_iso(),
+        }
+    prices = sorted(p for p in (_f(t.get("lastPrice")) for t in rows) if p)
+    mid = len(prices) // 2
+    median = prices[mid] if len(prices) % 2 else (prices[mid - 1] + prices[mid]) / 2.0
+    names = [str(t.get("venue")) for t in rows if t.get("venue")]
+    base = min(rows, key=lambda t: abs((_f(t.get("lastPrice")) or median) - median))
+    ticker = dict(base)
+    ticker["lastPrice"] = f"{median:.2f}"
+    ticker["pair"] = "BTC composite"
+    label = f"Median · {len(names)} venues ({', '.join(names)})"
+    ticker["venue"] = label
+    # Depth must not follow the composite label. The ladder is one venue.
+    _last_quote_venue = "OKX"
+    payload = {
+        "ticker": ticker,
+        "venue": label,
+        "venues": names,
+        "medianLast": median,
+        "fetchedAt": _now_iso(),
+        "errors": errors,
+    }
+    return _cache_set(key, payload)
 
 
 def _coinbase_candles(product: str, gran: int, limit: int) -> list[list]:
@@ -549,6 +577,7 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "lastPrice": last,
         "markPrice": mark,
         "indexPrice": index,
+        "indexSource": "OKX index",
         "openInterest": oi,
         "fundingRate": funding,
         "nextFundingTime": next_funding,
@@ -584,6 +613,7 @@ def _hl_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "lastPrice": mark,
         "markPrice": mark,
         "indexPrice": oracle,
+        "indexSource": "Hyperliquid oracle",
         "openInterest": _f(ctx.get("openInterest")),
         "fundingRate": _f(ctx.get("funding")),
         "longShortRatio": None,
@@ -609,6 +639,7 @@ def _bybit_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "lastPrice": last,
         "markPrice": _f(row.get("markPrice")) or last,
         "indexPrice": _f(row.get("indexPrice")) or last,
+        "indexSource": "Bybit index",
         "openInterest": _f(row.get("openInterest")),
         "fundingRate": _f(row.get("fundingRate")),
         "longShortRatio": None,
@@ -681,7 +712,7 @@ def get_liquidations(*, refresh: bool = False) -> dict[str, Any]:
 
 
 def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
-    key = "market:perp:v1"
+    key = "market:perp:v2"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -918,9 +949,40 @@ def _fetch_bybit_dated(index_hint: float | None) -> tuple[list[dict], dict | Non
     return out, perp, []
 
 
+def _dedupe_contracts(rows: list[dict]) -> list[dict]:
+    """One row per margin and expiry. Keep the higher open interest."""
+    best: dict[tuple, dict] = {}
+    order: list[tuple] = []
+    for row in rows or []:
+        if not isinstance(row, dict):
+            continue
+        key = (row.get("margin"), row.get("deliveryDate") or row.get("symbol"))
+        prev = best.get(key)
+        if prev is None:
+            best[key] = row
+            order.append(key)
+            continue
+        if (row.get("openInterest") or 0) > (prev.get("openInterest") or 0):
+            best[key] = row
+    out = [best[k] for k in order]
+    out.sort(key=lambda c: c.get("deliveryDate") or 0)
+    return out
+
+
+def _curve_tick_label(row: dict) -> str:
+    margin = "COIN" if str(row.get("margin") or "").upper().startswith("COIN") else "USDT"
+    days = row.get("daysToExpiry")
+    if days is None:
+        return margin
+    try:
+        return f"{margin} {int(round(float(days)))}d"
+    except (TypeError, ValueError):
+        return margin
+
+
 def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     """Dated BTC futures from OKX, Deribit, and Bybit."""
-    key = "market:futures:v3"
+    key = "market:futures:v4"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -939,23 +1001,38 @@ def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
         deribit, deribit_index, deribit_err = deribit_f.result()
         bybit, bybit_perp, bybit_err = bybit_f.result()
     errors.extend(okx_err + deribit_err + bybit_err)
-    # Spot composite on Futures uses the same OKX BTC-USDT index as the Perp tab.
+    # Index is the perp venue index, then OKX, then Deribit. It is not the spot median.
     index = index_hint or okx_index or deribit_index
     if isinstance(perp, dict) and index and not perp.get("indexPrice"):
         perp["indexPrice"] = index
-    coin_contracts = (coin or []) + (deribit or []) + (bybit or [])
-    coin_contracts.sort(key=lambda c: c.get("deliveryDate") or 0)
+    usdt = _dedupe_contracts(usdt)
+    coin_contracts = _dedupe_contracts((coin or []) + (deribit or []) + (bybit or []))
+    curve_usdt = bool(usdt)
     curve_src = (usdt or coin_contracts)[:8]
-    curve = [{"label": "Perp", "days": 0, "basis": 0, "annBasis": 0}]
+    curve_margin = "USDT" if curve_usdt else "COIN"
+    curve = [{"label": "Perp", "days": 0, "basis": 0, "annBasis": 0, "margin": curve_margin}]
     for c in curve_src:
         if c.get("daysToExpiry") is None:
             continue
         curve.append({
-            "label": c["symbol"],
+            "label": _curve_tick_label(c),
             "days": c["daysToExpiry"],
             "basis": c.get("basisPct") or 0,
             "annBasis": c.get("annBasisPct") or 0,
+            "margin": c.get("margin"),
         })
+    index_source = "Index"
+    if (
+        index is not None
+        and index_hint is not None
+        and abs(float(index) - float(index_hint)) < 1
+        and isinstance(perp, dict)
+    ):
+        index_source = perp.get("indexSource") or f"{perp.get('venue') or 'Perp'} index"
+    elif okx_index is not None and index is not None and abs(float(index) - float(okx_index)) < 1:
+        index_source = "OKX index"
+    elif deribit_index is not None:
+        index_source = "Deribit index"
     venues = []
     if usdt or coin:
         venues.append("OKX")
@@ -971,6 +1048,9 @@ def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
         "fallback": True,
         "fetchedAt": _now_iso(),
         "indexPrice": index,
+        "indexSource": index_source,
+        "curveMargin": curve_margin,
+        "curveLabel": "USDT margin" if curve_margin == "USDT" else "COIN margin",
         "perp": perp if isinstance(perp, dict) else {},
         "contracts": (usdt or [])[:12],
         "coinContracts": coin_contracts[:12],
@@ -1106,20 +1186,21 @@ def _depth_aligned_to_ticker(depth: dict[str, Any], ticker: dict[str, Any], quot
 def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
     quote = get_spot_quote(refresh=refresh)
     klines = get_klines(interval="1m", limit=500, refresh=refresh)
-    # Extra levels so pinning the ticker top still leaves a 20-row ladder.
-    depth = get_depth(limit=80, refresh=refresh, prefer=quote.get("venue"))
+    # One venue's book. The composite last is not pinned onto these levels.
+    depth = get_depth(limit=40, refresh=refresh, prefer="OKX")
     ticker = quote.get("ticker") or {}
-    if ticker:
-        depth = _depth_aligned_to_ticker(depth, ticker, quote.get("venue"))
     return {
         "ticker": ticker,
         "klines": klines.get("klines") or [],
         "depth": {
             "bids": (depth.get("bids") or [])[:20],
             "asks": (depth.get("asks") or [])[:20],
+            "venue": depth.get("venue"),
         },
         "depthVenue": depth.get("venue"),
         "venue": quote.get("venue") or klines.get("venue"),
+        "klineVenue": klines.get("venue"),
+        "venues": quote.get("venues") or [],
         "fetchedAt": _now_iso(),
         "errors": (quote.get("errors") or []) + (klines.get("errors") or []) + (depth.get("errors") or []),
     }
