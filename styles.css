@@ -6960,6 +6960,15 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   background: var(--red);
 }
 
+.status.stale .status-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.status.stale .status-text {
+  color: #f59e0b;
+}
+
 .last-update {
   font-family: var(--mono);
   font-size: 0.75rem;

@@ -21,7 +21,8 @@ from macro_data.cache import cache_get, cache_set
 
 MEMPOOL = "https://mempool.space/api"
 USER_AGENT = "BTC-Dashboard/1.0 (+misc-whales)"
-CACHE_TTL = 120
+# Longer than one warm pass (~170s) plus the 90s sleep, including a slow whale scan.
+CACHE_TTL = 900
 # Cleared while the startup thread is fetching. HTTP misses wait on it; the warm thread does not.
 _whale_warm_ready = threading.Event()
 _whale_warm_ready.set()

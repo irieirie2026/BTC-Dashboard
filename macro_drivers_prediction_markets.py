@@ -547,6 +547,7 @@ def _normalize_market(
     active: bool = True,
     event_title: str | None = None,
     tags: list | None = None,
+    quoted_at: str | None = None,
 ) -> dict | None:
     if not question or yes_p is None:
         return None
@@ -583,6 +584,7 @@ def _normalize_market(
         "active": active and not resolved,
         "resolved": resolved,
         "btcHighlight": btc_highlight,
+        "quotedAt": str(quoted_at) if quoted_at else None,
     }
 
 
@@ -621,6 +623,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
                 active=bool(m.get("active", True)) and not m.get("closed"),
                 event_title=event_title,
                 tags=tags,
+                quoted_at=m.get("updatedAt") or m.get("updated_at") or event.get("updatedAt"),
             )
             if row:
                 markets_out.append(row)
@@ -647,6 +650,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
         liquidity=_as_float(event.get("liquidity")),
         active=bool(event.get("active", True)) and not event.get("closed"),
         tags=tags,
+        quoted_at=event.get("updatedAt") or event.get("updated_at"),
     )
     return [row] if row else []
 
@@ -677,6 +681,7 @@ def _parse_polymarket_market(m: dict, event: dict | None = None) -> dict | None:
         active=bool(m.get("active", True)) and not m.get("closed"),
         event_title=(event or {}).get("title"),
         tags=tags,
+        quoted_at=m.get("updatedAt") or m.get("updated_at") or (event or {}).get("updatedAt"),
     )
 
 
@@ -1520,6 +1525,7 @@ def _arb_market_ref(m: dict, **extra) -> dict:
         "endDate": m.get("endDate"),
         "volume24h": m.get("volume24h"),
         "liquidity": m.get("liquidity"),
+        "quotedAt": m.get("quotedAt"),
         "eventTitle": m.get("eventTitle"),
     }
     ref.update(extra)
@@ -2161,6 +2167,51 @@ def _find_cross_platform_arbs(markets: list[dict]) -> list[dict]:
     return sorted(opps, key=lambda x: x["edgePct"], reverse=True)
 
 
+def _quote_age_hours(market: dict) -> float | None:
+    raw = market.get("quotedAt") or market.get("updatedAt")
+    if raw in (None, ""):
+        return None
+    ts = None
+    if isinstance(raw, (int, float)):
+        ts = float(raw)
+        if ts > 1e12:
+            ts /= 1000.0
+    else:
+        text = str(raw).strip()
+        if text.isdigit():
+            ts = float(text)
+            if ts > 1e12:
+                ts /= 1000.0
+        else:
+            try:
+                ts = datetime.fromisoformat(text.replace("Z", "+00:00")).timestamp()
+            except ValueError:
+                return None
+    if ts is None:
+        return None
+    return (time.time() - ts) / 3600.0
+
+
+def _ladder_leg_tradable(market: dict) -> bool:
+    """Drop a strike-ladder leg that is illiquid or whose quote is older than 6 hours."""
+    liq_ok = False
+    vol_ok = False
+    try:
+        liq_ok = market.get("liquidity") is not None and float(market.get("liquidity")) >= 10000
+    except (TypeError, ValueError):
+        liq_ok = False
+    try:
+        vol_ok = market.get("volume24h") is not None and float(market.get("volume24h")) >= 5000
+    except (TypeError, ValueError):
+        vol_ok = False
+    if not liq_ok and not vol_ok:
+        return False
+    age = _quote_age_hours(market)
+    if age is not None and age > 6:
+        return False
+    return True
+
+
 def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
     """Nested BTC ladders: P(S>K_high) ≤ P(S>K_low). Violation → buy low Yes + buy high No."""
     opps: list[dict] = []
@@ -2191,6 +2242,8 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
             if not same_event and _ladder_similarity(low_m["question"], high_m["question"]) < 0.55:
                 continue
             if not _end_dates_compatible(low_m, high_m, max_days=21) and not same_event:
+                continue
+            if not _ladder_leg_tradable(low_m) or not _ladder_leg_tradable(high_m):
                 continue
             yes_low = _yes_price(low_m)
             no_high = _no_price(high_m)
@@ -2269,6 +2322,22 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
                             "yesLow": round(yes_low * 100, 1),
                             "yesHigh": round(yes_high * 100, 1),
                         },
+                        "legsLiquidity": [
+                            {
+                                "id": low_m.get("id"),
+                                "liquidity": low_m.get("liquidity"),
+                                "volume24h": low_m.get("volume24h"),
+                                "quotedAt": low_m.get("quotedAt"),
+                                "ageHours": _quote_age_hours(low_m),
+                            },
+                            {
+                                "id": high_m.get("id"),
+                                "liquidity": high_m.get("liquidity"),
+                                "volume24h": high_m.get("volume24h"),
+                                "quotedAt": high_m.get("quotedAt"),
+                                "ageHours": _quote_age_hours(high_m),
+                            },
+                        ],
                         "sizing": _sizing_locked_pm(
                             all_in=all_in,
                             net=net,
@@ -2849,7 +2918,18 @@ def _section_outlook(markets: list[dict], section: str) -> dict:
     return _build_outlook(subset)
 
 
+def _market_end_ts(market: dict) -> float | None:
+    end = str(market.get("endDate") or "")[:10]
+    if len(end) < 10:
+        return None
+    try:
+        return datetime.strptime(end, "%Y-%m-%d").replace(tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return None
+
+
 def _pick_btc_100k(price_markets: list[dict]) -> dict | None:
+    """Nearest BTC > $100k expiry that is at least 30 days out. A nearer market is not the headline."""
     matches = [
         m
         for m in price_markets
@@ -2857,7 +2937,16 @@ def _pick_btc_100k(price_markets: list[dict]) -> dict | None:
     ]
     if not matches:
         return None
-    return max(matches, key=lambda m: m.get("volume24h") or 0)
+    horizon = time.time() + 30 * 86400
+    qualified: list[tuple[float, dict]] = []
+    for market in matches:
+        end_ts = _market_end_ts(market)
+        if end_ts is not None and end_ts >= horizon:
+            qualified.append((end_ts, market))
+    if not qualified:
+        return None
+    qualified.sort(key=lambda item: item[0])
+    return qualified[0][1]
 
 
 def _btc100k_caption(market: dict | None) -> str:
@@ -3287,32 +3376,7 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
         "mockOnly": mock_only,
         "errors": errors,
         "networkBlock": network_block,
-        "heroes": [
-            {
-                "name": "BTC > $100k",
-                "value": f"{outlook['btc100kProb']:.0f}%" if outlook.get("btc100kProb") is not None else "—",
-                "sub": outlook.get("btc100kCaption") or "Implied probability",
-            },
-            {
-                "name": "Arb opportunities",
-                "value": str(outlook.get("arbCount", 0)),
-                "sub": (
-                    f"Max {outlook['maxArbEdge']:.0f}pp edge"
-                    if outlook.get("arbCount")
-                    else "Scan clear"
-                ),
-            },
-            {
-                "name": "24h volume",
-                "value": _fmt_usd(outlook["totalVolume24h"]),
-                "sub": "Active universe",
-            },
-            {
-                "name": "Active markets",
-                "value": str(outlook["activeMarkets"]),
-                "sub": "Polymarket + Kalshi",
-            },
-        ],
+        "heroes": _prediction_heroes(outlook, blocked_empty=source == "adm-block"),
         "outlook": outlook,
         "markets": markets,
         "sections": sections_meta,
@@ -3346,6 +3410,43 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
     }
     _cache_set(cache_key, payload)
     return payload
+
+
+def _prediction_heroes(outlook: dict, *, blocked_empty: bool) -> list[dict]:
+    """Hero tiles. A censored empty book is NO DATA, not a measured zero."""
+    if blocked_empty:
+        return [
+            {"name": "BTC > $100k", "value": "—", "sub": "NO DATA · ADM block"},
+            {"name": "Arb opportunities", "value": "—", "sub": "NO DATA · books not readable"},
+            {"name": "24h volume", "value": "—", "sub": "NO DATA · ADM block"},
+            {"name": "Active markets", "value": "—", "sub": "NO DATA · ADM block"},
+        ]
+    return [
+        {
+            "name": "BTC > $100k",
+            "value": f"{outlook['btc100kProb']:.0f}%" if outlook.get("btc100kProb") is not None else "—",
+            "sub": outlook.get("btc100kCaption") or "Implied probability",
+        },
+        {
+            "name": "Arb opportunities",
+            "value": str(outlook.get("arbCount", 0)),
+            "sub": (
+                f"Max {outlook['maxArbEdge']:.0f}pp edge"
+                if outlook.get("arbCount")
+                else "Scan clear"
+            ),
+        },
+        {
+            "name": "24h volume",
+            "value": _fmt_usd(outlook.get("totalVolume24h")),
+            "sub": "Active universe",
+        },
+        {
+            "name": "Active markets",
+            "value": str(outlook.get("activeMarkets") or 0),
+            "sub": "Polymarket + Kalshi",
+        },
+    ]
 
 
 def _fmt_usd(value: float | None) -> str:

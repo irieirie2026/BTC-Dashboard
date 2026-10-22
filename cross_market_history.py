@@ -2,15 +2,55 @@
 
 from __future__ import annotations
 
+import json
 import math
+import os
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 from cache import service as cache_service
 from cache.keys import cross_market_events
 
 MAX_EVENTS = 50_000
 MAX_AGE_SEC = 30 * 86400
+_SLIDE_MS = 300_000
+
+
+def _history_path() -> Path:
+    override = (os.environ.get("XMARKET_HISTORY_PATH") or "").strip()
+    if override:
+        return Path(override)
+    return Path(__file__).resolve().parent / "data" / "xmarket_history.jsonl"
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    if not path.is_file():
+        return []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    rows: list[dict] = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(row, dict):
+            rows.append(row)
+    return rows
+
+
+def _write_jsonl(path: Path, events: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    body = "".join(json.dumps(row, separators=(",", ":")) + "\n" for row in events)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(body, encoding="utf-8")
+    tmp.replace(path)
 
 
 def _now_iso() -> str:
@@ -18,9 +58,20 @@ def _now_iso() -> str:
 
 
 def _load_events() -> list[dict]:
-    # Write TTL is 30 days. The read must use the same window or 7d/30d history disappears.
+    # Durable jsonl survives a restart. An empty file falls through to the cache ring,
+    # and a non-empty cache is copied onto disk once.
+    path = _history_path()
+    rows = _read_jsonl(path)
+    if rows:
+        return rows
     raw = cache_service.get(cross_market_events(), default=[], ttl=MAX_AGE_SEC)
-    return raw if isinstance(raw, list) else []
+    events = raw if isinstance(raw, list) else []
+    if events:
+        try:
+            _write_jsonl(path, events)
+        except OSError:
+            pass
+    return events
 
 
 def _event_ts_ms(event: dict) -> float | None:
@@ -69,13 +120,7 @@ def _coarse_z(event: dict):
         return ""
 
 
-def _dedupe_key(event: dict) -> tuple:
-    """Same pair (or venue) and type inside a 5-minute bucket is one event.
-
-    A second print 0.8s later with a different z is the same shock.
-    """
-    ts_ms = _event_ts_ms(event) or 0
-    bucket = int(ts_ms // 300_000)
+def _shock_identity(event: dict) -> tuple:
     pair = str(
         event.get("pair")
         or event.get("venue")
@@ -84,6 +129,14 @@ def _dedupe_key(event: dict) -> tuple:
         or ""
     )
     kind = str(event.get("type") or event.get("title") or "")
+    return (pair, kind)
+
+
+def _dedupe_key(event: dict) -> tuple:
+    """Identity plus a fixed bucket. Readers use a sliding window instead of this key."""
+    ts_ms = _event_ts_ms(event) or 0
+    bucket = int(ts_ms // _SLIDE_MS)
+    pair, kind = _shock_identity(event)
     return (pair, kind, bucket)
 
 
@@ -107,6 +160,7 @@ def append_events(new_events: list[dict]) -> dict:
     if not new_events:
         return {"appended": 0, "total": len(_load_events())}
     events = _prune(_load_events())
+    added = 0
     for e in new_events:
         if not isinstance(e, dict):
             continue
@@ -118,9 +172,14 @@ def append_events(new_events: list[dict]) -> dict:
             if stamped is not None:
                 row["ts"] = stamped
         events.append(row)
+        added += 1
     events = _prune(events)
     cache_service.set(cross_market_events(), events, ttl=MAX_AGE_SEC)
-    return {"appended": len(new_events), "total": len(events)}
+    try:
+        _write_jsonl(_history_path(), events)
+    except OSError:
+        pass
+    return {"appended": added, "total": len(events)}
 
 
 def get_history(*, days: int = 7, limit: int = 2000, window: str | None = None) -> dict:
@@ -133,15 +192,18 @@ def get_history(*, days: int = 7, limit: int = 2000, window: str | None = None) 
         cutoff_ms = (time.time() - max(1, hours) * 3600) * 1000
     events = _load_events()
     filtered = []
-    seen: set[tuple] = set()
+    # Newest first. A later print of the same pair and type inside 5 minutes is one shock.
+    # Exact 300_000 ms spacing stays distinct. A print that straddles a bucket boundary does not.
+    last_kept: dict[tuple, float] = {}
     for e in reversed(events):
         ts_ms = _event_ts_ms(e)
         if ts_ms is None or ts_ms < cutoff_ms:
             continue
-        key = _dedupe_key(e)
-        if key in seen:
+        ident = _shock_identity(e)
+        prev = last_kept.get(ident)
+        if prev is not None and abs(ts_ms - prev) < _SLIDE_MS:
             continue
-        seen.add(key)
+        last_kept[ident] = ts_ms
         filtered.append(e)
         if len(filtered) >= limit:
             break

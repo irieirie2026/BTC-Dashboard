@@ -358,26 +358,63 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     return _cache_set(key, payload)
 
 
+def _kline_last_open_ms(rows: list) -> int | None:
+    if not rows:
+        return None
+    try:
+        return int(float(rows[-1][0]))
+    except (TypeError, ValueError, IndexError):
+        return None
+
+
+def _kline_batch_fresh(rows: list, gran: int, now: float | None = None) -> bool:
+    """True when the last open is within max(3 bars, 180 seconds)."""
+    last = _kline_last_open_ms(rows)
+    if last is None or len(rows) < 10:
+        return False
+    now_s = time.time() if now is None else float(now)
+    max_age = max(int(gran) * 3, 180)
+    return (now_s - (last / 1000.0)) <= max_age
+
+
 def _coinbase_candles(product: str, gran: int, limit: int) -> list[list]:
-    # Coinbase max 300 candles per request
+    # Coinbase returns at most 300 candles. Walk backward, up to 4 pages, when more are requested.
+    want = max(1, min(int(limit or 300), 1200))
+    pages = 1 if want <= 300 else min(4, (want + 299) // 300)
     end = int(time.time())
-    start = end - gran * min(limit, 300)
-    url = (
-        f"https://api.exchange.coinbase.com/products/{product}/candles"
-        f"?granularity={gran}&start={start}&end={end}"
-    )
-    raw = _fetch_json(url)
-    if not isinstance(raw, list):
-        return []
-    # Coinbase: [time, low, high, open, close, volume], newest first
-    rows = []
-    for item in reversed(raw):
-        if not isinstance(item, (list, tuple)) or len(item) < 6:
-            continue
-        t, low, high, o, c, v = item[:6]
-        open_ms = int(float(t) * 1000)
-        rows.append(_binance_kline_row(open_ms, float(o), float(high), float(low), float(c), float(v), gran))
-    return rows[-limit:]
+    seen: set[int] = set()
+    rows: list[list] = []
+    for _page in range(pages):
+        start = end - gran * min(300, want)
+        if start >= end:
+            break
+        url = (
+            f"https://api.exchange.coinbase.com/products/{product}/candles"
+            f"?granularity={gran}&start={start}&end={end}"
+        )
+        raw = _fetch_json(url)
+        if not isinstance(raw, list) or not raw:
+            break
+        page_rows: list[list] = []
+        for item in raw:
+            if not isinstance(item, (list, tuple)) or len(item) < 6:
+                continue
+            t, low, high, o, c, v = item[:6]
+            open_ms = int(float(t) * 1000)
+            if open_ms in seen:
+                continue
+            seen.add(open_ms)
+            page_rows.append(
+                _binance_kline_row(open_ms, float(o), float(high), float(low), float(c), float(v), gran)
+            )
+        if not page_rows:
+            break
+        rows.extend(page_rows)
+        end = min(int(row[0]) for row in page_rows) // 1000
+        if len(rows) >= want or len(page_rows) < 10:
+            break
+    rows.sort(key=lambda row: int(row[0]))
+    return rows[-want:]
 
 
 def _kraken_pair(product: str) -> str:
@@ -482,59 +519,65 @@ def get_klines(*, interval: str = "1m", limit: int = 500, product: str = "BTC-US
     errors: list[str] = []
     klines: list[list] = []
     venue = None
-    # 4h and 1w are not Coinbase granularities. OKX and Bybit cover those bars.
-    if gran in (60, 300, 900, 3600, 21600, 86400):
-        try:
-            klines = _coinbase_candles(product, gran, limit)
-            venue = "Coinbase"
-        except Exception as exc:
-            errors.append(f"coinbase: {exc}")
-    if len(klines) < 10:
-        try:
-            alt = _okx_candles(product, interval, limit)
-            if len(alt) >= 10:
-                klines = alt
-                venue = "OKX"
-        except Exception as exc:
-            errors.append(f"okx: {exc}")
-    if len(klines) < 10:
-        try:
-            alt = _bybit_candles(product, interval, limit)
-            if len(alt) >= 10:
-                klines = alt
-                venue = "Bybit"
-        except Exception as exc:
-            errors.append(f"bybit: {exc}")
-    if len(klines) < 10:
-        try:
-            mins = max(1, gran // 60)
-            if mins not in (1, 5, 15, 60, 240, 1440, 10080):
-                mins = 60
-            klines = _kraken_ohlc(mins, limit, _kraken_pair(product))
-            venue = "Kraken"
-        except Exception as exc:
-            errors.append(f"kraken: {exc}")
-    if len(klines) < 10:
+
+    def _try_coinbase() -> list:
+        # 4h and 1w are not Coinbase granularities. OKX and Bybit cover those bars.
+        if gran not in (60, 300, 900, 3600, 21600, 86400):
+            return []
+        return _coinbase_candles(product, gran, limit)
+
+    def _try_kraken() -> list:
+        mins = max(1, gran // 60)
+        if mins not in (1, 5, 15, 60, 240, 1440, 10080):
+            mins = 60
+        return _kraken_ohlc(mins, limit, _kraken_pair(product))
+
+    def _try_binance() -> list:
         symbol = "ETHUSDT" if str(product).upper().startswith("ETH") else "BTCUSDT"
+        raw = _fetch_json(
+            "https://api.binance.com/api/v3/klines?"
+            + urllib.parse.urlencode({"symbol": symbol, "interval": interval, "limit": limit})
+        )
+        return raw if isinstance(raw, list) else []
+
+    freshest: tuple[int, list, str] | None = None
+    for name, fn in (
+        ("Coinbase", _try_coinbase),
+        ("OKX", lambda: _okx_candles(product, interval, limit)),
+        ("Bybit", lambda: _bybit_candles(product, interval, limit)),
+        ("Kraken", _try_kraken),
+        ("Binance", _try_binance),
+    ):
         try:
-            raw = _fetch_json(
-                "https://api.binance.com/api/v3/klines?"
-                + urllib.parse.urlencode({"symbol": symbol, "interval": interval, "limit": limit})
-            )
-            if isinstance(raw, list) and raw:
-                klines = raw
-                venue = "Binance"
+            rows = fn() or []
         except Exception as exc:
-            errors.append(f"binance: {exc}")
+            errors.append(f"{name.lower()}: {exc}")
+            continue
+        if len(rows) < 10:
+            continue
+        last_ms = _kline_last_open_ms(rows) or 0
+        if freshest is None or last_ms > freshest[0]:
+            freshest = (last_ms, rows, name)
+        if _kline_batch_fresh(rows, gran):
+            klines = rows
+            venue = name
+            break
+    if not klines and freshest is not None:
+        klines = freshest[1]
+        venue = freshest[2]
     if not klines:
         return {"klines": [], "venue": None, "error": "No klines", "errors": errors, "fetchedAt": _now_iso()}
+    stale = not _kline_batch_fresh(klines, gran)
     payload = {
         "klines": klines,
         "venue": venue,
         "interval": interval,
+        "stale": stale,
         "fetchedAt": _now_iso(),
         "errors": errors,
     }
+    if stale:
+        payload["staleReason"] = "last bar older than 3 intervals"
     return _cache_set(key, payload)
 
 
@@ -896,6 +939,7 @@ def _contract_row(
     volume: float | None,
     exp_ms: int | None,
     venue: str | None = None,
+    quote_ts: int | float | str | None = None,
 ) -> dict[str, Any] | None:
     if last is None and mark is None:
         return None
@@ -903,12 +947,18 @@ def _contract_row(
     mark_px = mark if mark is not None else last_px
     days = _days_to(exp_ms)
     basis, ann = _basis_fields(mark_px, index, days)
-    return {
+    price_source = "last"
+    if last is not None and mark is not None and last > 0 and abs(mark - last) / last > 0.0015:
+        # Last print has drifted from the mark. The desk shows the mark and says so.
+        price_source = "mark"
+    row = {
         "symbol": symbol,
         "type": "Dated",
         "margin": margin,
         "last": last_px,
+        "lastTrade": last,
         "mark": mark_px,
+        "priceSource": price_source,
         "index": index,
         "basisPct": basis,
         "annBasisPct": ann,
@@ -918,6 +968,15 @@ def _contract_row(
         "daysToExpiry": days,
         "venue": venue,
     }
+    if quote_ts not in (None, ""):
+        try:
+            quoted = int(float(quote_ts))
+            if quoted < 10_000_000_000:
+                quoted *= 1000
+            row["quoteTs"] = quoted
+        except (TypeError, ValueError):
+            pass
+    return row
 
 
 def _fetch_okx_dated(index_hint: float | None) -> tuple[list[dict], list[dict], float | None, list[str]]:
@@ -974,6 +1033,7 @@ def _fetch_okx_dated(index_hint: float | None) -> tuple[list[dict], list[dict], 
         built = _contract_row(
             inst, margin=margin, last=last, mark=mark, index=index,
             oi=oi_map.get(inst), volume=btc_vol, exp_ms=exp_ms, venue="OKX",
+            quote_ts=row.get("ts"),
         )
         if not built:
             continue
@@ -1111,7 +1171,7 @@ def _curve_tick_label(row: dict) -> str:
 
 def get_futures_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     """Dated BTC futures from OKX, Deribit, and Bybit."""
-    key = "market:futures:v5"
+    key = "market:futures:v6"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1331,7 +1391,9 @@ def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
         "depthVenue": depth.get("venue"),
         "venue": quote.get("venue") or klines.get("venue"),
         "klineVenue": klines.get("venue"),
+        "klineStale": bool(klines.get("stale")),
         "venues": quote.get("venues") or [],
+        "venueCount": quote.get("venueCount") or len(quote.get("venues") or []),
         "fetchedAt": _now_iso(),
         "errors": (quote.get("errors") or []) + (klines.get("errors") or []) + (depth.get("errors") or []),
     }

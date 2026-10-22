@@ -196,6 +196,8 @@ def test_live_prediction_excludes_mocks():
         assert blocked["markets"] == []
         hero = next(item for item in blocked["heroes"] if item["name"] == "BTC > $100k")
         assert hero["value"] == "—"
+        assert all(item["value"] == "—" for item in blocked["heroes"])
+        assert all("0" != item["value"] and not str(item["value"]).startswith("$0") for item in blocked["heroes"])
 
         pm._cache.clear()
         mocked = pm.get_prediction_markets_payload(refresh=True, mock_only=True)

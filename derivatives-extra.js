@@ -64,6 +64,103 @@ function markIvDecimal(raw) {
   return null;
 }
 
+function normCdf(x) {
+  const erf = Math.erf
+    ? Math.erf(x / Math.SQRT2)
+    : (() => {
+        const sign = x < 0 ? -1 : 1;
+        const ax = Math.abs(x) / Math.SQRT2;
+        const t = 1 / (1 + 0.3275911 * ax);
+        const poly = (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t;
+        return sign * (1 - poly * Math.exp(-ax * ax));
+      })();
+  return 0.5 * (1 + erf);
+}
+
+function rrCallDelta(spot, strike, tYears, iv) {
+  if (!(spot > 0) || !(strike > 0) || !(tYears > 0) || !(iv > 0)) return null;
+  const d1 = (Math.log(spot / strike) + 0.5 * iv * iv * tYears) / (iv * Math.sqrt(tYears));
+  return normCdf(d1);
+}
+
+function rrExpiryLabel(expMs) {
+  const d = new Date(expMs);
+  const mon = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][d.getUTCMonth()];
+  return `${String(d.getUTCDate()).padStart(2, "0")} ${mon} ${d.getUTCFullYear()}`;
+}
+
+function riskReversal25d(chain, indexPrice) {
+  const empty = { skew25: null, method: "25d RR, puts minus calls", expiry: null };
+  const spot = Number(indexPrice);
+  if (!(spot > 0)) return empty;
+  const now = Date.now();
+  const byExp = new Map();
+  (chain || []).forEach((opt) => {
+    let exp = Number(opt.expiry);
+    const strike = Number(opt.strike);
+    const iv = Number(opt.markIv);
+    if (!Number.isFinite(exp) || exp <= 0 || !Number.isFinite(strike) || strike <= 0) return;
+    if (!Number.isFinite(iv) || iv <= 0) return;
+    if (exp < 1e12) exp *= 1000;
+    const side = String(opt.side || "C").charAt(0).toUpperCase() === "P" ? "P" : "C";
+    if (!byExp.has(exp)) byExp.set(exp, []);
+    byExp.get(exp).push({ strike, side, markIv: iv });
+  });
+  const rows = [];
+  byExp.forEach((opts, exp) => {
+    const days = (exp - now) / 86400000;
+    if (days < 1 || days > 400) return;
+    const tYears = Math.max(days / 365, 1 / 365);
+    let bestPut = null;
+    let bestCall = null;
+    let putDist = 1e9;
+    let callDist = 1e9;
+    opts.forEach((opt) => {
+      const delta = rrCallDelta(spot, opt.strike, tYears, opt.markIv);
+      if (delta == null) return;
+      if (opt.side === "P") {
+        const dist = Math.abs(delta - 1 - -0.25);
+        if (dist < putDist) {
+          putDist = dist;
+          bestPut = opt;
+        }
+      } else {
+        const dist = Math.abs(delta - 0.25);
+        if (dist < callDist) {
+          callDist = dist;
+          bestCall = opt;
+        }
+      }
+    });
+    if (!bestPut || !bestCall || putDist > 0.1 || callDist > 0.1) return;
+    rows.push({
+      exp,
+      days,
+      rr: (bestPut.markIv - bestCall.markIv) * 100,
+    });
+  });
+  if (!rows.length) return empty;
+  rows.sort((a, b) => a.days - b.days);
+  const before = [...rows].reverse().find((row) => row.days <= 30) || null;
+  const after = rows.find((row) => row.days >= 30) || null;
+  if (before && after && before.exp !== after.exp && after.days !== before.days) {
+    const weight = (30 - before.days) / (after.days - before.days);
+    return {
+      skew25: before.rr + (after.rr - before.rr) * weight,
+      method: "25d RR, 30d interpolated, puts minus calls",
+      expiry: `${rrExpiryLabel(before.exp)}–${rrExpiryLabel(after.exp)}`,
+    };
+  }
+  const nearest = rows.reduce((best, row) =>
+    Math.abs(row.days - 30) < Math.abs(best.days - 30) ? row : best,
+  );
+  return {
+    skew25: nearest.rr,
+    method: `25d RR, ${nearest.days.toFixed(0)}d listed, puts minus calls`,
+    expiry: rrExpiryLabel(nearest.exp),
+  };
+}
+
 function expiryLabel(ts) {
   return new Date(ts).toLocaleDateString("en-US", {
     month: "short",
@@ -143,6 +240,9 @@ function deliveryMapContract(c, index) {
     deliveryDate: c.deliveryDate ?? null,
     daysToExpiry: Number.isFinite(days) ? days : null,
     venue: c.venue || null,
+    lastTrade: c.lastTrade,
+    priceSource: c.priceSource || null,
+    quoteTs: c.quoteTs ?? null,
   };
 }
 
@@ -318,7 +418,7 @@ function renderDeliveryScreen() {
           <td>${dxMarginLabel(c.margin)}</td>
           <td>${c.type}</td>
           <td>${exp}</td>
-          <td class="mono">$${dxFmtPrice(c.last)}</td>
+          <td class="mono">${dxLastCell(c)}</td>
           <td class="mono">$${dxFmtPrice(c.mark)}</td>
           <td class="mono ${basisCls}">${fmtPct(c.basisPct, 3)}</td>
           <td class="mono ${basisCls}">${c.daysToExpiry ? fmtPct(c.annBasisPct, 2) : "—"}</td>
@@ -331,6 +431,19 @@ function renderDeliveryScreen() {
 
   drawDeliveryCurveChart(curvePoints);
   drawDeliveryOiChart([perp, ...dxDedupeContracts([...(contracts || []), ...(deliveryData.coinContracts || [])])]);
+}
+
+function dxLastCell(c) {
+  const useMark = c?.priceSource === "mark" && c.mark != null && Number.isFinite(Number(c.mark));
+  const px = useMark ? c.mark : c?.last;
+  let text = "$" + dxFmtPrice(px);
+  if (useMark) text += " mark";
+  const ts = Number(c?.quoteTs);
+  if (Number.isFinite(ts) && ts > 0 && Date.now() - ts > 15 * 60 * 1000) {
+    const mins = Math.round((Date.now() - ts) / 60000);
+    text += mins >= 60 ? ` · ${Math.round(mins / 60)}h` : ` · ${mins}m`;
+  }
+  return text;
 }
 
 function dxMarginLabel(margin) {
@@ -391,7 +504,7 @@ function drawDeliveryCurveChart(points) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 28, bottom: 56, left: 104 };
+  const pad = { top: 32, right: 40, bottom: 64, left: 120 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -432,13 +545,16 @@ function drawDeliveryCurveChart(points) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "12px IBM Plex Mono, monospace";
   ctx.textAlign = "right";
-  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 8, pad.top + 12);
-  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 8, h - pad.bottom);
+  ctx.textBaseline = "top";
+  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 8, 8);
+  ctx.textBaseline = "bottom";
+  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 8, h - 8);
   ctx.textAlign = "center";
+  ctx.textBaseline = "bottom";
   curvePts.forEach((p) => {
     const x = pad.left + (p.days / maxDays) * chartW;
     const label = String(p.label || "");
-    ctx.fillText(label, x, h - 18);
+    ctx.fillText(label, x, h - 8);
   });
 }
 
@@ -540,28 +656,17 @@ async function fetchOptionsBundle() {
     const ivHigh = allIv.length ? Math.max(...allIv) : null;
     const ivLow = allIv.length ? Math.min(...allIv) : null;
 
-    const putWing = chain.filter(
-      (o) =>
-        o.side === "P" &&
-        o.markIv &&
-        indexPrice &&
-        o.strike <= indexPrice * 0.88 &&
-        o.strike >= indexPrice * 0.75,
-    );
-    const callWing = chain.filter(
-      (o) =>
-        o.side === "C" &&
-        o.markIv &&
-        indexPrice &&
-        o.strike >= indexPrice * 1.12 &&
-        o.strike <= indexPrice * 1.28,
-    );
-    const avg = (arr) =>
-      arr.length ? arr.reduce((s, o) => s + o.markIv, 0) / arr.length : null;
-    const skew25 =
-      avg(putWing) != null && avg(callWing) != null
-        ? (avg(putWing) - avg(callWing)) * 100
-        : null;
+    const rr = riskReversal25d(chain, indexPrice);
+    const serverSkew = Number(payload.skew25);
+    const skew25 = rr.skew25 != null
+      ? rr.skew25
+      : (Number.isFinite(serverSkew) ? serverSkew : null);
+    const skewMethod = rr.skew25 != null
+      ? rr.method
+      : (payload.skewMethod || rr.method);
+    const skewExpiry = rr.skew25 != null
+      ? rr.expiry
+      : (payload.skewExpiry || rr.expiry);
 
     const volByStrike = {};
     chain.forEach((o) => {
@@ -662,6 +767,9 @@ async function fetchOptionsBundle() {
     const dvol = Number.isFinite(dvolRaw) && dvolRaw > 0
       ? (dvolRaw > 3 ? dvolRaw / 100 : dvolRaw)
       : null;
+    const termRaw = Number(payload.termRv30d);
+    const termRv30d = Number.isFinite(termRaw) && termRaw > 0 ? termRaw : null;
+    const ivTermGap = dvol != null && termRv30d != null ? (dvol - termRv30d) * 100 : null;
     const atmDte = nearestExpiry ? daysToExpiry(nearestExpiry) : null;
     return {
       indexPrice,
@@ -674,6 +782,11 @@ async function fetchOptionsBundle() {
       ivHigh,
       ivLow,
       skew25,
+      skewMethod,
+      skewExpiry,
+      ivTermGap,
+      termRv30d,
+      termRvSource: payload.termRvSource || null,
       nearestExpiry,
       smileExpiry,
       ivTerm,
@@ -764,10 +877,27 @@ function renderOptionsVolScreen() {
   if (dvolSub) dvolSub.textContent = d.dvolLabel || "Deribit DVOL · 30d";
   set(
     "opt-iv-skew",
-    d.skew25 != null
-      ? (d.skew25 >= 0 ? "+" : "") + d.skew25.toFixed(1) + " vol pts"
+    d.skew25 != null && Number.isFinite(Number(d.skew25))
+      ? (d.skew25 >= 0 ? "+" : "") + Number(d.skew25).toFixed(1) + " vol pts"
       : "—",
   );
+  const skewSub = dxEl("opt-iv-skew-sub");
+  if (skewSub) {
+    const method = d.skewMethod || "25d RR, puts minus calls";
+    skewSub.textContent = d.skewExpiry ? `${method} · ${d.skewExpiry}` : method;
+  }
+  set(
+    "opt-iv-term-rv",
+    d.ivTermGap != null && Number.isFinite(Number(d.ivTermGap))
+      ? (d.ivTermGap >= 0 ? "+" : "") + Number(d.ivTermGap).toFixed(1) + " vol pts"
+      : "—",
+  );
+  const gapSub = dxEl("opt-iv-term-rv-sub");
+  if (gapSub) {
+    gapSub.textContent = d.termRvSource
+      ? `DVOL − ${d.termRvSource}`
+      : "DVOL − 30d term RV";
+  }
   set(
     "opt-iv-range",
     d.ivLow && d.ivHigh ? fmtIv(d.ivLow) + " – " + fmtIv(d.ivHigh) : "—",
@@ -872,7 +1002,7 @@ function drawIvTermChart(term) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 28, bottom: 72, left: 48 };
+  const pad = { top: 32, right: 44, bottom: 72, left: 72 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -907,7 +1037,9 @@ function drawIvTermChart(term) {
   ctx.textAlign = "right";
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
-  ctx.fillText(maxIv.toFixed(0) + "%", pad.left - 6, pad.top + 10);
+  ctx.textBaseline = "top";
+  ctx.fillText(maxIv.toFixed(0) + "%", pad.left - 6, 8);
+  ctx.textBaseline = "alphabetic";
   ctx.fillText(minIv.toFixed(0) + "%", pad.left - 6, h - pad.bottom);
   // Ticks sit on the expiry's DTE, not on an even index. Even spacing
   // put the date labels under the wrong contracts.
@@ -940,13 +1072,14 @@ function drawVolSmileChart(opts, spot) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 20, bottom: 36, left: 52 };
+  const pad = { top: 32, right: 36, bottom: 48, left: 68 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -984,6 +1117,7 @@ function drawVolSmileChart(opts, spot) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
   ctx.textAlign = "center";
+  ctx.textBaseline = "bottom";
   ctx.fillText(fmtStrike(minK), pad.left, h - 8);
   ctx.fillText(fmtStrike(maxK), w - pad.right, h - 8);
 }
@@ -1013,7 +1147,7 @@ function drawDeliveryOiChart(contracts) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 72, bottom: 28, left: 128 };
+  const pad = { top: 28, right: 110, bottom: 36, left: 140 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -1042,9 +1176,13 @@ function drawDeliveryOiChart(contracts) {
     ctx.fillStyle = "#7d8799";
     ctx.font = "12px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
-    ctx.fillText(r.label, pad.left - 8, y + bodyH / 2 + 4);
+    ctx.textBaseline = "middle";
+    ctx.fillText(r.label, pad.left - 8, y + bodyH / 2);
     ctx.textAlign = "left";
-    ctx.fillText(fmtVol(r.oi) + " BTC", Math.min(valueX + 6, w - pad.right), y + bodyH / 2 + 4);
+    const valueLabel = fmtVol(r.oi) + " BTC";
+    const textW = ctx.measureText(valueLabel).width;
+    const textX = Math.min(valueX + 6, w - 8 - textW);
+    ctx.fillText(valueLabel, Math.max(pad.left + 4, textX), y + bodyH / 2);
   });
 }
 
@@ -1056,13 +1194,14 @@ function drawStrikeVolChart(topStrikes, spot) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 32, left: 88 };
+  const pad = { top: 28, right: 28, bottom: 40, left: 108 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -1132,7 +1271,7 @@ function drawOiStrikeChart(topStrikes, spot) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 32, left: 88 };
+  const pad = { top: 28, right: 28, bottom: 40, left: 108 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 

@@ -100,9 +100,19 @@ function renderDominance(dominance) {
   legendEl.textContent = legend;
 }
 
+function treasuryUsdLabel(summary) {
+  const n = Number(summary?.totalUsd);
+  if (Number.isFinite(n) && n > 0) {
+    if (n >= 1e9) return "$" + (n / 1e9).toFixed(3) + "B";
+    if (n >= 1e6) return "$" + (n / 1e6).toFixed(3) + "M";
+    return formatUsdCompact(n);
+  }
+  return summary?.totalUsdLabel || "—";
+}
+
 function renderHero(summary, btcPrice, btcChange24h) {
   $("trs-total-btc").textContent = summary.totalBtcLabel || "—";
-  $("trs-total-usd").textContent = summary.totalUsdLabel || formatUsdCompact(summary.totalUsd);
+  $("trs-total-usd").textContent = treasuryUsdLabel(summary);
   $("trs-company-count").textContent = String(summary.count || "—");
 
   const priceLabel = summary.btcPriceLabel || (btcPrice ? "$" + formatPrice(btcPrice, 0) : "—");

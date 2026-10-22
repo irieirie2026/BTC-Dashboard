@@ -239,6 +239,14 @@ function drawEtfFlowChart(rows) {
   );
 }
 
+function etfStampSource(data) {
+  const src = data?.source || data?.flows?.source || "farside.co.uk/btc";
+  const diffs = data?.flows?.diffs;
+  const n = Array.isArray(diffs) ? diffs.length : 0;
+  if (n > 0) return `${src} · ${n} date diffs vs bitbo`;
+  return src;
+}
+
 function renderEtfDashboardData(data) {
   etfData = data;
   const { holdings, flows } = data;
@@ -259,7 +267,7 @@ async function loadEtfDashboard() {
     await swr.runSWR({
       key: "etf",
       l1: "etf",
-      source: "Bitbo",
+      source: "farside.co.uk/btc",
       fetch: async () => {
         const res = await fetch(ETF_API);
         if (!res.ok) throw new Error("API " + res.status);
@@ -275,7 +283,7 @@ async function loadEtfDashboard() {
         renderEtfDashboardData(data);
         const stamp = swr.formatPanelMeta({
           fetchedAt: data.fetchedAt,
-          source: "Bitbo",
+          source: etfStampSource(data),
           stale: opts.stale,
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,

@@ -4,7 +4,9 @@
  */
 
 const TS_API = "/api/stats/timeseries";
-const TS_SUITE_CACHE_KEY = "ts-last-suite-v1";
+function tsSuiteCacheKey() {
+  return `ts-last-suite-v1:${window.APP_VERSION || "0"}`;
+}
 
 let tsSuite = null;
 let tsSelectedId = null;
@@ -17,7 +19,7 @@ function tsPersistSuite(suite) {
   if (!suite?.models?.length) return;
   try {
     localStorage.setItem(
-      TS_SUITE_CACHE_KEY,
+      tsSuiteCacheKey(),
       JSON.stringify({ savedAt: Date.now(), fetchedAt: suite.asOf || new Date().toISOString(), data: suite }),
     );
   } catch {
@@ -27,10 +29,12 @@ function tsPersistSuite(suite) {
 
 function tsLoadPersistedSuite() {
   try {
-    const raw = localStorage.getItem(TS_SUITE_CACHE_KEY);
+    const raw = localStorage.getItem(tsSuiteCacheKey());
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (!parsed?.data?.models?.length) return null;
+    const version = window.APP_VERSION || "0";
+    if (!parsed.data.productVersion || parsed.data.productVersion !== version) return null;
     return parsed;
   } catch {
     return null;

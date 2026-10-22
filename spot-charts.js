@@ -23,6 +23,7 @@ let spotHistoryRange = "all";
 let spotHistoryControlsBound = false;
 let spotPollTimer = null;
 let spotKlineVenue = "";
+let spotKlineStale = false;
 
 const spotEl = (id) => document.getElementById(id);
 
@@ -32,6 +33,16 @@ function spotFmtPrice(n) {
 
 function spotFmtDate(ms) {
   return new Date(ms).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function spotFmtUtc(ms, withClock) {
+  const d = new Date(ms);
+  const mon = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][d.getUTCMonth()];
+  const day = d.getUTCDate();
+  if (!withClock) return `${mon} ${day}, ${d.getUTCFullYear()}`;
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  return `${mon} ${day} ${hh}:${mm}Z`;
 }
 
 function spotFmtDateTime(ms) {
@@ -515,8 +526,12 @@ function spotUpdateMeta(tf, bars) {
         : days >= 1
           ? `${days.toFixed(1)} days`
           : `${(span / 3_600_000).toFixed(1)} hr`;
+  const granMs = { "1m": 60_000, "5m": 300_000, "1h": 3_600_000, "4h": 14_400_000, "1d": 86_400_000 }[tf] || 60_000;
+  const barStale = Date.now() - lastMs > Math.max(granMs * 3, 180_000);
+  const stale = barStale || spotKlineStale;
+  const withClock = span < 2 * 86_400_000;
   if (meta) {
-    meta.textContent = `${bars.length.toLocaleString()} bars · ${spotFmtDate(firstMs)} → ${spotFmtDate(lastMs)} (${range})`;
+    meta.textContent = `${bars.length.toLocaleString()} bars · ${spotFmtUtc(firstMs, withClock)} → ${spotFmtUtc(lastMs, withClock)} (${range})${stale ? " · STALE" : ""}`;
   }
   spotSetChartLabel(spotChartTitle(tf, bars));
 }
@@ -531,6 +546,7 @@ async function spotLoadTimeframe(tf, options = {}) {
   const cfg = SPOT_TF[tf];
   if (!cfg) return;
   spotActiveTf = tf;
+  spotKlineStale = false;
   spotSetTfActive(tf);
 
   const meta = spotEl("spot-chart-meta");
@@ -550,8 +566,9 @@ async function spotLoadTimeframe(tf, options = {}) {
   }
 }
 
-function spotApplyInitialKlines(klines, venue) {
+function spotApplyInitialKlines(klines, venue, stale) {
   if (venue) spotKlineVenue = String(venue);
+  spotKlineStale = !!stale;
   if (!Array.isArray(klines) || !klines.length) return;
   const bars = spotDedupeBars(klines.map(spotKlineToBar));
   spotBars = bars;
@@ -584,12 +601,7 @@ function spotOnLiveKline(k) {
     spotBindMainResize();
   }
   spotMainCtrl?.requestDraw();
-  const meta = spotEl("spot-chart-meta");
-  if (meta && spotBars.length) {
-    const firstMs = spotBars[0].time * 1000;
-    const lastMs = spotBars[spotBars.length - 1].time * 1000;
-    meta.textContent = `${spotBars.length.toLocaleString()} bars · ${spotFmtDateTime(firstMs)} → ${spotFmtDateTime(lastMs)} (live)`;
-  }
+  if (spotBars.length) spotUpdateMeta(spotActiveTf, spotBars);
 }
 
 async function spotLoadHistory() {

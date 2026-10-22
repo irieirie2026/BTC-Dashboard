@@ -32,7 +32,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=234" />
+    <link rel="stylesheet" href="styles.css?v=235" />
     <link rel="stylesheet" href="assets/options-strategy/btc-options-strategy.css?v=8" />
     <!-- Bundled home motto (Grok Luna) — same clip every time; no live TTS / browser voice -->
     <link rel="preload" href="assets/home-motto.mp3" as="audio" type="audio/mpeg" />
@@ -141,7 +141,7 @@
                   <button type="button" class="home-sound-toggle" id="home-sound-toggle" aria-pressed="true">🔊 Buccaneers</button>
                 </div>
                 <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
-                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.4</span><span class="home-banner-chip-lbl">Version</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.5</span><span class="home-banner-chip-lbl">Version</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">14</span><span class="home-banner-chip-lbl">Dashboards</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Law</span><span class="home-banner-chip-lbl">70+ countries</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Arbs</span><span class="home-banner-chip-lbl">PM + Deribit</span></li>
@@ -182,7 +182,7 @@
               <div id="home-section-grid" class="home-section-grid" role="list"></div>
             </section>
             <footer class="home-footer">
-              <p><span class="home-version">Version <span data-app-version>1.1.4</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
+              <p><span class="home-version">Version <span data-app-version>1.1.5</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
             </footer>
           </div>
         </div>
@@ -1036,9 +1036,14 @@
               <span class="deriv-hero-sub" id="opt-dvol-sub">Deribit DVOL · 30d vol index</span>
             </article>
             <article class="deriv-hero-block">
+              <span class="deriv-hero-label">IV − term RV</span>
+              <span class="deriv-hero-value" id="opt-iv-term-rv">—</span>
+              <span class="deriv-hero-sub" id="opt-iv-term-rv-sub">DVOL − 30d term RV</span>
+            </article>
+            <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="opt-skew">25Δ Skew</span>
               <span class="deriv-hero-value" id="opt-iv-skew">—</span>
-              <span class="deriv-hero-sub">Put IV − Call IV</span>
+              <span class="deriv-hero-sub" id="opt-iv-skew-sub">25d RR, puts minus calls</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="opt-iv-range">IV Range</span>
@@ -5573,21 +5578,21 @@
     <div id="chart-tooltip" class="chart-tooltip" role="tooltip" hidden></div>
     <div id="xm-heat-tooltip" class="xm-heat-tooltip" role="tooltip" hidden></div>
     <script src="chart-utils.js?v=9"></script>
-    <script src="swr-cache.js?v=9"></script>
+    <script src="swr-cache.js?v=10"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
     <script src="help.js?v=182"></script>
-    <script src="version.js?v=6"></script>
+    <script src="version.js?v=7"></script>
     <script src="home.js?v=22"></script>
     <script src="dashboard.js?v=80"></script>
-    <script src="etf.js?v=12"></script>
-    <script src="treasury.js?v=16"></script>
-    <script src="derivatives-extra.js?v=25"></script>
+    <script src="etf.js?v=13"></script>
+    <script src="treasury.js?v=17"></script>
+    <script src="derivatives-extra.js?v=27"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=3"></script>
     <script src="stats.js?v=32"></script>
     <script src="stats-volatility.js?v=43"></script>
-    <script src="stats-timeseries.js?v=25"></script>
+    <script src="stats-timeseries.js?v=26"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
     <script src="equity-insights.js?v=32"></script>
@@ -5612,12 +5617,12 @@
     <script src="law.js?v=26"></script>
     <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
-    <script src="prediction-markets.js?v=14"></script>
+    <script src="prediction-markets.js?v=15"></script>
     <script src="cross-market-engine.js?v=12"></script>
     <script src="cross-market-ws.js?v=5"></script>
     <script src="cross-market-charts.js?v=20"></script>
     <script src="cross-market.js?v=31"></script>
-    <script src="spot-charts.js?v=9"></script>
-    <script src="app.js?v=35"></script>
+    <script src="spot-charts.js?v=11"></script>
+    <script src="app.js?v=36"></script>
   </body>
 </html>

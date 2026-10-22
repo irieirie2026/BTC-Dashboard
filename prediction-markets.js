@@ -335,6 +335,18 @@ async function pmFetch(refresh = false) {
       ),
     };
   }
+  if (data.networkBlock?.blocked && markets.length === 0) {
+    return {
+      ...data,
+      markets,
+      heroes: [
+        { name: "BTC > $100k", value: "—", sub: "NO DATA · ADM block" },
+        { name: "Arb opportunities", value: "—", sub: "NO DATA · books not readable" },
+        { name: "24h volume", value: "—", sub: "NO DATA · ADM block" },
+        { name: "Active markets", value: "—", sub: "NO DATA · ADM block" },
+      ],
+    };
+  }
   return { ...data, markets };
 }
 

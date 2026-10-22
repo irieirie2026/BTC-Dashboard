@@ -6,6 +6,7 @@ __pycache__/
 .env
 .env.local
 data/ss-payments.json
+data/xmarket_history.jsonl
 data/tts-cache/
 node_modules/
 strategy-builder/node_modules/

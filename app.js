@@ -15,6 +15,12 @@ const marketIndicatorCache = {};
 
 let lastBids = [];
 let lastAsks = [];
+let heldQuote = { bid: null, ask: null };
+let lastBookFetchedAt = null;
+let lastBookVenue = "";
+let bookRefreshFailed = false;
+let lastFuturesFetchedAt = null;
+let futuresLoadInflight = false;
 
 let prevPrice = null;
 let ws = null;
@@ -73,9 +79,11 @@ function setConnectionStatus(state, elId = "connection-status") {
   const label =
     state === "connected"
       ? "Live"
-      : state === "disconnected"
-        ? "Disconnected"
-        : "Connecting…";
+      : state === "stale"
+        ? "STALE"
+        : state === "disconnected"
+          ? "Disconnected"
+          : "Connecting…";
 
   ids.forEach((id) => {
     const el = $(id);
@@ -165,8 +173,12 @@ function updateTicker(data) {
   $("vol-usdt").textContent = formatVolume(data.q) + " USDT";
   $("weighted-avg").textContent = formatPrice(data.w);
 
-  const bid = parseFloat(data.bid);
-  const ask = parseFloat(data.ask);
+  let bid = parseFloat(data.bid);
+  let ask = parseFloat(data.ask);
+  if (Number.isFinite(bid) && bid > 0) heldQuote.bid = bid;
+  else bid = heldQuote.bid;
+  if (Number.isFinite(ask) && ask > 0) heldQuote.ask = ask;
+  else ask = heldQuote.ask;
   $("best-bid").textContent = Number.isFinite(bid) && bid > 0 ? formatPrice(bid) : "—";
   $("best-ask").textContent = Number.isFinite(ask) && ask > 0 ? formatPrice(ask) : "—";
   if (Number.isFinite(bid) && bid > 0 && Number.isFinite(ask) && ask > 0) {
@@ -192,24 +204,13 @@ function updateDepth(data) {
   const mid = (bestBid + bestAsk) / 2;
 
   $("book-mid").textContent = formatPrice(mid);
-  const bookVenue = data?.venue ? String(data.venue) : "";
-  const bookWhen = data?.fetchedAt ? String(data.fetchedAt).replace("T", " ").replace(".000Z", "Z") : "";
-  const ladderMeta = document.getElementById("book-ladder-meta");
-  if (ladderMeta) {
-    ladderMeta.textContent = [
-      "Depth · 20 levels",
-      bookVenue || null,
-      bookWhen || null,
-    ].filter(Boolean).join(" · ");
+  if (data?.fetchedAt) {
+    lastBookFetchedAt = data.fetchedAt;
+    bookRefreshFailed = false;
   }
-  const depthMeta = document.getElementById("book-depth-meta");
-  if (depthMeta) {
-    depthMeta.textContent = [
-      "Cumulative volume · 20 levels",
-      bookVenue || null,
-      bookWhen || null,
-    ].filter(Boolean).join(" · ");
-  }
+  if (data?.venue) lastBookVenue = String(data.venue);
+  paintBookMeta();
+  refreshMarketLiveBadge();
   $("spread-bid").textContent = formatPrice(bestBid);
   $("spread-ask").textContent = formatPrice(bestAsk);
 
@@ -379,6 +380,41 @@ function handleMessage(event) {
 let spotVenue = "binance";
 let binanceWsFails = 0;
 
+function bookAgeSuffix(fetchedAt, failed) {
+  const age = window.DashboardSWR?.formatFetchedAge?.(fetchedAt) || "";
+  const ms = window.DashboardSWR?.fetchedAgeMs?.(fetchedAt);
+  const stale = failed || (ms != null && ms >= 90_000);
+  return `${age ? ` · ${age}` : ""}${stale ? " · STALE" : ""}`;
+}
+
+function paintBookMeta() {
+  const when = lastBookFetchedAt
+    ? String(lastBookFetchedAt).replace("T", " ").replace(/\.\d+Z$/, "Z")
+    : "";
+  const suffix = bookAgeSuffix(lastBookFetchedAt, bookRefreshFailed);
+  const ladderMeta = document.getElementById("book-ladder-meta");
+  if (ladderMeta) {
+    ladderMeta.textContent = ["Depth · 20 levels", lastBookVenue || null, when || null]
+      .filter(Boolean)
+      .join(" · ") + suffix;
+  }
+  const depthMeta = document.getElementById("book-depth-meta");
+  if (depthMeta) {
+    depthMeta.textContent = ["Cumulative volume · 20 levels", lastBookVenue || null, when || null]
+      .filter(Boolean)
+      .join(" · ") + suffix;
+  }
+}
+
+function refreshMarketLiveBadge() {
+  const age = window.DashboardSWR?.fetchedAgeMs?.(lastBookFetchedAt);
+  if (!lastBookFetchedAt || bookRefreshFailed || (age != null && age >= 90_000)) {
+    setConnectionStatus(lastBookFetchedAt ? "stale" : "connecting");
+    return;
+  }
+  setConnectionStatus("connected");
+}
+
 function mapCoinbaseTicker(msg) {
   if (!msg || msg.type !== "ticker") return;
   updateTicker({
@@ -403,7 +439,7 @@ function connectCoinbase() {
   ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
   ws.onopen = () => {
     binanceWsFails = 0;
-    setConnectionStatus("connected");
+    refreshMarketLiveBadge();
     ws.send(JSON.stringify({
       type: "subscribe",
       product_ids: ["BTC-USD"],
@@ -845,7 +881,8 @@ function perpBundleFromSnapshot(perp) {
 
 async function loadFuturesData() {
   const swr = window.DashboardSWR;
-  if (!swr) return;
+  if (!swr || futuresLoadInflight) return;
+  futuresLoadInflight = true;
 
   try {
     await swr.runSWR({
@@ -867,14 +904,19 @@ async function loadFuturesData() {
         }
         applyFuturesBundle(data);
         futuresVenue = (data.venue || futuresVenue || "okx").toLowerCase();
+        if (data?.fetchedAt) lastFuturesFetchedAt = data.fetchedAt;
         const optionsOpen = document.querySelector(
           '#dashboard-derivatives .menu-screen[data-l2="options"]:not([hidden]), #dashboard-derivatives .menu-screen[data-l2="volatility"]:not([hidden])',
         );
-        if (data.marketState?.price) setConnectionStatus("connected", "futures-status");
+        const persisted = !!(opts.stale || opts.refreshing || opts.refreshFailed || opts.fromCache);
+        if (data.marketState?.price) {
+          setConnectionStatus(persisted ? "stale" : "connected", "futures-status");
+        }
         setFuturesPanelMeta({
           fetchedAt: data.fetchedAt,
           source: src,
-          stale: opts.stale,
+          stale: opts.stale || opts.fromCache,
+          forceStale: !!(opts.stale || opts.fromCache || opts.refreshFailed),
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,
         });
@@ -882,7 +924,8 @@ async function loadFuturesData() {
           window.DashboardSWR?.setHeaderStamp?.("derivatives", {
             fetchedAt: data.fetchedAt,
             source: src,
-            stale: opts.stale,
+            stale: opts.stale || opts.fromCache,
+            forceStale: !!(opts.stale || opts.fromCache || opts.refreshFailed),
             refreshing: opts.refreshing,
             refreshFailed: opts.refreshFailed,
           });
@@ -893,7 +936,14 @@ async function loadFuturesData() {
     console.error("Failed to load futures data:", err);
     if (futuresMarketState.price) {
       const v = (futuresVenue || "okx").toUpperCase();
-      setFuturesPanelMeta({ fetchedAt: new Date().toISOString(), source: v });
+      setConnectionStatus("stale", "futures-status");
+      setFuturesPanelMeta({
+        fetchedAt: lastFuturesFetchedAt,
+        source: v,
+        stale: true,
+        forceStale: true,
+        refreshFailed: true,
+      });
       return;
     }
     setConnectionStatus("disconnected", "futures-status");
@@ -901,6 +951,8 @@ async function loadFuturesData() {
       state: "error",
       source: (futuresVenue || "okx").toUpperCase(),
     });
+  } finally {
+    futuresLoadInflight = false;
   }
 }
 
@@ -957,7 +1009,10 @@ function alignBookToTicker(depth, ticker) {
 
 function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
-  const venueLabel = bundle.venue || ticker?.venue || "Median spot composite";
+  const venueCount = Number(bundle.venueCount) || (Array.isArray(bundle.venues) ? bundle.venues.length : 0);
+  const venueLabel = venueCount > 0
+    ? `Median · ${venueCount} venues`
+    : (bundle.venue || ticker?.venue || "Median spot composite");
   window.spotCompositeLabel = venueLabel;
   const chartLabel = document.getElementById("spot-chart-label");
   if (chartLabel && bundle.klineVenue) {
@@ -987,7 +1042,7 @@ function applySpotBundle(bundle) {
     w: ticker.weightedAvgPrice,
   });
 
-  window.SpotCharts?.applyInitialKlines?.(klines, bundle.klineVenue);
+  window.SpotCharts?.applyInitialKlines?.(klines, bundle.klineVenue, bundle.klineStale);
   // The median last is not pinned onto another venue's book.
   updateDepth({
     bids: (depth?.bids || []).slice(0, 20),
@@ -1027,8 +1082,11 @@ async function loadInitialData() {
           depth: book,
           depthVenue: book.venue || bundle.depthVenue || null,
           klineVenue: bundle.klineVenue || null,
+          klineStale: !!bundle.klineStale,
           fetchedAt: bundle.fetchedAt || new Date().toISOString(),
           venue: bundle.venue || "Median spot composite",
+          venues: bundle.venues || [],
+          venueCount: bundle.venueCount || (bundle.venues || []).length,
         };
       },
       render: (data, opts = {}) => {
@@ -1106,7 +1164,9 @@ async function refreshProxiedDepth() {
     });
     rememberBookAnchor(aligned.bids?.[0]?.[0], aligned.asks?.[0]?.[0], depth.venue);
   } catch (_) {
-    /* keep the last ladder */
+    bookRefreshFailed = true;
+    paintBookMeta();
+    refreshMarketLiveBadge();
   }
 }
 
@@ -1117,3 +1177,9 @@ setInterval(loadFuturesData, FUTURES_POLL_MS);
 setInterval(loadFuturesIndicators, INDICATOR_POLL_MS);
 setInterval(updateFundingCountdown, 1000);
 setInterval(refreshProxiedDepth, DEPTH_POLL_MS);
+setInterval(() => {
+  paintBookMeta();
+  refreshMarketLiveBadge();
+  const age = window.DashboardSWR?.fetchedAgeMs?.(lastFuturesFetchedAt);
+  if (age != null && age > FUTURES_POLL_MS && !futuresLoadInflight) loadFuturesData();
+}, DEPTH_POLL_MS);

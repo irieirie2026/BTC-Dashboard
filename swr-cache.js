@@ -208,13 +208,14 @@ async function runSWR({
 
   if (persisted?.data && !revalidate) {
     render(persisted.data, {
-      stale: false,
+      stale: true,
       fromCache: true,
+      forceStale: true,
       fetchedAt: persisted.fetchedAt,
     });
     stampHeader(
       l1,
-      { ...stampOpts, fetchedAt: persisted.fetchedAt, stale: false },
+      { ...stampOpts, fetchedAt: persisted.fetchedAt, stale: true, forceStale: true },
       updateHeader,
     );
     return persisted.data;
@@ -305,6 +306,8 @@ window.DashboardSWR = {
   loadPersisted,
   persistPayload,
   formatFetchedTime,
+  formatFetchedAge,
+  fetchedAgeMs,
   formatPanelMeta,
   setHeaderStamp,
   setViewStatusBar,

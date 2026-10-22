@@ -6,6 +6,7 @@ import json
 import math
 from urllib.parse import parse_qs, urlparse
 
+from api_errors import BadRequest
 from server import (
     _parse_tradfi_symbol_list,
     get_defi_payload,
@@ -858,6 +859,8 @@ def handle_api(handler):
             send_binary(handler, 200, payload)
         else:
             send_json(handler, 200, payload)
+    except BadRequest as exc:
+        send_json(handler, 400, {"error": str(exc), "accepted": exc.accepted})
     except ValueError as exc:
         send_json(handler, 404, {"error": str(exc)})
     except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):

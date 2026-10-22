@@ -21,7 +21,8 @@ from datetime import datetime, timezone
 from macro_data.cache import cache_get, cache_set
 
 USER_AGENT = "BTC-Dashboard/1.0 (+misc-metrics)"
-CACHE_TTL = 300
+# Longer than one warm pass plus the 90s sleep. A whale scan can run for minutes.
+CACHE_TTL = 900
 BLOCK_SUBSIDY_BTC = 3.125
 BLOCKS_PER_DAY = 144
 DAILY_ISSUANCE_BTC = BLOCK_SUBSIDY_BTC * BLOCKS_PER_DAY

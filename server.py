@@ -98,17 +98,19 @@ NITTER_MIRROR_HOSTS = (
 )
 
 
-def fetch_html(url, timeout=30):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+def fetch_html(url, timeout=30, user_agent=None):
+    req = urllib.request.Request(url, headers={"User-Agent": user_agent or USER_AGENT})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
-def cached_fetch(key, url, parser, *, refresh=False):
+def cached_fetch(key, url, parser, *, refresh=False, user_agent=None):
     cached = _cget(f"scrape:{key}", CACHE_TTL, refresh=refresh)
     if cached is not None:
         return cached
-    data = parser(fetch_html(url))
+    data = parser(fetch_html(url, user_agent=user_agent))
+    if isinstance(data, dict) and data.get("rows") == [] and data.get("status") == "NO DATA":
+        return data
     _cset(f"scrape:{key}", data, CACHE_TTL)
     return data
 
@@ -222,6 +224,165 @@ def compute_flow_summaries(rows):
             "byEtf": _sum_by_etf(rows, lambda r: r["totalUsdM"] < 0),
         },
     ]
+
+
+_FLOW_MONTHS = {
+    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+    "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
+}
+FARSIDE_FLOW_URL = "https://farside.co.uk/btc/"
+FARSIDE_TICKERS = (
+    "IBIT", "FBTC", "BITB", "ARKB", "BTCO", "EZBC", "BRRR", "HODL",
+    "BTCW", "MSBT", "GBTC", "BTC",
+)
+
+
+def _flow_date_iso(label: str) -> str | None:
+    text = re.sub(r"\s+", " ", str(label or "")).strip()
+    day_first = re.match(r"(\d{1,2}) ([A-Za-z]{3}) (\d{4})$", text)
+    if day_first:
+        mon = _FLOW_MONTHS.get(day_first.group(2).lower())
+        if mon:
+            return f"{int(day_first.group(3)):04d}-{mon:02d}-{int(day_first.group(1)):02d}"
+    month_first = re.match(r"([A-Za-z]{3}) (\d{1,2}), (\d{4})$", text)
+    if month_first:
+        mon = _FLOW_MONTHS.get(month_first.group(1).lower())
+        if mon:
+            return f"{int(month_first.group(3)):04d}-{mon:02d}-{int(month_first.group(2)):02d}"
+    iso = re.match(r"(\d{4})-(\d{2})-(\d{2})$", text)
+    if iso:
+        return text
+    return None
+
+
+def _flow_number(text: str) -> float | None:
+    raw = re.sub(r"\s+", "", str(text or ""))
+    if raw in ("", "-", "—", "–"):
+        return None
+    neg = raw.startswith("(") and raw.endswith(")")
+    raw = raw.strip("()").replace(",", "").replace("$", "")
+    if raw.endswith("%"):
+        return None
+    try:
+        val = float(raw)
+    except ValueError:
+        return None
+    return -val if neg else val
+
+
+def _flow_rows_by_iso(payload: dict | None) -> dict[str, dict]:
+    out = {}
+    for row in (payload or {}).get("rows") or []:
+        iso = row.get("dateIso") or _flow_date_iso(row.get("date") or "")
+        if iso:
+            out[iso] = row
+    return out
+
+
+def _flow_diffs(primary: dict, other: dict | None) -> list[dict]:
+    """Recent dates where bitbo is missing or the total disagrees with Farside."""
+    if not other or not other.get("rows"):
+        return []
+    other_rows = _flow_rows_by_iso(other)
+    diffs = []
+    for row in (primary.get("rows") or [])[:10]:
+        iso = row.get("dateIso") or _flow_date_iso(row.get("date") or "")
+        if not iso:
+            continue
+        peer = other_rows.get(iso)
+        if peer is None:
+            diffs.append({
+                "date": iso,
+                "farsideUsdM": row.get("totalUsdM"),
+                "bitboUsdM": None,
+                "note": "missing on bitbo",
+            })
+            continue
+        try:
+            gap = abs(float(row.get("totalUsdM")) - float(peer.get("totalUsdM")))
+        except (TypeError, ValueError):
+            continue
+        if gap > 0.05:
+            diffs.append({
+                "date": iso,
+                "farsideUsdM": row.get("totalUsdM"),
+                "bitboUsdM": peer.get("totalUsdM"),
+                "note": "totals differ",
+            })
+    return diffs
+
+
+def parse_farside_flows(html):
+    """US spot-Bitcoin ETF flows from the free Farside table. Totals are $ millions."""
+    if not html:
+        return {
+            "tickers": list(FARSIDE_TICKERS),
+            "rows": [],
+            "summaries": [],
+            "source": "farside.co.uk/btc",
+            "status": "NO DATA",
+            "reason": "Farside returned an empty page",
+        }
+    thead = ""
+    head_match = re.search(r"<thead[\s\S]*?</thead>", html, re.I)
+    if head_match:
+        thead = head_match.group(0)
+    tickers = []
+    for token in re.findall(r">\s*([A-Z]{2,5})\s*<", thead):
+        if token not in tickers and token not in ("FEE", "TOTAL"):
+            tickers.append(token)
+    if len(tickers) < 4:
+        tickers = list(FARSIDE_TICKERS)
+    body = html
+    body_match = re.search(r"<tbody[\s\S]*?</tbody>", html, re.I)
+    if body_match:
+        body = body_match.group(0)
+    rows = []
+    for tr in re.finditer(r"<tr[\s\S]*?</tr>", body, re.I):
+        cells = re.findall(r'class="tabletext">([\s\S]*?)</span>', tr.group(0))
+        if not cells:
+            continue
+        label = re.sub(r"<[^>]+>", "", cells[0])
+        label = re.sub(r"\s+", " ", label).strip()
+        iso = _flow_date_iso(label)
+        if not iso:
+            continue
+        numbers = []
+        for cell in cells[1:]:
+            plain = re.sub(r"<[^>]+>", "", cell)
+            numbers.append(_flow_number(plain))
+        numbers = [n for n in numbers if n is not None]
+        if len(numbers) < 2:
+            continue
+        total = numbers[-1]
+        flow_vals = numbers[:-1]
+        flows = {}
+        for i, ticker in enumerate(tickers):
+            if i < len(flow_vals):
+                flows[ticker] = flow_vals[i]
+        rows.append({
+            "date": iso,
+            "dateIso": iso,
+            "flows": flows,
+            "totalUsdM": total,
+        })
+    rows.sort(key=lambda row: row["dateIso"], reverse=True)
+    if not rows:
+        return {
+            "tickers": tickers,
+            "rows": [],
+            "summaries": [],
+            "source": "farside.co.uk/btc",
+            "status": "NO DATA",
+            "reason": "Farside table had no dated flow rows",
+        }
+    return {
+        "tickers": tickers,
+        "rows": rows,
+        "summaries": compute_flow_summaries(rows),
+        "source": "farside.co.uk/btc",
+        "status": "ok",
+    }
 
 
 def parse_flows(html):
@@ -586,6 +747,11 @@ def _parse_homepage_companies(html, btc_price):
     return out
 
 
+def _usd_billions_label(amount):
+    """Three decimals so the hero matches the summed holdings, e.g. $105.007B."""
+    return f"${float(amount) / 1e9:.3f}B"
+
+
 def parse_bitcointreasuries(_html=""):
     homepage_html = fetch_html(BT_HOME_URL)
     homepage_summary = _parse_homepage_summary(homepage_html)
@@ -770,8 +936,11 @@ def parse_bitcointreasuries(_html=""):
             "totalBtc": total_btc,
             "totalBtcLabel": total_btc_label,
             "totalUsd": total_usd,
-            "totalUsdLabel": homepage_summary.get("totalUsdLabel")
-            or f"${total_usd / 1e9:.2f}B",
+            "totalUsdLabel": (
+                _usd_billions_label(total_usd)
+                if total_usd and total_usd > 0
+                else homepage_summary.get("totalUsdLabel")
+            ),
             "count": homepage_summary.get("count") or len(holders),
             "pct21m": pct21m,
             "btcPriceLabel": homepage_summary.get("btcPriceLabel"),
@@ -971,6 +1140,56 @@ def _options_strike_stats(contracts, index_price=None):
     }
 
 
+def _options_term_rv_30d() -> dict:
+    """30d term RV for the options IV gap. Does not fit the volatility suite.
+
+    A cached model term is used when the suite has already been run. Otherwise
+    the last 30 daily closes on disk are a close-to-close RV. Missing stays None.
+    """
+    try:
+        from volatility_models import _cache_get as vol_cache_get
+
+        cached = vol_cache_get("vol:suite:v8:1095:t:")
+        summary = (cached or {}).get("summary") or {}
+        term = summary.get("forecastTerm30d")
+        if isinstance(term, (int, float)) and term == term and float(term) > 0:
+            return {
+                "termRv30d": float(term),
+                "termRvSource": "model 30d term RV",
+                "termRvModel": summary.get("markModelId"),
+            }
+    except Exception:
+        pass
+    try:
+        import math
+
+        raw = json.loads(STATS_HISTORY_DISK_CACHE.read_text(encoding="utf-8"))
+        closes = [
+            float(day["close"])
+            for day in (raw.get("days") or [])
+            if isinstance(day, dict) and day.get("close")
+        ][-31:]
+        rets = [
+            math.log(closes[i] / closes[i - 1])
+            for i in range(1, len(closes))
+            if closes[i - 1] > 0 and closes[i] > 0
+        ]
+        if len(rets) < 15:
+            return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
+        mean = sum(rets) / len(rets)
+        var = sum((ret - mean) ** 2 for ret in rets) / (len(rets) - 1)
+        ann = math.sqrt(var) * math.sqrt(365.0)
+        if not (ann > 0):
+            return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
+        return {
+            "termRv30d": ann,
+            "termRvSource": "30d close-to-close RV",
+            "termRvModel": None,
+        }
+    except Exception:
+        return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
+
+
 def _fetch_options_payload(_html=""):
     summary = _fetch_json_url(
         f"{DERIBIT_API}/get_book_summary_by_currency?currency=BTC&kind=option"
@@ -998,6 +1217,10 @@ def _fetch_options_payload(_html=""):
     except (TypeError, ValueError):
         index_px = None
     surface = _options_strike_stats(contracts, index_px)
+    from options_skew import risk_reversal_25d
+
+    skew = risk_reversal_25d(contracts, index_px)
+    term = _options_term_rv_30d()
     return {
         "contracts": contracts,
         "index": idx,
@@ -1008,6 +1231,12 @@ def _fetch_options_payload(_html=""):
         "topStrikes": surface.get("topStrikes") or [],
         "nearestExpiry": surface.get("nearestExpiry"),
         "indexPrice": index_px,
+        "skew25": skew.get("skew25"),
+        "skewMethod": skew.get("method"),
+        "skewExpiry": skew.get("expiry"),
+        "termRv30d": term.get("termRv30d"),
+        "termRvSource": term.get("termRvSource"),
+        "termRvModel": term.get("termRvModel"),
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -1015,7 +1244,7 @@ def _fetch_options_payload(_html=""):
 
 
 def get_options_payload(*, refresh=False):
-    cached = _cget("options", CACHE_TTL, refresh=refresh)
+    cached = _cget("options:v2", CACHE_TTL, refresh=refresh)
     if cached is not None:
         out = dict(cached)
         age = _iso_age_sec(out.get("fetchedAt"))
@@ -1023,7 +1252,7 @@ def get_options_payload(*, refresh=False):
         out["stale"] = age is None or age > CACHE_TTL
         return out
     data = _fetch_options_payload()
-    _cset("options", data, CACHE_TTL)
+    _cset("options:v2", data, CACHE_TTL)
     data = dict(data)
     data["ageSec"] = 0
     data["stale"] = False
@@ -1212,9 +1441,9 @@ ONCHAIN_CHART_NAMES = frozenset({
 def get_onchain_chart_payload(name, timespan="30days"):
     if name not in ONCHAIN_CHART_NAMES:
         raise ValueError(f"Unknown on-chain chart: {name}")
-    allowed_timespans = {"1year", "2years", "30days", "60days", "90days"}
-    if timespan not in allowed_timespans:
-        timespan = "30days"
+    from api_errors import canonical_timespan
+
+    timespan = canonical_timespan(timespan, kind="onchain")
     key = f"onchain-chart:{name}:{timespan}"
     cached = _cget(key, CACHE_TTL)
     if cached is not None:
@@ -1499,12 +1728,55 @@ def get_etf_payload(*, refresh=False):
     holdings = cached_fetch(
         "holdings", "https://bitbo.io/treasuries/us-etfs/", parse_holdings, refresh=refresh
     )
-    flows = cached_fetch(
-        "flows", "https://bitbo.io/treasuries/etf-flows/", parse_flows, refresh=refresh
-    )
+    farside_error = None
+    flows = None
+    try:
+        flows = cached_fetch(
+            "flows:farside:v1",
+            FARSIDE_FLOW_URL,
+            parse_farside_flows,
+            refresh=refresh,
+            user_agent=BROWSER_UA,
+        )
+    except Exception as exc:
+        farside_error = f"{type(exc).__name__}: {exc}"
+        flows = None
+    bitbo_flows = None
+    try:
+        bitbo_flows = cached_fetch(
+            "flows", "https://bitbo.io/treasuries/etf-flows/", parse_flows, refresh=refresh
+        )
+    except Exception:
+        bitbo_flows = None
+    if isinstance(flows, dict) and flows.get("rows"):
+        flows = {
+            **flows,
+            "diffs": _flow_diffs(flows, bitbo_flows),
+            "compareSource": "bitbo.io/treasuries/etf-flows" if bitbo_flows else None,
+        }
+    elif isinstance(bitbo_flows, dict) and bitbo_flows.get("rows"):
+        flows = {
+            **bitbo_flows,
+            "source": "bitbo.io/treasuries/etf-flows",
+            "status": "ok",
+            "note": "Farside unavailable. These rows are bitbo and can differ from Farside.",
+            "farsideError": farside_error,
+            "diffs": [],
+        }
+    else:
+        flows = {
+            "tickers": list(FARSIDE_TICKERS),
+            "rows": [],
+            "summaries": [],
+            "source": "farside.co.uk/btc",
+            "status": "NO DATA",
+            "reason": farside_error or "Farside and bitbo returned no flow rows",
+            "diffs": [],
+        }
     return {
         "holdings": holdings,
         "flows": flows,
+        "source": flows.get("source"),
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
@@ -5034,10 +5306,26 @@ _workers_lock = None
 _workers_started = False
 
 
+# Snapshot, books, and exchanges warm before the slow whale scan.
+WARM_STEP_ORDER = (
+    "snapshot",
+    "options",
+    "perp",
+    "futures",
+    "depth",
+    "exchanges",
+    "metrics",
+    "whales",
+    "macro",
+    "series",
+)
+
+
 def _warm_startup_caches() -> None:
-    # One thread. Whales refresh on a timer; macro and series run once on the first pass.
+    # One thread. Macro and series run once on the first pass.
     # Parallel warm threads deadlock Python 3.14's import lock.
     # The 24-model time-series suite is not on this loop.
+    # Whale note_* wraps only the whale call so a long scan does not block the books.
     from macro_data.misc_whales import (
         get_misc_whales_payload,
         note_whale_warm_done,
@@ -5046,21 +5334,6 @@ def _warm_startup_caches() -> None:
 
     first = True
     while True:
-        note_whale_warm_start()
-        try:
-            get_misc_whales_payload(refresh=True, from_warm=True)
-            print("Whale cache warmed key=misc:whales:v3", flush=True)
-        except Exception as exc:
-            print(f"Whale cache warm skipped: {exc}", flush=True)
-        finally:
-            note_whale_warm_done()
-        try:
-            from macro_data.misc_metrics import get_misc_metrics_payload
-
-            get_misc_metrics_payload(refresh=True)
-            print("Metrics cache warmed", flush=True)
-        except Exception as exc:
-            print(f"Metrics cache warm skipped: {exc}", flush=True)
         try:
             from btc_indicators_api import get_snapshot_payload
 
@@ -5089,6 +5362,21 @@ def _warm_startup_caches() -> None:
             print("Exchanges cache warmed", flush=True)
         except Exception as exc:
             print(f"Exchanges cache warm skipped: {exc}", flush=True)
+        try:
+            from macro_data.misc_metrics import get_misc_metrics_payload
+
+            get_misc_metrics_payload(refresh=True)
+            print("Metrics cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Metrics cache warm skipped: {exc}", flush=True)
+        note_whale_warm_start()
+        try:
+            get_misc_whales_payload(refresh=True, from_warm=True)
+            print("Whale cache warmed key=misc:whales:v3", flush=True)
+        except Exception as exc:
+            print(f"Whale cache warm skipped: {exc}", flush=True)
+        finally:
+            note_whale_warm_done()
         if first:
             _warm_macro_caches()
             _warm_btc_series()

@@ -189,11 +189,13 @@ def test_btc100k_names_one_market():
         },
     ]
     pick = _pick_btc_100k(markets)
-    assert pick["id"] == "kalshi-100k"
-    assert pick["yesProb"] == 48
+    # Nearest expiry at least 30 days out. Volume no longer wins a nearer contract.
+    assert pick["id"] == "poly-701496"
+    assert pick["yesProb"] == 26
+    assert pick["endDate"] == "2026-12-31"
     caption = _btc100k_caption(pick)
-    assert "Kalshi" in caption
-    assert "48" not in caption or "100" in caption
+    assert "Polymarket" in caption
+    assert "2026-12-31" in caption
     legs = _btc100k_legs(markets)
     assert {row["id"] for row in legs} == {"poly-701496", "kalshi-100k"}
     probs = [row["yesProb"] for row in legs]

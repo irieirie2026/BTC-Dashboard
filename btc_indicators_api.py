@@ -156,6 +156,7 @@ def _finalize_series_payload(indicator: str, data: dict[str, Any]) -> dict[str, 
 
 # Response window only. Never trim the widest series stored under data/btc-series/.
 _TIMESPAN_DAYS = {
+    "7days": 7,
     "30days": 30,
     "60days": 60,
     "90days": 90,
@@ -189,10 +190,15 @@ def _series_point_seconds(point: dict[str, Any]) -> int | None:
 
 
 def _apply_timespan(payload: dict[str, Any], timespan: str) -> dict[str, Any]:
-    """Filter a response copy by timespan and recompute latest. Does not persist."""
-    span = timespan or "all"
+    """Filter a response copy by timespan and recompute latest. Does not persist.
+
+    30d, 1y, and 7days are aliases. Any other unknown value is a 400.
+    """
+    from api_errors import canonical_timespan
+
+    span = canonical_timespan(timespan, kind="series")
     out = {**payload, "timespan": span}
-    days = _TIMESPAN_DAYS.get(span) if span in _TIMESPAN_DAYS else None
+    days = _TIMESPAN_DAYS.get(span)
     series = payload.get("series")
     if not days or not isinstance(series, list):
         return out
@@ -774,8 +780,91 @@ def _median_funding(perp_table: list[dict]) -> float | None:
     return (rates[mid - 1] + rates[mid]) / 2
 
 
+def _series_asof_epoch(data: dict[str, Any] | None) -> int | None:
+    if not isinstance(data, dict):
+        return None
+    text = _data_as_of_from_series_data(data)
+    if not text:
+        return None
+    try:
+        return int(calendar.timegm(time.strptime(str(text)[:10], "%Y-%m-%d")))
+    except (ValueError, OverflowError):
+        return None
+
+
+def _series_is_recent(data: dict[str, Any] | None, *, days: float = 3) -> bool:
+    epoch = _series_asof_epoch(data)
+    if epoch is None:
+        return False
+    return (time.time() - epoch) <= days * 86400
+
+
+def _prefer_later_series(
+    store: dict[str, Any] | None,
+    live: dict[str, Any] | None,
+) -> tuple[dict[str, Any], bool]:
+    """Pick the later as-of series. The second value is True when that series is a stale store."""
+
+    def usable(body: dict[str, Any] | None) -> bool:
+        return isinstance(body, dict) and _latest_from_series_data(body) is not None
+
+    store_ok = usable(store)
+    live_ok = usable(live)
+    if store_ok and live_ok:
+        store_epoch = _series_asof_epoch(store) or 0
+        live_epoch = _series_asof_epoch(live) or 0
+        if store_epoch > live_epoch:
+            return store, not _series_is_recent(store)
+        if live_epoch > store_epoch:
+            return live, False
+        return live, False
+    if live_ok:
+        return live, False
+    if store_ok:
+        return store, not _series_is_recent(store)
+    return {}, False
+
+
+def _chart_active_address_series(
+    *,
+    refresh: bool = False,
+    live: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Latest active-address point the chart uses. Never calls write_series."""
+    from btc_data.fetchers import fetch_blockchain_chart as _fetch_chart
+    from btc_data.store import read_series_cached as _read_store
+
+    store = _read_store("active_addresses", ttl=86400) or {}
+    if not (store.get("series") or store.get("latest")):
+        store = {}
+    fetched = live
+    store_recent = _series_is_recent(store)
+    if fetched is None and (refresh or not store_recent):
+        try:
+            fetched = _fetch_chart(
+                "n-unique-addresses",
+                "30days",
+                refresh=bool(refresh or not store_recent),
+            )
+        except Exception:
+            fetched = None
+    chosen, stale_store = _prefer_later_series(store or None, fetched)
+    latest = chosen.get("latest") if isinstance(chosen, dict) else None
+    series = (chosen.get("series") or []) if isinstance(chosen, dict) else []
+    if not isinstance(latest, dict) and series:
+        latest = series[-1]
+    return {
+        "latest": latest if isinstance(latest, dict) else None,
+        "series": series,
+        "source": (chosen.get("source") if isinstance(chosen, dict) else None) or "Blockchain.info",
+        "fetchedAt": chosen.get("fetchedAt") if isinstance(chosen, dict) else None,
+        "fromStore": bool(store) and chosen is store,
+        "stale": bool(stale_store),
+    }
+
+
 def _active_address_cell(bitinfo: dict[str, Any], active_chart: dict[str, Any]) -> dict:
-    """Snapshot cell uses the same series store the chart reads, including its as-of date."""
+    """Snapshot cell uses the same series the chart reads, including its as-of date."""
     series_val = _latest_from_series_data(active_chart) if active_chart else None
     series_asof = _data_as_of_from_series_data(active_chart) if active_chart else None
     series_source = None
@@ -785,13 +874,16 @@ def _active_address_cell(bitinfo: dict[str, Any], active_chart: dict[str, Any]) 
         if not series_source and isinstance(latest, dict):
             series_source = latest.get("source")
     if series_val is not None:
+        extra = {
+            "fetchedAt": active_chart.get("fetchedAt"),
+            "dataAsOf": series_asof,
+        }
+        if active_chart.get("stale"):
+            extra["stale"] = True
         return _cell(
             series_val,
             series_source or "Blockchain.info",
-            {
-                "fetchedAt": active_chart.get("fetchedAt"),
-                "dataAsOf": series_asof,
-            },
+            extra,
         )
     bit_val = bitinfo.get("active_addresses_24h") if isinstance(bitinfo, dict) else None
     return _cell(
@@ -967,15 +1059,8 @@ def _build_fast_snapshot_cells() -> dict[str, dict]:
     netflow = _fetch_netflow_snapshot(refresh=False)
     bg_kpis = _fetch_bg_kpi_snapshot(refresh=False)
 
-    active_body = _store_series_body("active_addresses", ttl=86400) or {}
     hash_body = _store_series_body("hash_rate", ttl=86400) or {}
-    active_chart = {
-        "latest": active_body.get("latest") or ((active_body.get("series") or [None])[-1]),
-        "series": active_body.get("series") or [],
-        "source": active_body.get("source") or "Blockchain.info",
-        "fetchedAt": active_body.get("fetchedAt"),
-        "fromStore": bool(active_body),
-    }
+    active_chart = _chart_active_address_series(refresh=False)
     hash_chart = {
         "latest": hash_body.get("latest") or ((hash_body.get("series") or [None])[-1]),
         "fetchedAt": hash_body.get("fetchedAt"),
@@ -1193,13 +1278,13 @@ def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
 def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     from server import get_fear_greed_payload
 
-    cache_key = "btc:bundle:snapshot:v12"
+    cache_key = "btc:bundle:snapshot:v13"
     fast_source = (
         "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
         "Coin Metrics · Santiment store"
     )
     if not refresh:
-        cached = cache_get(cache_key, ttl=300)
+        cached = cache_get(cache_key, ttl=900)
         if cached is not None:
             cells = dict(cached.get("cells") or {})
             if not any(_cell_value_missing(key, cells.get(key)) for key in _SNAPSHOT_LIVE_KEYS):
@@ -1219,7 +1304,7 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
             from_cache=False,
             refresh=False,
         )
-        cache_set(cache_key, payload, ttl=300)
+        cache_set(cache_key, payload, ttl=900)
         return payload
 
     if refresh:
@@ -1272,16 +1357,7 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     realized = bg_kpis.get("realized_price") or {}
     hodl = bg_kpis.get("hodl_waves") or {}
     puell = data["puell"]
-    active_chart = data["active_chart"]
-    active_store = _store_series_body("active_addresses", ttl=86400) or {}
-    if active_store.get("latest") or active_store.get("series"):
-        active_chart = {
-            "latest": active_store.get("latest") or ((active_store.get("series") or [None])[-1]),
-            "series": active_store.get("series") or [],
-            "source": active_store.get("source") or "Blockchain.info",
-            "fetchedAt": active_store.get("fetchedAt"),
-            "fromStore": True,
-        }
+    active_chart = _chart_active_address_series(refresh=True, live=data.get("active_chart"))
     hash_chart = data["hash_chart"]
     netflow = data["netflow"]
     mempool = data["mempool"]
@@ -1330,7 +1406,7 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     )
     payload["errors"] = sorted(set(errors + payload.get("errors", [])))
     payload["partial"] = bool(payload["errors"])
-    cache_set(cache_key, payload, ttl=300)
+    cache_set(cache_key, payload, ttl=900)
     return payload
 
 

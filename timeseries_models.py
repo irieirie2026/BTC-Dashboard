@@ -1972,6 +1972,18 @@ def hit_rate_interval(p: float, n: int, *, z: float = 1.96) -> dict[str, Any]:
     }
 
 
+def _product_version() -> str:
+    """Product version from package.json. The suite cache key includes it."""
+    import json
+    from pathlib import Path
+
+    try:
+        raw = json.loads((Path(__file__).resolve().parent / "package.json").read_text(encoding="utf-8"))
+        return str(raw.get("version") or "0")
+    except (OSError, ValueError, TypeError):
+        return "0"
+
+
 def get_timeseries_suite_payload(
     *,
     days: int = 3650,
@@ -1979,10 +1991,11 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v13:{days}:{','.join(models or [])}"
+    version = _product_version()
+    key = f"ts:suite:v14:{version}:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
-        if cached is not None:
+        if cached is not None and cached.get("productVersion") == version:
             out = dict(cached)
             out["fromCache"] = True
             return out
@@ -2547,6 +2560,7 @@ def get_timeseries_suite_payload(
             ),
         },
         "fromCache": False,
+        "productVersion": _product_version(),
     }
     _cache_set(key, payload)
     return payload
