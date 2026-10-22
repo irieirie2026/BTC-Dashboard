@@ -264,11 +264,12 @@ def _ticker_from_exchange_row(row: dict) -> dict[str, Any]:
     }
 
 
-def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
+def _exchange_spot_rows(*, refresh: bool = False) -> tuple[list[dict], str | None]:
     """Live spot rows from the exchanges desk, so both cards share one median.
 
     A quote refresh reuses the exchange snapshot only when it is younger than 40s.
     Older copies are fetched again so bid/ask cannot sit on a 15-minute cache.
+    The second value is that snapshot's fetchedAt, which is the age of the print.
     """
     try:
         from server import _fetch_all_exchange_data, _iso_age_sec
@@ -280,14 +281,14 @@ def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
             if not fresh:
                 raw = _fetch_all_exchange_data(refresh=True)
     except Exception:
-        return []
+        return [], None
     if not isinstance(raw, dict):
-        return []
+        return [], None
     out = []
     for row in raw.get("spot") or []:
         if isinstance(row, dict) and row.get("price") is not None and not row.get("unavailable"):
             out.append(row)
-    return out
+    return out, raw.get("fetchedAt")
 
 
 def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
@@ -301,7 +302,7 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
             _last_quote_venue = "OKX"
             return cached
     errors: list[str] = []
-    exchange_rows = _exchange_spot_rows(refresh=refresh)
+    exchange_rows, quoted_at = _exchange_spot_rows(refresh=refresh)
     rows: list[dict[str, Any]] = []
     if len(exchange_rows) >= 3:
         for row in exchange_rows:
@@ -347,6 +348,8 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     if med_change is not None and (1.0 + med_change / 100.0) != 0:
         open_px = median / (1.0 + med_change / 100.0)
     ticker["lastPrice"] = f"{median:.2f}"
+    ticker["weightedAvgPrice"] = f"{median:.2f}"
+    ticker["priceSource"] = "median last"
     ticker["openPrice"] = f"{open_px:.2f}" if open_px is not None else None
     ticker["openIs24h"] = open_px is not None
     ticker["priceChangePercent"] = med_change
@@ -356,15 +359,19 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     ticker["pair"] = "BTC composite"
     label = comp["label"]
     ticker["venue"] = label
+    ticker["lastSource"] = label
     # Depth must not follow the composite label. The ladder is one venue.
     _last_quote_venue = "OKX"
+    held_at = quoted_at or _now_iso()
     payload = {
         "ticker": ticker,
         "venue": label,
         "venues": names,
         "venueCount": comp["venueCount"],
         "medianLast": median,
-        "fetchedAt": _now_iso(),
+        "priceSource": "median last",
+        "quotedAt": held_at,
+        "fetchedAt": held_at,
         "errors": errors,
     }
     return _cache_set(key, payload)
@@ -1406,6 +1413,8 @@ def get_spot_bundle(*, refresh: bool = False) -> dict[str, Any]:
         "klineStale": bool(klines.get("stale")),
         "venues": quote.get("venues") or [],
         "venueCount": quote.get("venueCount") or len(quote.get("venues") or []),
-        "fetchedAt": _now_iso(),
+        "priceSource": quote.get("priceSource") or "median last",
+        "quotedAt": quote.get("quotedAt") or quote.get("fetchedAt"),
+        "fetchedAt": quote.get("quotedAt") or quote.get("fetchedAt") or _now_iso(),
         "errors": (quote.get("errors") or []) + (klines.get("errors") or []) + (depth.get("errors") or []),
     }

@@ -1022,7 +1022,7 @@ const METRIC_HELP = {
   },
   "opt-skew": {
     title: "25Δ Risk Reversal",
-    body: "25-delta risk reversal: put IV minus call IV. On each expiry the put IV is interpolated in delta to exactly −0.25 and the call IV to exactly +0.25. An expiry that does not bracket the target delta is skipped. The print is then interpolated to 30 days when one expiry is at or under 30 days and another is at or over 30 days. Otherwise it uses the listed expiry nearest 30 days. A positive number means puts are richer.",
+    body: "25-delta risk reversal: put IV minus call IV, using Deribit’s forward delta (Black-76), not a premium-adjusted delta. On each expiry the forward is the median underlying price, and the put IV is interpolated in that delta to exactly −0.25 and the call IV to exactly +0.25. An expiry that does not bracket the target delta is skipped. The print is then interpolated to 30 days when one expiry is at or under 30 days and another is at or over 30 days. Otherwise it uses the listed expiry nearest 30 days. The subtitle lists each expiry’s risk reversal and its weight so the 30-day number can be tied out. A positive number means puts are richer.",
   },
   "opt-iv-c2c": {
     title: "DVOL − 30d close-to-close RV",
@@ -2909,7 +2909,7 @@ const METRIC_HELP = {
     body: "Live Deribit DVOL when the index feed is available, otherwise nearest-weekly ATM mark IV from the option book. Not the GARCH forecast.",
   },
   "vol-ivgap": {
-    title: "IV − term RV",
+    title: "ATM 30d IV − term RV",
     body: "Live ATM mark IV minus the mark model’s term RV at 7d and 30d. Positive = options rich vs the model (short-vol gate). Negative = options cheap (long-vol gate). Cond. vol is yesterday’s close; IV is the live book.",
   },
   "vol-persist": {
@@ -2969,8 +2969,8 @@ const METRIC_HELP = {
     body: "Approximate days until a variance shock decays to half its impact, derived from persistence. Only defined when 0 &lt; persistence &lt; 1.",
   },
   "vol-col-condvol": {
-    title: "Cond. vol (ann.)",
-    body: "Latest fitted conditional volatility for that row’s model, annualized with √365: σ_t from the last in-sample day × √365. Same definition as the last point on the Conditional volatility chart when that model is selected (the chart plots the full σ path; the table only shows the endpoint).",
+    title: "HAR term RV",
+    body: "The HAR row shows the 30-day HAR term RV (forecast path at day 30), which is the series compared with ATM IV. Other models still show that row’s conditional vol in the same column. Hover a cell for which one it is. Conditional vol is the last fitted σ × √365.",
   },
   "vol-col-status": {
     title: "Status",

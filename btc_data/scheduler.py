@@ -75,7 +75,11 @@ def fetch_and_store(spec: MetricSpec, *, refresh: bool = True, dry_run: bool = F
 
     payload = fetch_metric(spec, refresh=refresh)
     payload["unit"] = spec.unit
-    ok = write_series(spec.id, payload, ttl=spec.ttl)
+    # An error with no points must not replace the last good file.
+    if payload.get("error") and not payload.get("series"):
+        ok = False
+    else:
+        ok = write_series(spec.id, payload, ttl=spec.ttl)
     _mark_source_fetch(spec.source, state)
 
     errors = state.setdefault("errors", {})

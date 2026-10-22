@@ -415,7 +415,7 @@ function pmArbTypeLabel(type) {
     {
       "cross-platform": "Cross-venue lock",
       "sum-discount": "Yes + No lock",
-      monotonicity: "Strike ladder lock",
+      monotonicity: "Strike ladder (relative value, no depth)",
       "deribit-basis": "Model gap",
     }[type] || type
   );

@@ -1884,7 +1884,7 @@ _ARB_TYPE_META = {
         ],
     },
     "monotonicity": {
-        "shortLabel": "Strike ladder lock",
+        "shortLabel": "Strike ladder (relative value, no depth)",
         "plainEnglish": (
             "A higher Bitcoin price target should never be more likely than a lower one "
             "for the same deadline. When the market prices it that way, buy the cheaper "
@@ -2379,15 +2379,19 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
             econ = _arb_economics(
                 all_in=all_in, mid_sum=yes_low + no_high, fees=fees, net=net, locked=locked
             )
-            opps.append(
-                _arb_record(
+            prefix = (
+                "Strike ladder lock"
+                if locked
+                else "Strike ladder (relative value, no depth)"
+            )
+            rec = _arb_record(
                     type_="monotonicity",
                     edge_pct=net * 100,
                     gross_pct=gross * 100,
                     fee_pct=fees * 100,
                     locked=locked,
                     confidence="high" if same_event else "medium",
-                    title=f"Strike ladder lock · {net * 100:.1f}% net",
+                    title=f"{prefix} · {net * 100:.1f}% net",
                     summary=(
                         f"${low_m['_strike']:,} Yes {yes_low * 100:.0f}¢ vs "
                         f"${high_m['_strike']:,} Yes {yes_high * 100:.0f}¢ (inverted) · "
@@ -2476,7 +2480,9 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
                         ],
                     },
                 )
-            )
+            if locked:
+                rec["typeLabel"] = "Strike ladder lock"
+            opps.append(rec)
     return sorted(opps, key=lambda x: x["edgePct"], reverse=True)
 
 

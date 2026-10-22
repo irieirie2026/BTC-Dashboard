@@ -77,10 +77,27 @@ function normCdf(x) {
   return 0.5 * (1 + erf);
 }
 
-function rrCallDelta(spot, strike, tYears, iv) {
-  if (!(spot > 0) || !(strike > 0) || !(tYears > 0) || !(iv > 0)) return null;
-  const d1 = (Math.log(spot / strike) + 0.5 * iv * iv * tYears) / (iv * Math.sqrt(tYears));
+function rrCallDelta(forward, strike, tYears, iv) {
+  if (!(forward > 0) || !(strike > 0) || !(tYears > 0) || !(iv > 0)) return null;
+  const d1 = (Math.log(forward / strike) + 0.5 * iv * iv * tYears) / (iv * Math.sqrt(tYears));
   return normCdf(d1);
+}
+
+function rrMedian(values) {
+  const ordered = values.filter((n) => Number.isFinite(n) && n > 0).sort((a, b) => a - b);
+  if (!ordered.length) return null;
+  const mid = Math.floor(ordered.length / 2);
+  if (ordered.length % 2) return ordered[mid];
+  return (ordered[mid - 1] + ordered[mid]) / 2;
+}
+
+function rrTieOut(legs) {
+  const bits = (legs || []).map((leg) => {
+    const sign = leg.rr >= 0 ? "+" : "";
+    return `${leg.expiry} RR ${sign}${Number(leg.rr).toFixed(2)} × ${Number(leg.weight).toFixed(2)}`;
+  });
+  bits.push("forward delta, not premium-adjusted");
+  return bits.join(" · ");
 }
 
 function rrExpiryLabel(expMs) {
@@ -111,7 +128,15 @@ function rrIvDecimal(raw) {
 }
 
 function riskReversal25d(chain, indexPrice) {
-  const empty = { skew25: null, method: "25d RR, puts minus calls", expiry: null };
+  const empty = {
+    skew25: null,
+    method: "25d RR, forward delta, puts minus calls",
+    expiry: null,
+    legs: [],
+    tieOut: null,
+    deltaConvention: "forward",
+    premiumAdjusted: false,
+  };
   const spot = Number(indexPrice);
   if (!(spot > 0)) return empty;
   const now = Date.now();
@@ -124,18 +149,20 @@ function riskReversal25d(chain, indexPrice) {
     if (iv == null) return;
     if (exp < 1e12) exp *= 1000;
     const side = String(opt.side || "C").charAt(0).toUpperCase() === "P" ? "P" : "C";
+    const forward = Number(opt.underlyingPrice || opt.underlying_price || opt.estimated_delivery_price);
     if (!byExp.has(exp)) byExp.set(exp, []);
-    byExp.get(exp).push({ strike, side, markIv: iv });
+    byExp.get(exp).push({ strike, side, markIv: iv, forward: Number.isFinite(forward) && forward > 0 ? forward : null });
   });
   const rows = [];
   byExp.forEach((opts, exp) => {
     const days = (exp - now) / 86400000;
     if (days < 1 || days > 400) return;
     const tYears = Math.max(days / 365, 1 / 365);
+    const forward = rrMedian(opts.map((opt) => opt.forward).filter((n) => n != null)) || spot;
     const puts = [];
     const calls = [];
     opts.forEach((opt) => {
-      const delta = rrCallDelta(spot, opt.strike, tYears, opt.markIv);
+      const delta = rrCallDelta(forward, opt.strike, tYears, opt.markIv);
       if (delta == null) return;
       if (opt.side === "P") puts.push([delta - 1, opt.markIv]);
       else calls.push([delta, opt.markIv]);
@@ -153,21 +180,37 @@ function riskReversal25d(chain, indexPrice) {
   rows.sort((a, b) => a.days - b.days);
   const before = [...rows].reverse().find((row) => row.days <= 30) || null;
   const after = rows.find((row) => row.days >= 30) || null;
+  const leg = (row, weight) => ({
+    expiry: rrExpiryLabel(row.exp),
+    days: Math.round(row.days * 100) / 100,
+    rr: Math.round(row.rr * 10000) / 10000,
+    weight: Math.round(weight * 10000) / 10000,
+  });
   if (before && after && before.exp !== after.exp && after.days !== before.days) {
     const weight = (30 - before.days) / (after.days - before.days);
+    const legs = [leg(before, 1 - weight), leg(after, weight)];
     return {
       skew25: before.rr + (after.rr - before.rr) * weight,
-      method: "25d RR, 30d interpolated, puts minus calls",
+      method: "25d RR, 30d interpolated, forward delta, puts minus calls",
       expiry: `${rrExpiryLabel(before.exp)}–${rrExpiryLabel(after.exp)}`,
+      legs,
+      tieOut: rrTieOut(legs),
+      deltaConvention: "forward",
+      premiumAdjusted: false,
     };
   }
   const nearest = rows.reduce((best, row) =>
     Math.abs(row.days - 30) < Math.abs(best.days - 30) ? row : best,
   );
+  const legs = [leg(nearest, 1)];
   return {
     skew25: nearest.rr,
-    method: `25d RR, ${nearest.days.toFixed(0)}d listed, puts minus calls`,
+    method: `25d RR, ${nearest.days.toFixed(0)}d listed, forward delta, puts minus calls`,
     expiry: rrExpiryLabel(nearest.exp),
+    legs,
+    tieOut: rrTieOut(legs),
+    deltaConvention: "forward",
+    premiumAdjusted: false,
   };
 }
 
@@ -391,7 +434,7 @@ function renderDeliveryScreen() {
   }
   set("delivery-perp", "$" + dxFmtPrice(perp.last));
   const perpSub = dxEl("delivery-perp-sub");
-  if (perpSub) perpSub.textContent = (perp.venue || deliveryData.venue || "Perp") + " perpetual";
+  if (perpSub) perpSub.textContent = `${perp.venue || deliveryData.venue || "Perp"} lastPrice`;
   set("delivery-curve-shape", curveShape);
   set(
     "delivery-nearest-basis",
@@ -657,6 +700,7 @@ async function fetchOptionsBundle() {
         return {
           ...parsed,
           markIv: markIvDecimal(c.mark_iv ?? c.markIv ?? c.iv),
+          underlyingPrice: parseFloat(c.underlying_price || c.underlyingPrice || c.estimated_delivery_price) || null,
           markPrice: parseFloat(c.mark_price || 0),
           volume: parseFloat(c.volume || 0),
           openInterest: parseFloat(c.open_interest || 0),
@@ -733,6 +777,8 @@ async function fetchOptionsBundle() {
     const skewExpiry = rr.skew25 != null
       ? rr.expiry
       : (payload.skewExpiry || rr.expiry);
+    const skewLegs = rr.skew25 != null ? (rr.legs || []) : (payload.skewLegs || rr.legs || []);
+    const skewTieOut = rr.skew25 != null ? rr.tieOut : (payload.skewTieOut || rr.tieOut || "");
 
     const volByStrike = {};
     chain.forEach((o) => {
@@ -866,6 +912,8 @@ async function fetchOptionsBundle() {
       skew25,
       skewMethod,
       skewExpiry,
+      skewLegs,
+      skewTieOut,
       ivTermGap,
       ivC2cGap,
       ivModelGap,
@@ -971,10 +1019,13 @@ function renderOptionsVolScreen() {
       : "—",
   );
   const skewSub = dxEl("opt-iv-skew-sub");
+  const skewTie = d.skewTieOut || "";
   if (skewSub) {
-    const method = d.skewMethod || "25d RR, puts minus calls";
-    skewSub.textContent = d.skewExpiry ? `${method} · ${d.skewExpiry}` : method;
+    const method = d.skewMethod || "25d RR, forward delta, puts minus calls";
+    skewSub.textContent = skewTie || (d.skewExpiry ? `${method} · ${d.skewExpiry}` : method);
   }
+  const skewEl = dxEl("opt-iv-skew");
+  if (skewEl && skewTie) skewEl.title = skewTie;
   set("opt-iv-c2c", dxGapPts(d.ivC2cGap) || "—");
   const c2cSub = dxEl("opt-iv-c2c-sub");
   if (c2cSub) c2cSub.textContent = "DVOL − 30d close-to-close RV";

@@ -241,7 +241,7 @@ function volCondShown(m) {
 
 function volCondTitle(m) {
   const term = volHarTerm30(m);
-  if (term == null) return "";
+  if (term == null) return ` title="Conditional vol"`;
   return ` title="30d HAR term RV. Conditional vol ${volFmtPct(m.currentCondVolAnn, 1)}"`;
 }
 
@@ -442,7 +442,15 @@ function volSetLiveIvKpis(suite, chain) {
         : g30 != null
           ? volFmtPct(g30, 1)
           : "—";
-  set("vol-kpi-ivgap", gapTxt);
+  const atmBit = atm30 != null ? ` · ATM ${volFmtPct(atm30, 1)}` : "";
+  set("vol-kpi-ivgap", gapTxt === "—" && !atmBit ? "—" : `${gapTxt}${atmBit}`);
+  const gapLabel = volEl("vol-kpi-ivgap-label");
+  if (gapLabel) {
+    const named = `ATM 30d IV − ${rvName} RV`;
+    const inner = gapLabel.querySelector(".metric-label-text");
+    if (inner) inner.textContent = named;
+    else gapLabel.textContent = named;
+  }
   if (!chain) {
     set("vol-kpi-ivgap-sub", g30 != null ? gapSub : "stale · Deribit chain unavailable");
   } else {

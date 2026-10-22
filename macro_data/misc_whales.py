@@ -125,9 +125,7 @@ def _enrich_tx(tx: dict, *, source: str, block_time: int | None = None, block_he
     vouts = tx.get("vout") or []
     vins = tx.get("vin") or []
     out_sum = sum((v.get("value") or 0) for v in vouts)
-    value_btc = out_sum / 1e8
-    if value_btc < NOTABLE_BTC:
-        return None
+    gross_btc = out_sum / 1e8
 
     # Dominant output (largest non-change heuristic: largest single out)
     outs = sorted(
@@ -159,9 +157,17 @@ def _enrich_tx(tx: dict, *, source: str, block_time: int | None = None, block_he
         )
     ins = sorted(ins, key=lambda x: x["valueBtc"], reverse=True)
 
-    # Change that stays inside the same addresses is not a transfer between entities.
+    # Count only coins that leave the input addresses. Change sent back is not a transfer.
     out_addrs = {row["address"] for row in outs if row.get("address")}
     in_addrs = {row["address"] for row in ins if row.get("address")}
+    net_sats = 0
+    for vout in vouts:
+        addr = vout.get("scriptpubkey_address")
+        if addr and addr not in in_addrs:
+            net_sats += vout.get("value") or 0
+    net_btc = net_sats / 1e8
+    if net_btc < NOTABLE_BTC:
+        return None
     if out_addrs and out_addrs <= in_addrs:
         return None
 
@@ -197,14 +203,16 @@ def _enrich_tx(tx: dict, *, source: str, block_time: int | None = None, block_he
 
     return {
         "txid": tx.get("txid", ""),
-        "valueBtc": round(value_btc, 4),
+        "valueBtc": round(net_btc, 4),
+        "grossBtc": round(gross_btc, 4),
+        "netBtc": round(net_btc, 4),
         "feeBtc": fee_btc,
         "feeSat": fee,
         "source": source,
         "confirmed": confirmed,
         "time": ts,
         "blockHeight": block_height or status.get("block_height"),
-        "tier": _size_tier(value_btc),
+        "tier": _size_tier(net_btc),
         "direction": direction,
         "directionLabel": directionLabel,
         "identified": bool(known_in or known_out),
@@ -262,8 +270,9 @@ def _whale_warming_payload(cache_key: str) -> dict:
         "fromCache": False,
         "warming": True,
         "stale": True,
+        "unavailable": True,
         "status": "NO DATA",
-        "reason": "Warm scan still in flight",
+        "reason": "cold start, warming",
         "error": "NO DATA",
         "exchanges": [],
         "transfers": [],

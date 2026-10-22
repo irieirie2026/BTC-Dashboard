@@ -10,6 +10,7 @@ from typing import Any, Callable
 
 from btc_data.coinmetrics import (
     COINMETRICS_METRICS,
+    _flag_netflow_preliminary,
     fetch_coinmetrics_series,
     fetch_exchange_netflow_series,
 )
@@ -580,7 +581,7 @@ def _fetch_netflow_snapshot(*, refresh: bool = False) -> dict[str, Any]:
     for days in (90, 30, 7):
         cached = _cached_series_body(f"btc:cm:v1:exchange_netflow:{days}", ttl=43200 * 7)
         if cached:
-            return cached
+            return _flag_netflow_preliminary(cached)
     if not refresh:
         return {
             "series": [],
@@ -665,7 +666,38 @@ def _blockchair_difficulty_from_store() -> float | None:
     return None
 
 
-def _repair_snapshot_cells(cells: dict[str, dict]) -> None:
+def _mempool_difficulty(*, allow_live: bool = False) -> float | None:
+    """Current difficulty from mempool.space. Live only while a snapshot is building."""
+    key = "btc:mempool:difficulty:v1"
+    cached = cache_get(key, ttl=900)
+    if isinstance(cached, dict) and _snapshot_value_usable("difficulty", cached.get("difficulty")):
+        return float(cached["difficulty"])
+    if not allow_live:
+        hit = cache_get_stale(key)
+        if hit and isinstance(hit[0], dict) and _snapshot_value_usable("difficulty", hit[0].get("difficulty")):
+            return float(hit[0]["difficulty"])
+        return None
+    try:
+        from btc_data.fetchers import fetch_json
+
+        raw = fetch_json(
+            "https://mempool.space/api/v1/mining/difficulty-adjustments?interval=1m",
+            timeout=8,
+        )
+        diff = None
+        if isinstance(raw, list) and raw and isinstance(raw[0], (list, tuple)) and len(raw[0]) >= 3:
+            diff = float(raw[0][2])
+        if _snapshot_value_usable("difficulty", diff):
+            cache_set(key, {"difficulty": diff, "fetchedAt": _now_iso(), "source": "Mempool.space"})
+            return float(diff)
+    except Exception:
+        hit = cache_get_stale(key)
+        if hit and isinstance(hit[0], dict) and _snapshot_value_usable("difficulty", hit[0].get("difficulty")):
+            return float(hit[0]["difficulty"])
+    return None
+
+
+def _repair_snapshot_cells(cells: dict[str, dict], *, allow_live: bool = False) -> None:
     """Fix known bad cached snapshot values using disk store."""
     hr = cells.get("hash_rate") or {}
     val = hr.get("value")
@@ -782,6 +814,46 @@ def _repair_snapshot_cells(cells: dict[str, dict]) -> None:
                 "source": diff_cell.get("source") or "Blockchair",
                 "note": "Latest difficulty (ribbon uses same base series when model cache is empty)",
             }
+
+    # Blockchair 430 must not drop the cells. Mempool is the free fallback.
+    if _cell_value_missing("difficulty", cells.get("difficulty")) or _cell_value_missing(
+        "difficulty_ribbon", cells.get("difficulty_ribbon")
+    ):
+        fixed = (
+            _mempool_difficulty(allow_live=allow_live)
+            if _cell_value_missing("difficulty", cells.get("difficulty"))
+            else (cells.get("difficulty") or {}).get("value")
+        )
+        if _snapshot_value_usable("difficulty", fixed):
+            note = "mempool.space difficulty-adjustments"
+            if _cell_value_missing("difficulty", cells.get("difficulty")):
+                cells["difficulty"] = _cell(
+                    fixed,
+                    "Mempool.space",
+                    {"fetchedAt": _now_iso(), "note": note},
+                )
+            if _cell_value_missing("difficulty_ribbon", cells.get("difficulty_ribbon")):
+                cells["difficulty_ribbon"] = _cell(
+                    fixed,
+                    "Mempool.space",
+                    {"fetchedAt": _now_iso(), "note": note},
+                )
+        else:
+            reason = "Blockchair unavailable and mempool difficulty missing"
+            for key in ("difficulty", "difficulty_ribbon"):
+                if not _cell_value_missing(key, cells.get(key)):
+                    continue
+                cells[key] = _cell(
+                    None,
+                    "unavailable",
+                    {
+                        "unavailable": True,
+                        "stale": True,
+                        "status": "unavailable",
+                        "error": reason,
+                        "reason": reason,
+                    },
+                )
 
 
 def _median_funding(perp_table: list[dict]) -> float | None:
@@ -1179,7 +1251,7 @@ def _finalize_snapshot_payload(
     if not fast_path:
         _enrich_snapshot_cells(cells, refresh=refresh)
     try:
-        _repair_snapshot_cells(cells)
+        _repair_snapshot_cells(cells, allow_live=refresh)
     except Exception:
         pass
     errors: list[str] = []
@@ -1367,9 +1439,35 @@ def _empty_snapshot_shell() -> dict[str, Any]:
         "fastPath": True,
         "fromCache": False,
         "stale": True,
+        "unavailable": True,
+        "reason": "cold start, warming",
+        "warming": True,
         "status": "STALE",
         "error": "NO DATA",
     }
+
+
+def _restamp_netflow_preliminary(payload: dict[str, Any]) -> dict[str, Any]:
+    """Copy the flagged series bit onto a stored snapshot cell. No network, no rebuild."""
+    cells = payload.get("cells")
+    if not isinstance(cells, dict) or "exchange_netflow" not in cells:
+        return payload
+    cell = cells.get("exchange_netflow")
+    if not isinstance(cell, dict):
+        return payload
+    try:
+        body = _fetch_netflow_snapshot(refresh=False)
+    except Exception:
+        return payload
+    latest = body.get("latest") if isinstance(body, dict) else None
+    if not isinstance(latest, dict):
+        return payload
+    preliminary = bool(body.get("latestPreliminary")) if "latestPreliminary" in body else bool(latest.get("preliminary"))
+    out = dict(payload)
+    out_cells = dict(cells)
+    out_cells["exchange_netflow"] = {**cell, "preliminary": preliminary}
+    out["cells"] = out_cells
+    return out
 
 
 def _kick_snapshot_build() -> None:
@@ -1403,14 +1501,14 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
                 out = dict(cached)
                 out["fromCache"] = True
                 out["cells"] = cells
-                return out
+                return _restamp_netflow_preliminary(out)
         stale = cache_get_stale(_SNAPSHOT_CACHE_KEY)
         _kick_snapshot_build()
         if stale and isinstance(stale[0], dict):
             data, age = stale
-            return _tag_stale_snapshot(data, age)
+            return _restamp_netflow_preliminary(_tag_stale_snapshot(data, age))
         if isinstance(cached, dict):
-            return _tag_stale_snapshot(cached, 0.0)
+            return _restamp_netflow_preliminary(_tag_stale_snapshot(cached, 0.0))
         return _empty_snapshot_shell()
 
     with _SNAPSHOT_BUILD_LOCK:

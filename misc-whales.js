@@ -144,8 +144,7 @@ function mwEnrichTx(tx, source, blockTime, blockHeight) {
   const vouts = tx.vout || [];
   const vins = tx.vin || [];
   const outSum = vouts.reduce((s, v) => s + (v.value || 0), 0);
-  const valueBtc = outSum / 1e8;
-  if (valueBtc < MW_NOTABLE_BTC) return null;
+  const grossBtc = outSum / 1e8;
 
   const outs = vouts
     .filter((v) => v.scriptpubkey_address)
@@ -164,6 +163,12 @@ function mwEnrichTx(tx, source, blockTime, blockHeight) {
 
   const outAddrs = new Set(outs.map((row) => row.address).filter(Boolean));
   const inAddrs = new Set(ins.map((row) => row.address).filter(Boolean));
+  const netBtc = vouts.reduce((sum, v) => {
+    const addr = v.scriptpubkey_address;
+    if (!addr || inAddrs.has(addr)) return sum;
+    return sum + (v.value || 0) / 1e8;
+  }, 0);
+  if (netBtc < MW_NOTABLE_BTC) return null;
   if (outAddrs.size && [...outAddrs].every((addr) => inAddrs.has(addr))) return null;
 
   const fromAddr = ins[0]?.address || null;
@@ -189,14 +194,16 @@ function mwEnrichTx(tx, source, blockTime, blockHeight) {
   const status = tx.status || {};
   return {
     txid: tx.txid || "",
-    valueBtc: Math.round(valueBtc * 10000) / 10000,
+    valueBtc: Math.round(netBtc * 10000) / 10000,
+    grossBtc: Math.round(grossBtc * 10000) / 10000,
+    netBtc: Math.round(netBtc * 10000) / 10000,
     feeSat: tx.fee,
     feeBtc: tx.fee != null ? tx.fee / 1e8 : null,
     source,
     confirmed: !!status.confirmed,
     time: blockTime || status.block_time || Math.floor(Date.now() / 1000),
     blockHeight: blockHeight || status.block_height,
-    tier: mwSizeTier(valueBtc),
+    tier: mwSizeTier(netBtc),
     direction,
     directionLabel,
     identified: !!(knownIn || knownOut),
@@ -562,7 +569,7 @@ function mwRenderFeed(data) {
       <article class="mw-feed-item mw-feed-item--${mwEscape(t.tier || "notable")}" data-txid="${mwEscape(t.txid)}">
         <div class="mw-feed-main">
           <div class="mw-feed-amount">
-            <span class="mw-feed-btc mono">${mwFmtBtc(t.valueBtc, t.valueBtc >= 100 ? 1 : 2)} <small>BTC</small></span>
+            <span class="mw-feed-btc mono">${mwFeedAmount(t)}</span>
             ${usd != null ? `<span class="mw-feed-usd mono">${mwFmtUsd(usd)}</span>` : ""}
             ${mwTierBadge(t.tier)}
           </div>
@@ -675,9 +682,23 @@ function mwRenderAbout(data) {
     `<ul class="mm-about-list">${price}${lines.map((l) => `<li>${mwEscape(l)}</li>`).join("")}</ul>`;
 }
 
+function mwFeedAmount(t) {
+  const net = t.netBtc != null ? Number(t.netBtc) : Number(t.valueBtc);
+  const gross = t.grossBtc != null ? Number(t.grossBtc) : net;
+  const digits = net >= 100 ? 1 : 2;
+  if (Number.isFinite(gross) && Number.isFinite(net) && Math.abs(gross - net) >= 0.05) {
+    return `${mwFmtBtc(net, digits)} net <small>BTC</small> · ${mwFmtBtc(gross, digits)} gross`;
+  }
+  return `${mwFmtBtc(net, digits)} <small>BTC</small>`;
+}
+
 function mwRenderMeta(data) {
   const meta = mwEl("mw-meta");
   if (!meta) return;
+  if (data?.warming || /cold start/i.test(String(data?.reason || ""))) {
+    meta.textContent = "warming up";
+    return;
+  }
   const parts = [];
   if (data?.updatedAt) parts.push(`Updated ${mwFmtTime(data.updatedAt)}`);
   if (data?.btcUsd) parts.push(`$${Number(data.btcUsd).toLocaleString()} mark`);

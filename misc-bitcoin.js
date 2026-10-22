@@ -2520,6 +2520,10 @@ function mbFormatUpdatedHtml(cellOrFetched) {
 }
 
 function mbFormatStaleHtml(cell) {
+  if (cell?.unavailable) {
+    const reason = cell.reason || cell.error || "unavailable";
+    return `<span class="mb-stale-badge" title="${mbEscapeAttr(reason)}">unavailable</span>`;
+  }
   if (!mbCellIsStale(cell)) {
     return `<span class="mb-status-ok" title="Within refresh window">OK</span>`;
   }
@@ -2630,10 +2634,14 @@ function mbTableRowHtml(row, cells) {
   const badges = mbSignalBadges(ind.key, latest, cell, cells);
   const badgeTitle = badges.map((b) => b.title).join(" · ");
   const helpAttr = ind.help ? ` data-help-key="${ind.help}"` : "";
-  const valueTitle = fromCache ? "Latest from chart series cache" : hint;
+  const unavailable = !!cell.unavailable && (latest == null || !cellUsable);
+  const valueTitle = unavailable
+    ? (cell.reason || cell.error || "unavailable")
+    : (fromCache ? "Latest from chart series cache" : hint);
+  const valueHtml = unavailable ? "unavailable" : mbFmtValue(latest, ind.format);
   return `<tr data-mb-row="${ind.key}" class="mb-table-row${stale ? " mb-table-row--stale" : ""}" tabindex="0" title="${mbEscapeAttr(hint)}">
     <td class="mb-col-indicator"${helpAttr} title="${mbEscapeAttr(hint)}">${ind.label}${ind.help ? '<button type="button" class="help-trigger help-trigger--inline" data-help-key="' + ind.help + '" aria-label="Explain">?</button>' : ""}</td>
-    <td class="mono mb-col-value${fromCache ? " mb-table-value--cached" : ""}" title="${mbEscapeAttr(valueTitle)}">${mbFmtValue(latest, ind.format)}</td>
+    <td class="mono mb-col-value${fromCache ? " mb-table-value--cached" : ""}" title="${mbEscapeAttr(valueTitle)}">${valueHtml}</td>
     <td class="mb-signal-col mb-col-signal" title="${mbEscapeAttr(badgeTitle)}">${mbSignalBadgesHtml(badges)}</td>
     <td class="mb-col-source">${mbSourceBadge(cell.source || ind.source, cell)}</td>
     <td class="macro-muted mb-col-updated">${updated}</td>
@@ -2714,16 +2722,19 @@ function mbRenderSnapshot() {
   }
   const stats = mbEl("mb-stats");
   if (stats) {
+    const warming = mbSnapshot.warming || /cold start/i.test(String(mbSnapshot.reason || ""));
     const errCount = (mbSnapshot.errors || []).length;
     const indCount = mbMergedIndicators().length;
     const filled = Object.values(mbSnapshot.cells || {}).filter((c) => c?.value != null).length;
     const autoNote = mbLastAutoRefreshAt
       ? ` · auto-updated ${mbFormatAutoRefreshAge(mbLastAutoRefreshAt)}`
       : " · auto-updates every 10 min";
-    stats.textContent = errCount
-      ? `${filled}/${indCount} indicators live · free APIs only · ${errCount} warning(s)${autoNote}`
-      : `${indCount} indicators · free APIs · store-first cache${autoNote}`;
-    stats.classList.toggle("md-stats--warn", errCount > 0);
+    stats.textContent = warming
+      ? "warming up"
+      : errCount
+        ? `${filled}/${indCount} indicators live · free APIs only · ${errCount} warning(s)${autoNote}`
+        : `${indCount} indicators · free APIs · store-first cache${autoNote}`;
+    stats.classList.toggle("md-stats--warn", warming || errCount > 0);
   }
   mbRenderKpis();
   mbRenderHeroes();

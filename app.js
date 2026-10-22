@@ -17,12 +17,15 @@ let lastBids = [];
 let lastAsks = [];
 let heldQuote = { bid: null, ask: null };
 let lastSpotFetchedAt = null;
+let lastSpotQuotedAt = null;
+let lastSpotSourceLabel = "";
 let spotLiveInflight = false;
 const SPOT_POLL_MS = 20_000;
 let lastBookFetchedAt = null;
 let lastBookVenue = "";
 let bookRefreshFailed = false;
 let lastFuturesFetchedAt = null;
+let lastFuturesSource = "";
 let futuresLoadInflight = false;
 
 let prevPrice = null;
@@ -103,6 +106,27 @@ function setFuturesPanelMeta(opts = {}) {
     const panel = $(id);
     if (panel) panel.textContent = text;
   }
+}
+
+function paintFuturesStamp() {
+  const ts = lastFuturesFetchedAt;
+  if (!ts) return;
+  const ms = window.DashboardSWR?.fetchedAgeMs?.(ts);
+  const sec = ms == null || !Number.isFinite(ms) ? null : Math.max(0, Math.round(ms / 1000));
+  const src = lastFuturesSource || "perp";
+  const when = new Date(ts);
+  const clock = Number.isFinite(when.getTime())
+    ? when.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })
+    : String(ts);
+  const text = sec == null
+    ? `Updated ${clock} · ${src} lastPrice`
+    : `Updated ${clock} · ${sec}s · ${src} lastPrice`;
+  for (const id of ["futures-update", "futures-sentiment-update", "futures-header-update"]) {
+    const panel = $(id);
+    if (panel) panel.textContent = text;
+  }
+  const srcEl = document.getElementById("fut-price-source");
+  if (srcEl) srcEl.textContent = sec == null ? `${src} lastPrice` : `${src} lastPrice · ${sec}s`;
 }
 
 function formatPct(n, decimals = 2) {
@@ -437,16 +461,8 @@ function refreshMarketLiveBadge() {
 
 function mapCoinbaseTicker(msg) {
   if (!msg || msg.type !== "ticker") return;
-  updateTicker({
-    c: msg.price,
-    o: msg.open_24h || msg.price,
-    h: msg.high_24h || msg.price,
-    l: msg.low_24h || msg.price,
-    v: msg.volume_24h || 0,
-    q: (parseFloat(msg.volume_24h) || 0) * (parseFloat(msg.price) || 0),
-    w: msg.price,
-  });
-  // The Coinbase ticker is one bid and one ask. It must not replace the 20-level book.
+  // Coinbase BTC-USD is one venue. Last and weighted avg stay on the API median lastPrice.
+  refreshMarketLiveBadge();
 }
 
 function connectCoinbase() {
@@ -892,9 +908,10 @@ function perpBundleFromSnapshot(perp) {
         valueClass: ls > 1 ? "positive" : ls < 1 ? "negative" : "",
       },
     ],
-    fetchedAt: perp.fetchedAt || new Date().toISOString(),
+    fetchedAt: perp.fetchedAt || null,
     venue,
     venueLabel: venue,
+    priceSource: venue,
     indexSource: perp.indexSource || (venue ? `${venue} index` : "Index"),
   };
 }
@@ -911,16 +928,14 @@ async function loadFuturesData() {
       source: "OKX",
       updateHeader: false,
       fetch: async () => {
-        const futAge = window.DashboardSWR?.fetchedAgeMs?.(lastFuturesFetchedAt);
-        // Read the warm-loop copy. refresh=1 only after the server stamp is two minutes old.
-        const perpUrl = futAge != null && futAge > 120_000 ? "/api/market/perp?refresh=1" : "/api/market/perp";
-        const perp = await fetchJsonTimeout(perpUrl, 20000);
+        // Idle polls read the warm cache. refresh=1 live-fetches and the abort kept the old stamp.
+        const perp = await fetchJsonTimeout("/api/market/perp", 8000);
         if (!perp?.lastPrice) throw new Error(perp?.error || "Perp feed unavailable");
         futuresVenue = String(perp.venue || "OKX").toLowerCase();
         return perpBundleFromSnapshot(perp);
       },
       render: (data, opts = {}) => {
-        const src = data?.venueLabel || data?.venue || "OKX";
+        const src = data?.priceSource || data?.venueLabel || data?.venue || "OKX";
         if (opts.loading) {
           setFuturesPanelMeta({ state: "loading", source: src });
           return;
@@ -928,31 +943,12 @@ async function loadFuturesData() {
         applyFuturesBundle(data);
         futuresVenue = (data.venue || futuresVenue || "okx").toLowerCase();
         if (data?.fetchedAt) lastFuturesFetchedAt = data.fetchedAt;
-        const optionsOpen = document.querySelector(
-          '#dashboard-derivatives .menu-screen[data-l2="options"]:not([hidden]), #dashboard-derivatives .menu-screen[data-l2="volatility"]:not([hidden])',
-        );
+        lastFuturesSource = src;
         const persisted = !!(opts.stale || opts.refreshing || opts.refreshFailed || opts.fromCache);
         if (data.marketState?.price) {
           setConnectionStatus(persisted ? "stale" : "connected", "futures-status");
         }
-        setFuturesPanelMeta({
-          fetchedAt: data.fetchedAt,
-          source: src,
-          stale: opts.stale || opts.fromCache,
-          forceStale: !!(opts.stale || opts.fromCache || opts.refreshFailed),
-          refreshing: opts.refreshing,
-          refreshFailed: opts.refreshFailed,
-        });
-        if (!optionsOpen) {
-          window.DashboardSWR?.setHeaderStamp?.("derivatives", {
-            fetchedAt: data.fetchedAt,
-            source: src,
-            stale: opts.stale || opts.fromCache,
-            forceStale: !!(opts.stale || opts.fromCache || opts.refreshFailed),
-            refreshing: opts.refreshing,
-            refreshFailed: opts.refreshFailed,
-          });
-        }
+        paintFuturesStamp();
       },
     });
   } catch (err) {
@@ -960,13 +956,7 @@ async function loadFuturesData() {
     if (futuresMarketState.price) {
       const v = (futuresVenue || "okx").toUpperCase();
       setConnectionStatus("stale", "futures-status");
-      setFuturesPanelMeta({
-        fetchedAt: lastFuturesFetchedAt,
-        source: v,
-        stale: true,
-        forceStale: true,
-        refreshFailed: true,
-      });
+      paintFuturesStamp();
       return;
     }
     setConnectionStatus("disconnected", "futures-status");
@@ -1036,18 +1026,54 @@ function spotQuoteAgeBit(fetchedAt) {
   return ` · ${Math.max(0, Math.round(ms / 1000))}s`;
 }
 
-function spotVenueLabel(bundle) {
+function spotVenueBase(bundle) {
   const venueCount = Number(bundle?.venueCount) || (Array.isArray(bundle?.venues) ? bundle.venues.length : 0);
-  const base = venueCount > 0
-    ? `Median · ${venueCount} venues`
-    : (bundle?.venue || bundle?.ticker?.venue || "Median spot composite");
-  return base + spotQuoteAgeBit(bundle?.fetchedAt || lastSpotFetchedAt);
+  if (venueCount > 0) return `Median · ${venueCount} venues`;
+  return bundle?.venue || bundle?.ticker?.venue || "Median spot composite";
+}
+
+function spotSourceBase(bundle) {
+  const venueCount = Number(bundle?.venueCount) || (Array.isArray(bundle?.venues) ? bundle.venues.length : 0);
+  return venueCount > 0 ? `Median last · ${venueCount} venues` : "Median last";
+}
+
+function spotHeldAt(bundle) {
+  return bundle?.quotedAt || bundle?.fetchedAt || lastSpotQuotedAt || lastSpotFetchedAt;
+}
+
+function spotVenueLabel(bundle) {
+  return spotVenueBase(bundle) + spotQuoteAgeBit(spotHeldAt(bundle));
+}
+
+function paintSpotSourceLabels() {
+  const at = lastSpotQuotedAt || lastSpotFetchedAt;
+  const ms = window.DashboardSWR?.fetchedAgeMs?.(at);
+  const sec = ms == null || !Number.isFinite(ms) ? null : Math.max(0, Math.round(ms / 1000));
+  const age = sec == null ? "" : ` · ${sec}s`;
+  const text = `${lastSpotSourceLabel || "Median last"}${age}`;
+  for (const id of ["spot-last-source", "weighted-avg-source"]) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+  if (window.spotCompositeLabel) {
+    const base = String(window.spotCompositeLabel).replace(/ · \d+s$/, "");
+    const next = base + age;
+    window.spotCompositeLabel = next;
+    const venueNote = document.getElementById("spot-venue-count");
+    if (venueNote) venueNote.textContent = next;
+    const spotSub = document.getElementById("spot-subtitle");
+    if (spotSub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
+      spotSub.textContent = next;
+    }
+  }
 }
 
 function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
   const venueLabel = spotVenueLabel(bundle);
   window.spotCompositeLabel = venueLabel;
+  lastSpotSourceLabel = spotSourceBase(bundle);
+  if (bundle.quotedAt || bundle.fetchedAt) lastSpotQuotedAt = bundle.quotedAt || bundle.fetchedAt;
   const chartLabel = document.getElementById("spot-chart-label");
   if (chartLabel && bundle.klineVenue) {
     const text = `1m candles · ${bundle.klineVenue}`;
@@ -1075,7 +1101,7 @@ function applySpotBundle(bundle) {
     l: ticker.lowPrice,
     v: ticker.volume,
     q: ticker.quoteVolume,
-    w: ticker.weightedAvgPrice,
+    w: ticker.weightedAvgPrice || ticker.lastPrice,
   });
 
   window.SpotCharts?.applyInitialKlines?.(klines, bundle.klineVenue, bundle.klineStale);
@@ -1123,14 +1149,18 @@ async function loadInitialData() {
           venue: bundle.venue || "Median spot composite",
           venues: bundle.venues || [],
           venueCount: bundle.venueCount || (bundle.venues || []).length,
+          quotedAt: bundle.quotedAt || bundle.fetchedAt || null,
+          priceSource: bundle.priceSource || bundle.ticker?.priceSource || "median last",
         };
       },
       render: (data, opts = {}) => {
         if (opts.loading) return;
         applySpotBundle(data);
         if (data?.fetchedAt && !opts.stale && !opts.refreshing && !opts.refreshFailed) {
-          lastSpotFetchedAt = data.fetchedAt;
+          lastSpotFetchedAt = data.quotedAt || data.fetchedAt;
+          lastSpotQuotedAt = data.quotedAt || data.fetchedAt;
         }
+        paintSpotSourceLabels();
       },
     });
   } catch (err) {
@@ -1203,15 +1233,14 @@ async function refreshSpotLive() {
   if (spotLiveInflight) return;
   spotLiveInflight = true;
   try {
-    const age = window.DashboardSWR?.fetchedAgeMs?.(lastSpotFetchedAt);
-    const refresh = age == null || age > 25_000;
-    const bundle = await fetch(`/api/market/spot${refresh ? "?refresh=1" : ""}`, { cache: "no-store" }).then((r) => r.json());
+    const bundle = await fetch("/api/market/spot", { cache: "no-store" }).then((r) => r.json());
     if (!bundle?.ticker?.lastPrice) return;
     const bid = parseFloat(bundle.ticker.bidPrice);
     const ask = parseFloat(bundle.ticker.askPrice);
     const venueCount = Number(bundle.venueCount) || (Array.isArray(bundle.venues) ? bundle.venues.length : 0);
     const venueLabel = spotVenueLabel(bundle);
     window.spotCompositeLabel = venueLabel;
+    lastSpotSourceLabel = spotSourceBase(bundle);
     const venueNote = document.getElementById("spot-venue-count");
     if (venueNote) venueNote.textContent = venueLabel;
     const spotSub = document.getElementById("spot-subtitle");
@@ -1229,7 +1258,7 @@ async function refreshSpotLive() {
       l: bundle.ticker.lowPrice,
       v: bundle.ticker.volume,
       q: bundle.ticker.quoteVolume,
-      w: bundle.ticker.weightedAvgPrice,
+      w: bundle.ticker.weightedAvgPrice || bundle.ticker.lastPrice,
     });
     const book = bundle.depth || {};
     if (book.bids?.length >= 20 && book.asks?.length >= 20) {
@@ -1240,7 +1269,11 @@ async function refreshSpotLive() {
         fetchedAt: book.fetchedAt || bundle.fetchedAt,
       });
     }
-    lastSpotFetchedAt = bundle.fetchedAt || new Date().toISOString();
+    if (bundle.quotedAt || bundle.fetchedAt) {
+      lastSpotQuotedAt = bundle.quotedAt || bundle.fetchedAt;
+      lastSpotFetchedAt = lastSpotQuotedAt;
+    }
+    paintSpotSourceLabels();
     const persisted = {
       ticker: bundle.ticker,
       klines: bundle.klines || [],
@@ -1263,12 +1296,7 @@ async function refreshSpotLive() {
     }
   } catch (_) {
     // Keep the last bid and ask. The venue note still shows how old they are.
-    if (window.spotCompositeLabel) {
-      const base = String(window.spotCompositeLabel).replace(/ · \d+s$/, "");
-      window.spotCompositeLabel = base + spotQuoteAgeBit(lastSpotFetchedAt);
-      const venueNote = document.getElementById("spot-venue-count");
-      if (venueNote) venueNote.textContent = window.spotCompositeLabel;
-    }
+    paintSpotSourceLabels();
   } finally {
     spotLiveInflight = false;
   }
@@ -1320,9 +1348,9 @@ setInterval(updateFundingCountdown, 1000);
 setInterval(refreshProxiedDepth, DEPTH_POLL_MS);
 setInterval(refreshSpotLive, SPOT_POLL_MS);
 setTimeout(refreshSpotLive, 1500);
+setInterval(paintFuturesStamp, 1000);
+setInterval(paintSpotSourceLabels, 1000);
 setInterval(() => {
   paintBookMeta();
   refreshMarketLiveBadge();
-  const age = window.DashboardSWR?.fetchedAgeMs?.(lastFuturesFetchedAt);
-  if (age != null && age > FUTURES_POLL_MS && !futuresLoadInflight) loadFuturesData();
 }, DEPTH_POLL_MS);
