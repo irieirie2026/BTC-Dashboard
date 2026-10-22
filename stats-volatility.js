@@ -228,6 +228,23 @@ function volFmtPct(x, d = 1) {
   return `${(Number(x) * 100).toFixed(d)}%`;
 }
 
+function volHarTerm30(m) {
+  if (m?.id !== "har_rv" || !Array.isArray(m.forecastTermAnn) || m.forecastTermAnn.length < 30) return null;
+  const term = Number(m.forecastTermAnn[29]);
+  return Number.isFinite(term) ? term : null;
+}
+
+function volCondShown(m) {
+  const term = volHarTerm30(m);
+  return volFmtPct(term != null ? term : m.currentCondVolAnn, 1);
+}
+
+function volCondTitle(m) {
+  const term = volHarTerm30(m);
+  if (term == null) return "";
+  return ` title="30d HAR term RV. Conditional vol ${volFmtPct(m.currentCondVolAnn, 1)}"`;
+}
+
 function volFmtNum(x, d = 4) {
   if (x == null || !Number.isFinite(Number(x))) return "—";
   const n = Number(x);
@@ -405,12 +422,17 @@ function volSetLiveIvKpis(suite, chain) {
         ? `ATM 7d (no DVOL)`
         : "Run to load book",
   );
+  const rvName = volRvModelLabel(mark, s);
   const g7 = atm7 != null && term7 != null ? atm7 - term7 : null;
   let g30 = atm30 != null && term30 != null ? atm30 - term30 : null;
-  let gapSub = "7d / 30d gap";
+  let gapSub = `ATM 7d IV − ${rvName} RV / ATM 30d IV − ${rvName} RV`;
   if (g7 == null && g30 == null && dvol != null && term30 != null) {
     g30 = dvol - term30;
-    gapSub = "DVOL − 30d term RV";
+    gapSub = `DVOL − ${rvName} RV`;
+  } else if (g7 != null && g30 == null) {
+    gapSub = `ATM 7d IV − ${rvName} RV`;
+  } else if (g7 == null && g30 != null) {
+    gapSub = `ATM 30d IV − ${rvName} RV`;
   }
   const gapTxt =
     g7 != null && g30 != null
@@ -426,7 +448,7 @@ function volSetLiveIvKpis(suite, chain) {
   } else {
     set(
       "vol-kpi-ivgap-sub",
-      g7 != null || g30 != null ? (g7 != null ? "positive = IV rich vs model" : gapSub) : "7d / 30d gap",
+      g7 != null || g30 != null ? gapSub : `ATM 7d IV − ${rvName} RV / ATM 30d IV − ${rvName} RV`,
     );
   }
   const suiteAsOf = suite?.asOf ? String(suite.asOf).replace("T", " ").slice(0, 16) + " UTC" : "—";
@@ -469,6 +491,18 @@ function volCachedDvol() {
   }
 }
 
+function volRvModelLabel(mark, summary) {
+  const id = String(mark?.id || summary?.markModelId || summary?.bestForecastModelId || "");
+  if (id === "egarch11") return "EGARCH";
+  if (id === "garch11") return "GARCH";
+  if (id === "gjr11") return "GJR";
+  if (id === "aparch11") return "APARCH";
+  if (id === "figarch11") return "FIGARCH";
+  if (id === "ewma") return "EWMA";
+  if (id === "har_rv") return "HAR";
+  return mark?.name || summary?.markModelName || summary?.bestForecastModelName || "model";
+}
+
 function volTerm30FromSuite(suite) {
   if (!suite) return null;
   const s = suite.summary || {};
@@ -497,7 +531,12 @@ function volPaintDvolGap(dvolDecimal) {
     ? current.replace(/—/g, gapTxt)
     : gapTxt;
   const sub = volEl("vol-kpi-ivgap-sub");
-  if (sub) sub.textContent = "DVOL − 30d term RV";
+  const summary = volSuite.summary || {};
+  const mark = (volSuite.models || []).find((m) => m.id === (summary.markModelId || volSuite.bestByQlike));
+  const rvName = volRvModelLabel(mark, summary);
+  if (sub && (!sub.textContent || /IV −|7d \/ 30d|DVOL − 30d term/.test(sub.textContent))) {
+    sub.textContent = `DVOL − ${rvName} RV`;
+  }
 }
 
 function volPaintCachedIv() {
@@ -636,7 +675,7 @@ function volRenderTable(suite) {
             ? Number(m.halfLifeDays).toFixed(1)
             : "—"
         }</td>
-        <td class="mono vol-td-num">${volFmtPct(m.currentCondVolAnn, 1)}</td>
+        <td class="mono vol-td-num"${volCondTitle(m)}>${volCondShown(m)}</td>
         <td class="vol-td-text"><span class="vol-status vol-status--${status}"${
           m.rvNote && status === "ok" ? ` title="${volEscape(m.rvNote)}"` : ""
         }>${volEscape(status)}</span></td>

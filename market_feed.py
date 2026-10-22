@@ -15,7 +15,10 @@ from datetime import datetime, timezone
 from typing import Any
 
 USER_AGENT = "BTC-Dashboard/1.0 (+market-feed)"
-CACHE_TTL = 20
+# Longer than the 75s warm loop so a pass refreshes the copy before it expires.
+# The book client still sends refresh=1 when its own age is past 30s.
+CACHE_TTL = 120
+DEPTH_CACHE_TTL = 90
 _CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
 
 GRANULARITY = {
@@ -1282,9 +1285,9 @@ def get_depth(*, limit: int = 20, refresh: bool = False, prefer: str | None = No
     limit = max(5, min(int(limit or 20), 100))
     pref_key = (prefer or _last_quote_venue or "any").strip().lower() or "any"
     key = f"market:depth:v3:{limit}:{pref_key}"
-    # Shorter than the ladder poll so samples a few seconds apart are new fetches.
+    # Warm copy outlives one 75s pass. A client refresh=1 still fetches a live book.
     if not refresh:
-        cached = _cache_get(key, ttl=6)
+        cached = _cache_get(key, ttl=DEPTH_CACHE_TTL)
         if cached:
             cached["fromCache"] = True
             return cached

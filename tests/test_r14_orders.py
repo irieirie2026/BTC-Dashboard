@@ -160,7 +160,7 @@ def test_active_addresses_prefer_later_series_without_writing():
         fetchers.fetch_blockchain_chart = original_fetch
 
 
-def test_history_sliding_window_and_jsonl():
+def test_history_sliding_window_and_jsonl(monkeypatch):
     import cross_market_history as hist
 
     now_ms = time.time() * 1000
@@ -188,7 +188,7 @@ def test_history_sliding_window_and_jsonl():
     assert len(exact) == 5, len(exact)
 
     tmp = Path(tempfile.mkdtemp()) / "xmarket_history.jsonl"
-    os.environ["XMARKET_HISTORY_PATH"] = str(tmp)
+    monkeypatch.setenv("XMARKET_HISTORY_PATH", str(tmp))
     store = {}
     original_get = hist.cache_service.get
     original_set = hist.cache_service.set
@@ -213,7 +213,6 @@ def test_history_sliding_window_and_jsonl():
     finally:
         hist.cache_service.get = original_get
         hist.cache_service.set = original_set
-        os.environ.pop("XMARKET_HISTORY_PATH", None)
 
 
 def test_btc_100k_nearest_expiry_and_ladder_filter():

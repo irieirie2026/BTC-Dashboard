@@ -34,8 +34,23 @@ def _load_env() -> None:
             __import__("os").environ[key] = val
 
 
+def _point_at_data_dir() -> None:
+    """Default to a tmp dir. Set BTC_DASH_DATA_DIR to write the live store."""
+    import os
+    import tempfile
+
+    if (os.environ.get("BTC_DASH_DATA_DIR") or "").strip() or (os.environ.get("BTC_SERIES_DIR") or "").strip():
+        return
+    tmp = Path(tempfile.mkdtemp(prefix="btc-prefetch-"))
+    os.environ["BTC_DASH_DATA_DIR"] = str(tmp)
+    os.environ["BTC_SERIES_DIR"] = str(tmp / "btc-series")
+    os.environ["XMARKET_HISTORY_PATH"] = str(tmp / "xmarket_history.jsonl")
+    print(f"Prefetch data dir {tmp} (set BTC_DASH_DATA_DIR to use the repo data/ tree)")
+
+
 def main() -> int:
     _load_env()
+    _point_at_data_dir()
     from btc_data.scheduler import run_batch, status_payload
 
     parser = argparse.ArgumentParser(description="Prefetch BTC metrics into local series store")

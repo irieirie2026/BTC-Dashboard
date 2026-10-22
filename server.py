@@ -1173,7 +1173,7 @@ def _close_to_close_rv_30d() -> float | None:
     try:
         import math
 
-        raw = json.loads(STATS_HISTORY_DISK_CACHE.read_text(encoding="utf-8"))
+        raw = json.loads(_stats_history_disk_path().read_text(encoding="utf-8"))
         closes = [
             float(day["close"])
             for day in (raw.get("days") or [])
@@ -1517,7 +1517,12 @@ BITSTAMP_OHLC_URL = "https://www.bitstamp.net/api/v2/ohlc/btcusd/"
 BLOCKCHAIN_MARKET_PRICE_URL = (
     "https://api.blockchain.info/charts/market-price?timespan=all&format=json"
 )
-STATS_HISTORY_DISK_CACHE = ROOT / "data" / "stats-btc-history-cache.json"
+def _stats_history_disk_path() -> Path:
+    """History cache path. Tests and scripts can point BTC_DASH_DATA_DIR at a tmp dir."""
+    explicit = (os.environ.get("BTC_DASH_DATA_DIR") or "").strip()
+    if explicit:
+        return Path(explicit) / "stats-btc-history-cache.json"
+    return ROOT / "data" / "stats-btc-history-cache.json"
 DAY_MS = 86_400_000
 
 
@@ -1722,18 +1727,20 @@ def _stats_history_payload_from_days(days, meta=None):
 
 
 def _load_stats_history_disk_cache():
-    if not STATS_HISTORY_DISK_CACHE.is_file():
+    path = _stats_history_disk_path()
+    if not path.is_file():
         return None
     try:
-        return json.loads(STATS_HISTORY_DISK_CACHE.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return None
 
 
 def _save_stats_history_disk_cache(payload):
+    path = _stats_history_disk_path()
     try:
-        STATS_HISTORY_DISK_CACHE.parent.mkdir(parents=True, exist_ok=True)
-        STATS_HISTORY_DISK_CACHE.write_text(
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
             json.dumps(payload, separators=(",", ":")),
             encoding="utf-8",
         )
@@ -5365,6 +5372,7 @@ _workers_started = False
 
 # Snapshot and whales warm first. Quote, candles, depth, and perp follow
 # so a cold start does not leave the books until the end of the pass.
+# Macro, series, and the HAR refit run on side threads so this order stays short.
 WARM_STEP_ORDER = (
     "snapshot",
     "whales",
@@ -5379,11 +5387,64 @@ WARM_STEP_ORDER = (
     "macro",
     "series",
 )
+# Start-to-start. Shorter than the snapshot TTL (900s) and the market TTLs.
+WARM_LOOP_SEC = 75
+_SIDE_WARM_STARTED = False
+
+
+def _refresh_har_if_due() -> None:
+    """Fit har_rv only, and only when the saved term is older than a day.
+
+    The 24-model suite and tsRun stay off this path.
+    """
+    from volatility_models import (
+        DESK_VOL_DAYS,
+        DESK_VOL_DIST,
+        get_volatility_suite_payload,
+        lookup_active_har_term,
+    )
+
+    row = lookup_active_har_term()
+    age = None if not isinstance(row, dict) else row.get("ageSec")
+    if isinstance(age, (int, float)) and float(age) <= 24 * 3600:
+        print("HAR term fresh", flush=True)
+        return
+    print("HAR term older than 24h; fitting har_rv", flush=True)
+    get_volatility_suite_payload(
+        days=DESK_VOL_DAYS,
+        dist=DESK_VOL_DIST,
+        models=["har_rv"],
+        refresh=True,
+    )
+    print("HAR term refit", flush=True)
+
+
+def _har_warm_loop() -> None:
+    while True:
+        try:
+            _refresh_har_if_due()
+        except Exception as exc:
+            print(f"HAR warm skipped: {exc}", flush=True)
+        time.sleep(3600)
+
+
+def _start_side_warmers() -> None:
+    """Macro, series, and HAR once. They must not stretch the market loop past its TTLs."""
+    global _SIDE_WARM_STARTED
+    import threading
+
+    if _SIDE_WARM_STARTED:
+        return
+    _SIDE_WARM_STARTED = True
+    threading.Thread(target=_warm_macro_caches, daemon=True, name="btc-warm-macro").start()
+    threading.Thread(target=_warm_btc_series, daemon=True, name="btc-warm-series").start()
+    threading.Thread(target=_har_warm_loop, daemon=True, name="btc-har").start()
 
 
 def _warm_startup_caches() -> None:
-    # One thread. Macro and series run once on the first pass.
-    # Parallel warm threads deadlock Python 3.14's import lock.
+    # One market thread. Macro, series, and HAR are side threads.
+    # Parallel import of the whole app at startup can deadlock Python 3.14;
+    # these side threads start after this module has finished importing.
     # The 24-model time-series suite is not on this loop.
     # Whale note_* wraps only the whale call so a long scan does not block the books.
     from macro_data.misc_whales import (
@@ -5392,8 +5453,9 @@ def _warm_startup_caches() -> None:
         note_whale_warm_start,
     )
 
-    first = True
+    _start_side_warmers()
     while True:
+        started = time.time()
         try:
             from btc_indicators_api import get_snapshot_payload
 
@@ -5447,11 +5509,8 @@ def _warm_startup_caches() -> None:
             print("Metrics cache warmed", flush=True)
         except Exception as exc:
             print(f"Metrics cache warm skipped: {exc}", flush=True)
-        if first:
-            _warm_macro_caches()
-            _warm_btc_series()
-            first = False
-        time.sleep(90)
+        elapsed = time.time() - started
+        time.sleep(max(1.0, WARM_LOOP_SEC - elapsed))
 
 
 def start_background_workers() -> None:

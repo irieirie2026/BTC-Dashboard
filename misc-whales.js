@@ -162,6 +162,10 @@ function mwEnrichTx(tx, source, blockTime, blockHeight) {
     }))
     .sort((a, b) => b.valueBtc - a.valueBtc);
 
+  const outAddrs = new Set(outs.map((row) => row.address).filter(Boolean));
+  const inAddrs = new Set(ins.map((row) => row.address).filter(Boolean));
+  if (outAddrs.size && [...outAddrs].every((addr) => inAddrs.has(addr))) return null;
+
   const fromAddr = ins[0]?.address || null;
   const toAddr = outs[0]?.address || null;
   const knownIn = ins.some((i) => mwLookup(i.address));
@@ -290,7 +294,7 @@ async function mwBuildClientPayload() {
 
   const blocks = await safe("blocks", () => mwFetchJson(`${MW_MEMPOOL}/blocks`));
   if (Array.isArray(blocks)) {
-    for (const block of blocks.slice(0, 12)) {
+    for (const block of blocks.slice(0, 10)) {
       for (const page of [0, 25]) {
         const txs = await safe(`block ${block.height}/${page}`, () =>
           mwFetchJson(`${MW_MEMPOOL}/block/${block.id}/txs/${page}`),
@@ -349,6 +353,8 @@ async function mwBuildClientPayload() {
     largeTx: {
       thresholdBtc: MW_NOTABLE_BTC,
       whaleThresholdBtc: MW_WHALE_BTC,
+      windowLabel: "last 10 blocks",
+      blocksScanned: 10,
       count1h: r1h.length,
       count24h: r24.length,
       volume1hBtc: Math.round(vol1h * 100) / 100,
@@ -385,7 +391,7 @@ async function mwBuildClientPayload() {
     },
     heroes: [
       { name: "Transfers (1h)", value: String(r1h.length), sub: `${Math.round(vol1h).toLocaleString()} BTC · ≥${MW_NOTABLE_BTC}` },
-      { name: "Transfers (24h)", value: String(r24.length), sub: `${Math.round(vol24h).toLocaleString()} BTC sample vol` },
+      { name: "Transfers (last 10 blocks)", value: String(r24.length), sub: `${Math.round(vol24h).toLocaleString()} BTC sample vol` },
       { name: "Unidentified (24h)", value: String(unk24.length), sub: `${Math.round(unkVol).toLocaleString()} BTC · no label` },
       { name: "Tracked net flow", value: `${(netIn - netOut >= 0 ? "+" : "")}${Math.round(netIn - netOut).toLocaleString()} BTC`, sub: `In ${Math.round(netIn)} · Out ${Math.round(netOut)}` },
     ],
@@ -585,7 +591,7 @@ function mwRenderFeed(data) {
         <p class="mm-card__sub">${lt.volume1hBtc != null ? `${mwFmtBtc(lt.volume1hBtc, 0)} BTC` : "—"} · ≥${notable} BTC</p>
       </div>
       <div class="mm-card mw-mini-card">
-        <h4 class="mm-card__title" data-help-key="mw-large-24h">Last 24 hours</h4>
+        <h4 class="mm-card__title" data-help-key="mw-large-24h">${mwEscape(lt.windowLabel || "last 10 blocks")}</h4>
         <p class="mm-card__value">${lt.count24h ?? "—"}</p>
         <p class="mm-card__sub">${lt.volume24hBtc != null ? `${mwFmtBtc(lt.volume24hBtc, 0)} BTC` : "—"} sample vol</p>
       </div>

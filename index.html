@@ -141,7 +141,7 @@
                   <button type="button" class="home-sound-toggle" id="home-sound-toggle" aria-pressed="true">🔊 Buccaneers</button>
                 </div>
                 <ul class="home-banner-chips" aria-label="Dashboard collection highlights">
-                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.6</span><span class="home-banner-chip-lbl">Version</span></li>
+                  <li class="home-banner-chip"><span class="home-banner-chip-val" data-app-version>1.1.7</span><span class="home-banner-chip-lbl">Version</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">14</span><span class="home-banner-chip-lbl">Dashboards</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Law</span><span class="home-banner-chip-lbl">70+ countries</span></li>
                   <li class="home-banner-chip"><span class="home-banner-chip-val">Arbs</span><span class="home-banner-chip-lbl">PM + Deribit</span></li>
@@ -182,7 +182,7 @@
               <div id="home-section-grid" class="home-section-grid" role="list"></div>
             </section>
             <footer class="home-footer">
-              <p><span class="home-version">Version <span data-app-version>1.1.6</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
+              <p><span class="home-version">Version <span data-app-version>1.1.7</span></span> · For research and education — not financial advice. Data sources vary by section (~15 min delayed where noted).</p>
             </footer>
           </div>
         </div>
@@ -1037,14 +1037,14 @@
               <span class="deriv-hero-sub" id="opt-dvol-sub">Deribit DVOL · 30d vol index</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label" data-help-key="opt-iv-c2c">IV − 30d close-to-close RV</span>
+              <span class="deriv-hero-label" data-help-key="opt-iv-c2c">DVOL − 30d close-to-close RV</span>
               <span class="deriv-hero-value" id="opt-iv-c2c">—</span>
-              <span class="deriv-hero-sub" id="opt-iv-c2c-sub">IV − 30d close-to-close RV</span>
+              <span class="deriv-hero-sub" id="opt-iv-c2c-sub">DVOL − 30d close-to-close RV</span>
             </article>
             <article class="deriv-hero-block">
-              <span class="deriv-hero-label" data-help-key="opt-iv-term-rv">IV − model term RV</span>
+              <span class="deriv-hero-label" data-help-key="opt-iv-term-rv">DVOL − HAR term RV</span>
               <span class="deriv-hero-value" id="opt-iv-term-rv">—</span>
-              <span class="deriv-hero-sub" id="opt-iv-term-rv-sub">IV − model term RV (HAR)</span>
+              <span class="deriv-hero-sub" id="opt-iv-term-rv-sub">DVOL − HAR term RV</span>
             </article>
             <article class="deriv-hero-block">
               <span class="deriv-hero-label" data-help-key="opt-skew">25Δ Skew</span>
@@ -1244,7 +1244,7 @@
             <p class="trs-hero-sub" id="trs-update">Loading from BitcoinTreasuries.net…</p>
             <div class="trs-hero-stats trs-hero-stats--three">
               <div class="trs-stat-card">
-                <span class="trs-stat-label" data-help-key="trs-total-btc">BTC Held by Public Companies</span>
+                <span class="trs-stat-label" data-help-key="trs-total-btc">BTC held by top 100 companies</span>
                 <span class="trs-stat-value" id="trs-total-btc">—</span>
                 <span class="trs-stat-sub" id="trs-total-usd">—</span>
               </div>
@@ -5588,17 +5588,17 @@
     <script src="swr-cache.js?v=10"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="help.js?v=183"></script>
-    <script src="version.js?v=8"></script>
+    <script src="help.js?v=184"></script>
+    <script src="version.js?v=9"></script>
     <script src="home.js?v=22"></script>
     <script src="dashboard.js?v=80"></script>
     <script src="etf.js?v=13"></script>
     <script src="treasury.js?v=19"></script>
-    <script src="derivatives-extra.js?v=28"></script>
+    <script src="derivatives-extra.js?v=29"></script>
     <script src="assets/options-strategy/btc-options-strategy.js?v=8"></script>
     <script src="options-strategy.js?v=3"></script>
     <script src="stats.js?v=32"></script>
-    <script src="stats-volatility.js?v=43"></script>
+    <script src="stats-volatility.js?v=44"></script>
     <script src="stats-timeseries.js?v=27"></script>
     <script src="stats-correlation.js?v=6"></script>
     <script src="tradfi.js?v=16"></script>
@@ -5611,7 +5611,7 @@
     <script src="news.js?v=5"></script>
     <script src="misc-metrics.js?v=5"></script>
     <script src="misc-calendar.js?v=3"></script>
-    <script src="misc-whales.js?v=3"></script>
+    <script src="misc-whales.js?v=4"></script>
     <script src="misc-greed-fear.js?v=5"></script>
     <script src="misc-bitcoin-valuation-models.js?v=11"></script>
     <script src="misc-bitcoin.js?v=40"></script>
@@ -5624,12 +5624,12 @@
     <script src="law.js?v=26"></script>
     <script src="law-relocate-legal.js?v=5"></script>
     <script src="law-simulator.js?v=3"></script>
-    <script src="prediction-markets.js?v=16"></script>
+    <script src="prediction-markets.js?v=17"></script>
     <script src="cross-market-engine.js?v=12"></script>
     <script src="cross-market-ws.js?v=5"></script>
     <script src="cross-market-charts.js?v=20"></script>
     <script src="cross-market.js?v=31"></script>
     <script src="spot-charts.js?v=12"></script>
-    <script src="app.js?v=38"></script>
+    <script src="app.js?v=39"></script>
   </body>
 </html>

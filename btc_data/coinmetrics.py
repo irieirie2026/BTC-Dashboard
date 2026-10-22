@@ -57,6 +57,29 @@ def _parse_cm_time(time_str: str) -> tuple[int | None, str]:
             return None, date
 
 
+def _cm_status(row: dict, value_key: str) -> str | None:
+    """Keep a Coin Metrics review flag. The value-only row used to drop it."""
+    candidates = [row.get(f"{value_key}-status"), row.get("status")]
+    for key, val in row.items():
+        if str(key).endswith("-status") and val not in (None, ""):
+            candidates.append(val)
+    for val in candidates:
+        if val not in (None, ""):
+            return str(val)
+    return None
+
+
+def _status_is_preliminary(status: str | None) -> bool:
+    if not status:
+        return False
+    text = status.strip().lower()
+    if text in {"reviewed", "final", "official"}:
+        return False
+    if text in {"flash", "preliminary", "estimate", "unreviewed"}:
+        return True
+    return "flash" in text or "prelim" in text
+
+
 def _normalize_cm_rows(raw: Any, value_key: str) -> list[dict]:
     rows = raw.get("data") if isinstance(raw, dict) else raw
     if not isinstance(rows, list):
@@ -73,7 +96,11 @@ def _normalize_cm_rows(raw: Any, value_key: str) -> list[dict]:
         except (TypeError, ValueError):
             continue
         ts, date = _parse_cm_time(str(row.get("time") or ""))
-        out.append({"timestamp": ts, "date": date, "value": fval})
+        point = {"timestamp": ts, "date": date, "value": fval}
+        status = _cm_status(row, value_key)
+        if status:
+            point["cmStatus"] = status
+        out.append(point)
     out.sort(key=lambda p: p.get("timestamp") or 0)
     return out
 
@@ -137,19 +164,41 @@ def fetch_coinmetrics_series(
     return payload
 
 
+def _point_is_preliminary(point: dict, today: str) -> bool:
+    """A flash/preliminary status wins on any date. With no status, only today is preliminary."""
+    status = point.get("cmStatus") or point.get("status")
+    if status:
+        return _status_is_preliminary(str(status))
+    return str(point.get("date") or "")[:10] == today
+
+
 def _flag_netflow_preliminary(payload: dict[str, Any]) -> dict[str, Any]:
-    """Today's Coin Metrics print is a flash value until the daily close is revised."""
+    """Mark flash prints. A missing status still treats today's row as preliminary."""
     out = dict(payload)
-    latest = out.get("latest") if isinstance(out.get("latest"), dict) else None
     today = time.strftime("%Y-%m-%d", time.gmtime())
-    preliminary = bool(latest) and str((latest or {}).get("date") or "")[:10] == today
+    series = []
+    for point in out.get("series") or []:
+        if not isinstance(point, dict):
+            series.append(point)
+            continue
+        row = dict(point)
+        if _point_is_preliminary(row, today):
+            row["preliminary"] = True
+            row["note"] = "preliminary"
+        series.append(row)
+    out["series"] = series
+    latest = out.get("latest") if isinstance(out.get("latest"), dict) else None
+    if latest is None and series and isinstance(series[-1], dict):
+        latest = series[-1]
+    preliminary = bool(latest) and _point_is_preliminary(dict(latest), today)
     if preliminary and latest is not None:
         latest = {**latest, "preliminary": True, "note": "preliminary"}
         out["latest"] = latest
-        series = [dict(point) if isinstance(point, dict) else point for point in (out.get("series") or [])]
-        if series and isinstance(series[-1], dict):
+        if series and isinstance(series[-1], dict) and str(series[-1].get("date") or "")[:10] == str(latest.get("date") or "")[:10]:
             series[-1] = {**series[-1], "preliminary": True, "note": "preliminary"}
-        out["series"] = series
+            out["series"] = series
+    elif latest is not None:
+        out["latest"] = dict(latest)
     out["latestPreliminary"] = preliminary
     return out
 
@@ -172,12 +221,16 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
             continue
         by_key.setdefault(key, {"date": pt.get("date", key), "timestamp": pt.get("timestamp")})
         by_key[key]["inflow"] = pt["value"]
+        if pt.get("cmStatus"):
+            by_key[key]["inflowStatus"] = pt.get("cmStatus")
     for pt in outflow.get("series") or []:
         key = str(pt.get("date") or pt.get("timestamp") or "")
         if not key:
             continue
         by_key.setdefault(key, {"date": pt.get("date", key), "timestamp": pt.get("timestamp")})
         by_key[key]["outflow"] = pt["value"]
+        if pt.get("cmStatus"):
+            by_key[key]["outflowStatus"] = pt.get("cmStatus")
 
     series = []
     for key in sorted(by_key):
@@ -192,11 +245,25 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
                 ts = int(time.mktime(time.strptime(str(row["date"])[:10], "%Y-%m-%d")))
             except (ValueError, OverflowError):
                 ts = None
-        series.append({
+        point = {
             "timestamp": ts,
             "date": row.get("date", key),
             "value": round(float(inf) - float(out), 4),
-        })
+        }
+        # Either leg being a flash print makes the netflow point preliminary.
+        leg_status = None
+        for leg in (row.get("inflowStatus"), row.get("outflowStatus")):
+            if _status_is_preliminary(str(leg) if leg else None):
+                leg_status = str(leg)
+                break
+        if leg_status is None:
+            for leg in (row.get("inflowStatus"), row.get("outflowStatus")):
+                if leg:
+                    leg_status = str(leg)
+                    break
+        if leg_status:
+            point["cmStatus"] = leg_status
+        series.append(point)
 
     latest = series[-1] if series else None
     payload = _flag_netflow_preliminary({

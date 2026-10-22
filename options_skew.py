@@ -1,9 +1,10 @@
 """25-delta risk reversal.
 
-Rate is zero. For each expiry, the put whose Black-Scholes delta is nearest
--0.25 and the call nearest +0.25. Risk reversal is put IV minus call IV, in
-vol points. Two expiries that straddle 30 days are interpolated. A single
-listed expiry is labelled with that expiry instead of a fake 30-day blend.
+Rate is zero. For each expiry, put IV and call IV are linearly interpolated
+in delta to exactly −0.25 and +0.25. An expiry with no strikes on both sides
+of the target is skipped. Risk reversal is put IV minus call IV, in vol
+points. Two expiries that straddle 30 days are interpolated. A single listed
+expiry is labelled with that expiry instead of a fake 30-day blend.
 """
 
 from __future__ import annotations
@@ -35,6 +36,23 @@ def _iv_decimal(raw: Any) -> float | None:
     if iv <= 3:
         return iv
     return None
+
+
+def _interp_iv(points: list[tuple[float, float]], target: float) -> float | None:
+    """Linear IV in delta. None when the strikes do not bracket ``target``."""
+    if not points:
+        return None
+    ordered = sorted(points, key=lambda row: row[0])
+    below = [row for row in ordered if row[0] <= target]
+    above = [row for row in ordered if row[0] >= target]
+    if not below or not above:
+        return None
+    lo = below[-1]
+    hi = above[0]
+    if hi[0] == lo[0]:
+        return lo[1]
+    weight = (target - lo[0]) / (hi[0] - lo[0])
+    return lo[1] + (hi[1] - lo[1]) * weight
 
 
 def risk_reversal_25d(
@@ -86,32 +104,24 @@ def risk_reversal_25d(
         if days < 1 or days > 400:
             continue
         t_years = max(days / 365.0, 1.0 / 365.0)
-        best_put = None
-        best_call = None
-        put_dist = 1e9
-        call_dist = 1e9
+        puts: list[tuple[float, float]] = []
+        calls: list[tuple[float, float]] = []
         for opt in opts:
             delta = _call_delta(spot, opt["strike"], t_years, opt["markIv"])
             if delta is None:
                 continue
             if opt["side"] == "P":
-                dist = abs((delta - 1.0) - (-0.25))
-                if dist < put_dist:
-                    put_dist = dist
-                    best_put = opt
+                puts.append((delta - 1.0, opt["markIv"]))
             else:
-                dist = abs(delta - 0.25)
-                if dist < call_dist:
-                    call_dist = dist
-                    best_call = opt
-        if best_put is None or best_call is None:
-            continue
-        if put_dist > 0.10 or call_dist > 0.10:
+                calls.append((delta, opt["markIv"]))
+        put_iv = _interp_iv(puts, -0.25)
+        call_iv = _interp_iv(calls, 0.25)
+        if put_iv is None or call_iv is None:
             continue
         rows.append({
             "exp": exp,
             "days": days,
-            "rr": (best_put["markIv"] - best_call["markIv"]) * 100.0,
+            "rr": (put_iv - call_iv) * 100.0,
         })
     if not rows:
         return empty

@@ -1022,14 +1022,14 @@ const METRIC_HELP = {
   },
   "opt-skew": {
     title: "25Δ Risk Reversal",
-    body: "25-delta risk reversal: put IV minus call IV. The strikes are the listed options nearest delta −0.25 and +0.25. The print is interpolated to 30 days when one expiry is at or under 30 days and another is at or over 30 days. Otherwise it uses the listed expiry nearest 30 days. A positive number means puts are richer.",
+    body: "25-delta risk reversal: put IV minus call IV. On each expiry the put IV is interpolated in delta to exactly −0.25 and the call IV to exactly +0.25. An expiry that does not bracket the target delta is skipped. The print is then interpolated to 30 days when one expiry is at or under 30 days and another is at or over 30 days. Otherwise it uses the listed expiry nearest 30 days. A positive number means puts are richer.",
   },
   "opt-iv-c2c": {
-    title: "IV − 30d close-to-close RV",
+    title: "DVOL − 30d close-to-close RV",
     body: "Deribit DVOL minus the 30-day close-to-close realized volatility from daily closes. This gap is separate from the HAR model term. A missing close-to-close sample stays blank.",
   },
   "opt-iv-term-rv": {
-    title: "IV − model term RV",
+    title: "DVOL − HAR term RV",
     body: "Deribit DVOL minus the HAR 30-day term from the active 5-year volatility suite. The subtitle shows the run time. A run older than six hours is tagged STALE with its age. If that HAR term is missing, the tile says model RV unavailable. Close-to-close RV is never substituted here.",
   },
   "opt-iv-range": {
@@ -1517,7 +1517,7 @@ const METRIC_HELP = {
     body: "Per-ETF net flows in USD millions for each recent trading day. Each cell shows how much capital entered or left that specific fund. The Totals column sums across all 13 ETFs for that day.",
   },
   "trs-total-btc": {
-    title: "BTC Held by Public Companies",
+    title: "BTC held by top 100 companies",
     body: "Bitcoin held by the top 100 company treasuries in this table. The dollar figure is that same set of rows. These are company treasuries, not the US Treasury.",
   },
   "trs-total-usd": {

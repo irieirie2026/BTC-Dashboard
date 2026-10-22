@@ -17,7 +17,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
-from macro_data.cache import cache_get, cache_set
+from macro_data.cache import cache_get, cache_get_stale, cache_set
 
 MEMPOOL = "https://mempool.space/api"
 USER_AGENT = "BTC-Dashboard/1.0 (+misc-whales)"
@@ -159,6 +159,12 @@ def _enrich_tx(tx: dict, *, source: str, block_time: int | None = None, block_he
         )
     ins = sorted(ins, key=lambda x: x["valueBtc"], reverse=True)
 
+    # Change that stays inside the same addresses is not a transfer between entities.
+    out_addrs = {row["address"] for row in outs if row.get("address")}
+    in_addrs = {row["address"] for row in ins if row.get("address")}
+    if out_addrs and out_addrs <= in_addrs:
+        return None
+
     from_addr = ins[0]["address"] if ins else None
     to_addr = outs[0]["address"] if outs else None
     from_m = _addr_meta(from_addr)
@@ -251,35 +257,40 @@ def _btc_usd() -> float | None:
     return None
 
 
+def _whale_warming_payload(cache_key: str) -> dict:
+    return {
+        "fromCache": False,
+        "warming": True,
+        "stale": True,
+        "status": "NO DATA",
+        "reason": "Warm scan still in flight",
+        "error": "NO DATA",
+        "exchanges": [],
+        "transfers": [],
+        "heroes": [],
+        "updatedAt": _now_iso(),
+        "cacheKey": cache_key,
+    }
+
+
 def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -> dict:
     cache_key = "misc:whales:v3"
     if not refresh:
         cached = cache_get(cache_key, ttl=CACHE_TTL)
         if cached:
             return {**cached, "fromCache": True}
-        # A cold request waits out a ~10s mempool scan. 12s was shorter than the
-        # warm fetch, so the first HTTP call started a second scan.
-        if not from_warm and not _whale_warm_ready.is_set():
-            print(f"Whales reader waiting key={cache_key}", flush=True)
-            _whale_warm_ready.wait(45)
-            cached = cache_get(cache_key, ttl=CACHE_TTL)
-            if cached:
-                print(f"Whales cache key {cache_key} fromCache=True", flush=True)
-                return {**cached, "fromCache": True}
-            if not _whale_warm_ready.is_set():
-                print(f"Whales warm still in flight key={cache_key}", flush=True)
-                return {
-                    "fromCache": False,
-                    "warming": True,
-                    "status": "NO DATA",
-                    "reason": "Warm scan still in flight",
-                    "error": "Whale scan still warming",
-                    "exchanges": [],
-                    "transfers": [],
-                    "heroes": [],
-                    "updatedAt": _now_iso(),
-                    "cacheKey": cache_key,
-                }
+        # Never wait on the warm scan. Serve the persisted copy, or say NO DATA at once.
+        stale = cache_get_stale(cache_key)
+        if stale and isinstance(stale[0], dict):
+            data, age = stale
+            return {
+                **data,
+                "fromCache": True,
+                "stale": True,
+                "status": "STALE",
+                "ageSec": round(float(age), 1),
+            }
+        return _whale_warming_payload(cache_key)
 
     errors: list[str] = []
     updated_at = _now_iso()
@@ -502,6 +513,8 @@ def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -
         "largeTx": {
             "thresholdBtc": NOTABLE_BTC,
             "whaleThresholdBtc": WHALE_BTC,
+            "windowLabel": "last 10 blocks",
+            "blocksScanned": BLOCKS_SCAN,
             "count1h": count_1h,
             "count24h": count_24h,
             "volume1hBtc": vol_1h,
@@ -538,7 +551,7 @@ def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -
                 "sub": f"{vol_1h:,.0f} BTC · ≥{NOTABLE_BTC:g} BTC",
             },
             {
-                "name": "Transfers (24h)",
+                "name": "Transfers (last 10 blocks)",
                 "value": str(count_24h),
                 "sub": f"{vol_24h:,.0f} BTC sample vol",
             },

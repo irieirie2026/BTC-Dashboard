@@ -18,6 +18,11 @@ def cache_get(key: str, *, ttl: int = DEFAULT_TTL) -> Any | None:
     return get_cache_service().get(key, ttl=ttl)
 
 
+def cache_get_stale(key: str) -> tuple[Any, float] | None:
+    """``(data, age_sec)`` even when the entry is past its TTL. None if nothing was stored."""
+    return get_cache_service().get_stale(key)
+
+
 def cache_set(key: str, data: Any, *, ttl: int | None = None) -> None:
     get_cache_service().set(key, data, ttl=ttl or DEFAULT_TTL)
 

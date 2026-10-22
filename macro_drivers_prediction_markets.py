@@ -548,6 +548,9 @@ def _normalize_market(
     event_title: str | None = None,
     tags: list | None = None,
     quoted_at: str | None = None,
+    yes_depth_usd: float | None = None,
+    no_depth_usd: float | None = None,
+    book: dict | list | None = None,
 ) -> dict | None:
     if not question or yes_p is None:
         return None
@@ -585,7 +588,20 @@ def _normalize_market(
         "resolved": resolved,
         "btcHighlight": btc_highlight,
         "quotedAt": str(quoted_at) if quoted_at else None,
+        "yesDepthUsd": yes_depth_usd,
+        "noDepthUsd": no_depth_usd,
+        "book": book,
     }
+
+
+def _gamma_depth_kwargs(raw: dict | None) -> dict:
+    """Copy book depth when Gamma sends it. Missing depth stays missing."""
+    if not isinstance(raw, dict):
+        return {}
+    book = raw.get("book") if isinstance(raw.get("book"), (dict, list)) else None
+    yes_depth = _as_float(raw.get("yesDepthUsd") if raw.get("yesDepthUsd") is not None else raw.get("yes_depth_usd"))
+    no_depth = _as_float(raw.get("noDepthUsd") if raw.get("noDepthUsd") is not None else raw.get("no_depth_usd"))
+    return {"yes_depth_usd": yes_depth, "no_depth_usd": no_depth, "book": book}
 
 
 def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
@@ -624,6 +640,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
                 event_title=event_title,
                 tags=tags,
                 quoted_at=m.get("updatedAt") or m.get("updated_at") or event.get("updatedAt"),
+                **_gamma_depth_kwargs(m),
             )
             if row:
                 markets_out.append(row)
@@ -651,6 +668,7 @@ def _parse_polymarket_event(event: dict, *, relevance_fn=None) -> list[dict]:
         active=bool(event.get("active", True)) and not event.get("closed"),
         tags=tags,
         quoted_at=event.get("updatedAt") or event.get("updated_at"),
+        **_gamma_depth_kwargs(event),
     )
     return [row] if row else []
 
@@ -682,6 +700,7 @@ def _parse_polymarket_market(m: dict, event: dict | None = None) -> dict | None:
         event_title=(event or {}).get("title"),
         tags=tags,
         quoted_at=m.get("updatedAt") or m.get("updated_at") or (event or {}).get("updatedAt"),
+        **_gamma_depth_kwargs(m),
     )
 
 
@@ -1380,6 +1399,7 @@ def _mock_markets() -> list[dict]:
 # events (strike + end date + question similarity).
 
 ARB_MIN_NET_EDGE = 0.012  # 1.2% after fees — pure locked arbs
+LOCKED_STATED_SIZE_USD = 100
 ARB_MIN_JACCARD = 0.52
 ARB_MAX_END_DATE_DAYS = 10  # cross-venue settlement windows must align
 ARB_MIN_DERIBIT_GAP = 0.08  # 8pp PM vs Deribit RN digital (relative value)
@@ -2214,6 +2234,89 @@ def _ladder_leg_tradable(market: dict) -> bool:
     return True
 
 
+def _level_price_usd(level: object) -> tuple[float, float] | None:
+    price = None
+    usd = None
+    shares = None
+    if isinstance(level, (list, tuple)) and len(level) >= 2:
+        try:
+            price = float(level[0])
+            shares = float(level[1])
+        except (TypeError, ValueError):
+            return None
+    elif isinstance(level, dict):
+        try:
+            price = float(level.get("price") if level.get("price") is not None else level.get("px"))
+        except (TypeError, ValueError):
+            return None
+        if level.get("sizeUsd") is not None or level.get("usd") is not None:
+            try:
+                usd = float(level.get("sizeUsd") if level.get("sizeUsd") is not None else level.get("usd"))
+            except (TypeError, ValueError):
+                return None
+        else:
+            try:
+                shares = float(level.get("size") if level.get("size") is not None else level.get("quantity") or 0)
+            except (TypeError, ValueError):
+                return None
+    else:
+        return None
+    if price is None or not (price == price):
+        return None
+    if usd is None:
+        if shares is None:
+            return None
+        usd = shares * price if price <= 1.5 else shares
+    return price, usd
+
+
+def _book_levels_for_side(market: dict, side: str) -> list:
+    book = market.get("book")
+    if isinstance(book, list):
+        return book
+    if not isinstance(book, dict):
+        return []
+    if side == "yes":
+        levels = book.get("yes") or book.get("bids") or book.get("yesBids")
+    else:
+        levels = book.get("no") or book.get("asks") or book.get("noBids")
+    return levels if isinstance(levels, list) else []
+
+
+def _depth_usd_at_quote(market: dict, *, side: str, quote: float) -> float | None:
+    """USD resting within about one cent of the quoted price. None when the book is missing."""
+    try:
+        target = float(quote)
+    except (TypeError, ValueError):
+        return None
+    explicit = market.get("yesDepthUsd") if side == "yes" else market.get("noDepthUsd")
+    levels = _book_levels_for_side(market, side)
+    if levels:
+        total = 0.0
+        found = False
+        for level in levels:
+            parsed = _level_price_usd(level)
+            if parsed is None:
+                continue
+            price, usd = parsed
+            if abs(price - target) <= 0.01:
+                total += usd
+                found = True
+        if found:
+            return total
+    if explicit is None:
+        return None
+    try:
+        return float(explicit)
+    except (TypeError, ValueError):
+        return None
+
+
+def _stated_depth_ok(market: dict, side: str, quote: float) -> bool:
+    depth = _depth_usd_at_quote(market, side=side, quote=quote)
+    return depth is not None and depth + 1e-9 >= LOCKED_STATED_SIZE_USD
+
+
 def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
     """Nested BTC ladders: P(S>K_high) ≤ P(S>K_low). Violation → buy low Yes + buy high No."""
     opps: list[dict] = []
@@ -2264,8 +2367,17 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
                 continue
             gross = 1.0 - (yes_low + no_high)
             fees = fee_y + fee_n + slip_y + slip_n
+            both_poly = (
+                str(low_m.get("platform") or "") == "polymarket"
+                and str(high_m.get("platform") or "") == "polymarket"
+            )
+            locked = (
+                both_poly
+                and _stated_depth_ok(low_m, "yes", yes_low)
+                and _stated_depth_ok(high_m, "no", no_high)
+            )
             econ = _arb_economics(
-                all_in=all_in, mid_sum=yes_low + no_high, fees=fees, net=net, locked=True
+                all_in=all_in, mid_sum=yes_low + no_high, fees=fees, net=net, locked=locked
             )
             opps.append(
                 _arb_record(
@@ -2273,7 +2385,7 @@ def _find_monotonicity_arbs(markets: list[dict]) -> list[dict]:
                     edge_pct=net * 100,
                     gross_pct=gross * 100,
                     fee_pct=fees * 100,
-                    locked=True,
+                    locked=locked,
                     confidence="high" if same_event else "medium",
                     title=f"Strike ladder lock · {net * 100:.1f}% net",
                     summary=(
@@ -3037,6 +3149,21 @@ def _section_heroes(markets: list[dict], section: str) -> list[dict]:
     ]
 
 
+def _model_gap_filtered_count(markets: list[dict]) -> int:
+    """Active above-strike markets that the model-gap floor drops."""
+    count = 0
+    for market in _active_markets(markets):
+        mid = str(market.get("id") or "")
+        if mid.startswith("mock-"):
+            continue
+        if not _is_above_strike_market(market.get("question") or ""):
+            continue
+        if _model_gap_tradable(market):
+            continue
+        count += 1
+    return count
+
+
 def _build_outlook(markets: list[dict]) -> dict:
     active = _active_markets(markets)
     price_markets = [m for m in active if m.get("category") == "price-targets"]
@@ -3098,6 +3225,7 @@ def _build_outlook(markets: list[dict]) -> dict:
         "activeMarkets": len(active),
         "totalVolume24h": sum(m.get("volume24h") or 0 for m in active),
         "arbCount": len(arbitrage),
+        "filteredCount": _model_gap_filtered_count(markets),
         "maxArbEdge": arbitrage[0]["edgePct"] if arbitrage else 0,
         "signals": signals,
         "arbitrage": arbitrage,

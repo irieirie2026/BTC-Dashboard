@@ -604,6 +604,33 @@ function pmArbMetricsGrid(a) {
     </div>`;
 }
 
+function pmArbMinLiquidity(arb) {
+  const values = (arb?.markets || [])
+    .map((m) => Number(m.liquidity))
+    .filter((n) => Number.isFinite(n));
+  if (!values.length) return "—";
+  return pmFmtUsd(Math.min(...values));
+}
+
+function pmArbMaxQuoteAge(arb) {
+  const stamps = (arb?.markets || [])
+    .map((m) => Date.parse(m.quotedAt))
+    .filter((n) => Number.isFinite(n));
+  if (!stamps.length) return "—";
+  const oldest = Math.min(...stamps);
+  const min = Math.max(0, Math.round((Date.now() - oldest) / 60000));
+  if (min < 60) return `${min}m`;
+  const hours = Math.floor(min / 60);
+  const rest = min % 60;
+  return rest ? `${hours}h ${rest}m` : `${hours}h`;
+}
+
+function pmFilteredLabel(outlook) {
+  const n = Number(outlook?.filteredCount);
+  if (!Number.isFinite(n)) return "";
+  return `${n} filtered`;
+}
+
 function pmArbSummaryTable(arbs) {
   if (!arbs?.length) return "";
   const lockedN = arbs.filter((a) => a.locked).length;
@@ -637,6 +664,8 @@ function pmArbSummaryTable(arbs) {
           : econ.exampleProfit != null
             ? `~$${Number(econ.exampleProfit).toLocaleString("en-US", { maximumFractionDigits: 0 })}`
             : "—";
+      const liq = pmArbMinLiquidity(a);
+      const quoteAge = pmArbMaxQuoteAge(a);
       const lockCell = a.locked
         ? `<span class="pm-arb-sum-lock pm-arb-sum-lock--yes">Locked</span>`
         : `<span class="pm-arb-sum-lock pm-arb-sum-lock--rv">Relative value</span>`;
@@ -651,6 +680,8 @@ function pmArbSummaryTable(arbs) {
         <td class="pm-arb-sum-conf pm-arb-confidence--${pmArbConfClass(conf)}">${conf}</td>
         <td class="mono">${cap}</td>
         <td class="mono">${edgeUsd}</td>
+        <td class="mono">${liq}</td>
+        <td class="mono">${quoteAge}</td>
         <td class="pm-arb-sum-venues">${venues || "—"}</td>
         <td class="pm-arb-sum-title" title="${pmEscAttr(title)}">${shortTitle}</td>
         <td><a class="pm-arb-sum-jump" href="#pm-arb-card-${i}">Detail →</a></td>
@@ -670,7 +701,7 @@ function pmArbSummaryTable(arbs) {
         </span>
       </div>
       <div class="pm-arb-summary__wrap">
-        <table class="pm-arb-summary-table" aria-label="Arbitrage opportunities summary">
+        <table class="pm-arb-summary-table" aria-label="Model gaps summary">
           <thead>
             <tr>
               <th class="mono">#</th>
@@ -682,6 +713,8 @@ function pmArbSummaryTable(arbs) {
               <th>${pmTip("Conf.", "Scanner confidence: high / medium / low.")}</th>
               <th class="mono">${pmTip("Capital", "Example or min-size capital (Deribit packages use 0.1 BTC-matched size).")}</th>
               <th class="mono">${pmTip("Edge $", "Illustrative dollar edge at that capital/face scale. Locked = modelled profit; relative value = model gap only.")}</th>
+              <th class="mono">${pmTip("Liquidity", "Smallest market liquidity on the row.")}</th>
+              <th class="mono">${pmTip("Quote age", "Oldest quote on the row.")}</th>
               <th>${pmTip("Venues", "Platforms involved in the legs.")}</th>
               <th>${pmTip("Title", "Short description of the opportunity.")}</th>
               <th></th>
@@ -1010,9 +1043,9 @@ function pmRenderOutlook() {
   if (arbs.length) {
     const lockedN = arbs.filter((a) => a.locked).length;
     html += `<div class="pm-arb-section">
-      <h4 class="pm-outlook-subhead">Arbitrage opportunities <span class="mono">${arbs.length}</span>${
+      <h4 class="pm-outlook-subhead">Model gaps <span class="mono">${arbs.length}</span>${
         lockedN ? ` · <span class="pm-arb-locked-count">${lockedN} locked</span>` : ""
-      }</h4>
+      }${pmFilteredLabel(outlook) ? ` · <span class="mono">${pmFilteredLabel(outlook)}</span>` : ""}</h4>
       <p class="pm-arb-intro">
         <strong>New here:</strong> a green ${pmTip("locked", "Designed to pay at least $1 face if rules match and both legs fill — profit is roughly $1 minus what you paid.")}
         badge means the package aims to pay more than it costs if resolution rules match —
@@ -1056,7 +1089,8 @@ function pmRenderOutlook() {
       clear =
         "Model gap: scanned live contracts against Black–Scholes digitals — no gap above the fee-adjusted threshold.";
     }
-    html += `<p class="pm-arb-clear">${clear}</p>`;
+    const filtered = pmFilteredLabel(outlook);
+    html += `<p class="pm-arb-clear">${clear}${filtered ? ` ${filtered}.` : ""}</p>`;
   }
 
   body.innerHTML = html || "<p>Loading outlook…</p>";

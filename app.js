@@ -1,7 +1,7 @@
 const SYMBOL = "BTCUSDT";
 
 const INDICATOR_POLL_MS = 300_000;
-const FUTURES_POLL_MS = 60_000;
+const FUTURES_POLL_MS = 30_000;
 const DEPTH_POLL_MS = 15_000;
 
 const MARKET_INDICATOR_TF = {
@@ -99,7 +99,7 @@ function setConnectionStatus(state, elId = "connection-status") {
 
 function setFuturesPanelMeta(opts = {}) {
   const text = window.DashboardSWR?.formatPanelMeta(opts) || opts.fallback || "—";
-  for (const id of ["futures-update", "futures-sentiment-update"]) {
+  for (const id of ["futures-update", "futures-sentiment-update", "futures-header-update"]) {
     const panel = $(id);
     if (panel) panel.textContent = text;
   }
@@ -176,18 +176,23 @@ function updateTicker(data) {
   $("vol-usdt").textContent = formatVolume(data.q) + " USDT";
   $("weighted-avg").textContent = formatPrice(data.w);
 
-  const lastPx = parseFloat(data.c);
-  const nearLast = (px) => !(lastPx > 0) || !(px > 0) || Math.abs(px - lastPx) / lastPx <= 0.002;
+  // The card shows the API median. A missing print keeps the last number.
   let bid = parseFloat(data.bid);
   let ask = parseFloat(data.ask);
-  if (Number.isFinite(bid) && bid > 0 && nearLast(bid)) heldQuote.bid = bid;
-  else if (!nearLast(heldQuote.bid)) heldQuote.bid = null;
-  if (!(Number.isFinite(bid) && bid > 0 && nearLast(bid))) bid = heldQuote.bid;
-  if (Number.isFinite(ask) && ask > 0 && nearLast(ask)) heldQuote.ask = ask;
-  else if (!nearLast(heldQuote.ask)) heldQuote.ask = null;
-  if (!(Number.isFinite(ask) && ask > 0 && nearLast(ask))) ask = heldQuote.ask;
-  $("best-bid").textContent = Number.isFinite(bid) && bid > 0 ? formatPrice(bid) : "—";
-  $("best-ask").textContent = Number.isFinite(ask) && ask > 0 ? formatPrice(ask) : "—";
+  if (Number.isFinite(bid) && bid > 0) heldQuote.bid = bid;
+  else bid = heldQuote.bid;
+  if (Number.isFinite(ask) && ask > 0) heldQuote.ask = ask;
+  else ask = heldQuote.ask;
+  const bidEl = $("best-bid");
+  const askEl = $("best-ask");
+  if (bidEl) {
+    if (Number.isFinite(bid) && bid > 0) bidEl.textContent = formatPrice(bid);
+    else if (!bidEl.textContent) bidEl.textContent = "—";
+  }
+  if (askEl) {
+    if (Number.isFinite(ask) && ask > 0) askEl.textContent = formatPrice(ask);
+    else if (!askEl.textContent) askEl.textContent = "—";
+  }
   const venueNote = document.getElementById("spot-venue-count");
   if (venueNote && window.spotCompositeLabel) venueNote.textContent = window.spotCompositeLabel;
   if (Number.isFinite(bid) && bid > 0 && Number.isFinite(ask) && ask > 0) {
@@ -907,8 +912,9 @@ async function loadFuturesData() {
       updateHeader: false,
       fetch: async () => {
         const futAge = window.DashboardSWR?.fetchedAgeMs?.(lastFuturesFetchedAt);
-        const perpUrl = futAge == null || futAge > 45_000 ? "/api/market/perp?refresh=1" : "/api/market/perp";
-        const perp = await fetchJsonTimeout(perpUrl, 12000);
+        // Read the warm-loop copy. refresh=1 only after the server stamp is two minutes old.
+        const perpUrl = futAge != null && futAge > 120_000 ? "/api/market/perp?refresh=1" : "/api/market/perp";
+        const perp = await fetchJsonTimeout(perpUrl, 20000);
         if (!perp?.lastPrice) throw new Error(perp?.error || "Perp feed unavailable");
         futuresVenue = String(perp.venue || "OKX").toLowerCase();
         return perpBundleFromSnapshot(perp);
@@ -1024,12 +1030,23 @@ function alignBookToTicker(depth, ticker) {
   return { ...depth, bids: pinnedBids.slice(0, 20), asks: pinnedAsks.slice(0, 20) };
 }
 
+function spotQuoteAgeBit(fetchedAt) {
+  const ms = window.DashboardSWR?.fetchedAgeMs?.(fetchedAt);
+  if (ms == null || !Number.isFinite(ms)) return "";
+  return ` · ${Math.max(0, Math.round(ms / 1000))}s`;
+}
+
+function spotVenueLabel(bundle) {
+  const venueCount = Number(bundle?.venueCount) || (Array.isArray(bundle?.venues) ? bundle.venues.length : 0);
+  const base = venueCount > 0
+    ? `Median · ${venueCount} venues`
+    : (bundle?.venue || bundle?.ticker?.venue || "Median spot composite");
+  return base + spotQuoteAgeBit(bundle?.fetchedAt || lastSpotFetchedAt);
+}
+
 function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
-  const venueCount = Number(bundle.venueCount) || (Array.isArray(bundle.venues) ? bundle.venues.length : 0);
-  const venueLabel = venueCount > 0
-    ? `Median · ${venueCount} venues`
-    : (bundle.venue || ticker?.venue || "Median spot composite");
+  const venueLabel = spotVenueLabel(bundle);
   window.spotCompositeLabel = venueLabel;
   const chartLabel = document.getElementById("spot-chart-label");
   if (chartLabel && bundle.klineVenue) {
@@ -1190,19 +1207,10 @@ async function refreshSpotLive() {
     const refresh = age == null || age > 25_000;
     const bundle = await fetch(`/api/market/spot${refresh ? "?refresh=1" : ""}`, { cache: "no-store" }).then((r) => r.json());
     if (!bundle?.ticker?.lastPrice) return;
-    const last = parseFloat(bundle.ticker.lastPrice);
-    let bid = parseFloat(bundle.ticker.bidPrice);
-    let ask = parseFloat(bundle.ticker.askPrice);
-    if (!(last > 0) || Math.abs(bid - last) / last > 0.002 || Math.abs(ask - last) / last > 0.002) {
-      bid = NaN;
-      ask = NaN;
-      heldQuote.bid = null;
-      heldQuote.ask = null;
-    }
+    const bid = parseFloat(bundle.ticker.bidPrice);
+    const ask = parseFloat(bundle.ticker.askPrice);
     const venueCount = Number(bundle.venueCount) || (Array.isArray(bundle.venues) ? bundle.venues.length : 0);
-    const venueLabel = venueCount > 0
-      ? `Median · ${venueCount} venues`
-      : (bundle.venue || "Median spot composite");
+    const venueLabel = spotVenueLabel(bundle);
     window.spotCompositeLabel = venueLabel;
     const venueNote = document.getElementById("spot-venue-count");
     if (venueNote) venueNote.textContent = venueLabel;
@@ -1254,7 +1262,13 @@ async function refreshSpotLive() {
       });
     }
   } catch (_) {
-    /* the next poll retries; a failed refresh keeps the previous stamp */
+    // Keep the last bid and ask. The venue note still shows how old they are.
+    if (window.spotCompositeLabel) {
+      const base = String(window.spotCompositeLabel).replace(/ · \d+s$/, "");
+      window.spotCompositeLabel = base + spotQuoteAgeBit(lastSpotFetchedAt);
+      const venueNote = document.getElementById("spot-venue-count");
+      if (venueNote) venueNote.textContent = window.spotCompositeLabel;
+    }
   } finally {
     spotLiveInflight = false;
   }

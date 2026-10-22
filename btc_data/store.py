@@ -12,16 +12,25 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def _series_dir() -> Path:
+    """Read the env on each call so tests can point writes at a tmp directory."""
     explicit = os.environ.get("BTC_SERIES_DIR", "").strip()
     if explicit:
         return Path(explicit)
+    dash = os.environ.get("BTC_DASH_DATA_DIR", "").strip()
+    if dash:
+        return Path(dash) / "btc-series"
     if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
         return Path("/tmp/btc-series")
     return ROOT / "data" / "btc-series"
 
 
+def _state_file() -> Path:
+    return _series_dir() / "_scheduler_state.json"
+
+
+# Import-time snapshots. Call sites inside this module re-read the env.
 SERIES_DIR = _series_dir()
-STATE_FILE = SERIES_DIR / "_scheduler_state.json"
+STATE_FILE = _state_file()
 
 
 def _now_iso() -> str:
@@ -30,13 +39,13 @@ def _now_iso() -> str:
 
 def _metric_path(metric_id: str) -> Path:
     safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in metric_id)
-    return SERIES_DIR / f"{safe}.json"
+    return _series_dir() / f"{safe}.json"
 
 
 def _disk_ok() -> bool:
     try:
-        SERIES_DIR.mkdir(parents=True, exist_ok=True)
-        probe = SERIES_DIR / ".write_probe"
+        _series_dir().mkdir(parents=True, exist_ok=True)
+        probe = _series_dir() / ".write_probe"
         probe.write_text("ok", encoding="utf-8")
         probe.unlink(missing_ok=True)
         return True
@@ -131,10 +140,11 @@ def is_stale(metric_id: str, ttl: int) -> bool:
 
 
 def list_inventory() -> list[dict[str, Any]]:
-    if not SERIES_DIR.exists():
+    series_dir = _series_dir()
+    if not series_dir.exists():
         return []
     rows: list[dict[str, Any]] = []
-    for path in sorted(SERIES_DIR.glob("*.json")):
+    for path in sorted(series_dir.glob("*.json")):
         if path.name.startswith("_"):
             continue
         try:
@@ -154,10 +164,11 @@ def list_inventory() -> list[dict[str, Any]]:
 
 
 def read_scheduler_state() -> dict[str, Any]:
-    if not STATE_FILE.exists():
+    path = _state_file()
+    if not path.exists():
         return {"runs": [], "lastSourceFetch": {}, "errors": {}}
     try:
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {"runs": [], "lastSourceFetch": {}, "errors": {}}
 
@@ -166,10 +177,11 @@ def write_scheduler_state(state: dict[str, Any]) -> None:
     if not _disk_ok():
         return
     state["updatedAt"] = _now_iso()
-    tmp = STATE_FILE.with_suffix(".tmp")
+    path = _state_file()
+    tmp = path.with_suffix(".tmp")
     try:
         tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
-        tmp.replace(STATE_FILE)
+        tmp.replace(path)
     except OSError:
         pass
 

@@ -8,5 +8,7 @@ __pycache__/
 data/ss-payments.json
 data/xmarket_history.jsonl
 data/tts-cache/
+data/btc-series/*.json
+data/stats-btc-history-cache.json
 node_modules/
 strategy-builder/node_modules/

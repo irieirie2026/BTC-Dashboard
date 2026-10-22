@@ -74,20 +74,17 @@ def test_whales_cache_served_while_warm_in_flight():
         calls["n"] += 1
         raise RuntimeError("duplicate mempool scan")
 
-    def publish():
-        time.sleep(0.25)
-        cache_set(key, sentinel)
-        whales.note_whale_warm_done()
-
+    cache_set(key, sentinel)
     whales._btc_usd = boom
     whales.note_whale_warm_start()
-    threading.Thread(target=publish, daemon=True).start()
     try:
+        started = time.time()
         out = whales.get_misc_whales_payload(refresh=False, from_warm=False)
     finally:
         whales._btc_usd = original
         whales.note_whale_warm_done()
         service.delete(key)
+    assert time.time() - started < 1
     assert out.get("fromCache") is True
     assert out.get("marker") == "r13-cache"
     assert calls["n"] == 0

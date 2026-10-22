@@ -95,6 +95,11 @@ def get(key: str, default: Any = None, *, ttl: int = DEFAULT_TTL) -> Any:
     return default if value is None else value
 
 
+def get_stale(key: str) -> tuple[Any, float] | None:
+    """Module-level read that keeps an expired copy and its age in seconds."""
+    return get_cache_service().get_stale(key)
+
+
 def set(key: str, data: Any, ttl: int = DEFAULT_TTL) -> None:
     """Module-level cache write. ``ttl`` may be passed positionally or by name."""
     get_cache_service().set(key, data, ttl=ttl)
@@ -143,6 +148,51 @@ class CacheService:
                     pass
 
         _stats["misses"] += 1
+        return None
+
+    def get_stale(self, key: str) -> tuple[Any, float] | None:
+        """Return ``(data, age_sec)`` from memory, Redis, or disk even past TTL.
+
+        Redis ``setex`` drops an expired key, so a process restart reads the disk copy.
+        """
+        now = time.time()
+
+        def _pack(ts: float, data: Any) -> tuple[Any, float] | None:
+            if data is None:
+                return None
+            return data, max(0.0, now - float(ts))
+
+        mem = _mem.get(key)
+        if isinstance(mem, dict) and mem.get("data") is not None:
+            packed = _pack(float(mem.get("ts") or now), mem["data"])
+            if packed is not None:
+                return packed
+
+        if redis_active():
+            client = get_redis_client()
+            if client:
+                try:
+                    raw = client.get(_redis_key(key))
+                    if raw:
+                        parsed = _deserialize(raw)
+                        if parsed and parsed[1] is not None:
+                            _mem[key] = {"ts": parsed[0], "data": parsed[1]}
+                            return _pack(parsed[0], parsed[1])
+                except Exception as exc:
+                    _stats["errors"] += 1
+                    _log.debug("Redis stale get failed for %s: %s", key, exc)
+
+        if _disk_enabled():
+            path = _disk_path(key)
+            if path.exists():
+                try:
+                    raw = path.read_text(encoding="utf-8")
+                    parsed = _deserialize(raw)
+                    if parsed and parsed[1] is not None:
+                        _mem[key] = {"ts": parsed[0], "data": parsed[1]}
+                        return _pack(parsed[0], parsed[1])
+                except OSError:
+                    pass
         return None
 
     def set(self, key: str, data: Any, *, ttl: int = DEFAULT_TTL) -> None:

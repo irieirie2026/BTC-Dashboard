@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import calendar
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable
@@ -29,7 +30,7 @@ from btc_data.registry import REGISTRY, registry_payload, refresh_registry
 from btc_data.store import read_series_cached
 from btc_data.scheduler import get_stored_metric, run_batch, status_payload
 from btc_data.valuation_models import get_models_meta, get_tab_bundle
-from macro_data.cache import cache_get, cache_set
+from macro_data.cache import cache_get, cache_get_stale, cache_set
 from btc_data.fetchers import (
     BGEOMETRICS_SERIES,
     SNAPSHOT_KPI_METRICS,
@@ -219,7 +220,17 @@ def _apply_timespan(payload: dict[str, Any], timespan: str) -> dict[str, Any]:
         if ts is None or ts >= cutoff:
             filtered.append(point)
     out["series"] = filtered
-    out["latest"] = filtered[-1] if filtered else None
+    if not filtered:
+        # A fresh full series sliced down to an empty window is still NO DATA.
+        # This copy is the HTTP response only. The stored series is left whole.
+        out["latest"] = None
+        out["stale"] = True
+        out["unavailable"] = True
+        out["status"] = "unavailable"
+        if not out.get("error"):
+            out["error"] = "NO DATA"
+        return out
+    out["latest"] = filtered[-1]
     return out
 
 
@@ -1327,17 +1338,65 @@ def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
     return cells
 
 
-def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
-    from server import get_fear_greed_payload
+_SNAPSHOT_CACHE_KEY = "btc:bundle:snapshot:v13"
+_SNAPSHOT_TTL = 900
+_SNAPSHOT_BUILD_LOCK = threading.Lock()
 
-    cache_key = "btc:bundle:snapshot:v13"
-    fast_source = (
-        "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
-        "Coin Metrics · Santiment store"
-    )
+
+def _tag_stale_snapshot(payload: dict[str, Any], age_sec: float | None) -> dict[str, Any]:
+    out = dict(payload)
+    out["cells"] = dict(payload.get("cells") or {})
+    out["stale"] = True
+    out["status"] = "STALE"
+    out["fromCache"] = True
+    if age_sec is not None:
+        out["ageSec"] = round(float(age_sec), 1)
+    return out
+
+
+def _empty_snapshot_shell() -> dict[str, Any]:
+    """Immediate answer when nothing has been persisted yet. The build runs beside it."""
+    return {
+        "cells": {},
+        "indicators": [],
+        "fetchedAt": None,
+        "errors": ["NO DATA"],
+        "partial": True,
+        "staleCount": 0,
+        "sourceChain": "persisted snapshot",
+        "fastPath": True,
+        "fromCache": False,
+        "stale": True,
+        "status": "STALE",
+        "error": "NO DATA",
+    }
+
+
+def _kick_snapshot_build() -> None:
+    """One background rebuild. A warm-loop build that already holds the lock is left alone."""
+    if not _SNAPSHOT_BUILD_LOCK.acquire(blocking=False):
+        return
+
+    def _run() -> None:
+        try:
+            _build_snapshot_refresh()
+        except Exception as exc:
+            print(f"Snapshot background build skipped: {exc}", flush=True)
+        finally:
+            _SNAPSHOT_BUILD_LOCK.release()
+
+    threading.Thread(target=_run, daemon=True, name="btc-snapshot-refresh").start()
+
+
+def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
+    """Serve a stored snapshot at once. A refresh rebuilds under one shared lock.
+
+    The previous copy stays readable until the new one is written. Requests do not
+    wait on the warm pass.
+    """
     if not refresh:
-        cached = cache_get(cache_key, ttl=900)
-        if cached is not None:
+        cached = cache_get(_SNAPSHOT_CACHE_KEY, ttl=_SNAPSHOT_TTL)
+        if isinstance(cached, dict):
             cells = dict(cached.get("cells") or {})
             if not any(_cell_value_missing(key, cells.get(key)) for key in _SNAPSHOT_LIVE_KEYS):
                 # A complete snapshot is returned as stored. Freshness is not recomputed.
@@ -1345,20 +1404,24 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
                 out["fromCache"] = True
                 out["cells"] = cells
                 return out
-        cells = _build_fast_snapshot_cells()
-        cells = _fill_missing_snapshot_cells(cells)
-        payload = _finalize_snapshot_payload(
-            cells,
-            source_chain=fast_source,
-            fast_path=True,
-            from_cache=False,
-            refresh=False,
-        )
-        cache_set(cache_key, payload, ttl=900)
-        return payload
+        stale = cache_get_stale(_SNAPSHOT_CACHE_KEY)
+        _kick_snapshot_build()
+        if stale and isinstance(stale[0], dict):
+            data, age = stale
+            return _tag_stale_snapshot(data, age)
+        if isinstance(cached, dict):
+            return _tag_stale_snapshot(cached, 0.0)
+        return _empty_snapshot_shell()
 
-    if refresh:
-        clear_all_caches()
+    with _SNAPSHOT_BUILD_LOCK:
+        return _build_snapshot_refresh()
+
+
+def _build_snapshot_refresh() -> dict[str, Any]:
+    from server import get_fear_greed_payload
+
+    refresh = True
+    cache_key = _SNAPSHOT_CACHE_KEY
 
     jobs: dict[str, tuple[Callable, tuple, dict]] = {
         "bitinfo": (fetch_bitinfo_snapshot, (), {"refresh": refresh}),

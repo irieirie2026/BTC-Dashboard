@@ -21,8 +21,12 @@ def _history_path() -> Path:
     override = (os.environ.get("XMARKET_HISTORY_PATH") or "").strip()
     if override:
         return Path(override)
+    # Pytest must fail closed when the override is missing, even if a data dir is set.
     if os.environ.get("PYTEST_CURRENT_TEST"):
         raise RuntimeError("tests must set XMARKET_HISTORY_PATH and must not write data/xmarket_history.jsonl")
+    dash = (os.environ.get("BTC_DASH_DATA_DIR") or "").strip()
+    if dash:
+        return Path(dash) / "xmarket_history.jsonl"
     return Path(__file__).resolve().parent / "data" / "xmarket_history.jsonl"
 
 

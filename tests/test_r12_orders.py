@@ -101,24 +101,28 @@ def test_history_dedupes_and_honours_window():
             "z": 1.0 + i,
         })
 
+    original = hist._load_events
     hist._load_events = lambda: list(events)
-    wide = hist.get_history(days=30, limit=2000, window="30d")
-    assert wide["count"] > 30, wide["count"]
-    assert wide["days"] == 30
-    venues = {e.get("venue") for e in wide["events"]}
-    assert "OldVenue" in venues
-    # Forty copies inside one 5-minute bucket collapse to one row.
-    uni = [e for e in wide["events"] if e.get("venue") == "Uniswap"]
-    assert len(uni) == 1, len(uni)
+    try:
+        wide = hist.get_history(days=30, limit=2000, window="30d")
+        assert wide["count"] > 30, wide["count"]
+        assert wide["days"] == 30
+        venues = {e.get("venue") for e in wide["events"]}
+        assert "OldVenue" in venues
+        # Forty copies inside one 5-minute bucket collapse to one row.
+        uni = [e for e in wide["events"] if e.get("venue") == "Uniswap"]
+        assert len(uni) == 1, len(uni)
 
-    day = hist.get_history(days=30, limit=2000, window="24h")
-    assert day["window"] == "24h"
-    assert all(e.get("venue") != "OldVenue" for e in day["events"])
-    assert day["count"] > 30
+        day = hist.get_history(days=30, limit=2000, window="24h")
+        assert day["window"] == "24h"
+        assert all(e.get("venue") != "OldVenue" for e in day["events"])
+        assert day["count"] > 30
 
-    week = hist.get_history(days=30, limit=5, window="7d")
-    assert week["days"] == 7
-    assert week["count"] == 5
+        week = hist.get_history(days=30, limit=5, window="7d")
+        assert week["days"] == 7
+        assert week["count"] == 5
+    finally:
+        hist._load_events = original
 
 
 def test_spot_median_skips_unavailable():

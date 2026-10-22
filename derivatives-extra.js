@@ -89,6 +89,27 @@ function rrExpiryLabel(expMs) {
   return `${String(d.getUTCDate()).padStart(2, "0")} ${mon} ${d.getUTCFullYear()}`;
 }
 
+function rrInterpIv(points, target) {
+  if (!points.length) return null;
+  const ordered = points.slice().sort((a, b) => a[0] - b[0]);
+  const below = ordered.filter((row) => row[0] <= target);
+  const above = ordered.filter((row) => row[0] >= target);
+  if (!below.length || !above.length) return null;
+  const lo = below[below.length - 1];
+  const hi = above[0];
+  if (hi[0] === lo[0]) return lo[1];
+  const weight = (target - lo[0]) / (hi[0] - lo[0]);
+  return lo[1] + (hi[1] - lo[1]) * weight;
+}
+
+function rrIvDecimal(raw) {
+  const iv = Number(raw);
+  if (!Number.isFinite(iv) || iv <= 0) return null;
+  if (iv > 3 && iv < 500) return iv / 100;
+  if (iv <= 3) return iv;
+  return null;
+}
+
 function riskReversal25d(chain, indexPrice) {
   const empty = { skew25: null, method: "25d RR, puts minus calls", expiry: null };
   const spot = Number(indexPrice);
@@ -98,9 +119,9 @@ function riskReversal25d(chain, indexPrice) {
   (chain || []).forEach((opt) => {
     let exp = Number(opt.expiry);
     const strike = Number(opt.strike);
-    const iv = Number(opt.markIv);
+    const iv = rrIvDecimal(opt.markIv != null ? opt.markIv : opt.mark_iv);
     if (!Number.isFinite(exp) || exp <= 0 || !Number.isFinite(strike) || strike <= 0) return;
-    if (!Number.isFinite(iv) || iv <= 0) return;
+    if (iv == null) return;
     if (exp < 1e12) exp *= 1000;
     const side = String(opt.side || "C").charAt(0).toUpperCase() === "P" ? "P" : "C";
     if (!byExp.has(exp)) byExp.set(exp, []);
@@ -111,32 +132,21 @@ function riskReversal25d(chain, indexPrice) {
     const days = (exp - now) / 86400000;
     if (days < 1 || days > 400) return;
     const tYears = Math.max(days / 365, 1 / 365);
-    let bestPut = null;
-    let bestCall = null;
-    let putDist = 1e9;
-    let callDist = 1e9;
+    const puts = [];
+    const calls = [];
     opts.forEach((opt) => {
       const delta = rrCallDelta(spot, opt.strike, tYears, opt.markIv);
       if (delta == null) return;
-      if (opt.side === "P") {
-        const dist = Math.abs(delta - 1 - -0.25);
-        if (dist < putDist) {
-          putDist = dist;
-          bestPut = opt;
-        }
-      } else {
-        const dist = Math.abs(delta - 0.25);
-        if (dist < callDist) {
-          callDist = dist;
-          bestCall = opt;
-        }
-      }
+      if (opt.side === "P") puts.push([delta - 1, opt.markIv]);
+      else calls.push([delta, opt.markIv]);
     });
-    if (!bestPut || !bestCall || putDist > 0.1 || callDist > 0.1) return;
+    const putIv = rrInterpIv(puts, -0.25);
+    const callIv = rrInterpIv(calls, 0.25);
+    if (putIv == null || callIv == null) return;
     rows.push({
       exp,
       days,
-      rr: (bestPut.markIv - bestCall.markIv) * 100,
+      rr: (putIv - callIv) * 100,
     });
   });
   if (!rows.length) return empty;
@@ -967,7 +977,7 @@ function renderOptionsVolScreen() {
   }
   set("opt-iv-c2c", dxGapPts(d.ivC2cGap) || "—");
   const c2cSub = dxEl("opt-iv-c2c-sub");
-  if (c2cSub) c2cSub.textContent = "IV − 30d close-to-close RV";
+  if (c2cSub) c2cSub.textContent = "DVOL − 30d close-to-close RV";
   if (d.modelTermRv30d == null) {
     set("opt-iv-term-rv", "model RV unavailable");
   } else {
@@ -976,12 +986,12 @@ function renderOptionsVolScreen() {
   const gapSub = dxEl("opt-iv-term-rv-sub");
   if (gapSub) {
     if (d.modelTermRv30d == null) {
-      gapSub.textContent = "IV − model term RV (HAR)";
+      gapSub.textContent = "DVOL − HAR term RV";
     } else {
       const when = dxAsOfClock(d.modelTermAsOf);
       const age = dxAgeLabel(d.modelTermAgeSec);
       const stale = d.modelTermStale ? ` · STALE${age ? ` · ${age}` : ""}` : "";
-      gapSub.textContent = `IV − model term RV (HAR${when ? `, as of ${when}` : ""})${stale}`;
+      gapSub.textContent = `DVOL − HAR term RV${when ? ` (as of ${when})` : ""}${stale}`;
     }
   }
   set(
