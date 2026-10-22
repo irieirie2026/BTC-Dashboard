@@ -110,10 +110,24 @@ function treasuryUsdLabel(summary) {
   return summary?.totalUsdLabel || "—";
 }
 
+function treasuryCountLabel(summary) {
+  const label = document.querySelector('[data-help-key="trs-company-count"]');
+  const text = summary?.countLabel
+    || (Number(summary?.count) >= 100 ? "Top 100 companies" : `${summary?.count || "—"} companies`);
+  if (label) {
+    const textEl = label.querySelector(".metric-label-text");
+    if (textEl) textEl.textContent = text;
+    else label.textContent = text;
+  }
+  const scope = $("trs-company-scope");
+  if (scope) scope.textContent = summary?.scope || "Company treasuries";
+}
+
 function renderHero(summary, btcPrice, btcChange24h) {
   $("trs-total-btc").textContent = summary.totalBtcLabel || "—";
   $("trs-total-usd").textContent = treasuryUsdLabel(summary);
   $("trs-company-count").textContent = String(summary.count || "—");
+  treasuryCountLabel(summary);
 
   const priceLabel = summary.btcPriceLabel || (btcPrice ? "$" + formatPrice(btcPrice, 0) : "—");
   $("trs-btc-price").textContent = priceLabel;

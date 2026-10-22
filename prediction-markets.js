@@ -416,7 +416,7 @@ function pmArbTypeLabel(type) {
       "cross-platform": "Cross-venue lock",
       "sum-discount": "Yes + No lock",
       monotonicity: "Strike ladder lock",
-      "deribit-basis": "Prediction market vs Deribit",
+      "deribit-basis": "Model gap",
     }[type] || type
   );
 }
@@ -674,7 +674,7 @@ function pmArbSummaryTable(arbs) {
           <thead>
             <tr>
               <th class="mono">#</th>
-              <th>${pmTip("Type", "Structure class: Yes+No lock, cross-venue, strike ladder, or prediction market vs Deribit.")}</th>
+              <th>${pmTip("Type", "Structure class: Yes+No lock, cross-venue, strike ladder, or model gap.")}</th>
               <th>${pmTip("Kind", "Locked = cash structure if rules match. Relative value = model disagreement, not a free lunch.")}</th>
               <th class="mono">${pmTip("Net", "Edge after fees and slippage buffer (% of $1 face).")}</th>
               <th class="mono">${pmTip("Gross", "Edge before cost haircuts.")}</th>
@@ -905,7 +905,7 @@ function pmArbCardHtml(a, idx) {
     monotonicity:
       "Strike ladder: a higher Bitcoin target priced more likely than a lower one — buy low-strike Yes and high-strike No if rules nest.",
     "deribit-basis":
-      "Prediction-market odds vs Deribit Black–Scholes digital probability for a similar strike and expiry. Relative value only.",
+      "Model gap: prediction-market odds versus a Deribit Black–Scholes digital for a similar strike and expiry. This is not a locked arbitrage.",
   };
   const risks = (a.risks || []).slice(0, 4);
   const checks = (a.checklist || []).slice(0, 4);
@@ -1054,7 +1054,7 @@ function pmRenderOutlook() {
       clear = ds.detail || clear;
     } else if (ds?.status === "scanned") {
       clear =
-        "Prediction market vs Deribit: scanned live contracts against Black–Scholes digitals — no gap above the fee-adjusted threshold.";
+        "Model gap: scanned live contracts against Black–Scholes digitals — no gap above the fee-adjusted threshold.";
     }
     html += `<p class="pm-arb-clear">${clear}</p>`;
   }
@@ -1357,7 +1357,28 @@ async function pmLoad({ refresh = false, silent = false } = {}) {
   } finally {
     pmLoading = false;
     pmRenderAll();
+    pmStampHeader();
   }
+}
+
+function pmPredictionVisible() {
+  const screen = document.querySelector(
+    '#dashboard-market .menu-screen[data-l2="prediction-markets"]',
+  );
+  return !!screen && !screen.hidden;
+}
+
+function pmStampHeader() {
+  const swr = window.DashboardSWR;
+  if (!swr || !pmPredictionVisible()) return;
+  const fetchedAt = pmData?.updatedAt || pmData?.fetchedAt || null;
+  swr.setHeaderStamp("market", {
+    fetchedAt: fetchedAt || new Date().toISOString(),
+    source: pmData?.source || "Prediction markets",
+    stale: !fetchedAt,
+    refreshing: false,
+    refreshFailed: !!pmError && !pmData,
+  });
 }
 
 function pmStartPoll() {
@@ -1450,7 +1471,7 @@ function pmBindEvents() {
 function initPredictionMarkets() {
   pmBindEvents();
   if (!pmData) {
-    pmLoad();
+    pmLoad({ refresh: true });
     if (!pmPollTimer) pmStartPoll();
   } else {
     pmRenderAll();

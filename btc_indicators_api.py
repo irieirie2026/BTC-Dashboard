@@ -151,6 +151,14 @@ def _finalize_series_payload(indicator: str, data: dict[str, Any]) -> dict[str, 
         out["series"] = _normalize_series_points(series)
         if out.get("latest") is None:
             out["latest"] = out["series"][-1]
+    else:
+        out["series"] = []
+        out["latest"] = None
+        out["stale"] = True
+        out["unavailable"] = True
+        out["status"] = "unavailable"
+        if not out.get("error"):
+            out["error"] = "NO DATA"
     return out
 
 
@@ -825,6 +833,49 @@ def _prefer_later_series(
     return {}, False
 
 
+def _merge_address_series(store: dict[str, Any] | None, chart: dict[str, Any] | None) -> dict[str, Any]:
+    """Keep the longer store history and the later chart point. Does not write the store."""
+    store = store if isinstance(store, dict) else {}
+    chart = chart if isinstance(chart, dict) else {}
+    by_key: dict[str, dict] = {}
+
+    def _put(point: dict) -> None:
+        if not isinstance(point, dict):
+            return
+        sec = _series_point_seconds(point)
+        key = str(point.get("date") or "")[:10] or (str(sec) if sec is not None else "")
+        if key:
+            by_key[key] = point
+
+    for point in store.get("series") or []:
+        _put(point)
+    for point in chart.get("series") or []:
+        _put(point)
+    chart_latest = chart.get("latest") if isinstance(chart.get("latest"), dict) else None
+    if chart_latest:
+        _put(chart_latest)
+    series = sorted(by_key.values(), key=lambda point: _series_point_seconds(point) or 0)
+    latest = series[-1] if series else None
+    return {
+        "series": series,
+        "latest": latest,
+        "source": chart.get("source") or store.get("source") or "Blockchain.info",
+        "fetchedAt": chart.get("fetchedAt") or store.get("fetchedAt"),
+        "stale": bool(chart.get("stale")) and latest is None,
+    }
+
+
+def _active_address_series_body(*, refresh: bool = False) -> dict[str, Any]:
+    """Series endpoint and the snapshot cell share the later active-address point."""
+    from btc_data.store import read_series_cached as _read_store
+
+    chart = _chart_active_address_series(refresh=refresh)
+    store = _read_store("active_addresses", ttl=86400) or {}
+    if not (store.get("series") or store.get("latest")):
+        store = {}
+    return _merge_address_series(store, chart)
+
+
 def _chart_active_address_series(
     *,
     refresh: bool = False,
@@ -940,6 +991,7 @@ def _assemble_snapshot_cells(
                 "error": netflow.get("error"),
                 "stale": netflow.get("stale"),
                 "note": netflow.get("note"),
+                "preliminary": bool((netflow.get("latest") or {}).get("preliminary")),
             },
         ),
         "mempool_fees": _cell(
@@ -1288,13 +1340,11 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
         if cached is not None:
             cells = dict(cached.get("cells") or {})
             if not any(_cell_value_missing(key, cells.get(key)) for key in _SNAPSHOT_LIVE_KEYS):
-                return _finalize_snapshot_payload(
-                    cells,
-                    source_chain=cached.get("sourceChain") or fast_source,
-                    fast_path=cached.get("fastPath", True),
-                    from_cache=True,
-                    refresh=False,
-                )
+                # A complete snapshot is returned as stored. Freshness is not recomputed.
+                out = dict(cached)
+                out["fromCache"] = True
+                out["cells"] = cells
+                return out
         cells = _build_fast_snapshot_cells()
         cells = _fill_missing_snapshot_cells(cells)
         payload = _finalize_snapshot_payload(
@@ -1700,6 +1750,32 @@ def get_valuation_payload(
     return payload
 
 
+def series_indicator_names() -> list[str]:
+    """Indicators the series route accepts. Used by the 400 body."""
+    names = set(INDICATORS)
+    try:
+        refresh_registry()
+        names.update(REGISTRY)
+    except Exception:
+        pass
+    names.update(COINMETRICS_METRICS)
+    names.update(BGEOMETRICS_SERIES)
+    names.update({
+        "active_addresses",
+        "san_daily_active_addresses",
+        "hash_rate",
+        "market_price",
+        "exchange_netflow",
+        "puell_multiple",
+        "hodl_waves_1y_plus",
+        "fear_greed",
+        "btc_dominance",
+        "open_interest",
+        "funding_rate",
+    })
+    return sorted(names)
+
+
 def _series_payload_unsliced(
     indicator: str,
     *,
@@ -1713,6 +1789,20 @@ def _series_payload_unsliced(
         registry_key = indicator
         if indicator == "hodl_waves_1y_plus":
             registry_key = "hodl_waves"
+        if indicator in ("active_addresses", "san_daily_active_addresses"):
+            data = _active_address_series_body(refresh=refresh)
+            if indicator == "san_daily_active_addresses":
+                data = {
+                    **data,
+                    "source": (
+                        "Blockchain.info · n-unique-addresses "
+                        "(free daily active addresses)"
+                    ),
+                    "aliasOf": "active_addresses",
+                    "note": "Santiment daily_active_addresses requires a key; this series is the free unique-address count.",
+                }
+            return _finalize_series_payload(indicator, data)
+
         if registry_key in REGISTRY and REGISTRY[registry_key].enabled:
             data = get_metric_data(registry_key, refresh=refresh)
             return _finalize_series_payload(indicator, data)
@@ -1816,7 +1906,12 @@ def _series_payload_unsliced(
             })
 
         raise ValueError(f"Unknown indicator: {indicator}")
-    except ValueError:
+    except ValueError as exc:
+        text = str(exc)
+        if text.startswith("Unknown indicator"):
+            from api_errors import BadRequest
+
+            raise BadRequest(text, accepted=series_indicator_names()) from exc
         raise
     except Exception as exc:
         return _finalize_series_payload(indicator, {

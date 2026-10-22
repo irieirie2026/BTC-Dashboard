@@ -1383,6 +1383,8 @@ ARB_MIN_NET_EDGE = 0.012  # 1.2% after fees — pure locked arbs
 ARB_MIN_JACCARD = 0.52
 ARB_MAX_END_DATE_DAYS = 10  # cross-venue settlement windows must align
 ARB_MIN_DERIBIT_GAP = 0.08  # 8pp PM vs Deribit RN digital (relative value)
+MODEL_GAP_MIN_LIQUIDITY = 10_000
+MODEL_GAP_MAX_QUOTE_MIN = 30
 ARB_DERIBIT_EXPIRY_DAYS = 12  # match PM endDate to nearest Deribit expiry
 
 # Execution costs on mid prices (no live book). Kalshi fee ≈ 0.07·p·(1−p).
@@ -2539,6 +2541,20 @@ def _deribit_digital_for_strike(
     }
 
 
+def _model_gap_tradable(market: dict) -> bool:
+    """A model gap needs a liquidity floor and a quote younger than 30 minutes."""
+    try:
+        liquidity = float(market.get("liquidity"))
+    except (TypeError, ValueError):
+        return False
+    if liquidity < MODEL_GAP_MIN_LIQUIDITY:
+        return False
+    age = _quote_age_hours(market)
+    if age is None or age * 60 > MODEL_GAP_MAX_QUOTE_MIN:
+        return False
+    return True
+
+
 def _find_deribit_arbs(markets: list[dict]) -> list[dict]:
     """PM binary vs Deribit risk-neutral digital (relative value + fee buffer).
 
@@ -2558,6 +2574,8 @@ def _find_deribit_arbs(markets: list[dict]) -> list[dict]:
         if not _is_above_strike_market(q):
             continue
         if _primary_strike(q) is None or _yes_price(m) is None or not m.get("endDate"):
+            continue
+        if not _model_gap_tradable(m):
             continue
         candidates.append(m)
     # Cap scan size — full universe is huge after broad Polymarket search
@@ -2705,7 +2723,7 @@ def _find_deribit_arbs(markets: list[dict]) -> list[dict]:
                 fee_pct=fees_pct,
                 locked=False,
                 confidence=conf,
-                title=f"Prediction market vs Deribit · {best_edge * 100:.1f}pp net gap",
+                title=f"Model gap · {best_edge * 100:.1f}pp net",
                 summary=summary,
                 action=action,
                 description=(
@@ -3048,7 +3066,7 @@ def _build_outlook(markets: list[dict]) -> dict:
         if deri_arbs:
             headline += f" · {len(deri_arbs)} Deribit RV"
     elif deri_arbs:
-        headline = f"{len(deri_arbs)} PM↔Deribit gap{'s' if len(deri_arbs) != 1 else ''} · max {max_edge:.1f}pp (not locked)"
+        headline = f"{len(deri_arbs)} model gap{'s' if len(deri_arbs) != 1 else ''} · max {max_edge:.1f}pp (not a locked arb)"
     elif deribit_scan.get("status") == "no_live_pm":
         headline = "PM↔Deribit idle · live prediction feed unavailable"
     elif above_100 and above_100.get("yesProb") is not None:
@@ -3148,7 +3166,7 @@ def _outlook_commentary(
         if mono:
             parts.append(f"{len(mono)} strike-ladder")
         if deri:
-            parts.append(f"{len(deri)} PM↔Deribit")
+            parts.append(f"{len(deri)} model gap")
         kind = "locked arb" if locked else "relative-value gap"
         lines.append(
             f"Arb scan: {', '.join(parts)} {kind}{'s' if len(arbitrage) != 1 else ''} — "

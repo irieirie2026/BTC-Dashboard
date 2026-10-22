@@ -314,6 +314,7 @@ function tsRenderKpis(suite) {
       suite.nObs != null ? `${suite.nObs} obs` : "",
       suite.fromCache ? "cached" : "fresh",
       suite.statsmodelsAvailable ? "statsmodels" : "numpy core",
+      `v ${window.APP_VERSION || "—"}`,
     ]
       .filter(Boolean)
       .join(" · ");
@@ -1027,6 +1028,7 @@ function tsRenderCommentary(suite) {
     meta.textContent = [
       suite.asOf ? String(suite.asOf).replace("T", " ").slice(0, 16) + " UTC" : "",
       suite.summary?.bestModelName ? `mark: ${suite.summary.bestModelName}` : "",
+      `v ${window.APP_VERSION || "—"}`,
     ]
       .filter(Boolean)
       .join(" · ");
@@ -2265,16 +2267,20 @@ function tsUpdateRangeInfo() {
   }
   const meta = tsEl("ts-suite-meta");
   if (meta && !tsBusy) {
-    meta.textContent = tsSuite
-      ? [
-          tsSuite.pair || "BTC/USD",
-          tsSuite.nObs != null ? `${tsSuite.nObs} obs` : "",
-          `range ${label}`,
-          tsSuite.fromCache ? "cached" : "last run",
-        ]
-          .filter(Boolean)
-          .join(" · ")
-      : `Range ${label} · press Run all models`;
+    const ver = `v ${window.APP_VERSION || "—"}`;
+    meta.textContent = tsSuite?.fromCache
+      ? `Last-good models · as_of ${tsSuite.asOf || "—"} · ${ver} · stale until Run`
+      : tsSuite
+        ? [
+            tsSuite.pair || "BTC/USD",
+            tsSuite.nObs != null ? `${tsSuite.nObs} obs` : "",
+            `range ${label}`,
+            "last run",
+            ver,
+          ]
+            .filter(Boolean)
+            .join(" · ")
+        : `Range ${label} · press Run all models · ${ver}`;
   }
 }
 
@@ -2466,7 +2472,7 @@ function initTimeSeriesModule() {
     if (tsSuite) {
       const meta = tsEl("ts-suite-meta");
       if (meta) {
-        meta.textContent = `${meta.textContent.split("·")[0]?.trim() || "BTC/USD"} · range changed — press Run all models`;
+        meta.textContent = `${meta.textContent.split("·")[0]?.trim() || "BTC/USD"} · range changed — press Run all models · v ${window.APP_VERSION || "—"}`;
       }
     }
   });
@@ -2485,7 +2491,7 @@ function initTimeSeriesModule() {
     tsRenderDetail(tsSelectedModel(tsSuite), tsSuite);
     tsDrawAll(tsSuite);
     const meta = tsEl("ts-suite-meta");
-    if (meta) meta.textContent = `Last-good models · as_of ${cached.fetchedAt || tsSuite.asOf || "—"} · stale until Run`;
+    if (meta) meta.textContent = `Last-good models · as_of ${cached.fetchedAt || tsSuite.asOf || "—"} · v ${window.APP_VERSION || "—"} · stale until Run`;
   }
   window.decorateHelpLabels?.(screen);
 }

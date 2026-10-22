@@ -3935,7 +3935,12 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
         "Practical use: Puell is a miner-income cycle lens. Extreme highs = security budget flush; extreme lows = stress. Confirm with hashprice and hash ribbons on Miner & Network.",
         reading || "",
       ];
-    case "exchange_netflow":
+    case "exchange_netflow": {
+      const preliminary = !!(
+        chartData?.latest?.preliminary
+        || chartData?.latestPreliminary
+        || chartData?.series?.[chartData.series.length - 1]?.preliminary
+      );
       return [
         live
         + " "
@@ -3947,9 +3952,11 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
               ? "Mild net inflow — slightly more deposits than withdrawals."
               : latest < 0
                 ? "Mild net outflow — slight bias toward withdrawals."
-                : "Flows are roughly balanced today."),
+                : "Flows are roughly balanced today.")
+        + (preliminary ? " Latest point is preliminary." : ""),
         "Practical use: one noisy day is not a thesis. Look for multi-day streaks and confirm with exchange balance trend (stock of inventory, not just flow).",
       ];
+    }
     case "exchange_balance":
       return [
         live

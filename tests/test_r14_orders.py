@@ -87,9 +87,11 @@ def test_warm_order_and_cache_ttl():
 
     assert whale_ttl >= 600
     assert metrics_ttl >= 600
-    assert WARM_STEP_ORDER.index("snapshot") < WARM_STEP_ORDER.index("whales")
-    assert WARM_STEP_ORDER.index("options") < WARM_STEP_ORDER.index("whales")
-    assert WARM_STEP_ORDER.index("depth") < WARM_STEP_ORDER.index("whales")
+    assert WARM_STEP_ORDER[0] == "snapshot"
+    assert WARM_STEP_ORDER[1] == "whales"
+    assert WARM_STEP_ORDER.index("quote") < WARM_STEP_ORDER.index("options")
+    assert WARM_STEP_ORDER.index("klines") < WARM_STEP_ORDER.index("options")
+    assert WARM_STEP_ORDER.index("depth") < WARM_STEP_ORDER.index("options")
 
 
 def test_active_addresses_prefer_later_series_without_writing():

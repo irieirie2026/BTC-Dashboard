@@ -7287,6 +7287,13 @@ body[data-l1="stats"] .menu-tree--compact .menu-l2-slot .dashboard-nav {
   color: var(--red);
 }
 
+.stat-venue {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+}
+
 /* On-chain & indicators */
 .insights-grid {
   display: grid;

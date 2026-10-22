@@ -1021,8 +1021,16 @@ const METRIC_HELP = {
     body: "Deribit <strong>mark IV</strong> of the at-the-money option on the <strong>nearest expiry</strong> (tenor shown under the number). This is not Deribit DVOL (a 30-day vol index) and not a GARCH/HAR forecast. Stats → Volatility DVOL/ATM chips are labeled separately so they are not comparable as a bare “ATM IV”.",
   },
   "opt-skew": {
-    title: "25Δ Volatility Skew",
-    body: "Difference between out-of-the-money put IV and call IV (approximate 25-delta wings). Positive skew means puts are richer — typical in BTC as investors pay for downside protection.",
+    title: "25Δ Risk Reversal",
+    body: "25-delta risk reversal: put IV minus call IV. The strikes are the listed options nearest delta −0.25 and +0.25. The print is interpolated to 30 days when one expiry is at or under 30 days and another is at or over 30 days. Otherwise it uses the listed expiry nearest 30 days. A positive number means puts are richer.",
+  },
+  "opt-iv-c2c": {
+    title: "IV − 30d close-to-close RV",
+    body: "Deribit DVOL minus the 30-day close-to-close realized volatility from daily closes. This gap is separate from the HAR model term. A missing close-to-close sample stays blank.",
+  },
+  "opt-iv-term-rv": {
+    title: "IV − model term RV",
+    body: "Deribit DVOL minus the HAR 30-day term from the active 5-year volatility suite. The subtitle shows the run time. A run older than six hours is tagged STALE with its age. If that HAR term is missing, the tile says model RV unavailable. Close-to-close RV is never substituted here.",
   },
   "opt-iv-range": {
     title: "IV Range",
@@ -1510,15 +1518,15 @@ const METRIC_HELP = {
   },
   "trs-total-btc": {
     title: "BTC Held by Public Companies",
-    body: "Total Bitcoin on balance sheets across all publicly traded treasury companies tracked by BitcoinTreasuries.net — the same dataset used on bitcointreasuries.net.",
+    body: "Bitcoin held by the top 100 company treasuries in this table. The dollar figure is that same set of rows. These are company treasuries, not the US Treasury.",
   },
   "trs-total-usd": {
     title: "Total Treasury Value (USD)",
     body: "Combined USD market value of all public company BTC holdings at the current Bitcoin price. Updates with BTC price even when coin balances are unchanged.",
   },
   "trs-company-count": {
-    title: "Number of Public Companies",
-    body: "Count of publicly traded companies reporting Bitcoin holdings. New entrants are added as filings and disclosures are verified.",
+    title: "Top 100 companies",
+    body: "Count of the company treasuries summed into the hero. When the table has at least 100 rows the label is Top 100 companies and the count is 100. These are company bitcoin treasuries, not the US Treasury.",
   },
   "trs-btc-price": {
     title: "BTC Price",

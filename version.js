@@ -14,5 +14,6 @@
  * 1.1.3 repairs the r12 desks.
  * 1.1.4 repairs the r13 desks.
  * 1.1.5 repairs the r14 desks.
+ * 1.1.6 repairs the r15 desks.
  */
-window.APP_VERSION = "1.1.5";
+window.APP_VERSION = "1.1.6";

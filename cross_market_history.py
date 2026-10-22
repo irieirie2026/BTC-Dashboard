@@ -21,6 +21,8 @@ def _history_path() -> Path:
     override = (os.environ.get("XMARKET_HISTORY_PATH") or "").strip()
     if override:
         return Path(override)
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        raise RuntimeError("tests must set XMARKET_HISTORY_PATH and must not write data/xmarket_history.jsonl")
     return Path(__file__).resolve().parent / "data" / "xmarket_history.jsonl"
 
 
@@ -190,7 +192,7 @@ def get_history(*, days: int = 7, limit: int = 2000, window: str | None = None) 
     if window and str(window).strip().lower().endswith("h"):
         hours = int(str(window).strip().lower()[:-1] or "24")
         cutoff_ms = (time.time() - max(1, hours) * 3600) * 1000
-    events = _load_events()
+    events = sorted(_load_events(), key=lambda row: _event_ts_ms(row) or 0)
     filtered = []
     # Newest first. A later print of the same pair and type inside 5 minutes is one shock.
     # Exact 300_000 ms spacing stays distinct. A print that straddles a bucket boundary does not.

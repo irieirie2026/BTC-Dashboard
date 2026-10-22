@@ -483,6 +483,14 @@ function dxDedupeContracts(rows) {
   return [...best.values()].sort((a, b) => (Number(a.deliveryDate) || 0) - (Number(b.deliveryDate) || 0));
 }
 
+function dxFitLabel(ctx, text, maxW) {
+  const raw = String(text || "");
+  if (ctx.measureText(raw).width <= maxW) return raw;
+  let cut = raw;
+  while (cut.length > 1 && ctx.measureText(`${cut}…`).width > maxW) cut = cut.slice(0, -1);
+  return `${cut}…`;
+}
+
 function dxShortOiLabel(c) {
   const margin = String(c.margin || "").toUpperCase().startsWith("COIN") ? "COIN" : "USDT";
   if (!c.deliveryDate || c.type === "Perpetual" || c.type === "PERPETUAL") return margin + " perp";
@@ -545,17 +553,65 @@ function drawDeliveryCurveChart(points) {
   ctx.fillStyle = "#7d8799";
   ctx.font = "12px IBM Plex Mono, monospace";
   ctx.textAlign = "right";
-  ctx.textBaseline = "top";
-  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 8, 8);
-  ctx.textBaseline = "bottom";
-  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 8, h - 8);
+  ctx.textBaseline = "middle";
+  ctx.fillText(fmtPct(maxAbs, 1), pad.left - 8, pad.top + 6);
+  ctx.fillText("0", pad.left - 8, zeroY);
+  ctx.fillText(fmtPct(-maxAbs, 1), pad.left - 8, pad.top + chartH - 6);
   ctx.textAlign = "center";
-  ctx.textBaseline = "bottom";
+  ctx.textBaseline = "top";
+  let nextLabelX = -Infinity;
   curvePts.forEach((p) => {
     const x = pad.left + (p.days / maxDays) * chartW;
     const label = String(p.label || "");
-    ctx.fillText(label, x, h - 8);
+    const width = ctx.measureText(label).width;
+    if (x < nextLabelX) return;
+    ctx.fillText(label, x, pad.top + chartH + 10);
+    nextLabelX = x + width / 2 + 10;
   });
+}
+
+function dxStoredHarTerm() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem("vol-last-suite-v1") || "null");
+    const suite = parsed?.data;
+    const har = (suite?.models || []).find((row) => row && row.id === "har_rv");
+    const path = har?.forecastTermAnn;
+    const term = Array.isArray(path) && path.length >= 30 ? Number(path[29]) : NaN;
+    if (!(term > 0)) return null;
+    const asOf = suite.asOf || parsed.fetchedAt || null;
+    const ms = asOf ? Date.parse(String(asOf)) : NaN;
+    const ageSec = Number.isFinite(ms) ? Math.max(0, (Date.now() - ms) / 1000) : null;
+    return {
+      term,
+      asOf,
+      ageSec,
+      stale: ageSec == null || ageSec > 6 * 3600,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function dxGapPts(gap) {
+  if (gap == null || !Number.isFinite(Number(gap))) return null;
+  const n = Number(gap);
+  return `${n >= 0 ? "+" : ""}${n.toFixed(1)} vol pts`;
+}
+
+function dxAsOfClock(asOf) {
+  if (!asOf) return "";
+  const ms = Date.parse(String(asOf));
+  if (!Number.isFinite(ms)) return String(asOf);
+  return `${new Date(ms).toISOString().slice(0, 16).replace("T", " ")}Z`;
+}
+
+function dxAgeLabel(sec) {
+  const n = Number(sec);
+  if (!Number.isFinite(n) || n < 0) return "";
+  if (n < 3600) return `${Math.max(1, Math.round(n / 60))}m old`;
+  const hours = Math.floor(n / 3600);
+  const mins = Math.round((n % 3600) / 60);
+  return mins ? `${hours}h ${mins}m old` : `${hours}h old`;
 }
 
 async function fetchOptionsBundle() {
@@ -767,9 +823,25 @@ async function fetchOptionsBundle() {
     const dvol = Number.isFinite(dvolRaw) && dvolRaw > 0
       ? (dvolRaw > 3 ? dvolRaw / 100 : dvolRaw)
       : null;
-    const termRaw = Number(payload.termRv30d);
-    const termRv30d = Number.isFinite(termRaw) && termRaw > 0 ? termRaw : null;
-    const ivTermGap = dvol != null && termRv30d != null ? (dvol - termRv30d) * 100 : null;
+    const c2cRaw = Number(payload.closeToCloseRv30d);
+    const closeToCloseRv30d = Number.isFinite(c2cRaw) && c2cRaw > 0 ? c2cRaw : null;
+    const modelRaw = Number(payload.modelTermRv30d ?? payload.termRv30d);
+    let modelTermRv30d = Number.isFinite(modelRaw) && modelRaw > 0 ? modelRaw : null;
+    let modelTermAsOf = payload.modelTermAsOf || null;
+    let modelTermStale = !!payload.modelTermStale;
+    let modelTermAgeSec = Number.isFinite(Number(payload.modelTermAgeSec)) ? Number(payload.modelTermAgeSec) : null;
+    if (modelTermRv30d == null) {
+      const stored = dxStoredHarTerm();
+      if (stored) {
+        modelTermRv30d = stored.term;
+        modelTermAsOf = stored.asOf;
+        modelTermStale = stored.stale;
+        modelTermAgeSec = stored.ageSec;
+      }
+    }
+    const ivC2cGap = dvol != null && closeToCloseRv30d != null ? (dvol - closeToCloseRv30d) * 100 : null;
+    const ivModelGap = dvol != null && modelTermRv30d != null ? (dvol - modelTermRv30d) * 100 : null;
+    const ivTermGap = ivModelGap;
     const atmDte = nearestExpiry ? daysToExpiry(nearestExpiry) : null;
     return {
       indexPrice,
@@ -785,7 +857,14 @@ async function fetchOptionsBundle() {
       skewMethod,
       skewExpiry,
       ivTermGap,
-      termRv30d,
+      ivC2cGap,
+      ivModelGap,
+      closeToCloseRv30d,
+      modelTermRv30d,
+      modelTermAsOf,
+      modelTermStale,
+      modelTermAgeSec,
+      termRv30d: modelTermRv30d,
       termRvSource: payload.termRvSource || null,
       nearestExpiry,
       smileExpiry,
@@ -886,17 +965,24 @@ function renderOptionsVolScreen() {
     const method = d.skewMethod || "25d RR, puts minus calls";
     skewSub.textContent = d.skewExpiry ? `${method} · ${d.skewExpiry}` : method;
   }
-  set(
-    "opt-iv-term-rv",
-    d.ivTermGap != null && Number.isFinite(Number(d.ivTermGap))
-      ? (d.ivTermGap >= 0 ? "+" : "") + Number(d.ivTermGap).toFixed(1) + " vol pts"
-      : "—",
-  );
+  set("opt-iv-c2c", dxGapPts(d.ivC2cGap) || "—");
+  const c2cSub = dxEl("opt-iv-c2c-sub");
+  if (c2cSub) c2cSub.textContent = "IV − 30d close-to-close RV";
+  if (d.modelTermRv30d == null) {
+    set("opt-iv-term-rv", "model RV unavailable");
+  } else {
+    set("opt-iv-term-rv", dxGapPts(d.ivModelGap) || "—");
+  }
   const gapSub = dxEl("opt-iv-term-rv-sub");
   if (gapSub) {
-    gapSub.textContent = d.termRvSource
-      ? `DVOL − ${d.termRvSource}`
-      : "DVOL − 30d term RV";
+    if (d.modelTermRv30d == null) {
+      gapSub.textContent = "IV − model term RV (HAR)";
+    } else {
+      const when = dxAsOfClock(d.modelTermAsOf);
+      const age = dxAgeLabel(d.modelTermAgeSec);
+      const stale = d.modelTermStale ? ` · STALE${age ? ` · ${age}` : ""}` : "";
+      gapSub.textContent = `IV − model term RV (HAR${when ? `, as of ${when}` : ""})${stale}`;
+    }
   }
   set(
     "opt-iv-range",
@@ -1154,15 +1240,17 @@ function drawDeliveryOiChart(contracts) {
   ctx.clearRect(0, 0, w, h);
 
   const co = window.ChartOutlier;
-  const values = rows.map((r) => r.oi);
+  const minPitch = 16;
+  const shown = rows.slice(0, Math.max(1, Math.floor(chartH / minPitch)));
+  const values = shown.map((r) => r.oi);
   const outlier = co?.isBarOutlier(values);
-  const outlierIdx = outlier ? co.findOutlierIndex(rows, (r) => r.oi) : -1;
+  const outlierIdx = outlier ? co.findOutlierIndex(shown, (r) => r.oi) : -1;
   const scaleMax = co?.barScaleMax(values, outlier) ?? Math.max(...values, 0.001);
-  const barH = chartH / rows.length;
-  const bodyH = Math.max(barH * 0.65, 8);
+  const pitch = chartH / shown.length;
+  const bodyH = Math.max(4, Math.min(14, pitch * 0.72));
 
-  rows.forEach((r, i) => {
-    const y = pad.top + i * barH + (barH - bodyH) / 2;
+  shown.forEach((r, i) => {
+    const y = pad.top + i * pitch + (pitch - bodyH) / 2;
     const color = String(r.margin || "").toUpperCase().startsWith("COIN")
       ? "rgba(251, 191, 36, 0.75)"
       : "rgba(14, 203, 129, 0.75)";
@@ -1177,7 +1265,7 @@ function drawDeliveryOiChart(contracts) {
     ctx.font = "12px IBM Plex Mono, monospace";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    ctx.fillText(r.label, pad.left - 8, y + bodyH / 2);
+    ctx.fillText(dxFitLabel(ctx, r.label, pad.left - 16), pad.left - 8, y + bodyH / 2);
     ctx.textAlign = "left";
     const valueLabel = fmtVol(r.oi) + " BTC";
     const textW = ctx.measureText(valueLabel).width;

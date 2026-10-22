@@ -185,7 +185,8 @@ def _sum_by_etf(rows, predicate=None):
         if predicate and not predicate(row):
             continue
         for ticker in ETF_TICKERS:
-            totals[ticker] += row["flows"].get(ticker, 0.0)
+            value = row["flows"].get(ticker, 0.0)
+            totals[ticker] += 0.0 if value is None else value
     return totals
 
 
@@ -327,10 +328,31 @@ def parse_farside_flows(html):
     head_match = re.search(r"<thead[\s\S]*?</thead>", html, re.I)
     if head_match:
         thead = head_match.group(0)
+
+    def _header_token(cell):
+        plain = re.sub(r"<[^>]+>", " ", cell)
+        plain = (
+            plain.replace("&nbsp;", " ")
+            .replace("&#160;", " ")
+            .replace("\xa0", " ")
+        )
+        plain = re.sub(r"&[a-z]+;", " ", plain, flags=re.I)
+        return re.sub(r"[^A-Za-z]", "", plain).upper()
+
+    # The logo row, the ticker row, and the fee row share one thead.
+    # Keep the row with the most ticker symbols. Logo alts are not that row.
     tickers = []
-    for token in re.findall(r">\s*([A-Z]{2,5})\s*<", thead):
-        if token not in tickers and token not in ("FEE", "TOTAL"):
-            tickers.append(token)
+    header_rows = re.findall(r"<tr[\s\S]*?</tr>", thead, re.I) or [thead]
+    for row in header_rows:
+        found = []
+        for cell in re.findall(r"<t[hd][^>]*>([\s\S]*?)</t[hd]>", row, re.I):
+            token = _header_token(cell)
+            if token in ("", "DATE", "FEE", "TOTAL"):
+                continue
+            if 2 <= len(token) <= 6 and token not in found:
+                found.append(token)
+        if len(found) > len(tickers):
+            tickers = found
     if len(tickers) < 4:
         tickers = list(FARSIDE_TICKERS)
     body = html
@@ -351,15 +373,16 @@ def parse_farside_flows(html):
         for cell in cells[1:]:
             plain = re.sub(r"<[^>]+>", "", cell)
             numbers.append(_flow_number(plain))
-        numbers = [n for n in numbers if n is not None]
-        if len(numbers) < 2:
+        # Keep blank and dash cells. Dropping them shifts later tickers left.
+        if sum(1 for n in numbers if n is not None) < 2:
             continue
         total = numbers[-1]
         flow_vals = numbers[:-1]
+        if total is None:
+            continue
         flows = {}
         for i, ticker in enumerate(tickers):
-            if i < len(flow_vals):
-                flows[ticker] = flow_vals[i]
+            flows[ticker] = flow_vals[i] if i < len(flow_vals) else None
         rows.append({
             "date": iso,
             "dateIso": iso,
@@ -838,8 +861,10 @@ def parse_bitcointreasuries(_html=""):
         company["rank"] = i
 
     holders = [c for c in companies if c["btc"] > 0]
-    total_btc = sum(c["btc"] for c in holders)
-    total_usd = sum(c.get("usd") or 0 for c in holders)
+    # One source for the hero: the same top-100 rows that make the dollar total.
+    shown = holders[:100]
+    total_btc = sum(c["btc"] for c in shown)
+    total_usd = sum(c.get("usd") or 0 for c in shown)
     homepage_btc = _parse_compact_btc(homepage_summary.get("totalBtcLabel"))
     if total_btc <= 0 and homepage_btc:
         total_btc = homepage_btc
@@ -941,7 +966,10 @@ def parse_bitcointreasuries(_html=""):
                 if total_usd and total_usd > 0
                 else homepage_summary.get("totalUsdLabel")
             ),
-            "count": homepage_summary.get("count") or len(holders),
+            "count": len(shown),
+            "countLabel": "Top 100 companies" if len(shown) >= 100 else f"{len(shown)} companies",
+            "scope": "Company treasuries",
+            "homepageCount": homepage_summary.get("count"),
             "pct21m": pct21m,
             "btcPriceLabel": homepage_summary.get("btcPriceLabel"),
             "btcDominanceLabel": homepage_summary.get("btcDominanceLabel"),
@@ -1140,26 +1168,8 @@ def _options_strike_stats(contracts, index_price=None):
     }
 
 
-def _options_term_rv_30d() -> dict:
-    """30d term RV for the options IV gap. Does not fit the volatility suite.
-
-    A cached model term is used when the suite has already been run. Otherwise
-    the last 30 daily closes on disk are a close-to-close RV. Missing stays None.
-    """
-    try:
-        from volatility_models import _cache_get as vol_cache_get
-
-        cached = vol_cache_get("vol:suite:v8:1095:t:")
-        summary = (cached or {}).get("summary") or {}
-        term = summary.get("forecastTerm30d")
-        if isinstance(term, (int, float)) and term == term and float(term) > 0:
-            return {
-                "termRv30d": float(term),
-                "termRvSource": "model 30d term RV",
-                "termRvModel": summary.get("markModelId"),
-            }
-    except Exception:
-        pass
+def _close_to_close_rv_30d() -> float | None:
+    """Annualized 30d close-to-close RV from the daily-close cache. Does not fit a model."""
     try:
         import math
 
@@ -1175,19 +1185,57 @@ def _options_term_rv_30d() -> dict:
             if closes[i - 1] > 0 and closes[i] > 0
         ]
         if len(rets) < 15:
-            return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
+            return None
         mean = sum(rets) / len(rets)
         var = sum((ret - mean) ** 2 for ret in rets) / (len(rets) - 1)
         ann = math.sqrt(var) * math.sqrt(365.0)
         if not (ann > 0):
-            return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
-        return {
-            "termRv30d": ann,
-            "termRvSource": "30d close-to-close RV",
-            "termRvModel": None,
-        }
+            return None
+        return ann
     except Exception:
-        return {"termRv30d": None, "termRvSource": None, "termRvModel": None}
+        return None
+
+
+def _options_term_rv_30d() -> dict:
+    """Both IV gaps. Close-to-close and HAR term stay separate. No silent swap.
+
+    The model term is the HAR run for the active 5Y suite key. A miss stays
+    unavailable. An old run is returned with its age and a stale flag.
+    """
+    close_rv = _close_to_close_rv_30d()
+    model = {
+        "modelTermRv30d": None,
+        "modelTermAsOf": None,
+        "modelTermStale": False,
+        "modelTermAgeSec": None,
+        "modelTermKey": None,
+        "modelTermModel": None,
+    }
+    try:
+        from volatility_models import lookup_active_har_term
+
+        found = lookup_active_har_term() or {}
+        term = found.get("term")
+        if isinstance(term, (int, float)) and term == term and float(term) > 0:
+            model = {
+                "modelTermRv30d": float(term),
+                "modelTermAsOf": found.get("asOf"),
+                "modelTermStale": bool(found.get("stale")),
+                "modelTermAgeSec": found.get("ageSec"),
+                "modelTermKey": found.get("cacheKey"),
+                "modelTermModel": "har_rv",
+            }
+    except Exception:
+        pass
+    return {
+        "closeToCloseRv30d": close_rv,
+        "closeToCloseSource": "30d close-to-close RV" if close_rv else None,
+        # termRv30d is the model term only. Close-to-close is the other field.
+        "termRv30d": model.get("modelTermRv30d"),
+        "termRvSource": "model term RV (HAR)" if model.get("modelTermRv30d") else None,
+        "termRvModel": model.get("modelTermModel"),
+        **model,
+    }
 
 
 def _fetch_options_payload(_html=""):
@@ -1237,6 +1285,14 @@ def _fetch_options_payload(_html=""):
         "termRv30d": term.get("termRv30d"),
         "termRvSource": term.get("termRvSource"),
         "termRvModel": term.get("termRvModel"),
+        "closeToCloseRv30d": term.get("closeToCloseRv30d"),
+        "closeToCloseSource": term.get("closeToCloseSource"),
+        "modelTermRv30d": term.get("modelTermRv30d"),
+        "modelTermAsOf": term.get("modelTermAsOf"),
+        "modelTermStale": term.get("modelTermStale"),
+        "modelTermAgeSec": term.get("modelTermAgeSec"),
+        "modelTermKey": term.get("modelTermKey"),
+        "modelTermModel": term.get("modelTermModel"),
         "source": "deribit.com",
         "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -1244,7 +1300,7 @@ def _fetch_options_payload(_html=""):
 
 
 def get_options_payload(*, refresh=False):
-    cached = _cget("options:v2", CACHE_TTL, refresh=refresh)
+    cached = _cget("options:v3", CACHE_TTL, refresh=refresh)
     if cached is not None:
         out = dict(cached)
         age = _iso_age_sec(out.get("fetchedAt"))
@@ -1252,7 +1308,7 @@ def get_options_payload(*, refresh=False):
         out["stale"] = age is None or age > CACHE_TTL
         return out
     data = _fetch_options_payload()
-    _cset("options:v2", data, CACHE_TTL)
+    _cset("options:v3", data, CACHE_TTL)
     data = dict(data)
     data["ageSec"] = 0
     data["stale"] = False
@@ -1732,7 +1788,7 @@ def get_etf_payload(*, refresh=False):
     flows = None
     try:
         flows = cached_fetch(
-            "flows:farside:v1",
+            "flows:farside:v3",
             FARSIDE_FLOW_URL,
             parse_farside_flows,
             refresh=refresh,
@@ -4651,6 +4707,7 @@ def _fetch_all_exchange_data(refresh=False):
         "errors": errors,
         "spotErrors": spot_errors,
         "perpErrors": perp_errors,
+        "fetchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     _cset(key, data, CACHE_TTL)
     return data
@@ -5306,16 +5363,19 @@ _workers_lock = None
 _workers_started = False
 
 
-# Snapshot, books, and exchanges warm before the slow whale scan.
+# Snapshot and whales warm first. Quote, candles, depth, and perp follow
+# so a cold start does not leave the books until the end of the pass.
 WARM_STEP_ORDER = (
     "snapshot",
-    "options",
+    "whales",
+    "quote",
+    "klines",
+    "depth",
     "perp",
     "futures",
-    "depth",
+    "options",
     "exchanges",
     "metrics",
-    "whales",
     "macro",
     "series",
 )
@@ -5341,22 +5401,40 @@ def _warm_startup_caches() -> None:
             print("Snapshot cache warmed", flush=True)
         except Exception as exc:
             print(f"Snapshot cache warm skipped: {exc}", flush=True)
+        note_whale_warm_start()
+        try:
+            get_misc_whales_payload(refresh=True, from_warm=True)
+            print("Whale cache warmed key=misc:whales:v3", flush=True)
+        except Exception as exc:
+            print(f"Whale cache warm skipped: {exc}", flush=True)
+        finally:
+            note_whale_warm_done()
+        try:
+            from market_feed import (
+                get_depth,
+                get_futures_snapshot,
+                get_klines,
+                get_perp_snapshot,
+                get_spot_quote,
+            )
+
+            get_spot_quote(refresh=True)
+            print("Spot quote cache warmed", flush=True)
+            get_klines(interval="1m", limit=500, refresh=True)
+            print("1m candle cache warmed", flush=True)
+            get_depth(limit=40, refresh=True)
+            print("Order book cache warmed", flush=True)
+            get_perp_snapshot(refresh=True)
+            print("Perp cache warmed", flush=True)
+            get_futures_snapshot(refresh=True)
+            print("Futures cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Market cache warm skipped: {exc}", flush=True)
         try:
             get_options_payload(refresh=True)
             print("Options cache warmed", flush=True)
         except Exception as exc:
             print(f"Options cache warm skipped: {exc}", flush=True)
-        try:
-            from market_feed import get_depth, get_futures_snapshot, get_perp_snapshot
-
-            get_perp_snapshot(refresh=True)
-            print("Perp cache warmed", flush=True)
-            get_futures_snapshot(refresh=True)
-            print("Futures cache warmed", flush=True)
-            get_depth(limit=20, refresh=True)
-            print("Order book cache warmed", flush=True)
-        except Exception as exc:
-            print(f"Futures cache warm skipped: {exc}", flush=True)
         try:
             _write_all_exchange_sections()
             print("Exchanges cache warmed", flush=True)
@@ -5369,14 +5447,6 @@ def _warm_startup_caches() -> None:
             print("Metrics cache warmed", flush=True)
         except Exception as exc:
             print(f"Metrics cache warm skipped: {exc}", flush=True)
-        note_whale_warm_start()
-        try:
-            get_misc_whales_payload(refresh=True, from_warm=True)
-            print("Whale cache warmed key=misc:whales:v3", flush=True)
-        except Exception as exc:
-            print(f"Whale cache warm skipped: {exc}", flush=True)
-        finally:
-            note_whale_warm_done()
         if first:
             _warm_macro_caches()
             _warm_btc_series()

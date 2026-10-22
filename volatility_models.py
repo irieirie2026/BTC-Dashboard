@@ -504,6 +504,148 @@ def _cache_set(key: str, val: dict[str, Any]) -> None:
     _CACHE[key] = (time.time(), val)
 
 
+# Desk suite the Options IV tile reads. 5Y, Student-t, default-on models.
+DESK_VOL_DAYS = 1825
+DESK_VOL_DIST = "t"
+DESK_VOL_MODELS = (
+    "garch11",
+    "egarch11",
+    "gjr11",
+    "aparch11",
+    "figarch11",
+    "ewma",
+    "har_rv",
+)
+_HAR_DISK_KEY = "vol:har-term:v1"
+_HAR_STALE_SEC = 6 * 3600
+
+
+def suite_cache_key(days: int, dist: str, models: list[str] | tuple[str, ...] | None) -> str:
+    return f"vol:suite:v8:{int(days)}:{dist}:{','.join(models or [])}"
+
+
+def _har_term_value(payload: dict | None) -> float | None:
+    if not isinstance(payload, dict):
+        return None
+    models = payload.get("models") or []
+    har = next((row for row in models if isinstance(row, dict) and row.get("id") == "har_rv"), None)
+    if isinstance(har, dict):
+        path = har.get("forecastTermAnn") or []
+        if len(path) >= 30:
+            try:
+                term = float(path[29])
+            except (TypeError, ValueError):
+                term = None
+            if term and term == term and term > 0:
+                return term
+    summary = payload.get("summary") or {}
+    mark = summary.get("markModelId") or summary.get("bestForecastModelId")
+    if mark == "har_rv":
+        try:
+            term = float(summary.get("forecastTerm30d"))
+        except (TypeError, ValueError):
+            term = None
+        if term and term == term and term > 0:
+            return term
+    return None
+
+
+def _persist_har_term(key: str, payload: dict) -> None:
+    term = _har_term_value(payload)
+    if not term:
+        return
+    try:
+        from cache.service import set as cache_set
+
+        cache_set(
+            _HAR_DISK_KEY,
+            {
+                "term": term,
+                "asOf": payload.get("asOf"),
+                "cacheKey": key,
+                "days": payload.get("daysRequested"),
+                "savedAt": time.time(),
+            },
+            ttl=14 * 86400,
+        )
+    except Exception:
+        return
+
+
+def _har_age_sec(as_of: str | None, saved_at: float | None = None) -> float | None:
+    if isinstance(as_of, str) and as_of.strip():
+        text = as_of.strip().replace("Z", "+00:00")
+        try:
+            stamp = datetime.fromisoformat(text).timestamp()
+            return max(0.0, time.time() - stamp)
+        except ValueError:
+            pass
+    if isinstance(saved_at, (int, float)):
+        return max(0.0, time.time() - float(saved_at))
+    return None
+
+
+def lookup_active_har_term() -> dict[str, Any] | None:
+    """HAR 30d term from the active 5Y suite. Never substitutes close-to-close RV."""
+    preferred = suite_cache_key(DESK_VOL_DAYS, DESK_VOL_DIST, DESK_VOL_MODELS)
+    now = time.time()
+    ranked: list[tuple] = []
+    for key, hit in list(_CACHE.items()):
+        if not str(key).startswith("vol:suite:v8:"):
+            continue
+        if not isinstance(hit, tuple) or len(hit) != 2:
+            continue
+        ts, payload = hit
+        try:
+            age = now - float(ts)
+        except (TypeError, ValueError):
+            continue
+        if age > _CACHE_TTL or not isinstance(payload, dict):
+            continue
+        term = _har_term_value(payload)
+        if not term:
+            continue
+        rank = (
+            0 if key == preferred else 1 if ":1825:" in str(key) else 2,
+            -float(ts),
+        )
+        ranked.append((rank, key, payload, term))
+    if ranked:
+        ranked.sort(key=lambda row: row[0])
+        _rank, key, payload, term = ranked[0]
+        as_of = payload.get("asOf")
+        age = _har_age_sec(as_of)
+        return {
+            "term": term,
+            "asOf": as_of,
+            "cacheKey": key,
+            "stale": age is None or age > _HAR_STALE_SEC,
+            "ageSec": age,
+        }
+    try:
+        from cache.service import get as cache_get
+
+        disk = cache_get(_HAR_DISK_KEY, default=None, ttl=14 * 86400)
+    except Exception:
+        disk = None
+    if not isinstance(disk, dict):
+        return None
+    try:
+        term = float(disk.get("term"))
+    except (TypeError, ValueError):
+        return None
+    if not (term > 0):
+        return None
+    age = _har_age_sec(disk.get("asOf"), disk.get("savedAt"))
+    return {
+        "term": term,
+        "asOf": disk.get("asOf"),
+        "cacheKey": disk.get("cacheKey") or preferred,
+        "stale": True if age is None else age > _HAR_STALE_SEC,
+        "ageSec": age,
+    }
+
+
 def _half_life(persistence: float | None) -> float | None:
     if persistence is None or not (0 < persistence < 1):
         return None
@@ -1576,7 +1718,7 @@ def get_volatility_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     """Estimate catalog of models and return comparison + series for UI."""
-    key = f"vol:suite:v8:{days}:{dist}:{','.join(models or [])}"
+    key = suite_cache_key(days, dist, models)
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -1863,6 +2005,7 @@ def get_volatility_suite_payload(
         "fromCache": False,
     }
     _cache_set(key, payload)
+    _persist_har_term(key, payload)
     return payload
 
 

@@ -72,8 +72,8 @@ function spotDedupeBars(bars) {
   return [...byTime.values()].sort((a, b) => a.time - b.time);
 }
 
-async function spotFetchKlines(interval, limit = 1000) {
-  const bundled = await window.marketFetchKlines?.(interval, limit);
+async function spotFetchKlines(interval, limit = 1000, refresh = false) {
+  const bundled = await window.marketFetchKlines?.(interval, limit, "BTC-USD", refresh);
   if (bundled?.venue) spotKlineVenue = String(bundled.venue);
   const raw = bundled?.klines || [];
   if (!raw.length) throw new Error("Klines unavailable");
@@ -630,13 +630,55 @@ async function spotLoadHistory() {
   }
 }
 
+async function spotRefreshLiveCandles() {
+  if (spotActiveTf !== "1m") return;
+  const last = spotBars[spotBars.length - 1];
+  const lastMs = last ? last.time * 1000 : 0;
+  const age = last ? Date.now() - lastMs : Infinity;
+  try {
+    if (!last || age > 120_000) {
+      const bars = await spotFetchKlines("1m", 1000, true);
+      if (!bars.length) return;
+      spotBars = bars;
+      spotKlineStale = false;
+      if (!spotMainCtrl) {
+        spotMountMainChart();
+        spotBindMainControls();
+        spotBindMainResize();
+      }
+      spotMainCtrl?.requestDraw();
+      spotUpdateMeta("1m", spotBars);
+      return;
+    }
+    const bundled = await window.marketFetchKlines?.("1m", 5, "BTC-USD", true);
+    const fresh = spotDedupeBars((bundled?.klines || []).map(spotKlineToBar));
+    if (!fresh.length) return;
+    const byTime = new Map(spotBars.map((bar) => [bar.time, bar]));
+    fresh.forEach((bar) => byTime.set(bar.time, bar));
+    spotBars = [...byTime.values()].sort((a, b) => a.time - b.time);
+    if (spotBars.length > 1000) spotBars = spotBars.slice(-1000);
+    spotKlineStale = false;
+    spotMainCtrl?.requestDraw();
+    spotUpdateMeta("1m", spotBars);
+  } catch (err) {
+    console.error("spotRefreshLiveCandles", err);
+  }
+}
+
 function spotStartPolling() {
   if (spotPollTimer) clearInterval(spotPollTimer);
   spotPollTimer = setInterval(() => {
     const cfg = SPOT_TF[spotActiveTf];
-    if (!cfg || cfg.live) return;
+    if (!cfg) return;
+    if (cfg.live) {
+      spotRefreshLiveCandles();
+      return;
+    }
     spotLoadTimeframe(spotActiveTf, { silent: true });
-  }, 120_000);
+  }, 20_000);
+  setTimeout(() => {
+    if (SPOT_TF[spotActiveTf]?.live) spotRefreshLiveCandles();
+  }, 1500);
 }
 
 function spotOnShow() {

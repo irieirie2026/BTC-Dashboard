@@ -168,7 +168,7 @@ function paintExchangesChart(section, data, w, h) {
   const chart = data.chart || {};
   const items = chart.items || [];
   const canvas = exEl(`exchanges-${section}-chart`);
-  if (!canvas || !items.length) return;
+  if (!canvas || !items.length || w < 2 || h < 2) return;
 
   const co = window.ChartOutlier;
   const ctx = canvas.getContext("2d");
@@ -178,11 +178,39 @@ function paintExchangesChart(section, data, w, h) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, w, h);
 
-  const pad = { top: 12, right: 16, bottom: 12, left: 76 };
-  const chartW = w - pad.left - pad.right;
+  const pad = { top: 12, right: 16, bottom: 12, left: 96 };
   const chartH = h - pad.top - pad.bottom;
-  const barH = Math.min(18, chartH / items.length - 4);
+  const pitch = chartH / items.length;
+  const barH = Math.max(4, Math.min(16, pitch * 0.72));
+  const rowFont = pitch < 14 ? "9px" : "10px";
+  ctx.font = `${rowFont} IBM Plex Mono, monospace`;
+  let valueLabelW = 28;
+  for (const item of items) {
+    const text = String(item.display || item.value || "");
+    valueLabelW = Math.max(valueLabelW, ctx.measureText(text).width);
+  }
+  // Keep the value text inside the canvas. The longest funding bars used to
+  // end at the right edge, so "+0.01%" was clipped to "+0.".
+  const gutterLeft = w - 8 - Math.ceil(valueLabelW);
+  const plotRight = Math.max(pad.left + 48, gutterLeft - 6);
+  const plotW = plotRight - pad.left;
   const signed = !!chart.signed;
+
+  function paintValue(text, anchorX, align, yMid) {
+    ctx.font = `${rowFont} IBM Plex Mono, monospace`;
+    ctx.fillStyle = "#7d8799";
+    const tw = ctx.measureText(text).width;
+    let x = anchorX;
+    if (align === "left") {
+      if (x + tw > w - 4) x = w - 4 - tw;
+      if (x < pad.left + 2) x = pad.left + 2;
+    } else if (x - tw < 2) {
+      x = tw + 2;
+    }
+    ctx.textAlign = align;
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, x, yMid);
+  }
 
   if (signed) {
     const values = items.map((i) => i.value || 0);
@@ -191,11 +219,16 @@ function paintExchangesChart(section, data, w, h) {
       ? co.findOutlierIndex(items, (i) => i.value || 0)
       : -1;
     const scaleMax = co?.barScaleMax(values, outlier) ?? Math.max(...values.map(Math.abs), 0.001);
-    const halfW = chartW / 2 - 8;
-    const mid = pad.left + chartW / 2;
+    const mid = pad.left + plotW / 2;
+    let halfW = Math.max(16, plotW / 2 - 4);
+    // A broken outlier bar reaches ~1.32× halfW. Pull the scale in so that
+    // tail, and the value after it, still ends before the right gutter.
+    if (outlier && mid + halfW * 1.32 > plotRight) {
+      halfW = Math.max(16, (plotRight - mid) / 1.32);
+    }
 
     items.forEach((item, idx) => {
-      const y = pad.top + idx * (barH + 4);
+      const y = pad.top + idx * pitch + (pitch - barH) / 2;
       const val = item.value || 0;
       const positive = val >= 0;
       let labelX;
@@ -224,13 +257,11 @@ function paintExchangesChart(section, data, w, h) {
       }
 
       ctx.fillStyle = "#c8d0dc";
-      ctx.font = "10px IBM Plex Sans, sans-serif";
+      ctx.font = `${rowFont} IBM Plex Sans, sans-serif`;
       ctx.textAlign = "right";
-      ctx.fillText(item.label, pad.left - 6, y + barH * 0.72);
-      ctx.font = "10px IBM Plex Mono, monospace";
-      ctx.fillStyle = "#7d8799";
-      ctx.textAlign = positive ? "left" : "right";
-      ctx.fillText(item.display || String(val), labelX, y + barH * 0.72);
+      ctx.textBaseline = "middle";
+      ctx.fillText(item.label, pad.left - 6, y + barH / 2);
+      paintValue(item.display || String(val), labelX, positive ? "left" : "right", y + barH / 2);
     });
 
     ctx.strokeStyle = "rgba(125, 135, 153, 0.35)";
@@ -245,9 +276,10 @@ function paintExchangesChart(section, data, w, h) {
   const outlier = co?.isBarOutlier(values);
   const outlierIdx = outlier ? co.findOutlierIndex(items, (i) => i.value || 0) : -1;
   const scaleMax = co?.barScaleMax(values, outlier) ?? Math.max(...values, 1);
+  const barBudget = outlier ? plotW / 1.12 : plotW;
 
   items.forEach((item, idx) => {
-    const y = pad.top + idx * (barH + 4);
+    const y = pad.top + idx * pitch + (pitch - barH) / 2;
     let valueX;
 
     if (outlier && idx === outlierIdx) {
@@ -255,25 +287,23 @@ function paintExchangesChart(section, data, w, h) {
         x0: pad.left,
         y,
         bodyH: barH,
-        chartW,
+        chartW: barBudget,
         colorStart: EXCHART_COLORS[idx % EXCHART_COLORS.length],
         colorEnd: EXCHART_COLORS[idx % EXCHART_COLORS.length],
       });
     } else {
-      const barW = ((item.value || 0) / scaleMax) * chartW;
+      const barW = ((item.value || 0) / scaleMax) * barBudget;
       ctx.fillStyle = EXCHART_COLORS[idx % EXCHART_COLORS.length];
       ctx.fillRect(pad.left, y, barW, barH);
       valueX = pad.left + barW;
     }
 
     ctx.fillStyle = "#c8d0dc";
-    ctx.font = "10px IBM Plex Sans, sans-serif";
+    ctx.font = `${rowFont} IBM Plex Sans, sans-serif`;
     ctx.textAlign = "right";
-    ctx.fillText(item.label, pad.left - 6, y + barH * 0.72);
-    ctx.textAlign = "left";
-    ctx.font = "10px IBM Plex Mono, monospace";
-    ctx.fillStyle = "#7d8799";
-    ctx.fillText(item.display || String(item.value), valueX + 6, y + barH * 0.72);
+    ctx.textBaseline = "middle";
+    ctx.fillText(item.label, pad.left - 6, y + barH / 2);
+    paintValue(item.display || String(item.value), valueX + 6, "left", y + barH / 2);
   });
 }
 

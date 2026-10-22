@@ -532,7 +532,12 @@ def dispatch_api(path, query, body: dict | None = None):
             # Full history by default; client zooms interactively. Disk cache keyed by timespan.
             timespan = (query.get("timespan") or ["all"])[0]
             if not indicator:
-                raise ValueError("Missing indicator parameter")
+                from btc_indicators_api import series_indicator_names
+
+                raise BadRequest(
+                    "Missing indicator parameter",
+                    accepted=series_indicator_names(),
+                )
             return btc["series"](indicator, timespan=timespan, refresh=refresh)
         if sub == "valuation":
             timespan = (query.get("timespan") or ["all"])[0]

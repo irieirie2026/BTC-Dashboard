@@ -16,6 +16,9 @@ const marketIndicatorCache = {};
 let lastBids = [];
 let lastAsks = [];
 let heldQuote = { bid: null, ask: null };
+let lastSpotFetchedAt = null;
+let spotLiveInflight = false;
+const SPOT_POLL_MS = 20_000;
 let lastBookFetchedAt = null;
 let lastBookVenue = "";
 let bookRefreshFailed = false;
@@ -173,14 +176,20 @@ function updateTicker(data) {
   $("vol-usdt").textContent = formatVolume(data.q) + " USDT";
   $("weighted-avg").textContent = formatPrice(data.w);
 
+  const lastPx = parseFloat(data.c);
+  const nearLast = (px) => !(lastPx > 0) || !(px > 0) || Math.abs(px - lastPx) / lastPx <= 0.002;
   let bid = parseFloat(data.bid);
   let ask = parseFloat(data.ask);
-  if (Number.isFinite(bid) && bid > 0) heldQuote.bid = bid;
-  else bid = heldQuote.bid;
-  if (Number.isFinite(ask) && ask > 0) heldQuote.ask = ask;
-  else ask = heldQuote.ask;
+  if (Number.isFinite(bid) && bid > 0 && nearLast(bid)) heldQuote.bid = bid;
+  else if (!nearLast(heldQuote.bid)) heldQuote.bid = null;
+  if (!(Number.isFinite(bid) && bid > 0 && nearLast(bid))) bid = heldQuote.bid;
+  if (Number.isFinite(ask) && ask > 0 && nearLast(ask)) heldQuote.ask = ask;
+  else if (!nearLast(heldQuote.ask)) heldQuote.ask = null;
+  if (!(Number.isFinite(ask) && ask > 0 && nearLast(ask))) ask = heldQuote.ask;
   $("best-bid").textContent = Number.isFinite(bid) && bid > 0 ? formatPrice(bid) : "—";
   $("best-ask").textContent = Number.isFinite(ask) && ask > 0 ? formatPrice(ask) : "—";
+  const venueNote = document.getElementById("spot-venue-count");
+  if (venueNote && window.spotCompositeLabel) venueNote.textContent = window.spotCompositeLabel;
   if (Number.isFinite(bid) && bid > 0 && Number.isFinite(ask) && ask > 0) {
     const spread = ask - bid;
     $("spread").textContent = formatPrice(spread) + " (" + ((spread / bid) * 100).toFixed(4) + "%)";
@@ -233,6 +242,7 @@ function drawDepthChart(bids, asks, mid) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
 
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
@@ -240,7 +250,7 @@ function drawDepthChart(bids, asks, mid) {
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 16, right: 16, bottom: 28, left: 16 };
+  const pad = { top: 16, right: 16, bottom: 36, left: 72 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -324,13 +334,18 @@ function drawDepthChart(bids, asks, mid) {
 
   ctx.fillStyle = "#7d8799";
   ctx.font = "10px IBM Plex Mono, monospace";
+  ctx.textBaseline = "bottom";
+  ctx.textAlign = "left";
+  ctx.fillText(formatPrice(minPrice), pad.left, h - 6);
   ctx.textAlign = "center";
-  ctx.fillText(formatPrice(minPrice), x(minPrice), h - 8);
-  ctx.fillText(formatPrice(mid), midX, h - 8);
-  ctx.fillText(formatPrice(maxPrice), x(maxPrice), h - 8);
+  const midLabelX = Math.min(Math.max(midX, pad.left + 48), w - 48);
+  ctx.fillText(formatPrice(mid), midLabelX, h - 6);
+  ctx.textAlign = "right";
+  ctx.fillText(formatPrice(maxPrice), w - 6, h - 6);
 
   ctx.textAlign = "right";
-  ctx.fillText(formatBtc(maxCum), pad.left - 4, pad.top + 10);
+  ctx.textBaseline = "top";
+  ctx.fillText(formatBtc(maxCum), pad.left - 6, pad.top);
 }
 
 function renderOrderBookLadder(bids, asks) {
@@ -891,7 +906,9 @@ async function loadFuturesData() {
       source: "OKX",
       updateHeader: false,
       fetch: async () => {
-        const perp = await fetchJsonTimeout("/api/market/perp", 12000);
+        const futAge = window.DashboardSWR?.fetchedAgeMs?.(lastFuturesFetchedAt);
+        const perpUrl = futAge == null || futAge > 45_000 ? "/api/market/perp?refresh=1" : "/api/market/perp";
+        const perp = await fetchJsonTimeout(perpUrl, 12000);
         if (!perp?.lastPrice) throw new Error(perp?.error || "Perp feed unavailable");
         futuresVenue = String(perp.venue || "OKX").toLowerCase();
         return perpBundleFromSnapshot(perp);
@@ -1028,6 +1045,8 @@ function applySpotBundle(bundle) {
   if (spotSub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
     spotSub.textContent = venueLabel;
   }
+  const venueNote = document.getElementById("spot-venue-count");
+  if (venueNote) venueNote.textContent = venueLabel;
   updateTicker({
     c: ticker.lastPrice,
     o: ticker.openPrice,
@@ -1092,6 +1111,9 @@ async function loadInitialData() {
       render: (data, opts = {}) => {
         if (opts.loading) return;
         applySpotBundle(data);
+        if (data?.fetchedAt && !opts.stale && !opts.refreshing && !opts.refreshFailed) {
+          lastSpotFetchedAt = data.fetchedAt;
+        }
       },
     });
   } catch (err) {
@@ -1141,9 +1163,108 @@ function rememberBookAnchor(bid, ask, venue) {
   if (b > 0 && a > 0) bookAnchor = { bid: b, ask: a, venue: venue || bookAnchor?.venue || null };
 }
 
+function persistSpotBook(depth) {
+  const swr = window.DashboardSWR;
+  if (!swr?.loadPersisted || !swr.persistPayload || !depth) return;
+  const saved = swr.loadPersisted("market:spot");
+  if (!saved?.data) return;
+  const next = {
+    ...saved.data,
+    depth: {
+      bids: (depth.bids || []).slice(0, 20),
+      asks: (depth.asks || []).slice(0, 20),
+      venue: depth.venue || saved.data.depthVenue,
+      fetchedAt: depth.fetchedAt || null,
+    },
+    depthVenue: depth.venue || saved.data.depthVenue,
+    fetchedAt: depth.fetchedAt || saved.data.fetchedAt,
+  };
+  swr.persistPayload("market:spot", next, next.fetchedAt);
+}
+
+async function refreshSpotLive() {
+  if (spotLiveInflight) return;
+  spotLiveInflight = true;
+  try {
+    const age = window.DashboardSWR?.fetchedAgeMs?.(lastSpotFetchedAt);
+    const refresh = age == null || age > 25_000;
+    const bundle = await fetch(`/api/market/spot${refresh ? "?refresh=1" : ""}`, { cache: "no-store" }).then((r) => r.json());
+    if (!bundle?.ticker?.lastPrice) return;
+    const last = parseFloat(bundle.ticker.lastPrice);
+    let bid = parseFloat(bundle.ticker.bidPrice);
+    let ask = parseFloat(bundle.ticker.askPrice);
+    if (!(last > 0) || Math.abs(bid - last) / last > 0.002 || Math.abs(ask - last) / last > 0.002) {
+      bid = NaN;
+      ask = NaN;
+      heldQuote.bid = null;
+      heldQuote.ask = null;
+    }
+    const venueCount = Number(bundle.venueCount) || (Array.isArray(bundle.venues) ? bundle.venues.length : 0);
+    const venueLabel = venueCount > 0
+      ? `Median · ${venueCount} venues`
+      : (bundle.venue || "Median spot composite");
+    window.spotCompositeLabel = venueLabel;
+    const venueNote = document.getElementById("spot-venue-count");
+    if (venueNote) venueNote.textContent = venueLabel;
+    const spotSub = document.getElementById("spot-subtitle");
+    if (spotSub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
+      spotSub.textContent = venueLabel;
+    }
+    updateTicker({
+      c: bundle.ticker.lastPrice,
+      o: bundle.ticker.openPrice,
+      openIs24h: bundle.ticker.openIs24h,
+      changePct: bundle.ticker.priceChangePercent ?? bundle.ticker.changePct,
+      bid,
+      ask,
+      h: bundle.ticker.highPrice,
+      l: bundle.ticker.lowPrice,
+      v: bundle.ticker.volume,
+      q: bundle.ticker.quoteVolume,
+      w: bundle.ticker.weightedAvgPrice,
+    });
+    const book = bundle.depth || {};
+    if (book.bids?.length >= 20 && book.asks?.length >= 20) {
+      updateDepth({
+        bids: book.bids.slice(0, 20),
+        asks: book.asks.slice(0, 20),
+        venue: bundle.depthVenue || book.venue,
+        fetchedAt: book.fetchedAt || bundle.fetchedAt,
+      });
+    }
+    lastSpotFetchedAt = bundle.fetchedAt || new Date().toISOString();
+    const persisted = {
+      ticker: bundle.ticker,
+      klines: bundle.klines || [],
+      depth: book,
+      depthVenue: bundle.depthVenue || book.venue || null,
+      klineVenue: bundle.klineVenue || null,
+      klineStale: !!bundle.klineStale,
+      fetchedAt: lastSpotFetchedAt,
+      venue: venueLabel,
+      venues: bundle.venues || [],
+      venueCount,
+    };
+    window.DashboardSWR?.persistPayload?.("market:spot", persisted, lastSpotFetchedAt);
+    if (document.body.dataset.l1 === "market" || !document.body.dataset.l1) {
+      window.DashboardSWR?.setHeaderStamp?.("market", {
+        fetchedAt: lastSpotFetchedAt,
+        source: venueLabel,
+        stale: false,
+      });
+    }
+  } catch (_) {
+    /* the next poll retries; a failed refresh keeps the previous stamp */
+  } finally {
+    spotLiveInflight = false;
+  }
+}
+
 async function refreshProxiedDepth() {
   try {
-    const depth = await fetch("/api/market/depth?limit=40", { cache: "no-store" }).then((r) => r.json());
+    const bookAge = window.DashboardSWR?.fetchedAgeMs?.(lastBookFetchedAt);
+    const refresh = bookAge == null || bookAge > 30_000 ? "&refresh=1" : "";
+    const depth = await fetch(`/api/market/depth?limit=40${refresh}`, { cache: "no-store" }).then((r) => r.json());
     if (!(depth?.bids?.length >= 20 && depth?.asks?.length >= 20)) return;
     const sameVenue =
       bookAnchor?.venue &&
@@ -1163,6 +1284,12 @@ async function refreshProxiedDepth() {
       fetchedAt: depth.fetchedAt || null,
     });
     rememberBookAnchor(aligned.bids?.[0]?.[0], aligned.asks?.[0]?.[0], depth.venue);
+    persistSpotBook({
+      bids: (aligned.bids || []).slice(0, 20),
+      asks: (aligned.asks || []).slice(0, 20),
+      venue: depth.venue,
+      fetchedAt: depth.fetchedAt || null,
+    });
   } catch (_) {
     bookRefreshFailed = true;
     paintBookMeta();
@@ -1177,6 +1304,8 @@ setInterval(loadFuturesData, FUTURES_POLL_MS);
 setInterval(loadFuturesIndicators, INDICATOR_POLL_MS);
 setInterval(updateFundingCountdown, 1000);
 setInterval(refreshProxiedDepth, DEPTH_POLL_MS);
+setInterval(refreshSpotLive, SPOT_POLL_MS);
+setTimeout(refreshSpotLive, 1500);
 setInterval(() => {
   paintBookMeta();
   refreshMarketLiveBadge();

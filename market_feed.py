@@ -262,11 +262,20 @@ def _ticker_from_exchange_row(row: dict) -> dict[str, Any]:
 
 
 def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
-    """Live spot rows from the exchanges desk, so both cards share one median."""
-    try:
-        from server import _fetch_all_exchange_data
+    """Live spot rows from the exchanges desk, so both cards share one median.
 
-        raw = _fetch_all_exchange_data(refresh=refresh)
+    A quote refresh reuses the exchange snapshot only when it is younger than 40s.
+    Older copies are fetched again so bid/ask cannot sit on a 15-minute cache.
+    """
+    try:
+        from server import _fetch_all_exchange_data, _iso_age_sec
+
+        raw = _fetch_all_exchange_data(refresh=False)
+        if refresh:
+            age = _iso_age_sec(raw.get("fetchedAt")) if isinstance(raw, dict) else None
+            fresh = isinstance(raw, dict) and raw.get("spot") and age is not None and age <= 40
+            if not fresh:
+                raw = _fetch_all_exchange_data(refresh=True)
     except Exception:
         return []
     if not isinstance(raw, dict):
@@ -289,7 +298,7 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
             _last_quote_venue = "OKX"
             return cached
     errors: list[str] = []
-    exchange_rows = _exchange_spot_rows(refresh=False)
+    exchange_rows = _exchange_spot_rows(refresh=refresh)
     rows: list[dict[str, Any]] = []
     if len(exchange_rows) >= 3:
         for row in exchange_rows:

@@ -137,12 +137,29 @@ def fetch_coinmetrics_series(
     return payload
 
 
+def _flag_netflow_preliminary(payload: dict[str, Any]) -> dict[str, Any]:
+    """Today's Coin Metrics print is a flash value until the daily close is revised."""
+    out = dict(payload)
+    latest = out.get("latest") if isinstance(out.get("latest"), dict) else None
+    today = time.strftime("%Y-%m-%d", time.gmtime())
+    preliminary = bool(latest) and str((latest or {}).get("date") or "")[:10] == today
+    if preliminary and latest is not None:
+        latest = {**latest, "preliminary": True, "note": "preliminary"}
+        out["latest"] = latest
+        series = [dict(point) if isinstance(point, dict) else point for point in (out.get("series") or [])]
+        if series and isinstance(series[-1], dict):
+            series[-1] = {**series[-1], "preliminary": True, "note": "preliminary"}
+        out["series"] = series
+    out["latestPreliminary"] = preliminary
+    return out
+
+
 def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False) -> dict[str, Any]:
     cache_key = f"btc:cm:v1:exchange_netflow:{days_back}"
     if not refresh:
         cached = cache_get(cache_key, ttl=COINMETRICS_TTL)
         if cached is not None:
-            return {**cached, "fromCache": True}
+            return _flag_netflow_preliminary({**cached, "fromCache": True})
 
     inflow = fetch_coinmetrics_series("exchange_inflow", days_back=days_back, refresh=refresh)
     outflow = fetch_coinmetrics_series("exchange_outflow", days_back=days_back, refresh=refresh)
@@ -182,7 +199,7 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
         })
 
     latest = series[-1] if series else None
-    payload = {
+    payload = _flag_netflow_preliminary({
         "series": series,
         "latest": latest,
         "source": "Coin Metrics Community",
@@ -190,6 +207,6 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
         "fromCache": False,
         "error": "; ".join(errors) if errors and not series else None,
         "note": "Netflow = exchange inflow − outflow (native BTC)",
-    }
+    })
     cache_set(cache_key, payload)
     return payload

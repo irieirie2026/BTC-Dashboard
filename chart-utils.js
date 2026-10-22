@@ -637,9 +637,10 @@ async function marketFetchJson(url, timeoutMs = 4000) {
   }
 }
 
-window.marketFetchKlines = async function marketFetchKlines(interval, limit = 500, product = "BTC-USD") {
+window.marketFetchKlines = async function marketFetchKlines(interval, limit = 500, product = "BTC-USD", refresh = false) {
+  const refreshQ = refresh ? "&refresh=1" : "";
   const data = await marketFetchJson(
-    `/api/market/klines?interval=${encodeURIComponent(interval)}&limit=${limit}&product=${encodeURIComponent(product)}`,
+    `/api/market/klines?interval=${encodeURIComponent(interval)}&limit=${limit}&product=${encodeURIComponent(product)}${refreshQ}`,
     15000,
   );
   const klines = data.klines || data;
