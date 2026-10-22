@@ -1367,7 +1367,7 @@ async function xmLoadHistory() {
       el.innerHTML = `<p class="xm-muted">${data?.emptyReason || "No cross-market events in this window."}</p>`;
       return;
     }
-    el.innerHTML = events.slice(-12).reverse().map((evt) => {
+    el.innerHTML = [...events].reverse().map((evt) => {
       const when = evt.ts ? new Date(evt.ts).toLocaleString() : (evt.recordedAt || "");
       const title = evt.title || `${evt.venue || evt.premiumId || "venue"} ${evt.type || "event"}`;
       return `<div class="xm-alert"><time class="mono">${when}</time><strong>${title}</strong><span>${evt.venue || ""} ${evt.type || ""}</span></div>`;

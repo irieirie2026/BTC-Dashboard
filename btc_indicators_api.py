@@ -774,6 +774,33 @@ def _median_funding(perp_table: list[dict]) -> float | None:
     return (rates[mid - 1] + rates[mid]) / 2
 
 
+def _active_address_cell(bitinfo: dict[str, Any], active_chart: dict[str, Any]) -> dict:
+    """Snapshot cell uses the same series store the chart reads, including its as-of date."""
+    series_val = _latest_from_series_data(active_chart) if active_chart else None
+    series_asof = _data_as_of_from_series_data(active_chart) if active_chart else None
+    series_source = None
+    if isinstance(active_chart, dict):
+        series_source = active_chart.get("source")
+        latest = active_chart.get("latest")
+        if not series_source and isinstance(latest, dict):
+            series_source = latest.get("source")
+    if series_val is not None:
+        return _cell(
+            series_val,
+            series_source or "Blockchain.info",
+            {
+                "fetchedAt": active_chart.get("fetchedAt"),
+                "dataAsOf": series_asof,
+            },
+        )
+    bit_val = bitinfo.get("active_addresses_24h") if isinstance(bitinfo, dict) else None
+    return _cell(
+        bit_val,
+        "BitInfoCharts" if bit_val is not None else "Blockchain.info",
+        {"fetchedAt": (bitinfo or {}).get("fetchedAt"), "dataAsOf": None},
+    )
+
+
 def _assemble_snapshot_cells(
     *,
     bitinfo: dict[str, Any],
@@ -807,11 +834,7 @@ def _assemble_snapshot_cells(
         "rich_top100_pct": _cell(bitinfo.get("rich_top100_pct"), _wealth_source("rich_top100_pct"), bitinfo_extra),
         "rich_top1000_pct": _cell(bitinfo.get("rich_top1000_pct"), _wealth_source("rich_top1000_pct"), bitinfo_extra),
         "wealth_top10_pct": _cell(bitinfo.get("wealth_top10_pct"), _wealth_source("wealth_top10_pct"), bitinfo_extra),
-        "active_addresses": _cell(
-            bitinfo.get("active_addresses_24h") or (active_chart.get("latest") or {}).get("value"),
-            "BitInfoCharts" if bitinfo.get("active_addresses_24h") else "Blockchain.info",
-            {"fetchedAt": bitinfo.get("fetchedAt") or active_chart.get("fetchedAt")},
-        ),
+        "active_addresses": _active_address_cell(bitinfo, active_chart),
         "hash_rate": _cell(
             _hash_rate_snapshot_ehs(bitinfo, hash_chart, from_store=hash_chart.get("fromStore", False)),
             "BitInfoCharts" if bitinfo.get("hash_rate_zhs") else "Blockchain.info",
@@ -948,7 +971,10 @@ def _build_fast_snapshot_cells() -> dict[str, dict]:
     hash_body = _store_series_body("hash_rate", ttl=86400) or {}
     active_chart = {
         "latest": active_body.get("latest") or ((active_body.get("series") or [None])[-1]),
+        "series": active_body.get("series") or [],
+        "source": active_body.get("source") or "Blockchain.info",
         "fetchedAt": active_body.get("fetchedAt"),
+        "fromStore": bool(active_body),
     }
     hash_chart = {
         "latest": hash_body.get("latest") or ((hash_body.get("series") or [None])[-1]),
@@ -1167,7 +1193,7 @@ def _fill_missing_snapshot_cells(cells: dict[str, dict]) -> dict[str, dict]:
 def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     from server import get_fear_greed_payload
 
-    cache_key = "btc:bundle:snapshot:v11"
+    cache_key = "btc:bundle:snapshot:v12"
     fast_source = (
         "Store-first snapshot · BitInfoCharts cache → BGeometrics disk → "
         "Coin Metrics · Santiment store"
@@ -1247,6 +1273,15 @@ def get_snapshot_payload(*, refresh: bool = False) -> dict[str, Any]:
     hodl = bg_kpis.get("hodl_waves") or {}
     puell = data["puell"]
     active_chart = data["active_chart"]
+    active_store = _store_series_body("active_addresses", ttl=86400) or {}
+    if active_store.get("latest") or active_store.get("series"):
+        active_chart = {
+            "latest": active_store.get("latest") or ((active_store.get("series") or [None])[-1]),
+            "series": active_store.get("series") or [],
+            "source": active_store.get("source") or "Blockchain.info",
+            "fetchedAt": active_store.get("fetchedAt"),
+            "fromStore": True,
+        }
     hash_chart = data["hash_chart"]
     netflow = data["netflow"]
     mempool = data["mempool"]

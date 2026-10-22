@@ -228,10 +228,16 @@ def test_us_fred_timeout_is_no_data_not_zero():
         return []
 
     fred.fetch_fred_csv = timed_out
+
+    def bls_down():
+        raise TimeoutError("BLS read timed out")
+
+    api._BLS_FETCH = bls_down
     try:
         payload = api.get_us_fred_payload(refresh=True)
     finally:
         fred.fetch_fred_csv = original
+        api._BLS_FETCH = None
     row = payload["latest"]["CPIAUCNS"]
     assert row["id"] == "CPIAUCNS"
     assert row["status"] == "NO DATA"

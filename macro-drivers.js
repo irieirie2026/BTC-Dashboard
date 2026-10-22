@@ -518,7 +518,7 @@ function mdRenderUsOverview(data) {
   const rows = mdUsLatestRows(data);
   if (head) {
     head.innerHTML =
-      "<tr><th>Series</th><th>FRED</th><th class=\"mono\">Latest</th><th>As of</th><th>Unit</th></tr>";
+      "<tr><th>Series</th><th>Source</th><th class=\"mono\">Latest</th><th>As of</th><th>Unit</th></tr>";
   }
   if (!rows.length) {
     body.innerHTML = '<tr><td colspan="5">No US FRED series</td></tr>';
@@ -529,8 +529,10 @@ function mdRenderUsOverview(data) {
       const missing = row.value == null || Number.isNaN(Number(row.value));
       const val = missing ? (row.status || "NO DATA") : Number(row.value).toFixed(2);
       const asOf = missing ? (row.reason || "NO DATA") : (row.date || "—");
-      const name = row.id ? `${row.label || row.id} · ${row.id}` : (row.label || "—");
-      return `<tr><td>${name}</td><td class="mono">${row.id || "—"}</td><td class="mono">${val}</td><td class="mono">${asOf}</td><td>${row.unit || "%"}</td></tr>`;
+      const seriesId = row.seriesId || row.id || "—";
+      const src = row.source || "FRED";
+      const name = row.label ? `${row.label} · ${seriesId}` : seriesId;
+      return `<tr><td>${name}</td><td class="mono">${src} · ${seriesId}</td><td class="mono">${val}</td><td class="mono">${asOf}</td><td>${row.unit || "%"}</td></tr>`;
     })
     .join("");
 }
@@ -544,13 +546,13 @@ async function mdLoadUsDrivers(force = false) {
     return mdUsDrivers;
   }
   const result = await swr.runSWR({
-    key: "macro:drivers:us-fred:v2",
+    key: "macro:drivers:us-fred:v3",
     l1: "macro",
     source: "FRED",
     persist: true,
     revalidate: force,
     updateHeader: false,
-    validate: (data) => !!(data && data.country === "US" && data.source === "FRED" && data.latest),
+    validate: (data) => !!(data && data.country === "US" && data.latest && /FRED|BLS/.test(String(data.source || ""))),
     fetch: fetchUs,
     render: (data, opts = {}) => {
       if (opts.loading && !data) {

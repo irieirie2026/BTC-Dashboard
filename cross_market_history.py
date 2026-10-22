@@ -70,12 +70,21 @@ def _coarse_z(event: dict):
 
 
 def _dedupe_key(event: dict) -> tuple:
-    """Same venue, type, and rounded shock inside a 5-minute bucket is one event."""
+    """Same pair (or venue) and type inside a 5-minute bucket is one event.
+
+    A second print 0.8s later with a different z is the same shock.
+    """
     ts_ms = _event_ts_ms(event) or 0
     bucket = int(ts_ms // 300_000)
-    venue = str(event.get("venue") or event.get("premiumId") or event.get("exchange") or "")
+    pair = str(
+        event.get("pair")
+        or event.get("venue")
+        or event.get("premiumId")
+        or event.get("exchange")
+        or ""
+    )
     kind = str(event.get("type") or event.get("title") or "")
-    return (venue, kind, _coarse_z(event), bucket)
+    return (pair, kind, bucket)
 
 
 def _parse_window(window: str | None, days: int) -> int:

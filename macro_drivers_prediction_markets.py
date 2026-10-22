@@ -1,4 +1,7 @@
-"""BTC-centric prediction markets — Polymarket Gamma API + Kalshi with mock fallback.
+"""BTC-centric prediction markets — Polymarket Gamma API + Kalshi.
+
+Live payloads never include mock rows. Seed markets are only for ?mock=1
+or BTC_PM_MOCK=1. An empty or ADM-blocked book is NO DATA.
 
 Live data (default):
   - Polymarket public Gamma API (no key): https://gamma-api.polymarket.com
@@ -3170,7 +3173,9 @@ def _cache_set(key: str, payload: dict) -> None:
 
 
 def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = False) -> dict:
-    cache_key = "prediction-markets:mock" if mock_only else "prediction-markets:live:v3"
+    if os.environ.get("BTC_PM_MOCK", "").strip().lower() in ("1", "true", "yes"):
+        mock_only = True
+    cache_key = "prediction-markets:mock" if mock_only else "prediction-markets:live:v4"
     cached = _cache_get(cache_key, refresh)
     if cached is not None:
         return cached
@@ -3227,17 +3232,14 @@ def get_prediction_markets_payload(*, refresh: bool = False, mock_only: bool = F
                         f"{', '.join(network_block.get('affected') or ['prediction markets'])}"
                     )
 
-        mock = _mock_markets()
-        markets = _enrich_markets(_merge_live_with_mock(live, mock))
-        if not any(m.get("platform") == "kalshi" for m in markets):
-            markets = _enrich_markets(
-                list(markets) + [m for m in mock if m.get("platform") == "kalshi"]
-            )
-        source = "live" if live else "mock"
-        if live and len(live) < len(mock):
-            source = "live+mock"
-        if network_block and network_block.get("blocked") and not live:
-            source = "mock+adm-block"
+        live = [m for m in live if not str(m.get("id") or "").startswith("mock-")]
+        markets = _enrich_markets(live)
+        if live:
+            source = "live"
+        elif network_block and network_block.get("blocked"):
+            source = "adm-block"
+        else:
+            source = "empty"
 
     outlook = _build_outlook(markets)
     if network_block and network_block.get("blocked"):

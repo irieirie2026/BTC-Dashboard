@@ -413,9 +413,13 @@ function volSetLiveIvKpis(suite, chain) {
     gapSub = "DVOL − 30d term RV";
   }
   const gapTxt =
-    g7 != null || g30 != null
-      ? `${g7 != null ? volFmtPct(g7, 1) : "—"} / ${g30 != null ? volFmtPct(g30, 1) : "—"}`
-      : "—";
+    g7 != null && g30 != null
+      ? `${volFmtPct(g7, 1)} / ${volFmtPct(g30, 1)}`
+      : g7 != null
+        ? volFmtPct(g7, 1)
+        : g30 != null
+          ? volFmtPct(g30, 1)
+          : "—";
   set("vol-kpi-ivgap", gapTxt);
   if (!chain) {
     set("vol-kpi-ivgap-sub", g30 != null ? gapSub : "stale · Deribit chain unavailable");
@@ -478,16 +482,20 @@ function volTerm30FromSuite(suite) {
 }
 
 function volPaintDvolGap(dvolDecimal) {
+  const node = volEl("vol-kpi-ivgap");
+  if (!node || !volSuite) return;
+  const current = (node.textContent || "").trim();
+  if (current && current !== "—" && !current.startsWith("—") && !current.endsWith("—")) return;
   const dvol = dvolDecimal != null && Number.isFinite(Number(dvolDecimal)) ? Number(dvolDecimal) : volCachedDvol();
-  if (dvol == null || !volSuite) return;
+  if (dvol == null) return;
   const dec = dvol > 3 ? dvol / 100 : dvol;
   const term30 = volTerm30FromSuite(volSuite);
   if (term30 == null) return;
   const gap = dec - term30;
-  const node = volEl("vol-kpi-ivgap");
-  const current = (node?.textContent || "").trim();
-  if (current && current !== "—" && !current.startsWith("—")) return;
-  if (node) node.textContent = `— / ${volFmtPct(gap, 1)}`;
+  const gapTxt = volFmtPct(gap, 1);
+  node.textContent = current && current !== "—" && current.includes("/")
+    ? current.replace(/—/g, gapTxt)
+    : gapTxt;
   const sub = volEl("vol-kpi-ivgap-sub");
   if (sub) sub.textContent = "DVOL − 30d term RV";
 }

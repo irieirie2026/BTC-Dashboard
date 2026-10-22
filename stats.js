@@ -1008,6 +1008,7 @@ async function fetchBtcStats() {
       key: "stats-btcusd-v3",
       l1: "stats",
       source: STATS_SOURCE,
+      staleAfterMs: 26 * 60 * 60 * 1000,
       persist: false,
       validate: (d) =>
         d?.count > STATS_MIN_SAMPLE &&
@@ -1054,10 +1055,11 @@ async function fetchBtcStats() {
               ? ` · ${data.warnings[0]}`
               : "";
           updateEl.textContent =
-            `${data.count} days · ${data.pair || STATS_PAIR} · ${data.source || STATS_SOURCE} · ` +
+            `${data.count} daily closes · ${data.pair || STATS_PAIR} · ${data.source || STATS_SOURCE} · ` +
             swr.formatPanelMeta({
               fetchedAt: data.fetchedAt,
-              stale: opts.stale || data.stale,
+              staleAfterMs: 26 * 60 * 60 * 1000,
+              forceStale: !!data.stale,
               refreshing: opts.refreshing,
               refreshFailed: opts.refreshFailed,
             }) +

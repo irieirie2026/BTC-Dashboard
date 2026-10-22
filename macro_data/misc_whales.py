@@ -256,12 +256,29 @@ def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -
         cached = cache_get(cache_key, ttl=CACHE_TTL)
         if cached:
             return {**cached, "fromCache": True}
-        # A cold request waits for the warm thread instead of starting a second 10s fetch.
+        # A cold request waits out a ~10s mempool scan. 12s was shorter than the
+        # warm fetch, so the first HTTP call started a second scan.
         if not from_warm and not _whale_warm_ready.is_set():
-            _whale_warm_ready.wait(12)
+            print(f"Whales reader waiting key={cache_key}", flush=True)
+            _whale_warm_ready.wait(45)
             cached = cache_get(cache_key, ttl=CACHE_TTL)
             if cached:
+                print(f"Whales cache key {cache_key} fromCache=True", flush=True)
                 return {**cached, "fromCache": True}
+            if not _whale_warm_ready.is_set():
+                print(f"Whales warm still in flight key={cache_key}", flush=True)
+                return {
+                    "fromCache": False,
+                    "warming": True,
+                    "status": "NO DATA",
+                    "reason": "Warm scan still in flight",
+                    "error": "Whale scan still warming",
+                    "exchanges": [],
+                    "transfers": [],
+                    "heroes": [],
+                    "updatedAt": _now_iso(),
+                    "cacheKey": cache_key,
+                }
 
     errors: list[str] = []
     updated_at = _now_iso()

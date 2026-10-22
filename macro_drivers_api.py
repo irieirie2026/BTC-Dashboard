@@ -380,8 +380,78 @@ def _fred_display_points(obs: list[tuple[str, float]], transform: str) -> list[d
     return points
 
 
+_BLS_SERIES = "CUUR0000SA0"
+# Tests set this to a callable. Production leaves it None and POSTs the public API once.
+_BLS_FETCH = None
+
+
+def _bls_points_from_payload(payload: dict) -> list[tuple[str, float]]:
+    """BLS period M09 is September. M13 is an annual average and is left out."""
+    points: list[tuple[str, float]] = []
+    series = ((payload or {}).get("Results") or {}).get("series") or []
+    for item in series:
+        if not isinstance(item, dict):
+            continue
+        for row in item.get("data") or []:
+            if not isinstance(row, dict):
+                continue
+            period = str(row.get("period") or "")
+            if not period.startswith("M") or period == "M13":
+                continue
+            try:
+                month = int(period[1:])
+                year_i = int(row["year"])
+                value = float(str(row["value"]).replace(",", ""))
+            except (TypeError, ValueError, KeyError):
+                continue
+            if month < 1 or month > 12:
+                continue
+            points.append((f"{year_i:04d}-{month:02d}-01", value))
+    return points
+
+
+def _fetch_bls_cpi_nsa() -> list[tuple[str, float]]:
+    """One public BLS request for CPI-U NSA (CUUR0000SA0). No second FRED client."""
+    if _BLS_FETCH is not None:
+        fetched = _BLS_FETCH()
+        return list(fetched or [])
+    import json
+    import urllib.request
+
+    year = time.gmtime().tm_year
+    body = json.dumps(
+        {
+            "seriesid": [_BLS_SERIES],
+            "startyear": str(year - 3),
+            "endyear": str(year),
+        }
+    ).encode()
+    req = urllib.request.Request(
+        "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+        data=body,
+        method="POST",
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "BTC-MacroDrivers/2.0",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        payload = json.loads(resp.read().decode("utf-8", errors="replace"))
+    status = str((payload or {}).get("status") or "")
+    if status and status != "REQUEST_SUCCEEDED":
+        messages = (payload or {}).get("message") or []
+        detail = "; ".join(str(item) for item in messages) or status
+        raise RuntimeError(detail)
+    return _bls_points_from_payload(payload if isinstance(payload, dict) else {})
+
+
 def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
-    """US macro drivers from the public FRED CSV (no API key)."""
+    """US macro drivers from the public FRED CSV (no API key).
+
+    CPI-U falls back to the BLS public API when FRED returns no points.
+    Other series stay NO DATA. 3.7 is never hardcoded.
+    """
     from macro_data.fred_csv import fetch_fred_csv, fred_last_error
 
     # One series at a time. A parallel fan-out is what this host resets.
@@ -400,9 +470,11 @@ def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
         reason = None if points else (fred_last_error(spec["id"]) or "FRED returned no observations")
         series[spec["id"]] = {
             "id": spec["id"],
+            "seriesId": spec["id"],
             "label": spec["label"],
             "unit": spec["unit"],
             "transform": spec["transform"],
+            "source": "FRED",
             "points": points,
             "status": "ok" if points else "NO DATA",
             "reason": reason,
@@ -410,26 +482,77 @@ def get_us_fred_payload(*, refresh: bool = False) -> dict[str, Any]:
         last = points[-1] if points else None
         latest[spec["id"]] = {
             "id": spec["id"],
+            "seriesId": spec["id"],
             "label": spec["label"],
             "unit": spec["unit"],
+            "source": "FRED",
             "date": last["date"] if last else None,
             "value": last["value"] if last else None,
             "status": "ok" if last else "NO DATA",
             "reason": reason,
         }
 
+    cpi_source = "FRED"
+    cpi_series_id = "CPIAUCNS"
+    bls_error = None
+    cpi_points = series["CPIAUCNS"]["points"]
+    if not cpi_points:
+        try:
+            bls_obs = _fetch_bls_cpi_nsa()
+            bls_points = _fred_display_points(bls_obs, "yoy")
+            if bls_points:
+                cpi_points = bls_points
+                cpi_source = "BLS"
+                cpi_series_id = _BLS_SERIES
+            else:
+                bls_error = "BLS returned no CPI observations"
+        except Exception as exc:
+            bls_error = f"BLS fetch failed: {type(exc).__name__}: {exc}"
+    if cpi_points and cpi_source == "BLS":
+        cpi_reason = None
+        cpi_status = "ok"
+    elif cpi_points:
+        cpi_reason = None
+        cpi_status = "ok"
+    else:
+        bits = [bit for bit in (series["CPIAUCNS"]["reason"], bls_error) if bit]
+        cpi_reason = " · ".join(bits) if bits else "FRED returned no observations"
+        cpi_status = "NO DATA"
+        cpi_points = []
+    cpi_last = cpi_points[-1] if cpi_points else None
+    series["CPIAUCNS"].update(
+        {
+            "points": cpi_points,
+            "status": cpi_status,
+            "reason": cpi_reason,
+            "source": cpi_source,
+            "seriesId": cpi_series_id,
+        }
+    )
+    latest["CPIAUCNS"].update(
+        {
+            "date": cpi_last["date"] if cpi_last else None,
+            "value": cpi_last["value"] if cpi_last else None,
+            "status": cpi_status,
+            "reason": cpi_reason,
+            "source": cpi_source,
+            "seriesId": cpi_series_id,
+        }
+    )
+
     fetched_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     for spec in _US_FRED_SPECS:
         row = latest[spec["id"]]
         print(
-            f"FRED {spec['id']} status={row['status']} value={row['value']} "
+            f"FRED {spec['id']} source={row.get('source')} series={row.get('seriesId')} "
+            f"status={row['status']} value={row['value']} "
             f"date={row['date']} points={len(series[spec['id']]['points'])} "
             f"reason={row['reason']}",
             flush=True,
         )
     return {
         "country": "US",
-        "source": "FRED",
+        "source": "FRED+BLS" if cpi_source == "BLS" else "FRED",
         "series": series,
         "latest": latest,
         "fetchedAt": fetched_at,

@@ -283,37 +283,59 @@ function pmMockPayload() {
   };
 }
 
+function pmLiveEmpty(reason) {
+  return {
+    updatedAt: new Date().toISOString(),
+    source: "empty",
+    mockOnly: false,
+    errors: reason ? [reason] : [],
+    markets: [],
+    heroes: [
+      { name: "BTC > $100k", value: "—", sub: "NO DATA" },
+      { name: "Arb opportunities", value: "—", sub: "NO DATA" },
+      { name: "24h volume", value: "—", sub: "NO DATA" },
+      { name: "Active markets", value: "0", sub: "Live book empty" },
+    ],
+    outlook: {
+      headline: "NO DATA",
+      lines: [reason || "Live prediction book is empty. No probability is shown."],
+      btc100kProb: null,
+    },
+  };
+}
+
 async function pmFetch(refresh = false) {
   const params = new URLSearchParams({ _: String(Date.now()) });
   if (refresh) params.set("refresh", "1");
-  const mock = pmMockPayload();
+  const pageMock = new URLSearchParams(location.search).get("mock") === "1";
+  if (pageMock) params.set("mock", "1");
+  const res = await fetch(`${PM_API}?${params}`, { cache: "no-store" });
+  const text = await res.text();
+  let data = null;
   try {
-    const res = await fetch(`${PM_API}?${params}`);
-    const text = await res.text();
-    let data = null;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = null;
-    }
-    if (res.ok && Array.isArray(data?.markets) && data.markets.length) return data;
-    if (res.ok && data && Array.isArray(data.markets) && !data.markets.length) {
-      return {
-        ...mock,
-        ...data,
-        markets: mock.markets,
-        source: data.source ? `${data.source}+mock` : "mock",
-        errors: [
-          ...(data.errors || []),
-          "Live book empty — showing sample markets",
-        ],
-      };
-    }
-    return mock;
-  } catch (err) {
-    console.warn("[prediction-markets]", err);
-    return mock;
+    data = JSON.parse(text);
+  } catch {
+    data = null;
   }
+  if (!res.ok || !data) {
+    throw new Error(data?.error || `Prediction markets ${res.status}`);
+  }
+  if (pageMock || data.mockOnly) return data;
+  const markets = (Array.isArray(data.markets) ? data.markets : []).filter(
+    (m) => !String(m?.id || "").startsWith("mock-"),
+  );
+  const source = String(data.source || "");
+  if (source.includes("mock")) {
+    return {
+      ...data,
+      markets,
+      source: data.networkBlock?.blocked ? "adm-block" : markets.length ? "live" : "empty",
+      heroes: (data.heroes || []).map((h) =>
+        h?.name === "BTC > $100k" ? { ...h, value: "—", sub: "NO DATA" } : h,
+      ),
+    };
+  }
+  return { ...data, markets };
 }
 
 function pmFiltersActive() {
@@ -1040,7 +1062,7 @@ function pmRenderMeta() {
     ? new Date(pmData.updatedAt).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
     : "—";
   const count = pmFilteredMarkets().length;
-  const err = pmError ? " · fallback" : "";
+  const err = String(src).includes("mock") && pmError ? " · fallback" : "";
   meta.textContent = `Prediction Markets · ${count} shown · ${src} · updated ${updated}${err}`;
 }
 
@@ -1172,10 +1194,18 @@ function pmRenderMarkets() {
     cards.style.display = pmFilters.view === "cards" ? "grid" : "none";
   }
 
+  const noBook = !(pmData?.markets || []).length;
+  const blocked = pmData?.source === "adm-block" || pmData?.networkBlock?.blocked;
+  const emptyCopy = noBook
+    ? blocked
+      ? "NO DATA · prediction venues are blocked on this network. No probability is shown."
+      : "NO DATA · live book is empty. No probability is shown."
+    : "No markets match the current filters. Try Status → All, or clear topic/platform filters.";
+  if (empty && noBook) empty.textContent = emptyCopy;
   if (tbody) {
     tbody.innerHTML = rows.length
       ? rows.map(pmRowHtml).join("")
-      : `<tr><td colspan="9">No markets match the current filters. Try Status → All, or clear topic/platform filters.</td></tr>`;
+      : `<tr><td colspan="9">${emptyCopy}</td></tr>`;
   }
   if (cards) {
     cards.innerHTML = rows.map(pmCardHtml).join("");
@@ -1200,7 +1230,7 @@ function pmRenderCensorshipBanner() {
       <div class="pm-censorship-banner__kicker">Network censorship · Italian ADM</div>
       <h3 class="pm-censorship-banner__title">Blocked: <a href="${page}" target="_blank" rel="noopener noreferrer">${host}</a></h3>
       <p class="pm-censorship-banner__msg">${block.message || ""}</p>
-      <p class="pm-censorship-banner__affect"><strong>Affected:</strong> ${affected} live APIs · showing seed/mock markets only · PM↔Deribit arb idle</p>
+      <p class="pm-censorship-banner__affect"><strong>Affected:</strong> ${affected} live APIs · no probability is shown · PM↔Deribit arb idle</p>
       <p class="pm-censorship-banner__fix"><strong>What to do:</strong> ${block.suggestion || "Switch on a VPN outside Italy, then hard-refresh."}</p>
       <p class="pm-censorship-banner__rant">${block.rant || ""}</p>
       <p class="pm-censorship-banner__link">Block page: <a href="${page}" target="_blank" rel="noopener noreferrer">${page}</a></p>
@@ -1306,9 +1336,11 @@ async function pmLoad({ refresh = false, silent = false } = {}) {
     pmError = pmData.errors?.length ? pmData.errors.join(" · ") : null;
   } catch (err) {
     pmError = err.message || String(err);
-    if (!pmData) {
+    const pageMock = new URLSearchParams(location.search).get("mock") === "1";
+    if (pageMock) {
       pmData = pmMockPayload();
-      pmError = `${pmError} — showing offline mock data`;
+    } else {
+      pmData = pmLiveEmpty(pmError);
     }
   } finally {
     pmLoading = false;

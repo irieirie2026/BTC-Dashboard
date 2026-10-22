@@ -145,7 +145,7 @@ function renderNewsScreen(section, data, opts = {}) {
     updateEl.textContent = window.DashboardSWR?.formatPanelMeta({
       fetchedAt: data.fetchedAt,
       source: data.source || "RSS",
-      stale: opts.stale,
+      staleAfterMs: NEWS_POLL_MS * 2,
       refreshing: opts.refreshing,
       refreshFailed: opts.refreshFailed,
     }) || "—";
@@ -177,6 +177,7 @@ async function loadNewsSection(section) {
       key: `news:${section}`,
       l1: "news",
       source: "RSS",
+      staleAfterMs: NEWS_POLL_MS * 2,
       fetch: () => fetchNewsSection(section),
       render: (data, opts = {}) => {
         const feed = nwEl(`news-${section}-feed`);
@@ -194,7 +195,7 @@ async function loadNewsSection(section) {
       window.DashboardSWR?.formatPanelMeta({
         fetchedAt: failedAt,
         source: "RSS",
-        stale: !!failedAt,
+        staleAfterMs: NEWS_POLL_MS * 2,
         refreshFailed: true,
         state: failedAt ? undefined : "error",
       }) || "update failed";
@@ -203,8 +204,8 @@ async function loadNewsSection(section) {
     window.DashboardSWR?.setHeaderStamp?.("news", {
       fetchedAt: failedAt,
       source: "RSS",
-      stale: !!failedAt,
-      refreshFailed: !!failedAt,
+      staleAfterMs: NEWS_POLL_MS * 2,
+      refreshFailed: true,
       state: failedAt ? undefined : "error",
     });
     const commentary = nwEl(`news-${section}-commentary`);

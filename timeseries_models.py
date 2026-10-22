@@ -1472,21 +1472,21 @@ def _forecast_returns_path(
     if model_id == "prophet":
         dates = data.get("dates") or []
         if not PROPHET_AVAILABLE or Prophet is None:
-            return _apply_holt_fallback(
-                logp,
-                h,
-                "prophet not installed — Holt fallback",
-                "prophet not installed",
-            )
+            return [], {
+                "unavailable": True,
+                "error": "prophet not installed",
+                "warning": "prophet not installed",
+                "fallbackReason": "prophet not installed",
+            }
         try:
             return _prophet_path(logp, dates, h)
         except ImportError as exc:
-            return _apply_holt_fallback(
-                logp,
-                h,
-                f"ImportError: {exc} — prophet not installed — Holt fallback",
-                "prophet not installed",
-            )
+            return [], {
+                "unavailable": True,
+                "error": "prophet not installed",
+                "warning": f"ImportError: {exc} — prophet not installed",
+                "fallbackReason": "prophet not installed",
+            }
         except Exception as exc:
             return _apply_holt_fallback(
                 logp,
@@ -1854,6 +1854,15 @@ def _fit_model(
     mid = cat["id"]
     h = 30
     path, meta = _forecast_returns_path(mid, data, macro, h)
+    if meta.get("unavailable"):
+        return {
+            "ok": False,
+            "unavailable": True,
+            "error": meta.get("error") or "unavailable",
+            "warning": meta.get("warning"),
+            "fallbackReason": meta.get("fallbackReason"),
+            "engine": meta.get("engine"),
+        }
     last_p = float(data["close"][-1])
 
     # In-sample 1-step residual proxy: rolling re-fit is expensive; use AR residual approx
@@ -1940,6 +1949,29 @@ def _comparable_ic(row: dict[str, Any], key: str) -> float | None:
     return fv if math.isfinite(fv) else None
 
 
+def hit_rate_interval(p: float, n: int, *, z: float = 1.96) -> dict[str, Any]:
+    """Normal 95% interval for a directional hit rate. Lower bound ≤ 0.50 does not beat naive."""
+    try:
+        prob = float(p)
+        count = int(n)
+    except (TypeError, ValueError):
+        return {"p": None, "n": None, "se": None, "lo": None, "hi": None, "beatsNaive": False}
+    if count <= 0 or not math.isfinite(prob):
+        return {"p": prob, "n": count, "se": None, "lo": None, "hi": None, "beatsNaive": False}
+    se = math.sqrt(max(prob * (1.0 - prob), 0.0) / count)
+    lo = prob - z * se
+    hi = prob + z * se
+    return {
+        "p": prob,
+        "n": count,
+        "se": se,
+        "lo": lo,
+        "hi": hi,
+        "zScore": ((prob - 0.5) / se) if se else None,
+        "beatsNaive": lo > 0.5,
+    }
+
+
 def get_timeseries_suite_payload(
     *,
     days: int = 3650,
@@ -1947,7 +1979,7 @@ def get_timeseries_suite_payload(
     refresh: bool = False,
 ) -> dict[str, Any]:
     days = max(180, min(int(days or 3650), 8000))
-    key = f"ts:suite:v12:{days}:{','.join(models or [])}"
+    key = f"ts:suite:v13:{days}:{','.join(models or [])}"
     if not refresh:
         cached = _cache_get(key)
         if cached is not None:
@@ -2015,7 +2047,15 @@ def get_timeseries_suite_payload(
             "blurb": cat["blurb"],
             "whyBtc": cat["whyBtc"],
             "equation": cat.get("equation"),
-            "status": "ok" if fit.get("ok") else "failed",
+            "status": (
+                "unavailable"
+                if fit.get("unavailable")
+                else "fallback"
+                if fit.get("fallbackReason")
+                else "ok"
+                if fit.get("ok")
+                else "failed"
+            ),
             "error": fit.get("error"),
             "warning": fit.get("warning"),
             "fallbackReason": fit.get("fallbackReason"),
@@ -2117,7 +2157,10 @@ def get_timeseries_suite_payload(
     best_aic = _best_by(lambda r: _comparable_ic(r, "aic"))
     best_bic = _best_by(lambda r: _comparable_ic(r, "bic"))
 
-    # Desk mark: directional hit primary (7d), with RMSE/MAE/AIC/BIC tie-breaks
+    # Desk mark: directional hit primary (7d), with RMSE/MAE/AIC/BIC tie-breaks.
+    # A 95% interval whose lower bound is at or below 50% selects Naive.
+    hit_ci_box: list[dict[str, Any]] = []
+
     def _pick_primary() -> tuple[dict | None, list[str]]:
         reasons: list[str] = []
         scored: list[tuple[tuple, dict]] = []
@@ -2157,6 +2200,33 @@ def get_timeseries_suite_payload(
         rmse7 = _h_metric(pick, 7, "rmseRet")
         mae7 = _h_metric(pick, 7, "maeRet")
         n7 = (pick.get("backtest") or {}).get("horizons", {}).get("7", {}).get("n")
+        try:
+            n7_i = int(n7) if n7 is not None else None
+        except (TypeError, ValueError):
+            n7_i = None
+        if hit7 is not None and n7_i and n7_i > 0:
+            leader_ci = hit_rate_interval(hit7, n7_i)
+            hit_ci_box.append(leader_ci)
+            if leader_ci.get("lo") is not None and leader_ci["lo"] <= 0.50:
+                reasons.append(
+                    f"Highest 7d hit {(hit7 * 100):.1f}% on N={n7_i} "
+                    f"(95% CI [{leader_ci['lo'] * 100:.1f}%, {leader_ci['hi'] * 100:.1f}%]). "
+                    "no model beats naive"
+                )
+                naive_row = next((r for r in ok_rows if r.get("id") == "naive"), None)
+                if naive_row is not None:
+                    pick = naive_row
+                    hit7 = _h_metric(pick, 7, "dirHitRate")
+                    hit1 = _h_metric(pick, 1, "dirHitRate")
+                    hit30 = _h_metric(pick, 30, "dirHitRate")
+                    rmse7 = _h_metric(pick, 7, "rmseRet")
+                    mae7 = _h_metric(pick, 7, "maeRet")
+                    n7 = (pick.get("backtest") or {}).get("horizons", {}).get("7", {}).get("n")
+            else:
+                reasons.append(
+                    f"7d hit 95% CI [{leader_ci['lo'] * 100:.1f}%, {leader_ci['hi'] * 100:.1f}%] "
+                    f"on N={n7_i}."
+                )
         if hit7 is not None:
             reasons.append(
                 "Primary criterion: highest expanding-window OOS directional hit rate "
@@ -2372,11 +2442,23 @@ def get_timeseries_suite_payload(
             "primaryHorizon": 7,
             "rule": (
                 "Maximize OOS directional hit rate at 7d; break ties with 1d/30d hit, "
-                "then lower 7d RMSE, MAE, then univariate AIC/BIC (VAR/VECM excluded)."
+                "then lower 7d RMSE, MAE, then univariate AIC/BIC (VAR/VECM excluded). "
+                "If the 95% CI lower bound is at or below 50%, the desk mark is Naive."
             ),
             "selectedId": None if insufficient_sample else (detail_row["id"] if detail_row else None),
-            "selectedName": "insufficient sample" if insufficient_sample else (detail_row["name"] if detail_row else None),
-            "label": "insufficient sample" if insufficient_sample else None,
+            "selectedName": (
+                "insufficient sample" if insufficient_sample
+                else "no model beats naive"
+                if any("no model beats naive" in str(item) for item in selection_reasons)
+                else (detail_row["name"] if detail_row else None)
+            ),
+            "label": (
+                "insufficient sample" if insufficient_sample
+                else "no model beats naive"
+                if any("no model beats naive" in str(item) for item in selection_reasons)
+                else None
+            ),
+            "hit7Ci": hit_ci_box[-1] if hit_ci_box else None,
             "insufficientSample": insufficient_sample,
             "nOos7": oos_n7,
             "reasons": selection_reasons,

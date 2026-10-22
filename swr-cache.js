@@ -26,11 +26,17 @@ function formatFetchedTime(fetchedAt) {
   return d.toLocaleTimeString("en-US", { hour12: false });
 }
 
-function formatFetchedAge(fetchedAt) {
-  if (!fetchedAt) return "";
+function fetchedAgeMs(fetchedAt) {
+  if (!fetchedAt) return null;
   const d = new Date(fetchedAt);
-  if (Number.isNaN(d.getTime())) return "";
-  const sec = Math.max(0, Math.round((Date.now() - d.getTime()) / 1000));
+  if (Number.isNaN(d.getTime())) return null;
+  return Math.max(0, Date.now() - d.getTime());
+}
+
+function formatFetchedAge(fetchedAt) {
+  const ms = fetchedAgeMs(fetchedAt);
+  if (ms == null) return "";
+  const sec = Math.round(ms / 1000);
   if (sec < 90) return "";
   if (sec < 3600) return `${Math.max(1, Math.round(sec / 60))} min old`;
   if (sec < 86400) return `${Math.max(1, Math.round(sec / 3600))} h old`;
@@ -98,14 +104,18 @@ function formatPanelMeta(opts = {}) {
   const time = formatFetchedTime(opts.fetchedAt);
   const age = formatFetchedAge(opts.fetchedAt);
   const ageBit = age ? ` · ${age}` : "";
-  const staleBit = age ? " · STALE" : "";
+  const staleAfterMs = Number(opts.staleAfterMs) > 0 ? Number(opts.staleAfterMs) : 90_000;
+  const ageMs = fetchedAgeMs(opts.fetchedAt);
+  const pastThreshold = opts.forceStale === true || (ageMs != null && ageMs >= staleAfterMs);
+  const staleBit = pastThreshold ? " · STALE" : "";
   const source = opts.source ? ` · ${opts.source}` : "";
   if (opts.refreshFailed) return `Saved ${time}${ageBit}${staleBit}${source} · update failed`;
-  if (opts.stale && opts.refreshing) return `Saved ${time}${ageBit}${staleBit}${source} · updating…`;
+  if (opts.refreshing) return `Saved ${time}${ageBit}${staleBit}${source} · updating…`;
   if (opts.state === "loading") return `Loading…${source}`;
   if (opts.state === "error") return `Unavailable${source}`;
-  if (opts.fromCache || opts.stale) return `Cached ${time}${ageBit}${staleBit}${source}`;
-  if (age) return `Updated ${time}${ageBit} · STALE${source}`;
+  if (opts.fromCache || (opts.stale && pastThreshold)) return `Cached ${time}${ageBit}${staleBit}${source}`;
+  if (pastThreshold) return `Updated ${time}${ageBit}${staleBit}${source}`;
+  if (age) return `Updated ${time}${ageBit}${source}`;
   return `Updated ${time}${source}`;
 }
 
@@ -191,9 +201,10 @@ async function runSWR({
   updateHeader = true,
   persist = true,
   revalidate = true,
+  staleAfterMs,
 }) {
   const persisted = loadPersisted(key);
-  const stampOpts = { source };
+  const stampOpts = { source, staleAfterMs };
 
   if (persisted?.data && !revalidate) {
     render(persisted.data, {
@@ -249,6 +260,9 @@ async function runSWR({
           },
           updateHeader,
         );
+      } else {
+        stampHeader(l1, { ...stampOpts, state: "error", refreshFailed: true }, updateHeader);
+        render(null, { refreshFailed: true, loading: false });
       }
       return null;
     }

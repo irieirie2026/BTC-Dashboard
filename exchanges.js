@@ -95,7 +95,7 @@ function renderExchangesHeroes(section, data) {
   if (!strip) return;
 
   strip.innerHTML = (data.heroes || [])
-    .slice(0, 4)
+    .slice(0, 5)
     .map(
       (h) => `
       <article class="deriv-hero-block">
@@ -314,24 +314,19 @@ function renderExchangesScreen(section, data, opts = {}) {
 
   const updateEl = exEl(`exchanges-${section}-update`);
   if (updateEl) {
-    const stale = !!(opts.stale || data.stale);
     const refreshing = !!(opts.refreshing || data.refreshing);
-    let meta = window.DashboardSWR?.formatPanelMeta({
+    const meta = window.DashboardSWR?.formatPanelMeta({
       fetchedAt: data.fetchedAt,
       source: data.source || "Exchange APIs",
-      stale,
+      staleAfterMs: EXCHANGES_POLL_MS * 2,
+      forceStale: !!data.stale,
       refreshing,
       refreshFailed: opts.refreshFailed,
     }) || "—";
-    const age = exchangeAgeLabel(data);
-    if (age) {
-      meta = stale ? meta.replace("updating…", `${age} · updating…`) : `${meta} · ${age}`;
-      if (stale && !meta.includes(age)) meta = `${meta} · ${age}`;
-    }
     updateEl.textContent = meta;
     updateEl.classList.toggle(
       "header-meta--stale",
-      !!(opts.stale && (opts.refreshing || opts.refreshFailed)),
+      !!(data.stale || opts.refreshFailed),
     );
   }
 
@@ -358,6 +353,7 @@ async function loadExchangesSection(section) {
       key: `exchanges:${section}`,
       l1: "exchanges",
       source: "Exchange APIs",
+      staleAfterMs: EXCHANGES_POLL_MS * 2,
       fetch: () => fetchExchangesSection(section),
       render: (data, opts = {}) => {
         const body = exEl(`exchanges-${section}-table-body`);

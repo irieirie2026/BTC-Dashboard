@@ -12,5 +12,6 @@
  * 1.1.1 repairs the r10 desks: liquidity units, snapshot cells, exchanges, and DeFi routes.
  * 1.1.2 repairs the r11 desks.
  * 1.1.3 repairs the r12 desks.
+ * 1.1.4 repairs the r13 desks.
  */
-window.APP_VERSION = "1.1.3";
+window.APP_VERSION = "1.1.4";

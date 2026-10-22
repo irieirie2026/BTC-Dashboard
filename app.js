@@ -120,32 +120,61 @@ function flashPrice(direction) {
 function updateTicker(data) {
   const price = parseFloat(data.c);
   const open = parseFloat(data.o);
-  const change = price - open;
-  const changePct = (change / open) * 100;
-  const isPositive = change >= 0;
+  const explicit = data.changePct != null ? Number(data.changePct) : null;
+  const openIs24h = data.openIs24h === true || data.openIs24h === "true";
+  const hasOpen = openIs24h && Number.isFinite(open) && open > 0 && Number.isFinite(price);
 
   window.btcSpotPrice = price;
   window.dispatchEvent(new CustomEvent("btc-spot-price", { detail: { price } }));
 
-  $("price").textContent = formatPrice(price);
+  $("price").textContent = Number.isFinite(price) ? formatPrice(price) : "—";
 
-  if (prevPrice !== null && price !== prevPrice) {
+  if (prevPrice !== null && Number.isFinite(price) && price !== prevPrice) {
     flashPrice(price > prevPrice ? "up" : "down");
   }
-  prevPrice = price;
+  if (Number.isFinite(price)) prevPrice = price;
 
   const changeEl = $("price-change");
-  changeEl.className = "price-change " + (isPositive ? "positive" : "negative");
-  changeEl.querySelector(".change-pct").textContent =
-    (isPositive ? "+" : "") + changePct.toFixed(2) + "%";
-  changeEl.querySelector(".change-abs").textContent =
-    (isPositive ? "+" : "") + formatPrice(change) + " USDT";
+  let changePct = null;
+  let change = null;
+  if (hasOpen && explicit != null && Number.isFinite(explicit)) {
+    changePct = explicit;
+    change = price - open;
+  } else if (hasOpen) {
+    change = price - open;
+    changePct = (change / open) * 100;
+  }
+  if (changePct == null || !Number.isFinite(changePct)) {
+    changeEl.className = "price-change";
+    changeEl.querySelector(".change-pct").textContent = "—";
+    changeEl.querySelector(".change-abs").textContent = "—";
+  } else {
+    const isPositive = changePct >= 0;
+    changeEl.className = "price-change " + (isPositive ? "positive" : "negative");
+    changeEl.querySelector(".change-pct").textContent =
+      (isPositive ? "+" : "") + changePct.toFixed(2) + "%";
+    changeEl.querySelector(".change-abs").textContent =
+      change != null && Number.isFinite(change)
+        ? (isPositive ? "+" : "") + formatPrice(change) + " USDT"
+        : "—";
+  }
 
   $("high-24h").textContent = formatPrice(data.h);
   $("low-24h").textContent = formatPrice(data.l);
   $("vol-btc").textContent = formatBtc(data.v) + " BTC";
   $("vol-usdt").textContent = formatVolume(data.q) + " USDT";
   $("weighted-avg").textContent = formatPrice(data.w);
+
+  const bid = parseFloat(data.bid);
+  const ask = parseFloat(data.ask);
+  $("best-bid").textContent = Number.isFinite(bid) && bid > 0 ? formatPrice(bid) : "—";
+  $("best-ask").textContent = Number.isFinite(ask) && ask > 0 ? formatPrice(ask) : "—";
+  if (Number.isFinite(bid) && bid > 0 && Number.isFinite(ask) && ask > 0) {
+    const spread = ask - bid;
+    $("spread").textContent = formatPrice(spread) + " (" + ((spread / bid) * 100).toFixed(4) + "%)";
+  } else {
+    $("spread").textContent = "—";
+  }
 }
 
 function updateDepth(data) {
@@ -160,14 +189,8 @@ function updateDepth(data) {
 
   const bestBid = lastBids[0][0];
   const bestAsk = lastAsks[0][0];
-  const spread = bestAsk - bestBid;
-  const spreadPct = (spread / bestBid) * 100;
   const mid = (bestBid + bestAsk) / 2;
 
-  $("best-bid").textContent = formatPrice(bestBid);
-  $("best-ask").textContent = formatPrice(bestAsk);
-  $("spread").textContent =
-    formatPrice(spread) + " (" + spreadPct.toFixed(4) + "%)";
   $("book-mid").textContent = formatPrice(mid);
   const bookVenue = data?.venue ? String(data.venue) : "";
   const bookWhen = data?.fetchedAt ? String(data.fetchedAt).replace("T", " ").replace(".000Z", "Z") : "";
@@ -681,12 +704,16 @@ function refreshFuturesGrid() {
 }
 
 function updateFuturesHero(price, open) {
+  $("fut-price").textContent = Number.isFinite(price) ? formatPrice(price) : "—";
+  const changeEl = $("fut-change");
+  if (!Number.isFinite(price) || !Number.isFinite(open) || !(open > 0)) {
+    changeEl.className = "futures-change";
+    changeEl.textContent = "—";
+    return;
+  }
   const change = price - open;
   const changePct = (change / open) * 100;
   const isPositive = change >= 0;
-
-  $("fut-price").textContent = formatPrice(price);
-  const changeEl = $("fut-change");
   changeEl.className = "futures-change " + (isPositive ? "positive" : "negative");
   changeEl.textContent =
     formatPct(changePct) + " · " + (isPositive ? "+" : "") + formatPrice(change);
@@ -777,7 +804,7 @@ function perpBundleFromSnapshot(perp) {
   return {
     marketState: {
       price: finiteNum(perp.lastPrice),
-      openPrice: finiteNum(perp.lastPrice),
+      openPrice: finiteNum(perp.openPrice),
       high: finiteNum(perp.highPrice),
       low: finiteNum(perp.lowPrice),
       volume: finiteNum(perp.volume),
@@ -932,10 +959,6 @@ function applySpotBundle(bundle) {
   const { ticker, klines, depth } = bundle;
   const venueLabel = bundle.venue || ticker?.venue || "Median spot composite";
   window.spotCompositeLabel = venueLabel;
-  const sub = document.querySelector(".subtitle");
-  if (sub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
-    sub.textContent = venueLabel;
-  }
   const chartLabel = document.getElementById("spot-chart-label");
   if (chartLabel && bundle.klineVenue) {
     const text = `1m candles · ${bundle.klineVenue}`;
@@ -946,9 +969,17 @@ function applySpotBundle(bundle) {
     }
   }
 
+  const spotSub = document.getElementById("spot-subtitle");
+  if (spotSub && (document.body.dataset.l1 === "market" || !document.body.dataset.l1)) {
+    spotSub.textContent = venueLabel;
+  }
   updateTicker({
     c: ticker.lastPrice,
     o: ticker.openPrice,
+    openIs24h: ticker.openIs24h,
+    changePct: ticker.priceChangePercent ?? ticker.changePct,
+    bid: ticker.bidPrice,
+    ask: ticker.askPrice,
     h: ticker.highPrice,
     l: ticker.lowPrice,
     v: ticker.volume,

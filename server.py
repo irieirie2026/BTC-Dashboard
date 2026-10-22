@@ -1020,7 +1020,7 @@ def get_options_payload(*, refresh=False):
         out = dict(cached)
         age = _iso_age_sec(out.get("fetchedAt"))
         out["ageSec"] = age
-        out["stale"] = age is None or age > 120
+        out["stale"] = age is None or age > CACHE_TTL
         return out
     data = _fetch_options_payload()
     _cset("options", data, CACHE_TTL)
@@ -4332,7 +4332,7 @@ def _run_venue_fetchers(fetchers, timeout=10):
 
 
 def _fetch_all_exchange_data(refresh=False):
-    key = "exchanges:raw:v5"
+    key = "exchanges:raw:v6"
     if not refresh:
         cached = _cget(key, CACHE_TTL)
         if cached is not None:
@@ -4451,7 +4451,7 @@ def _build_exchanges_chart(section, table):
     if section == "perp":
         rows = sorted(
             [r for r in table if r.get("fundingPct") is not None and not r.get("unavailable")],
-            key=lambda x: abs(x.get("fundingPct") or 0),
+            key=lambda x: x.get("fundingPct") if x.get("fundingPct") is not None else float("-inf"),
             reverse=True,
         )[:8]
         return {
@@ -4658,16 +4658,23 @@ def _build_exchanges_perp(perp, errors):
         {"name": "Avg Funding", "value": f"{avg_fund * 100:.4f}%" if avg_fund is not None else "—", "sub": "Last published rate"},
         {"name": "Positive Funding", "value": f"{len(pos)}/{len(live)}" if live else "—", "sub": "Longs pay shorts"},
     ]
-    if live:
-        extreme = max(live, key=lambda p: abs(p.get("fundingRate") or 0))
-        rate = extreme.get("fundingRate") or 0
-        # 0.05% per interval. A normal 0.005% print is the highest rate, not an extreme.
-        hero_name = "Extreme Funding" if abs(rate) >= 0.0005 else "Highest Funding"
+    rated = [p for p in live if p.get("fundingRate") is not None]
+    if rated:
+        highest = max(rated, key=lambda p: p.get("fundingRate"))
+        lowest = min(rated, key=lambda p: p.get("fundingRate"))
+        hi = highest.get("fundingRate")
         heroes.append({
-            "name": hero_name,
-            "value": extreme.get("exchange"),
-            "sub": f"{rate * 100:.4f}%",
+            "name": "Highest Funding",
+            "value": highest.get("exchange"),
+            "sub": f"{hi * 100:.4f}%",
         })
+        lo = lowest.get("fundingRate")
+        if lowest.get("exchange") != highest.get("exchange"):
+            heroes.append({
+                "name": "Lowest Funding",
+                "value": lowest.get("exchange"),
+                "sub": f"{lo * 100:.4f}%",
+            })
 
     lines = []
     if not live:
@@ -4678,7 +4685,11 @@ def _build_exchanges_perp(perp, errors):
             f"{avg_fund * 100:.4f}%." if avg_fund is not None else
             f"Perp snapshot: {len(live)} live venues.",
         )
-        for row in sorted(live, key=lambda x: abs(x.get("fundingRate") or 0), reverse=True)[:2]:
+        for row in sorted(
+            rated,
+            key=lambda x: x.get("fundingRate") if x.get("fundingRate") is not None else float("-inf"),
+            reverse=True,
+        )[:2]:
             fr = row.get("fundingRate")
             if fr is not None:
                 lines.append(
@@ -4688,7 +4699,7 @@ def _build_exchanges_perp(perp, errors):
     if errors:
         lines.append(f"Perp: {len(errors)} failed ({_exchange_error_names(errors)}).")
     lines.append("Roadmap: OI breakdown, basis time series, cross-venue funding arb — extend as needed.")
-    return heroes[:4], table, lines
+    return heroes[:5], table, lines
 
 
 def _build_exchanges_volume(spot, perp, errors):
@@ -4863,7 +4874,7 @@ def _write_all_exchange_sections():
     written = {}
     for section in EXCHANGES_CATEGORIES:
         data = _fetch_exchanges_section(section, refresh=False)
-        _cset(f"exchanges:{section}", data, CACHE_TTL)
+        _cset(f"exchanges:{section}:v6", data, CACHE_TTL)
         written[section] = data
     return written
 
@@ -4895,7 +4906,7 @@ def _kick_exchange_refresh():
 def get_exchanges_payload(section, *, refresh=False):
     if section not in EXCHANGES_CATEGORIES:
         raise ValueError(f"Unknown Exchanges section: {section}")
-    key = f"exchanges:{section}"
+    key = f"exchanges:{section}:v6"
     if refresh:
         written = _write_all_exchange_sections()
         data = written.get(section) or {}
@@ -4903,7 +4914,8 @@ def get_exchanges_payload(section, *, refresh=False):
     cached = _cget(key, CACHE_TTL * 48)
     if cached is not None:
         age = _iso_age_sec(cached.get("fetchedAt"))
-        stale = age is None or age > 120
+        # Client poll is 5 minutes. STALE only past 2× that interval.
+        stale = age is None or age > 600
         if stale:
             _kick_exchange_refresh()
         return _stamp_exchange_payload(
@@ -5018,76 +5030,100 @@ def _warm_btc_series() -> None:
         print(f"BTC series prefetch skipped: {exc}")
 
 
-if __name__ == "__main__":
+_workers_lock = None
+_workers_started = False
+
+
+def _warm_startup_caches() -> None:
+    # One thread. Whales refresh on a timer; macro and series run once on the first pass.
+    # Parallel warm threads deadlock Python 3.14's import lock.
+    # The 24-model time-series suite is not on this loop.
+    from macro_data.misc_whales import (
+        get_misc_whales_payload,
+        note_whale_warm_done,
+        note_whale_warm_start,
+    )
+
+    first = True
+    while True:
+        note_whale_warm_start()
+        try:
+            get_misc_whales_payload(refresh=True, from_warm=True)
+            print("Whale cache warmed key=misc:whales:v3", flush=True)
+        except Exception as exc:
+            print(f"Whale cache warm skipped: {exc}", flush=True)
+        finally:
+            note_whale_warm_done()
+        try:
+            from macro_data.misc_metrics import get_misc_metrics_payload
+
+            get_misc_metrics_payload(refresh=True)
+            print("Metrics cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Metrics cache warm skipped: {exc}", flush=True)
+        try:
+            from btc_indicators_api import get_snapshot_payload
+
+            get_snapshot_payload(refresh=True)
+            print("Snapshot cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Snapshot cache warm skipped: {exc}", flush=True)
+        try:
+            get_options_payload(refresh=True)
+            print("Options cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Options cache warm skipped: {exc}", flush=True)
+        try:
+            from market_feed import get_depth, get_futures_snapshot, get_perp_snapshot
+
+            get_perp_snapshot(refresh=True)
+            print("Perp cache warmed", flush=True)
+            get_futures_snapshot(refresh=True)
+            print("Futures cache warmed", flush=True)
+            get_depth(limit=20, refresh=True)
+            print("Order book cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Futures cache warm skipped: {exc}", flush=True)
+        try:
+            _write_all_exchange_sections()
+            print("Exchanges cache warmed", flush=True)
+        except Exception as exc:
+            print(f"Exchanges cache warm skipped: {exc}", flush=True)
+        if first:
+            _warm_macro_caches()
+            _warm_btc_series()
+            first = False
+        time.sleep(90)
+
+
+def start_background_workers() -> None:
+    """Start the single warm thread. Idempotent. Call from __main__ or run_local only."""
+    global _workers_lock, _workers_started
+    import threading
+
+    if _workers_lock is None:
+        _workers_lock = threading.Lock()
+    with _workers_lock:
+        if _workers_started:
+            return
+        _workers_started = True
+    threading.Thread(target=_warm_startup_caches, daemon=True, name="btc-warm").start()
+
+
+def serve_forever_app() -> None:
     port = 5173
     host = (os.environ.get("HOST") or "127.0.0.1").strip() or "127.0.0.1"
     try:
-        server = ThreadingHTTPServer((host, port), Handler)
+        httpd = ThreadingHTTPServer((host, port), Handler)
     except OSError as exc:
         if exc.errno in (48, 98):  # Address already in use (macOS, Linux)
             print(f"Port {port} is already in use — dashboard likely running at http://{host}:{port}")
             raise SystemExit(0)
         raise
-    import threading
-
-    def _warm_startup_caches() -> None:
-        # One thread. Whales refresh on a timer; macro and series run once on the first pass.
-        # Parallel warm threads deadlock Python 3.14's import lock.
-        from macro_data.misc_whales import (
-            get_misc_whales_payload,
-            note_whale_warm_done,
-            note_whale_warm_start,
-        )
-
-        first = True
-        while True:
-            note_whale_warm_start()
-            try:
-                get_misc_whales_payload(refresh=True, from_warm=True)
-                print("Whale cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Whale cache warm skipped: {exc}", flush=True)
-            finally:
-                note_whale_warm_done()
-            try:
-                from macro_data.misc_metrics import get_misc_metrics_payload
-
-                get_misc_metrics_payload(refresh=True)
-                print("Metrics cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Metrics cache warm skipped: {exc}", flush=True)
-            try:
-                from btc_indicators_api import get_snapshot_payload
-
-                get_snapshot_payload(refresh=True)
-                print("Snapshot cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Snapshot cache warm skipped: {exc}", flush=True)
-            try:
-                get_options_payload(refresh=True)
-                print("Options cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Options cache warm skipped: {exc}", flush=True)
-            try:
-                from market_feed import get_futures_snapshot, get_perp_snapshot
-
-                get_perp_snapshot(refresh=True)
-                print("Perp cache warmed", flush=True)
-                get_futures_snapshot(refresh=True)
-                print("Futures cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Futures cache warm skipped: {exc}", flush=True)
-            try:
-                _write_all_exchange_sections()
-                print("Exchanges cache warmed", flush=True)
-            except Exception as exc:
-                print(f"Exchanges cache warm skipped: {exc}", flush=True)
-            if first:
-                _warm_macro_caches()
-                _warm_btc_series()
-                first = False
-            time.sleep(90)
-
-    threading.Thread(target=_warm_startup_caches, daemon=True).start()
+    start_background_workers()
     print(f"Serving at http://{host}:{port}")
-    server.serve_forever()
+    httpd.serve_forever()
+
+
+if __name__ == "__main__":
+    serve_forever_app()

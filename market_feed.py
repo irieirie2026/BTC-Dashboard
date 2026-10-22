@@ -213,6 +213,54 @@ def spot_median_from_rows(rows: list[dict] | None) -> dict[str, Any]:
     return {"median": float(median), "venueCount": len(names), "venues": names, "label": label}
 
 
+def _median_finite(values) -> float | None:
+    ordered = []
+    for raw in values:
+        try:
+            num = float(raw)
+        except (TypeError, ValueError):
+            continue
+        if num == num and num not in (float("inf"), float("-inf")):
+            ordered.append(num)
+    if not ordered:
+        return None
+    ordered.sort()
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        return float(ordered[mid])
+    return float((ordered[mid - 1] + ordered[mid]) / 2.0)
+
+
+def _median_positive(values) -> float | None:
+    return _median_finite([v for v in values if v is not None and _f(v) is not None and _f(v) > 0])
+
+
+def _ticker_from_exchange_row(row: dict) -> dict[str, Any]:
+    """Map one exchange desk row. A missing 24h change stays missing."""
+    price = _f(row.get("price") if row.get("price") is not None else row.get("lastPrice"))
+    raw_change = row.get("changePct")
+    if raw_change is None:
+        raw_change = row.get("priceChangePercent")
+    change = _f(raw_change) if raw_change is not None else None
+    open_px = None
+    if change is not None and price and (1.0 + change / 100.0) != 0:
+        open_px = price / (1.0 + change / 100.0)
+    return {
+        "venue": row.get("exchange") or row.get("venue"),
+        "lastPrice": price,
+        "openPrice": open_px,
+        "openIs24h": open_px is not None,
+        "changePct": change,
+        "highPrice": _f(row.get("high") or row.get("highPrice")),
+        "lowPrice": _f(row.get("low") or row.get("lowPrice")),
+        "volume": _f(row.get("volume")) or 0,
+        "quoteVolume": _f(row.get("quoteVolume") or row.get("volume")) or 0,
+        "bidPrice": _f(row.get("bid") if row.get("bid") is not None else row.get("bidPrice")),
+        "askPrice": _f(row.get("ask") if row.get("ask") is not None else row.get("askPrice")),
+        "priceChangePercent": change,
+    }
+
+
 def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
     """Live spot rows from the exchanges desk, so both cards share one median."""
     try:
@@ -233,7 +281,7 @@ def _exchange_spot_rows(*, refresh: bool = False) -> list[dict]:
 def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     """Median last of every live spot venue. The book venue stays OKX."""
     global _last_quote_venue
-    key = "market:quote:v3"
+    key = "market:quote:v4"
     if not refresh:
         cached = _cache_get(key)
         if cached:
@@ -245,18 +293,7 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     if len(exchange_rows) >= 3:
         for row in exchange_rows:
-            rows.append({
-                "venue": row.get("exchange"),
-                "lastPrice": row.get("price"),
-                "openPrice": row.get("price"),
-                "highPrice": row.get("high") or row.get("price"),
-                "lowPrice": row.get("low") or row.get("price"),
-                "volume": row.get("volume") or 0,
-                "quoteVolume": row.get("volume") or 0,
-                "bidPrice": row.get("bid") or row.get("price"),
-                "askPrice": row.get("ask") or row.get("price"),
-                "priceChangePercent": row.get("changePct") or 0,
-            })
+            rows.append(_ticker_from_exchange_row(row))
     else:
         from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -284,7 +321,26 @@ def get_spot_quote(*, refresh: bool = False) -> dict[str, Any]:
     names = comp["venues"]
     base = min(rows, key=lambda t: abs((_f(t.get("lastPrice")) or median) - median))
     ticker = dict(base)
+    def _row_change(row: dict):
+        if row.get("changePct") is not None:
+            return row.get("changePct")
+        return row.get("priceChangePercent")
+
+    med_change = _median_finite(
+        [_row_change(r) for r in rows if _row_change(r) is not None]
+    )
+    med_bid = _median_positive([r.get("bidPrice") for r in rows])
+    med_ask = _median_positive([r.get("askPrice") for r in rows])
+    open_px = None
+    if med_change is not None and (1.0 + med_change / 100.0) != 0:
+        open_px = median / (1.0 + med_change / 100.0)
     ticker["lastPrice"] = f"{median:.2f}"
+    ticker["openPrice"] = f"{open_px:.2f}" if open_px is not None else None
+    ticker["openIs24h"] = open_px is not None
+    ticker["priceChangePercent"] = med_change
+    ticker["changePct"] = med_change
+    ticker["bidPrice"] = f"{med_bid:.2f}" if med_bid is not None else None
+    ticker["askPrice"] = f"{med_ask:.2f}" if med_ask is not None else None
     ticker["pair"] = "BTC composite"
     label = comp["label"]
     ticker["venue"] = label
@@ -640,6 +696,7 @@ def _okx_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "longShortRatio": ls,
         "highPrice": _f(row.get("high24h")),
         "lowPrice": _f(row.get("low24h")),
+        "openPrice": _f(row.get("open24h")),
         "volume": btc_vol,
         "quoteVolume": quote_vol,
     }
@@ -675,6 +732,7 @@ def _hl_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "longShortRatio": None,
         "highPrice": _f(ctx.get("dayNtlVlm")),
         "lowPrice": None,
+        "openPrice": None,
         "volume": _f(ctx.get("dayNtlVlm")),
         "quoteVolume": _f(ctx.get("dayNtlVlm")),
     }
@@ -701,6 +759,7 @@ def _bybit_perp(*, timeout: float = 3.5) -> dict[str, Any] | None:
         "longShortRatio": None,
         "highPrice": _f(row.get("highPrice24h")),
         "lowPrice": _f(row.get("lowPrice24h")),
+        "openPrice": _f(row.get("prevPrice24h")),
         "volume": _f(row.get("volume24h")),
         "quoteVolume": _f(row.get("turnover24h")),
     }
@@ -768,7 +827,7 @@ def get_liquidations(*, refresh: bool = False) -> dict[str, Any]:
 
 
 def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
-    key = "market:perp:v2"
+    key = "market:perp:v3"
     if not refresh:
         cached = _cache_get(key)
         if cached:

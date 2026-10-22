@@ -627,9 +627,20 @@ function tsHorizonRow(m, suite, hz) {
   const sel = m.id === tsSelectedId ? " vol-row--selected" : "";
   const bestCls = isBest ? " vol-row--best-hit ts-row--best" : "";
   const deskCls = isDesk && !isBest ? " vol-row--desk-mark" : "";
-  const statusKind = m.status === "ok" ? (m.warning ? "fallback" : "ok") : "failed";
+  const statusKind =
+    m.status === "unavailable"
+      ? "unavailable"
+      : m.status === "fallback" || (m.status === "ok" && m.warning)
+        ? "fallback"
+        : m.status === "ok"
+          ? "ok"
+          : "failed";
   const statusLabel =
-    statusKind === "fallback" ? `FALLBACK · ${tsShortFallback(m)}` : statusKind;
+    statusKind === "fallback"
+      ? `FALLBACK · ${tsShortFallback(m)}`
+      : statusKind === "unavailable"
+        ? "UNAVAILABLE"
+        : statusKind;
   const statusTitle = tsStatusTitle(m);
   const errTitle = statusTitle ? ` title="${tsEscape(statusTitle)}"` : "";
   const btErr = m.backtest?.error ? String(m.backtest.error) : "";
@@ -748,10 +759,12 @@ function tsRenderTable(suite) {
 
   const meta = tsEl("ts-compare-meta");
   if (meta) {
-    const ok = models.filter((m) => m.status === "ok").length;
+    const okN = models.filter((m) => m.status === "ok").length;
+    const fallN = models.filter((m) => m.status === "fallback").length;
+    const unavailN = models.filter((m) => m.status === "unavailable").length;
     meta.textContent = empty
       ? "Run models to populate"
-      : `${ok}/${models.length} ok · sorted by OOS hit % · badges: HIT · RMSE · MAE · MAPE · AIC · BIC · MARK`;
+      : `${okN} ok · ${fallN} fallback · ${unavailN} unavailable · sorted by OOS hit % · badges: HIT · RMSE · MAE · MAPE · AIC · BIC · MARK`;
   }
   window.decorateHelpLabels?.(
     document.querySelector('.menu-screen[data-l1="stats"][data-l2="timeseries"]'),
@@ -886,7 +899,9 @@ function tsRenderGuide(suite) {
 
 function tsBuildCommentary(suite) {
   const models = suite.models || [];
-  const ok = models.filter((m) => m.status === "ok");
+  const ok = models.filter((m) => m.status === "ok" && !m.fallbackReason);
+  const fallback = models.filter((m) => m.status === "fallback" || (m.status === "ok" && m.fallbackReason));
+  const unavailable = models.filter((m) => m.status === "unavailable");
   const failed = models.filter((m) => m.status === "failed");
   const s = suite.summary || {};
   const lines = [];
@@ -901,23 +916,30 @@ function tsBuildCommentary(suite) {
     const why = m.error || m.fallbackReason || m.warning || "no error text";
     return `${tsEscape(m.name)}: ${tsEscape(why)}`;
   });
-  const fell = ok.filter((m) => m.fallbackReason || (m.warning && /fallback|not installed|failed/i.test(String(m.warning))));
-  const fallBits = fell.map((m) => {
+  const fallBits = fallback.map((m) => {
     const why = m.fallbackReason || m.warning || m.error || "fallback";
     return `${tsEscape(m.name)}: ${tsEscape(why)}`;
   });
+  const unavailBits = unavailable.map((m) => `${tsEscape(m.name)}: ${tsEscape(m.error || m.fallbackReason || "unavailable")}`);
   lines.push(
-    `<strong>${ok.length}</strong>/${models.length} models ok` +
-      (failBits.length ? `. Failed — ${failBits.join("; ")}` : "") +
+    `<strong>${ok.length} ok</strong> · <strong>${fallback.length} fallback</strong> · <strong>${unavailable.length} unavailable</strong>` +
+      (failed.length ? ` · ${failed.length} failed` : "") +
       (fallBits.length ? `. Fallback — ${fallBits.join("; ")}` : "") +
+      (unavailBits.length ? `. Unavailable — ${unavailBits.join("; ")}` : "") +
+      (failBits.length ? `. Failed — ${failBits.join("; ")}` : "") +
       ".",
   );
   {
-    const markName = suite.selection?.selectedName || s.bestModelName;
+    const markName = suite.selection?.label || suite.selection?.selectedName || s.bestModelName;
+    const ci = suite.selection?.hit7Ci;
+    const ciTxt = ci && ci.lo != null && ci.hi != null
+      ? ` 7d hit 95% CI ${(ci.lo * 100).toFixed(1)}%–${(ci.hi * 100).toFixed(1)}% (N=${ci.n}).`
+      : "";
     if (markName) {
       lines.push(
-        `Desk mark (hit-primary): <strong>${tsEscape(markName)}</strong>. ` +
+        `Desk mark (hit-primary): <strong>${tsEscape(markName)}</strong>.${ciTxt} ` +
           `Rule: maximize <strong>7d OOS directional hit</strong>; ties break on 1d/30d hit, then RMSE, MAE, AIC, BIC. ` +
+          `A lower bound at or below 50% selects the naive forecast. ` +
           `See <strong>Why this model</strong> for the full rationale.`,
       );
     }

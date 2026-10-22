@@ -859,19 +859,20 @@ function renderOptionsOiScreen() {
 function drawIvTermChart(term) {
   const canvas = dxEl("options-iv-term-chart");
   if (!canvas) return;
-  const valid = term.filter((t) => t.atmIv);
+  const valid = (term || []).filter((t) => t.atmIv);
   if (!valid.length) return;
 
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return;
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
   const w = rect.width;
   const h = rect.height;
-  const pad = { top: 18, right: 20, bottom: 36, left: 48 };
+  const pad = { top: 18, right: 28, bottom: 72, left: 48 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
 
@@ -910,15 +911,23 @@ function drawIvTermChart(term) {
   ctx.fillText(minIv.toFixed(0) + "%", pad.left - 6, h - pad.bottom);
   // Ticks sit on the expiry's DTE, not on an even index. Even spacing
   // put the date labels under the wrong contracts.
-  ctx.textAlign = "center";
-  const step = Math.max(1, Math.ceil(valid.length / 6));
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+  const step = Math.max(1, Math.ceil(valid.length / 5));
+  let lastX = -1e9;
   valid.forEach((t, i) => {
     if (i % step !== 0 && i !== valid.length - 1) return;
     const x = pad.left + (t.days / maxDays) * chartW;
+    if (x - lastX < 36 && i !== valid.length - 1) return;
+    lastX = x;
     const label = t.expiry
       ? `${fmtChartDate(t.expiry, true)} · ${Math.round(t.days)}d`
       : `${Math.round(t.days)}d`;
-    ctx.fillText(label, x, h - 8);
+    ctx.save();
+    ctx.translate(x, pad.top + chartH + 14);
+    ctx.rotate(-Math.PI / 4);
+    ctx.fillText(label, 0, 0);
+    ctx.restore();
   });
 }
 
