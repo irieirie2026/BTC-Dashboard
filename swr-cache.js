@@ -19,11 +19,19 @@ function swrEl(id) {
   return document.getElementById(id);
 }
 
+const ROME_CLOCK = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Rome",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
+
 function formatFetchedTime(fetchedAt) {
   if (!fetchedAt) return "—";
   const d = new Date(fetchedAt);
   if (Number.isNaN(d.getTime())) return "—";
-  return d.toLocaleTimeString("en-US", { hour12: false });
+  return ROME_CLOCK.format(d);
 }
 
 function fetchedAgeMs(fetchedAt) {

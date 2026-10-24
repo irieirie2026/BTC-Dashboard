@@ -18,5 +18,6 @@
  * 1.1.7 repairs the r16 desks.
  * 1.1.8 repairs the r17 desks.
  * 1.1.9 repairs the r18 desks.
+ * 1.1.10 fixes the clock zone (r19-1).
  */
-window.APP_VERSION = "1.1.9";
+window.APP_VERSION = "1.1.10";
