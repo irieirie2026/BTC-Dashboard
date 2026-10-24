@@ -399,7 +399,7 @@ async function mwBuildClientPayload() {
     heroes: [
       { name: "Transfers (1h)", value: String(r1h.length), sub: `${Math.round(vol1h).toLocaleString()} BTC · ≥${MW_NOTABLE_BTC}` },
       { name: "Transfers (last 10 blocks)", value: String(r24.length), sub: `${Math.round(vol24h).toLocaleString()} BTC sample vol` },
-      { name: "Unidentified (24h)", value: String(unk24.length), sub: `${Math.round(unkVol).toLocaleString()} BTC · no label` },
+      { name: "Unidentified (last 10 blocks)", value: String(unk24.length), sub: `${Math.round(unkVol).toLocaleString()} BTC · no label` },
       { name: "Tracked net flow", value: `${(netIn - netOut >= 0 ? "+" : "")}${Math.round(netIn - netOut).toLocaleString()} BTC`, sub: `In ${Math.round(netIn)} · Out ${Math.round(netOut)}` },
     ],
     about: [
@@ -608,7 +608,7 @@ function mwRenderFeed(data) {
         <p class="mm-card__sub">${lt.unknownVolume24hBtc != null ? `${mwFmtBtc(lt.unknownVolume24hBtc, 0)} BTC` : "—"} no label</p>
       </div>
       <div class="mm-card mw-mini-card mw-mini-card--spark">
-        <h4 class="mm-card__title" data-help-key="mw-large-spark">24h activity</h4>
+        <h4 class="mm-card__title" data-help-key="mw-large-spark">Last 10 blocks</h4>
         <div class="mw-large-spark">${mwSparklineSvg(lt.sparkline || []) || '<span class="mm-card__sub">No transfers in sample</span>'}</div>
         <p class="mm-card__sub">Hourly count in sample</p>
       </div>

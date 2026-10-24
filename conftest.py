@@ -19,3 +19,8 @@ _TEST_DATA = Path(tempfile.mkdtemp(prefix="btc-dash-pytest-"))
 os.environ["BTC_DASH_DATA_DIR"] = str(_TEST_DATA)
 os.environ["BTC_SERIES_DIR"] = str(_TEST_DATA / "btc-series")
 os.environ["XMARKET_HISTORY_PATH"] = str(_TEST_DATA / "xmarket_history.jsonl")
+os.environ["BTC_MACRO_CACHE_DIR"] = str(_TEST_DATA / "macro-cache")
+
+from tests.isolation import require_isolated_dirs
+
+require_isolated_dirs()

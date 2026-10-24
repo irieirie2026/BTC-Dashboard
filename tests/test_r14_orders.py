@@ -2,12 +2,22 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parents[1]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+
+from tests.isolation import claim_temp_dirs
+
+claim_temp_dirs()
+
 import json
 import os
 import tempfile
 import time
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 
 from api_errors import BadRequest, canonical_timespan
 
@@ -160,7 +170,7 @@ def test_active_addresses_prefer_later_series_without_writing():
         fetchers.fetch_blockchain_chart = original_fetch
 
 
-def test_history_sliding_window_and_jsonl(monkeypatch):
+def test_history_sliding_window_and_jsonl(monkeypatch=None):
     import cross_market_history as hist
 
     now_ms = time.time() * 1000
@@ -188,7 +198,10 @@ def test_history_sliding_window_and_jsonl(monkeypatch):
     assert len(exact) == 5, len(exact)
 
     tmp = Path(tempfile.mkdtemp()) / "xmarket_history.jsonl"
-    monkeypatch.setenv("XMARKET_HISTORY_PATH", str(tmp))
+    if monkeypatch is not None:
+        monkeypatch.setenv("XMARKET_HISTORY_PATH", str(tmp))
+    else:
+        os.environ["XMARKET_HISTORY_PATH"] = str(tmp)
     store = {}
     original_get = hist.cache_service.get
     original_set = hist.cache_service.set
@@ -388,6 +401,15 @@ def test_kline_freshness_and_mark_source():
 
 
 if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    _root = Path(__file__).resolve().parents[1]
+    if str(_root) not in sys.path:
+        sys.path.insert(0, str(_root))
+    from tests.isolation import claim_temp_dirs
+
+    claim_temp_dirs()
     fns = [
         test_timespan_aliases_and_http_400,
         test_warm_order_and_cache_ttl,

@@ -446,7 +446,7 @@ function volSetLiveIvKpis(suite, chain) {
   set("vol-kpi-ivgap", gapTxt === "—" && !atmBit ? "—" : `${gapTxt}${atmBit}`);
   const gapLabel = volEl("vol-kpi-ivgap-label");
   if (gapLabel) {
-    const named = `ATM 30d IV − ${rvName} RV`;
+    const named = "ATM 7d/30d IV − EGARCH(2,1) RV";
     const inner = gapLabel.querySelector(".metric-label-text");
     if (inner) inner.textContent = named;
     else gapLabel.textContent = named;

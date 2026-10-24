@@ -736,12 +736,12 @@ const METRIC_HELP = {
     body: "Count and total BTC volume of ≥10 BTC transfers in the last hour within the sample window (not full mempool).",
   },
   "mw-large-24h": {
-    title: "Transfers (24h)",
-    body: "Count and total BTC volume of ≥10 BTC transfers in the last 24 hours within the sample window.",
+    title: "Transfers (last 10 blocks)",
+    body: "Count and total BTC volume of ≥10 BTC transfers in the last 10 blocks within the sample window.",
   },
   "mw-large-spark": {
-    title: "24h activity",
-    body: "Hourly count of sampled large transfers over the last 24 hours.",
+    title: "Last 10 blocks",
+    body: "Hourly count of sampled large transfers over the last 10 blocks. The scan does not walk 144 blocks.",
   },
   "mw-dormant": {
     title: "Activity spike proxy",
@@ -2909,8 +2909,8 @@ const METRIC_HELP = {
     body: "Live Deribit DVOL when the index feed is available, otherwise nearest-weekly ATM mark IV from the option book. Not the GARCH forecast.",
   },
   "vol-ivgap": {
-    title: "ATM 30d IV − term RV",
-    body: "Live ATM mark IV minus the mark model’s term RV at 7d and 30d. Positive = options rich vs the model (short-vol gate). Negative = options cheap (long-vol gate). Cond. vol is yesterday’s close; IV is the live book.",
+    title: "ATM 7d/30d IV − EGARCH(2,1) RV",
+    body: "Live ATM mark IV at 7d and 30d minus the EGARCH(2,1) term RV. Positive = options rich vs the model (short-vol gate). Negative = options cheap (long-vol gate). Cond. vol is yesterday’s close; IV is the live book.",
   },
   "vol-persist": {
     title: "Persistence & half-life",

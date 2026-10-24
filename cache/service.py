@@ -11,7 +11,9 @@ import hashlib
 import json
 import logging
 import os
+import threading
 import time
+import uuid
 from pathlib import Path
 from typing import Any, Callable
 
@@ -51,6 +53,13 @@ def _default_cache_dir() -> Path:
 CACHE_DIR = _default_cache_dir()
 
 
+def _cache_dir() -> Path:
+    """Honour BTC_MACRO_CACHE_DIR on every disk op, including after import."""
+    global CACHE_DIR
+    CACHE_DIR = _default_cache_dir()
+    return CACHE_DIR
+
+
 def _redis_key(key: str) -> str:
     if key.startswith(f"{KEY_PREFIX}:"):
         return key
@@ -59,7 +68,12 @@ def _redis_key(key: str) -> str:
 
 def _disk_path(key: str) -> Path:
     digest = hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
-    return CACHE_DIR / f"{digest}.json"
+    return _cache_dir() / f"{digest}.json"
+
+
+def _unique_tmp(path: Path) -> Path:
+    token = f"{os.getpid()}.{threading.get_ident()}.{uuid.uuid4().hex}"
+    return path.with_name(f".{path.name}.{token}.tmp")
 
 
 def _disk_enabled() -> bool:
@@ -67,8 +81,9 @@ def _disk_enabled() -> bool:
     if _disk_ok is not None:
         return _disk_ok
     try:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        probe = CACHE_DIR / ".write_probe"
+        folder = _cache_dir()
+        folder.mkdir(parents=True, exist_ok=True)
+        probe = folder / ".write_probe"
         probe.write_text("ok", encoding="utf-8")
         probe.unlink(missing_ok=True)
         _disk_ok = True
@@ -213,14 +228,19 @@ class CacheService:
 
         if _disk_enabled():
             path = _disk_path(key)
-            tmp = path.with_suffix(".tmp")
+            tmp = _unique_tmp(path)
             try:
-                CACHE_DIR.mkdir(parents=True, exist_ok=True)
+                path.parent.mkdir(parents=True, exist_ok=True)
                 tmp.write_text(payload, encoding="utf-8")
-                tmp.replace(path)
-            except OSError:
-                global _disk_ok
-                _disk_ok = False
+                os.replace(tmp, path)
+            except OSError as exc:
+                # One failed write stays local. The next set() tries the disk again.
+                _stats["errors"] += 1
+                _log.warning("Disk cache write failed for %s: %s", key, exc)
+                try:
+                    tmp.unlink(missing_ok=True)
+                except OSError:
+                    pass
 
     def delete(self, key: str) -> None:
         _mem.pop(key, None)
@@ -294,8 +314,9 @@ class CacheService:
     def clear_all(self) -> None:
         """Clear memory, disk files, and Redis keys under KEY_PREFIX."""
         _mem.clear()
-        if _disk_enabled() and CACHE_DIR.exists():
-            for p in CACHE_DIR.glob("*.json"):
+        folder = _cache_dir()
+        if _disk_enabled() and folder.exists():
+            for p in folder.glob("*.json"):
                 try:
                     p.unlink()
                 except OSError:
@@ -325,7 +346,7 @@ class CacheService:
             "redisEnabled": redis_active(),
             "diskEnabled": _disk_enabled(),
             "keyPrefix": KEY_PREFIX,
-            "cacheDir": str(CACHE_DIR),
+            "cacheDir": str(_cache_dir()),
         }
 
 

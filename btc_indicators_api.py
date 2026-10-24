@@ -420,9 +420,15 @@ def _cell_from_series_data(data: dict[str, Any], default_source: str) -> dict:
         "note",
         "mayProxy",
         "isEstimate",
+        "preliminary",
     ):
         if data.get(field) is not None:
             extra[field] = data[field]
+    if "preliminary" not in extra:
+        if data.get("latestPreliminary") is not None:
+            extra["preliminary"] = bool(data.get("latestPreliminary"))
+        elif isinstance(data.get("latest"), dict) and data["latest"].get("preliminary") is not None:
+            extra["preliminary"] = bool(data["latest"].get("preliminary"))
     as_of = _data_as_of_from_series_data(data)
     if as_of:
         extra["dataAsOf"] = as_of
@@ -578,19 +584,26 @@ _SNAPSHOT_JOB_TIMEOUTS: dict[str, int] = {
 
 
 def _fetch_netflow_snapshot(*, refresh: bool = False) -> dict[str, Any]:
+    from btc_data.coinmetrics import _netflow_cached_body_invalid
+
+    invalid = False
     for days in (90, 30, 7):
         cached = _cached_series_body(f"btc:cm:v1:exchange_netflow:{days}", ttl=43200 * 7)
-        if cached:
-            return _flag_netflow_preliminary(cached)
-    if not refresh:
-        return {
-            "series": [],
-            "latest": None,
-            "source": "Coin Metrics Community",
-            "error": "netflow cache miss",
-            "fetchedAt": _now_iso(),
-        }
-    return fetch_exchange_netflow_series(days_back=90, refresh=True)
+        if not cached:
+            continue
+        if _netflow_cached_body_invalid(cached):
+            invalid = True
+            continue
+        return _flag_netflow_preliminary(cached)
+    if invalid or refresh:
+        return fetch_exchange_netflow_series(days_back=90, refresh=True)
+    return {
+        "series": [],
+        "latest": None,
+        "source": "Coin Metrics Community",
+        "error": "netflow cache miss",
+        "fetchedAt": _now_iso(),
+    }
 
 
 def _fetch_bg_kpi_snapshot(*, refresh: bool = False) -> dict[str, dict[str, Any]]:

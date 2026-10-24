@@ -6,6 +6,17 @@ extra alpha at zero; that case is a warning, not a reason to fake a likelihood.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parents[1]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+
+from tests.isolation import claim_temp_dirs
+
+claim_temp_dirs()
+
 import math
 import time
 from datetime import datetime, timezone
@@ -254,6 +265,15 @@ def test_us_fred_timeout_is_no_data_not_zero():
 
 
 if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    _root = Path(__file__).resolve().parents[1]
+    if str(_root) not in sys.path:
+        sys.path.insert(0, str(_root))
+    from tests.isolation import claim_temp_dirs
+
+    claim_temp_dirs()
     fns = [
         test_garch_p_changes_likelihood,
         test_arma_d0_forecast_stays_in_return_units,

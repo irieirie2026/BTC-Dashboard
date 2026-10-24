@@ -3190,7 +3190,7 @@ def _build_outlook(markets: list[dict]) -> dict:
     max_edge = max((a["edgePct"] for a in arbitrage), default=0)
     deri_arbs = [a for a in arbitrage if a.get("type") == "deribit-basis"]
 
-    headline = "Prediction markets — outlook & arb scan"
+    headline = "Prediction markets — outlook & model gaps"
     if locked_arbs:
         headline = (
             f"{len(locked_arbs)} locked arb{'s' if len(locked_arbs) != 1 else ''} · "
@@ -3204,12 +3204,12 @@ def _build_outlook(markets: list[dict]) -> dict:
         headline = "PM↔Deribit idle · live prediction feed unavailable"
     elif above_100 and above_100.get("yesProb") is not None:
         headline = (
-            f"{above_100['yesProb']:.0f}% · {btc100k_caption} · fee-aware arb scan clear"
+            f"{above_100['yesProb']:.0f}% · {btc100k_caption} · fee-aware model gaps clear"
         )
     elif above_100:
         headline = f"{btc100k_caption} · probability missing"
     elif avg_yes is not None:
-        headline = f"Avg BTC price-market Yes: {avg_yes:.0f}% · arb scan clear"
+        headline = f"Avg BTC price-market Yes: {avg_yes:.0f}% · model gaps clear"
 
     lead_macro = max(
         [m for m in active if "finance" in (m.get("topics") or []) or "economics" in (m.get("topics") or [])],
@@ -3303,7 +3303,7 @@ def _outlook_commentary(
             parts.append(f"{len(deri)} model gap")
         kind = "locked arb" if locked else "relative-value gap"
         lines.append(
-            f"Arb scan: {', '.join(parts)} {kind}{'s' if len(arbitrage) != 1 else ''} — "
+            f"Model gaps: {', '.join(parts)} {kind}{'s' if len(arbitrage) != 1 else ''} — "
             "net edges are after platform fees + slippage buffers; "
             "only locked structures guarantee ≥$1 if rules match."
         )
@@ -3317,7 +3317,7 @@ def _outlook_commentary(
         )
     else:
         lines.append(
-            "Arb scan: no fee-adjusted locked arbs (Yes+No / cross-venue / ladder) in the current universe."
+            "Model gaps: no fee-adjusted locked arbs (Yes+No / cross-venue / ladder) in the current universe."
         )
 
     ds = deribit_scan or {}

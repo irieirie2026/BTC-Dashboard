@@ -119,20 +119,84 @@ function formatPanelMeta(opts = {}) {
   return `Updated ${time}${source}`;
 }
 
+const viewClocks = new Map();
+
+function clockKey(l1, l2) {
+  return `${l1 || ""}|${l2 || ""}`;
+}
+
+function formatLiveStamp(opts = {}) {
+  const source = opts.source ? ` · ${opts.source}` : "";
+  if (opts.state === "loading") return `Loading…${source}`;
+  if (opts.state === "error" && !opts.fetchedAt) return `Unavailable${source}`;
+  if (!opts.fetchedAt) return "—";
+  const time = formatFetchedTime(opts.fetchedAt);
+  const ms = fetchedAgeMs(opts.fetchedAt);
+  const sec = ms == null ? null : Math.round(ms / 1000);
+  const ageBit = sec == null ? "" : ` · ${sec}s`;
+  const staleAfter = Number(opts.staleAfterMs) > 0 ? Number(opts.staleAfterMs) : 120_000;
+  const staleBit = ms != null && ms >= staleAfter ? " · STALE" : "";
+  if (opts.refreshFailed) return `Saved ${time}${ageBit}${staleBit}${source} · update failed`;
+  if (opts.refreshing) return `Saved ${time}${ageBit}${staleBit}${source} · updating…`;
+  return `Updated ${time}${ageBit}${staleBit}${source}`;
+}
+
+function rememberViewClock(l1, opts = {}) {
+  if (!l1) return;
+  const l2 = opts.l2 || "";
+  viewClocks.set(clockKey(l1, l2), {
+    l1,
+    l2,
+    fetchedAt: opts.fetchedAt || null,
+    source: opts.source || "",
+    staleAfterMs: opts.staleAfterMs,
+    cardIds: opts.cardIds || [],
+    state: opts.state || null,
+    refreshing: !!opts.refreshing,
+    refreshFailed: !!opts.refreshFailed,
+    stale: !!opts.stale,
+  });
+  paintViewClocks();
+}
+
+function paintViewClocks() {
+  const l1 = document.body?.dataset?.l1 || window.MenuController?.l1 || "";
+  const l2 = window.MenuController?.l2 || "";
+  if (!l1) return;
+  const clock = viewClocks.get(clockKey(l1, l2)) || viewClocks.get(clockKey(l1, ""));
+  if (!clock || (!clock.fetchedAt && !clock.state)) return;
+  const text = formatLiveStamp(clock);
+  const headerId = SWR_HEADER_MAP[l1];
+  const header = headerId ? swrEl(headerId) : null;
+  if (header && !header.hidden && !header.closest?.("[hidden]")) {
+    header.textContent = text;
+    header.classList.toggle("header-meta--stale", !!(clock.stale && (clock.refreshing || clock.refreshFailed)));
+  }
+  for (const id of clock.cardIds || []) {
+    const el = swrEl(id);
+    if (el) el.textContent = text;
+  }
+}
+
 function setHeaderStamp(l1, opts = {}) {
   const elId = SWR_HEADER_MAP[l1];
   const el = elId ? swrEl(elId) : null;
-  if (!el) return;
+  if (!el && !opts.cardIds) return;
 
-  // Only stamp the active L1 so a background revalidate on Market/Stats
-  // does not overwrite the visible header while the user is elsewhere.
   const activeL1 = document.body?.dataset?.l1;
+  const activeL2 = window.MenuController?.l2 || "";
+  const requestedL2 = opts.l2 || (activeL1 === l1 ? activeL2 : "");
+  rememberViewClock(l1, { ...opts, l2: requestedL2 });
+
+  // Only stamp the active view so a background revalidate does not overwrite
+  // the visible header with another desk's timestamp.
   if (activeL1 && l1 && activeL1 !== l1) return;
+  if (opts.l2 && activeL2 && opts.l2 !== activeL2) return;
 
   // Market Live/Binance stamp lives on #last-update; never write into a hidden bar.
-  if (el.hidden || el.closest?.("[hidden]")) return;
+  if (!el || el.hidden || el.closest?.("[hidden]")) return;
 
-  el.textContent = formatPanelMeta(opts);
+  el.textContent = formatLiveStamp({ ...opts, l2: requestedL2 });
   el.classList.toggle(
     "header-meta--stale",
     !!(opts.stale && (opts.refreshing || opts.refreshFailed)),
@@ -302,6 +366,8 @@ async function runSWR({
   }
 }
 
+setInterval(paintViewClocks, 1000);
+
 window.DashboardSWR = {
   loadPersisted,
   persistPayload,
@@ -309,6 +375,9 @@ window.DashboardSWR = {
   formatFetchedAge,
   fetchedAgeMs,
   formatPanelMeta,
+  formatLiveStamp,
+  rememberViewClock,
+  paintViewClocks,
   setHeaderStamp,
   setViewStatusBar,
   runSWR,

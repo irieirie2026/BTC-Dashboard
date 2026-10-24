@@ -108,23 +108,23 @@ function setFuturesPanelMeta(opts = {}) {
   }
 }
 
+function perpViewOpen() {
+  return document.body?.dataset?.l1 === "derivatives" && window.MenuController?.l2 === "perp";
+}
+
 function paintFuturesStamp() {
   const ts = lastFuturesFetchedAt;
   if (!ts) return;
+  const src = lastFuturesSource || "perp";
   const ms = window.DashboardSWR?.fetchedAgeMs?.(ts);
   const sec = ms == null || !Number.isFinite(ms) ? null : Math.max(0, Math.round(ms / 1000));
-  const src = lastFuturesSource || "perp";
-  const when = new Date(ts);
-  const clock = Number.isFinite(when.getTime())
-    ? when.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })
-    : String(ts);
-  const text = sec == null
-    ? `Updated ${clock} · ${src} lastPrice`
-    : `Updated ${clock} · ${sec}s · ${src} lastPrice`;
-  for (const id of ["futures-update", "futures-sentiment-update", "futures-header-update"]) {
-    const panel = $(id);
-    if (panel) panel.textContent = text;
-  }
+  window.DashboardSWR?.rememberViewClock?.("derivatives", {
+    l2: "perp",
+    fetchedAt: ts,
+    source: `${src} lastPrice`,
+    cardIds: ["futures-update", "futures-sentiment-update"],
+    staleAfterMs: 120_000,
+  });
   const srcEl = document.getElementById("fut-price-source");
   if (srcEl) srcEl.textContent = sec == null ? `${src} lastPrice` : `${src} lastPrice · ${sec}s`;
 }
@@ -942,8 +942,13 @@ async function loadFuturesData() {
         }
         applyFuturesBundle(data);
         futuresVenue = (data.venue || futuresVenue || "okx").toLowerCase();
-        if (data?.fetchedAt) lastFuturesFetchedAt = data.fetchedAt;
-        lastFuturesSource = src;
+        const incoming = data?.fetchedAt ? Date.parse(data.fetchedAt) : NaN;
+        const current = lastFuturesFetchedAt ? Date.parse(lastFuturesFetchedAt) : 0;
+        const newer = !Number.isFinite(incoming) || !Number.isFinite(current) || incoming >= current;
+        if (newer) {
+          if (data?.fetchedAt) lastFuturesFetchedAt = data.fetchedAt;
+          lastFuturesSource = src;
+        }
         const persisted = !!(opts.stale || opts.refreshing || opts.refreshFailed || opts.fromCache);
         if (data.marketState?.price) {
           setConnectionStatus(persisted ? "stale" : "connected", "futures-status");
@@ -1287,13 +1292,19 @@ async function refreshSpotLive() {
       venueCount,
     };
     window.DashboardSWR?.persistPayload?.("market:spot", persisted, lastSpotFetchedAt);
-    if (document.body.dataset.l1 === "market" || !document.body.dataset.l1) {
-      window.DashboardSWR?.setHeaderStamp?.("market", {
-        fetchedAt: lastSpotFetchedAt,
-        source: venueLabel,
-        stale: false,
-      });
-    }
+    const spotAt = lastSpotQuotedAt || lastSpotFetchedAt;
+    window.DashboardSWR?.rememberViewClock?.("market", {
+      l2: "spot",
+      fetchedAt: spotAt,
+      source: lastSpotSourceLabel || venueLabel,
+      staleAfterMs: 120_000,
+    });
+    window.DashboardSWR?.rememberViewClock?.("market", {
+      l2: "orderbook",
+      fetchedAt: spotAt,
+      source: lastSpotSourceLabel || venueLabel,
+      staleAfterMs: 120_000,
+    });
   } catch (_) {
     // Keep the last bid and ask. The venue note still shows how old they are.
     paintSpotSourceLabels();
@@ -1342,7 +1353,32 @@ async function refreshProxiedDepth() {
 setInterval(() => {
   loadMarketIndicators(activeIndicatorTf);
 }, INDICATOR_POLL_MS);
-setInterval(loadFuturesData, FUTURES_POLL_MS);
+async function pollPerpWhileOpen() {
+  if (!perpViewOpen() || futuresLoadInflight) return;
+  futuresLoadInflight = true;
+  try {
+    const perp = await fetchJsonTimeout("/api/market/perp", 12000);
+    if (!perp?.lastPrice || !perp.fetchedAt) return;
+    const incoming = Date.parse(perp.fetchedAt);
+    const current = lastFuturesFetchedAt ? Date.parse(lastFuturesFetchedAt) : 0;
+    if (Number.isFinite(incoming) && Number.isFinite(current) && incoming < current) return;
+    const bundle = perpBundleFromSnapshot(perp);
+    applyFuturesBundle(bundle);
+    lastFuturesFetchedAt = perp.fetchedAt;
+    lastFuturesSource = bundle.priceSource || bundle.venue || "OKX";
+    futuresVenue = String(perp.venue || futuresVenue || "okx").toLowerCase();
+    window.DashboardSWR?.persistPayload?.("derivatives:futures", bundle, perp.fetchedAt);
+    setConnectionStatus("connected", "futures-status");
+    paintFuturesStamp();
+  } catch (_) {
+    paintFuturesStamp();
+  } finally {
+    futuresLoadInflight = false;
+  }
+}
+
+window.pollPerpWhileOpen = pollPerpWhileOpen;
+setInterval(pollPerpWhileOpen, FUTURES_POLL_MS);
 setInterval(loadFuturesIndicators, INDICATOR_POLL_MS);
 setInterval(updateFundingCountdown, 1000);
 setInterval(refreshProxiedDepth, DEPTH_POLL_MS);

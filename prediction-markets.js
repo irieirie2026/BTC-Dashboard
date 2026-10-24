@@ -1406,12 +1406,14 @@ function pmStampHeader() {
   const swr = window.DashboardSWR;
   if (!swr || !pmPredictionVisible()) return;
   const fetchedAt = pmData?.updatedAt || pmData?.fetchedAt || null;
-  swr.setHeaderStamp("market", {
-    fetchedAt: fetchedAt || new Date().toISOString(),
+  swr.rememberViewClock("market", {
+    l2: "prediction-markets",
+    fetchedAt: fetchedAt || null,
     source: pmData?.source || "Prediction markets",
     stale: !fetchedAt,
-    refreshing: false,
+    staleAfterMs: 120_000,
     refreshFailed: !!pmError && !pmData,
+    state: fetchedAt ? null : "loading",
   });
 }
 

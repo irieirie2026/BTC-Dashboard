@@ -565,7 +565,7 @@ def get_misc_whales_payload(*, refresh: bool = False, from_warm: bool = False) -
                 "sub": f"{vol_24h:,.0f} BTC sample vol",
             },
             {
-                "name": "Unidentified (24h)",
+                "name": "Unidentified (last 10 blocks)",
                 "value": str(len(unknown_24)),
                 "sub": f"{unknown_vol_24:,.0f} BTC · no exchange label",
             },

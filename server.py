@@ -1302,20 +1302,68 @@ def _fetch_options_payload(_html=""):
 
 
 
+OPTIONS_PARTIAL_TTL = 30
+
+
+def _options_payload_missing_har(data) -> bool:
+    if not isinstance(data, dict):
+        return True
+    term = data.get("modelTermRv30d")
+    return not isinstance(term, (int, float)) or not (term == term and float(term) > 0)
+
+
+def _merge_options_har(data: dict) -> dict | None:
+    """Fill a cached options payload once HAR is on disk. Does not refit HAR."""
+    term = _options_term_rv_30d()
+    if _options_payload_missing_har(term):
+        return None
+    merged = dict(data)
+    for field in (
+        "closeToCloseRv30d",
+        "closeToCloseSource",
+        "termRv30d",
+        "termRvSource",
+        "termRvModel",
+        "modelTermRv30d",
+        "modelTermAsOf",
+        "modelTermStale",
+        "modelTermAgeSec",
+        "modelTermKey",
+        "modelTermModel",
+    ):
+        if field in term:
+            merged[field] = term.get(field)
+    merged["fetchedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    return merged
+
+
+def _decorate_options(data: dict, *, ttl: int) -> dict:
+    out = dict(data)
+    age = _iso_age_sec(out.get("fetchedAt"))
+    out["ageSec"] = age
+    out["stale"] = age is None or age > ttl
+    return out
+
+
 def get_options_payload(*, refresh=False):
-    cached = _cget("options:v3", CACHE_TTL, refresh=refresh)
-    if cached is not None:
-        out = dict(cached)
-        age = _iso_age_sec(out.get("fetchedAt"))
-        out["ageSec"] = age
-        out["stale"] = age is None or age > CACHE_TTL
-        return out
+    cached = None if refresh else _cget("options:v3", CACHE_TTL, refresh=False)
+    if isinstance(cached, dict) and not _options_payload_missing_har(cached):
+        return _decorate_options(cached, ttl=CACHE_TTL)
+    if isinstance(cached, dict):
+        rebuilt = _merge_options_har(cached)
+        if rebuilt is not None:
+            _cset("options:v3", rebuilt, CACHE_TTL)
+            return _decorate_options(rebuilt, ttl=CACHE_TTL)
+        age = _iso_age_sec(cached.get("fetchedAt"))
+        if age is not None and age <= OPTIONS_PARTIAL_TTL:
+            return _decorate_options(cached, ttl=OPTIONS_PARTIAL_TTL)
     data = _fetch_options_payload()
-    _cset("options:v3", data, CACHE_TTL)
-    data = dict(data)
-    data["ageSec"] = 0
-    data["stale"] = False
-    return data
+    ttl = OPTIONS_PARTIAL_TTL if _options_payload_missing_har(data) else CACHE_TTL
+    _cset("options:v3", data, ttl)
+    out = dict(data)
+    out["ageSec"] = 0
+    out["stale"] = False
+    return out
 
 
 _MONTHS = {

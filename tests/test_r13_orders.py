@@ -2,6 +2,17 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parents[1]
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+
+from tests.isolation import claim_temp_dirs
+
+claim_temp_dirs()
+
 import threading
 import time
 
@@ -59,6 +70,9 @@ def test_history_dedupes_pair_and_type():
 
 
 def test_whales_cache_served_while_warm_in_flight():
+    from tests.isolation import require_isolated_dirs
+
+    require_isolated_dirs()
     import macro_data.misc_whales as whales
     from cache.service import get_cache_service
     from macro_data.cache import cache_set
@@ -265,6 +279,15 @@ def test_workers_start_once():
 
 
 if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    _root = Path(__file__).resolve().parents[1]
+    if str(_root) not in sys.path:
+        sys.path.insert(0, str(_root))
+    from tests.isolation import claim_temp_dirs
+
+    claim_temp_dirs()
     fns = [
         test_highest_funding_is_signed_max,
         test_hit_rate_ci_naive_gate,

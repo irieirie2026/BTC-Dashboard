@@ -164,6 +164,21 @@ def fetch_coinmetrics_series(
     return payload
 
 
+def _netflow_cached_body_invalid(body: dict | None) -> bool:
+    """A stored netflow series with points and no cmStatus predates the status field.
+
+    The 90-day snapshot copy from that era hides a flash print. Refetch it.
+    A body marked cmStatusChecked was fetched after this rule and may simply
+    have no review flag on the wire.
+    """
+    if not isinstance(body, dict) or body.get("cmStatusChecked") is True:
+        return False
+    points = [pt for pt in (body.get("series") or []) if isinstance(pt, dict)]
+    if not points:
+        return False
+    return not any(pt.get("cmStatus") for pt in points)
+
+
 def _point_is_preliminary(point: dict, today: str) -> bool:
     """A flash/preliminary status wins on any date. With no status, only today is preliminary."""
     status = point.get("cmStatus") or point.get("status")
@@ -207,7 +222,7 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
     cache_key = f"btc:cm:v1:exchange_netflow:{days_back}"
     if not refresh:
         cached = cache_get(cache_key, ttl=COINMETRICS_TTL)
-        if cached is not None:
+        if cached is not None and not _netflow_cached_body_invalid(cached):
             return _flag_netflow_preliminary({**cached, "fromCache": True})
 
     inflow = fetch_coinmetrics_series("exchange_inflow", days_back=days_back, refresh=refresh)
@@ -275,5 +290,7 @@ def fetch_exchange_netflow_series(*, days_back: int = 365, refresh: bool = False
         "error": "; ".join(errors) if errors and not series else None,
         "note": "Netflow = exchange inflow − outflow (native BTC)",
     })
+    if series and not any(isinstance(pt, dict) and pt.get("cmStatus") for pt in series):
+        payload["cmStatusChecked"] = True
     cache_set(cache_key, payload)
     return payload

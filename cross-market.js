@@ -705,7 +705,7 @@ async function xmTryBrowserVenues() {
 }
 
 async function xmTryCrossMarketApi() {
-  for (const url of [`${XM_API}?refresh=1`, XM_API]) {
+  for (const url of [XM_API, `${XM_API}?refresh=1`]) {
     const data = await xmFetchJson(url);
     if (xmValidSnapshot(data) && !xmLooksLikeDemo(data)) {
       xmLastFetchNote = "cross-market API";
@@ -718,9 +718,9 @@ async function xmTryCrossMarketApi() {
 
 async function xmTryExchangesBridge() {
   const pairs = [
-    ["/api/exchanges/spot?refresh=1", "/api/exchanges/perp?refresh=1"],
-    ["/api/exchanges/spot?refresh=1", "/api/exchanges/perp"],
     ["/api/exchanges/spot", "/api/exchanges/perp"],
+    ["/api/exchanges/spot?refresh=1", "/api/exchanges/perp"],
+    ["/api/exchanges/spot?refresh=1", "/api/exchanges/perp?refresh=1"],
   ];
   for (const [spotUrl, perpUrl] of pairs) {
     const [spot, perp] = await Promise.all([xmFetchJson(spotUrl), xmFetchJson(perpUrl)]);
@@ -753,12 +753,54 @@ function xmFinalizeSnapshot(snap, source, live, browserMeta) {
   return { data: snap, live: live || Boolean(browserMeta?.venueCount), source };
 }
 
+let xmBrowserInflight = null;
+let xmBrowserLast = null;
+
+function xmBrowserBundle() {
+  if (!xmBrowserInflight) {
+    xmBrowserInflight = xmTryBrowserVenues()
+      .then((value) => {
+        if (value) xmBrowserLast = value;
+        return value || xmBrowserLast;
+      })
+      .finally(() => {
+        xmBrowserInflight = null;
+      });
+  }
+  return xmBrowserInflight;
+}
+
+function xmWithin(promise, ms) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (!settled) resolve(null);
+    }, ms);
+    promise.then(
+      (value) => {
+        settled = true;
+        clearTimeout(timer);
+        resolve(value);
+      },
+      () => {
+        settled = true;
+        clearTimeout(timer);
+        resolve(null);
+      },
+    );
+  });
+}
+
 async function xmFetchSnapshot() {
-  const [browser, apiLive, bridged] = await Promise.all([
-    xmTryBrowserVenues(),
-    xmTryCrossMarketApi(),
-    xmTryExchangesBridge(),
-  ]);
+  const browserPromise = xmBrowserBundle();
+  const apiPromise = xmTryCrossMarketApi();
+  const bridgePromise = xmTryExchangesBridge();
+  const apiLive = await apiPromise;
+  const apiReady = !!(apiLive?.data && xmValidSnapshot(apiLive.data) && !xmLooksLikeDemo(apiLive.data));
+  const bridged = await bridgePromise;
+  // A disk snapshot paints at once. Browser venues merge when they are already in hand.
+  let browser = await xmWithin(browserPromise, apiReady ? 300 : 8000);
+  if (!browser) browser = xmBrowserLast;
 
   let snap = null;
   let live = false;

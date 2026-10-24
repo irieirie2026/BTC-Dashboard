@@ -274,22 +274,28 @@ const MENU_TREE = {
             label: "Price & Basis",
             accent: "#f59e0b",
             accentDim: "rgba(245, 158, 11, 0.18)",
+            onShow: () => window.pollPerpWhileOpen?.(),
           },
           sentiment: {
             label: "Sentiment",
             accent: "#ea580c",
             accentDim: "rgba(234, 88, 12, 0.18)",
+            onShow: () => window.pollPerpWhileOpen?.(),
           },
           indicators: {
             label: "Indicators",
             accent: "#fb923c",
             accentDim: "rgba(251, 146, 60, 0.18)",
+            onShow: () => window.pollPerpWhileOpen?.(),
           },
           liquidations: {
             label: "Liquidations",
             accent: "#f6465d",
             accentDim: "rgba(246, 70, 93, 0.18)",
-            onShow: () => window.loadLiquidations?.(),
+            onShow: () => {
+              window.pollPerpWhileOpen?.();
+              window.loadLiquidations?.();
+            },
           },
         },
       },
@@ -1896,6 +1902,7 @@ const MenuController = {
     applyMenuTheme(l1, l2, l3, activeL4);
     updateBreadcrumb(l1, l2, l3, activeL4);
     runOnShow(l1, l2, l3, activeL4);
+    persistMenuSelection();
     requestAnimationFrame(() => scrollActiveTabIntoView(4));
   },
 
@@ -1934,6 +1941,7 @@ const MenuController = {
     applyMenuTheme(l1, l2, activeL3);
     updateBreadcrumb(l1, l2, activeL3);
     runOnShow(l1, l2, activeL3);
+    persistMenuSelection();
     if (l1 === "onchain") {
       setTimeout(() => window.refreshOnchainCharts?.(l2), 200);
     }
@@ -1965,11 +1973,13 @@ const MenuController = {
       applyMenuTheme(l1, activeL2);
       updateBreadcrumb(l1, activeL2);
       runOnShow(l1, activeL2);
+      persistMenuSelection();
       requestAnimationFrame(() => scrollActiveTabIntoView(2));
       return;
     }
 
-    const savedL3 = localStorage.getItem(MENU_L3_KEY);
+    const scoped = readScoped(l1);
+    const savedL3 = scoped?.l3 || localStorage.getItem(MENU_L3_KEY);
     // When entering Statistics, prefer Summary unless user already chose Correlation
     let preferL3 = savedL3;
     if (l1 === "stats" && activeL2 === "statistics" && savedL3 === "correlation") {
@@ -1985,12 +1995,17 @@ const MenuController = {
     this.l1 = l1;
 
     let savedL2 = null;
-    let savedL3 = null;
-    try {
-      savedL2 = localStorage.getItem(MENU_L2_KEY);
-      savedL3 = localStorage.getItem(MENU_L3_KEY);
-    } catch (_) {
-      /* private mode / quota */
+    const scoped = readScoped(l1);
+    if (scoped?.l2) {
+      savedL2 = scoped.l2;
+    } else {
+      try {
+        if (localStorage.getItem(MENU_L1_KEY) === l1) {
+          savedL2 = localStorage.getItem(MENU_L2_KEY);
+        }
+      } catch (_) {
+        /* private mode / quota */
+      }
     }
     const activeL2 = normalizeL2(l1, savedL2);
 
@@ -2007,9 +2022,6 @@ const MenuController = {
     } catch (_) {
       /* a full quota must not block the tab */
     }
-    try {
-      syncSectionUrl(l1);
-    } catch (_) {}
 
     const meta = DASHBOARD_META[l1] || DASHBOARD_META.market;
     const subtitle = document.querySelector(".subtitle");
@@ -2154,13 +2166,78 @@ function sectionPathFor(l1) {
   return `/${l1}`;
 }
 
-/** Keep the address bar on the open desk so a reload does not depend on `/`. */
+const MENU_SCOPED_KEY = "btc-menu-scoped";
+
+function readScoped(l1) {
+  try {
+    const all = JSON.parse(localStorage.getItem(MENU_SCOPED_KEY) || "{}");
+    return all?.[l1] || null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function writeScoped(l1, l2, l3, l4) {
+  if (!l1) return;
+  try {
+    const all = JSON.parse(localStorage.getItem(MENU_SCOPED_KEY) || "{}");
+    all[l1] = { l2: l2 || null, l3: l3 || null, l4: l4 || null };
+    localStorage.setItem(MENU_SCOPED_KEY, JSON.stringify(all));
+  } catch (_) {}
+}
+
+function readHashSelection() {
+  const raw = (window.location.hash || "").replace(/^#/, "");
+  if (!raw) return null;
+  const parts = raw.split("/").filter(Boolean);
+  const l1 = parts[0];
+  if (!l1 || !MENU_TREE[l1]) return null;
+  return { l1, l2: parts[1] || null, l3: parts[2] || null, l4: parts[3] || null };
+}
+
+function persistMenuSelection() {
+  const mc = window.MenuController;
+  if (!mc?.l1) return;
+  writeScoped(mc.l1, mc.l2, mc.l3, mc.l4);
+  try {
+    localStorage.setItem(MENU_L1_KEY, mc.l1);
+    if (mc.l2) localStorage.setItem(MENU_L2_KEY, mc.l2);
+  } catch (_) {}
+  syncSectionUrl(mc.l1);
+  window.DashboardSWR?.paintViewClocks?.();
+}
+
+function applyHashSelection() {
+  const sel = readHashSelection();
+  if (!sel) return false;
+  try {
+    localStorage.setItem(MENU_L1_KEY, sel.l1);
+    if (sel.l2) localStorage.setItem(MENU_L2_KEY, sel.l2);
+    else localStorage.removeItem(MENU_L2_KEY);
+    if (sel.l3) localStorage.setItem(MENU_L3_KEY, sel.l3);
+    else localStorage.removeItem(MENU_L3_KEY);
+    if (sel.l4) localStorage.setItem(MENU_L4_KEY, sel.l4);
+    else localStorage.removeItem(MENU_L4_KEY);
+  } catch (_) {}
+  writeScoped(sel.l1, sel.l2, sel.l3, sel.l4);
+  return true;
+}
+
+/** Keep the address bar on the open desk, including the sub-tab hash. */
 function syncSectionUrl(l1) {
   if (!window.history?.replaceState) return;
   const path = (window.location.pathname || "/").replace(/\/$/, "") || "/";
-  const next = sectionPathFor(l1);
-  if (l1 && l1 !== "home" && (path === next || path.startsWith(`${next}/`))) return;
-  if ((!l1 || l1 === "home") && isAppRootPath(path)) return;
+  const nextPath = sectionPathFor(l1);
+  const mc = window.MenuController;
+  const parts = [l1 || mc?.l1, mc?.l2, mc?.l3, mc?.l4].filter(Boolean);
+  const hash = parts.length ? `#${parts.join("/")}` : "";
+  const keepPath = l1 && l1 !== "home"
+    ? (path === nextPath || path.startsWith(`${nextPath}/`))
+    : isAppRootPath(path);
+  const pathOut = keepPath ? (path || "/") : nextPath;
+  const next = `${pathOut}${hash}`;
+  const current = `${path}${window.location.hash || ""}`;
+  if (current === next) return;
   window.history.replaceState({}, "", next);
 }
 
@@ -2331,14 +2408,17 @@ function initDashboardSwitcher() {
   if (menuInitialized) return;
   menuInitialized = true;
 
-  migrateStatsValuationMenu();
-  migrateMarketMenu();
-  migrateSocialMenu();
-  migrateCrossMarketMenu();
+  const fromHash = applyHashSelection();
+  if (!fromHash) {
+    migrateStatsValuationMenu();
+    migrateMarketMenu();
+    migrateSocialMenu();
+    migrateCrossMarketMenu();
 
-  migrateMiscMenu();
-  migrateValuationMenu();
-  bootstrapPathMenu();
+    migrateMiscMenu();
+    migrateValuationMenu();
+    bootstrapPathMenu();
+  }
   // A leftover service worker (none is registered by this app) can reload
   // the document on its own timer and land the user back on whatever `/` opens.
   if (navigator.serviceWorker?.getRegistrations) {
@@ -2352,7 +2432,7 @@ function initDashboardSwitcher() {
   if (tree) {
     tree.addEventListener("click", (event) => {
       const l1Tab = event.target.closest(".dash-tab--l1");
-      if (l1Tab?.dataset.dashboard) {
+      if (l1Tab?.dataset.dashboard && l1Tab.dataset.dashboard !== MenuController.l1) {
         MenuController.setLevel1(l1Tab.dataset.dashboard);
       }
     });

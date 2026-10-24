@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -23,6 +24,8 @@ CROSSES = [
 FX_PAIRS = ("KRW", "JPY", "EUR", "GBP", "AUD", "CAD")
 
 _cache: dict[str, dict] = {}
+_refresh_lock = threading.Lock()
+_refresh_running = False
 
 
 def _safe_float(val) -> float | None:
@@ -402,12 +405,51 @@ def _pack_snapshot(
     }
 
 
+def _snapshot_from_exchange_disk() -> dict | None:
+    """Pack the 15-minute exchange table. No FX or venue network calls."""
+    venues, errors = _venues_from_exchange_cache()
+    if len(venues) < 2:
+        return None
+    data = _pack_snapshot(venues, errors, {}, fallback=False)
+    data["stale"] = True
+    data["fromCache"] = True
+    return data
+
+
+def _kick_cross_market_refresh() -> None:
+    """Fill the 4s memory cache off the request thread after a cold disk serve."""
+    global _refresh_running
+    with _refresh_lock:
+        if _refresh_running:
+            return
+        _refresh_running = True
+
+    def _run() -> None:
+        global _refresh_running
+        try:
+            get_cross_market_snapshot(refresh=True)
+        except Exception:
+            pass
+        finally:
+            with _refresh_lock:
+                _refresh_running = False
+
+    threading.Thread(target=_run, daemon=True, name="btc-xmarket-refresh").start()
+
+
 def get_cross_market_snapshot(*, refresh: bool = False) -> dict:
     key = "cross_market:snapshot"
     now = time.time()
     entry = _cache.get(key)
     if not refresh and entry and now - entry["ts"] < CACHE_TTL:
         return entry["data"]
+
+    # A restart has no 4s memory entry. The exchange table is already on disk.
+    if not refresh and entry is None:
+        disk = _snapshot_from_exchange_disk()
+        if disk:
+            _kick_cross_market_refresh()
+            return disk
 
     try:
         fx, (venues, errors) = {}, ([], [])

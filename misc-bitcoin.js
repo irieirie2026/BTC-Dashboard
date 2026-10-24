@@ -101,11 +101,14 @@ function mbFmtValue(val, format) {
 function mbSourceBadge(source, extra = {}) {
   if (!source) return '<span class="md-source md-source--na">—</span>';
   const cls = MB_SOURCE_CLASS[source] || "na";
-  let label = source;
-  if (extra.stale) label += " · stale";
-  if (extra.isEstimate) label += " · est";
-  if (extra.mayProxy) label += " · proxy";
-  return `<span class="md-source md-source--${cls}" title="${label}">${source.split(" ·")[0]}</span>`;
+  const flags = [];
+  if (extra.stale) flags.push("stale");
+  if (extra.isEstimate) flags.push("est");
+  if (extra.mayProxy) flags.push("proxy");
+  if (extra.preliminary) flags.push("preliminary");
+  const base = source.split(" ·")[0];
+  const label = flags.length ? `${base} · ${flags.join(" · ")}` : base;
+  return `<span class="md-source md-source--${cls}" title="${label}">${label}</span>`;
 }
 
 function mbPlotLayoutCategory(title, height = 340, opts = {}) {
@@ -3947,8 +3950,10 @@ function mbBuildOnchainChartCommentary(key, chartData, mempool = null) {
         reading || "",
       ];
     case "exchange_netflow": {
+      const netflowCell = mbSnapshot?.cells?.exchange_netflow;
       const preliminary = !!(
-        chartData?.latest?.preliminary
+        netflowCell?.preliminary
+        || chartData?.latest?.preliminary
         || chartData?.latestPreliminary
         || chartData?.series?.[chartData.series.length - 1]?.preliminary
       );

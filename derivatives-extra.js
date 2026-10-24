@@ -382,15 +382,16 @@ async function loadDeliveryFutures() {
         }
         deliveryData = data;
         renderDeliveryScreen();
-        if (updateEl) {
-          updateEl.textContent = swr.formatPanelMeta({
-            fetchedAt: data.fetchedAt,
-            source: src,
-            stale: opts.stale,
-            refreshing: opts.refreshing,
-            refreshFailed: opts.refreshFailed,
-          });
-        }
+        swr.rememberViewClock?.("derivatives", {
+          l2: "futures",
+          fetchedAt: data.fetchedAt,
+          source: src,
+          cardIds: ["delivery-update"],
+          staleAfterMs: 120_000,
+          stale: opts.stale,
+          refreshing: opts.refreshing,
+          refreshFailed: opts.refreshFailed,
+        });
       },
     });
   } catch (err) {
@@ -964,27 +965,16 @@ async function loadOptionsData() {
         optionsData = data;
         renderOptionsVolScreen();
         renderOptionsOiScreen();
-        const stamp = swr.formatPanelMeta({
+        swr.rememberViewClock?.("derivatives", {
+          l2: "options",
           fetchedAt: data.fetchedAt,
-          source: "Deribit BTC",
+          source: data.source || "Deribit BTC",
+          cardIds: ["options-vol-update", "options-oi-update"],
+          staleAfterMs: 120_000,
           stale: opts.stale,
           refreshing: opts.refreshing,
           refreshFailed: opts.refreshFailed,
         });
-        if (volUpdate) volUpdate.textContent = stamp;
-        if (oiUpdate) oiUpdate.textContent = stamp;
-        const optionsVisible = document.querySelector(
-          '#dashboard-derivatives .menu-screen[data-l2="options"]:not([hidden])',
-        );
-        if (optionsVisible) {
-          swr.setHeaderStamp("derivatives", {
-            fetchedAt: data.fetchedAt,
-            source: data.source || "Deribit",
-            stale: opts.stale,
-            refreshing: opts.refreshing,
-            refreshFailed: opts.refreshFailed,
-          });
-        }
       },
     });
   } catch (err) {
