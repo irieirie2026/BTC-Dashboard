@@ -1,7 +1,7 @@
 const SYMBOL = "BTCUSDT";
 
 const INDICATOR_POLL_MS = 300_000;
-const FUTURES_POLL_MS = 30_000;
+const FUTURES_POLL_MS = 5_000;
 const DEPTH_POLL_MS = 15_000;
 
 const MARKET_INDICATOR_TF = {
@@ -27,6 +27,7 @@ let bookRefreshFailed = false;
 let lastFuturesFetchedAt = null;
 let lastFuturesSource = "";
 let futuresLoadInflight = false;
+let perpPollInflight = false;
 
 let prevPrice = null;
 let ws = null;
@@ -112,12 +113,41 @@ function perpViewOpen() {
   return document.body?.dataset?.l1 === "derivatives" && window.MenuController?.l2 === "perp";
 }
 
+function perpQuoteShouldApply(previousFetchedAt, incomingFetchedAt) {
+  if (!incomingFetchedAt) return false;
+  if (!previousFetchedAt) return true;
+  const incoming = Date.parse(incomingFetchedAt);
+  const current = Date.parse(previousFetchedAt);
+  if (!Number.isFinite(incoming) || !Number.isFinite(current)) {
+    return String(incomingFetchedAt) !== String(previousFetchedAt);
+  }
+  return incoming > current;
+}
+
+function perpAgeIsStale(fetchedAt, nowMs) {
+  const t = Date.parse(fetchedAt);
+  if (!Number.isFinite(t)) return false;
+  return nowMs - t >= 120_000;
+}
+
 function paintFuturesStamp() {
   const ts = lastFuturesFetchedAt;
   if (!ts) return;
   const src = lastFuturesSource || "perp";
   const ms = window.DashboardSWR?.fetchedAgeMs?.(ts);
   const sec = ms == null || !Number.isFinite(ms) ? null : Math.max(0, Math.round(ms / 1000));
+  const stale = perpAgeIsStale(ts, Date.now());
+  const text = window.DashboardSWR?.formatLiveStamp?.({
+    fetchedAt: ts,
+    source: `${src} lastPrice`,
+    staleAfterMs: 120_000,
+  });
+  if (perpViewOpen() && text) {
+    for (const id of ["futures-update", "futures-sentiment-update", "futures-header-update"]) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+  }
   window.DashboardSWR?.rememberViewClock?.("derivatives", {
     l2: "perp",
     fetchedAt: ts,
@@ -126,7 +156,11 @@ function paintFuturesStamp() {
     staleAfterMs: 120_000,
   });
   const srcEl = document.getElementById("fut-price-source");
-  if (srcEl) srcEl.textContent = sec == null ? `${src} lastPrice` : `${src} lastPrice · ${sec}s`;
+  if (srcEl) {
+    srcEl.textContent = sec == null
+      ? `${src} lastPrice`
+      : `${src} lastPrice · ${sec}s${stale ? " · STALE" : ""}`;
+  }
 }
 
 function formatPct(n, decimals = 2) {
@@ -1354,26 +1388,24 @@ setInterval(() => {
   loadMarketIndicators(activeIndicatorTf);
 }, INDICATOR_POLL_MS);
 async function pollPerpWhileOpen() {
-  if (!perpViewOpen() || futuresLoadInflight) return;
-  futuresLoadInflight = true;
+  if (!perpViewOpen() || perpPollInflight) return;
+  perpPollInflight = true;
   try {
     const perp = await fetchJsonTimeout("/api/market/perp", 12000);
-    if (!perp?.lastPrice || !perp.fetchedAt) return;
-    const incoming = Date.parse(perp.fetchedAt);
-    const current = lastFuturesFetchedAt ? Date.parse(lastFuturesFetchedAt) : 0;
-    if (Number.isFinite(incoming) && Number.isFinite(current) && incoming < current) return;
-    const bundle = perpBundleFromSnapshot(perp);
-    applyFuturesBundle(bundle);
-    lastFuturesFetchedAt = perp.fetchedAt;
-    lastFuturesSource = bundle.priceSource || bundle.venue || "OKX";
-    futuresVenue = String(perp.venue || futuresVenue || "okx").toLowerCase();
-    window.DashboardSWR?.persistPayload?.("derivatives:futures", bundle, perp.fetchedAt);
-    setConnectionStatus("connected", "futures-status");
+    if (perp?.lastPrice && perp.fetchedAt && perpQuoteShouldApply(lastFuturesFetchedAt, perp.fetchedAt)) {
+      const bundle = perpBundleFromSnapshot(perp);
+      applyFuturesBundle(bundle);
+      lastFuturesFetchedAt = perp.fetchedAt;
+      lastFuturesSource = bundle.priceSource || bundle.venue || "OKX";
+      futuresVenue = String(perp.venue || futuresVenue || "okx").toLowerCase();
+      window.DashboardSWR?.persistPayload?.("derivatives:futures", bundle, perp.fetchedAt);
+      setConnectionStatus("connected", "futures-status");
+    }
     paintFuturesStamp();
   } catch (_) {
     paintFuturesStamp();
   } finally {
-    futuresLoadInflight = false;
+    perpPollInflight = false;
   }
 }
 

@@ -19,5 +19,6 @@
  * 1.1.8 repairs the r17 desks.
  * 1.1.9 repairs the r18 desks.
  * 1.1.10 fixes the clock zone (r19-1).
+ * 1.1.11 keeps the Perp UPDATED stamp on every fetch (r19-2).
  */
-window.APP_VERSION = "1.1.10";
+window.APP_VERSION = "1.1.11";

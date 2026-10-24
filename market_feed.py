@@ -888,13 +888,26 @@ def get_liquidations(*, refresh: bool = False) -> dict[str, Any]:
     return _cache_set(key, payload)
 
 
-def get_perp_snapshot(*, refresh: bool = False) -> dict[str, Any]:
+def get_perp_snapshot(*, refresh: bool = False, allow_stale: bool = False) -> dict[str, Any]:
+    """Return the perp quote.
+
+    The open Perp tab reads with allow_stale so an expired entry still carries
+    the last fetchedAt. A live fetch on that path was slow enough for the
+    browser to abort, and the card kept the previous stamp.
+    """
     key = "market:perp:v3"
     if not refresh:
-        cached = _cache_get(key)
-        if cached:
-            cached["fromCache"] = True
-            return cached
+        hit = _CACHE.get(key)
+        if hit:
+            stored_at, val = hit
+            fresh = time.time() - stored_at <= CACHE_TTL
+            if fresh or (allow_stale and val.get("lastPrice")):
+                cached = dict(val)
+                cached["fromCache"] = True
+                if not fresh:
+                    cached["stale"] = True
+                return cached
+            _CACHE.pop(key, None)
     errors: list[str] = []
     out: dict[str, Any] = {"fetchedAt": _now_iso()}
     for name, fn in (("okx", _okx_perp), ("hyperliquid", _hl_perp), ("bybit", _bybit_perp)):

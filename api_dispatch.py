@@ -738,7 +738,7 @@ def dispatch_api(path, query, body: dict | None = None):
         if sub in ("eth", "eth-daily"):
             return get_eth_daily(refresh=refresh)
         if sub == "perp":
-            return get_perp_snapshot(refresh=refresh)
+            return get_perp_snapshot(refresh=refresh, allow_stale=not refresh)
         if sub in ("liquidations", "liq"):
             return get_liquidations(refresh=refresh)
         if sub in ("futures", "delivery"):
