@@ -1,8 +1,17 @@
 const EXCHANGES_SECTIONS = ["overview", "spot", "perp", "volume"];
 
 const EXCHANGES_POLL_MS = 300_000;
+// The shared warm loop can leave a perp fetchedAt older than a minute.
+// refresh=1 is the existing read that stamps a new one. Overview, spot,
+// and volume stay on the 5 minute poll and the 10 minute STALE mark.
+const EXCHANGES_PERP_POLL_MS = 30_000;
+const EXCHANGES_PERP_WATCH_MS = 5_000;
+const EXCHANGES_PERP_STALE_MS = 120_000;
 const exchangesCache = {};
 let exchangesPollTimer = null;
+let exchangesPerpPollTimer = null;
+let exchangesPerpWatchTimer = null;
+let exchangesPerpInflight = false;
 let exchangesActiveSection = null;
 let exchangesReady = false;
 
@@ -81,8 +90,9 @@ function changeClass(col, v) {
   return "";
 }
 
-async function fetchExchangesSection(section) {
-  const res = await fetch(`/api/exchanges/${section}?_=${Date.now()}`);
+async function fetchExchangesSection(section, refresh = false) {
+  const extra = section === "perp" && refresh ? "&refresh=1" : "";
+  const res = await fetch(`/api/exchanges/${section}?_=${Date.now()}${extra}`);
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || `Exchanges ${section} ${res.status}`);
@@ -326,6 +336,39 @@ function renderExchangesChart(section, data) {
   );
 }
 
+function exchangesSectionStaleMs(section) {
+  return section === "perp" ? EXCHANGES_PERP_STALE_MS : EXCHANGES_POLL_MS * 2;
+}
+
+function exchangesPerpShouldApply(previousFetchedAt, incomingFetchedAt) {
+  if (!incomingFetchedAt) return false;
+  if (!previousFetchedAt) return true;
+  const incoming = Date.parse(incomingFetchedAt);
+  const current = Date.parse(previousFetchedAt);
+  if (!Number.isFinite(incoming) || !Number.isFinite(current)) {
+    return String(incomingFetchedAt) !== String(previousFetchedAt);
+  }
+  return incoming > current;
+}
+
+function exchangesPerpAgeIsStale(fetchedAt, nowMs) {
+  const t = Date.parse(fetchedAt);
+  if (!Number.isFinite(t)) return false;
+  return nowMs - t >= EXCHANGES_PERP_STALE_MS;
+}
+
+function rememberExchangesPerpClock(data) {
+  const swr = window.DashboardSWR;
+  if (!swr?.rememberViewClock || !data?.fetchedAt) return;
+  swr.rememberViewClock("exchanges", {
+    l2: "perp",
+    fetchedAt: data.fetchedAt,
+    source: data.source || "Exchange APIs",
+    cardIds: ["exchanges-perp-update"],
+    staleAfterMs: EXCHANGES_PERP_STALE_MS,
+  });
+}
+
 function exchangeAgeLabel(data) {
   const t = data?.fetchedAt ? Date.parse(data.fetchedAt) : NaN;
   const sec = Number.isFinite(t)
@@ -340,6 +383,10 @@ function exchangeAgeLabel(data) {
 
 function renderExchangesScreen(section, data, opts = {}) {
   if (!data) return;
+  if (section === "perp" && !exchangesPerpShouldApply(exchangesCache.perp?.fetchedAt, data.fetchedAt)) {
+    rememberExchangesPerpClock(exchangesCache.perp);
+    return;
+  }
   exchangesCache[section] = data;
 
   const updateEl = exEl(`exchanges-${section}-update`);
@@ -348,7 +395,7 @@ function renderExchangesScreen(section, data, opts = {}) {
     const meta = window.DashboardSWR?.formatPanelMeta({
       fetchedAt: data.fetchedAt,
       source: data.source || "Exchange APIs",
-      staleAfterMs: EXCHANGES_POLL_MS * 2,
+      staleAfterMs: exchangesSectionStaleMs(section),
       forceStale: !!data.stale,
       refreshing,
       refreshFailed: opts.refreshFailed,
@@ -364,6 +411,9 @@ function renderExchangesScreen(section, data, opts = {}) {
   renderExchangesTable(section, data);
   renderExchangesChart(section, data);
   renderExchangesCommentary(section, data);
+  if (section === "perp") {
+    queueMicrotask(() => rememberExchangesPerpClock(exchangesCache.perp));
+  }
 
   const screen = document.querySelector(
     `#dashboard-exchanges .menu-screen[data-l2="${section}"]`,
@@ -374,17 +424,20 @@ function renderExchangesScreen(section, data, opts = {}) {
 async function loadExchangesSection(section) {
   if (!EXCHANGES_SECTIONS.includes(section)) return;
   exchangesActiveSection = section;
+  if (section === "perp" && exchangesPerpInflight) return;
 
   const swr = window.DashboardSWR;
   if (!swr) return;
+  if (section === "perp") exchangesPerpInflight = true;
 
   try {
     await swr.runSWR({
       key: `exchanges:${section}`,
       l1: "exchanges",
       source: "Exchange APIs",
-      staleAfterMs: EXCHANGES_POLL_MS * 2,
-      fetch: () => fetchExchangesSection(section),
+      staleAfterMs: exchangesSectionStaleMs(section),
+      updateHeader: section !== "perp",
+      fetch: () => fetchExchangesSection(section, section === "perp"),
       render: (data, opts = {}) => {
         const body = exEl(`exchanges-${section}-table-body`);
         if (opts.loading) {
@@ -417,14 +470,42 @@ async function loadExchangesSection(section) {
     if (body && !exchangesCache[section]) {
       body.innerHTML = '<tr><td colspan="6">Failed to load exchange data.</td></tr>';
     }
+    if (section === "perp") rememberExchangesPerpClock(exchangesCache.perp);
+  } finally {
+    if (section === "perp") exchangesPerpInflight = false;
+  }
+}
+
+async function refreshExchangesPerpCache() {
+  if (exchangesActiveSection !== "perp" || exchangesPerpInflight) return;
+  try {
+    const fresh = await fetchExchangesSection("perp", false);
+    if (exchangesActiveSection !== "perp") return;
+    renderExchangesScreen("perp", fresh);
+  } catch (err) {
+    console.error("Exchanges perp watch failed:", err);
+    rememberExchangesPerpClock(exchangesCache.perp);
   }
 }
 
 function startExchangesPoll() {
-  if (exchangesPollTimer) return;
-  exchangesPollTimer = setInterval(() => {
-    if (exchangesActiveSection) loadExchangesSection(exchangesActiveSection);
-  }, EXCHANGES_POLL_MS);
+  if (!exchangesPollTimer) {
+    exchangesPollTimer = setInterval(() => {
+      if (exchangesActiveSection && exchangesActiveSection !== "perp") {
+        loadExchangesSection(exchangesActiveSection);
+      }
+    }, EXCHANGES_POLL_MS);
+  }
+  if (!exchangesPerpPollTimer) {
+    exchangesPerpPollTimer = setInterval(() => {
+      if (exchangesActiveSection === "perp") loadExchangesSection("perp");
+    }, EXCHANGES_PERP_POLL_MS);
+  }
+  if (!exchangesPerpWatchTimer) {
+    exchangesPerpWatchTimer = setInterval(() => {
+      if (exchangesActiveSection === "perp") refreshExchangesPerpCache();
+    }, EXCHANGES_PERP_WATCH_MS);
+  }
 }
 
 function initExchangesModule() {
