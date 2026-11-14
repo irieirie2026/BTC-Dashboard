@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-11-13T23:15:33Z",
+  "fetchedAt": "2026-11-14T04:59:09Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Erik Voorhees(@ErikVoorhees), an early #Bitcoin supporter and founder of ShapeShift, spent 4.75M $USDT to buy 2,504 $ETH at $1,896 in the past hour. https://arkm.com/explorer/address/0x3358Fac53CD1e23AcA4025c644d3cE2A48E64a22",
+      "link": "https://x.com/lookonchain/status/2121465585724997997#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "Erik Voorhees( @ErikVoorhees ), an early #Bitcoin supporter and founder of ShapeShift, spent 4.75M $USDT to buy 2,504 $ETH at $1,896 in the past hour. arkm.com/explorer/address/0x\u2026",
+      "publishedAt": "2026-11-14T04:49:45+00:00",
+      "publishedTs": 1794631785.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin is the biggest rabbit hole of all",
+      "link": "https://x.com/DocumentingBTC/status/2121424050379685903#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Bitcoin is the biggest rabbit hole of all Video",
+      "publishedAt": "2026-11-14T02:04:42+00:00",
+      "publishedTs": 1794621882.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: Correction: $549 million*",
+      "link": "https://x.com/BitcoinMagazine/status/2121404760284664032#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Correction: $549 million*",
+      "publishedAt": "2026-11-14T00:48:03+00:00",
+      "publishedTs": 1794617283.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "this is pete buttigieg's fault, I just can't prove it",
+      "link": "https://x.com/nic_carter/status/2121401108199551330#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-11-14T00:33:32+00:00",
+      "publishedTs": 1794616412.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "as someone well versed in \u201csystems thinking\u201d i advise you to panic and freak the fuck out",
+      "link": "https://x.com/hopes_revenge/status/2121391396372488622#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-11-13T23:54:57+00:00",
+      "publishedTs": 1794614097.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "This week at Bitcoin Magazine \ud83d\udcf0 - BMTV - Strategy +1036 BTC - Strive + 29 BTC - BlackRock - Super League +16 BTC - BitFuFu +66 BTC - Trump +1510 BTC - Hive Digital - Grant Cardone +20 BTC - El Savador - MSCI & Strategy - Russia - Kazakhstan - Square - Miami & BTC - Isreal",
+      "link": "https://x.com/theonlyposted/status/2121380867436167212#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "This week at Bitcoin Magazine \ud83d\udcf0 - BMTV - Strategy +1036 BTC - Strive + 29 BTC - BlackRock - Super League +16 BTC - BitFuFu +66 BTC - Trump +1510 BTC - Hive Digital - Grant Cardone +20 BTC - El Savador - MSCI &amp; Strategy - Russia - Kazakhstan - Square - Miami &amp; BTC - Isreal",
+      "publishedAt": "2026-11-13T23:13:06+00:00",
+      "publishedTs": 1794611586.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Ethereum $ETH, Linux, and Python are among the most important open-source projects ever built. Our Head of Research, @LowBeta, was featured in Both Sides of the Coin, the new book by @JSeyff and @EricBalchunas on the story behind Bitcoin ETFs.",
+      "link": "https://x.com/Grayscale/status/2121375322981777874#m",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
+      "summary": "Ethereum $ETH , Linux, and Python are among the most important open-source projects ever built. Our Head of Research, @LowBeta , was featured in Both Sides of the Coin, the new book by @JSeyff and @EricBalchunas on the story behind Bitcoin ETFs.",
+      "publishedAt": "2026-11-13T22:51:04+00:00",
+      "publishedTs": 1794610264.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "JUST IN: Bitcoin is bouncing off its 200-Week Moving Average \ud83d\udc40 HODL \u270a",
       "link": "https://x.com/BitcoinMagazine/status/2121364542857044360#m",
@@ -432,19 +523,6 @@
       "isRetweet": true
     },
     {
-      "title": "JUST IN: Bitcoin falls to $68,656, as $297 million in BTC longs get liquidated in 60 minutes We\u2019re HODLing! \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2121089466953584770#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-13T03:55:11+00:00",
-      "publishedTs": 1794542111.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "It's liquidation day! Four whales got liquidated for over $10M each, with a total of $143.89M in positions wiped out! 0x6046: 12,742 $ETH ($25.2M) and 536.89 $BTC ($38.77M) 0x01e2: 511 $BTC($36.4M) 0x5f91: 357.09 $BTC ($25.15M) 0x4a20: 112,176 $SOL ($9M), 82.66 $BTC ($5.85M), and",
       "link": "https://x.com/lookonchain/status/2121081124336415037#m",
       "source": "@lookonchain",
@@ -453,19 +531,6 @@
       "summary": "It's liquidation day! Four whales got liquidated for over $10M each, with a total of $143.89M in positions wiped out! 0x6046: 12,742 $ETH ($25.2M) and 536.89 $BTC ($38.77M) 0x01e2: 511 $BTC ($36.4M) 0x5f91: 357.09 $BTC ($25.15M) 0x4a20: 112,176 $SOL ($9M), 82.66 $BTC ($5.85M), an",
       "publishedAt": "2026-11-13T03:22:02+00:00",
       "publishedTs": 1794540122.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Bitcoin falls below $70,000 \ud83d\udc40 HODL!",
-      "link": "https://x.com/BitcoinMagazine/status/2121078855536689530#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-13T03:13:01+00:00",
-      "publishedTs": 1794539581.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -664,19 +729,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Nov 12 Update: #Bitcoin ETFs: 1D NetFlow: -3,621 $BTC(-$262.8M)\ud83d\udd34 7D NetFlow: -19,453 $BTC(-$1.41B)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -66,020 $ETH(-$132.41M)\ud83d\udd34 7D NetFlow: -210,673 $ETH(-$422.51M)\ud83d\udd34",
-      "link": "https://x.com/lookonchain/status/2120876365113336029#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Nov 12 Update: #Bitcoin ETFs: 1D NetFlow: -3,621 $BTC (-$262.8M)\ud83d\udd34 7D NetFlow: -19,453 $BTC (-$1.41B)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -66,020 $ETH (-$132.41M)\ud83d\udd34 7D NetFlow: -210,673 $ETH (-$422.51M)\ud83d\udd34",
-      "publishedAt": "2026-11-12T13:48:24+00:00",
-      "publishedTs": 1794491304.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "Roundhill is taking on the MANGOS ETFs w $MAGP which is magnificent 7 plus a few AI stocks.",
@@ -1134,19 +1186,6 @@
       "isRetweet": false
     },
     {
-      "title": "Today, 1 in 2 Ethereum blocks will be protected. With Phylax, apps can set circuit breakers that Titan Builder enforces at block construction, excluding transactions that violate app-defined rules before settlement. It's a simple idea: hacks should not settle.",
-      "link": "https://x.com/phylaxsystems/status/2120169760776450086#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "Today, 1 in 2 Ethereum blocks will be protected. With Phylax, apps can set circuit breakers that Titan Builder enforces at block construction, excluding transactions that violate app-defined rules before settlement. It's a simple idea: hacks should not settle. Video",
-      "publishedAt": "2026-11-10T15:00:36+00:00",
-      "publishedTs": 1794322836.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "\u20bfaby Bear gets it. https://t.co/LUe0u6VvVp",
       "link": "https://x.com/saylor/status/2120158698278682752#m",
       "source": "@saylor",
@@ -1233,19 +1272,6 @@
       "summary": "",
       "publishedAt": "2026-11-09T22:08:03+00:00",
       "publishedTs": 1794262083.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "This is how normies think data centers work",
-      "link": "https://x.com/Sovereign_Ctzn/status/2119903745073094810#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "This is how normies think data centers work Mary Pezzulo (@mary_pezzulo) Let me try and explain: a Krispy Kreme uses water to make doughnuts which can be eaten and coffee which can be drunken. The workers wash their hands so the food is sanitary and the customers use the bathroom",
-      "publishedAt": "2026-11-09T21:23:33+00:00",
-      "publishedTs": 1794259413.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -1519,19 +1545,6 @@
       "summary": "Why there will never be a better Bitcoin Video",
       "publishedAt": "2026-11-07T12:46:50+00:00",
       "publishedTs": 1794055610.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Who controls Bitcoin?",
-      "link": "https://x.com/DocumentingBTC/status/2118840771436748817#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Who controls Bitcoin? Video",
-      "publishedAt": "2026-11-06T22:59:40+00:00",
-      "publishedTs": 1794005980.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
