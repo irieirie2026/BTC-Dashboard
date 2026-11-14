@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-14T04:59:09Z",
+  "fetchedAt": "2026-11-14T12:01:33Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
     {
@@ -557,19 +557,6 @@
       "summary": "Trader 0x5f91 just got fully liquidated on his 357.09 $BTC ($25.15M) position! hypurrscan.io/address/0x5f91\u2026",
       "publishedAt": "2026-11-13T02:21:01+00:00",
       "publishedTs": 1794536461.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Gambler 0x01e2 got liquidated 6 times in the past 12 hours, with a total of 404.86 $BTC ($28.9M) liquidated! He still holds a long on 143.84 $BTC ($10.2M), with a new liquidation price of $70,712.57. https://hypurrscan.io/address/0x01e273fc08012db1b75e8ca93f8139bfac2ee977#perps",
-      "link": "https://x.com/lookonchain/status/2121056196602003781#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Gambler 0x01e2 got liquidated 6 times in the past 12 hours, with a total of 404.86 $BTC ($28.9M) liquidated! He still holds a long on 143.84 $BTC ($10.2M), with a new liquidation price of $70,712.57. hypurrscan.io/address/0x01e2\u2026",
-      "publishedAt": "2026-11-13T01:42:59+00:00",
-      "publishedTs": 1794534179.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
