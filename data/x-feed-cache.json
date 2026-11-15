@@ -1,7 +1,72 @@
 {
-  "fetchedAt": "2026-11-15T17:33:25Z",
+  "fetchedAt": "2026-11-15T22:29:13Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Type of alarm system you end up with when you hire the owner\u2019s nephew who is \u201cgood at computers\u201d to set up the IT",
+      "link": "https://x.com/nic_carter/status/2122073704784117978#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "Type of alarm system you end up with when you hire the owner\u2019s nephew who is \u201cgood at computers\u201d to set up the IT International Cyber Digest (@IntCyberDigest) \ud83d\udea8 BREAKING: This week's Microsoft Outlook outage stopped a chlorine alarm from reaching anyone at Germany's Phantasialand",
+      "publishedAt": "2026-11-15T21:06:12+00:00",
+      "publishedTs": 1794776772.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "My guess is the admin realizes the China hawks went too far and there are now discussions of bringing him back, cowed and equipped with a new China policy",
+      "link": "https://x.com/nic_carter/status/2122069752655052948#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "My guess is the admin realizes the China hawks went too far and there are now discussions of bringing him back, cowed and equipped with a new China policy First Squawk (@FirstSquawk) JENSEN HUANG IS DISCUSSING A COMEBACK AS NVIDIA CEO WITH ALLIES, WITH A \u201cWAR ROOM\u201d OF SILICON VAL",
+      "publishedAt": "2026-11-15T20:50:29+00:00",
+      "publishedTs": 1794775829.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "When you want to understand what\u2019s happening with Bitcoin, start with the data. Strategy\u2019s Bitcoin dashboard brings the key metrics into focus. https://www.strategy.com/bitcoin",
+      "link": "https://x.com/saylor/status/2122062138126823754#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "When you want to understand what\u2019s happening with Bitcoin, start with the data. Strategy\u2019s Bitcoin dashboard brings the key metrics into focus. strategy.com/bitcoin",
+      "publishedAt": "2026-11-15T20:20:14+00:00",
+      "publishedTs": 1794774014.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Security has finally been promoted to a first class citizen in the world of software engineering and internet infrastructure, because it's no longer feasible to sweep problems under the rug and gamble that they won't be found.",
+      "link": "https://x.com/lopp/status/2122038332926415342#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Security has finally been promoted to a first class citizen in the world of software engineering and internet infrastructure, because it's no longer feasible to sweep problems under the rug and gamble that they won't be found. NickH (@hash_bender) This is probably as good a time ",
+      "publishedAt": "2026-11-15T18:45:38+00:00",
+      "publishedTs": 1794768338.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Our business centers on the capital we hold and our ability to create credit. $MSTR $STRC",
+      "link": "https://x.com/Strategy/status/2122016502971093377#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Our business centers on the capital we hold and our ability to create credit. $MSTR $STRC Video",
+      "publishedAt": "2026-11-15T17:18:54+00:00",
+      "publishedTs": 1794763134.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Didn\u2019t need to be thinking about human centipede this early on a Sunday",
       "link": "https://x.com/nic_carter/status/2122006295977087272#m",
@@ -1108,19 +1173,6 @@
       "isRetweet": true
     },
     {
-      "title": "Bitcoin is Digital Capital. Strategy transforms it into Digital Credit and Digital Equity. Bringing $STRC and $MSTR onchain is another step toward capital markets that never close. https://www.okx.com/en-us/learn/okxice-tsv-launch?utm_source=chatgpt.com",
-      "link": "https://x.com/saylor/status/2120580116963004755#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is Digital Capital. Strategy transforms it into Digital Credit and Digital Equity. Bringing $STRC and $MSTR onchain is another step toward capital markets that never close. okx.com/en-us/learn/okxice-t\u2026 Link Digital Securities are Coming to OKXICE TSV, with 70+ Assets to ",
-      "publishedAt": "2026-11-11T18:11:13+00:00",
-      "publishedTs": 1794420673.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Digital Credit is built for everyone. $MSTR $STRC",
       "link": "https://x.com/Strategy/status/2120578660432290302#m",
       "source": "@saylor",
@@ -1168,19 +1220,6 @@
       "summary": "This was the missing piece of the Internet Video",
       "publishedAt": "2026-11-11T15:20:55+00:00",
       "publishedTs": 1794410455.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Deutsche \u20bfank. https://crypto.news/deutsche-bank-launches-crypto-custody-bitcoin-ethereum/?utm_source=chatgpt.com",
-      "link": "https://x.com/saylor/status/2120525843558781180#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Deutsche \u20bfank. crypto.news/deutsche-bank-la\u2026 Link Deutsche Bank launches crypto custody for Bitcoin, Ethereum, stablecoins Deutsche Bank launches regulated crypto custody for institutional clients, supporting Bitcoin, Ethereum and stablecoins, with Asia expansion planned for 2027",
-      "publishedAt": "2026-11-11T14:35:33+00:00",
-      "publishedTs": 1794407733.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1272,19 +1311,6 @@
       "summary": "right! just like the first company to commercialize telephones, Alexander Graham Bell's Bell Telephone Company, which became American Telephone and Telegraph, or AT&amp;T. wait... Noah Ziems (@NoahZiems) Fun Fact: Basically none of the initial railroad companies made money. They ",
       "publishedAt": "2026-11-11T00:41:42+00:00",
       "publishedTs": 1794357702.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Woohoo!! @JSeyff @EricBalchunas",
-      "link": "https://x.com/nic_carter/status/2120299786146623927#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-11-10T23:37:16+00:00",
-      "publishedTs": 1794353836.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1493,19 +1519,6 @@
       "summary": "Upwind Security MDR (@UpwindMDR) \ud83d\udea8 CRITICAL - Unauthenticated RCE in React Server Components (GHSA-xqc2-xf4c-x3h3) A critical vulnerability in React Server Components packages (react-server-dom-webpack, react-server-dom-turbopack, react-server-dom-parcel) allows unauthenticated r",
       "publishedAt": "2026-11-08T20:14:28+00:00",
       "publishedTs": 1794168868.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "A cursory scan of my wrench attack repository shows that at least 4% of attacks are criminals attacking criminals, or victims of scams seeking retribution against the scammer. The real number is likely higher. Don't do crime, it doesn't pay!",
-      "link": "https://x.com/lopp/status/2119516228557648294#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-11-08T19:43:42+00:00",
-      "publishedTs": 1794167022.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
