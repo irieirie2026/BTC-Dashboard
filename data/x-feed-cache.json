@@ -1,7 +1,98 @@
 {
-  "fetchedAt": "2026-11-14T22:52:19Z",
+  "fetchedAt": "2026-11-15T02:23:33Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Why nobody really understands Bitcoin",
+      "link": "https://x.com/DocumentingBTC/status/2121784721642299737#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Why nobody really understands Bitcoin Video",
+      "publishedAt": "2026-11-15T01:57:53+00:00",
+      "publishedTs": 1794707873.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "It's liquidation day again! Trader 0xc05b got liquidated 7 times in the past 10 hours, with a total of 172 $BTC ($11.03M) and 2,984 $ETH ($5.44M) liquidated! https://hypurrscan.io/address/0xc05b532d9b4eff8c140ad5477dc87d5803b98951#txs",
+      "link": "https://x.com/lookonchain/status/2121778811952148898#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "It's liquidation day again! Trader 0xc05b got liquidated 7 times in the past 10 hours, with a total of 172 $BTC ($11.03M) and 2,984 $ETH ($5.44M) liquidated! hypurrscan.io/address/0xc05b\u2026 Lookonchain (@lookonchain) It's liquidation day! Four whales got liquidated for over $10M ea",
+      "publishedAt": "2026-11-15T01:34:24+00:00",
+      "publishedTs": 1794706464.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "loracle.hl(@loraclexyz) is taking a huge hit! His $BTC, $XMR, $ETH, and $STRK longs are now down a combined $26.7M in unrealized losses! https://hypurrscan.io/address/0xefe4c06b6d310978bead596e1798a4fc1d9d194b#txs",
+      "link": "https://x.com/lookonchain/status/2121776261639143715#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "loracle.hl( @loraclexyz ) is taking a huge hit! His $BTC , $XMR , $ETH , and $STRK longs are now down a combined $26.7M in unrealized losses! hypurrscan.io/address/0xefe4\u2026",
+      "publishedAt": "2026-11-15T01:24:16+00:00",
+      "publishedTs": 1794705856.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @EricBalchunas: Only gold bugs can truly understand the bitcoin experience, which is ironic in a way",
+      "link": "https://x.com/EricBalchunas/status/2121744829810114899#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Only gold bugs can truly understand the bitcoin experience, which is ironic in a way",
+      "publishedAt": "2026-11-14T23:19:22+00:00",
+      "publishedTs": 1794698362.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Extreme fear now shows up when bitcoin is $63,000 per coin. Crazy because people used to dream of reaching this point...",
+      "link": "https://x.com/APompliano/status/2121740704850624586#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "",
+      "publishedAt": "2026-11-14T23:02:58+00:00",
+      "publishedTs": 1794697378.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Coverage of gold ETFs in the media from 2014 to 2018 was absolutely brutal - as bad or worse than bitcoin lately - it was like a string of Morrissey song titles: 'new milestones in misery' 'massive disappointment' 'give up hope' 'a pet rock' and how it 'doesn't work' as safe have",
+      "link": "https://x.com/EricBalchunas/status/2121740664211644620#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "Coverage of gold ETFs in the media from 2014 to 2018 was absolutely brutal - as bad or worse than bitcoin lately - it was like a string of Morrissey song titles: 'new milestones in misery' 'massive disappointment' 'give up hope' 'a pet rock' and how it 'doesn't work' as safe have",
+      "publishedAt": "2026-11-14T23:02:49+00:00",
+      "publishedTs": 1794697369.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bank credit is going to be a key driver of $BTC adoption. $MSTR",
+      "link": "https://x.com/Strategy/status/2121725688126300554#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Bank credit is going to be a key driver of $BTC adoption. $MSTR Video",
+      "publishedAt": "2026-11-14T22:03:18+00:00",
+      "publishedTs": 1794693798.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "See you next \u20bflock, Laura. https://t.co/PiJNP1Jc0V",
       "link": "https://x.com/saylor/status/2121724034715144572#m",
@@ -653,32 +744,6 @@
       "isRetweet": true
     },
     {
-      "title": "It's liquidation day! Four whales got liquidated for over $10M each, with a total of $143.89M in positions wiped out! 0x6046: 12,742 $ETH ($25.2M) and 536.89 $BTC ($38.77M) 0x01e2: 511 $BTC($36.4M) 0x5f91: 357.09 $BTC ($25.15M) 0x4a20: 112,176 $SOL ($9M), 82.66 $BTC ($5.85M), and",
-      "link": "https://x.com/lookonchain/status/2121081124336415037#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "It's liquidation day! Four whales got liquidated for over $10M each, with a total of $143.89M in positions wiped out! 0x6046: 12,742 $ETH ($25.2M) and 536.89 $BTC ($38.77M) 0x01e2: 511 $BTC ($36.4M) 0x5f91: 357.09 $BTC ($25.15M) 0x4a20: 112,176 $SOL ($9M), 82.66 $BTC ($5.85M), an",
-      "publishedAt": "2026-11-13T03:22:02+00:00",
-      "publishedTs": 1794540122.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The whale who held over $140M in $BTC and $ETH longs got fully liquidated over the past 2 days, losing a total of $17.69M.",
-      "link": "https://x.com/lookonchain/status/2121075504463909311#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "The whale who held over $140M in $BTC and $ETH longs got fully liquidated over the past 2 days, losing a total of $17.69M. Lookonchain (@lookonchain) A whale is betting big on $BTC and $ETH , with $140.88M in long positions! Positions: 1,236 $BTC ($102.2M) 15,928 $ETH ($38.67M) h",
-      "publishedAt": "2026-11-13T02:59:42+00:00",
-      "publishedTs": 1794538782.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Euro Pacific Asset Management's Peter Schiff on how the Fed could actually fix inflation: \"If you have a drug problem, how do you stop? Well, you go to rehab and you go cold turkey.\" \"Painful choices would have to be made and a lot of people would lose a lot of money.\"",
       "link": "https://x.com/watchbmtv/status/2120980778842776015#m",
       "source": "@BitcoinMagazine",
@@ -1017,32 +1082,6 @@
       "isRetweet": false
     },
     {
-      "title": "Many people forget just how long the 'winter' was for $GLD. It had an initial burst, even becaming the biggest ETF in world for one day in 2011 ,and then the bad times came and and it (saw 40% of investors bail) and took nearly a DECADE to get back to its that aum high again. Tod",
-      "link": "https://x.com/EricBalchunas/status/2120482561424007194#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Many people forget just how long the 'winter' was for $GLD . It had an initial burst, even becaming the biggest ETF in world for one day in 2011 ,and then the bad times came and and it (saw 40% of investors bail) and took nearly a DECADE to get back to its that aum high again. To",
-      "publishedAt": "2026-11-11T11:43:33+00:00",
-      "publishedTs": 1794397413.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Arthur Hayes @cryptohayes ile \u00fc\u00e7\u00fcnc\u00fc kez bir araya geldik. Bitcoin, Fed ve likidite, 2027 beklentileri, yapay zek\u00e2 ve FLOP\u2019u (@flop_labs) konu\u015ftuk. T\u00fcrk\u00e7e altyaz\u0131l\u0131 hali burada. \u0130yi seyirler.",
-      "link": "https://x.com/erhanunal/status/2120431339438788753#m",
-      "source": "@CryptoHayes",
-      "authorName": "Arthur Hayes",
-      "authorRole": "BitMEX co-founder \u00b7 macro",
-      "summary": "Arthur Hayes @cryptohayes ile \u00fc\u00e7\u00fcnc\u00fc kez bir araya geldik. Bitcoin, Fed ve likidite, 2027 beklentileri, yapay zek\u00e2 ve FLOP\u2019u ( @flop_labs ) konu\u015ftuk. T\u00fcrk\u00e7e altyaz\u0131l\u0131 hali burada. \u0130yi seyirler. Video",
-      "publishedAt": "2026-11-11T08:20:01+00:00",
-      "publishedTs": 1794385201.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "You can cast a magic spell with 12 words",
       "link": "https://x.com/DocumentingBTC/status/2120324502559060366#m",
       "source": "@DocumentingBTC",
@@ -1316,19 +1355,6 @@
       "isRetweet": true
     },
     {
-      "title": "Look \u20bfoth Ways https://t.co/43KfTIRr9o",
-      "link": "https://x.com/saylor/status/2119864764167798873#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Look \u20bfoth Ways https://nitter.perennialte.ch/t.co/43KfTIRr9o Video",
-      "publishedAt": "2026-11-09T18:48:39+00:00",
-      "publishedTs": 1794250119.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The Office episode when Michael uses bitcoin https://t.co/pqT6B337LR",
       "link": "https://x.com/DocumentingBTC/status/2119824911992807589#m",
       "source": "@DocumentingBTC",
@@ -1519,19 +1545,6 @@
       "summary": "Why there will never be a better Bitcoin Video",
       "publishedAt": "2026-11-07T12:46:50+00:00",
       "publishedTs": 1794055610.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Who controls Bitcoin?",
-      "link": "https://x.com/DocumentingBTC/status/2118840771436748817#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Who controls Bitcoin? Video",
-      "publishedAt": "2026-11-06T22:59:40+00:00",
-      "publishedTs": 1794005980.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
