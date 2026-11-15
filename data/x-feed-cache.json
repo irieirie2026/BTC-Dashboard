@@ -1,7 +1,137 @@
 {
-  "fetchedAt": "2026-11-15T10:24:28Z",
+  "fetchedAt": "2026-11-15T17:33:25Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "Didn\u2019t need to be thinking about human centipede this early on a Sunday",
+      "link": "https://x.com/nic_carter/status/2122006295977087272#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-11-15T16:38:20+00:00",
+      "publishedTs": 1794760700.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Vulnerabilities patched by Microsoft",
+      "link": "https://x.com/lopp/status/2122005455945756776#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "",
+      "publishedAt": "2026-11-15T16:35:00+00:00",
+      "publishedTs": 1794760500.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Why is the price of Bitcoin crashing?",
+      "link": "https://x.com/DocumentingBTC/status/2122003898038968793#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Why is the price of Bitcoin crashing? Video",
+      "publishedAt": "2026-11-15T16:28:48+00:00",
+      "publishedTs": 1794760128.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "So France is criminally charging their greatest living and best-known novelist for speaking out against immigration. What do Europeans think of this? Is it \u201cwell of course speech has limits\u201d and \u201cwell he probably shouldn\u2019t have said that\u201d?",
+      "link": "https://x.com/nic_carter/status/2122002275329605690#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "So France is criminally charging their greatest living and best-known novelist for speaking out against immigration. What do Europeans think of this? Is it \u201cwell of course speech has limits\u201d and \u201cwell he probably shouldn\u2019t have said that\u201d? Visegr\u00e1d 24 (@visegrad24) BREAKING: The ",
+      "publishedAt": "2026-11-15T16:22:21+00:00",
+      "publishedTs": 1794759741.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40 \"This dip could use a little orange.\" \ud83d\udfe0",
+      "link": "https://x.com/BitcoinMagazine/status/2121970089947750785#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-15T14:14:28+00:00",
+      "publishedTs": 1794752068.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The bottleneck for software engineering keeps changing. Historically, it was writing the code and tests to ensure they conformed with the specs. In early days of agentic coding it was reviewing code for correctness. Now (for complex projects) it's the build & test phase. It's rat",
+      "link": "https://x.com/lopp/status/2121966241669693593#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "The bottleneck for software engineering keeps changing. Historically, it was writing the code and tests to ensure they conformed with the specs. In early days of agentic coding it was reviewing code for correctness. Now (for complex projects) it's the build & test phase. It's rat",
+      "publishedAt": "2026-11-15T13:59:10+00:00",
+      "publishedTs": 1794751150.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin. \ud83d\udc40 \u201cBitcoin's cheap, we want more.\u201d \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2121960930242130382#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-15T13:38:04+00:00",
+      "publishedTs": 1794749884.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This dip could use a little orange.",
+      "link": "https://x.com/saylor/status/2121960852643545184#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-15T13:37:46+00:00",
+      "publishedTs": 1794749866.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Bitcoin's cheap, we want more.",
+      "link": "https://x.com/ColeMacro/status/2121958498032590991#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-15T13:28:24+00:00",
+      "publishedTs": 1794749304.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "AguilaTrades(@AguilaTrades) just added another 1,000 $BTC to his long! He now holds a 40x long on 2,000 $BTC ($131.13M), with $3.87M in unrealized profit. Liquidation price: $62,140.49",
+      "link": "https://x.com/lookonchain/status/2121917970092089429#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "AguilaTrades( @AguilaTrades ) just added another 1,000 $BTC to his long! He now holds a 40x long on 2,000 $BTC ($131.13M), with $3.87M in unrealized profit. Liquidation price: $62,140.49 Lookonchain (@lookonchain) What perfect timing! AguilaTrades( @AguilaTrades ) opened a 40x lo",
+      "publishedAt": "2026-11-15T10:47:22+00:00",
+      "publishedTs": 1794739642.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "What perfect timing! AguilaTrades(@AguilaTrades) opened a 40x long on 1,000 $BTC ($64.4M) just 30 minutes ago and is already up $1.8M+ in unrealized profit! He has made $5.66M trading in the past week, mostly by shorting $BTC. Now he timed his $BTC long perfectly! https://hyperbo",
       "link": "https://x.com/lookonchain/status/2121792225202106859#m",
@@ -385,7 +515,7 @@
       "source": "@lopp",
       "authorName": "Jameson Lopp",
       "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "AI will evaluate fiat and quickly conclude that bitcoin is the superior system. Watcher.Guru (@WatcherGuru) JUST IN: \ud83c\uddfa\ud83c\uddf8 Federal Reserve report identifies artificial intelligence as a major risk to the US financial system. \u2014 https://nitter.perennialte.ch/WatcherGuru/status/2121353",
+      "summary": "AI will evaluate fiat and quickly conclude that bitcoin is the superior system. Watcher Guru (@WatcherGuru) JUST IN: \ud83c\uddfa\ud83c\uddf8 Federal Reserve report identifies artificial intelligence as a major risk to the US financial system. \u2014 https://nitter.perennialte.ch/WatcherGuru/status/2121353",
       "publishedAt": "2026-11-13T21:35:57+00:00",
       "publishedTs": 1794605757.0,
       "category": "x",
@@ -757,19 +887,6 @@
       "isRetweet": true
     },
     {
-      "title": "Euro Pacific Asset Management's Peter Schiff on how the Fed could actually fix inflation: \"If you have a drug problem, how do you stop? Well, you go to rehab and you go cold turkey.\" \"Painful choices would have to be made and a lot of people would lose a lot of money.\"",
-      "link": "https://x.com/watchbmtv/status/2120980778842776015#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Euro Pacific Asset Management's Peter Schiff on how the Fed could actually fix inflation: \"If you have a drug problem, how do you stop? Well, you go to rehab and you go cold turkey.\" \"Painful choices would have to be made and a lot of people would lose a lot of money.\" Video",
-      "publishedAt": "2026-11-12T20:43:18+00:00",
-      "publishedTs": 1794516198.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "I joined @contessabrewer and @SullyCNBC on @PowerLunch to discuss $MSTR, MSCI, Bitcoin market volatility, regulatory developments, cybersecurity, and the future of AI. 00:17 - MSCI exclusion would have immaterial impact on $MSTR; only 3% of shares tied to its indices 01:01 - Macr",
       "link": "https://x.com/phongle/status/2120972741310345451#m",
       "source": "@saylor",
@@ -817,19 +934,6 @@
       "summary": "There's an ETF for everything. And usually there's multiple options hahahah Eric Balchunas (@EricBalchunas) Roundhill is taking on the MANGOS ETFs w $MAGP which is magnificent 7 plus a few AI stocks. \u2014 https://nitter.perennialte.ch/EricBalchunas/status/2120871598366314715#m",
       "publishedAt": "2026-11-12T18:01:50+00:00",
       "publishedTs": 1794506510.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @JSeyff: And what are the levered NVDA single stock ETF traders doing? What they always do. Buying the dip on the long Nvidia ETFs and taking the profits on the inverse products. Full note with these charts and more available here: https://blinks.bloomberg.com/screens/DOCV%2",
-      "link": "https://x.com/JSeyff/status/2120936037438681220#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "And what are the levered NVDA single stock ETF traders doing? What they always do. Buying the dip on the long Nvidia ETFs and taking the profits on the inverse products. Full note with these charts and more available here: blinks.bloomberg.com/screens\u2026",
-      "publishedAt": "2026-11-12T17:45:31+00:00",
-      "publishedTs": 1794505531.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -885,6 +989,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
+    },
+    {
+      "title": "Today I'm releasing the first major upgrade to https://statoshi.info/ in ~8 years. Dozens of new metrics and charts added! Statoshi is now based off Bitcoin Core v32.1",
+      "link": "https://x.com/lopp/status/2120893458919587950#m",
+      "source": "@lopp",
+      "authorName": "Jameson Lopp",
+      "authorRole": "Casa \u00b7 Bitcoin security",
+      "summary": "Today I'm releasing the first major upgrade to statoshi.info/ in ~8 years. Dozens of new metrics and charts added! Statoshi is now based off Bitcoin Core v32.1",
+      "publishedAt": "2026-11-12T14:56:19+00:00",
+      "publishedTs": 1794495379.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
     },
     {
       "title": "Join us on November 19 at 5pm ET for our Q3 2026 Earnings Investor Q&A with @Saylor and @PhongLe, hosted by @NatBrunell. https://www.strategy.com/press/strategy-to-host-live-q-and-a-with-investors-featuring-michael-saylor-and-phong-le_11-19-2026",
@@ -1212,19 +1329,6 @@
       "isRetweet": false
     },
     {
-      "title": "people have the absolute worst intuitions about electricity prices and load growth",
-      "link": "https://x.com/nic_carter/status/2120259671856422946#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "people have the absolute worst intuitions about electricity prices and load growth John Bistline (@JEBistline) New EPRI report finds that where electricity demand grew from 2019 to 2024, a 10% rise in sales went with a 1.5 to 4% drop in prices. Where demand shrank, a 10% fall in ",
-      "publishedAt": "2026-11-10T20:57:52+00:00",
-      "publishedTs": 1794344272.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "> be El Salvador > send nerds to Haiti for UN thingie > gang kidnaps Salvadorian nerds > bukele says \"give back\" > gang \"nah\" > bukele says \"ok we take back\" > gang \"nah, also you're a bitch\" > bukele comes to take back > gang \"wtf that's illegal, UN tell them something\" > UN say",
       "link": "https://x.com/vxunderground/status/2120239415637295555#m",
       "source": "@lopp",
@@ -1272,19 +1376,6 @@
       "summary": "",
       "publishedAt": "2026-11-10T15:23:37+00:00",
       "publishedTs": 1794324217.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "\u20bfaby Bear gets it. https://t.co/LUe0u6VvVp",
-      "link": "https://x.com/saylor/status/2120158698278682752#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "\u20bfaby Bear gets it. https://nitter.perennialte.ch/t.co/LUe0u6VvVp Video",
-      "publishedAt": "2026-11-10T14:16:38+00:00",
-      "publishedTs": 1794320198.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1355,19 +1446,6 @@
       "isRetweet": false
     },
     {
-      "title": "Our USD Assets cover 3.4 years of annual interest and dividends, up from 0.5 years at the end of May. $MSTR $STRC",
-      "link": "https://x.com/Strategy/status/2119914943516725563#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-11-09T22:08:03+00:00",
-      "publishedTs": 1794262083.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "The Office episode when Michael uses bitcoin https://t.co/pqT6B337LR",
       "link": "https://x.com/DocumentingBTC/status/2119824911992807589#m",
       "source": "@DocumentingBTC",
@@ -1433,32 +1511,6 @@
       "isRetweet": false
     },
     {
-      "title": "Lightning Network capacity peaked at the beginning of 2026 and has dropped 45% in BTC terms year to date.",
-      "link": "https://x.com/lopp/status/2119489731457421536#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "Lightning Network capacity peaked at the beginning of 2026 and has dropped 45% in BTC terms year to date. LNbits (@lnbits) \u26a0\ufe0f\u26a0\ufe0f All LNbits users should stop their LNbits servers IMMEDIATELY. \u26a0\ufe0f\u26a0\ufe0f Please forward this announcement. Following a wave of attacks, we have a number of s",
-      "publishedAt": "2026-11-08T17:58:24+00:00",
-      "publishedTs": 1794160704.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Received nearly 1,000 emails today resulting from bots checking for account existence at various services. Smells like another breach.",
-      "link": "https://x.com/lopp/status/2119478191324602738#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "",
-      "publishedAt": "2026-11-08T17:12:33+00:00",
-      "publishedTs": 1794157953.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Why everyone should diversify into Bitcoin",
       "link": "https://x.com/DocumentingBTC/status/2119471813361074547#m",
       "source": "@DocumentingBTC",
@@ -1472,19 +1524,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @lopp: To be clear: the victim in this case is a criminal who has previous assaulted people. He recklessly endangered the public by firing into the street and deserves punishment. A non-negligible number of victims make poor decisions that lead to them ending up in a bad sit",
-      "link": "https://x.com/lopp/status/2119439901070418249#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "To be clear: the victim in this case is a criminal who has previous assaulted people. He recklessly endangered the public by firing into the street and deserves punishment. A non-negligible number of victims make poor decisions that lead to them ending up in a bad situation.",
-      "publishedAt": "2026-11-08T14:40:24+00:00",
-      "publishedTs": 1794148824.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Why energy is the true currency",
       "link": "https://x.com/DocumentingBTC/status/2119427127275872716#m",
       "source": "@DocumentingBTC",
@@ -1493,19 +1532,6 @@
       "summary": "Why energy is the true currency Video",
       "publishedAt": "2026-11-08T13:49:38+00:00",
       "publishedTs": 1794145778.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "This French wrench attack has some unique twists. The victim had already been kidnapped before in 2022. This time, the victim managed to fire a Glock at the attackers and scare them off. The victim received 2.5 years in prison for using the gun. https://cryptoast.fr/tentative-enl",
-      "link": "https://x.com/lopp/status/2119414382333731165#m",
-      "source": "@lopp",
-      "authorName": "Jameson Lopp",
-      "authorRole": "Casa \u00b7 Bitcoin security",
-      "summary": "This French wrench attack has some unique twists. The victim had already been kidnapped before in 2022. This time, the victim managed to fire a Glock at the attackers and scare them off. The victim received 2.5 years in prison for using the gun. cryptoast.fr/tentative-enlev\u2026 Link",
-      "publishedAt": "2026-11-08T12:59:00+00:00",
-      "publishedTs": 1794142740.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1545,19 +1571,6 @@
       "summary": "Why a Bitcoin will be worth $10 trillion Video",
       "publishedAt": "2026-11-07T12:54:21+00:00",
       "publishedTs": 1794056061.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Why there will never be a better Bitcoin",
-      "link": "https://x.com/DocumentingBTC/status/2119048933687136464#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Why there will never be a better Bitcoin Video",
-      "publishedAt": "2026-11-07T12:46:50+00:00",
-      "publishedTs": 1794055610.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
