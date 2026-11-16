@@ -1,7 +1,33 @@
 {
-  "fetchedAt": "2026-11-15T22:29:13Z",
+  "fetchedAt": "2026-11-16T02:33:53Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "R to @saylor: Image",
+      "link": "https://x.com/saylor/status/2122132735301145036#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-16T01:00:46+00:00",
+      "publishedTs": 1794790846.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Stretch Dividend Rate maintained at 12.00% for December 2026. $STRC",
+      "link": "https://x.com/saylor/status/2122132729508855992#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-16T01:00:44+00:00",
+      "publishedTs": 1794790844.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "Type of alarm system you end up with when you hire the owner\u2019s nephew who is \u201cgood at computers\u201d to set up the IT",
       "link": "https://x.com/nic_carter/status/2122073704784117978#m",
@@ -913,19 +939,6 @@
       "isRetweet": false
     },
     {
-      "title": "AguilaTrades(@AguilaTrades) has been doing well lately! He closed his $BTC short 4 hours ago, making $1.3M in profit. Right after that, he opened another 40x short on 500 $BTC ($34.65M), with a liquidation price of $72,273.30. https://hyperbot.network/trader/0x1f250Df59A777d61Cb8",
-      "link": "https://x.com/lookonchain/status/2121194936762822750#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "AguilaTrades( @AguilaTrades ) has been doing well lately! He closed his $BTC short 4 hours ago, making $1.3M in profit. Right after that, he opened another 40x short on 500 $BTC ($34.65M), with a liquidation price of $72,273.30. hyperbot.network/trader/0x1f\u2026",
-      "publishedAt": "2026-11-13T10:54:17+00:00",
-      "publishedTs": 1794567257.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Oh no! Bitcoin is falling to prices we haven\u2019t seen since\u2026..3 months ago. Everyone relax, so you can realize that AI and bitcoin are one big trade now.",
       "link": "https://x.com/APompliano/status/2121103503154422152#m",
       "source": "@APompliano",
@@ -986,19 +999,6 @@
       "summary": "",
       "publishedAt": "2026-11-12T19:48:49+00:00",
       "publishedTs": 1794512929.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "There's an ETF for everything. And usually there's multiple options hahahah",
-      "link": "https://x.com/JSeyff/status/2120940145209995575#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "There's an ETF for everything. And usually there's multiple options hahahah Eric Balchunas (@EricBalchunas) Roundhill is taking on the MANGOS ETFs w $MAGP which is magnificent 7 plus a few AI stocks. \u2014 https://nitter.perennialte.ch/EricBalchunas/status/2120871598366314715#m",
-      "publishedAt": "2026-11-12T18:01:50+00:00",
-      "publishedTs": 1794506510.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1108,19 +1108,6 @@
       "isRetweet": false
     },
     {
-      "title": "Let $STRC do the heavy lifting.",
-      "link": "https://x.com/saylor/status/2120860530986336551#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Let $STRC do the heavy lifting. Video",
-      "publishedAt": "2026-11-12T12:45:28+00:00",
-      "publishedTs": 1794487528.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Imagine a 1990s TV commercial for bitcoin",
       "link": "https://x.com/DocumentingBTC/status/2120671059594592440#m",
       "source": "@DocumentingBTC",
@@ -1168,19 +1155,6 @@
       "summary": "BREAKING: The Constitutionality Index has now scored every law in the history of the United States. 48,000 laws dating back to 1789. So far as I'm aware, I'm the first one to ever attempt such a thing. And we've now ranked every president based on the percentage of laws they enac",
       "publishedAt": "2026-11-11T18:11:17+00:00",
       "publishedTs": 1794420677.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Digital Credit is built for everyone. $MSTR $STRC",
-      "link": "https://x.com/Strategy/status/2120578660432290302#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Credit is built for everyone. $MSTR $STRC Video",
-      "publishedAt": "2026-11-11T18:05:25+00:00",
-      "publishedTs": 1794420325.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
