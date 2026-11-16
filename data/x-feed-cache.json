@@ -1,7 +1,20 @@
 {
-  "fetchedAt": "2026-11-16T02:33:53Z",
+  "fetchedAt": "2026-11-16T10:39:08Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "AguilaTrades(@AguilaTrades) turned $650K into $6.5M in just 5 days \u2014 a 10x return! He just opened another 40x short on 252.64 $BTC ($16.34M). https://hypurrscan.io/address/0x1f250Df59A777d61Cb8bd043c12970F3AFE4F925#perps",
+      "link": "https://x.com/lookonchain/status/2122224231836737623#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "AguilaTrades( @AguilaTrades ) turned $650K into $6.5M in just 5 days \u2014 a 10x return! He just opened another 40x short on 252.64 $BTC ($16.34M). hypurrscan.io/address/0x1f25\u2026",
+      "publishedAt": "2026-11-16T07:04:20+00:00",
+      "publishedTs": 1794812660.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "R to @saylor: Image",
       "link": "https://x.com/saylor/status/2122132735301145036#m",
@@ -882,19 +895,6 @@
       "summary": "",
       "publishedAt": "2026-11-13T13:51:08+00:00",
       "publishedTs": 1794577868.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Nov 13 Update: #Bitcoin ETFs: 1D NetFlow: -4,423 $BTC(-$308.81M)\ud83d\udd34 7D NetFlow: -19,045 $BTC(-$1.33B)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -32,917 $ETH(-$64.95M)\ud83d\udd34 7D NetFlow: -218,001 $ETH(-$430.15M)\ud83d\udd34",
-      "link": "https://x.com/lookonchain/status/2121239068063457521#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "Nov 13 Update: #Bitcoin ETFs: 1D NetFlow: -4,423 $BTC (-$308.81M)\ud83d\udd34 7D NetFlow: -19,045 $BTC (-$1.33B)\ud83d\udd34 #Ethereum ETFs: 1D NetFlow: -32,917 $ETH (-$64.95M)\ud83d\udd34 7D NetFlow: -218,001 $ETH (-$430.15M)\ud83d\udd34",
-      "publishedAt": "2026-11-13T13:49:39+00:00",
-      "publishedTs": 1794577779.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
