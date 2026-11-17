@@ -1,7 +1,241 @@
 {
-  "fetchedAt": "2026-11-16T20:48:27Z",
+  "fetchedAt": "2026-11-17T12:46:45Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 $3.5T Goldman Sachs disclosed $1.28 billion worth of spot Bitcoin ETFs in its Q3 filing. That's a ~121% increase from $580 million in Q2! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2122671091571200001#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-17T12:40:00+00:00",
+      "publishedTs": 1794919200.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddf7\ud83c\uddfa Starting today, Russian retail investors can now legally buy Bitcoin \ud83d\udc40",
+      "link": "https://x.com/BitcoinMagazine/status/2122653530339365310#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-17T11:30:13+00:00",
+      "publishedTs": 1794915013.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The Binance hacker has started laundering the 602,402 $ETH ($1.09B) he holds! Over the past 3 hours, he has transferred out 74,880 $ETH ($136.8M) and is now swapping it for $BTC via #THORChain. https://arkm.com/explorer/entity/binance-hacker-2",
+      "link": "https://x.com/lookonchain/status/2122633788127940768#m",
+      "source": "@lookonchain",
+      "authorName": "Lookonchain",
+      "authorRole": "On-chain intelligence",
+      "summary": "The Binance hacker has started laundering the 602,402 $ETH ($1.09B) he holds! Over the past 3 hours, he has transferred out 74,880 $ETH ($136.8M) and is now swapping it for $BTC via #THORChain . arkm.com/explorer/entity/bin\u2026",
+      "publishedAt": "2026-11-17T10:11:46+00:00",
+      "publishedTs": 1794910306.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Today Smarter Web announced a further 55 Bitcoin bought taking our total Bitcoin held to 2,905. We also confirmed the 5th MORE Weekly Dividend. MORE offers a 12% variable annual preferred dividend rate, calculated daily on a \u00a3100 reference amount and payable weekly. We continue t",
+      "link": "https://x.com/asjwebley/status/2122586013725782501#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Today Smarter Web announced a further 55 Bitcoin bought taking our total Bitcoin held to 2,905. We also confirmed the 5th MORE Weekly Dividend. MORE offers a 12% variable annual preferred dividend rate, calculated daily on a \u00a3100 reference amount and payable weekly. We continue t",
+      "publishedAt": "2026-11-17T07:01:56+00:00",
+      "publishedTs": 1794898916.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @nic_carter: i tried vibecoding a thing that checks if you have a corpus of pre 2022 medium pieces and generates a \"knows how to write without AI\" card but i got terribly rate limited so it didn't work anyway if someone wants to figure this out by all means",
+      "link": "https://x.com/nic_carter/status/2122509712822571303#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "i tried vibecoding a thing that checks if you have a corpus of pre 2022 medium pieces and generates a \"knows how to write without AI\" card but i got terribly rate limited so it didn't work anyway if someone wants to figure this out by all means",
+      "publishedAt": "2026-11-17T01:58:44+00:00",
+      "publishedTs": 1794880724.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "has anyone built a tool for writers to prove they didn't write something with AI. like a timelapse screen recording of you writing the piece or something (can be faked ofc). or do we have to default to simply having a decent corpus of pre-2022 work.",
+      "link": "https://x.com/nic_carter/status/2122508948058296476#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-11-17T01:55:42+00:00",
+      "publishedTs": 1794880542.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "rest now sweet princes",
+      "link": "https://x.com/nic_carter/status/2122474608628490685#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "",
+      "publishedAt": "2026-11-16T23:39:15+00:00",
+      "publishedTs": 1794872355.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Direxion just announced a partnership Silvia to educate their investors on income via specialized ETFs",
+      "link": "https://x.com/EricBalchunas/status/2122472988670824803#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "",
+      "publishedAt": "2026-11-16T23:32:48+00:00",
+      "publishedTs": 1794871968.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: @DrJStrategy of Wellington-Altus - Why Bitcoin's super cycle \"is still intact\" \u26a1\ufe0f From @watchbmtv \ud83d\udc47 https://youtu.be/m7ygyYMe3mg?si=MuU4uGXluQ2WQ9Ng",
+      "link": "https://x.com/BitcoinMagazine/status/2122467050207809624#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: @DrJStrategy of Wellington-Altus - Why Bitcoin's super cycle \"is still intact\" \u26a1\ufe0f From @watchbmtv \ud83d\udc47 youtu.be/m7ygyYMe3mg?si=MuU4\u2026",
+      "publishedAt": "2026-11-16T23:09:12+00:00",
+      "publishedTs": 1794870552.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We\u2019ve added USD Strength to the Strategy dashboard. At today\u2019s rates, our USD assets can fund 3.4 years of interest and dividends. That\u2019s 41% of the weighted duration of our Digital Credit. https://www.strategy.com",
+      "link": "https://x.com/saylor/status/2122459084599197886#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We\u2019ve added USD Strength to the Strategy dashboard. At today\u2019s rates, our USD assets can fund 3.4 years of interest and dividends. That\u2019s 41% of the weighted duration of our Digital Credit. strategy.com",
+      "publishedAt": "2026-11-16T22:37:33+00:00",
+      "publishedTs": 1794868653.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: Twenty One Capital bought 154.3 BTC worth $10 million for their treasury. They now hold 43,668 BTC worth $2.85 billion! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2122456467391619197#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-16T22:27:09+00:00",
+      "publishedTs": 1794868029.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: Peruvian Bull: The Yen Carry Trade and Bitcoin\u2019s Road to $300k Youtube: https://youtu.be/RsPBmLb6tTY Rumble: https://rumble.com/v7ib6yy-roberto-rios-the-yen-carry-trade-and-bitcoins-road-to-300k.html Spotify: https://open.spotify.com/episode/7IG8mowK",
+      "link": "https://x.com/BitcoinMagazine/status/2122454695973404767#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: Peruvian Bull: The Yen Carry Trade and Bitcoin\u2019s Road to $300k Youtube: youtu.be/RsPBmLb6tTY Rumble: rumble.com/v7ib6yy-roberto-r\u2026 Spotify: open.spotify.com/episode/7IG\u2026 Apple: podcasts.apple.com/us/podcas\u2026",
+      "publishedAt": "2026-11-16T22:20:07+00:00",
+      "publishedTs": 1794867607.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: Roberto Rios: The Yen Carry Trade and Bitcoin's Road to $300k With fiscal dominance already here and high rates forcing the government to borrow more, @peruvian_bull says \"higher yields are actually bullish for Bitcoin\" and that \"this cycle we're going to g",
+      "link": "https://x.com/BitcoinMagazine/status/2122453593760682369#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Roberto Rios: The Yen Carry Trade and Bitcoin's Road to $300k With fiscal dominance already here and high rates forcing the government to borrow more, @peruvian_bull says \"higher yields are actually bullish for Bitcoin\" and that \"this cycle we're going to go to $300,000.\" He join",
+      "publishedAt": "2026-11-16T22:15:44+00:00",
+      "publishedTs": 1794867344.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: Your keys. Your Bitcoin. Put your Bitcoin to work without giving up self-custody. See what\u2019s possible with @VFXBlockchain. Learn more: https://verifiedx.io/bmtv",
+      "link": "https://x.com/BitcoinMagazine/status/2122452453987688533#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Your keys. Your Bitcoin. Put your Bitcoin to work without giving up self-custody. See what\u2019s possible with @VFXBlockchain . Learn more: verifiedx.io/bmtv Link VerifiedX \u2014 The Financial Operating System for Bitcoin. VerifiedX is the financial operating system that turns Bitcoin in",
+      "publishedAt": "2026-11-16T22:11:12+00:00",
+      "publishedTs": 1794867072.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Wells Fargo disclosed 49.6 million shares of BlackRock\u2019s spot Bitcoin ETF currently worth $1.82 billion, making them the largest institutional BTC ETF holder. That\u2019s an ~200% increase from 24.4 million shares in Q2! \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2122444965586542824#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "",
+      "publishedAt": "2026-11-16T21:41:27+00:00",
+      "publishedTs": 1794865287.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "This is deeply true. Bitcoin has long wished to be digital gold. People may not have fully internalized what it means if it indeed gets to be digital gold.",
+      "link": "https://x.com/HHorsley/status/2122443341338149150#m",
+      "source": "@ericbalchunas",
+      "authorName": "Eric Balchunas",
+      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "summary": "This is deeply true. Bitcoin has long wished to be digital gold. People may not have fully internalized what it means if it indeed gets to be digital gold. Eric Balchunas (@EricBalchunas) Coverage of gold ETFs in the media from 2014 to 2018 was absolutely brutal - as bad or worse",
+      "publishedAt": "2026-11-16T21:35:00+00:00",
+      "publishedTs": 1794864900.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Twenty One acquired 154.32 $BTC for approximately $10 million at an average price of approximately $64,801.01 per bitcoin. $XXI funded the purchase with cash, bringing the company\u2019s total holdings to approximately 43,668 bitcoin as of November 16, 2026. We built Twenty One becaus",
+      "link": "https://x.com/RaphaZagury/status/2122440697265488088#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Twenty One acquired 154.32 $BTC for approximately $10 million at an average price of approximately $64,801.01 per bitcoin. $XXI funded the purchase with cash, bringing the company\u2019s total holdings to approximately 43,668 bitcoin as of November 16, 2026. We built Twenty One becaus",
+      "publishedAt": "2026-11-16T21:24:29+00:00",
+      "publishedTs": 1794864269.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "Wellington-Altus' James Thorne on what sets Bitcoin apart: \"What is pristine collateral? That would be Bitcoin. It's transparent. You know what it is. You know the counterparty.\" \"The way Strategy is trading tells you that nobody's done the work. This is how early we are in the c",
+      "link": "https://x.com/watchbmtv/status/2122438569595896072#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Wellington-Altus' James Thorne on what sets Bitcoin apart: \"What is pristine collateral? That would be Bitcoin. It's transparent. You know what it is. You know the counterparty.\" \"The way Strategy is trading tells you that nobody's done the work. This is how early we are in the c",
+      "publishedAt": "2026-11-16T21:16:02+00:00",
+      "publishedTs": 1794863762.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
     {
       "title": "Yes, ETF launches have been outpacing IPOs by 6x this year. It's been going up every year since 2021. Here's chart. Thanks for watching btw.",
       "link": "https://x.com/EricBalchunas/status/2122428315436736841#m",
@@ -40,6 +274,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "After the weekend sell-off, @DrJStrategy believes the #Bitcoin super cycle is still intact. Listen to what he had to say on @BitcoinMagazine: https://youtube.com/watch?v=m7ygyYMe3mg @watchbmtv @GraceRemiTV @realseanhagan",
+      "link": "https://x.com/wellingtonaltus/status/2122419288124576098#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "After the weekend sell-off, @DrJStrategy believes the #Bitcoin super cycle is still intact. Listen to what he had to say on @BitcoinMagazine : youtube.com/watch?v=m7ygyYMe\u2026 @watchbmtv @GraceRemiTV @realseanhagan",
+      "publishedAt": "2026-11-16T19:59:25+00:00",
+      "publishedTs": 1794859165.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Kalshi to list ETFs and stocks",
@@ -183,6 +430,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Rule Investment Media CEO Rick Rule on Washington's spending problem: \"I've come to learn after being a voter for more than 50 years that in terms of spending, it doesn't matter too much what administration we have.\" \"I'm not sure there's a lot of difference between the Democrats",
+      "link": "https://x.com/watchbmtv/status/2122372184609849368#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Rule Investment Media CEO Rick Rule on Washington's spending problem: \"I've come to learn after being a voter for more than 50 years that in terms of spending, it doesn't matter too much what administration we have.\" \"I'm not sure there's a lot of difference between the Democrats",
+      "publishedAt": "2026-11-16T16:52:15+00:00",
+      "publishedTs": 1794847935.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "Looking fwd to discussing (debating?) the wild world of ETFs with @DaveNadig on ETF IQ today, which starts in 20min at Noon EST. Also on show, Vanguard, Raymond James and Bank of New York @isabelletanlee in for Scarlet. Stream here: https://www.bloomberg.com/live/us",
@@ -458,19 +718,6 @@
       "isRetweet": false
     },
     {
-      "title": "BREAKING: Public companies Strategy and Strive bought over $47 million worth of Bitcoin during this dip \ud83d\udca5 Strategy: 485 BTC Strive: 251 BTC",
-      "link": "https://x.com/BitcoinMagazine/status/2122315369247388071#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-16T13:06:29+00:00",
-      "publishedTs": 1794834389.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Strategy has acquired 485 $BTC and repurchased $228M of $STRC. As of 11/15/26, we hold 850,849 BTC and $4.9B of USD Assets. $MSTR https://www.strategy.com/press/strategy-acquires-485-btc-and-repurchases-228-million-of-strc_11-16-2026",
       "link": "https://x.com/saylor/status/2122315179522429177#m",
       "source": "@saylor",
@@ -666,19 +913,6 @@
       "isRetweet": false
     },
     {
-      "title": "Why is the price of Bitcoin crashing?",
-      "link": "https://x.com/DocumentingBTC/status/2122003898038968793#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "Why is the price of Bitcoin crashing? Video",
-      "publishedAt": "2026-11-15T16:28:48+00:00",
-      "publishedTs": 1794760128.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "So France is criminally charging their greatest living and best-known novelist for speaking out against immigration. What do Europeans think of this? Is it \u201cwell of course speech has limits\u201d and \u201cwell he probably shouldn\u2019t have said that\u201d?",
       "link": "https://x.com/nic_carter/status/2122002275329605690#m",
       "source": "@nic_carter",
@@ -705,19 +939,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: Michael Saylor hints at another Bitcoin announcement tomorrow \ud83d\udc40 \"This dip could use a little orange.\" \ud83d\udfe0",
-      "link": "https://x.com/BitcoinMagazine/status/2121970089947750785#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-15T14:14:28+00:00",
-      "publishedTs": 1794752068.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "The bottleneck for software engineering keeps changing. Historically, it was writing the code and tests to ensure they conformed with the specs. In early days of agentic coding it was reviewing code for correctness. Now (for complex projects) it's the build & test phase. It's rat",
       "link": "https://x.com/lopp/status/2121966241669693593#m",
       "source": "@lopp",
@@ -726,19 +947,6 @@
       "summary": "The bottleneck for software engineering keeps changing. Historically, it was writing the code and tests to ensure they conformed with the specs. In early days of agentic coding it was reviewing code for correctness. Now (for complex projects) it's the build & test phase. It's rat",
       "publishedAt": "2026-11-15T13:59:10+00:00",
       "publishedTs": 1794751150.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Public company Strive CEO hints at buying more Bitcoin. \ud83d\udc40 \u201cBitcoin's cheap, we want more.\u201d \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2121960930242130382#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-15T13:38:04+00:00",
-      "publishedTs": 1794749884.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -783,19 +991,6 @@
       "isRetweet": false
     },
     {
-      "title": "What perfect timing! AguilaTrades(@AguilaTrades) opened a 40x long on 1,000 $BTC ($64.4M) just 30 minutes ago and is already up $1.8M+ in unrealized profit! He has made $5.66M trading in the past week, mostly by shorting $BTC. Now he timed his $BTC long perfectly! https://hyperbo",
-      "link": "https://x.com/lookonchain/status/2121792225202106859#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "What perfect timing! AguilaTrades( @AguilaTrades ) opened a 40x long on 1,000 $BTC ($64.4M) just 30 minutes ago and is already up $1.8M+ in unrealized profit! He has made $5.66M trading in the past week, mostly by shorting $BTC . Now he timed his $BTC long perfectly! hyperbot.net",
-      "publishedAt": "2026-11-15T02:27:42+00:00",
-      "publishedTs": 1794709662.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Why nobody really understands Bitcoin",
       "link": "https://x.com/DocumentingBTC/status/2121784721642299737#m",
       "source": "@DocumentingBTC",
@@ -804,45 +999,6 @@
       "summary": "Why nobody really understands Bitcoin Video",
       "publishedAt": "2026-11-15T01:57:53+00:00",
       "publishedTs": 1794707873.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "It's liquidation day again! Trader 0xc05b got liquidated 7 times in the past 10 hours, with a total of 172 $BTC ($11.03M) and 2,984 $ETH ($5.44M) liquidated! https://hypurrscan.io/address/0xc05b532d9b4eff8c140ad5477dc87d5803b98951#txs",
-      "link": "https://x.com/lookonchain/status/2121778811952148898#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "It's liquidation day again! Trader 0xc05b got liquidated 7 times in the past 10 hours, with a total of 172 $BTC ($11.03M) and 2,984 $ETH ($5.44M) liquidated! hypurrscan.io/address/0xc05b\u2026 Lookonchain (@lookonchain) It's liquidation day! Four whales got liquidated for over $10M ea",
-      "publishedAt": "2026-11-15T01:34:24+00:00",
-      "publishedTs": 1794706464.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "loracle.hl(@loraclexyz) is taking a huge hit! His $BTC, $XMR, $ETH, and $STRK longs are now down a combined $26.7M in unrealized losses! https://hypurrscan.io/address/0xefe4c06b6d310978bead596e1798a4fc1d9d194b#txs",
-      "link": "https://x.com/lookonchain/status/2121776261639143715#m",
-      "source": "@lookonchain",
-      "authorName": "Lookonchain",
-      "authorRole": "On-chain intelligence",
-      "summary": "loracle.hl( @loraclexyz ) is taking a huge hit! His $BTC , $XMR , $ETH , and $STRK longs are now down a combined $26.7M in unrealized losses! hypurrscan.io/address/0xefe4\u2026",
-      "publishedAt": "2026-11-15T01:24:16+00:00",
-      "publishedTs": 1794705856.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @EricBalchunas: Only gold bugs can truly understand the bitcoin experience, which is ironic in a way",
-      "link": "https://x.com/EricBalchunas/status/2121744829810114899#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
-      "summary": "Only gold bugs can truly understand the bitcoin experience, which is ironic in a way",
-      "publishedAt": "2026-11-14T23:19:22+00:00",
-      "publishedTs": 1794698362.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -863,15 +1019,15 @@
     {
       "title": "Coverage of gold ETFs in the media from 2014 to 2018 was absolutely brutal - as bad or worse than bitcoin lately - it was like a string of Morrissey song titles: 'new milestones in misery' 'massive disappointment' 'give up hope' 'a pet rock' and how it 'doesn't work' as safe have",
       "link": "https://x.com/EricBalchunas/status/2121740664211644620#m",
-      "source": "@ericbalchunas",
-      "authorName": "Eric Balchunas",
-      "authorRole": "Bloomberg \u00b7 BTC ETF analyst",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "Coverage of gold ETFs in the media from 2014 to 2018 was absolutely brutal - as bad or worse than bitcoin lately - it was like a string of Morrissey song titles: 'new milestones in misery' 'massive disappointment' 'give up hope' 'a pet rock' and how it 'doesn't work' as safe have",
       "publishedAt": "2026-11-14T23:02:49+00:00",
       "publishedTs": 1794697369.0,
       "category": "x",
       "isTweet": true,
-      "isRetweet": false
+      "isRetweet": true
     },
     {
       "title": "Bank credit is going to be a key driver of $BTC adoption. $MSTR",
@@ -913,19 +1069,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin for Corporations' George Mekhail on MSCI removing Strategy and Metaplanet from its global indexes: \"A benchmark's job\u2026 is to measure the market. They're not responsible for deciding which parts of it count.\" \"We filed a formal complaint asking MSCI to withdraw the framewo",
-      "link": "https://x.com/watchbmtv/status/2121675093973561676#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Bitcoin for Corporations' George Mekhail on MSCI removing Strategy and Metaplanet from its global indexes: \"A benchmark's job\u2026 is to measure the market. They're not responsible for deciding which parts of it count.\" \"We filed a formal complaint asking MSCI to withdraw the framewo",
-      "publishedAt": "2026-11-14T18:42:15+00:00",
-      "publishedTs": 1794681735.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @saylor: Watch my full Cantor Convergence keynote on YouTube. https://www.youtube.com/watch?v=SJXZ5GycchU",
       "link": "https://x.com/saylor/status/2121656320449249354#m",
       "source": "@saylor",
@@ -963,19 +1106,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "BREAKING: Bitcoin falls below $65,000 HODL! \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2121646733650190650#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-14T16:49:34+00:00",
-      "publishedTs": 1794674974.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "R to @nic_carter: it's not just the best way to allocate scarce goods the price hike also creates more supply. like magic",
@@ -1043,32 +1173,6 @@
       "isRetweet": false
     },
     {
-      "title": "Bitcoin is Digital Capital. Strategy transforms it into Digital Credit. Over the past month, Bitcoin fell 17.3%. STRC\u2019s price was essentially flat, and dividends brought its total return to +1.0%.",
-      "link": "https://x.com/saylor/status/2121599681427869760#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-11-14T13:42:36+00:00",
-      "publishedTs": 1794663756.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinMagazine: Correction: $549 million*",
-      "link": "https://x.com/BitcoinMagazine/status/2121404760284664032#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Correction: $549 million*",
-      "publishedAt": "2026-11-14T00:48:03+00:00",
-      "publishedTs": 1794617283.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "this is pete buttigieg's fault, I just can't prove it",
       "link": "https://x.com/nic_carter/status/2121401108199551330#m",
       "source": "@nic_carter",
@@ -1095,58 +1199,6 @@
       "isRetweet": true
     },
     {
-      "title": "This week at Bitcoin Magazine \ud83d\udcf0 - BMTV - Strategy +1036 BTC - Strive + 29 BTC - BlackRock - Super League +16 BTC - BitFuFu +66 BTC - Trump +1510 BTC - Hive Digital - Grant Cardone +20 BTC - El Savador - MSCI & Strategy - Russia - Kazakhstan - Square - Miami & BTC - Isreal",
-      "link": "https://x.com/theonlyposted/status/2121380867436167212#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "This week at Bitcoin Magazine \ud83d\udcf0 - BMTV - Strategy +1036 BTC - Strive + 29 BTC - BlackRock - Super League +16 BTC - BitFuFu +66 BTC - Trump +1510 BTC - Hive Digital - Grant Cardone +20 BTC - El Savador - MSCI &amp; Strategy - Russia - Kazakhstan - Square - Miami &amp; BTC - Isreal",
-      "publishedAt": "2026-11-13T23:13:06+00:00",
-      "publishedTs": 1794611586.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Ethereum $ETH, Linux, and Python are among the most important open-source projects ever built. Our Head of Research, @LowBeta, was featured in Both Sides of the Coin, the new book by @JSeyff and @EricBalchunas on the story behind Bitcoin ETFs.",
-      "link": "https://x.com/Grayscale/status/2121375322981777874#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Ethereum $ETH , Linux, and Python are among the most important open-source projects ever built. Our Head of Research, @LowBeta , was featured in Both Sides of the Coin, the new book by @JSeyff and @EricBalchunas on the story behind Bitcoin ETFs.",
-      "publishedAt": "2026-11-13T22:51:04+00:00",
-      "publishedTs": 1794610264.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "JUST IN: Bitcoin is bouncing off its 200-Week Moving Average \ud83d\udc40 HODL \u270a",
-      "link": "https://x.com/BitcoinMagazine/status/2121364542857044360#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "",
-      "publishedAt": "2026-11-13T22:08:14+00:00",
-      "publishedTs": 1794607694.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "R to @BitcoinMagazine: WATCH: @JoeCarlasare of Amundsen Davis - Why this is a fantastic time to buy Bitcoin \u26a1\ufe0f From @watchbmtv \ud83d\udc47 https://youtu.be/QlieBet41X0?si=RxwfcSUMf6SRBHcP",
-      "link": "https://x.com/BitcoinMagazine/status/2121360197365252252#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "WATCH: @JoeCarlasare of Amundsen Davis - Why this is a fantastic time to buy Bitcoin \u26a1\ufe0f From @watchbmtv \ud83d\udc47 youtu.be/QlieBet41X0?si=Rxwf\u2026 Link Joe Carlasare on \u201cExtreme Fear\u201d in Bitcoin: \u201cI\u2019m A Buyer Here\u201d Bitcoin went from 57,000 to 82,000 in less than 90 days earlier thi... www.y",
-      "publishedAt": "2026-11-13T21:50:58+00:00",
-      "publishedTs": 1794606658.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "AI will evaluate fiat and quickly conclude that bitcoin is the superior system.",
       "link": "https://x.com/lopp/status/2121356415482871924#m",
       "source": "@lopp",
@@ -1168,19 +1220,6 @@
       "summary": "",
       "publishedAt": "2026-11-13T21:28:11+00:00",
       "publishedTs": 1794605291.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: Amundsen Davis' Joe Carlasare says \"This is a fantastic time to buy Bitcoin.\" \ud83d\udc40 \"Don't be kicking yourself when Bitcoin is above $100K or $150K saying man I really wish I would have smashed the buy button\" \ud83d\udc4f",
-      "link": "https://x.com/BitcoinMagazine/status/2121336251953672216#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: Amundsen Davis' Joe Carlasare says \"This is a fantastic time to buy Bitcoin.\" \ud83d\udc40 \"Don't be kicking yourself when Bitcoin is above $100K or $150K saying man I really wish I would have smashed the buy button\" \ud83d\udc4f Video",
-      "publishedAt": "2026-11-13T20:15:49+00:00",
-      "publishedTs": 1794600949.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -1212,32 +1251,6 @@
       "isRetweet": false
     },
     {
-      "title": "Digital Credit in DeFi grew from $0 to $525M since January 2026. With Saturn, $STRC now does what TradFi can\u2019t: \u2022 24/7 liquidity: @CurveFinance \u2022 Composable lending and leverage: @Morpho, @Lista_DAO \u2022 Tranching: @Strata_Markets \u2022 Fixed and variable rates: @Pendle_fi",
-      "link": "https://x.com/saturn_credit/status/2121306007171436665#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Credit in DeFi grew from $0 to $525M since January 2026. With Saturn, $STRC now does what TradFi can\u2019t: \u2022 24/7 liquidity: @CurveFinance \u2022 Composable lending and leverage: @Morpho , @Lista_DAO \u2022 Tranching: @Strata_Markets \u2022 Fixed and variable rates: @Pendle_fi",
-      "publishedAt": "2026-11-13T18:15:38+00:00",
-      "publishedTs": 1794593738.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "JUST IN: $383 million Miller Value Partners Chairman Bill Miller IV says the gold analogy \"would imply a value of $1.3 million for Bitcoin if the world properly contextualized the technology\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2121290228975780306#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: $383 million Miller Value Partners Chairman Bill Miller IV says the gold analogy \"would imply a value of $1.3 million for Bitcoin if the world properly contextualized the technology\" \ud83d\ude80 Video",
-      "publishedAt": "2026-11-13T17:12:56+00:00",
-      "publishedTs": 1794589976.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Software engineering is evolving, but AI doesn't make engineers obsolete. SEs should become more like product managers, driving the product forward without waiting to be told what to do. There is no ceiling on the potential for innovation. There's always more work to be done.",
       "link": "https://x.com/lopp/status/2121279052673589619#m",
       "source": "@lopp",
@@ -1249,19 +1262,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Don\u2019t Buy Bitcoin Before Watching This (ft. Eric Balchunas & James Seyffart) https://x.com/i/broadcasts/2XybgLVvbqPvVO",
-      "link": "https://x.com/WOLF_Financial/status/2121275758337204714#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "Don\u2019t Buy Bitcoin Before Watching This (ft. Eric Balchunas &amp; James Seyffart) nitter.perennialte.ch/i/broadcasts/2XybgLVvb\u2026",
-      "publishedAt": "2026-11-13T16:15:26+00:00",
-      "publishedTs": 1794586526.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "the stock is up 10% off the lows. release another mistress",
@@ -1355,32 +1355,6 @@
       "isRetweet": false
     },
     {
-      "title": "Who at the CIA did Jensen Huang offend? Damn",
-      "link": "https://x.com/nic_carter/status/2120646935526756634#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-11-11T22:36:43+00:00",
-      "publishedTs": 1794436603.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "what if we put trampolines on the roof of the data center?",
-      "link": "https://x.com/nic_carter/status/2120588143259000973#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "what if we put trampolines on the roof of the data center? johnny maga (@johnnymaga) The woman who blocked the project told Fox the $5B investment would only benefit the employees of the data center, advocating for the site to be turned into an indoor trampoline park instead. Eve",
-      "publishedAt": "2026-11-11T18:43:06+00:00",
-      "publishedTs": 1794422586.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "BREAKING: The Constitutionality Index has now scored every law in the history of the United States. 48,000 laws dating back to 1789. So far as I'm aware, I'm the first one to ever attempt such a thing. And we've now ranked every president based on the percentage of laws they enac",
       "link": "https://x.com/tomselliott/status/2120580135334080935#m",
       "source": "@lopp",
@@ -1392,19 +1366,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": true
-    },
-    {
-      "title": "Worrying about AI oversupply in 2026 is like worrying about petroleum oversupply in 1910",
-      "link": "https://x.com/nic_carter/status/2120554067147587606#m",
-      "source": "@nic_carter",
-      "authorName": "Nic Carter",
-      "authorRole": "Castle Island \u00b7 Bitcoin research",
-      "summary": "",
-      "publishedAt": "2026-11-11T16:27:42+00:00",
-      "publishedTs": 1794414462.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
     },
     {
       "title": "This was the missing piece of the Internet",
@@ -1649,6 +1610,19 @@
       "summary": "This will change how you understand Bitcoin Video",
       "publishedAt": "2026-11-07T19:57:39+00:00",
       "publishedTs": 1794081459.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Why a Bitcoin will be worth $10 trillion",
+      "link": "https://x.com/DocumentingBTC/status/2119050824202748207#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "Why a Bitcoin will be worth $10 trillion Video",
+      "publishedAt": "2026-11-07T12:54:21+00:00",
+      "publishedTs": 1794056061.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
