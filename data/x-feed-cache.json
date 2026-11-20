@@ -1,7 +1,189 @@
 {
-  "fetchedAt": "2026-11-19T19:57:44Z",
+  "fetchedAt": "2026-11-20T01:42:31Z",
   "source": "nitter.perennialte.ch",
   "tweets": [
+    {
+      "title": "R to @saylor: You can also watch our full Q3 2026 Investor Q&A on YouTube. https://www.youtube.com/watch?v=gQpmfn0NquQ",
+      "link": "https://x.com/saylor/status/2123577772601696480#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "You can also watch our full Q3 2026 Investor Q&amp;A on YouTube. youtube.com/watch?v=gQpmfn0N\u2026",
+      "publishedAt": "2026-11-20T00:42:49+00:00",
+      "publishedTs": 1795135369.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "How do we decide when to buy Bitcoin and when to buy back $STRC? In Strategy\u2019s Q3 2026 Investor Q&A with @NatBrunell, @PhongLe and I answered your questions about Bitcoin Per Share, funding dividends through a downturn, and creating long-term value for $MSTR shareholders. 02:05 -",
+      "link": "https://x.com/saylor/status/2123577768914923974#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "How do we decide when to buy Bitcoin and when to buy back $STRC ? In Strategy\u2019s Q3 2026 Investor Q&A with @NatBrunell , @PhongLe and I answered your questions about Bitcoin Per Share, funding dividends through a downturn, and creating long-term value for $MSTR shareholders. 02:05",
+      "publishedAt": "2026-11-20T00:42:48+00:00",
+      "publishedTs": 1795135368.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "The only game where everyone wins is Bitcoin",
+      "link": "https://x.com/DocumentingBTC/status/2123561431786528932#m",
+      "source": "@DocumentingBTC",
+      "authorName": "Documenting Bitcoin",
+      "authorRole": "BTC history & culture",
+      "summary": "The only game where everyone wins is Bitcoin Video",
+      "publishedAt": "2026-11-19T23:37:53+00:00",
+      "publishedTs": 1795131473.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Beware the Virtuous Tyrants",
+      "link": "https://x.com/nic_carter/status/2123544013382783328#m",
+      "source": "@nic_carter",
+      "authorName": "Nic Carter",
+      "authorRole": "Castle Island \u00b7 Bitcoin research",
+      "summary": "The anthrax letters and the dangerous logic of saving the world Article Beware the Virtuous Tyrants \u201cOf all tyrannies, a tyranny sincerely exercised for the good of its victims may be the most oppressive.\u201d \u2013 C.S. Lewis On September 18, 2001, just days after 9/11, 63-year-old Robe",
+      "publishedAt": "2026-11-19T22:28:40+00:00",
+      "publishedTs": 1795127320.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: @dlawant of @Anchorage - Seeing A \u201cVery Strong Inflow\u201d for Bitcoin at $60k \u26a1\ufe0f From @watchbmtv \ud83d\udc47 https://youtu.be/fN-U69aCJOY?si=ZyPXBFYmK2JqVrmY",
+      "link": "https://x.com/BitcoinMagazine/status/2123540306708865233#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: @dlawant of @Anchorage - Seeing A \u201cVery Strong Inflow\u201d for Bitcoin at $60k \u26a1\ufe0f From @watchbmtv \ud83d\udc47 youtu.be/fN-U69aCJOY?si=ZyPX\u2026",
+      "publishedAt": "2026-11-19T22:13:57+00:00",
+      "publishedTs": 1795126437.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "LIVE: LIVE: Strategy ($MSTR) Q3 2026 Investor Q&A feat. Michael Saylor, Phong Le & Natalie Brunell https://x.com/i/broadcasts/2VNPyLnBgajpAL",
+      "link": "https://x.com/BitcoinMagazine/status/2123537217524003058#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "LIVE: LIVE: Strategy ( $MSTR ) Q3 2026 Investor Q&amp;A feat. Michael Saylor, Phong Le &amp; Natalie Brunell nitter.perennialte.ch/i/broadcasts/2VNPyLnBg\u2026",
+      "publishedAt": "2026-11-19T22:01:40+00:00",
+      "publishedTs": 1795125700.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "We are LIVE with @Saylor, @PhongLe, & @NatBrunell. Join us & share your questions on X and YouTube. https://x.com/i/broadcasts/2kEllOkVkoEPjJ",
+      "link": "https://x.com/Strategy/status/2123536893526614050#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "We are LIVE with @Saylor , @PhongLe , &amp; @NatBrunell . Join us &amp; share your questions on X and YouTube. nitter.perennialte.ch/i/broadcasts/2kEllOkVk\u2026",
+      "publishedAt": "2026-11-19T22:00:23+00:00",
+      "publishedTs": 1795125623.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: @DariusDale42 of @42Macro - Why 2027 Should Be A Great Year for Bitcoin From @watchbmtv \ud83d\udc47 https://youtu.be/GVYglll7Wgs?si=QbIEEStdInqBandj",
+      "link": "https://x.com/BitcoinMagazine/status/2123533182968729618#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: @DariusDale42 of @42Macro - Why 2027 Should Be A Great Year for Bitcoin From @watchbmtv \ud83d\udc47 youtu.be/GVYglll7Wgs?si=QbIE\u2026 Link Darius Dale: 2027 Should Be a \u201cGreat Year for Bitcoin\u201d as Fed Rate Cuts Come Darius Dale, Founder &amp; CEO of 42 Macro, joins BMTV to answer whethe",
+      "publishedAt": "2026-11-19T21:45:38+00:00",
+      "publishedTs": 1795124738.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Darius Dale: Forget the Fed Panic, 2027 Is Bullish for Bitcoin \ud83d\udcf7 With no recession in sight and an AI productivity boom picking up, @DariusDale42 sees the Fed setting up dramatic easing in 2027, and he thinks bitcoin is the big winner. 00:00 Darius Dale Joins BMTV to Talk the Fed",
+      "link": "https://x.com/watchbmtv/status/2123529249659195597#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Darius Dale: Forget the Fed Panic, 2027 Is Bullish for Bitcoin \ud83d\udcf7 With no recession in sight and an AI productivity boom picking up, @DariusDale42 sees the Fed setting up dramatic easing in 2027, and he thinks bitcoin is the big winner. 00:00 Darius Dale Joins BMTV to Talk the Fed",
+      "publishedAt": "2026-11-19T21:30:01+00:00",
+      "publishedTs": 1795123801.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: Anchorage Digital Head of Research says \"a more benign macroeconomic cycle developing into 2027\" could be bullish for BTC \ud83d\udc40 \"Perhaps looking in hindsight, folks will see 2027 as a positive year and we'll see that as a confirmation for the four year cycle.\" \ud83d\udc4f",
+      "link": "https://x.com/BitcoinMagazine/status/2123525463767216218#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: Anchorage Digital Head of Research says \"a more benign macroeconomic cycle developing into 2027\" could be bullish for BTC \ud83d\udc40 \"Perhaps looking in hindsight, folks will see 2027 as a positive year and we'll see that as a confirmation for the four year cycle.\" \ud83d\udc4f Video",
+      "publishedAt": "2026-11-19T21:14:58+00:00",
+      "publishedTs": 1795122898.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "R to @BitcoinMagazine: WATCH: @StocktonKatie of Fairlead Strategies - Bitcoin and Gold \u201cWill Likely Bottom Here in the Relatively Near Term\" \u26a1\ufe0f From @watchbmtv \ud83d\udc47 https://youtu.be/sqFLEyEftIQ?si=oenMhjzYDE5Vk8bk",
+      "link": "https://x.com/BitcoinMagazine/status/2123520543504666731#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "WATCH: @StocktonKatie of Fairlead Strategies - Bitcoin and Gold \u201cWill Likely Bottom Here in the Relatively Near Term\" \u26a1\ufe0f From @watchbmtv \ud83d\udc47 youtu.be/sqFLEyEftIQ?si=oenM\u2026 Link Bitcoin\u2019s Last Line of Defense Is $58K Katie Stockton, Founder of Fairlead Strategies, joins BMTV as Bitco",
+      "publishedAt": "2026-11-19T20:55:25+00:00",
+      "publishedTs": 1795121725.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
+    {
+      "title": "Structure matters for Digital Money. Saturn\u2019s senior tranche, srUSDat, has recorded zero drawdowns since inception, including through the June and November $STRC selloffs. Choose senior protection with srUSDat or higher distributions with jrUSDat.",
+      "link": "https://x.com/saturn_credit/status/2123519099703832841#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-19T20:49:41+00:00",
+      "publishedTs": 1795121381.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "All our top institutional shareholders increased their $MSTR positions in Q3 2026. The top 15 now hold 33% of MSTR shares outstanding.",
+      "link": "https://x.com/Strategy/status/2123512872567448055#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "",
+      "publishedAt": "2026-11-19T20:24:56+00:00",
+      "publishedTs": 1795119896.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 42 Macro founder says \"We think that surprising and dramatic easing in 2027 & beyond is still on the table and it's highly likely to occur.\" \"2027 should be a great year for Bitcoin\" \ud83d\ude80",
+      "link": "https://x.com/BitcoinMagazine/status/2123507836768407675#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 42 Macro founder says \"We think that surprising and dramatic easing in 2027 &amp; beyond is still on the table and it's highly likely to occur.\" \"2027 should be a great year for Bitcoin\" \ud83d\ude80 Video",
+      "publishedAt": "2026-11-19T20:04:55+00:00",
+      "publishedTs": 1795118695.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": false
+    },
     {
       "title": "The fact that the literal father of x risk as a discipline and creator of many key EA concepts has THIS attitude to AI x risk should give the doomers pause. Cause for epistemic humility at least",
       "link": "https://x.com/nic_carter/status/2123501412776555002#m",
@@ -53,6 +235,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Anchorage Digital's David Lawant on Bitcoin after the Anthropic IPO: \"A lot of folks were pulling capital from a lot of parts of the market.\" \"I think it's possible that in the short term we can see a little bit of a relief rally.\"",
+      "link": "https://x.com/watchbmtv/status/2123497424190885982#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "Anchorage Digital's David Lawant on Bitcoin after the Anthropic IPO: \"A lot of folks were pulling capital from a lot of parts of the market.\" \"I think it's possible that in the short term we can see a little bit of a relief rally.\" Video",
+      "publishedAt": "2026-11-19T19:23:33+00:00",
+      "publishedTs": 1795116213.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "R to @nic_carter: And in case you\u2019re wondering yes Miami really is like this. It is the most GTA city in existence.",
@@ -120,6 +315,19 @@
       "isRetweet": false
     },
     {
+      "title": "\ud83d\udd35 @42Macro's Darius Dale (@DariusDale42) on the Fed-Treasury Accord 2.0: \"We're very bullish on 2027.\" \"Could be a meaningful catalyst for asset price appreciation in gold, crypto, silver, all the things that typically require liquidity to sustain uptrends.\"",
+      "link": "https://x.com/watchbmtv/status/2123470943284596912#m",
+      "source": "@BitcoinMagazine",
+      "authorName": "Bitcoin Magazine",
+      "authorRole": "Bitcoin media",
+      "summary": "\ud83d\udd35 @42Macro 's Darius Dale ( @DariusDale42 ) on the Fed-Treasury Accord 2.0: \"We're very bullish on 2027.\" \"Could be a meaningful catalyst for asset price appreciation in gold, crypto, silver, all the things that typically require liquidity to sustain uptrends.\" Video",
+      "publishedAt": "2026-11-19T17:38:19+00:00",
+      "publishedTs": 1795109899.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
+    },
+    {
       "title": "JUST IN: Fairlead Strategies Founder Katie Stockton says \"our longer-term indicators for Bitcoin are somewhat constructive\" \ud83d\udc40 \"As long as it holds above that $58,000 to $60,000 or within that range, then it preserves the potential for a long-term basing phase for Bitcoin\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2123469571122479157#m",
       "source": "@BitcoinMagazine",
@@ -131,6 +339,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Today! Strategy Investor Q&A with @Saylor & @PhongLe, hosted by @NatBrunell at 5PM ET. Participate LIVE on X & YouTube: https://x.com/i/broadcasts/2kEllOkVkoEPjJ",
+      "link": "https://x.com/Strategy/status/2123455802400796787#m",
+      "source": "@saylor",
+      "authorName": "Michael Saylor",
+      "authorRole": "MicroStrategy \u00b7 BTC treasury",
+      "summary": "Today! Strategy Investor Q&amp;A with @Saylor &amp; @PhongLe , hosted by @NatBrunell at 5PM ET. Participate LIVE on X &amp; YouTube: nitter.perennialte.ch/i/broadcasts/2kEllOkVk\u2026",
+      "publishedAt": "2026-11-19T16:38:09+00:00",
+      "publishedTs": 1795106289.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "ByteTree's Charlie Morris on where Bitcoin ranks next to gold: \"We realized that Bitcoin was always going to be number one.\" \"Bitcoin and gold are just always going to be there, and they're always going to appreciate solely over time.\"",
@@ -419,19 +640,6 @@
       "isRetweet": false
     },
     {
-      "title": "R to @BitcoinMagazine: WATCH: @saifedean - Why This Is Likely The Bottom For Bitcoin \u26a1\ufe0f From @watchbmtv \ud83d\udc47 https://youtu.be/QjI5_uWmFCI",
-      "link": "https://x.com/BitcoinMagazine/status/2123196608582218062#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "WATCH: @saifedean - Why This Is Likely The Bottom For Bitcoin \u26a1\ufe0f From @watchbmtv \ud83d\udc47 youtu.be/QjI5_uWmFCI Link Saifedean Ammous: AI Could Be \u201cMassively Overvalued\u201d as Bitcoin Starts \u201cIts Own Run\u201d Saifedean Ammous, author of The Bitcoin Standard, joins BMTV to tal... www.youtube.com",
-      "publishedAt": "2026-11-18T23:28:13+00:00",
-      "publishedTs": 1795044493.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Tomorrow's 0-day has already been scheduled. It's PHP again.",
       "link": "https://x.com/lopp/status/2123187709313184255#m",
       "source": "@lopp",
@@ -458,19 +666,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: The Bitcoin Standard author Saifedean Ammous says \"this is likely the bottom\" for Bitcoin \ud83d\udc40 \"I think we've consolidated around the $60K level...I can't see us spending much more time around these levels.\"",
-      "link": "https://x.com/BitcoinMagazine/status/2123163779093676362#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: The Bitcoin Standard author Saifedean Ammous says \"this is likely the bottom\" for Bitcoin \ud83d\udc40 \"I think we've consolidated around the $60K level...I can't see us spending much more time around these levels.\" Video",
-      "publishedAt": "2026-11-18T21:17:46+00:00",
-      "publishedTs": 1795036666.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "Red candles. Orange tie. Mic on. \ud83c\udf99\ufe0f",
       "link": "https://x.com/AlexesNakamoto/status/2123161748744126521#m",
       "source": "@saylor",
@@ -484,53 +679,14 @@
       "isRetweet": true
     },
     {
-      "title": "R to @BitcoinMagazine: Why should your rate depend on your loan size? With SALT, it doesn't. 6.99% APR at 30% LTV. \ud83d\udc4f Get started now: https://saltlending.com/bmtv/?utm_source=splashcards&utm_campaign=52783658-BMTV",
-      "link": "https://x.com/BitcoinMagazine/status/2123154369860587817#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Why should your rate depend on your loan size? With SALT, it doesn't. 6.99% APR at 30% LTV. \ud83d\udc4f Get started now: saltlending.com/bmtv/?utm_so\u2026",
-      "publishedAt": "2026-11-18T20:40:22+00:00",
-      "publishedTs": 1795034422.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "JUST IN: Bloomberg Senior Analyst James Seyffart says if you don't understand Bitcoin yet, \"you probably should at this point\". \"It's not going away any time soon...Bitcoin is censorship resistance and a hedge against currency debasement\" \ud83d\udc4f",
       "link": "https://x.com/BitcoinMagazine/status/2123139054250115099#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
+      "source": "@JSeyff",
+      "authorName": "James Seyff",
+      "authorRole": "Bloomberg \u00b7 ETF research",
       "summary": "JUST IN: Bloomberg Senior Analyst James Seyffart says if you don't understand Bitcoin yet, \"you probably should at this point\". \"It's not going away any time soon...Bitcoin is censorship resistance and a hedge against currency debasement\" \ud83d\udc4f Video",
       "publishedAt": "2026-11-18T19:39:31+00:00",
       "publishedTs": 1795030771.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strike's Trey Sellers (@ts_hodl) on the difference between Bitcoin's market and its protocol: \"Bitcoin's price is certainly volatile, especially in the near term, but Bitcoin itself is actually very stable.\" \"It produces a new block every 10 minutes on repeat. It's like a heartbe",
-      "link": "https://x.com/watchbmtv/status/2123129740861071382#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Strike's Trey Sellers ( @ts_hodl ) on the difference between Bitcoin's market and its protocol: \"Bitcoin's price is certainly volatile, especially in the near term, but Bitcoin itself is actually very stable.\" \"It produces a new block every 10 minutes on repeat. It's like a heart",
-      "publishedAt": "2026-11-18T19:02:30+00:00",
-      "publishedTs": 1795028550.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "This week is going to be wild for AI on Wall Street. I\u2019m going live with @BilalSLittle from @DirexionLETFs to break down: \u2022 What Anthropic\u2019s IPO means for markets \u2022 What NVIDIA earnings actually mean for the AI trade \u2022 How to position around these major market events We\u2019ll save t",
-      "link": "https://x.com/APompliano/status/2123121053815738497#m",
-      "source": "@APompliano",
-      "authorName": "Anthony Pompliano",
-      "authorRole": "Investor \u00b7 macro & BTC",
-      "summary": "This week is going to be wild for AI on Wall Street. I\u2019m going live with @BilalSLittle from @DirexionLETFs to break down: \u2022 What Anthropic\u2019s IPO means for markets \u2022 What NVIDIA earnings actually mean for the AI trade \u2022 How to position around these major market events We\u2019ll save t",
-      "publishedAt": "2026-11-18T18:27:59+00:00",
-      "publishedTs": 1795026479.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": true
@@ -544,19 +700,6 @@
       "summary": "",
       "publishedAt": "2026-11-18T18:23:11+00:00",
       "publishedTs": 1795026191.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Strike Head of Private Clients says \"over the long term Bitcoin's fundamentals have never been stronger.\" \ud83d\udc40 \"They have to continue to debase the fiat money...when stepping up against the fixed monetary supply of Bitcoin, the value of that network will go up\" \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2123113910903689217#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 Strike Head of Private Clients says \"over the long term Bitcoin's fundamentals have never been stronger.\" \ud83d\udc40 \"They have to continue to debase the fiat money...when stepping up against the fixed monetary supply of Bitcoin, the value of that network will go up\" \ud83d\ude80 Video",
-      "publishedAt": "2026-11-18T17:59:36+00:00",
-      "publishedTs": 1795024776.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
@@ -640,32 +783,6 @@
       "isRetweet": false
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 New York's state pension fund raised their stake in Strategy to 352,850 shares worth ~$54 million in Q3 \ud83d\ude80",
-      "link": "https://x.com/BitcoinMagazine/status/2123089645831606631#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "JUST IN: \ud83c\uddfa\ud83c\uddf8 New York's state pension fund raised their stake in Strategy to 352,850 shares worth ~$54 million in Q3 \ud83d\ude80 Video",
-      "publishedAt": "2026-11-18T16:23:11+00:00",
-      "publishedTs": 1795018991.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "Strive's Jeff Walton (@PunterJeff) on whether Anthropic's IPO pops the AI bubble: \"The order book is supposedly six times oversubscribed... there's a lot of demand for this stock.\" \"I think it will trade very similarly to how we saw SpaceX trade.\"",
-      "link": "https://x.com/watchbmtv/status/2123089240154415360#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Strive's Jeff Walton ( @PunterJeff ) on whether Anthropic's IPO pops the AI bubble: \"The order book is supposedly six times oversubscribed... there's a lot of demand for this stock.\" \"I think it will trade very similarly to how we saw SpaceX trade.\" Video",
-      "publishedAt": "2026-11-18T16:21:34+00:00",
-      "publishedTs": 1795018894.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "It's that time of the day again.",
       "link": "https://x.com/lopp/status/2123084227667447859#m",
       "source": "@lopp",
@@ -677,19 +794,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Strike's Trey Sellers (@ts_hodl) on where Bitcoin goes from here: \"We're going to continue to see some volatility here in the short term.\" \"Over the long term, Bitcoin's fundamentals have never been stronger.\"",
-      "link": "https://x.com/watchbmtv/status/2123083362290315404#m",
-      "source": "@BitcoinMagazine",
-      "authorName": "Bitcoin Magazine",
-      "authorRole": "Bitcoin media",
-      "summary": "Strike's Trey Sellers ( @ts_hodl ) on where Bitcoin goes from here: \"We're going to continue to see some volatility here in the short term.\" \"Over the long term, Bitcoin's fundamentals have never been stronger.\" Video",
-      "publishedAt": "2026-11-18T15:58:13+00:00",
-      "publishedTs": 1795017493.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "Bloomberg Intelligence's James Seyffart on Bitcoin: \"If you're just somebody that doesn't understand it yet, you probably should at this point. Like this is not going away anytime soon.\" \"Bitcoin is censorship resistant and it's a hedge against currency debasement.\"",
@@ -887,19 +991,6 @@
       "isRetweet": false
     },
     {
-      "title": "They kid, but someone will literally launch this ETF @EricBalchunas @JSeyff @Todd_Sohn @DaveNadig",
-      "link": "https://x.com/SamRo/status/2122853769071440069#m",
-      "source": "@JSeyff",
-      "authorName": "James Seyff",
-      "authorRole": "Bloomberg \u00b7 ETF research",
-      "summary": "They kid, but someone will literally launch this ETF @EricBalchunas @JSeyff @Todd_Sohn @DaveNadig The Daily Show (@TheDailyShow) Introducing the new Vanguard Unf**kable CEO ETF Video \u2014 https://nitter.perennialte.ch/TheDailyShow/status/2122842221544095785#m",
-      "publishedAt": "2026-11-18T00:45:53+00:00",
-      "publishedTs": 1794962753.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
       "title": "R to @nic_carter: nature is healing",
       "link": "https://x.com/nic_carter/status/2122822987875508489#m",
       "source": "@nic_carter",
@@ -924,6 +1015,19 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
+    },
+    {
+      "title": "Lava Card now earns you 10% back in bitcoin on purchases at @cfosilvia. Silvia is a personal AI CFO, built by investors for investors.",
+      "link": "https://x.com/lava_xyz/status/2122814792926916889#m",
+      "source": "@APompliano",
+      "authorName": "Anthony Pompliano",
+      "authorRole": "Investor \u00b7 macro & BTC",
+      "summary": "Lava Card now earns you 10% back in bitcoin on purchases at @cfosilvia . Silvia is a personal AI CFO, built by investors for investors.",
+      "publishedAt": "2026-11-17T22:11:01+00:00",
+      "publishedTs": 1794953461.0,
+      "category": "x",
+      "isTweet": true,
+      "isRetweet": true
     },
     {
       "title": "James Bond is incoherent in 2026 because the UK has neither the desire nor the ability to project power abroad or influence global affairs, they are busy shedding the last of their colonial possessions. Their main law enforcement priority is criminalizing dissent domestically",
@@ -1160,19 +1264,6 @@
       "isRetweet": false
     },
     {
-      "title": "We\u2019ve added USD Strength to the Strategy dashboard. At today\u2019s rates, our USD assets can fund 3.4 years of interest and dividends. That\u2019s 41% of the weighted duration of our Digital Credit. https://www.strategy.com",
-      "link": "https://x.com/saylor/status/2122459084599197886#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We\u2019ve added USD Strength to the Strategy dashboard. At today\u2019s rates, our USD assets can fund 3.4 years of interest and dividends. That\u2019s 41% of the weighted duration of our Digital Credit. strategy.com",
-      "publishedAt": "2026-11-16T22:37:33+00:00",
-      "publishedTs": 1794868653.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "i\u2019m a data man, ladies and gentlemen. i have numerous concerns spread across this state. i have compute flowing at many thousand megawatts per day. and as an data man i hope that you\u2019ll forgive just good old-fashioned plain speaking. now this work is very much a family enterprise",
       "link": "https://x.com/___frye/status/2122447294234824838#m",
       "source": "@nic_carter",
@@ -1238,32 +1329,6 @@
       "isRetweet": false
     },
     {
-      "title": "We are very pleased to welcome Jesse Myers @Croesus_BTC. Jesse joins Super League now and will lead Bitcoin treasury strategy as Chief Investment Officer of Superplanet once our transaction closes and the company joins the Metaplanet group. Jesse is a well-known Bitcoin analyst a",
-      "link": "https://x.com/gerovich/status/2122375217427411391#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "We are very pleased to welcome Jesse Myers @Croesus_BTC . Jesse joins Super League now and will lead Bitcoin treasury strategy as Chief Investment Officer of Superplanet once our transaction closes and the company joins the Metaplanet group. Jesse is a well-known Bitcoin analyst ",
-      "publishedAt": "2026-11-16T17:04:18+00:00",
-      "publishedTs": 1794848658.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Bitcoin is my exit plan. https://t.co/OYqrBlVlA4",
-      "link": "https://x.com/saylor/status/2122374878850383918#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Bitcoin is my exit plan. https://nitter.perennialte.ch/t.co/OYqrBlVlA4 Video",
-      "publishedAt": "2026-11-16T17:02:57+00:00",
-      "publishedTs": 1794848577.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
       "title": "HODLing through painful or boring Bitcoin price action is incredibly easy with this one simple trick: Focus on your hatred of governments and central banks rather than your love of wealth. Bitcoin will always be easy to hold if you prioritize sovereignty over price.",
       "link": "https://x.com/lopp/status/2122356401129623572#m",
       "source": "@lopp",
@@ -1314,32 +1379,6 @@
       "category": "x",
       "isTweet": true,
       "isRetweet": false
-    },
-    {
-      "title": "Digital Credit is an alloy of $BTC and dollars. $MSTR $STRC",
-      "link": "https://x.com/Strategy/status/2122340756220494242#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "Digital Credit is an alloy of $BTC and dollars. $MSTR $STRC Video",
-      "publishedAt": "2026-11-16T14:47:22+00:00",
-      "publishedTs": 1794840442.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
-    },
-    {
-      "title": "Bitcoin had a hard week. Its supply cap didn\u2019t change. Neither did our conviction. 8 more BTC for the $SLE treasury.",
-      "link": "https://x.com/matt_edelman/status/2122315813801841111#m",
-      "source": "@saylor",
-      "authorName": "Michael Saylor",
-      "authorRole": "MicroStrategy \u00b7 BTC treasury",
-      "summary": "",
-      "publishedAt": "2026-11-16T13:08:15+00:00",
-      "publishedTs": 1794834495.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": true
     },
     {
       "title": "The advent of AI has made this truth more obvious than ever.",
@@ -1571,19 +1610,6 @@
       "summary": "Every invention sounds crazy at first Video",
       "publishedAt": "2026-11-10T03:10:24+00:00",
       "publishedTs": 1794280224.0,
-      "category": "x",
-      "isTweet": true,
-      "isRetweet": false
-    },
-    {
-      "title": "The Bitcoin Whitepaper is pure poetry",
-      "link": "https://x.com/DocumentingBTC/status/2119939650609369494#m",
-      "source": "@DocumentingBTC",
-      "authorName": "Documenting Bitcoin",
-      "authorRole": "BTC history & culture",
-      "summary": "The Bitcoin Whitepaper is pure poetry Video",
-      "publishedAt": "2026-11-09T23:46:13+00:00",
-      "publishedTs": 1794267973.0,
       "category": "x",
       "isTweet": true,
       "isRetweet": false
